@@ -1,0 +1,499 @@
+#russia2 decisions
+
+SOV_europe_expansion = {
+
+    SOV_join_the_war_against_poland = {
+		
+		icon = GFX_decision_generic_ignite_civil_war
+
+     	available = {
+     		country_exists = POL
+     		has_idea = SOV_molotov_ribbentrop_pact
+			POL = {
+				has_war_with = GER
+			}
+     	}
+		
+		visible = {
+			country_exists = POL
+		}	
+
+     	fire_only_once = yes
+
+     	cost = 50
+
+     	complete_effect = {
+			SOV = {
+				declare_war_on = {
+					target = POL
+					type = take_state_focus
+					generator = { 89 91 93 94 95 96 784 }
+				}
+			}
+		}
+	}
+
+    SOV_demand_poland = {
+
+     	available = {
+     	    has_army_manpower = {
+    		size > 1500000
+    		}
+    		NOT = { has_war_with = POL }
+    		NOT = { has_idea = SOV_molotov_ribbentrop_pact }
+			country_exists = POL
+     	}
+		
+		visible = {
+			country_exists = POL
+		}	
+
+     	fire_only_once = yes
+
+     	cost = 150
+
+     	complete_effect = {
+     	POL = {
+			country_event = { id = poland.2 }
+			}
+		}
+    }
+
+    SOV_demand_bessarabia = {
+
+     	available = {
+     	    has_army_manpower = {
+    		size > 1000000
+    		}
+    		NOT = { has_war_with = ROM }
+			country_exists = ROM
+     	}
+
+		visible = {
+			country_exists = ROM
+		}
+		
+     	fire_only_once = yes
+
+     	cost = 100
+
+     	complete_effect = {
+     	ROM = {
+			country_event = { id = romania.1 }
+			}
+		}
+    }
+
+    SOV_demand_estonia = {
+
+     	available = {
+     	    has_army_manpower = {
+    		size > 1000000
+    		}
+    		NOT = { has_war_with = EST }
+			country_exists = EST
+			NOT = {
+				EST = {
+					is_puppet_of = SOV
+				}	
+			}			
+     	}
+
+		visible = {
+			country_exists = EST
+			NOT = {
+				EST = {
+					is_puppet_of = SOV
+				}	
+			}			
+		}	
+
+     	fire_only_once = yes
+
+     	cost = 50
+
+     	complete_effect = {
+     	EST = {
+			country_event = { id = baltics.1 }
+			}
+		}
+    }
+
+    SOV_demand_latvia = {
+
+     	available = {
+     	    has_army_manpower = {
+    		size > 1000000
+    		}
+    		NOT = { has_war_with = LAT }
+			country_exists = LAT
+			NOT = {
+				LAT = {
+					is_puppet_of = SOV
+				}	
+			}	
+     	}
+		
+		visible = {
+			country_exists = LAT
+			NOT = {
+				LAT = {
+					is_puppet_of = SOV
+				}
+			}	
+		}	
+
+     	fire_only_once = yes
+
+     	cost = 50
+
+     	complete_effect = {
+     	LAT = {
+			country_event = { id = baltics.2 }
+			}
+		}
+    }
+
+    SOV_demand_lithuania = {
+
+     	available = {
+     	    has_army_manpower = {
+    		size > 1000000
+    		}
+    		NOT = { has_war_with = LIT }
+			country_exists = LIT
+			NOT = {
+				LIT = {
+					is_puppet_of = SOV
+				}	
+			}			
+    	}
+		
+		visible = {
+			country_exists = LIT
+			NOT = {
+				LIT = {
+					is_puppet_of = SOV
+				}	
+			}						
+		}	
+
+     	fire_only_once = yes
+
+     	cost = 50
+
+     	complete_effect = {
+     	LIT = {
+			country_event = { id = baltics.3 }
+			}
+		}
+    }
+}
+
+SOV_integrate_the_baltics = {
+
+	SOV_integrate_lithuania = {
+		available = {
+			LIT = { is_puppet_of = SOV }
+			date > 1940.05.15			
+		}
+		
+		visible = {
+			LIT = { is_puppet_of = SOV }
+		}	
+
+		fire_only_once = yes
+
+		cost = 100
+
+		days_remove = 70
+		remove_effect = {
+			annex_country = {
+				target = LIT
+			}
+		}	
+	}
+	
+	SOV_integrate_latvia = {
+		available = {
+			LAT = { is_puppet_of = SOV }
+			date > 1940.05.15			
+		}
+		
+		visible = {
+			LAT = { is_puppet_of = SOV }
+		}		
+
+		fire_only_once = yes
+
+		cost = 100
+
+		days_remove = 70
+		remove_effect = {
+			annex_country = {
+				target = LAT
+			}
+		}	
+	}
+
+	SOV_integrate_estonia = {
+		available = {
+			EST = { is_puppet_of = SOV }
+			date > 1940.05.15
+		}
+		
+		visible = {
+			EST = { is_puppet_of = SOV }
+		}		
+
+		fire_only_once = yes
+
+		cost = 100
+
+		days_remove = 70
+		remove_effect = {
+			annex_country = {
+				target = EST
+			}
+		}	
+	}
+}	
+
+SOV_unhappy_peasants = {
+
+	SOV_peasants_rebelion = {
+
+		icon = generic_civil_support
+
+		allowed = { TAG = SOV }
+
+		available = {
+			custom_trigger_tooltip = {
+		    tooltip = SOV_peasants_rebelion_tt
+			NOT = {
+				has_idea = SOV_Unhappy_peasants1
+				has_idea = SOV_Unhappy_peasants2
+				has_idea = SOV_Unhappy_peasants3
+				has_idea = SOV_Unhappy_peasants4
+				has_idea = SOV_Unhappy_peasants5
+				has_idea = SOV_Unhappy_peasants6
+				}
+			}
+		}
+		
+		activation = {
+			OR = {
+				has_idea = SOV_Unhappy_peasants1
+				has_idea = SOV_Unhappy_peasants2
+				has_idea = SOV_Unhappy_peasants3
+				has_idea = SOV_Unhappy_peasants4
+				has_idea = SOV_Unhappy_peasants5
+				has_idea = SOV_Unhappy_peasants6
+			}
+		}
+
+		visible = {
+			
+		}
+
+		is_good = no
+
+		fire_only_once = yes
+
+		days_mission_timeout = 2920
+
+		cancel_trigger = {
+			hidden_trigger = {
+				has_idea = SOV_Happy_peasants
+			}
+		}
+
+		timeout_effect = {
+			SOV = {
+            	country_event = { id = soviets.18 }
+			}
+        }
+
+		complete_effect = {
+			add_manpower = 100000
+		}
+	}
+
+	SOV_peasants_propaganda = {
+		icon = GFX_decision_eng_propaganda_campaigns
+        cost = 100
+        fire_only_once = yes
+        visible = {
+        	OR = {
+				has_idea = SOV_Unhappy_peasants1
+				has_idea = SOV_Unhappy_peasants2
+				has_idea = SOV_Unhappy_peasants3
+				has_idea = SOV_Unhappy_peasants4
+				has_idea = SOV_Unhappy_peasants5
+				has_idea = SOV_Unhappy_peasants6
+			}
+        }
+        available = {
+        	has_completed_focus = SOV_start_five_year_plan
+        	custom_trigger_tooltip = {
+	        	tooltip = SOV_unhappy_peasants_tt
+	            has_idea = SOV_Unhappy_peasants1
+            }
+        }
+        complete_effect = {
+	        custom_effect_tooltip = SOV_peasants_lower_penalty_tt
+	        swap_ideas = {
+				remove_idea = SOV_Unhappy_peasants1
+				add_idea = SOV_Unhappy_peasants2
+			}
+        }
+    }
+
+    SOV_peasants_compensations = {
+		icon = GFX_decision_hol_attract_foreign_investors
+        cost = 100
+        fire_only_once = yes
+        visible = {
+        	OR = {
+				has_idea = SOV_Unhappy_peasants1
+				has_idea = SOV_Unhappy_peasants2
+				has_idea = SOV_Unhappy_peasants3
+				has_idea = SOV_Unhappy_peasants4
+				has_idea = SOV_Unhappy_peasants5
+				has_idea = SOV_Unhappy_peasants6
+			}
+        }
+        available = {
+        	has_completed_focus = SOV_improve_russia
+            custom_trigger_tooltip = {
+	        	tooltip = SOV_peasants_propaganda_tt
+	            has_idea = SOV_Unhappy_peasants2
+            }
+        }
+        complete_effect = {
+	        custom_effect_tooltip = SOV_peasants_lower_penalty_tt
+	        swap_ideas = {
+				remove_idea = SOV_Unhappy_peasants2
+				add_idea = SOV_Unhappy_peasants3
+			}
+        }
+    }
+
+    SOV_peasants_recruiting = {
+		icon = GFX_decision_generic_nationalism
+        cost = 100
+        fire_only_once = yes
+        visible = {
+        	OR = {
+				has_idea = SOV_Unhappy_peasants1
+				has_idea = SOV_Unhappy_peasants2
+				has_idea = SOV_Unhappy_peasants3
+				has_idea = SOV_Unhappy_peasants4
+				has_idea = SOV_Unhappy_peasants5
+				has_idea = SOV_Unhappy_peasants6
+			}
+        }
+        available = {
+        	has_completed_focus = SOV_new_soviet_uniform
+            custom_trigger_tooltip = {
+	        	tooltip = SOV_peasants_compensations_tt
+	            has_idea = SOV_Unhappy_peasants3
+            }
+        }
+        complete_effect = {
+	        custom_effect_tooltip = SOV_peasants_lower_penalty_tt
+	        swap_ideas = {
+				remove_idea = SOV_Unhappy_peasants3
+				add_idea = SOV_Unhappy_peasants4
+			}
+        }
+    }
+
+    SOV_peasants_exile = {
+		icon = GFX_decision_oppression
+        cost = 100
+        fire_only_once = yes
+        visible = {
+        	OR = {
+				has_idea = SOV_Unhappy_peasants1
+				has_idea = SOV_Unhappy_peasants2
+				has_idea = SOV_Unhappy_peasants3
+				has_idea = SOV_Unhappy_peasants4
+				has_idea = SOV_Unhappy_peasants5
+				has_idea = SOV_Unhappy_peasants6
+			}
+        }
+        available = {
+        	has_completed_focus = SOV_improve_Siberias_railways
+            custom_trigger_tooltip = {
+	        	tooltip = SOV_peasants_recruiting_tt
+	            has_idea = SOV_Unhappy_peasants4
+            }
+        }
+        complete_effect = {
+	        custom_effect_tooltip = SOV_peasants_lower_penalty_tt
+	        swap_ideas = {
+				remove_idea = SOV_Unhappy_peasants4
+				add_idea = SOV_Unhappy_peasants5
+			}
+        }
+    }
+
+    SOV_peasants_demands = {
+		icon = GFX_decision_eng_trade_unions_support
+        cost = 100
+        fire_only_once = yes
+        visible = {
+        	OR = {
+				has_idea = SOV_Unhappy_peasants1
+				has_idea = SOV_Unhappy_peasants2
+				has_idea = SOV_Unhappy_peasants3
+				has_idea = SOV_Unhappy_peasants4
+				has_idea = SOV_Unhappy_peasants5
+				has_idea = SOV_Unhappy_peasants6
+			}
+        }
+        available = {
+        	has_completed_focus = SOV_new_russia
+            custom_trigger_tooltip = {
+	        	tooltip = SOV_peasants_exile_tt
+	            has_idea = SOV_Unhappy_peasants5
+            }
+        }
+        complete_effect = {
+	        custom_effect_tooltip = SOV_peasants_lower_penalty_tt
+	        swap_ideas = {
+				remove_idea = SOV_Unhappy_peasants5
+				add_idea = SOV_Unhappy_peasants6
+			}
+        }
+    }
+
+    SOV_happy_peasants = {
+		icon = GFX_decision_hol_exchange_intelligence_data
+        cost = 100
+        fire_only_once = yes
+        visible = {
+        	OR = {
+				has_idea = SOV_Unhappy_peasants1
+				has_idea = SOV_Unhappy_peasants2
+				has_idea = SOV_Unhappy_peasants3
+				has_idea = SOV_Unhappy_peasants4
+				has_idea = SOV_Unhappy_peasants5
+				has_idea = SOV_Unhappy_peasants6
+			}
+        }
+        available = {
+        	has_completed_focus = SOV_finish_the_second_five_year_plan
+            custom_trigger_tooltip = {
+	        	tooltip = SOV_peasants_demands_tt
+	            has_idea = SOV_Unhappy_peasants6
+            }
+        }
+        complete_effect = {
+        	custom_effect_tooltip = SOV_happy_peasants_tt
+			remove_ideas = SOV_Unhappy_peasants6
+			add_ideas = SOV_Happy_peasants
+        }
+    }
+}	
