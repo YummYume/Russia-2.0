@@ -1,0 +1,1451 @@
+###########################
+# Soviet Events
+###########################
+
+add_namespace = soviets
+
+# Finland Accepts Demands
+country_event = {
+	id = soviets.1
+	title = soviets.1.t
+	desc = soviets.1.d
+	picture = GFX_report_event_soviet_finnish_pact
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = soviets.1.a
+		SOV = { 
+			transfer_state = 146
+			transfer_state = 147
+			transfer_state = 722
+		}
+		hidden_effect = {
+			SOV = {
+				country_event = { days = 1 id = newsrussia2.3 }
+			}
+		}
+	}
+}
+
+# Finland Refuses Demands
+country_event = {
+	id = soviets.2
+	title = soviets.2.t
+	desc = soviets.2.d
+	picture = GFX_report_event_soviet_tanks_snow
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = soviets.2.a
+		create_wargoal = {
+			type = take_state
+			target = FIN
+			generator = { 146 147 722 }
+		}
+		hidden_effect = {
+			SOV = {
+				country_event = { days = 1 id = newsrussia2.2 }				
+			}
+		}
+	}
+}
+
+# Finland Becomes Puppet
+country_event = {
+	id = soviets.3
+	title = soviets.3.t
+	desc = soviets.3.d
+	picture = GFX_report_event_soviet_finnish_pact
+
+	is_triggered_only = yes
+
+	option = { # Soviet accepts
+		name = soviets.3.a
+		ai_chance = { factor = 80 }
+		SOV = { puppet = FIN }
+		hidden_effect = {
+			SOV = {
+				country_event = { days = 1 id = newsrussia2.4 }
+			}
+		}
+	}
+
+	option = { # Soviet refuses
+		name = soviets.3.b
+		ai_chance = { factor = 20 }
+		create_wargoal = {
+			type = take_state
+			target = FIN
+			generator = { 146 147 722 }
+		}
+		FIN = {
+			country_event = { days = 5 id = finlands.2 }
+		}
+	}
+}
+
+# Communist government in FROM baltic country and they wish to be annexed
+country_event = {
+	id = soviets.4
+	title = soviets.4.t
+	desc = soviets.4.d
+	picture = GFX_report_event_soviet_in_riga
+
+	is_triggered_only = yes
+
+	option = {
+		name = soviets.4.a
+		ai_chance = { factor = 100 }
+
+		effect_tooltip = {
+			if = {
+				limit = { FROM = { tag = LIT } }
+			 	SOV = {
+			 		annex_country = {
+					target = LIT
+					transfer_troops = yes } 
+					add_named_threat = { threat = 2 name = soviets.4_threat_LIT }
+				}
+			}
+			if = {
+				limit = { FROM = { tag = FIN } } 
+			 	SOV = { 
+			 		annex_country = {
+					target = FIN
+					transfer_troops = yes } 
+					add_named_threat = { threat = 5 name = soviets.4_threat_FIN }
+				}
+			}
+			if = {
+				limit = { FROM = { tag = EST } } 
+			 	SOV = { 
+			 		annex_country = {
+					target = EST
+					transfer_troops = yes } 
+					add_named_threat = { threat = 2 name = soviets.4_threat_EST }
+				}
+			}
+			if = {
+				limit = { FROM = { tag = LAT } } 
+			 	SOV = {
+			 		annex_country = {
+					target = LAT
+					transfer_troops = yes } 
+					add_named_threat = { threat = 2 name = soviets.4_threat_LAT }
+				}
+			}
+		} 
+
+		hidden_effect = {
+
+			 FROM = {
+			 	country_event = { id = baltics.6 hours = 6}
+			 }			
+		}
+	}
+	option = {
+		name = soviets.4.b
+		ai_chance = { factor = 0 }
+	}
+}
+
+# Communist government in FROM baltic country and they wish to be part puppet
+country_event = {
+	id = soviets.5
+	title = soviets.5.t
+	desc = soviets.5.d
+	picture = GFX_report_event_soviet_in_riga
+
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			FROM = {
+				save_event_target_as = baltic
+			}
+		}
+	}
+
+	option = {
+		name = soviets.5.a
+		if = {
+			limit = {
+				FROM = { is_puppet = no }
+			}
+			SOV = { puppet = FROM }
+		}
+		ai_chance = { factor = 100 }
+			if = {
+				limit = { FROM = { tag = LIT } }
+				add_named_threat = { threat = 1 name = soviets.5_threat_LIT }
+			}	
+			if = {
+				limit = { FROM = { tag = FIN } }
+				add_named_threat = { threat = 2 name = soviets.5_threat_FIN }
+			}			
+			if = {
+				limit = { FROM = { tag = EST } }
+				add_named_threat = { threat = 1 name = soviets.5_threat_EST }
+			}			
+			if = {
+				limit = { FROM = { tag = LAT } }
+				add_named_threat = { threat = 1 name = soviets.5_threat_LAT }
+			}		
+
+		#trigger news event
+		hidden_effect = {
+			news_event =  { id = news.70 days = 1}
+		}		
+	}
+	option = {
+		name = soviets.5.b
+		ai_chance = { factor = 0 }
+	}
+}
+
+# Estonia Surrenders
+country_event = {
+	id = soviets.6
+	title = soviets.6.t
+	desc = soviets.6.d
+	picture = GFX_report_event_stalin_propaganda
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = soviet.6.a
+		annex_country = { target = EST }
+		country_event = { days = 2 id = newsrussia2.7 }		
+	}
+}
+
+# Estonia Refuses
+country_event = {
+	id = soviets.7
+	title = soviets.7.t
+	desc = soviets.7.d
+	picture = GFX_report_event_soviet_tanks
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = soviet.7.a
+		create_wargoal = {
+			type = annex_everything
+			target = EST
+		}		
+	}
+}
+
+# Latvia Surrenders
+country_event = {
+	id = soviets.8
+	title = soviets.8.t
+	desc = soviets.8.d
+	picture = GFX_report_event_stalin_propaganda
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = soviets.8.a
+		annex_country = { target = LAT }
+		country_event = { days = 2 id = newsrussia2.11 }		
+	}
+}
+
+# Latvia Refuses
+country_event = {
+	id = soviets.9
+	title = soviets.9.t
+	desc = soviets.9.d
+	picture = GFX_report_event_soviet_tanks
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = soviets.9.a
+		create_wargoal = {
+			type = annex_everything
+			target = LAT
+		}		
+	}
+}
+
+# Lithuania Surrenders
+country_event = {
+	id = soviets.10
+	title = soviets.10.t
+	desc = soviets.10.d
+	picture = GFX_report_event_stalin_propaganda
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = soviets.10.a
+		annex_country = { target = LIT }
+		country_event = { days = 2 id = newsrussia2.9 }		
+	}
+}
+
+# Lithuania Refuses
+country_event = {
+	id = soviets.11
+	title = soviets.11.t
+	desc = soviets.11.d
+	picture = GFX_report_event_soviet_tanks
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = soviets.11.a
+		create_wargoal = {
+			type = annex_everything
+			target = LIT
+		}		
+	}
+}
+
+#Finland want us to annex them
+country_event = {
+	id = soviets.12
+	title = soviets.12.t
+	desc = soviets.12.d
+	picture = GFX_report_event_soviet_tank_parade
+	
+	is_triggered_only = yes
+	
+	option = { #accepts
+		name = soviets.12.a
+		ai_chance = { factor = 75 }
+		hidden_effect = {
+			add_state_core = 146
+			add_state_core = 111
+			add_state_core = 149
+			add_state_core = 150
+			add_state_core = 148
+			add_state_core = 147
+			add_state_core = 722
+		}
+		annex_country = { 
+			target = FIN
+			transfer_troops = yes
+		}
+		add_threat = 5
+		hidden_effect = {
+		country_event = { days = 3 id = news.69 }
+		}
+	}
+
+	option = { #refuse
+		name = soviets.12.b
+		ai_chance = { factor = 25 }
+	}
+}
+
+#Mongolia refuse
+country_event = {
+	id = soviets.13
+	title = soviets.13.t
+	desc = soviets.13.d
+	picture = GFX_report_event_stalin_01
+		
+	is_triggered_only = yes
+	
+	option = { #damn
+		name = soviets.13.a
+	}
+}
+
+#Mongolia accept	
+country_event = {
+	id = soviets.14
+	title = soviets.14.t
+	desc = soviets.14.d
+	picture = GFX_report_event_generic_sign_treaty2
+	
+	is_triggered_only = yes
+	
+	option = { #good choice comrade
+		name = soviets.14.a
+		hidden_effect = {
+			SOV = {
+				country_event = { days = 3 id = newsrussia2.1 }
+			}
+		}
+		SOV= {
+			puppet = MON
+		}	
+	}
+}
+
+# SOV recover territory
+country_event = {
+	id = soviets.15
+	title = soviets.15.t
+	desc = soviets.15.d
+	picture = GFX_report_event_soviet_tank_parade
+
+	trigger = {
+		tag = SOV
+		has_idea = SOV_Exiled_russia
+		195 = { is_controlled_by = SOV }
+		219 = { is_controlled_by = SOV }
+		217 = { is_controlled_by = SOV }
+	}
+
+	mean_time_to_happen = { days = 2 }
+
+	option = { # Remove Exiled Russia
+		name = soviets.15.a
+		remove_ideas = SOV_Exiled_russia
+		add_stability = 0.20
+		hidden_effect = {
+			country_event = { days = 2 id = newsrussia2.14 }
+		}
+	}
+}
+
+# SOV becomes Far Eastern Republic
+country_event = {
+	id = soviets.16
+	
+	trigger = {
+		tag = SOV
+		has_idea = SOV_Exiled_russia
+	}
+
+	mean_time_to_happen = { days = 2 }
+
+	hidden = yes
+
+	immediate = {
+		set_cosmetic_tag = SOV_far_eastern_republic
+		set_global_flag = SOV_became_far_eastern_republic
+	}
+}
+
+# SOV becomes SOV again
+country_event = {
+	id = soviet.17
+	
+	trigger = {
+		tag = SOV
+		NOT = {
+			has_idea = SOV_Exiled_russia
+		}
+		has_global_flag = SOV_became_far_eastern_republic
+	}
+
+	mean_time_to_happen = { days = 2 }
+
+	hidden = yes
+
+	immediate = {
+		drop_cosmetic_tag = yes
+		clr_global_flag = SOV_became_far_eastern_republic
+	}
+}
+
+# Peasants Revolt
+country_event = {
+	id = soviets.18
+	title = soviets.18.t
+	desc = soviets.18.d
+	picture = GFX_report_event_french_resistance_01
+	
+	is_triggered_only = yes
+
+	option = { # Oh no
+		name = soviets.18.a
+		start_civil_war = {
+    		ideology = neutrality
+    		size = 0.4
+    		only_own_territory = yes
+		}
+		hidden_effect = {
+			country_event = { days = 2 id = newsrussia2.15 }
+			remove_ideas = SOV_Unhappy_peasants1
+			remove_ideas = SOV_Unhappy_peasants2
+			remove_ideas = SOV_Unhappy_peasants3
+			remove_ideas = SOV_Unhappy_peasants4
+			remove_ideas = SOV_Unhappy_peasants5
+			remove_ideas = SOV_Unhappy_peasants6
+			remove_ideas = SOV_Happy_peasants
+		}
+	}
+}
+
+#White Death
+country_event = {
+	id = soviets.19
+	title = soviets.19.t
+	desc = soviets.19.d
+	picture = GFX_report_event_dead_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		SOV = { has_government = communism }
+		TAG = SOV
+		FIN = {
+			AND = {
+				surrender_progress > 0.05
+				has_defensive_war_with = SOV
+			}
+		}
+	}	
+		
+	mean_time_to_happen = { days = 1 }
+		
+	option = { #White death strike again !
+		name = soviets.19.a
+		add_ideas = SOV_White_death
+	}
+}
+
+#Train New Officers
+country_event = {
+	id = soviets.20
+	title = soviets.20.t
+	desc = soviets.20.d
+	picture = GFX_report_event_british_inspect_troops
+	
+	is_triggered_only = yes
+	
+	option = { #attack is the best defense
+		name = soviets.20.a
+		every_army_leader = {
+			add_attack = 1
+		}
+	}
+	
+	option = { #defense
+		name = soviets.20.b
+		every_army_leader = {
+			add_defense = 1
+		}
+	}
+
+	option = { #logistic
+		name = soviets.20.c
+		every_army_leader = {
+			add_logistics = 1
+		}
+	}
+
+	option = { #planning
+		name = soviets.20.e
+		every_army_leader = {
+			add_planning = 1
+		}
+	}	
+}
+
+#Katyń Massacre
+country_event = {
+	id = soviets.21
+	title = soviets.21.t
+	desc = soviets.21.d
+	picture = GFX_report_event_polish_army
+	
+	fire_only_once = yes
+	
+	trigger = {
+		SOV = { has_government = communism }
+		TAG = SOV
+		96 = { is_owned_and_controlled_by = SOV }
+		784 = { is_owned_and_controlled_by = SOV }
+		95 = { is_owned_and_controlled_by = SOV }
+		94 = { is_owned_and_controlled_by = SOV }
+		93 = { is_owned_and_controlled_by = SOV }
+		91 = { is_owned_and_controlled_by = SOV }
+		89 = { is_owned_and_controlled_by = SOV }
+	}
+
+	mean_time_to_happen = { months = 8 }
+	
+	option = { #Do the massacre
+		ai_chance = {
+			factor = 80
+		}	
+		name = soviets.21.a
+		add_ideas = SOV_Katyn_massacre
+		add_manpower = -22000
+	}
+
+	option = { #We're not monsters
+		ai_chance = {
+			factor = 20
+		}	
+		name = soviets.21.b
+	}
+}
+
+#Germany Discover the Massacre
+country_event = {
+	id = soviets.22
+	title = soviets.22.t
+	desc = soviets.22.d
+	picture = GFX_report_event_dead_soldiers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		TAG = GER
+		GER = {
+			has_war_with = SOV
+		}	
+		SOV = {
+			has_idea = SOV_Katyn_massacre
+		}
+		242 = {
+			is_controlled_by = GER
+		}	
+	}
+
+	mean_time_to_happen = { days = 10 }
+
+	option = { #Mein Gott !
+		name = soviets.22.a
+		hidden_effect = {
+			country_event = { days = 1 id = newsrussia2.16 }
+		}
+	}
+}
+
+#No purges completed - decide what to do
+country_event = {
+	id = soviets.23
+	title = soviets.23.t
+	desc = soviets.23.d
+	picture = GFX_report_event_soviet_purge_politicians
+
+	trigger = {
+		has_government = communism
+		tag = SOV
+		has_global_flag = SOV_fourth_international_fired
+		NOT = { has_completed_focus = SOV_great_purge }
+		NOT = { has_completed_focus = SOV_avoid_purge }
+		NOT = { has_completed_focus = SOV_great_purge2}
+	}
+
+	mean_time_to_happen = {
+		days = 90
+	}
+
+	fire_only_once = yes
+
+	#Don't invite trotsky
+	option = {
+		name = soviets.23.a
+		custom_effect_tooltip = soviet.23.a_tt
+		set_country_flag = SOV_soviet.48_notrotsky
+	}
+
+	#Invite back Trotsky
+	option = {
+		name = soviets.23.b
+		custom_effect_tooltip = soviets.23.b_tt
+		set_country_flag = SOV_soviet.48_notrotsky
+	}
+
+}
+	
+# Great Purge - Begins
+country_event = {
+	id = soviets.24
+	title = soviets.24.t
+	desc = soviets.24.d
+	picture = GFX_report_event_soviet_purge_speech
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = soviets.24.a
+	}
+}
+
+# Great Purge - Trial of the Anti-Soviet Trotskyist Center
+country_event = {
+	id = soviets.25
+	title = soviets.25.t
+	desc = soviets.25.d
+	picture = GFX_report_event_soviet_purge_trial
+
+	fire_only_once = yes
+	
+	trigger = {
+		tag = SOV
+		NOT = { has_completed_focus = SOV_great_purge }
+		focus_progress = {
+			focus = SOV_great_purge2
+			progress > 0.25
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = {
+		ai_chance = {
+			factor = 30
+		}
+		name = soviets.25.a
+		custom_effect_tooltip = remove_political_advisor
+		show_ideas_tooltip = mikhail_kalinin
+		set_country_flag = purged_kalinin
+		hidden_effect = {
+			remove_ideas = mikhail_kalinin
+		}
+	}
+	option = {
+		ai_chance = {
+			factor = 30
+		}
+		name = soviets.25.b
+		custom_effect_tooltip = remove_political_advisor
+		show_ideas_tooltip = nikita_khrushchev
+		set_country_flag = purged_khrushchev
+		hidden_effect = {
+			remove_ideas = nikita_khrushchev
+		}
+	}
+	option = {
+		ai_chance = {
+			factor = 30
+		}
+		name = soviets.25.c
+		add_political_power = -75
+		set_country_flag = purged_party_members
+	}
+	option = {
+		ai_chance = {
+			factor = 10
+			modifier = {
+				factor = 0
+				is_historical_focus_on = yes
+			}
+		}
+		name = soviets.25.e
+		set_country_flag = no_political_purge
+		custom_effect_tooltip = soviets.27_tt2
+	}
+}
+
+# Great Purge - Secret Trial of the Generals
+country_event = {
+	id = soviets.26
+	title = soviets.26.t
+	desc = soviets.26.d
+	picture = GFX_report_event_soviet_purge_officers_01
+
+	fire_only_once = yes
+	
+	trigger = {
+		tag = SOV
+		NOT = { has_completed_focus = SOV_great_purge }
+		focus_progress = {
+			focus = SOV_great_purge2
+			progress > 0.5
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = {
+		ai_chance = {
+			factor = 20
+		}
+		name = soviets.26.a
+		set_country_flag = purge_1_group_a
+		custom_effect_tooltip = remove_theorist
+		show_ideas_tooltip = mikhail_tukhachevsky
+		custom_effect_tooltip = remove_chief_of_army
+		show_ideas_tooltip = alexander_yegorov
+		show_ideas_tooltip = vasily_blucher
+		custom_effect_tooltip = remove_chief_of_navy
+		show_ideas_tooltip = pyotr_smirnov
+		show_ideas_tooltip = mikhail_frinovsky
+		remove_unit_leader = 401 #mikhail_tukhachevsky, field marshal
+		custom_effect_tooltip = soviets.27_tt
+		hidden_effect = {
+			remove_ideas = mikhail_tukhachevsky
+			remove_ideas = alexander_yegorov
+			remove_ideas = vasily_blucher
+			remove_ideas = pyotr_smirnov
+			remove_ideas = mikhail_frinovsky
+		}
+	}
+	option = {
+		ai_chance = {
+			factor = 75
+		}
+		name = soviets.26.b
+		set_country_flag = purge_1_group_b
+		custom_effect_tooltip = remove_chief_of_army
+		show_ideas_tooltip = semyon_timoshenko
+		show_ideas_tooltip = kliment_voroshilov
+		custom_effect_tooltip = remove_chief_of_navy
+		show_ideas_tooltip = ivan_yumashev
+		custom_effect_tooltip = remove_military_high_command
+		show_ideas_tooltip = konstantin_rokossovsky
+		show_ideas_tooltip = vladimir_kasatonov
+		remove_unit_leader = 405 #kliment_voroshilov, field marshal
+		remove_unit_leader = 402 #konstantin_rokossovsky, general
+		remove_unit_leader = 404 #semyon_timoshenko, general
+		remove_unit_leader = 403 #vladimir_kasatonov, naval commander
+		custom_effect_tooltip = soviets.27_tt
+		hidden_effect = {
+			remove_ideas = semyon_timoshenko
+			remove_ideas = kliment_voroshilov
+			remove_ideas = ivan_yumashev
+			remove_ideas = konstantin_rokossovsky
+			remove_ideas = vladimir_kasatonov
+		}	
+	}
+	# REVISIT Balance, since the latter removes more unit leaders
+	option = {
+		ai_chance = {
+			factor = 5
+			modifier = {
+				factor = 0
+				is_historical_focus_on = yes
+			}
+		}
+		name = soviets.26.c
+		set_country_flag = purge_1_no_purge 
+		custom_effect_tooltip = soviets.27_tt2
+	}
+}
+
+# Great Purge - Trial of the 21
+country_event = {
+	id = soviets.27
+	title = soviets.27.t
+	desc = soviets.27.d
+	picture = GFX_report_event_soviet_purge_officers_02
+
+	fire_only_once = yes
+	
+	trigger = {
+		tag = SOV
+		NOT = { has_completed_focus = SOV_great_purge2 }
+		focus_progress = {
+			focus = SOV_great_purge2
+			progress > 0.75
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = {
+		ai_chance = {
+			factor = 50
+		}
+		name = soviets.27.a
+		set_country_flag = purge_2_group_a
+		custom_effect_tooltip = remove_political_advisor
+		show_ideas_tooltip = SOV_nikolai_yezhov
+		custom_effect_tooltip = remove_chief_of_airforce
+		show_ideas_tooltip = yakov_smushkevich
+		show_ideas_tooltip = pavel_rychagov
+		show_ideas_tooltip = alexander_novikov
+		custom_effect_tooltip = remove_military_high_command
+		show_ideas_tooltip = gordey_levchenko
+		remove_unit_leader = 406 #gordey_levchenko, naval commander
+		custom_effect_tooltip = soviets.27_tt
+		hidden_effect = {
+			remove_ideas = SOV_nikolai_yezhov
+			remove_ideas = yakov_smushkevich
+			remove_ideas = pavel_rychagov
+			remove_ideas = alexander_novikov
+			remove_ideas = gordey_levchenko
+		}
+	}
+	option = {
+		ai_chance = {
+			factor = 45
+		}
+		name = soviets.27.b
+		set_country_flag = purge_2_group_b
+		custom_effect_tooltip = remove_chief_of_navy
+		show_ideas_tooltip = nikolay_kuznetsov
+		custom_effect_tooltip = remove_chief_of_airforce
+		show_ideas_tooltip = konstantin_vershinin
+		custom_effect_tooltip = remove_military_high_command
+		show_ideas_tooltip = sergei_khudyakov
+		show_ideas_tooltip = aleksandr_vasilevsky
+		remove_unit_leader = 407 #aleksandr_vasilevsky, general
+		custom_effect_tooltip = soviets.27_tt
+		hidden_effect = {
+			remove_ideas = nikolay_kuznetsov
+			remove_ideas = konstantin_vershinin
+			remove_ideas = sergei_khudyakov
+			remove_ideas = aleksandr_vasilevsky
+		}
+	}
+	option = {
+		ai_chance = {
+			factor = 5
+			modifier = {
+				factor = 0
+				is_historical_focus_on = yes
+			}
+		}
+		name = soviets.27.c
+		set_country_flag = purge_2_no_purge
+		custom_effect_tooltip = soviets.27_tt2
+	}
+}
+
+# Foreign Policies
+country_event = {
+	id = soviets.28
+	title = soviets.28.t
+	desc = soviets.28.d
+	picture = GFX_report_event_stalin_meeting
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = soviets.28.a
+		every_other_country = {
+			limit = {
+				has_government = democratic
+				NOT = { is_in_faction_with = SOV }
+			}
+			add_opinion_modifier = { target = SOV modifier = medium_decrease }
+		}
+		hidden_effect = {
+			SOV = {
+				country_event = { days = 1 id = newsrussia2.17 }
+			}
+		}
+	}
+
+	option = {
+		name = soviets.28.b
+		every_other_country = {
+			limit = {
+				has_government = fascism
+				NOT = { is_in_faction_with = SOV }
+			}
+			add_opinion_modifier = { target = SOV modifier = medium_decrease }
+		}
+		hidden_effect = {
+			SOV = {
+				country_event = { days = 1 id = newsrussia2.18 }
+			}
+		}
+	}
+}
+
+# Third International's Council Member
+country_event = {
+	id = soviets.29
+	title = soviets.29.t
+	desc = soviets.29.d
+	picture = GFX_report_event_stalin_meeting
+	
+	trigger = {
+		country_exists = SOV
+		SOV = {
+			has_completed_focus = SOV_third_int_council
+		}
+		NOT = {
+			tag = SOV
+			has_idea = SOV_Third_international_council
+		}
+		is_in_faction_with = SOV
+		has_government = communism
+	}
+
+	mean_time_to_happen = { days = 5 }
+	
+	option = {
+		name = soviets.29.a
+		add_ideas = SOV_Third_international_council
+	}
+}
+
+# The Sakhalin Situation
+country_event = {
+	id = soviets.30
+	title = soviets.30.t
+	desc = soviets.30.d
+	picture = GFX_report_event_japan_army_mountainside
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = soviets.30.a
+		JAP = {
+			country_event = { days = 1 id = japans.1 }
+		}
+	}
+
+	option = {
+		name = soviets.30.b
+		JAP = {
+			country_event = { days = 1 id = japans.2 }
+		}
+	}
+
+	option = {
+		name = soviets.30.c
+		JAP = {
+			country_event = { days = 1 id = japans.3 }
+			start_border_war = {
+				change_state_after_war = no
+				attacker = {
+					state = 655
+					num_provinces = 1
+					on_win = soviets.35
+					on_lose = soviets.36
+				}
+				
+				defender = {
+					state = 537
+					num_provinces = 1
+					on_win = japans.4
+					on_lose = japans.5
+				}
+			}
+		}
+	}
+
+	option = {
+		name = soviets.30.e
+		add_political_power = 50
+	}
+}
+
+# Japan Accepts Giving South Sakhalin
+country_event = {
+	id = soviets.31
+	title = soviets.31.t
+	desc = soviets.31.d
+	picture = GFX_report_event_japan_europe_pact
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = soviets.31.a
+		SOV = {
+			transfer_state = 537
+		}
+	}
+}
+
+# Japan Refuses Giving South Sakhalin
+country_event = {
+	id = soviets.32
+	title = soviets.32.t
+	desc = soviets.32.d
+	picture = GFX_report_event_japanese_parade
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = soviets.32.a
+		create_wargoal = {
+		    type = take_state
+			target = JAP
+			generator = { 537 }
+		}
+	}
+}
+
+# Japan Accepts North Sakhalin Offer
+country_event = {
+	id = soviets.33
+	title = soviets.33.t
+	desc = soviets.33.d
+	picture = GFX_report_event_japan_europe_pact
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = soviets.33.a
+		JAP = {
+			transfer_state = 655
+		}
+		diplomatic_relation = {
+    		country = JAP
+    		relation = non_aggression_pact
+    		active = yes
+		}
+	}
+}
+
+# Japan Refuses North Sakhalin Offer
+country_event = {
+	id = soviets.34
+	title = soviets.34.t
+	desc = soviets.34.d
+	picture = GFX_report_event_japanese_parade
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = soviets.34.a
+		add_political_power = -50
+	}
+}
+
+# Won Border War Against Japan
+country_event = {
+	id = soviets.35
+	title = soviets.35.t
+	desc = soviets.35.d
+	picture = GFX_report_event_china_infiltration
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = soviets.35.a
+		SOV = {
+			transfer_state = 537
+		}
+		add_war_support = 0.05
+	}
+}
+
+# Lost Border War Against Japan
+country_event = {
+	id = soviets.36
+	title = soviets.36.t
+	desc = soviets.36.d
+	picture = GFX_report_event_japanese_transport_soldiers
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = soviets.36.a
+		add_political_power = -100
+		add_war_support = -0.05
+	}
+}
+
+# PRC Accepts - Send the Ultimatums!
+country_event = {
+	id = soviets.37
+	title = soviets.37.t
+	desc = soviets.37.d
+	picture = GFX_report_event_stalin_02
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = soviets.37.a
+		every_country = {
+			limit = {
+				is_major = no
+				NOT = { is_puppet_of = JAP }
+				any_owned_state = {
+					is_core_of = PRC
+				}
+				NOT = { is_in_faction_with = SOV }
+				NOT = { TAG = PRC }
+				NOT = { has_war_with = PRC }
+				NOT = { original_tag = SOV }
+				NOT = { has_war_with = ROOT }
+			}
+			country_event = { days = 1 id = generics.1 }
+		}
+	}
+}
+
+# PRC Refuses - Get Wargoals
+country_event = {
+	id = soviets.38
+	title = soviets.38.t
+	desc = soviets.38.d
+	picture = GFX_report_event_korean_war_march
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = soviets.38.a
+		every_country = {
+			limit = {
+				is_major = no
+				any_owned_state = {
+					is_core_of = PRC
+				}
+				NOT = { is_in_faction_with = SOV }
+				NOT = { original_tag = SOV }
+				NOT = { has_war_with = ROOT }
+			}
+			ROOT = {
+				create_wargoal = {
+	    			type = puppet_wargoal_focus
+	    			target = PREV
+				}
+			}
+		}
+	}
+}
+
+# Middle Eastern Country Accepts
+country_event = {
+	id = soviets.39
+	title = soviets.39.t
+	desc = soviets.39.d
+	picture = GFX_report_event_stalin_propaganda
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = soviets.39.a
+		puppet = FROM
+	}
+}
+
+# Middle Eastern Country Refuses
+country_event = {
+	id = soviets.40
+	title = soviets.40.t
+	desc = soviets.40.d
+	picture = GFX_report_event_indian_parade
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = soviets.40.a
+		create_wargoal = {
+	    	type = puppet_wargoal_focus
+	    	target = FROM
+		}
+	}
+}
+
+#Assassination Attempt of Stalin - Who will do the Coup ?
+country_event = {
+	id = soviets.41
+	title = soviets.41.t
+	desc = soviets.41.d
+	picture = GFX_report_event_generic_parliament
+	
+	is_triggered_only = yes
+	
+	option = { #Let the army Handle this
+		name = soviets.41.a
+		custom_effect_tooltip = soviets.41_tt
+		country_event = { id = soviets.42 days = 2 }
+	}
+	
+	option = { #Let the Bureaucrats Handle this
+		name = soviets.41.b
+		custom_effect_tooltip = soviets.412_tt
+		country_event = { id = soviets.43 days = 2 }
+	}
+}
+
+#Assassination Attempt of Stalin - The Army
+country_event = {
+	id = soviets.42
+	title = soviets.42.t
+	desc = soviets.42.d
+	picture = GFX_report_event_soviet_purge_officers_01
+	
+	is_triggered_only = yes
+	
+	option = { #Bribe his Guards
+		name = soviets.42.a
+		trigger = {
+			NOT = {
+				has_global_flag = SOV_bribe_guard
+			}
+		}	
+		random_list = {
+			fixed_random_seed = no
+			40 = {
+				country_event = { id = soviets.44 days = 20 }
+			}
+			40 = {	
+				country_event = { id = soviets.45 days = 20 }
+			}
+			20 = {
+				country_event = { id = soviets.46 days = 10 }
+			}	
+		}
+		set_global_flag = SOV_bribe_guard
+	}
+
+	option = { #Send an Assassin
+		name = soviets.42.b
+		trigger = {
+			NOT = {
+				has_global_flag = SOV_send_assassin
+			}
+		}		
+		random_list = {
+		fixed_random_seed = no
+			60 = {
+				country_event = { id = soviets.44 days = 20 }
+			}
+			20 = {	
+				country_event = { id = soviets.45 days = 20 }
+			}
+			20 = {
+				country_event = { id = soviets.46 days = 10 }
+			}	
+		}
+		set_global_flag = SOV_send_assassin
+	}
+
+	option = { #Send the Squad 
+		name = soviets.42.c
+		random_list = {
+		fixed_random_seed = no
+			80 = {
+				country_event = { id = soviets.44 days = 20 }
+			}
+			20 = {	
+				country_event = { id = soviets.45 days = 20 }
+			}
+		}
+	}	
+}
+
+#Assassination Attempt of Stalin - The Bureaucrats
+country_event = {
+	id = soviets.43
+	title = soviets.43.t
+	desc = soviets.43.d
+	picture = GFX_report_event_soviet_purge_trial
+	
+	is_triggered_only = yes
+	
+	option = { #Poison Stalin's Drink
+		name = soviets.43.a
+		trigger = {
+			NOT = {
+				has_global_flag = SOV_poison_drink
+			}
+		}		
+		random_list = {
+		fixed_random_seed = no
+			20 = {
+				country_event = { id = soviets.44 days = 20 }
+			}
+			80 = {	
+				country_event = { id = soviets.47 days = 20 }
+			}
+		}
+		set_global_flag = SOV_poison_drink
+	}
+
+	option = { #Send an Armed Bureaucrat to shoot him
+		name = soviets.43.b
+		trigger = {
+			NOT = {
+				has_global_flag = SOV_armed_bureau
+			}
+		}		
+		random_list = {
+		fixed_random_seed = no
+			40 = {
+				country_event = { id = soviets.44 days = 20 }
+			}
+			40 = {	
+				country_event = { id = soviets.45 days = 20 }
+			}
+			20 = {
+				country_event = { id = soviets.47 days = 10}
+			}	
+		}
+		set_global_flag = SOV_armed_bureau
+	}
+
+	option = { #Give a Bomb to a Bureaucrat so that he can plant it and blow Stalin up
+		name = soviets.43.c
+		random_list = {
+		fixed_random_seed = no
+			60 = {
+				country_event = { id = soviets.44 days = 20 }
+			}
+			40 = {	
+				country_event = { id = soviets.45 days = 20 }
+			}
+		}		
+	}
+}
+	
+#Assassination Sucessful
+country_event = {
+	id = soviets.44
+	title = soviets.44.t
+	desc = soviets.44.d
+	picture = GFX_report_event_soviet_purge_speech
+	
+	is_triggered_only = yes
+		
+	option = { #Perfect
+		name = soviets.44.a
+		kill_country_leader = yes
+		create_country_leader = {
+			name = "Empty Parliament"
+			desc = "POLITICS_EMPTY_PARLIAMENT_DESC"
+			picture = "gfx/leaders/SOV/Portrait_Soviet_Empty_Parliament.dds"
+			expire = "1965.1.1"
+			ideology = stalinism
+			traits = {
+				empty_parliament
+			}
+		}
+	}		
+}
+
+#The Assassination Attempt Failed
+country_event = {
+	id = soviets.45
+	title = soviets.45.t
+	desc = soviets.45.d
+	picture = GFX_report_event_stalin_01
+	
+	is_triggered_only = yes
+		
+	option = { #Damn
+		name = soviets.45.a
+	}	
+}
+
+#The Assassination Attempt Failed but Stalin didn't Noticed - Military
+country_event = {
+	id = soviets.46
+	title = soviets.46.t
+	desc = soviets.46.d
+	picture = GFX_report_event_stalin_meeting
+	
+	is_triggered_only = yes
+	
+	option = { #it's bad but thank god
+		name = soviets.46.a
+		country_event = { id = soviets.42 days = 20 }
+	}
+}
+
+#The Assassination Attempt Failed but Stalin didn't Noticed - Bureaucrats
+country_event = {
+	id = soviets.47
+	title = soviets.47.t
+	desc = soviets.47.d
+	picture = GFX_report_event_stalin_meeting
+	
+	is_triggered_only = yes
+	
+	option = { #it's bad but thank god
+		name = soviets.47.a
+		country_event = { id = soviets.43 days = 20 }
+	}
+}	
+	

@@ -1,0 +1,65 @@
+###########################
+# Generic/Special Events
+###########################
+
+add_namespace = generics
+
+# China Soviet-PRC Ultimatum
+country_event = {
+	id = generics.1
+	title = generics.1.t
+	desc = generics.1.d
+	picture = GFX_report_event_spain_civil_war_volunteers_02
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = generics.1.a
+		every_owned_state = {
+			limit = {
+				is_core_of = PRC
+	        }
+	        PRC = {
+				transfer_state = PREV
+			}
+    	}
+    	if = {
+    		limit = {
+        		all_owned_state = {
+    				is_core_of = PRC
+				}
+    		}
+    		custom_effect_tooltip = GAME_OVER_TT
+    	}
+	}
+
+	option = {
+		name = generics.1.b
+		PRC = {
+			create_wargoal = {
+	    	type = annex_everything
+	    	target = ROOT
+			}
+		}
+	}
+}
+
+# Middle East Ultimatum
+country_event = {
+	id = generics.2
+	title = generics.2.t
+	desc = generics.2.d
+	picture = GFX_report_event_stalin_propaganda
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = generics.2.a
+		SOV = { country_event = { days = 1 id = soviets.39 } }
+	}
+
+	option = {
+		name = generics.2.b
+		SOV = { country_event = { days = 1 id = soviets.40 } }
+	}
+}
