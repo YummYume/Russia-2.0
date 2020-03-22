@@ -1,0 +1,71 @@
+###########################
+# German Events
+###########################
+
+add_namespace = germanys
+
+# Exile to Siberia
+country_event = {
+	id = germanys.1
+	title = germanys.1.t
+	desc = germanys.1.d
+	picture = GFX_report_event_fascist_speech
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = germanys.1.a
+		ai_chance = {
+			factor = 90
+		}
+		custom_effect_tooltip = SOV_exile_siberia_german_reward_tt
+		hidden_effect = {
+			every_country = {
+				limit = {
+					is_puppet_of = SOV
+				}
+				SOV = {
+					set_autonomy = {
+		    			target = PREV
+		    			autonomy_state = autonomy_free
+					}
+				}
+			}
+			every_state = { 
+	    		limit = {
+	    			is_owned_by = SOV
+	    			distance_to = {
+	    				value > 6000
+	    				target = 574
+					}
+	    		}
+	    		GER = { transfer_state = PREV }
+			}
+			SOV = {
+				country_event = { days = 1 id = newsrussia2.13 }
+			}
+		}
+		add_ideas = GER_Russian_triumph
+		SOV = {
+			dismantle_faction = yes
+			add_ideas = SOV_Exiled_russia
+		}
+		every_country = {
+			limit = {
+				has_war_with = SOV
+			}
+			white_peace = SOV
+			set_truce = {
+    			target = SOV
+    			days = 365
+			}
+		}
+	}
+
+	option = {
+		name = germanys.1.b
+		ai_chance = {
+		factor = 10
+		}
+	}
+}

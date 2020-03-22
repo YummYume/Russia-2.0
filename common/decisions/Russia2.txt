@@ -1,0 +1,1081 @@
+#russia2 decisions
+
+SOV_europe_expansion = {
+
+    SOV_join_the_war_against_poland = {
+		
+		icon = GFX_decision_generic_ignite_civil_war
+
+     	available = {
+     		country_exists = POL
+     		has_idea = SOV_molotov_ribbentrop_pact
+			POL = {
+				has_war_with = GER
+			}
+     	}
+		
+		visible = {
+			country_exists = POL
+		}	
+
+     	fire_only_once = yes
+
+     	cost = 50
+		
+		ai_will_do = {
+			factor = 150
+		}
+
+     	complete_effect = {
+			SOV = {
+				declare_war_on = {
+					target = POL
+					type = take_state_focus
+					generator = { 89 91 93 94 95 96 784 }
+				}
+			}
+		}
+	}
+
+    SOV_demand_poland = {
+
+     	available = {
+     	    has_army_manpower = {
+    		size > 1500000
+    		}
+    		NOT = { has_war_with = POL }
+    		NOT = { has_idea = SOV_molotov_ribbentrop_pact }
+			country_exists = POL
+     	}
+		
+		visible = {
+			country_exists = POL
+		}	
+
+     	fire_only_once = yes
+
+     	cost = 150
+		
+		ai_will_do = {
+			factor = 200
+			modifier = {
+				GER = {
+					has_war_with = POL
+				}
+				factor = 0
+			}	
+		}
+
+     	complete_effect = {
+     	POL = {
+			country_event = { id = poland.2 }
+			}
+		}
+    }
+
+    SOV_demand_bessarabia = {
+
+     	available = {
+     	    has_army_manpower = {
+    		size > 1000000
+    		}
+    		NOT = { has_war_with = ROM }
+			country_exists = ROM
+     	}
+
+		visible = {
+			country_exists = ROM
+		}
+		
+     	fire_only_once = yes
+
+     	cost = 100
+		
+		ai_will_do = {
+			factor = 90
+		}
+
+     	complete_effect = {
+     	ROM = {
+			country_event = { id = romania.1 }
+			}
+		}
+    }
+
+    SOV_demand_estonia = {
+
+     	available = {
+     	    has_army_manpower = {
+    		size > 1000000
+    		}
+    		NOT = { has_war_with = EST }
+			country_exists = EST
+			NOT = {
+				EST = {
+					is_puppet_of = SOV
+				}	
+			}			
+     	}
+
+		visible = {
+			country_exists = EST
+			NOT = {
+				EST = {
+					is_puppet_of = SOV
+				}	
+			}			
+		}	
+
+     	fire_only_once = yes
+
+     	cost = 50
+		
+		ai_will_do = {
+			factor = 110
+		}		
+
+     	complete_effect = {
+     	EST = {
+			country_event = { id = baltics.1 }
+			}
+		}
+    }
+
+    SOV_demand_latvia = {
+
+     	available = {
+     	    has_army_manpower = {
+    		size > 1000000
+    		}
+    		NOT = { has_war_with = LAT }
+			country_exists = LAT
+			NOT = {
+				LAT = {
+					is_puppet_of = SOV
+				}	
+			}	
+     	}
+		
+		visible = {
+			country_exists = LAT
+			NOT = {
+				LAT = {
+					is_puppet_of = SOV
+				}
+			}	
+		}	
+
+     	fire_only_once = yes
+
+     	cost = 50
+		
+		ai_will_do = {
+			factor = 110
+		}		
+
+     	complete_effect = {
+     	LAT = {
+			country_event = { id = baltics.2 }
+			}
+		}
+    }
+
+    SOV_demand_lithuania = {
+
+     	available = {
+     	    has_army_manpower = {
+    		size > 1000000
+    		}
+    		NOT = { has_war_with = LIT }
+			country_exists = LIT
+			NOT = {
+				LIT = {
+					is_puppet_of = SOV
+				}	
+			}			
+    	}
+		
+		visible = {
+			country_exists = LIT
+			NOT = {
+				LIT = {
+					is_puppet_of = SOV
+				}	
+			}						
+		}	
+
+     	fire_only_once = yes
+
+     	cost = 50
+		
+		ai_will_do = {
+			factor = 100
+		}		
+
+     	complete_effect = {
+     	LIT = {
+			country_event = { id = baltics.3 }
+			}
+		}
+    }
+}
+
+SOV_integrate_the_baltics = {
+
+	SOV_integrate_lithuania = {
+		available = {
+			LIT = { is_puppet_of = SOV }
+			date > 1940.05.15			
+		}
+		
+		visible = {
+			LIT = { is_puppet_of = SOV }
+		}	
+
+		fire_only_once = yes
+
+		cost = 100
+		
+		ai_will_do = {
+			factor = 80
+		}
+
+		days_remove = 70
+		remove_effect = {
+			annex_country = {
+				target = LIT
+			}
+		}	
+	}
+	
+	SOV_integrate_latvia = {
+		available = {
+			LAT = { is_puppet_of = SOV }
+			date > 1940.05.15			
+		}
+		
+		visible = {
+			LAT = { is_puppet_of = SOV }
+		}		
+
+		fire_only_once = yes
+
+		cost = 100
+		
+		ai_will_do = {
+			factor = 80
+		}		
+
+		days_remove = 70
+		remove_effect = {
+			annex_country = {
+				target = LAT
+			}
+		}	
+	}
+
+	SOV_integrate_estonia = {
+		available = {
+			EST = { is_puppet_of = SOV }
+			date > 1940.05.15
+		}
+		
+		visible = {
+			EST = { is_puppet_of = SOV }
+		}		
+
+		fire_only_once = yes
+
+		cost = 100
+		
+		ai_will_do = {
+			factor = 80
+		}		
+
+		days_remove = 70
+		remove_effect = {
+			annex_country = {
+				target = EST
+			}
+		}	
+	}
+}	
+
+SOV_unhappy_peasants = {
+
+	SOV_peasants_rebelion = {
+
+		icon = generic_civil_support
+
+		allowed = { TAG = SOV }
+
+		available = {
+			custom_trigger_tooltip = {
+		    tooltip = SOV_peasants_rebelion_tt
+			NOT = {
+				has_idea = SOV_Unhappy_peasants1
+				has_idea = SOV_Unhappy_peasants2
+				has_idea = SOV_Unhappy_peasants3
+				has_idea = SOV_Unhappy_peasants4
+				has_idea = SOV_Unhappy_peasants5
+				has_idea = SOV_Unhappy_peasants6
+				}
+			}
+		}
+		
+		activation = {
+			OR = {
+				has_idea = SOV_Unhappy_peasants1
+				has_idea = SOV_Unhappy_peasants2
+				has_idea = SOV_Unhappy_peasants3
+				has_idea = SOV_Unhappy_peasants4
+				has_idea = SOV_Unhappy_peasants5
+				has_idea = SOV_Unhappy_peasants6
+			}
+		}
+
+		visible = {
+			
+		}
+
+		is_good = no
+
+		fire_only_once = yes
+
+		days_mission_timeout = 2920
+
+		cancel_trigger = {
+			hidden_trigger = {
+				has_idea = SOV_Happy_peasants
+			}
+		}
+
+		timeout_effect = {
+			SOV = {
+            	country_event = { id = soviets.18 }
+			}
+        }
+
+		complete_effect = {
+			add_manpower = 100000
+		}
+	}
+
+	SOV_peasants_propaganda = {
+		icon = GFX_decision_eng_propaganda_campaigns
+        cost = 100
+		ai_will_do = {
+			factor = 300
+		}		
+        fire_only_once = yes
+        visible = {
+        	OR = {
+				has_idea = SOV_Unhappy_peasants1
+				has_idea = SOV_Unhappy_peasants2
+				has_idea = SOV_Unhappy_peasants3
+				has_idea = SOV_Unhappy_peasants4
+				has_idea = SOV_Unhappy_peasants5
+				has_idea = SOV_Unhappy_peasants6
+			}
+        }
+        available = {
+        	has_completed_focus = SOV_start_five_year_plan
+        	custom_trigger_tooltip = {
+	        	tooltip = SOV_unhappy_peasants_tt
+	            has_idea = SOV_Unhappy_peasants1
+            }
+        }
+        complete_effect = {
+	        custom_effect_tooltip = SOV_peasants_lower_penalty_tt
+	        swap_ideas = {
+				remove_idea = SOV_Unhappy_peasants1
+				add_idea = SOV_Unhappy_peasants2
+			}
+        }
+    }
+
+    SOV_peasants_compensations = {
+		icon = GFX_decision_hol_attract_foreign_investors
+        cost = 100
+		ai_will_do = {
+			factor = 300
+		}		
+        fire_only_once = yes
+        visible = {
+        	OR = {
+				has_idea = SOV_Unhappy_peasants1
+				has_idea = SOV_Unhappy_peasants2
+				has_idea = SOV_Unhappy_peasants3
+				has_idea = SOV_Unhappy_peasants4
+				has_idea = SOV_Unhappy_peasants5
+				has_idea = SOV_Unhappy_peasants6
+			}
+        }
+        available = {
+        	has_completed_focus = SOV_improve_russia
+            custom_trigger_tooltip = {
+	        	tooltip = SOV_peasants_propaganda_tt
+	            has_idea = SOV_Unhappy_peasants2
+            }
+        }
+        complete_effect = {
+	        custom_effect_tooltip = SOV_peasants_lower_penalty_tt
+	        swap_ideas = {
+				remove_idea = SOV_Unhappy_peasants2
+				add_idea = SOV_Unhappy_peasants3
+			}
+        }
+    }
+
+    SOV_peasants_recruiting = {
+		icon = GFX_decision_generic_nationalism
+        cost = 100
+		ai_will_do = {
+			factor = 300
+		}		
+        fire_only_once = yes
+        visible = {
+        	OR = {
+				has_idea = SOV_Unhappy_peasants1
+				has_idea = SOV_Unhappy_peasants2
+				has_idea = SOV_Unhappy_peasants3
+				has_idea = SOV_Unhappy_peasants4
+				has_idea = SOV_Unhappy_peasants5
+				has_idea = SOV_Unhappy_peasants6
+			}
+        }
+        available = {
+        	has_completed_focus = SOV_new_soviet_uniform
+            custom_trigger_tooltip = {
+	        	tooltip = SOV_peasants_compensations_tt
+	            has_idea = SOV_Unhappy_peasants3
+            }
+        }
+        complete_effect = {
+	        custom_effect_tooltip = SOV_peasants_lower_penalty_tt
+	        swap_ideas = {
+				remove_idea = SOV_Unhappy_peasants3
+				add_idea = SOV_Unhappy_peasants4
+			}
+        }
+    }
+
+    SOV_peasants_exile = {
+		icon = GFX_decision_oppression
+        cost = 100
+		ai_will_do = {
+			factor = 300
+		}		
+        fire_only_once = yes
+        visible = {
+        	OR = {
+				has_idea = SOV_Unhappy_peasants1
+				has_idea = SOV_Unhappy_peasants2
+				has_idea = SOV_Unhappy_peasants3
+				has_idea = SOV_Unhappy_peasants4
+				has_idea = SOV_Unhappy_peasants5
+				has_idea = SOV_Unhappy_peasants6
+			}
+        }
+        available = {
+        	has_completed_focus = SOV_improve_Siberias_railways
+            custom_trigger_tooltip = {
+	        	tooltip = SOV_peasants_recruiting_tt
+	            has_idea = SOV_Unhappy_peasants4
+            }
+        }
+        complete_effect = {
+	        custom_effect_tooltip = SOV_peasants_lower_penalty_tt
+	        swap_ideas = {
+				remove_idea = SOV_Unhappy_peasants4
+				add_idea = SOV_Unhappy_peasants5
+			}
+        }
+    }
+
+    SOV_peasants_demands = {
+		icon = GFX_decision_eng_trade_unions_support
+        cost = 100
+		ai_will_do = {
+			factor = 300
+		}		
+        fire_only_once = yes
+        visible = {
+        	OR = {
+				has_idea = SOV_Unhappy_peasants1
+				has_idea = SOV_Unhappy_peasants2
+				has_idea = SOV_Unhappy_peasants3
+				has_idea = SOV_Unhappy_peasants4
+				has_idea = SOV_Unhappy_peasants5
+				has_idea = SOV_Unhappy_peasants6
+			}
+        }
+        available = {
+        	has_completed_focus = SOV_new_russia
+            custom_trigger_tooltip = {
+	        	tooltip = SOV_peasants_exile_tt
+	            has_idea = SOV_Unhappy_peasants5
+            }
+        }
+        complete_effect = {
+	        custom_effect_tooltip = SOV_peasants_lower_penalty_tt
+	        swap_ideas = {
+				remove_idea = SOV_Unhappy_peasants5
+				add_idea = SOV_Unhappy_peasants6
+			}
+        }
+    }
+
+    SOV_happy_peasants = {
+		icon = GFX_decision_hol_exchange_intelligence_data
+        cost = 100
+		ai_will_do = {
+			factor = 300
+		}		
+        fire_only_once = yes
+        visible = {
+        	OR = {
+				has_idea = SOV_Unhappy_peasants1
+				has_idea = SOV_Unhappy_peasants2
+				has_idea = SOV_Unhappy_peasants3
+				has_idea = SOV_Unhappy_peasants4
+				has_idea = SOV_Unhappy_peasants5
+				has_idea = SOV_Unhappy_peasants6
+			}
+        }
+        available = {
+        	has_completed_focus = SOV_finish_the_second_five_year_plan
+            custom_trigger_tooltip = {
+	        	tooltip = SOV_peasants_demands_tt
+	            has_idea = SOV_Unhappy_peasants6
+            }
+        }
+        complete_effect = {
+        	custom_effect_tooltip = SOV_happy_peasants_tt
+			remove_ideas = SOV_Unhappy_peasants6
+			add_ideas = SOV_Happy_peasants
+        }
+    }
+}
+
+SOV_chinese_war = {
+
+	SOV_send_guns_nationalist = {
+		icon = GFX_decision_generic_prepare_civil_war
+		cost = 50
+		ai_will_do = {
+			factor = 70
+		}		
+		fire_only_once = yes
+		visible = {
+			CHI = {
+				has_war_with = JAP
+			}
+		}
+		available = {
+			has_equipment = {
+				infantry_equipment_1 > 3999
+			}
+		}
+		complete_effect = {
+			send_equipment = {
+				equipment = infantry_equipment
+				amount = 4000
+				target = CHI
+			}
+			army_experience = 15
+		}
+	}
+
+	SOV_send_planes_nationalist = {
+		icon = GFX_decision_generic_air
+		cost = 50
+		ai_will_do = {
+			factor = 70
+		}		
+		fire_only_once = yes
+		visible = {
+			CHI = {
+				has_war_with = JAP
+			}
+		}
+		available = {
+			has_equipment = {
+				fighter_equipment > 499
+			}
+			has_equipment = {
+				tac_bomber_equipment > 499
+			}			
+		}
+		complete_effect = {	
+			send_equipment = {
+				equipment = fighter_equipment
+				amount = 500
+				target = CHI
+			}
+			send_equipment = {
+				equipment = tac_bomber_equipment
+				amount = 500
+				target = CHI
+			}
+			air_experience = 25	
+		}
+	}
+	
+	SOV_send_guns_communist = {
+		icon = GFX_decision_generic_prepare_civil_war
+		cost = 50
+		ai_will_do = {
+			factor = 70
+		}		
+		fire_only_once = yes
+		visible = {
+			PRC = {
+				has_war_with = JAP
+			}
+		}
+		available = {
+			has_equipment = {
+				infantry_equipment_1 > 2999
+			}
+		}
+		complete_effect = {
+			send_equipment = {
+				equipment = infantry_equipment
+				amount = 3000
+				target = PRC
+			}
+			army_experience = 15
+		}
+	}
+
+	SOV_send_planes_communist = {
+		icon = GFX_decision_generic_air
+		cost = 50
+		ai_will_do = {
+			factor = 70
+		}		
+		fire_only_once = yes
+		visible = {
+			PRC = {
+				has_war_with = JAP
+			}
+		}
+		available = {
+			has_equipment = {
+				fighter_equipment > 249
+			}
+			has_equipment = {
+				tac_bomber_equipment > 249
+			}			
+		}
+		complete_effect = {	
+			send_equipment = {
+				equipment = fighter_equipment
+				amount = 250
+				target = PRC
+			}
+			send_equipment = {
+				equipment = tac_bomber_equipment
+				amount = 250
+				target = PRC
+			}
+			air_experience = 15	
+		}
+	}
+	
+	SOV_send_support_equipment_nationalist = {
+		icon = GFX_decision_generic_operation
+		cost = 50
+		ai_will_do = {
+			factor = 70
+		}		
+		fire_only_once = yes
+		visible = {
+			CHI = {
+				has_war_with = JAP
+			}
+		}
+		available = {
+			has_equipment = {
+				support_equipment > 199
+			}
+		}
+		complete_effect = {
+			send_equipment = {
+				equipment = support_equipment
+				amount = 200
+				target = CHI
+			}			
+			army_experience = 5
+		}
+	}
+	
+	SOV_send_support_equipment_communist = {
+		icon = GFX_decision_generic_operation
+		cost = 50
+		ai_will_do = {
+			factor = 70
+		}		
+		fire_only_once = yes
+		visible = {
+			PRC = {
+				has_war_with = JAP
+			}
+		}
+		available = {
+			has_equipment = {
+				support_equipment > 199
+			}
+		}
+		complete_effect = {
+			send_equipment = {
+				equipment = support_equipment
+				amount = 200
+				target = PRC
+			}			
+			army_experience = 5
+		}
+	}	
+}
+
+SOV_minor_communist_countries_europe = {
+
+	SOV_invite_countries = {
+	
+		icon = GFX_generic_political_discourse
+		
+		fire_only_once = yes
+		
+		days_remove = 25
+
+		allowed = {
+			original_tag = SOV
+		}
+		
+		visible = {
+			is_faction_leader = yes
+		}
+		
+		target_root_trigger = {
+			has_completed_focus = SOV_communist_minorities_europe
+		}
+
+		target_trigger = {
+			FROM = {
+				NOT = { is_in_faction_with = ROOT }
+				capital_scope = {
+					is_on_continent = europe
+				}
+				is_major = no
+				num_of_factories < 30
+			}
+        }
+
+		available = {
+			OR = {
+				has_opinion = {
+					target = FROM
+					value > 49
+				}
+				FROM = {
+					has_opinion = {
+						target = ROOT
+						value > 49
+					}
+				}
+			}
+			FROM = {
+				OR = {
+					has_government = communism
+					communism > 0.3
+				}
+			}	
+			FROM = {
+				is_in_faction = no
+				is_subject = no
+			}
+			FROM = {
+				NOT = {
+					has_war_with = SOV
+				}
+			}	
+		}
+
+		cost = 25
+		
+		remove_effect = {
+			FROM = {
+				country_event = {
+					id = soviets.69
+				}				
+			}
+		}
+		
+		ai_will_do = {
+			factor = 100
+		}
+	}
+	
+	SOV_invest_countries = {
+	
+		icon = GFX_decision_ger_military_buildup
+		
+		fire_only_once = yes
+		
+		days_remove = 70
+
+		allowed = {
+			original_tag = SOV
+		}
+		
+		visible = {
+			is_faction_leader = yes
+		}
+		
+		target_root_trigger = {
+			has_completed_focus = SOV_help_minor_communist_countries_europe
+		}
+
+		target_trigger = {
+			FROM = {
+				has_country_flag = accepted_4th_international
+			}
+        }
+
+		cost = 50
+		
+		remove_effect = {
+			FROM = {
+				random_owned_state = {
+					add_extra_state_shared_building_slots = 2
+					add_building_construction  = {
+						type = arms_factory
+						level = 2
+						instant_build = yes
+					}
+				}
+				random_owned_state = {
+					add_extra_state_shared_building_slots = 2
+					add_building_construction  = {
+						type = industrial_complex
+						level = 2
+						instant_build = yes
+					}
+				}
+				add_popularity = {
+					ideology = communism
+					popularity = 0.1
+				}
+			}
+		}
+		
+		ai_will_do = {
+			factor = 80
+		}
+	}
+}
+
+SOV_help_spain = {
+	
+	SOV_send_weapons_spain = {
+		icon = GFX_decision_generic_prepare_civil_war
+		cost = 50
+		ai_will_do = {
+			factor = 70
+		}		
+		fire_only_once = yes
+		allowed = {
+			original_tag = SOV
+		}
+		visible = {
+			SPR = {
+				has_civil_war = yes
+			}
+		}
+		available = {
+			has_equipment = {
+				infantry_equipment > 1999
+			}
+		}	
+		complete_effect = {
+			send_equipment = {
+				equipment = infantry_equipment
+				amount = 2000
+				target = SPR
+			}
+			army_experience = 15
+		}
+	}
+
+	SOV_send_planes_spain = {
+		icon = GFX_decision_generic_air
+		cost = 50
+		ai_will_do = {
+			factor = 70
+		}		
+		fire_only_once = yes
+		allowed = {
+			original_tag = SOV
+		}
+		visible = {
+			SPR = {
+				has_civil_war = yes
+			}
+		}
+		available = {
+			has_equipment = {
+				fighter_equipment > 49
+			}
+			has_equipment = {
+				tac_bomber_equipment > 49
+			}			
+		}	
+		complete_effect = {
+			send_equipment = {
+				equipment = fighter_equipment
+				amount = 50
+				target = SPR
+			}
+			send_equipment = {
+				equipment = tac_bomber_equipment
+				amount = 50
+				target = SPR
+			}			
+			air_experience = 15
+		}
+	}
+	
+	SOV_send_support_equipment_spain = {
+		icon = GFX_decision_generic_operation
+		cost = 50
+		ai_will_do = {
+			factor = 70
+		}		
+		fire_only_once = yes
+		visible = {
+			SPR = {
+				has_civil_war = yes
+			}	
+		}
+		available = {
+			has_equipment = {
+				support_equipment > 299
+			}
+		}
+		complete_effect = {
+			send_equipment = {
+				equipment = support_equipment
+				amount = 300
+				target = SPR
+			}			
+			army_experience = 10
+		}
+	}
+	
+	SOV_send_volunteer = {
+		icon = GFX_decision_eng_blackshirt_march
+		cost = 50
+		ai_will_do = {
+			factor = 70
+		}		
+		fire_only_once = yes
+		visible = {
+			SPR = {
+				has_civil_war = yes
+			}
+		}
+		complete_effect = {
+			SPR = {
+				country_event = { id = soviets.72 days = 1 }
+			}	
+			add_manpower = -10500	
+		}
+	}	
+}
+
+SOV_mission_op = {
+
+	SOV_mission_korea = {
+		icon = GFX_decision_generic_civil_support
+		allowed = {
+			tag = HAW	
+		}	
+		available = {
+			SOV = {
+				NOT = {
+					has_country_flag = SOV_is_liberating_korea
+				}	
+			}	
+		}
+		activation = {
+			SOV = {
+				has_country_flag = SOV_is_liberating_korea
+			}
+		}	
+		visible = {
+			SOV = {
+				has_country_flag = SOV_is_liberating_korea
+			}	
+		}	
+		days_mission_timeout = 60
+		is_good = no
+		timeout_effect = {
+			
+		}
+	}
+	
+	SOV_mission_indochina = {
+		icon = GFX_decision_generic_civil_support
+		allowed = {
+			tag = HAW	
+		}		
+		available = {
+			SOV = {
+				NOT = {
+					has_country_flag = SOV_is_liberating_indochina
+				}
+			}	
+		}
+		visible = {
+			SOV = {
+				has_country_flag = SOV_is_liberating_indochina
+			}
+			FROM = {
+				has_country_flag = target_indochina
+			}	
+		}	
+		days_mission_timeout = 60
+		is_good = no
+		timeout_effect = {
+			
+		}
+	}
+
+	SOV_mission_tibet = {
+		icon = GFX_decision_generic_civil_support
+		allowed = {
+			tag = HAW	
+		}		
+		available = {
+			SOV = {
+				NOT = {
+					has_country_flag = SOV_is_liberating_tibet
+				}
+			}	
+		}
+		visible = {
+			SOV = {
+				has_country_flag = SOV_is_liberating_tibet
+			}
+			FROM = {
+				has_country_flag = target_tibet
+			}	
+		}	
+		days_mission_timeout = 60
+		is_good = no
+		timeout_effect = {
+			
+		}
+	}	
+}	

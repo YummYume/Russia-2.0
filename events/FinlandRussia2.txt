@@ -1,0 +1,126 @@
+###########################
+# Finland Events
+###########################
+
+add_namespace = finlands
+
+# Soviet Ultimatum
+country_event = {
+	id = finlands.1
+	title = finlands.1.t
+	desc = finlands.1.d
+	picture = GFX_report_event_soviet_tanks_snow
+	
+	is_triggered_only = yes
+	
+	option = { # Accept demands
+		name = finlands.1.a
+		ai_chance = {
+		factor = 40
+		modifier = { # Don't accept if in a faction that can protect them
+				factor = 0
+				OR = {
+					any_other_country = {
+						is_major = yes
+						OR = {
+							is_in_faction_with = FIN
+							has_guaranteed = FIN
+						}
+					}
+					has_idea = anti_soviet_pact
+				}
+			}
+		}
+		SOV = {
+			country_event = { days = 5 id = soviets.1 }
+			effect_tooltip = {
+				transfer_state = 146
+				transfer_state = 147
+				transfer_state = 722
+			}
+		}
+	}
+
+	option = { #Become puppet
+		name = finlands.1.c
+		ai_chance = {
+		factor = 10
+		modifier = { # Accept if communist
+				factor = 100
+				FIN = { has_government = communism }
+			}
+		}
+		SOV = {
+			country_event = { days = 5 id = soviets.3 }
+			effect_tooltip = {
+				puppet = FIN
+				custom_effect_tooltip = needs_approval
+			}
+		}
+	}
+
+	option = { # Refuse
+		name = finlands.1.b
+		ai_chance = { factor = 50 }
+		SOV = {
+			country_event = { days = 5 id = soviets.2 }
+			effect_tooltip = {
+				create_wargoal = {
+					type = take_state
+					target = FIN
+					generator = { 146 147 722 }
+				}
+			}
+		}
+	}
+}
+
+#Soviet refuse puppet
+country_event = {
+	id = finlands.2
+	title = finlands.2.t
+	desc = finlands.2.d
+	picture = GFX_report_event_finnish_soldiers_snow
+	
+	is_triggered_only = yes
+
+	option = {
+		name = finlands.2.a
+	}
+}
+
+#Finland propose it's own annexiation 
+country_event = {
+	id = finlands.3
+	title = finlands.3.t
+	desc = finlands.3.d
+	picture = GFX_report_event_communist_leader
+	
+	trigger = {
+		SOV = { has_government = communism }
+		TAG = FIN
+		FIN = {
+			AND = {
+				has_government = communism
+				is_puppet_of = SOV
+			}	
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 650
+	}
+
+	option = { #let's become one with the union
+		name = finlands.3.a
+		ai_chance = { factor = 90 }
+		SOV = { 
+			country_event = { days = 2 id = soviets.12 }
+		}
+	}
+
+	option = { #we're better as an independent country
+		name = finlands.3.b
+		ai_chance = { factor = 10 }
+	}
+}

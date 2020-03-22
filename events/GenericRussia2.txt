@@ -1,0 +1,103 @@
+###########################
+# Generic/Special Events
+###########################
+
+add_namespace = generics
+
+# China Soviet-PRC Ultimatum
+country_event = {
+	id = generics.1
+	title = generics.1.t
+	desc = generics.1.d
+	picture = GFX_report_event_spain_civil_war_volunteers_02
+	
+	is_triggered_only = yes
+	
+	option = {
+		ai_chance = {
+			factor = 40
+		}	
+		name = generics.1.a
+		every_owned_state = {
+			limit = {
+				is_core_of = PRC
+	        }
+	        PRC = {
+				transfer_state = PREV
+			}
+    	}
+    	if = {
+    		limit = {
+        		all_owned_state = {
+    				is_core_of = PRC
+				}
+    		}
+    		custom_effect_tooltip = GAME_OVER_TT
+    	}
+	}
+
+	option = {
+		ai_chance = {
+			factor = 60
+		}	
+		name = generics.1.b
+		PRC = {
+			create_wargoal = {
+	    	type = annex_everything
+	    	target = ROOT
+			}
+		}
+	}
+}
+
+# Middle East Ultimatum
+country_event = {
+	id = generics.2
+	title = generics.2.t
+	desc = generics.2.d
+	picture = GFX_report_event_stalin_propaganda
+	
+	is_triggered_only = yes
+	
+	option = {
+		ai_chance = {
+			factor = 45
+		}	
+		name = generics.2.a
+		SOV = { country_event = { days = 1 id = soviets.39 } }
+	}
+
+	option = {
+		ai_chance = {
+			factor = 55
+		}	
+		name = generics.2.b
+		SOV = { country_event = { days = 1 id = soviets.40 } }
+		add_opinion_modifier = { target = SOV modifier = soviet_threat }
+	}
+}
+
+# War Against Germany (event does nothing but prevent vanilla Yalta conference from happening)
+country_event = {
+	id = generics.3
+	title = generics.3.t
+	desc = generics.3.d
+	picture = GFX_report_event_stalin_propaganda
+	
+	trigger = {
+		NOT = { has_global_flag = had_yalta_conference }
+		has_government = democratic
+		has_war_with = GER
+	}
+
+	mean_time_to_happen = { days = 1 }
+	
+	immediate = {
+		set_global_flag = had_yalta_conference
+	}
+
+	option = {
+		name = generics.3.a
+		add_political_power = 50
+	}
+}
