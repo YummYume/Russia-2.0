@@ -11,7 +11,7 @@ How to LOCALLY install the mod for beta testing :
 - Tags : Alternative History, Events, Gameplay, Historical, National Focuses, Utilities, Military, Fixes, Balance
 - Create Mod. Do not enable it yet.
 - Go to Documents\Paradox Interactive\Hearts of Iron IV\mod, here you should see a folder Russia 2.0 (if not then you've done something wrong)
-- Go in the Russia 2.0 Folder and unzip the files there. All the files should be directly inside the folder (e.g. mod\Russia 2.0\common and NOT mod\Russia 2.0\Russia 2.0\mod)
+- Go in the Russia 2.0 Folder and unzip the files there. All the files should be directly inside the folder (e.g. mod\Russia 2.0\common and NOT mod\Russia 2.0\Russia 2.0\common)
 - Once this is done, simply enable the mod and you're good to go!
 
 If you have any problems with the installation, feel free to ask (once you've completed the steps above).
