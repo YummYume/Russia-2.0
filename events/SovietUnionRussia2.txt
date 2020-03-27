@@ -211,7 +211,7 @@ country_event = {
 	option = {
 		name = soviet.6.a
 		annex_country = { target = EST }
-		country_event = { days = 2 id = newsrussia2.7 }		
+		news_event = { days = 2 id = newsrussia2.7 }		
 	}
 }
 
@@ -245,7 +245,7 @@ country_event = {
 	option = {
 		name = soviets.8.a
 		annex_country = { target = LAT }
-		country_event = { days = 2 id = newsrussia2.11 }		
+		news_event = { days = 2 id = newsrussia2.11 }		
 	}
 }
 
@@ -279,7 +279,7 @@ country_event = {
 	option = {
 		name = soviets.10.a
 		annex_country = { target = LIT }
-		country_event = { days = 2 id = newsrussia2.9 }		
+		news_event = { days = 2 id = newsrussia2.9 }		
 	}
 }
 
@@ -352,7 +352,7 @@ country_event = {
 	}
 }
 
-#Mongolia accept	
+#Mongolia Accepts
 country_event = {
 	id = soviets.14
 	title = soviets.14.t
@@ -361,14 +361,12 @@ country_event = {
 	
 	is_triggered_only = yes
 	
-	option = { #good choice comrade
+	option = { #Good Choice Comrade
 		name = soviets.14.a
 		hidden_effect = {
-			SOV = {
-				country_event = { days = 3 id = newsrussia2.1 }
-			}
+			news_event = { days = 3 id = newsrussia2.1 }
 		}
-		SOV= {
+		SOV = {
 			puppet = MON
 		}	
 	}
@@ -396,7 +394,7 @@ country_event = {
 		remove_ideas = SOV_Exiled_russia
 		add_stability = 0.20
 		hidden_effect = {
-			country_event = { days = 2 id = newsrussia2.14 }
+			news_event = { days = 2 id = newsrussia2.14 }
 		}
 	}
 }
@@ -458,7 +456,7 @@ country_event = {
     		size = 0.4
 		}
 		hidden_effect = {
-			country_event = { days = 2 id = newsrussia2.15 }
+			news_event = { days = 2 id = newsrussia2.15 }
 			remove_ideas = SOV_Unhappy_peasants1
 			remove_ideas = SOV_Unhappy_peasants2
 			remove_ideas = SOV_Unhappy_peasants3
@@ -611,7 +609,7 @@ country_event = {
 	option = { #Mein Gott !
 		name = soviets.22.a
 		hidden_effect = {
-			country_event = { days = 1 id = newsrussia2.16 }
+			news_event = { days = 1 id = newsrussia2.16 }
 		}
 	}
 }
@@ -1450,7 +1448,7 @@ country_event = {
 			}
 		}	
 		hidden_effect = {
-			country_event = { id = newsrussia2.34 days = 1 }
+			news_event = { id = newsrussia2.34 days = 1 }
 		}
 		if = {
 			limit = {
@@ -1552,7 +1550,7 @@ country_event = {
 				set_country_flag = ENG_communist_civil_war
 				dismantle_faction = yes
 			}	
-			country_event = { id = newsrussia2.29 days = 1 }				
+			news_event = { id = newsrussia2.29 days = 1 }				
 			swap_ideas = {
 				remove_idea = SOV_Instability2
 				add_idea = SOV_Instability
@@ -1990,7 +1988,7 @@ country_event = {
 				ideology = stalinism
 			}
 		}	
-		country_event = { id = newsrussia2.32 days = 1 }	
+		news_event = { id = newsrussia2.32 days = 1 }	
 	}
 }
 
@@ -2041,7 +2039,7 @@ country_event = {
 			}
 		}
 		hidden_effect = {
-			country_event = { id = newsrussia2.33 days = 1 }
+			news_event = { id = newsrussia2.33 days = 1 }
 		}	
 	}
 }
@@ -2253,6 +2251,9 @@ country_event = {
 			popularity = 0.1
 		}
 		set_country_flag = accepted_4th_international
+		hidden_effect = {
+			news_event = { id = newsrussia2.41 days = 4 }
+		}
 	}
 
 	option = { #Refuse
@@ -2512,54 +2513,110 @@ country_event = {
 	id = soviets.80
 	title = soviets.80.t
 	desc = soviets.80.d
-	picture = GFX_report_event_generic_sign_treaty2
+	picture = GFX_report_event_ger_civil_war
 	
 	is_triggered_only = yes
 	
-	option = { #Accept
+	option = { #Would You Please Calm Down Thanks
 		name = soviets.80.a
 		ai_chance = { factor = 100 }
 
+		hidden_effect = {
+			add_to_variable = {
+			    var = ukrainian_revolt_factor
+			    value = 10
+			}
+			subtract_from_variable = {
+			    var = ukrainian_revolt_nothing_happens
+			    value = 10
+			}
+
+			random_list = {
+			    ukrainian_revolt_factor = {
+			        country_event = { id = soviets.81 days = 50 }
+			    }
+			    ukrainian_revolt_nothing_happens = {
+			        country_event = { id = soviets.80 days = 50 }
+			    }
+			    10 = {
+			        country_event = { id = soviets.82 days = 50 }
+			    }
+			}
+		}
+
+		if = {
+			limit = {
+				check_variable = {
+				    var = ukrainian_revolt_factor
+				    value = 25
+				    compare = less_than_or_equals
+				}
+			}
+			custom_effect_tooltip = SOV_ukrainian_anger_low_tt
+		}
+
+		else_if = {
+			limit = {
+				check_variable = {
+				    var = ukrainian_revolt_factor
+				    value = 25
+				    compare = greater_than
+				}
+				check_variable = {
+				    var = ukrainian_revolt_factor
+				    value = 55
+				    compare = less_than
+				}
+			}
+			custom_effect_tooltip = SOV_ukrainian_anger_medium_tt
+		}
+
+		else_if = {
+			limit = {
+				check_variable = {
+				    var = ukrainian_revolt_factor
+				    value = 55
+				    compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = SOV_ukrainian_anger_high_tt
+		}
+
 		random_owned_controlled_state = {
+			prioritize = { 192 197 196 226 200 227 228 221 259 203 198 199 201 202 193 225 }
+			limit = {
+				non_damaged_building_level = {
+					building = industrial_complex level > 0
+				}
+			}
 			damage_building = {
-			    type = infrastructure
-			    damage = 1
+			    type = industrial_complex damage = 1
 			}
 		}
 
 		random_owned_controlled_state = {
+			prioritize = { 192 197 196 226 200 227 228 221 259 203 198 199 201 202 193 225 }
+			limit = {
+				non_damaged_building_level = {
+					building = arms_factory level > 0
+				}
+			}
 			damage_building = {
-			    type = infrastructure
-			    damage = 1
+			    type = arms_factory damage = 1
 			}
 		}
 
 		random_owned_controlled_state = {
+			prioritize = { 192 197 196 226 200 227 228 221 259 203 198 199 201 202 193 225 }
+			limit = {
+				non_damaged_building_level = {
+					building = infrastructure level > 1
+				}
+			}
 			damage_building = {
 			    type = infrastructure
 			    damage = 1
 			}
-		}
-
-		add_to_variable = {
-		    var = ukrainian_revolt_factor
-		    value = 10
-		}
-		subtract_from_variable = {
-		    var = ukrainian_revolt_nothing_happens
-		    value = 10
-		}
-
-		random_list = {
-		    ukrainian_revolt_factor = {
-		        country_event = { id = soviets.81 days = 50 }
-		    }
-		    ukrainian_revolt_nothing_happens = {
-		        country_event = { id = soviets.80 days = 50 }
-		    }
-		    10 = {
-		        country_event = { id = soviets.82 days = 50 }
-		    }
 		}
 	}
 }
@@ -2569,26 +2626,41 @@ country_event = {
 	id = soviets.81
 	title = soviets.81.t
 	desc = soviets.81.d
-	picture = GFX_report_event_japanese_parade
+	picture = GFX_report_event_ger_civil_war
 	
 	is_triggered_only = yes
 	
-	option = { #Oh...
+	option = { #Uh Oh...
 		name = soviets.81.a
 
-		SOV = {
-			release = UKR
+		custom_effect_tooltip = SOV_ukrainian_anger_revolt_tt
 
-			declare_war_on = {
-			    target = UKR
-			    type = annex_everything
+		hidden_effect = {
+			SOV = {
+				if = {
+					limit = {
+						UKR = {
+							exists = no
+						}
+					}
+					release = UKR
+				}
+				else_if = {
+					limit = {
+						UKR = {
+							is_subject = yes
+						}
+					}
+					set_autonomy = {
+					    target = UKR
+					    autonomy_state = autonomy_free
+					}
+				}
 			}
-		}
 
-		UKR = {
-			army_experience = 25
-			add_political_power = 150
-			hidden_effect = {
+			UKR = {
+				army_experience = 25
+				add_political_power = 150
 				leave_faction = yes
 				set_popularities = {
 					democratic = 0
@@ -2609,7 +2681,7 @@ country_event = {
 					tech_engineers = 1
 				}
 				division_template = {
-					name = "Revolutionary Workers"
+					name = "Ukrainian Revolutionary Division"
 					priority = 1
 					regiments = {
 						infantry = { x = 0 y = 0 }
@@ -2624,80 +2696,144 @@ country_event = {
 					}
 				}
 				set_division_template_lock = {
-				    division_template = "Revolutionary Workers"
+				    division_template = "Ukrainian Revolutionary Division"
 				    is_locked = yes
 				}
 				capital_scope = {
 					create_unit = {
-						division = "name = \"Revolutionary Workers\" division_template = \"Revolutionary Workers\" start_experience_factor = 0.3"
+						division = "name = \"Ukrainian Revolutionary Division\" division_template = \"Ukrainian Revolutionary Division\" start_experience_factor = 0.3"
 						owner = UKR
 					}
 					create_unit = {
-						division = "name = \"Revolutionary Workers\" division_template = \"Revolutionary Workers\" start_experience_factor = 0.3"
+						division = "name = \"Ukrainian Revolutionary Division\" division_template = \"Ukrainian Revolutionary Division\" start_experience_factor = 0.3"
 						owner = UKR
 					}
 					create_unit = {
-						division = "name = \"Revolutionary Workers\" division_template = \"Revolutionary Workers\" start_experience_factor = 0.3"
+						division = "name = \"Ukrainian Revolutionary Division\" division_template = \"Ukrainian Revolutionary Division\" start_experience_factor = 0.3"
 						owner = UKR
 					}
 					create_unit = {
-						division = "name = \"Revolutionary Workers\" division_template = \"Revolutionary Workers\" start_experience_factor = 0.3"
+						division = "name = \"Ukrainian Revolutionary Division\" division_template = \"Ukrainian Revolutionary Division\" start_experience_factor = 0.3"
 						owner = UKR
 					}
 					create_unit = {
-						division = "name = \"Revolutionary Workers\" division_template = \"Revolutionary Workers\" start_experience_factor = 0.3"
+						division = "name = \"Ukrainian Revolutionary Division\" division_template = \"Ukrainian Revolutionary Division\" start_experience_factor = 0.3"
 						owner = UKR
 					}
 					create_unit = {
-						division = "name = \"Revolutionary Workers\" division_template = \"Revolutionary Workers\" start_experience_factor = 1"
+						division = "name = \"Ukrainian Revolutionary Division\" division_template = \"Ukrainian Revolutionary Division\" start_experience_factor = 1"
 						owner = UKR
 					}
 					create_unit = {
-						division = "name = \"Revolutionary Workers\" division_template = \"Revolutionary Workers\" start_experience_factor = 1"
+						division = "name = \"Ukrainian Revolutionary Division\" division_template = \"Ukrainian Revolutionary Division\" start_experience_factor = 1"
 						owner = UKR
 					}
 				}
 				random_owned_controlled_state = {
 					create_unit = {
-						division = "name = \"Revolutionary Workers\" division_template = \"Revolutionary Workers\" start_experience_factor = 0.3"
+						division = "name = \"Ukrainian Revolutionary Division\" division_template = \"Ukrainian Revolutionary Division\" start_experience_factor = 0.3"
 						owner = UKR
 					}
 				}
 				random_owned_controlled_state = {
 					create_unit = {
-						division = "name = \"Revolutionary Workers\" division_template = \"Revolutionary Workers\" start_experience_factor = 0.3"
+						division = "name = \"Ukrainian Revolutionary Division\" division_template = \"Ukrainian Revolutionary Division\" start_experience_factor = 0.3"
 						owner = UKR
 					}
 				}
 				random_owned_controlled_state = {
 					create_unit = {
-						division = "name = \"Revolutionary Workers\" division_template = \"Revolutionary Workers\" start_experience_factor = 0.3"
+						division = "name = \"Ukrainian Revolutionary Division\" division_template = \"Ukrainian Revolutionary Division\" start_experience_factor = 0.3"
 						owner = UKR
 					}
 				}
 				random_owned_controlled_state = {
 					create_unit = {
-						division = "name = \"Revolutionary Workers\" division_template = \"Revolutionary Workers\" start_experience_factor = 0.3"
+						division = "name = \"Ukrainian Revolutionary Division\" division_template = \"Ukrainian Revolutionary Division\" start_experience_factor = 0.3"
 						owner = UKR
 					}
 				}
 				random_owned_controlled_state = {
 					create_unit = {
-						division = "name = \"Revolutionary Workers\" division_template = \"Revolutionary Workers\" start_experience_factor = 0.3"
+						division = "name = \"Ukrainian Revolutionary Division\" division_template = \"Ukrainian Revolutionary Division\" start_experience_factor = 0.3"
 						owner = UKR
 					}
 				}
 				random_owned_controlled_state = {
 					create_unit = {
-						division = "name = \"Revolutionary Workers\" division_template = \"Revolutionary Workers\" start_experience_factor = 0.3"
+						division = "name = \"Ukrainian Revolutionary Division\" division_template = \"Ukrainian Revolutionary Division\" start_experience_factor = 0.3"
 						owner = UKR
 					}
 				}
 				random_owned_controlled_state = {
 					create_unit = {
-						division = "name = \"Revolutionary Workers\" division_template = \"Revolutionary Workers\" start_experience_factor = 0.3"
+						division = "name = \"Ukrainian Revolutionary Division\" division_template = \"Ukrainian Revolutionary Division\" start_experience_factor = 0.3"
 						owner = UKR
 					}
+				}
+			}
+
+			SOV = {
+				declare_war_on = {
+				    target = UKR
+				    type = annex_everything
+				}
+				add_political_power = -50
+				add_state_core = 192
+				add_state_core = 197
+				add_state_core = 196
+				add_state_core = 226
+				add_state_core = 200
+				add_state_core = 227
+				add_state_core = 228
+				add_state_core = 221
+				add_state_core = 259
+				add_state_core = 203
+				add_state_core = 198
+				add_state_core = 199
+				add_state_core = 201
+				add_state_core = 202
+				add_state_core = 193
+				add_state_core = 225
+				if = {
+					limit = {
+						UKR = {
+							owns_state = 766
+						}
+					}
+					add_state_claim = 766
+				}
+				if = {
+					limit = {
+						UKR = {
+							owns_state = 78
+						}
+					}
+					add_state_claim = 78
+				}
+				if = {
+					limit = {
+						UKR = {
+							owns_state = 89
+						}
+					}
+					add_state_claim = 89
+				}
+				if = {
+					limit = {
+						UKR = {
+							owns_state = 91
+						}
+					}
+					add_state_claim = 91
+				}
+				if = {
+					limit = {
+						UKR = {
+							owns_state = 93
+						}
+					}
+					add_state_claim = 93
 				}
 			}
 		}
@@ -2709,11 +2845,142 @@ country_event = {
 	id = soviets.82
 	title = soviets.82.t
 	desc = soviets.82.d
-	picture = GFX_report_event_generic_parliament
+	picture = GFX_report_event_generic_army
 	
 	is_triggered_only = yes
 	
 	option = { #Yay
 		name = soviets.82.a
+		random_owned_controlled_state = {
+			prioritize = { 192 197 196 226 200 227 228 221 259 203 198 199 201 202 193 225 }
+			limit = {
+				non_damaged_building_level = {
+					building = industrial_complex level > 1
+				}
+			}
+			damage_building = {
+			    type = industrial_complex damage = 2
+			}
+		}
+
+		random_owned_controlled_state = {
+			prioritize = { 192 197 196 226 200 227 228 221 259 203 198 199 201 202 193 225 }
+			limit = {
+				non_damaged_building_level = {
+					building = arms_factory level > 1
+				}
+			}
+			damage_building = {
+			    type = arms_factory damage = 2
+			}
+		}
+
+		random_owned_controlled_state = {
+			prioritize = { 192 197 196 226 200 227 228 221 259 203 198 199 201 202 193 225 }
+			limit = {
+				non_damaged_building_level = {
+					building = infrastructure level > 3
+				}
+			}
+			damage_building = {
+			    type = infrastructure
+			    damage = 3
+			}
+		}
+	}
+}
+
+#Rename Königsberg
+country_event = {
+	id = soviets.83
+	title = soviets.83.t
+	desc = soviets.83.d
+	picture = GFX_report_event_german_reichstag_gathering
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = SOV
+		SOV = {
+			has_government = communism
+			owns_state = 763 
+		}
+	}
+
+	option = { #Rename
+		name = soviets.83.a
+		ai_chance = {
+			base = 100
+		}
+		set_province_name = { id = 6332 name = "Kaliningrad"}
+		set_global_flag = SOV_konigsberg_renamed
+		hidden_effect = {
+			763 = {
+				set_state_name = "Kaliningrad"
+			}
+			country_event = { id = soviets.85 days = 180 }
+		}
+	}
+
+	option = { #No
+		name = soviets.83.b
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+#Königsberg Again!
+country_event = {
+	id = soviets.84
+
+	hidden = yes
+
+	trigger = {
+		GER = {
+			has_government = fascism
+			owns_state = 763
+		}
+		has_global_flag = SOV_konigsberg_renamed
+	}
+
+	mean_time_to_happen = { days = 2 }
+
+	option = { #Reverse City Name
+		name = soviets.84.a
+		ai_chance = {
+			base = 100
+		}
+		reset_province_name = 6332
+		763 = {
+			reset_state_name = yes
+		}
+		clr_global_flag = SOV_konigsberg_renamed
+	}
+}
+
+#Kaliningrad Becomes Core
+country_event = {
+	id = soviets.85
+	title = soviets.85.t
+	desc = soviets.85.d
+	picture = GFX_report_event_generic_parliament
+
+	is_triggered_only = yes
+
+	option = { #Rename
+		name = soviets.85.a
+		ai_chance = {
+			base = 100
+		}
+		if = {
+			limit = {
+				owns_state = 763
+			}
+			add_state_core = 763
+		}
+		else = {
+			add_state_claim = 763
+		}
 	}
 }
