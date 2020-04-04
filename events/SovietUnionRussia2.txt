@@ -413,7 +413,9 @@ country_event = {
 	hidden = yes
 
 	immediate = {
-		set_cosmetic_tag = SOV_far_eastern_republic
+		SOV = {
+			set_cosmetic_tag = FER
+		}	
 		set_global_flag = SOV_became_far_eastern_republic
 	}
 }
@@ -915,7 +917,7 @@ country_event = {
 	
 	option = {
 		ai_chance = {
-			factor = 20
+			factor = 50
 		}
 		name = soviets.28.a
 		every_other_country = {
@@ -925,6 +927,13 @@ country_event = {
 			}
 			add_opinion_modifier = { target = SOV modifier = anti_capitalism_diplomacy }
 		}
+		every_other_country = {
+			limit = {
+				has_government = fascism
+				NOT = { is_in_faction_with = SOV }
+			}
+			add_opinion_modifier = { target = SOV modifier = anti_capitalism_diplomacy_bonus }
+		}
 		hidden_effect = {
 			news_event = { days = 1 id = newsrussia2.17 }
 		}
@@ -932,7 +941,7 @@ country_event = {
 
 	option = {
 		ai_chance = {
-			factor = 80
+			factor = 50
 		}
 		name = soviets.28.b
 		every_other_country = {
@@ -941,6 +950,13 @@ country_event = {
 				NOT = { is_in_faction_with = SOV }
 			}
 			add_opinion_modifier = { target = SOV modifier = anti_fascist_diplomacy }
+		}
+		every_other_country = {
+			limit = {
+				has_government = democratic
+				NOT = { is_in_faction_with = SOV }
+			}
+			add_opinion_modifier = { target = SOV modifier = anti_fascist_diplomacy_bonus }
 		}
 		hidden_effect = {
 			news_event = { days = 1 id = newsrussia2.18 }
@@ -1643,7 +1659,7 @@ country_event = {
 			traits = {
 				empty_parliament
 			}
-		}
+		}	
 		hidden_effect = {
 			dismantle_faction = yes
 			random_other_country = {
@@ -1655,6 +1671,18 @@ country_event = {
 				dismantle_faction = yes
 				set_global_flag = SOV_end_civil_war
 			}
+			random_other_country = {
+				limit = {
+					original_tag = SOV
+					has_war_with = ROOT
+				}
+				set_cosmetic_tag = STS
+				load_focus_tree = {
+					tree = soviet2_focus
+					keep_completed = no
+				}
+				unlock_national_focus = SOV_great_purge2
+			}	
 			set_global_flag = Trotsky_coming_back2
 			news_event = { id = newsrussia2.30 days = 1 }
 		}
@@ -2938,7 +2966,6 @@ country_event = {
 
 	trigger = {
 		GER = {
-			has_government = fascism
 			owns_state = 763
 		}
 		has_global_flag = SOV_konigsberg_renamed
@@ -2946,7 +2973,7 @@ country_event = {
 
 	mean_time_to_happen = { days = 2 }
 
-	option = { #Reverse City Name
+	immediate = { #Reverse City Name
 		name = soviets.84.a
 		ai_chance = {
 			base = 100
@@ -2981,6 +3008,144 @@ country_event = {
 		}
 		else = {
 			add_state_claim = 763
+		}
+	}
+}
+
+#Form the Proletarian Union
+country_event = {
+	id = soviets.86
+	title = soviets.86.t
+	desc = soviets.86.d
+	picture = GFX_report_event_german_reichstag_gathering
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = SOV
+		SOV = {
+			has_government = communism
+			num_subjects > 29
+			NOT = {
+				has_idea = SOV_Exiled_russia
+				has_idea = trotskyite_plot
+				is_subject = yes
+			}
+			is_major = yes
+			arms_factory > 100
+			industrial_complex > 100
+			is_faction_leader = yes
+			OR = {
+				has_completed_focus = SOV_komintern_unite
+				has_completed_focus = SOV_workers_world_unite
+			}
+		}
+	}
+
+	option = { #Yes!
+		name = soviets.86.a
+		ai_chance = {
+			base = 100
+		}
+		every_other_country = {
+			limit = {
+				is_subject_of = SOV
+			}
+			country_event = { id = generics.4 days = 1 }
+		}
+
+		hidden_effect = {
+			country_event = { id = soviets.89 days = 10 }
+		}
+	}
+
+	option = { #No
+		name = soviets.86.b
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+#FROM Subject Accepts
+country_event = {
+	id = soviets.87
+	title = soviets.87.t
+	desc = soviets.87.d
+	picture = GFX_report_event_generic_parliament
+
+	is_triggered_only = yes
+
+	option = { #Yay
+		name = soviets.87.a
+		ai_chance = {
+			base = 100
+		}
+		annex_country = {
+		    target = FROM
+		    transfer_troops = yes
+		}
+	}
+}
+
+#FROM Subject Refuses
+country_event = {
+	id = soviets.88
+	title = soviets.88.t
+	desc = soviets.88.d
+	picture = GFX_report_event_generic_parliament
+
+	is_triggered_only = yes
+
+	option = { #Oh..
+		name = soviets.88.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+#Proletarian Union!
+country_event = {
+	id = soviets.89
+
+	hidden = yes
+
+	is_triggered_only = yes
+
+	immediate = {
+		add_country_leader_trait = proletarian
+		set_cosmetic_tag = SOV_proletarian_union
+		news_event = { id = newsrussia2.42 days = 1 }
+		if = {
+			limit = {
+				has_full_control_of_state = 42
+			}
+			set_capital = 42
+		}
+		else_if = {
+			limit = {
+				has_full_control_of_state = 16
+			}
+			set_capital = 16
+		}
+		else_if = {
+			limit = {
+				has_full_control_of_state = 126
+			}
+			set_capital = 126
+		}
+		else_if = {
+			limit = {
+				has_full_control_of_state = 64
+			}
+			set_capital = 64
+		}
+		else_if = {
+			limit = {
+				has_full_control_of_state = 10
+			}
+			set_capital = 10
 		}
 	}
 }

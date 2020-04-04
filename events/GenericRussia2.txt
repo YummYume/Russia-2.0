@@ -86,6 +86,7 @@ country_event = {
 	
 	trigger = {
 		NOT = { has_global_flag = had_yalta_conference }
+		NOT = { tag = GER }
 		has_government = democratic
 		has_war_with = GER
 	}
@@ -100,5 +101,41 @@ country_event = {
 
 	option = {
 		name = generics.3.a
+	}
+}
+
+#FROM Subject gets event to unify
+country_event = {
+	id = generics.4
+	title = generics.4.t
+	desc = generics.4.d
+	picture = GFX_report_event_generic_parliament
+
+	is_triggered_only = yes
+
+	option = { #Join the Union
+		name = generics.4.a
+		ai_chance = {
+			base = 75
+		}
+		every_owned_state = {
+			limit = {
+				is_core_of = ROOT
+			}
+			add_core_of = SOV
+		}
+		SOV = {
+			country_event = { id = soviets.87 days = 1 }
+		}
+	}
+
+	option = { #No!
+		name = generics.4.b
+		ai_chance = {
+			base = 25
+		}
+		SOV = {
+			country_event = { id = soviets.88 days = 1 }
+		}
 	}
 }

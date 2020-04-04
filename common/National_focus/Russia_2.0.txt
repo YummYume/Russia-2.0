@@ -1,5 +1,5 @@
 focus_tree = {
-	id = soviet_focus
+	id = soviet2_focus
 	continuous_focus_position = { x = 50 y = 2000 }
 
 	country = {
@@ -3856,7 +3856,7 @@ focus_tree = {
 			}
 			NOT = {
 				has_idea = SOV_Exiled_russia
-				has_idea = trotskyite_plot 
+				has_idea = trotskyite_plot
 			}
 		}
 		search_filters = { FOCUS_FILTER_INDUSTRY }
@@ -5745,7 +5745,6 @@ focus_tree = {
 			has_government = communism
 			is_major = yes
 			is_subject = no
-			NOT = { has_idea = trotskyite_plot_purged }
 		}
 		search_filters = { FOCUS_FILTER_POLITICAL }
 		completion_reward = {
@@ -6115,6 +6114,9 @@ focus_tree = {
 			655 = { is_owned_and_controlled_by = SOV }
 			408 = { is_owned_and_controlled_by = SOV }
 			537 = { is_owned_and_controlled_by = JAP }
+			NOT = {
+				has_idea = SOV_Proclaimed_neutrality
+			}
 		}
 		bypass = {
 			OR = {
@@ -6215,22 +6217,71 @@ focus_tree = {
 			is_faction_leader = yes
 			is_subject = no
 			has_war = no
-			country_exists = PRC
-			PRC = {
-				has_war = no
-				is_subject = no
+			NOT = {
+				has_idea = SOV_Proclaimed_neutrality
 			}
-			any_state = {
-				is_core_of = PRC
-				NOT = {
-					is_owned_by = PRC
+			OR = {
+				PRC = {
+					exists = yes
+					has_war = no
+					is_subject = no
+				}
+				SIK = {
+					exists = yes
+					has_war = no
+					is_subject = no
+				}
+			}
+			if = {
+				limit = {
+					PRC = {
+						exists = yes
+						is_subject = no
+					}
+				}
+				any_state = {
+					is_core_of = PRC
+					NOT = {
+						is_owned_by = PRC
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					SIK = {
+						exists = yes
+						is_subject = no
+					}
+				}
+				any_state = {
+					is_core_of = PRC
+					NOT = {
+						is_owned_by = SIK
+					}
 				}
 			}
 		}
 		search_filters = { FOCUS_FILTER_ANNEXATION FOCUS_FILTER_POLITICAL }
 		completion_reward = {
-			PRC = {
-				country_event = { id = wtt_prcs.1 }
+			if = {
+				limit = {
+					PRC = {
+						exists = yes
+					}
+				}
+				PRC = {
+					country_event = { id = wtt_prcs.1 }
+				}
+			}
+			else_if = {
+				limit = {
+					SIK = {
+						exists = yes
+					}
+				}
+				SIK = {
+					country_event = { id = wtt_prcs.1 }
+				}
 			}
 		}
 	}
@@ -6254,6 +6305,7 @@ focus_tree = {
 			408 = { is_owned_and_controlled_by = SOV }
 			country_exists = MAN
 			NOT = {
+				has_idea = SOV_Proclaimed_neutrality
 				MAN = {
 					has_government = communism
 				}
@@ -6280,7 +6332,7 @@ focus_tree = {
 			factor = 6
 		}
 		available = {
-			threat > 0.5
+			threat > 0.25
 			is_subject = no
 		}
 		search_filters = { FOCUS_FILTER_POLITICAL }
@@ -6383,6 +6435,9 @@ focus_tree = {
 		available = {
 			has_government = communism
 			is_subject = no
+			NOT = {
+				has_idea = SOV_Proclaimed_neutrality
+			}
 			OR = {
 				country_exists = AFG
 				country_exists = PER
@@ -7303,7 +7358,7 @@ focus_tree = {
 		prerequisite = {focus = SOV_avoid_purge }
 		mutually_exclusive = { focus = SOV_anti_stalinism_conspiracy }
 		icon = GFX_goal_generic_demand_territory
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			factor = 9
 		}
@@ -7325,7 +7380,7 @@ focus_tree = {
 		y = 3
 		prerequisite = {focus = SOV_speak_out_against_stalin }
 		icon = GFX_focus_eng_move_to_secure_the_dominions	
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			factor = 9
 		}
@@ -7520,10 +7575,14 @@ focus_tree = {
 			is_faction_leader = yes
 			is_subject = no
 			USA = {
+				NOT = { is_in_faction_with = SOV }
 				OR = {
 					has_government = communism
 					communism > 0.3
 				}
+				is_faction_leader = no
+				has_capitulated = no
+				is_subject = no
 			}
 		}	
 		completion_reward = {
@@ -7577,15 +7636,15 @@ focus_tree = {
 			has_government = communism
 			is_faction_leader = yes
 			is_subject = no
-			OR = {
-				SPR = {
-					has_government = communism
-				}
-				SPR = {
-					communism > 0.5
-				}
-			}
 			SPR = {
+				NOT = { is_in_faction_with = SOV }
+				OR = {
+					has_government = communism
+					communism > 0.3
+				}
+				is_faction_leader = no
+				has_capitulated = no
+				is_subject = no
 				NOT = {
 					has_civil_war = yes
 					has_idea = SPA_recovering_from_civil_war
@@ -7652,10 +7711,51 @@ focus_tree = {
 			has_government = communism
 			is_faction_leader = yes
 			is_subject = no
+			OR = {
+				PRC = {
+					exists = yes
+					NOT = { is_in_faction_with = SOV }
+					OR = {
+						has_government = communism
+						communism > 0.3
+					}
+					is_faction_leader = no
+					has_capitulated = no
+					is_subject = no
+				}
+				SIK = {
+					exists = yes
+					NOT = { is_in_faction_with = SOV }
+					OR = {
+						has_government = communism
+						communism > 0.3
+					}
+					is_faction_leader = no
+					has_capitulated = no
+					is_subject = no
+				}
+			}
 		}
 		completion_reward = {
-			PRC = {
-				country_event = { id = soviets.76 days = 1 }
+			if = {
+				limit = {
+					PRC = {
+						exists = yes
+					}
+				}
+				PRC = {
+					country_event = { id = soviets.76 days = 1 }
+				}
+			}
+			else_if = {
+				limit = {
+					SIK = {
+						exists = yes
+					}
+				}
+				SIK = {
+					country_event = { id = soviets.76 days = 1 }
+				}
 			}
 		}
 	}
@@ -8113,6 +8213,7 @@ focus_tree = {
 					}
 				}
 			}
+			unlock_decision_tooltip = SOV_invite_communist_revolution
 		}
 	}
 }
