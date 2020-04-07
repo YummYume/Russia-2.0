@@ -211,7 +211,9 @@ country_event = {
 	option = {
 		name = soviet.6.a
 		annex_country = { target = EST }
-		news_event = { days = 2 id = newsrussia2.7 }		
+		hidden_effect = {
+			news_event = { days = 2 id = newsrussia2.7 }
+		}	
 	}
 }
 
@@ -245,7 +247,9 @@ country_event = {
 	option = {
 		name = soviets.8.a
 		annex_country = { target = LAT }
-		news_event = { days = 2 id = newsrussia2.11 }		
+		hidden_effect = {
+			news_event = { days = 2 id = newsrussia2.11 }
+		}	
 	}
 }
 
@@ -279,7 +283,9 @@ country_event = {
 	option = {
 		name = soviets.10.a
 		annex_country = { target = LIT }
-		news_event = { days = 2 id = newsrussia2.9 }		
+		hidden_effect = {
+			news_event = { days = 2 id = newsrussia2.9 }
+		}	
 	}
 }
 
@@ -328,7 +334,7 @@ country_event = {
 		}
 		add_threat = 5
 		hidden_effect = {
-		country_event = { days = 3 id = news.69 }
+			news_event = { days = 3 id = news.69 }
 		}
 	}
 
@@ -572,8 +578,12 @@ country_event = {
 			factor = 80
 		}	
 		name = soviets.21.a
-		add_ideas = SOV_Katyn_massacre
+		add_timed_idea = {
+			idea = SOV_Katyn_massacre
+			days = 630
+		}	
 		add_manpower = -22000
+		set_country_flag = katyn_massacre
 	}
 
 	option = { #We're not monsters
@@ -599,7 +609,7 @@ country_event = {
 			has_war_with = SOV
 		}	
 		SOV = {
-			has_idea = SOV_Katyn_massacre
+			has_country_flag = katyn_massacre
 		}
 		242 = {
 			is_controlled_by = GER
@@ -611,7 +621,7 @@ country_event = {
 	option = { #Mein Gott !
 		name = soviets.22.a
 		hidden_effect = {
-			news_event = { days = 1 id = newsrussia2.16 }
+			news_event = { days = 1 id = newsrussia2.23 }
 		}
 	}
 }
@@ -1274,7 +1284,7 @@ country_event = {
 			factor = 20
 		}	
 		name = soviets.41.b
-		custom_effect_tooltip = soviets.412_tt
+		custom_effect_tooltip = soviets.41_tt2
 		country_event = { id = soviets.43 days = 10 }
 	}
 }
@@ -1551,7 +1561,37 @@ country_event = {
 				}	
 				set_country_flag = ENG_communist_civil_war
 				dismantle_faction = yes
-			}	
+			}
+			random_other_country = {
+				limit = {
+					original_tag = SOV
+					has_war_with = ROOT
+				}
+				set_cosmetic_tag = STS
+				load_focus_tree = {
+					tree = soviet2_focus
+					keep_completed = no
+				}
+				unlock_national_focus = SOV_great_purge2
+				set_party_name = { 
+					ideology = democratic
+					long_name = SOV_communism_party
+					name = SOV_communism_party
+				}
+				set_party_name = { 
+					ideology = neutrality
+					long_name = SOV_communism_party
+					name = SOV_communism_party
+				}
+				set_party_name = { 
+					ideology = fascism
+					long_name = SOV_communism_party
+					name = SOV_communism_party
+				}
+				retire_ideology_leader = democratic
+				retire_ideology_leader = neutrality
+				retire_ideology_leader = fascism
+			}			
 			news_event = { id = newsrussia2.29 days = 1 }				
 			swap_ideas = {
 				remove_idea = SOV_Instability2
@@ -1668,7 +1708,25 @@ country_event = {
 					keep_completed = no
 				}
 				unlock_national_focus = SOV_great_purge2
-			}	
+				set_party_name = { 
+					ideology = democratic
+					long_name = SOV_communism_party
+					name = SOV_communism_party
+				}
+				set_party_name = { 
+					ideology = neutrality
+					long_name = SOV_communism_party
+					name = SOV_communism_party
+				}
+				set_party_name = { 
+					ideology = fascism
+					long_name = SOV_communism_party
+					name = SOV_communism_party
+				}
+				retire_ideology_leader = democratic
+				retire_ideology_leader = neutrality
+				retire_ideology_leader = fascism
+			}
 			set_global_flag = Trotsky_coming_back2
 			news_event = { id = newsrussia2.30 days = 1 }
 		}
@@ -1780,7 +1838,11 @@ country_event = {
 		has_global_flag = Trotsky_coming_back2
 		NOT = {
 			has_civil_war = yes
-		}
+			has_country_leader = {
+				name = "Joseph Stalin"
+				ruling_only = yes
+			}
+		}	
 	}
 
 	mean_time_to_happen = { days = 40 }	
@@ -3135,3 +3197,25 @@ country_event = {
 		}
 	}
 }
+
+#End of civil war - Stalinist side wins
+country_event = {
+	id = soviets.90
+	
+	hidden = yes
+	
+	trigger = {
+		any_country = {
+			original_tag = SOV
+		}	
+		has_cosmetic_tag = STS
+		NOT = {
+			has_civil_war = yes
+		}	
+	}
+
+	immediate = {
+		drop_cosmetic_tag = yes
+		set_cosmetic_tag = SOV
+	}
+}	
