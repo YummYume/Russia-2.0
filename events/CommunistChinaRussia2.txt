@@ -21,14 +21,16 @@ country_event = {
 		add_opinion_modifier = { target = SOV modifier = soviet_prc_treaty }
 		SOV = {
 			add_to_faction = ROOT
-			give_guarantee = ROOT
 			country_event = { days = 1 id = soviets.37 }
 			add_opinion_modifier = { target = ROOT modifier = soviet_prc_treaty }
 			puppet = ROOT
-			set_autonomy = {
-			    target = ROOT
-			    autonomy_state = autonomy_dominion
+			hidden_effect = {
+				set_autonomy = {
+				    target = ROOT
+				    autonomy_state = autonomy_dominion
+				}
 			}
+			give_guarantee = ROOT
 		}
 		hidden_effect = {
 			news_event = { hours = 48 id = newsrussia2.20 }
@@ -47,6 +49,37 @@ country_event = {
 		}
 		hidden_effect = {
 			news_event = { hours = 6 id = newsrussia2.21 }
+		}
+	}
+}
+
+country_event = {
+	id = wtt_prcs.2
+	title = wtt_prcs.2.t
+	desc = wtt_prcs.2.d
+	picture = GFX_report_event_stalin_meeting
+	
+	is_triggered_only = yes
+	
+	option = {
+		ai_chance = {
+			factor = 100
+		}	
+		name = wtt_prcs.2.a
+		every_country = {
+			limit = {
+				is_major = no
+				NOT = { is_puppet_of = JAP }
+				any_owned_state = {
+					is_core_of = PRC
+				}
+				NOT = { is_in_faction_with = SOV }
+				NOT = { TAG = PRC }
+				NOT = { has_war_with = PRC }
+				NOT = { original_tag = SOV }
+				NOT = { has_war_with = ROOT }
+			}
+			country_event = { days = 1 id = generics.1 }
 		}
 	}
 }
