@@ -796,20 +796,16 @@ SOV_minor_communist_countries_europe = {
 				}
 			}
 			FROM = {
+				is_subject = no
+				is_in_faction = no
 				OR = {
 					has_government = communism
 					communism > 0.3
 				}
-			}	
-			FROM = {
-				is_in_faction = no
-				is_subject = no
-			}
-			FROM = {
 				NOT = {
 					has_war_with = SOV
 				}
-			}	
+			}
 		}
 
 		cost = 25
@@ -1373,11 +1369,6 @@ SOV_invite_revolution = {
         }
 
 		available = {
-			FROM = {
-				NOT = {
-					has_idea = SOV_Fight_revolution
-				}
-			}
 			OR = {
 				has_opinion = {
 					target = FROM
@@ -1391,17 +1382,13 @@ SOV_invite_revolution = {
 				}
 			}
 			FROM = {
-				OR = {
-					has_government = communism
-					communism > 0.3
-				}
-			}	
-			FROM = {
 				is_subject = no
-			}
-			FROM = {
+				has_government = communism
 				NOT = {
 					has_war_with = SOV
+				}
+				NOT = {
+					has_idea = SOV_Fight_revolution
 				}
 			}	
 		}
@@ -1424,7 +1411,7 @@ SOV_invite_revolution = {
 
 SOV_proclaim_revolution = {
 
-	SOV_triumph_paris = {
+	SOV_triumph_warsaw = {
 	
 		icon = GFX_decision_generic_nationalism
 		
@@ -1442,13 +1429,241 @@ SOV_proclaim_revolution = {
 
 		available = {
 			custom_trigger_tooltip = {
-				tooltip = SOV_need_1_scale
-				check_variable = {
-			    	var = revolution_final_count
-			    	value = 1
-			    	compare = greater_than_or_equals
+				tooltip = SOV_triumph_warsaw_tt
+				OR = {
+					10 = { 
+						is_owned_and_controlled_by = SOV
+					}
+					any_allied_country = {
+						has_government = communism
+						has_full_control_of_state = 10
+					}
 				}
 			}
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = SOV_add_1_scale
+			add_to_variable = {
+			    var = revolution_count
+			    value = 1
+			}
+			subtract_from_variable = {
+			    var = revolution_final_count
+			    value = 1
+			}
+			clamp_variable = {
+				var = revolution_count
+				min = 0
+				max = 12
+			}
+			clamp_variable = {
+				var = revolution_final_count
+				min = 0
+				max = 12
+			}
+			set_country_flag = SOV_has_conquered_old_city_europe
+		}
+		
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	SOV_triumph_madrid = {
+	
+		icon = GFX_decision_generic_nationalism
+		
+		fire_only_once = yes
+
+		cost = 10
+
+		allowed = {
+			original_tag = SOV
+		}
+		
+		visible = {
+			has_completed_focus = SOV_consolidate_true_communism
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = SOV_triumph_madrid_tt
+				OR = {
+					41 = { 
+						is_owned_and_controlled_by = SOV
+					}
+					any_allied_country = {
+						has_government = communism
+						has_full_control_of_state = 41
+					}
+				}
+			}
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = SOV_add_1_scale
+			add_to_variable = {
+			    var = revolution_count
+			    value = 1
+			}
+			subtract_from_variable = {
+			    var = revolution_final_count
+			    value = 1
+			}
+			clamp_variable = {
+				var = revolution_count
+				min = 0
+				max = 12
+			}
+			clamp_variable = {
+				var = revolution_final_count
+				min = 0
+				max = 12
+			}
+			set_country_flag = SOV_has_conquered_old_city_europe
+		}
+		
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	SOV_triumph_istanbul = {
+	
+		icon = GFX_decision_generic_nationalism
+		
+		fire_only_once = yes
+
+		cost = 10
+
+		allowed = {
+			original_tag = SOV
+		}
+		
+		visible = {
+			has_completed_focus = SOV_consolidate_true_communism
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = SOV_triumph_istanbul_tt
+				OR = {
+					341 = { 
+						is_owned_and_controlled_by = SOV
+					}
+					any_allied_country = {
+						has_government = communism
+						has_full_control_of_state = 341
+					}
+				}
+			}
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = SOV_add_1_scale
+			add_to_variable = {
+			    var = revolution_count
+			    value = 1
+			}
+			subtract_from_variable = {
+			    var = revolution_final_count
+			    value = 1
+			}
+			clamp_variable = {
+				var = revolution_count
+				min = 0
+				max = 12
+			}
+			clamp_variable = {
+				var = revolution_final_count
+				min = 0
+				max = 12
+			}
+			set_country_flag = SOV_has_conquered_old_city_europe
+		}
+		
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	SOV_triumph_vienna = {
+	
+		icon = GFX_decision_generic_nationalism
+		
+		fire_only_once = yes
+
+		cost = 10
+
+		allowed = {
+			original_tag = SOV
+		}
+		
+		visible = {
+			has_completed_focus = SOV_consolidate_true_communism
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = SOV_triumph_vienna_tt
+				OR = {
+					4 = { 
+						is_owned_and_controlled_by = SOV
+					}
+					any_allied_country = {
+						has_government = communism
+						has_full_control_of_state = 4
+					}
+				}
+			}
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = SOV_add_1_scale
+			add_to_variable = {
+			    var = revolution_count
+			    value = 1
+			}
+			subtract_from_variable = {
+			    var = revolution_final_count
+			    value = 1
+			}
+			clamp_variable = {
+				var = revolution_count
+				min = 0
+				max = 12
+			}
+			clamp_variable = {
+				var = revolution_final_count
+				min = 0
+				max = 12
+			}
+			set_country_flag = SOV_has_conquered_old_city_europe
+		}
+		
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	SOV_triumph_paris = {
+	
+		icon = GFX_decision_generic_nationalism
+		
+		fire_only_once = yes
+
+		cost = 10
+
+		allowed = {
+			original_tag = SOV
+		}
+		
+		visible = {
+			has_completed_focus = SOV_consolidate_true_communism
+		}
+
+		available = {
 			custom_trigger_tooltip = {
 				tooltip = SOV_triumph_paris_tt
 				OR = {
@@ -1509,14 +1724,6 @@ SOV_proclaim_revolution = {
 
 		available = {
 			custom_trigger_tooltip = {
-				tooltip = SOV_need_1_scale
-				check_variable = {
-			    	var = revolution_final_count
-			    	value = 1
-			    	compare = greater_than_or_equals
-				}
-			}
-			custom_trigger_tooltip = {
 				tooltip = SOV_triumph_berlin_tt
 				OR = {
 					64 = { 
@@ -1575,14 +1782,6 @@ SOV_proclaim_revolution = {
 		}
 
 		available = {
-			custom_trigger_tooltip = {
-				tooltip = SOV_need_1_scale
-				check_variable = {
-			    	var = revolution_final_count
-			    	value = 1
-			    	compare = greater_than_or_equals
-				}
-			}
 			custom_trigger_tooltip = {
 				tooltip = SOV_triumph_rome_tt
 				OR = {
@@ -1643,14 +1842,6 @@ SOV_proclaim_revolution = {
 
 		available = {
 			custom_trigger_tooltip = {
-				tooltip = SOV_need_1_scale
-				check_variable = {
-			    	var = revolution_final_count
-			    	value = 1
-			    	compare = greater_than_or_equals
-				}
-			}
-			custom_trigger_tooltip = {
 				tooltip = SOV_triumph_london_tt
 				OR = {
 					126 = { 
@@ -1709,14 +1900,6 @@ SOV_proclaim_revolution = {
 		}
 
 		available = {
-			custom_trigger_tooltip = {
-				tooltip = SOV_need_1_scale
-				check_variable = {
-			    	var = revolution_final_count
-			    	value = 1
-			    	compare = greater_than_or_equals
-				}
-			}
 			custom_trigger_tooltip = {
 				tooltip = SOV_triumph_washington_tt
 				OR = {
@@ -1777,14 +1960,6 @@ SOV_proclaim_revolution = {
 
 		available = {
 			custom_trigger_tooltip = {
-				tooltip = SOV_need_1_scale
-				check_variable = {
-			    	var = revolution_final_count
-			    	value = 1
-			    	compare = greater_than_or_equals
-				}
-			}
-			custom_trigger_tooltip = {
 				tooltip = SOV_triumph_tokyo_tt
 				OR = {
 					282 = { 
@@ -1826,73 +2001,6 @@ SOV_proclaim_revolution = {
 		}
 	}
 
-	SOV_triumph_warsaw = {
-	
-		icon = GFX_decision_generic_nationalism
-		
-		fire_only_once = yes
-
-		cost = 10
-
-		allowed = {
-			original_tag = SOV
-		}
-		
-		visible = {
-			has_completed_focus = SOV_consolidate_true_communism
-		}
-
-		available = {
-			custom_trigger_tooltip = {
-				tooltip = SOV_need_1_scale
-				check_variable = {
-			    	var = revolution_final_count
-			    	value = 1
-			    	compare = greater_than_or_equals
-				}
-			}
-			custom_trigger_tooltip = {
-				tooltip = SOV_triumph_warsaw_tt
-				OR = {
-					10 = { 
-						is_owned_and_controlled_by = SOV
-					}
-					any_allied_country = {
-						has_government = communism
-						has_full_control_of_state = 10
-					}
-				}
-			}
-		}
-
-		complete_effect = {
-			custom_effect_tooltip = SOV_add_1_scale
-			add_to_variable = {
-			    var = revolution_count
-			    value = 1
-			}
-			subtract_from_variable = {
-			    var = revolution_final_count
-			    value = 1
-			}
-			clamp_variable = {
-				var = revolution_count
-				min = 0
-				max = 12
-			}
-			clamp_variable = {
-				var = revolution_final_count
-				min = 0
-				max = 12
-			}
-			set_country_flag = SOV_has_conquered_old_city_europe
-		}
-		
-		ai_will_do = {
-			factor = 100
-		}
-	}
-
 	SOV_triumph_beijing = {
 	
 		icon = GFX_decision_generic_nationalism
@@ -1910,14 +2018,6 @@ SOV_proclaim_revolution = {
 		}
 
 		available = {
-			custom_trigger_tooltip = {
-				tooltip = SOV_need_1_scale
-				check_variable = {
-			    	var = revolution_final_count
-			    	value = 1
-			    	compare = greater_than_or_equals
-				}
-			}
 			custom_trigger_tooltip = {
 				tooltip = SOV_triumph_beijing_tt
 				OR = {
@@ -1978,14 +2078,6 @@ SOV_proclaim_revolution = {
 
 		available = {
 			custom_trigger_tooltip = {
-				tooltip = SOV_need_1_scale
-				check_variable = {
-			    	var = revolution_final_count
-			    	value = 1
-			    	compare = greater_than_or_equals
-				}
-			}
-			custom_trigger_tooltip = {
 				tooltip = SOV_triumph_delhi_tt
 				OR = {
 					439 = { 
@@ -2027,207 +2119,6 @@ SOV_proclaim_revolution = {
 		}
 	}
 
-	SOV_triumph_istanbul = {
-	
-		icon = GFX_decision_generic_nationalism
-		
-		fire_only_once = yes
-
-		cost = 10
-
-		allowed = {
-			original_tag = SOV
-		}
-		
-		visible = {
-			has_completed_focus = SOV_consolidate_true_communism
-		}
-
-		available = {
-			custom_trigger_tooltip = {
-				tooltip = SOV_need_1_scale
-				check_variable = {
-			    	var = revolution_final_count
-			    	value = 1
-			    	compare = greater_than_or_equals
-				}
-			}
-			custom_trigger_tooltip = {
-				tooltip = SOV_triumph_istanbul_tt
-				OR = {
-					341 = { 
-						is_owned_and_controlled_by = SOV
-					}
-					any_allied_country = {
-						has_government = communism
-						has_full_control_of_state = 341
-					}
-				}
-			}
-		}
-
-		complete_effect = {
-			custom_effect_tooltip = SOV_add_1_scale
-			add_to_variable = {
-			    var = revolution_count
-			    value = 1
-			}
-			subtract_from_variable = {
-			    var = revolution_final_count
-			    value = 1
-			}
-			clamp_variable = {
-				var = revolution_count
-				min = 0
-				max = 12
-			}
-			clamp_variable = {
-				var = revolution_final_count
-				min = 0
-				max = 12
-			}
-			set_country_flag = SOV_has_conquered_old_city
-		}
-		
-		ai_will_do = {
-			factor = 100
-		}
-	}
-
-	SOV_triumph_madrid = {
-	
-		icon = GFX_decision_generic_nationalism
-		
-		fire_only_once = yes
-
-		cost = 10
-
-		allowed = {
-			original_tag = SOV
-		}
-		
-		visible = {
-			has_completed_focus = SOV_consolidate_true_communism
-		}
-
-		available = {
-			custom_trigger_tooltip = {
-				tooltip = SOV_need_1_scale
-				check_variable = {
-			    	var = revolution_final_count
-			    	value = 1
-			    	compare = greater_than_or_equals
-				}
-			}
-			custom_trigger_tooltip = {
-				tooltip = SOV_triumph_madrid_tt
-				OR = {
-					41 = { 
-						is_owned_and_controlled_by = SOV
-					}
-					any_allied_country = {
-						has_government = communism
-						has_full_control_of_state = 41
-					}
-				}
-			}
-		}
-
-		complete_effect = {
-			custom_effect_tooltip = SOV_add_1_scale
-			add_to_variable = {
-			    var = revolution_count
-			    value = 1
-			}
-			subtract_from_variable = {
-			    var = revolution_final_count
-			    value = 1
-			}
-			clamp_variable = {
-				var = revolution_count
-				min = 0
-				max = 12
-			}
-			clamp_variable = {
-				var = revolution_final_count
-				min = 0
-				max = 12
-			}
-			set_country_flag = SOV_has_conquered_old_city_europe
-		}
-		
-		ai_will_do = {
-			factor = 100
-		}
-	}
-
-	SOV_triumph_vienna = {
-	
-		icon = GFX_decision_generic_nationalism
-		
-		fire_only_once = yes
-
-		cost = 10
-
-		allowed = {
-			original_tag = SOV
-		}
-		
-		visible = {
-			has_completed_focus = SOV_consolidate_true_communism
-		}
-
-		available = {
-			custom_trigger_tooltip = {
-				tooltip = SOV_need_1_scale
-				check_variable = {
-			    	var = revolution_final_count
-			    	value = 1
-			    	compare = greater_than_or_equals
-				}
-			}
-			custom_trigger_tooltip = {
-				tooltip = SOV_triumph_vienna_tt
-				OR = {
-					4 = { 
-						is_owned_and_controlled_by = SOV
-					}
-					any_allied_country = {
-						has_government = communism
-						has_full_control_of_state = 4
-					}
-				}
-			}
-		}
-
-		complete_effect = {
-			custom_effect_tooltip = SOV_add_1_scale
-			add_to_variable = {
-			    var = revolution_count
-			    value = 1
-			}
-			subtract_from_variable = {
-			    var = revolution_final_count
-			    value = 1
-			}
-			clamp_variable = {
-				var = revolution_count
-				min = 0
-				max = 12
-			}
-			clamp_variable = {
-				var = revolution_final_count
-				min = 0
-				max = 12
-			}
-			set_country_flag = SOV_has_conquered_old_city_europe
-		}
-		
-		ai_will_do = {
-			factor = 100
-		}
-	}
-
 	SOV_secure_revolution = {
 	
 		icon = generic_civil_support
@@ -2261,6 +2152,7 @@ SOV_proclaim_revolution = {
 
 		complete_effect = {
 			add_stability = 0.1
+			add_ideas = SOV_marching_revolution
 			set_country_flag = SOV_secured_revolution
 		}
 		
@@ -2305,6 +2197,86 @@ SOV_proclaim_revolution = {
 		}
 
 		complete_effect = {
+			swap_ideas = {
+				remove_idea = SOV_marching_revolution
+				add_idea = SOV_marching_revolution2
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							has_tech = tech_logistics_company
+						}
+					}
+					set_technology = {
+						tech_logistics_company = 1
+					}	
+				}
+				if = {
+					limit = {
+						NOT = {
+							has_tech = tech_signal_company
+						}
+					}
+					set_technology = {
+						tech_signal_company = 1
+					}	
+				}
+				division_template = {
+					name = "Strazhi Revolyutsii"
+					priority = 2
+					regiments = {
+						infantry = { x = 0 y = 0 }
+						infantry = { x = 0 y = 1 }
+						infantry = { x = 0 y = 2 }
+						infantry = { x = 0 y = 3 }
+						artillery_brigade = { x = 0 y = 4 }
+						infantry = { x = 1 y = 0 }
+						infantry = { x = 1 y = 1 }
+						infantry = { x = 1 y = 2 }
+						infantry = { x = 1 y = 3 }
+						artillery_brigade = { x = 1 y = 4 }
+						infantry = { x = 2 y = 0 }
+						infantry = { x = 2 y = 1 }
+						infantry = { x = 2 y = 2 }
+						infantry = { x = 2 y = 3 }
+						artillery_brigade = { x = 2 y = 4 }
+						infantry = { x = 3 y = 0 }
+						infantry = { x = 3 y = 1 }
+						artillery_brigade = { x = 3 y = 2 }
+					}
+					support = {
+						artillery = { x = 0 y = 0 }
+						logistics_company = { x = 0 y = 1 }
+						signal_company = { x = 0 y = 2 }
+						mot_recon = { x = 0 y = 3 }
+						engineer = { x = 0 y = 4 }
+					}
+				}
+				capital_scope = {
+					create_unit = {
+						division = "name = \"1st Strazhi Revolyutsii Division\" division_template = \"Strazhi Revolyutsii\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"2nd Strazhi Revolyutsii Division\" division_template = \"Strazhi Revolyutsii\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"3rd Strazhi Revolyutsii Division\" division_template = \"Strazhi Revolyutsii\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"4th Strazhi Revolyutsii Division\" division_template = \"Strazhi Revolyutsii\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"5th Strazhi Revolyutsii Division\" division_template = \"Strazhi Revolyutsii\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+				}
+			}
+			custom_effect_tooltip = SOV_expand_revolution_tt4
 			set_country_flag = SOV_expanded_revolution
 		}
 		
@@ -2349,6 +2321,116 @@ SOV_proclaim_revolution = {
 		}
 
 		complete_effect = {
+			swap_ideas = {
+				remove_idea = SOV_marching_revolution2
+				add_idea = SOV_marching_revolution3
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							has_tech = tech_logistics_company
+						}
+					}
+					set_technology = {
+						tech_logistics_company = 1
+					}	
+				}
+				if = {
+					limit = {
+						NOT = {
+							has_tech = tech_signal_company
+						}
+					}
+					set_technology = {
+						tech_signal_company = 1
+					}	
+				}
+				if = {
+					limit = {
+						NOT = {
+							has_tech = basic_medium_tank 
+						}
+					}
+					set_technology = {
+						basic_medium_tank  = 1
+					}	
+				}
+				if = {
+					limit = {
+						NOT = {
+							has_tech = mechanised_infantry
+						}
+					}
+					set_technology = {
+						mechanised_infantry = 1
+					}	
+				}
+				if = {
+					limit = {
+						NOT = {
+							has_tech = armored_car1
+						}
+					}
+					set_technology = {
+						armored_car1 = 1
+					}	
+				}
+				if = {
+					limit = {
+						NOT = {
+							has_tech = rocket_artillery
+						}
+					}
+					set_technology = {
+						rocket_artillery = 1
+					}	
+				}
+				division_template = {
+					name = "Tanki Osvobozhdeniya"
+					priority = 2
+					regiments = {
+						medium_armor = { x = 0 y = 0 }
+						medium_armor = { x = 0 y = 1 }
+						medium_armor = { x = 0 y = 2 }
+						medium_armor = { x = 0 y = 3 }
+						medium_armor = { x = 0 y = 4 }
+						medium_armor = { x = 1 y = 0 }
+						medium_armor = { x = 1 y = 1 }
+						medium_armor = { x = 1 y = 2 }
+						medium_armor = { x = 1 y = 3 }
+						medium_armor = { x = 1 y = 4 }
+						mechanized = { x = 2 y = 0 }
+						mechanized = { x = 2 y = 1 }
+						mechanized = { x = 2 y = 2 }
+						mechanized = { x = 2 y = 3 }
+						mechanized = { x = 2 y = 4 }
+						mechanized = { x = 3 y = 0 }
+						mechanized = { x = 3 y = 1 }
+						mechanized = { x = 3 y = 2 }
+						mechanized = { x = 3 y = 3 }
+						mechanized = { x = 3 y = 4 }
+					}
+					support = {
+						rocket_artillery = { x = 0 y = 0 }
+						logistics_company = { x = 0 y = 1 }
+						signal_company = { x = 0 y = 2 }
+						light_tank_recon = { x = 0 y = 3 }
+						engineer = { x = 0 y = 4 }
+					}
+				}
+				capital_scope = {
+					create_unit = {
+						division = "name = \"1st Tanki Osvobozhdeniya Divsion\" division_template = \"Tanki Osvobozhdeniya\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"2nd Tanki Osvobozhdeniya Divsion\" division_template = \"Tanki Osvobozhdeniya\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+				}
+			}
+			custom_effect_tooltip = SOV_last_step_revolution_tt4
 			set_country_flag = SOV_last_step_of_revolution
 		}
 		
@@ -2399,6 +2481,44 @@ SOV_proclaim_revolution = {
 		}
 
 		complete_effect = {
+			remove_ideas = SOV_marching_revolution3
+			add_ideas = SOV_dancing_revolution
+			add_state_core = 766
+			add_state_core = 78
+			add_state_core = 80
+			add_state_core = 91
+			add_state_core = 89
+			add_state_core = 93
+			add_state_core = 94
+			add_state_core = 95
+			add_state_core = 96
+			add_state_core = 784
+			add_state_core = 11
+			add_state_core = 189
+			add_state_core = 188
+			add_state_core = 12
+			add_state_core = 190
+			add_state_core = 191
+			add_state_core = 13
+			add_state_core = 146
+			add_state_core = 147
+			add_state_core = 722
+			add_state_core = 330
+			add_state_core = 537
+			add_state_claim = 341
+			add_state_claim = 10
+			add_state_claim = 64
+			add_state_claim = 42
+			add_state_claim = 16
+			add_state_claim = 126
+			add_state_claim = 2
+			add_state_claim = 41
+			add_state_claim = 4
+			add_state_claim = 608
+			add_state_claim = 282
+			add_state_claim = 439
+			add_state_claim = 361
+			country_event = soviets.92
 			set_country_flag = SOV_ended_revolution
 		}
 		
