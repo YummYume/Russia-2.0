@@ -5561,8 +5561,8 @@ SOV_divide_british_isle = { #Divide the British Isle
 SOV_liberate_iberia = { #Liberate the Iberian Workers
 	icon = GFX_operations_coup_government
 	map_icon = GFX_operations_operations_coup_government_map
-	name = SOV_liberate_iberian
-	desc = SOV_liberate_iberian_desc
+	name = SOV_liberate_iberia
+	desc = SOV_liberate_iberia_desc
 	days = 60
 
 	allowed = {
@@ -5660,6 +5660,14 @@ SOV_liberate_iberia = { #Liberate the Iberian Workers
 			hidden_effect = {
 				if = {
 					limit = {
+						165 = {
+							is_core_of = FROM
+						}
+					}
+					set_country_flag = give_core_back_cat #Setting a country flag to give back the core to the targetted country (if they had one)
+				}
+				if = {
+					limit = {
 						CAT = {
 							exists = no
 						}
@@ -5676,6 +5684,12 @@ SOV_liberate_iberia = { #Liberate the Iberian Workers
 					    target = CAT
 					    autonomy_state = autonomy_free
 					}
+				}
+				if = {
+					limit = {
+						has_country_flag = give_core_back_cat
+					}
+					add_state_core = 165 #Giving back the core to FROM. Yes I know this is stupid, but when you release a country you lose your core on it.
 				}
 			}
 		}
@@ -5828,6 +5842,18 @@ SOV_liberate_iberia = { #Liberate the Iberian Workers
 							TAG = FROM
 						}
 					}
+					every_country = {
+						limit = {
+							792 = { is_core_of = PREV }
+						}
+						set_country_flag = give_core_back_nav_792
+					}
+					every_country = {
+						limit = {
+							172 = { is_core_of = PREV }
+						}
+						set_country_flag = give_core_back_nav_172
+					}
 					if = {
 						limit = {
 							NAV = {
@@ -5855,6 +5881,12 @@ SOV_liberate_iberia = { #Liberate the Iberian Workers
 						    type = annex_everything
 						}
 					}
+					every_country = {
+						limit = {
+							has_country_flag = give_core_back_nav_792
+						}
+						add_state_core = 792
+					}
 				}
 			}
 
@@ -5865,9 +5897,16 @@ SOV_liberate_iberia = { #Liberate the Iberian Workers
 						owns_state = 172
 					}
 				}
-				CRO = {
+				NAV = {
 					transfer_state = 172
 				}
+			}
+
+			every_country = {
+				limit = {
+					has_country_flag =  give_core_back_nav_172
+				}
+				add_state_core = 172
 			}
 
 			NAV = {
@@ -6010,6 +6049,12 @@ SOV_liberate_iberia = { #Liberate the Iberian Workers
 							TAG = FROM
 						}
 					}
+					every_country = {
+						limit = {
+							171 = { is_core_of = PREV }
+						}
+						set_country_flag = give_core_back_glc_171
+					}
 					if = {
 						limit = {
 							GLC = {
@@ -6036,6 +6081,12 @@ SOV_liberate_iberia = { #Liberate the Iberian Workers
 						    target = GLC
 						    type = annex_everything
 						}
+					}
+					every_country = {
+						limit = {
+							has_country_flag = give_core_back_glc_171
+						}
+						add_state_core = 171
 					}
 				}
 			}
@@ -6138,7 +6189,7 @@ SOV_liberate_iberia = { #Liberate the Iberian Workers
 	}
 
 	outcome_potential = {
-		custom_effect_tooltip = SOV_liberate_iberian_tt
+		custom_effect_tooltip = SOV_liberate_iberia_tt
 		SOV = {
 			army_experience = 50
 			air_experience = 50
