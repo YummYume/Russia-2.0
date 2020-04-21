@@ -1015,7 +1015,7 @@ country_event = {
 	id = soviets.29
 	title = soviets.29.t
 	desc = soviets.29.d
-	picture = GFX_report_event_stalin_meeting
+	picture = GFX_report_event_communists_cheer
 	
 	trigger = {
 		country_exists = SOV
@@ -1862,6 +1862,7 @@ country_event = {
 	
 	option = { #Our Hero Is Back !
 		name = soviets.51.a
+		custom_effect_tooltip = SOV_trotsky_return
 		set_global_flag = Trotsky_return
 	}
 }
@@ -2092,6 +2093,11 @@ country_event = {
 				picture = "gfx/leaders/SOV/Nikitafinal.dds"
 				ideology = stalinism
 			}
+			hidden_effect = {
+				UKR = {
+					retire_ideology_leader = communism
+				}
+			}	
 		}
 
 		else_if = {
@@ -2113,7 +2119,7 @@ country_event = {
 	}
 }
 
-#Stalin Death - 1953
+#Stalin's Death - 1953
 country_event = {
 	id = soviets.60
 	title = soviets.60.t
@@ -2145,6 +2151,11 @@ country_event = {
 				expire = "1965.1.1"
 				ideology = stalinism
 			}
+			hidden_effect = {
+				UKR = {
+					retire_ideology_leader = communism
+				}
+			}	
 		}
 
 		else_if = {
@@ -2801,6 +2812,7 @@ country_event = {
 				set_politics = {
 					ruling_party = communism
 				}
+				retire_ideology_leader = communism
 				add_ideas = {
 					SOV_Ukrainian_revolt
 				}
@@ -3020,7 +3032,7 @@ country_event = {
 	}
 }
 
-#Rename KÃ¶nigsberg
+#Rename Königsberg
 country_event = {
 	id = soviets.83
 	title = soviets.83.t
@@ -3424,6 +3436,110 @@ country_event = {
 	}
 }
 
+#Event to Rename Stalingrad - Communist Only
+country_event = {
+	id = soviets.94
+	title = soviets.94.t
+	desc = soviets.94.d
+	picture = GFX_report_event_german_reichstag_gathering
+
+	fire_only_once = yes
+
+	trigger = {
+		TAG = SOV
+		SOV = {
+			NOT = {
+				OR = {
+					has_country_leader = {
+						name = "Joseph Stalin"
+						ruling_only = yes
+					}
+					has_country_leader = {
+						name = "Empty Parliament"
+						ruling_only = yes
+					}
+				}
+				has_war = yes
+			}
+		}
+	}
+
+	mean_time_to_happen = { days = 10 }
+
+	option = { #Nikita Is the Leader
+		name = soviets.94.a
+		trigger = {
+			SOV = {
+				has_country_leader = {
+					name = "Nikita Khrushchev"
+					ruling_only = yes
+				}
+			}
+		}
+		set_province_name = { id = 3529 name = "Volgograd"}
+		hidden_effect = {
+			217 = {
+				set_state_name = "Volgograd"
+			}
+		}	
+	}
+
+	option = { #Trotsky Is the Leader
+		name = soviets.94.b
+		trigger = {
+			SOV = {
+				has_country_leader = {
+					name = "Leon Trotsky"
+					ruling_only = yes
+				}
+			}
+		}
+		set_province_name = { id = 3529 name = "Trotskygrad"}
+		hidden_effect = {
+			217 = {
+				set_state_name = "Trotskygrad"
+			}
+		}
+	}
+
+	option = { #Vasily Is the Leader
+		name = soviets.94.c
+		trigger = {
+			SOV = {
+				has_country_leader = {
+					name = "Vasily Stalin"
+					ruling_only = yes
+				}
+			}
+		}
+		set_province_name = { id = 3529 name = "Vasilygrad"}
+		hidden_effect = {
+			217 = {
+				set_state_name = "Vasilygrad"
+			}
+		}
+	}
+
+	option = { #Vasily or Nikita Is the Leader
+		name = soviets.94.e
+		trigger = {
+			SOV = {
+				OR = {
+					has_country_leader = {
+						name = "Vasily Stalin"
+						ruling_only = yes
+					}
+					has_country_leader = {
+						name = "Nikita Khrushchev"
+						ruling_only = yes
+					}
+				}
+			}
+		}
+	}
+}
+
+#Germany Refuses Surrender
 country_event = {
 	id = soviets.95
 	title = soviets.95.t
