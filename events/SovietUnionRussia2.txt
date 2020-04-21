@@ -539,6 +539,7 @@ country_event = {
 		every_army_leader = {
 			add_attack = 1
 		}
+		add_ideas = SOV_new_officers_attack
 	}
 	
 	option = { #defense
@@ -547,6 +548,7 @@ country_event = {
 		every_army_leader = {
 			add_defense = 1
 		}
+		add_ideas = SOV_new_officers_defense
 	}
 
 	option = { #logistic
@@ -555,6 +557,7 @@ country_event = {
 		every_army_leader = {
 			add_logistics = 1
 		}
+		add_ideas = SOV_new_officers_logistics
 	}
 
 	option = { #planning
@@ -563,10 +566,11 @@ country_event = {
 		every_army_leader = {
 			add_planning = 1
 		}
+		add_ideas = SOV_new_officers_planning
 	}	
 }
 
-#Katyń Massacre
+#Katyń Massacre (wtf is up with the name?)
 country_event = {
 	id = soviets.21
 	title = soviets.21.t
@@ -614,7 +618,7 @@ country_event = {
 	}
 }
 
-#Germany Discover the Massacre
+#Germany Discovers the Massacre
 country_event = {
 	id = soviets.22
 	title = soviets.22.t
@@ -642,6 +646,18 @@ country_event = {
 		name = soviets.22.a
 		hidden_effect = {
 			news_event = { days = 1 id = newsrussia2.23 }
+		}
+		SOV = {
+			add_opinion_modifier = {
+				target = GER
+				modifier = denounced_katyn_massacre
+			}
+		}
+		POL = {
+			add_opinion_modifier = {
+				target = SOV
+				modifier = katyn_massacre
+			}
 		}
 	}
 }
@@ -1122,6 +1138,9 @@ country_event = {
 			target = JAP
 			generator = { 537 }
 		}
+		hidden_effect = {
+			news_event = { days = 1 id = newsrussia2.56 }
+		}
 	}
 }
 
@@ -1197,8 +1216,11 @@ country_event = {
 	
 	option = {
 		name = soviets.36.a
-		add_political_power = -100
+		add_political_power = -200
 		add_war_support = -0.05
+		hidden_effect = {
+			news_event = { days = 1 id = newsrussia2.57 }
+		}
 	}
 }
 
@@ -2068,7 +2090,6 @@ country_event = {
 			create_country_leader = {
 				name = "Nikita Khrushchev"
 				picture = "gfx/leaders/SOV/Nikitafinal.dds"
-				expire = "1965.1.1"
 				ideology = stalinism
 			}
 		}
@@ -2081,10 +2102,13 @@ country_event = {
 			create_country_leader = {
 				name = "Vasily Stalin"
 				picture = "gfx/leaders/SOV/Vasily_Stalin.dds"
-				expire = "1965.1.1"
 				ideology = stalinism
 			}
-		}	
+			hidden_effect = {
+				add_country_leader_trait = unplanned_sortie
+				add_country_leader_trait = new_hope
+			}
+		}
 		news_event = { id = newsrussia2.32 days = 1 }	
 	}
 }
@@ -3397,5 +3421,21 @@ country_event = {
 			ideology = stalinism
 		}
 		set_global_flag = Trotsky_return
+	}
+}
+
+country_event = {
+	id = soviets.95
+	title = soviets.95.t
+	desc = soviets.95.d
+	picture = GFX_report_event_hungary_refused
+
+	is_triggered_only = yes
+
+	option = {
+		name = soviets.95.a
+		ai_chance = {
+			factor = 100
+		}
 	}
 }
