@@ -2573,36 +2573,39 @@ country_event = {
 	option = { #Accept
 		name = soviets.76.a
 		ai_chance = { factor = 80 }
+		custom_effect_tooltip = SOV_one_china_proposal_tt
 		SOV = { 
 			add_to_faction = ROOT
 			country_event = { id = soviets.77 days = 1 }
 		}
-		every_country = {
-			limit = {
-				OR = {
-					tag = MAN
-					tag = MEN
-					tag = SHX
-					tag = CHI
-					tag = XSM
-					tag = SIK
-					tag = GXC
-					tag = YUN
-				}
-				NOT = {
+		hidden_effect = {
+			every_country = {
+				limit = {
 					OR = {
-						has_government = communism
-						is_in_faction_with = SOV
+						tag = MAN
+						tag = MEN
+						tag = SHX
+						tag = CHI
+						tag = XSM
+						tag = SIK
+						tag = GXC
+						tag = YUN
+					}
+					NOT = {
+						OR = {
+							has_government = communism
+							is_in_faction_with = SOV
+						}
+					}
+					any_owned_state = {
+						is_core_of = PRC
 					}
 				}
-				any_owned_state = {
-				    is_core_of = PRC
-				}
-			}
-			ROOT = {
-				create_wargoal = {
-					type = annex_everything
-					target = PREV
+				ROOT = {
+					create_wargoal = {
+						type = annex_everything
+						target = PREV
+					}
 				}
 			}
 		}
