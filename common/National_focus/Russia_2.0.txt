@@ -3249,8 +3249,25 @@ focus_tree = {
 			add_state_claim = 146
 			add_state_claim = 147
 			add_state_claim = 722
-			FIN = {
-				country_event = { id = finlands.1 }
+			if = {
+				limit = {
+					FIN = {
+						is_subject = yes
+					}
+				}
+				every_country = {
+					limit = {
+						FIN = {
+							is_subject_of = PREV
+						}
+					}
+					country_event = { id = finlands.1 }
+				}
+			}
+			else = {
+				FIN = {
+					country_event = { id = finlands.1 }
+				}
 			}
 		}
 	}
@@ -3365,14 +3382,22 @@ focus_tree = {
 		ai_will_do = {
 			factor = 6
 		}
-		bypass = {
-			NOT = { country_exists = TAN }
-		}
 		available = {
 			country_exists = TAN
-			OR = {
-				TAN = { is_in_faction_with = SOV }
-				TAN = { has_government = ROOT }
+			TAN = {
+				OR = {
+					is_in_faction_with = SOV
+					has_government = ROOT
+				}
+			}
+		}
+		bypass = {
+			TAN = {
+				OR = {
+					exists = no
+					NOT = { is_in_faction_with = SOV }
+					NOT = { has_government = ROOT }
+				}
 			}
 		}
 		search_filters = {FOCUS_FILTER_ANNEXATION}
@@ -3395,11 +3420,16 @@ focus_tree = {
 			factor = 4
 		}
 		available = {
-			AND = {
-				MON = { has_government = ROOT }
-				MON = { is_in_faction_with = SOV }
+			MON = {
+				exists = yes
+				is_subject = no
 			}
-			country_exists = MON
+			MON = {
+				AND = {
+					has_government = ROOT
+					is_in_faction_with = SOV
+				}
+			}
 		}
 		search_filters = {FOCUS_FILTER_ANNEXATION}
 		completion_reward = {
@@ -5530,6 +5560,13 @@ focus_tree = {
 		    name = "Joseph Stalin"
 			}
 		}
+		bypass = {
+			NOT = {
+				has_country_leader = {
+			    	name = "Joseph Stalin"
+				}
+			}
+		}
 		search_filters = { FOCUS_FILTER_POLITICAL }
 		completion_reward = {
 			custom_effect_tooltip = SOV_stalin_consti_tt
@@ -5572,7 +5609,7 @@ focus_tree = {
 		prerequisite = { focus = SOV_stalin_consti }
 		mutually_exclusive = { focus = SOV_the_nkvd }
 		icon = GFX_goal_generic_small_arms
-		cost = 10
+		cost = 8
 		ai_will_do = {
 			factor = 5
 		}
@@ -5622,7 +5659,7 @@ focus_tree = {
 		prerequisite = { focus = SOV_stalin_consti }
 		mutually_exclusive = { focus = SOV_rehabilitated_mil }
 		icon = GFX_goal_generic_military_deal
-		cost = 10
+		cost = 8
 		ai_will_do = {
 			factor = 5
 		}
@@ -5665,7 +5702,7 @@ focus_tree = {
 		y = 5
 		prerequisite = { focus = SOV_nkvd_spies focus = SOV_mil_reogranisation }
 		icon = GFX_goal_generic_military_sphere
-		cost = 10
+		cost = 8
 		ai_will_do = {
 			factor = 6
 		}
@@ -5673,7 +5710,10 @@ focus_tree = {
 			has_government = communism
 			OR = {
 				date > 1941.1.1
-				has_country_flag = SOV_war_since_purge
+				any_country = {
+					is_major = yes
+					has_war_with = SOV
+				}
 			}
 		}
 		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_RESEARCH }	
@@ -5725,6 +5765,13 @@ focus_tree = {
 			is_subject = no
 			has_country_leader = {
 		    name = "Joseph Stalin"
+			}
+		}
+		bypass = {
+			NOT = {
+				has_country_leader = {
+			    	name = "Joseph Stalin"
+				}
 			}
 		}
 		search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_POLITICAL }
@@ -6531,33 +6578,17 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_ANNEXATION }
 		completion_reward = {
 			add_state_claim = 341
-			if = {
-			    limit = {
-			        country_exists = AFG
-			        AFG = { is_subject = no }
-			    }
-				AFG = { country_event = { days = 1 id = generics.2 } }
-			}
-			if = {
-			    limit = {
-			        country_exists = PER
-			        PER = { is_subject = no }
-			    }
-				PER = { country_event = { days = 1 id = generics.2 } }
-			}
-			if = {
-			    limit = {
-			        country_exists = IRQ
-			        IRQ = { is_subject = no }
-			    }
-				IRQ = { country_event = { days = 1 id = generics.2 } }
-			}
-			if = {
-			    limit = {
-			        country_exists = TUR
-			        TUR = { is_subject = no }
-			    }
-				TUR = { country_event = { days = 1 id = generics.2 } }
+			every_country = {
+				limit = {
+					OR = {
+						tag = AFG
+						tag = PER
+						tag = IRQ
+						tag = TUR
+					}
+					is_subject = no
+				}
+				country_event = { days = 1 id = generics.2 }
 			}
 			hidden_effect = {
 				news_event = { hours = 6 id = newsrussia2.22 }
@@ -6617,7 +6648,10 @@ focus_tree = {
 			has_war = no
 			country_exists = GER
 			GER = {
-				has_war = yes
+				OR = {
+					has_added_tension_amount > 25
+					has_war = yes
+				}
 				NOT = { has_government = communism }
 			}
 			NOT = {
@@ -6637,6 +6671,7 @@ focus_tree = {
 				GER = {
 					has_government = communism
 				}
+				date > 1945.5.8
 			}
 		}
 		search_filters = { FOCUS_FILTER_ANNEXATION }
@@ -6689,7 +6724,7 @@ focus_tree = {
 		y = 11
 		prerequisite = { focus = SOV_officially_join_war }
 		icon = GFX_goal_tfv_burn_the_royal_portraits
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			factor = 8
 		}
@@ -6698,6 +6733,7 @@ focus_tree = {
 			has_war = yes
 		}
 		search_filters = { FOCUS_FILTER_MANPOWER }
+		continue_if_invalid = yes
 		completion_reward = {
 			add_ideas = { SOV_For_the_motherland }
 		}
@@ -6965,7 +7001,10 @@ focus_tree = {
 					is_subject_of = ENG
 				}
 			}
-			PER = { fascism > 0.25 }
+			OR = {
+				PER = { fascism > 0.25 }
+				date > 1941.8.25
+			}
 		}
 		search_filters = {FOCUS_FILTER_ANNEXATION}
 		completion_reward = {
@@ -6990,7 +7029,14 @@ focus_tree = {
 		}
 		bypass = {
 			OR = {
-				GER = { has_capitulated = yes }
+				GER = { 
+					OR = {
+						has_capitulated = yes
+						exists = no
+						is_puppet = yes
+						is_major = no
+					}
+				}
 				date > 1945.9.2
 				custom_trigger_tooltip = {
 		    		tooltip = SOV_yalta_over_tt
@@ -7963,6 +8009,7 @@ focus_tree = {
 			is_faction_leader = yes
 			is_subject = no
 		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
 		completion_reward = {
 			custom_effect_tooltip = SOV_help_minor_communist_countries_europe_tt
 		}
@@ -7983,6 +8030,7 @@ focus_tree = {
 			has_government = communism
 			is_subject = no
 		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
 		completion_reward = {
 			swap_ideas = {
 			    remove_idea = SOV_Rebuild_country
@@ -8007,6 +8055,7 @@ focus_tree = {
 			has_government = communism
 			is_subject = no
 		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
 		completion_reward = {
 			swap_ideas = {
 			    remove_idea = SOV_Rebuild_country2
@@ -8059,6 +8108,7 @@ focus_tree = {
 				}
 			}
 		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
 		completion_reward = {
 			set_variable = {
 			    var = ukrainian_revolt_factor
@@ -8095,6 +8145,7 @@ focus_tree = {
 				has_country_flag = SOV_enough_time_rebuild_country
 			}
 		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
 		completion_reward = {
 			remove_ideas = SOV_Rebuild_country3
 		}
@@ -8115,6 +8166,7 @@ focus_tree = {
 			has_government = communism
 			is_subject = no
 		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
 		completion_reward = {
 			add_ideas = SOV_Country_rebuilt
 			add_timed_idea = { idea = SOV_Selling_license days = 365 }
@@ -8136,6 +8188,7 @@ focus_tree = {
 			has_government = communism
 			is_subject = no
 		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
 		completion_reward = {
 			add_ideas = SOV_Country_rebuilt
 		}
@@ -8159,6 +8212,7 @@ focus_tree = {
 			    name = "Leon Trotsky"
 			}
 		}
+		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
 			custom_effect_tooltip = SOV_one_man_above_tt
 			hidden_effect = {
@@ -8182,6 +8236,7 @@ focus_tree = {
 			has_government = communism
 			is_subject = no
 		}
+		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
 			add_popularity = {
 			    ideology = communism
@@ -8206,6 +8261,7 @@ focus_tree = {
 			has_government = communism
 			is_subject = no
 		}
+		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
 			custom_effect_tooltip = SOV_european_revolution_tt
 			custom_effect_tooltip = SOV_european_revolution_tt2
@@ -8229,6 +8285,7 @@ focus_tree = {
 			has_government = communism
 			is_subject = no
 		}
+		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
 			custom_effect_tooltip = SOV_african_revolution_tt
 			custom_effect_tooltip = SOV_african_revolution_tt2
@@ -8252,6 +8309,7 @@ focus_tree = {
 			has_government = communism
 			is_subject = no
 		}
+		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
 			custom_effect_tooltip = SOV_asian_revolution_tt
 			custom_effect_tooltip = SOV_asian_revolution_tt2
@@ -8275,6 +8333,7 @@ focus_tree = {
 			has_government = communism
 			is_subject = no
 		}
+		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
 			custom_effect_tooltip = SOV_liberation_of_the_workers_tt
 		}
@@ -8333,6 +8392,7 @@ focus_tree = {
 			    name = "Leon Trotsky"
 			}
 		}
+		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
 			swap_ruler_traits = { remove = counter_revolutionist add = true_revolutionist }
 		}
@@ -8354,6 +8414,7 @@ focus_tree = {
 			is_subject = no
 			is_major = yes
 		}
+		search_filters = {FOCUS_FILTER_ANNEXATION}
 		completion_reward = {
 			custom_effect_tooltip = SOV_revolution_to_the_utmost_tt
 			unlock_decision_tooltip = SOV_end_revolution
