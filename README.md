@@ -20,7 +20,7 @@ Some things to note : The mod is NOT released yet, this is a beta testing versio
 
 This mod has been developed for a few months now, and we are pretty happy with how far we got, however, feedback is really needed. So don't hesitate to tell ideas you might have, the issues you encounter or anything else you have in mind.
 
-The mod is not Achievement Compatible. The 1939 start date doesn't work yet (will be done later).
+The mod is not Achievement Compatible. The 1939 start date now works.
 The AI can play the Soviet Union, some factors have been added but it is not optimal yet.
 
 Discord : Yam#2937 and Яaider#8659
