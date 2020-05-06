@@ -32,7 +32,17 @@ country_event = {
 		SOV = {
 			country_event = { days = 5 id = soviets.6 }
 		}
-		custom_effect_tooltip = SOV_game_totally_over_TT
+		if = {
+			limit = {
+				NOT = {
+					tag = EST
+				}
+ 			}
+			custom_effect_tooltip = SOV_estonia_is_puppet_tt
+		}
+		else = {
+			custom_effect_tooltip = SOV_game_totally_over_TT
+		}
 	}
 	option = { # Refuse
 		name = baltics.1.b
@@ -65,7 +75,15 @@ country_event = {
 					target = EST
 				}	
 			}
-		}	
+		}
+		if = {
+			limit = {
+				NOT = {
+					tag = EST
+				}
+ 			}
+			custom_effect_tooltip = SOV_estonia_is_puppet_tt
+		}
 	}
 }
 
@@ -97,9 +115,19 @@ country_event = {
 				}
 			}
 		}
-
 		SOV = {
 			country_event = { days = 5 id = soviets.8 }
+		}
+		if = {
+			limit = {
+				NOT = {
+					tag = LAT
+				}
+ 			}
+			custom_effect_tooltip = SOV_latvia_is_puppet_tt
+		}
+		else = {
+			custom_effect_tooltip = SOV_game_totally_over_TT
 		}
 	}
 	option = { # Refuse
@@ -124,7 +152,6 @@ country_event = {
 				}
 			}
 		}
-
 		SOV = {
 			country_event = { days = 5 id = soviets.9 }
 			effect_tooltip = {
@@ -133,7 +160,15 @@ country_event = {
 					target = LAT
 				}
 			}
-		}	
+		}
+		if = {
+			limit = {
+				NOT = {
+					tag = LAT
+				}
+ 			}
+			custom_effect_tooltip = SOV_latvia_is_puppet_tt
+		}
 	}
 }
 
@@ -165,9 +200,19 @@ country_event = {
 				}
 			}
 		}
-
 		SOV = {
 			country_event = { days = 5 id = soviets.10 }	
+		}
+		if = {
+			limit = {
+				NOT = {
+					tag = LIT
+				}
+ 			}
+			custom_effect_tooltip = SOV_lithuania_is_puppet_tt
+		}
+		else = {
+			custom_effect_tooltip = SOV_game_totally_over_TT
 		}
 	}
 	option = { # Refuse
@@ -192,7 +237,6 @@ country_event = {
 				}
 			}
 		}
-
 		SOV = {
 			country_event = { days = 5 id = soviets.11 }
 			effect_tooltip = {
@@ -201,11 +245,19 @@ country_event = {
 				target = LIT
 				}		
 			}
-		}	
+		}
+		if = {
+			limit = {
+				NOT = {
+					tag = LIT
+				}
+ 			}
+			custom_effect_tooltip = SOV_lithuania_is_puppet_tt
+		}
 	}
 }
 
-# Country becomes communist. Get's event to become part of the Soviet Union
+# Country becomes Communist. Gets event to become part of the Soviet Union
 country_event = {
 	id = baltics.5
 	title = baltics.5.t
@@ -215,7 +267,7 @@ country_event = {
 	trigger = {
 		SOV = { has_government = communism }
 		NOT = { has_country_flag = baltics.5_fired }
-		NOT = { is_puppet_of = SOV }
+		NOT = { is_subject_of = SOV }
 		OR = {
 			tag = LIT
 			tag = EST
@@ -243,7 +295,7 @@ country_event = {
 			}
 			modifier = {
 				factor = 0.5
-				is_puppet = yes
+				is_subject = yes
 			}
 		}
 		SOV =	{ country_event = { id = soviets.4 days = 1 } }
@@ -261,7 +313,7 @@ country_event = {
 	option = { # Stay as own communist state
 		name = baltics.5.c
 		trigger = {
-			is_puppet = no
+			is_subject = no
 		}
 		ai_chance = { factor = 5 }
 	}
