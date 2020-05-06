@@ -1,0 +1,165 @@
+###########################
+# Spanish Events
+###########################
+
+add_namespace = spains
+
+#Spanish Invitation to the International
+country_event = {
+	id = spains.1
+	title = spains.1.t
+	desc = spains.1.d
+	picture = GFX_report_event_generic_sign_treaty1
+	
+	is_triggered_only = yes
+	
+	option = { #Accepts
+		ai_chance = {
+			factor = 65
+			modifier = {
+				has_government = communism
+				factor = 100
+			}	
+		}	
+		name = spains.1.a
+		SOV = {
+			add_to_faction = SPR 
+			country_event = { id = spains.2 days = 1 }
+		}
+	}
+
+	option = { #Refuse
+		ai_chance = {
+			factor = 35
+			modifier = {
+				has_government = communism
+				factor = 0
+			}			
+		}	
+		name = spains.1.b
+		SOV = {
+			country_event = { id = spains.3 days = 1 }
+		}
+	}
+}
+
+#Spain Accepts the Invitation
+country_event = {
+	id = spains.2
+	title = spains.2.t
+	desc = spains.2.d
+	picture = GFX_report_event_hitler_handshake
+	
+	is_triggered_only = yes
+	
+	option = { #Good
+		name = spains.2.a
+		hidden_effect = {
+			news_event = { id = newsrussia2.45 days = 1 }
+		}		
+	}
+}
+
+#Spain Refuse the Invitation
+country_event = {
+	id = spains.3
+	title = spains.3.t
+	desc = spains.3.d
+	picture = GFX_report_event_generic_parliament
+	
+	is_triggered_only = yes
+	
+	option = { #Bad
+		name = spains.3.a
+	}
+}
+
+#Spain gets Soviet Proposition for Volunteers
+country_event = {
+	id = spains.4
+	title = spains.4.t
+	desc = spains.4.d
+	picture = GFX_report_event_spr_solidify_the_frontlines
+
+	is_triggered_only = yes
+
+	option = { # Accept
+		ai_chance = { factor = 80 }
+		name = spains.4.a	
+		SPR = {
+			division_template = {
+				name = "Soviet Volunteers"
+				priority = 1
+				regiments = {
+					infantry = { x = 0 y = 0 }
+					infantry = { x = 0 y = 1 }
+					infantry = { x = 0 y = 2 }
+				}
+				support = {
+					artillery = { x = 0 y = 0 }
+				}
+			}
+			set_division_template_lock = {
+			    division_template = "Soviet Volunteers"
+			    is_locked = yes
+			}
+			random_owned_controlled_state = {
+				create_unit = {
+					division = "name = \"Soviet Volunteers\" division_template = \"Soviet Volunteers\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
+					owner = SPR
+				}
+			}
+			random_owned_controlled_state = {
+				create_unit = {
+					division = "name = \"Soviet Volunteers\" division_template = \"Soviet Volunteers\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
+					owner = SPR
+				}
+			}
+			random_owned_controlled_state = {
+				create_unit = {
+					division = "name = \"Soviet Volunteers\" division_template = \"Soviet Volunteers\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
+					owner = SPR
+				}	
+			}	
+		}
+		SOV = {
+			country_event = { id = spains.5 days = 1 }
+		}	
+	}
+
+	option = { #Refuse
+		ai_chance = { factor = 20 }	
+		name = spains.4.b
+		SOV = {
+			country_event = { id = spains.6 days = 1 }
+		}	
+	}
+}
+
+#Spain Accept
+country_event = {
+	id = spains.5
+	title = spains.5.t
+	desc = spains.5.d
+	picture = GFX_report_event_hitler_handshake
+	
+	is_triggered_only = yes
+	
+	option = { # Good
+		name = spains.5.a
+	}
+}
+
+#Spain Refuse
+country_event = {
+	id = spains.6
+	title = spains.6.t
+	desc = spains.6.d
+	picture = GFX_report_event_generic_parliament
+	
+	is_triggered_only = yes
+	
+	option = { # Good
+		name = spains.6.a
+	}
+}

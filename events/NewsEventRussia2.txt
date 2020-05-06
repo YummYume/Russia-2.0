@@ -3152,3 +3152,156 @@ news_event = {
 		}
 	}
 }
+
+#Eastern Poland Ceded to the Soviet Union
+news_event = {
+	id = newsrussia2.60
+	title = newsrussia2.60.t
+	desc = newsrussia2.60.d
+	picture = GFX_news_event_generic_sign_treaty1
+
+	major = yes
+
+	is_triggered_only = yes
+
+	immediate = {
+		POL = {
+			save_event_target_as = Poland
+		}
+	}
+
+	#[Poland.GetName] recognises the strength of the [From.GetFactionName]!
+	option = {
+		name = newsrussia2.60.a
+		trigger = {
+			is_in_faction_with = SOV
+		}
+	}
+
+	#The [From.GetName] consumes everything in its path.
+	option = {
+		name = newsrussia2.60.b
+		trigger = {
+			NOT = {
+				is_in_faction_with = SOV
+			}
+			is_in_faction = yes
+		}
+	}
+
+	#[Poland.GetName] must have been left with no other choice.
+	option = {
+		name = newsrussia2.60.c
+		trigger = {
+			is_in_faction = no
+		}
+	}
+}
+
+#[Romania.GetName] Cedes Bessarabia to the [From.GetName]
+news_event = {
+	id = newsrussia2.61
+	title = newsrussia2.61.t
+	desc = newsrussia2.61.d
+	picture = GFX_news_events_generic_sign_treaty2
+
+	major = yes
+
+	is_triggered_only = yes
+
+	immediate = {
+		ROM = {
+			save_event_target_as = Romania
+		}
+	}
+
+	#This is essential to the [From.GetAdjective] strategy.
+	option = {
+		name = newsrussia2.61.a
+		trigger = {
+			is_in_faction_with = SOV
+			NOT = { TAG = SOV }
+		}
+	}
+
+	#The countries of the world must face the evil of the [From.GetName]!
+	option = {
+		name = newsrussia2.61.b
+		trigger = {
+			has_war_with = SOV
+			NOT = { TAG = GER }
+		}
+	}
+
+	#[PREV.GetName] is in an unfortunate position. 
+	option = {
+		name = newsrussia2.61.c
+		trigger = {
+			NOT = {
+				is_in_faction_with = SOV
+			}
+			NOT = {
+				has_war_with = SOV
+			}
+			NOT = {
+				OR = {
+					TAG = GER
+					TAG = PREV
+				}
+			}
+		}
+	}
+
+	#Is Soviet
+	option = {
+		name = newsrussia2.61.e
+		trigger = { TAG = SOV }
+	}
+
+	#Is Germany
+	option = {
+		name = newsrussia2.61.f
+		trigger = { TAG = GER }
+	}
+
+	#IS PREV
+	option = {
+		name = newsrussia2.61.g
+		trigger = { TAG = PREV }
+	}
+}
+
+# Romania refuses to surrender Bessarabia
+news_event = {
+	id = newsrussia2.62
+	title = newsrussia2.62.t
+	desc = newsrussia2.62.d
+	picture = GFX_news_event_romanian_soldiers
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = newsrussia2.62.a
+		trigger = {
+			NOT = {
+				TAG = SOV
+				TAG = ROM
+				TAG = GER
+			}
+		}
+	}
+	option = {
+		name = newsrussia2.62.b
+		trigger = { TAG = SOV }
+	}
+	option = {
+		name = newsrussia2.62.c
+		trigger = { TAG = ROM }
+	}
+	option = {
+		name = newsrussia2.62.e
+		trigger = { TAG = GER }
+	}
+}

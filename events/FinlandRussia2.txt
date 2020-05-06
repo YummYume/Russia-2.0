@@ -32,7 +32,7 @@ country_event = {
 			}
 		}
 		SOV = {
-			country_event = { days = 5 id = soviets.1 }
+			country_event = { days = 5 id = finlands.4 }
 			effect_tooltip = {
 				transfer_state = 146
 				transfer_state = 147
@@ -59,7 +59,7 @@ country_event = {
 			}
 		}
 		SOV = {
-			country_event = { days = 5 id = soviets.3 }
+			country_event = { days = 5 id = finlands.6 }
 			effect_tooltip = {
 				puppet = FIN
 				custom_effect_tooltip = needs_approval
@@ -79,7 +79,7 @@ country_event = {
 		name = finlands.1.b
 		ai_chance = { factor = 50 }
 		SOV = {
-			country_event = { days = 5 id = soviets.2 }
+			country_event = { days = 5 id = finlands.5 }
 			effect_tooltip = {
 				create_wargoal = {
 					type = take_state
@@ -146,5 +146,81 @@ country_event = {
 	option = { #we're better as an independent country
 		name = finlands.3.b
 		ai_chance = { factor = 10 }
+	}
+}
+
+# Finland Accepts Demands
+country_event = {
+	id = finlands.4
+	title = finlands.4.t
+	desc = finlands.4.d
+	picture = GFX_report_event_soviet_finnish_pact
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = finlands.4.a
+		SOV = { 
+			transfer_state = 146
+			transfer_state = 147
+			transfer_state = 722
+		}
+		hidden_effect = {
+			news_event = { days = 1 id = newsrussia2.3 }
+		}
+	}
+}
+
+# Finland Refuses Demands
+country_event = {
+	id = finlands.5
+	title = finlands.5.t
+	desc = finlands.5.d
+	picture = GFX_report_event_soviet_tanks_snow
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = finlands.5.a
+		create_wargoal = {
+			type = take_state
+			target = FIN
+			generator = { 146 147 722 }
+		}
+		hidden_effect = {
+			news_event = { days = 1 id = newsrussia2.2 }				
+		}
+	}
+}
+
+# Finland Becomes Puppet
+country_event = {
+	id = finlands.6
+	title = finlands.6.t
+	desc = finlands.6.d
+	picture = GFX_report_event_soviet_finnish_pact
+
+	is_triggered_only = yes
+
+	option = { # Soviet accepts
+		name = finlands.6.a
+		ai_chance = { factor = 80 }
+		SOV = { puppet = FIN }
+		hidden_effect = {
+			news_event = { days = 1 id = newsrussia2.4 }
+		}
+	}
+
+	option = { # Soviet refuses
+		name = finlands.6.b
+		ai_chance = { factor = 20 }
+		create_wargoal = {
+			type = take_state
+			target = FIN
+			generator = { 146 147 722 }
+		}
+		FIN = {
+			country_event = { days = 5 id = finlands.2 }
+		}
 	}
 }
