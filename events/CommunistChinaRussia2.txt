@@ -83,3 +83,93 @@ country_event = {
 		}
 	}
 }
+
+#Communist China (or Sinkiang) Gets an Invitation to the 4th International
+country_event = {
+	id = wtt_prcs.3
+	title = wtt_prcs.3.t
+	desc = wtt_prcs.3.d
+	picture = GFX_report_event_generic_sign_treaty2
+	
+	is_triggered_only = yes
+	
+	option = { #Accept
+		name = wtt_prcs.3.a
+		ai_chance = { factor = 80 }
+		custom_effect_tooltip = SOV_one_china_proposal_tt
+		SOV = { 
+			add_to_faction = ROOT
+			country_event = { id = wtt_prcs.4 days = 1 }
+		}
+		hidden_effect = {
+			every_country = {
+				limit = {
+					OR = {
+						tag = MAN
+						tag = MEN
+						tag = SHX
+						tag = CHI
+						tag = XSM
+						tag = SIK
+						tag = GXC
+						tag = YUN
+					}
+					NOT = {
+						OR = {
+							has_government = communism
+							is_in_faction_with = SOV
+						}
+					}
+					any_owned_state = {
+						is_core_of = PRC
+					}
+				}
+				ROOT = {
+					create_wargoal = {
+						type = annex_everything
+						target = PREV
+					}
+				}
+			}
+		}
+		hidden_effect = {
+			news_event = { id = newsrussia2.47 days = 1 }
+		}
+	}
+
+	option = { #Refuse
+		name = wtt_prcs.3.b
+		ai_chance = { factor = 20 }
+		SOV = {
+			country_event = { id = wtt_prcs.5 days = 1 }
+		}
+	}
+}
+
+#Communist China Accepts
+country_event = {
+	id = wtt_prcs.4
+	title = wtt_prcs.4.t
+	desc = wtt_prcs.4.d
+	picture = GFX_report_event_hitler_handshake
+	
+	is_triggered_only = yes
+	
+	option = { #Nice
+		name = wtt_prcs.4.a
+	}
+}
+
+#Communist China Refuses
+country_event = {
+	id = wtt_prcs.5
+	title = wtt_prcs.5.t
+	desc = wtt_prcs.5.d
+	picture = GFX_report_event_generic_parliament
+	
+	is_triggered_only = yes
+	
+	option = { #Bad
+		name = wtt_prcs.5.a
+	}
+}
