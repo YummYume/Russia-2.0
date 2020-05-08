@@ -3109,3 +3109,42 @@ country_event = {
 		}
 	}
 }
+
+#Unholy alliance - USA Can be Annexed Due to the Risk of Capitulation
+country_event = {
+	id = soviets.97
+	title = soviets.97.t
+	desc = soviets.97.d
+	picture = GFX_report_event_ger_civil_war
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = SOV
+		SOV = {
+			has_war = yes
+			NOT = {
+				has_capitulated = yes
+			}
+		}
+		USA = {
+			is_in_faction_with = SOV
+			has_country_flag = unholy_alliance
+			surrender_progress > 0.7
+			has_war = yes
+		}
+	}
+
+	mean_time_to_happen = { days = 2 }
+
+	option = { #Send the proposition 
+		name = soviets.97.a
+		USA = {
+			country_event = { days = 1 id = americas.4 }
+		}
+	}
+
+	option = { #They can manage on their own
+		name = soviets.97.b
+	}
+}

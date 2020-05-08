@@ -20,6 +20,9 @@ country_event = {
 			add_to_faction = USA 
 			country_event = { id = americas.2 days = 1 }
 		}
+		USA = {
+			set_country_flag = unholy_alliance
+		}
 	}
 
 	option = { #Refuse
@@ -59,5 +62,206 @@ country_event = {
 	
 	option = { #Bad
 		name = americas.3.a
+	}
+}
+
+#USA Receive the Soviet Proposition of an Union
+country_event = {
+	id = americas.4
+	title = americas.4.t
+	desc = americas.4.d
+	picture = GFX_report_event_generic_read_write
+
+	is_triggered_only = yes
+
+	option = { #Accept
+		ai_chance = {
+			factor = 100
+			modifier = {
+				factor = 0
+				SOV = {
+					surrender_progress > 0.6
+				}
+			}
+		}
+		name = americas.4.a
+		SOV = {
+			country_event = { days = 1 id = americas.5 }
+		}
+	}
+
+	option = { #Refuse
+		ai_chance = {
+			factor = 0
+		}	
+		name = americas.4.b
+		SOV = {
+			country_event = { days = 1 id = americas.6 }
+		}
+	}
+}
+
+#USA Accepts the Proposition
+country_event = {
+	id = americas.5
+	title = americas.5.t
+	desc = americas.5.d
+	picture = GFX_report_event_generic_sign_treaty3
+
+	is_triggered_only = yes
+
+	option = { #Nice
+		name = americas.5.a
+		SOV = {
+			set_country_flag = fall_of_america
+		}
+		hidden_effect = {
+			every_state = {
+				limit = {
+					is_core_of = USA
+				}
+				SOV = {
+					add_state_core = PREV
+				}
+			}
+		}
+		USA = {
+			every_unit_leader = {
+				set_unit_leader_flag = flag_former_american_general
+				set_nationality = SOV
+			}
+			transfer_navy = {
+				target = SOV
+			}
+		}
+		SOV = {
+			annex_country = { target = USA transfer_troops = yes }
+		}
+		custom_effect_tooltip = SOV_soviet_american_cores
+		hidden_effect = {
+			news_event = { days = 1 id = newsrussia2.64 }
+			SOV = {
+				set_cosmetic_tag = SNAU
+			}
+		}
+	}
+}
+
+#USA Refuse the proposition
+country_event = {
+	id = americas.6
+	title = americas.6.t
+	desc = americas.6.d
+	picture = GFX_report_event_german_troops
+
+	is_triggered_only = yes
+
+	option = { # Fools
+		name = americas.6.a
+	}
+}
+
+#The War is Over - America Becomes Free
+country_event = {
+	id = americas.7
+	title = americas.7.t
+	desc = americas.7.d
+	picture = GFX_report_event_generic_rally
+
+	fire_only_once = yes
+
+	trigger = {
+		TAG = SOV
+		SOV = {
+			has_cosmetic_tag = SNAU
+			has_country_flag = fall_of_america
+			has_war = no
+			is_subject = no
+		}
+		OR = {
+			NOT = {
+				country_exists = USA
+			}
+			USA = {
+				is_subject_of = SOV
+			}
+		}
+	}
+
+	mean_time_to_happen = { days = 5 }
+
+	option = { #Release USA
+		name = americas.7.a
+		if = {
+			limit = {
+				has_cosmetic_tag = SNAU
+			}
+			drop_cosmetic_tag = yes
+		}
+
+		if = {
+			limit = {
+				NOT = {
+					country_exists = USA
+				}
+			}
+			release = USA
+		}
+
+		else_if = {
+			limit = {
+				USA = {
+					is_subject_of = SOV
+				}
+			}
+			set_autonomy = {
+				target = USA
+				autonomy_state = autonomy_free
+			}
+		}
+
+		if = {
+			limit = {
+				is_faction_leader = yes
+				USA = {
+					is_subject = no
+					is_in_faction = no
+				}
+			}
+			add_to_faction = USA
+		}
+
+		every_unit_leader = {
+			limit = {
+				has_unit_leader_flag = {
+					flag = flag_former_american_general
+				}
+			}
+			set_nationality = USA
+		}		
+
+		every_state = {
+			limit = {
+				is_core_of = SOV
+				is_core_of = USA
+			}
+			remove_core_of = SOV
+		}
+
+		hidden_effect = {
+			USA = {
+				transfer_state = 685
+				transfer_state = 686
+				transfer_state = 463
+				transfer_state = 642
+				transfer_state = 727
+				transfer_state = 630
+				transfer_state = 629
+				transfer_state = 631
+				transfer_state = 632
+				transfer_state = 638
+				transfer_state = 650
+			}
+		}
 	}
 }
