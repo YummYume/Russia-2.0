@@ -7,12 +7,16 @@ SOV_europe_expansion = {
 		icon = GFX_decision_generic_ignite_civil_war
 
      	available = {
+			date > 1939.09.17
 			NOT = {
 				POL = {
-					has_capitulated = yes
-					is_in_faction_with = ENG
+					OR = {
+						has_capitulated = yes
+						is_in_faction_with = ENG
+						is_in_faction_with = FRA
+					}
 				}
-			} 
+			}
      		country_exists = POL
      		has_idea = SOV_molotov_ribbentrop_pact
 			POL = {
@@ -38,6 +42,16 @@ SOV_europe_expansion = {
 		}
 
      	complete_effect = {
+			every_country = {
+				limit = {
+					has_guaranteed = POL
+				}
+				diplomatic_relation = {
+					country = POL
+					relation = guarantee
+					active = no
+				}
+			}
 			SOV = {
 				declare_war_on = {
 					target = POL
