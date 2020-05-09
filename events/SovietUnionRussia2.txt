@@ -3150,6 +3150,7 @@ country_event = {
 	mean_time_to_happen = { days = 2 }
 
 	option = { #Send the proposition 
+		ai_chance = { factor = 90 }	
 		name = soviets.97.a
 		USA = {
 			country_event = { days = 1 id = americas.4 }
@@ -3157,6 +3158,7 @@ country_event = {
 	}
 
 	option = { #They can manage on their own
+		ai_chance = { factor = 10 }	
 		name = soviets.97.b
 	}
 }
@@ -3171,19 +3173,35 @@ country_event = {
 	is_triggered_only = yes
 	
 	option = { #Accept
-		ai_chance = { factor = 90 }	
+		ai_chance = {
+			factor = 100
+			modifier = {
+				factor = 75
+				SOV = {
+					has_war = yes
+				}
+			}
+		}
 		name = soviets.98.a
 		SOV = { 
 			add_to_faction = PREV
 			country_event = { id = soviets.99 days = 1 }
 		}
 		hidden_effect = {
-			news_event = { id = newsrussia2.65 days = 3 }
+			news_event = { id = newsrussia2.65 days = 2 }
 		}
 	}
 
 	option = { #Refuse
-		ai_chance = { factor = 10 }	
+		ai_chance = {
+			factor = 0
+			modifier = {
+				factor = 25
+				SOV = {
+					has_war = yes
+				}
+			}
+		}
 		name = soviets.98.b
 		SOV = {
 			country_event = { id = soviets.100 days = 1 }
@@ -3191,7 +3209,7 @@ country_event = {
 	}
 }
 
-#Revolution Country Accept
+#Revolution Country Accepts
 country_event = {
 	id = soviets.99
 	title = soviets.99.t
@@ -3205,7 +3223,7 @@ country_event = {
 	}
 }
 
-#Revolution Country Refuse
+#Revolution Country Refuses
 country_event = {
 	id = soviets.100
 	title = soviets.100.t
