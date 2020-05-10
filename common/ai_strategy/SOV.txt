@@ -239,12 +239,12 @@ southern_thrust = {
 	ai_strategy = {
 		type = antagonize
 		id = "PER"
-		value = 200
+		value = 100
 	}
 	ai_strategy = {
 		type = antagonize
 		id = "AFG"
-		value = 200
+		value = 100
 	}	
 	ai_strategy = {
 		type = antagonize
@@ -254,10 +254,11 @@ southern_thrust = {
 	ai_strategy = {
 		type = antagonize
 		id = "TUR"
-		value = 300 # Gotta get Istanbul :)
+		value = 200 # Gotta get Istanbul :)
 	}
 }
 
+#Do not attack Turkey if they're protected
 ignore_turkey = {
 	enable = {
 		tag = SOV
@@ -333,6 +334,7 @@ ignore_turkey = {
 	}	
 }
 
+#Do not attack Afghanistan if they're protected
 ignore_afghanistan = {
 	enable = {
 		tag = SOV
@@ -402,6 +404,7 @@ ignore_afghanistan = {
 	}	
 }
 
+#Do not attack Iran if they're protected
 ignore_persia = {
 	enable = {
 		tag = SOV
@@ -471,6 +474,7 @@ ignore_persia = {
 	}	
 }
 
+#Do not attack Iraq if they're protected
 ignore_iraq = {
 	enable = {
 		tag = SOV
@@ -933,6 +937,7 @@ SOV_pp_spending = {
 	}
 }
 
+#Stop the peasants before it's too late
 SOV_stop_peasants = {
 	enable = {
 		original_tag = SOV
@@ -1829,3 +1834,519 @@ fire_the_revolutions_operations = {
 	}
 }
 
+#Garrison territory if enemy can naval invade like crazy
+SOV_home_land_is_not_safe = {
+	enable = {
+		tag = SOV
+		OR = {
+			has_war_with = ENG
+			has_war_with = USA
+			has_war_with = JAP
+			any_country = {
+				has_navy_size = {
+					size > 50
+				}
+				stockpile_ratio = {
+					archetype = convoy
+					ratio > 100
+				}
+				has_war_with = SOV
+			}
+		}
+	}
+
+	abort_when_not_enabled = yes
+	
+	ai_strategy = {
+		type = garrison
+		value = 60
+	}
+}
+
+#Prevent Portugal from bringing the Soviets against Germany in 1937
+SOV_stop_portugal_suicide = {
+	enable = {
+		tag = SOV
+		has_government = communism
+		POR = {
+			has_government = communism
+		}
+	}
+
+	abort = {
+		OR = {
+			any_country = {
+				is_major = yes
+				has_war_with = SOV
+				has_government = fascism
+			}
+			date > 1940.1.1
+		}
+	}
+	
+	ai_strategy = {
+		type = alliance
+		id = "POR"			
+		value = -5000
+	}
+
+	ai_strategy = {
+		type = dont_join_wars_with
+		id = POR
+		target_country = GER
+		value = 5000
+	}
+
+	ai_strategy = {
+		type = dont_join_wars_with
+		id = POR
+		target_country = ITA
+		value = 5000
+	}
+
+	ai_strategy = {
+		type = dont_join_wars_with
+		id = POR
+		target_country = JAP
+		value = 5000
+	}
+}
+
+#Do not attack Xibei San Ma if they're protected
+ignore_xibei = {
+	enable = {
+		OR = {
+			tag = SOV
+			tag = PRC
+			tag = SIK
+		}
+		SOV = {
+			OR = {
+				has_completed_focus = SOV_force_chinese_unification
+				has_completed_focus = SOV_one_china
+			}
+		}
+		has_wargoal_against = XSM
+		OR = {
+			any_country = {
+				OR = {
+					is_in_faction_with = GER
+					is_in_faction_with = ENG
+					is_major = yes
+				}			
+				has_guaranteed = XSM
+			}
+			OR = {
+				XSM = {
+					is_in_faction_with = GER
+				}
+				XSM = {
+					is_in_faction_with = ENG
+				}
+			}		
+		}
+	}
+	abort = {
+		OR = {
+			NOT = {
+				OR = {
+					any_country = {
+						OR = {
+							is_in_faction_with = GER
+							is_in_faction_with = ENG
+							is_major = yes
+						}	
+						has_guaranteed = XSM
+					}
+					OR = {
+						XSM = {
+							is_in_faction_with = GER
+						}
+						XSM = {
+							is_in_faction_with = ENG
+						}
+					}
+				}	
+			}
+			XSM = {
+				has_war_with = SOV
+			}
+			date > 1943.08.05
+		}
+	}
+
+	ai_strategy = {
+		type = ignore
+		id = "XSM"
+		value = 350
+	}
+
+	ai_strategy = {
+		type = declare_war 
+		id = "XSM"
+		value = -1000
+	}
+}
+
+#Do not attack China if they're protected
+ignore_china = {
+	enable = {
+		OR = {
+			tag = SOV
+			tag = PRC
+			tag = SIK
+		}
+		SOV = {
+			OR = {
+				has_completed_focus = SOV_force_chinese_unification
+				has_completed_focus = SOV_one_china
+			}
+		}
+		has_wargoal_against = CHI
+		OR = {
+			any_country = {
+				OR = {
+					is_in_faction_with = GER
+					is_in_faction_with = ENG
+					is_major = yes
+				}			
+				has_guaranteed = CHI
+			}
+			OR = {
+				CHI = {
+					is_in_faction_with = GER
+				}
+				CHI = {
+					is_in_faction_with = ENG
+				}
+			}		
+		}
+	}
+	abort = {
+		OR = {
+			NOT = {
+				OR = {
+					any_country = {
+						OR = {
+							is_in_faction_with = GER
+							is_major = yes
+						}	
+						has_guaranteed = CHI
+					}
+					OR = {
+						ENG = {
+							is_in_faction_with = CHI
+						}
+						GER = {
+							is_in_faction_with = CHI
+						}
+					}
+				}	
+			}
+			CHI = {
+				has_war_with = SOV
+			}
+			date > 1943.08.05
+		}
+	}
+
+	ai_strategy = {
+		type = ignore
+		id = "CHI"
+		value = 350
+	}
+
+	ai_strategy = {
+		type = declare_war 
+		id = "CHI"
+		value = -1000
+	}
+}
+
+#Do not attack Shanxi if they're protected
+ignore_shanxi = {
+	enable = {
+		OR = {
+			tag = SOV
+			tag = PRC
+			tag = SIK
+		}
+		SOV = {
+			OR = {
+				has_completed_focus = SOV_force_chinese_unification
+				has_completed_focus = SOV_one_china
+			}
+		}
+		has_wargoal_against = SHX
+		OR = {
+			any_country = {
+				OR = {
+					is_in_faction_with = GER
+					is_in_faction_with = ENG
+					is_major = yes
+				}			
+				has_guaranteed = SHX
+			}
+			OR = {
+				SHX = {
+					is_in_faction_with = GER
+				}
+				SHX = {
+					is_in_faction_with = ENG
+				}
+			}		
+		}
+	}
+	abort = {
+		OR = {
+			NOT = {
+				OR = {
+					any_country = {
+						OR = {
+							is_in_faction_with = GER
+							is_major = yes
+						}	
+						has_guaranteed = SHX
+					}
+					OR = {
+						ENG = {
+							is_in_faction_with = SHX
+						}
+						GER = {
+							is_in_faction_with = SHX
+						}
+					}
+				}	
+			}
+			SHX = {
+				has_war_with = SOV
+			}
+			date > 1943.08.05
+		}
+	}
+
+	ai_strategy = {
+		type = ignore
+		id = "SHX"
+		value = 350
+	}
+
+	ai_strategy = {
+		type = declare_war 
+		id = "SHX"
+		value = -1000
+	}
+}
+
+#Do not attack Yunnan if they're protected
+ignore_yunnan = {
+	enable = {
+		OR = {
+			tag = SOV
+			tag = PRC
+			tag = SIK
+		}
+		SOV = {
+			OR = {
+				has_completed_focus = SOV_force_chinese_unification
+				has_completed_focus = SOV_one_china
+			}
+		}
+		has_wargoal_against = YUN
+		OR = {
+			any_country = {
+				OR = {
+					is_in_faction_with = GER
+					is_in_faction_with = ENG
+					is_major = yes
+				}			
+				has_guaranteed = YUN
+			}
+			OR = {
+				YUN = {
+					is_in_faction_with = GER
+				}
+				YUN = {
+					is_in_faction_with = ENG
+				}
+			}		
+		}
+	}
+	abort = {
+		OR = {
+			NOT = {
+				OR = {
+					any_country = {
+						OR = {
+							is_in_faction_with = GER
+							is_major = yes
+						}	
+						has_guaranteed = YUN
+					}
+					OR = {
+						GER = {
+							is_in_faction_with = YUN
+						}
+						ENG = {
+							is_in_faction_with = YUN
+						}
+					}
+				}	
+			}
+			YUN = {
+				has_war_with = SOV
+			}
+			date > 1943.08.05
+		}
+	}
+
+	ai_strategy = {
+		type = ignore
+		id = "YUN"
+		value = 350
+	}
+
+	ai_strategy = {
+		type = declare_war 
+		id = "YUN"
+		value = -1000
+	}
+}
+
+#Do not attack Guangxi Clique if they're protected
+ignore_guangxi = {
+	enable = {
+		OR = {
+			tag = SOV
+			tag = PRC
+			tag = SIK
+		}
+		SOV = {
+			OR = {
+				has_completed_focus = SOV_force_chinese_unification
+				has_completed_focus = SOV_one_china
+			}
+		}
+		has_wargoal_against = GXC
+		OR = {
+			any_country = {
+				OR = {
+					is_in_faction_with = GER
+					is_in_faction_with = ENG
+					is_major = yes
+				}			
+				has_guaranteed = GXC
+			}
+			OR = {
+				GXC = {
+					is_in_faction_with = GER
+				}
+				GXC = {
+					is_in_faction_with = ENG
+				}
+			}		
+		}
+	}
+	abort = {
+		OR = {
+			NOT = {
+				OR = {
+					any_country = {
+						OR = {
+							is_in_faction_with = GER
+							is_major = yes
+						}	
+						has_guaranteed = GXC
+					}
+					OR = {
+						ENG = {
+							is_in_faction_with = GXC
+						}
+						GER = {
+							is_in_faction_with = GXC
+						}
+					}
+				}	
+			}
+			GXC = {
+				has_war_with = SOV
+			}
+			date > 1943.08.05
+		}
+	}
+
+	ai_strategy = {
+		type = ignore
+		id = "GXC"
+		value = 350
+	}
+
+	ai_strategy = {
+		type = declare_war 
+		id = "GXC"
+		value = -1000
+	}
+}
+
+#Do not attack Guangxi Clique if they're protected
+ignore_japanese_puppets = {
+	enable = {
+		OR = {
+			tag = SOV
+			tag = PRC
+			tag = SIK
+		}
+		SOV = {
+			OR = {
+				has_completed_focus = SOV_force_chinese_unification
+				has_completed_focus = SOV_one_china
+			}
+		}
+		has_wargoal_against = GXC
+		OR = {
+			MEN = {
+				is_subject = yes
+			}
+			MAN = {
+				is_subject = yes
+			}
+		}
+	}
+	abort = {
+		OR = {
+			date > 1943.08.05
+			NOT = {
+				MEN = {
+					is_subject = yes
+				}
+				MAN = {
+					is_subject = yes
+				}
+			}
+		}
+	}
+
+	ai_strategy = {
+		type = ignore
+		id = "MEN"
+		value = 350
+	}
+
+	ai_strategy = {
+		type = declare_war 
+		id = "MEN"
+		value = -1000
+	}
+
+	ai_strategy = {
+		type = ignore
+		id = "MAN"
+		value = 350
+	}
+
+	ai_strategy = {
+		type = declare_war 
+		id = "MAN"
+		value = -1000
+	}
+}
