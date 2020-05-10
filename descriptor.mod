@@ -1,4 +1,4 @@
-version="0.1"
+version="1.0"
 tags={
 	"Alternative History"
 	"Events"
@@ -11,4 +11,4 @@ tags={
 	"Balance"
 }
 name="Russia 2.0"
-supported_version="1.9.1"
+supported_version="1.9.2"
