@@ -1,5 +1,7 @@
 # Russia-2.0
-A Complete Soviet Rework for Hearts of Iron IV
+## A Complete Soviet Rework for Hearts of Iron IV
+
+[Steam Page](https://steamcommunity.com/sharedfiles/filedetails/?id=2092066524)
 
 Updates are very frequent on our GitHub, however, you should **NOT** try to play with this current version unless it is marked as **_Stable_**.
 
@@ -13,7 +15,7 @@ Current version is : **_Stable_**.
 - Version : 1.0,
 - Directory : mod/Russia 2.0,
 - Tags : Alternative History, Events, Gameplay, Historical, National Focuses, Utilities, Military, Fixes, Balance,
-- Create Mod. Do not enable it yet,
+- Create the Mod. Do **NOT** enable it yet (very important),
 - Go to Documents\Paradox Interactive\Hearts of Iron IV\mod, here you should see a folder Russia 2.0 (if not then you've done something wrong),
 - Go in the Russia 2.0 Folder and unzip the files there. All the files should be directly inside the folder (e.g. mod\Russia 2.0\common and NOT mod\Russia 2.0\Russia 2.0\common),
 - Once this is done, simply enable the mod and you're good to go!
@@ -38,6 +40,7 @@ Do **NOT** upload this mod as your own.
 - Non-aligned path
 - AI Improvements
 - Bug fixes
+- New focus icons, event images, etc... (not a priority!)
 - Balance update
 - Anything that goes through our mind
 
