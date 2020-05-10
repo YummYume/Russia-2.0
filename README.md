@@ -1,4 +1,4 @@
-# Russia-2.0
+# Russia Reworked
 ## A Complete Soviet Rework for Hearts of Iron IV
 
 [Steam Page](https://steamcommunity.com/sharedfiles/filedetails/?id=2092066524)
@@ -21,6 +21,9 @@ Current version is : **_Stable_**.
 - Once this is done, simply enable the mod and you're good to go!
 
 If you have any problems with the installation, feel free to ask (once you've completed the steps above).
+
+What if you already have the mod installed locally and want to update it with the latest version?
+Simply download the ZIP file again, delete everything inside the Russia 2.0 folder and then drag the new files in.
 
 ## Extra notes :
 
