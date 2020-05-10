@@ -7,7 +7,7 @@ Current version is : **_Stable_**.
 
 ## How to LOCALLY install the mod for beta testing :
 
-- Download this Git as a zip file (Clone or Download > Download as ZIP),
+- Download this GitHub as a zip file (Clone or Download > Download as ZIP),
 - Start the HOI4 launcher and go to Mods > Mod Tools > Create a Mod,
 - Name : Russia 2.0,
 - Version : 1.0,
@@ -26,7 +26,7 @@ If you encounter any bug or something unusual happens, you can add it here as an
 
 This mod has been developed for a few months now, and we are pretty happy with how far we got, however, feedback is really needed. So do not hesitate to tell your thoughts about the mod, the issues you encountered, or anything else you have in mind.
 
-The mod is not achievement compatible. The 1939 start date now works fine.
+The mod is **NOT** achievement compatible. The 1939 start date now works fine.
 The AI can play the Soviet Union, some factors have been added, as well as an ai_strategy and AI behaviors (2 paths are currently available). Future updates will aim in improving the AI.
 
 Do **NOT** upload this mod as your own.
