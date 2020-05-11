@@ -258,56 +258,118 @@ southern_thrust = {
 	}
 }
 
-#Do not attack Turkey if they're protected
+#Do not attack turkey if they're protected
 ignore_turkey = {
-	enable = {
-		tag = SOV
-		has_wargoal_against = TUR
-		OR = {
-			any_country = {
-				OR = {
-					is_in_faction_with = GER
-					is_major = yes
-				}			
-				has_guaranteed = TUR
-			}
-			OR = {
-				TUR = {
-					is_in_faction_with = GER
-				}
-				TUR = {
-					is_in_faction_with = ENG
-				}
-			}		
-		}
-	}
-	abort = {
-		OR = {
-			NOT = {
-				OR = {
-					any_country = {
+    enable = {
+        tag = SOV
+        has_wargoal_against = TUR
+        OR = {
+            any_country = {
+                OR = {
+                    is_in_faction_with = GER
+                    is_in_faction_with = ENG
+                    is_major = yes
+                }            
+                has_guaranteed = TUR
+            }
+            any_country = {
+                is_major = yes
+                is_in_faction_with = TUR
+            }
+            any_country = {
+                OR = {
+                    tag = TUR
+                    is_in_faction_with = TUR
+                }
+                has_idea = anti_soviet_pact
+            }
+        }
+    }
+    abort = {
+        OR = {
+            NOT = {
+                OR = {
+                    any_country = {
+                        OR = {
+                            is_in_faction_with = GER
+                            is_in_faction_with = ENG
+                            is_major = yes
+                        }            
+                        has_guaranteed = TUR
+                    }
+                    any_country = {
+                        is_major = yes
+                        is_in_faction_with = TUR
+                    }
+                    any_country = {
+                        OR = {
+                            tag = TUR
+                            is_in_faction_with = TUR
+                        }
+                        has_idea = anti_soviet_pact
+					}
+					TUR = {
 						OR = {
-							is_in_faction_with = GER
-							is_major = yes
-						}	
-						has_guaranteed = TUR
-					}
-					OR = {
-						TUR = {
-							is_in_faction_with = GER
+							if = {
+								limit = {
+									is_in_faction = yes
+									NOT = {
+										any_country = {
+											has_guaranteed = TUR
+										}
+									}
+								}
+								alliance_strength_ratio < 0.8
+							}
+							has_war_with = SOV
 						}
-						TUR = {
-							is_in_faction_with = ENG
-						}
-					}
-				}	
+					}																
+				}			
 			}
 			TUR = {
-				has_war_with = SOV
-			}
-			date > 1945.08.05
-		}	
-	}
+				OR = {
+					if = {
+						limit = {
+							is_in_faction = yes
+							NOT = {
+								any_country = {
+									has_guaranteed = TUR
+								}
+							}
+						}
+									#set_temp_variable = { total_faction_strength = 0 }
+									#any_of = {
+									#	array = TUR.faction_members
+									#	value = current
+									#	index = i
+										
+									#	add_to_temp_variable = {
+									#		var = total_faction_strength
+									#		value = current.num_divisions
+									#	}
+									#	check_variable = {
+									#		var = SOV.num_divisions
+									#		value = total_faction_strength
+									#		compare = greater_than
+									#	}
+									#}
+									#print_variables = {
+									#	file = log_file
+									#	text = header_text
+									#	append = yes
+									#	print_global = yes
+									#	var_list = { SOV.num_divisions total_faction_strength TUR.faction_members }
+									#}
+					}
+					has_war_with = SOV
+				}
+			}				
+            NOT = {
+                has_wargoal_against = TUR
+            }
+            date > 1944.01.01
+        }    
+    }
 
 	ai_strategy = {
 		type = ignore
@@ -334,196 +396,265 @@ ignore_turkey = {
 	}	
 }
 
-#Do not attack Afghanistan if they're protected
+#Do not attack afghanistan if they're protected
 ignore_afghanistan = {
-	enable = {
-		tag = SOV
-		has_wargoal_against = AFG
-		OR = {
-			any_country = {
-				OR = {
-					is_in_faction_with = GER
-					is_major = yes
-				}			
-				has_guaranteed = AFG
-			}
-			OR = {
-				AFG = {
-					is_in_faction_with = GER
-				}
-				AFG = {
-					is_in_faction_with = ENG
-				}
-			}		
-		}
-	}
-	abort = {
-		OR = {
-			NOT = {
-				OR = {
-					any_country = {
+    enable = {
+        tag = SOV
+        has_wargoal_against = AFG
+        OR = {
+            any_country = {
+                OR = {
+                    is_in_faction_with = GER
+                    is_in_faction_with = ENG
+                    is_major = yes
+                }            
+                has_guaranteed = AFG
+            }
+            any_country = {
+                is_major = yes
+                is_in_faction_with = AFG
+            }
+            any_country = {
+                OR = {
+                    tag = AFG
+                    is_in_faction_with = AFG
+                }
+                has_idea = anti_soviet_pact
+            }
+        }
+    }
+    abort = {
+        OR = {
+            NOT = {
+                OR = {
+                    any_country = {
+                        OR = {
+                            is_in_faction_with = GER
+                            is_in_faction_with = ENG
+                            is_major = yes
+                        }            
+                        has_guaranteed = AFG
+                    }
+                    any_country = {
+                        is_major = yes
+                        is_in_faction_with = AFG
+                    }
+                    any_country = {
+                        OR = {
+                            tag = AFG
+                            is_in_faction_with = AFG
+                        }
+                        has_idea = anti_soviet_pact
+					}
+					AFG = {
 						OR = {
-							is_in_faction_with = GER
-							is_major = yes
-						}	
-						has_guaranteed = AFG
-					}
-					OR = {
-						AFG = {
-							is_in_faction_with = GER
+							if = {
+								limit = {
+									NOT = {
+										any_country = {
+											has_guaranteed = AFG
+										}
+									}
+								}
+								alliance_strength_ratio < 0.8
+							}
+							has_war_with = SOV
 						}
-						AFG = {
-							is_in_faction_with = ENG
-						}
-					}
-				}	
-			}
-			AFG = {
-				has_war_with = SOV
-			}
-			date > 1945.08.05
-		}	
-	}
+					}					
+                }    
+            }
+            NOT = {
+                has_wargoal_against = AFG
+            }
+            date > 1944.01.01
+        }    
+    }
 
-	ai_strategy = {
-		type = ignore
-		id = "AFG"
-		value = 350
-	}
+    ai_strategy = {
+        type = ignore
+        id = "AFG"
+        value = 350
+    }
 
-	ai_strategy = {
-		type = declare_war 
-		id = "AFG"
-		value = -1000
-	}
-	
-	ai_strategy = {
-		type = area_priority
-		id = middle_east
-		value = -150
-	}	
+    ai_strategy = {
+        type = declare_war 
+        id = "AFG"
+        value = -1000
+    }
+    
+    ai_strategy = {
+        type = area_priority
+        id = middle_east
+        value = -150
+    }    
 }
 
 #Do not attack Iran if they're protected
 ignore_persia = {
-	enable = {
-		tag = SOV
-		has_wargoal_against = PER
-		OR = {
-			any_country = {
-				OR = {
-					is_in_faction_with = GER
-					is_major = yes
-				}			
-				has_guaranteed = PER
-			}
-			OR = {
-				PER = {
-					is_in_faction_with = GER
-				}
-				PER = {
-					is_in_faction_with = ENG
-				}
-			}		
-		}
-	}
-	abort = {
-		OR = {
-			NOT = {
-				OR = {
-					any_country = {
+    enable = {
+        tag = SOV
+        has_wargoal_against = PER
+        OR = {
+            any_country = {
+                OR = {
+                    is_in_faction_with = GER
+                    is_in_faction_with = ENG
+                    is_major = yes
+                }            
+                has_guaranteed = PER
+            }
+            any_country = {
+                is_major = yes
+                is_in_faction_with = PER
+            }
+            any_country = {
+                OR = {
+                    tag = PER
+                    is_in_faction_with = PER
+                }
+                has_idea = anti_soviet_pact
+            }
+        }
+    }
+    abort = {
+        OR = {
+            NOT = {
+                OR = {
+                    any_country = {
+                        OR = {
+                            is_in_faction_with = GER
+                            is_in_faction_with = ENG
+                            is_major = yes
+                        }            
+                        has_guaranteed = PER
+                    }
+                    any_country = {
+                        is_major = yes
+                        is_in_faction_with = PER
+                    }
+                    any_country = {
+                        OR = {
+                            tag = PER
+                            is_in_faction_with = PER
+                        }
+                        has_idea = anti_soviet_pact
+					}
+					PER = {
 						OR = {
-							is_in_faction_with = GER
-							is_major = yes
-						}	
-						has_guaranteed = PER
-					}
-					OR = {
-						PER = {
-							is_in_faction_with = GER
+							if = {
+								limit = {
+									NOT = {
+										any_country = {
+											has_guaranteed = PER
+										}
+									}
+								}
+								alliance_strength_ratio < 0.8
+							}
+							has_war_with = SOV
 						}
-						PER = {
-							is_in_faction_with = ENG
-						}
-					}
-				}	
-			}
-			PER = {
-				has_war_with = SOV
-			}
-			date > 1945.08.05
-		}	
-	}
+					}					
+                }    
+            }
+            NOT = {
+                has_wargoal_against = PER
+            }
+            date > 1944.01.01
+        }    
+    }
 
-	ai_strategy = {
-		type = ignore
-		id = "PER"
-		value = 350
-	}
+    ai_strategy = {
+        type = ignore
+        id = "PER"
+        value = 350
+    }
 
-	ai_strategy = {
-		type = declare_war 
-		id = "PER"
-		value = -1000
-	}
-	
-	ai_strategy = {
-		type = area_priority
-		id = middle_east
-		value = -150
-	}	
+    ai_strategy = {
+        type = declare_war 
+        id = "PER"
+        value = -1000
+    }
+    
+    ai_strategy = {
+        type = area_priority
+        id = middle_east
+        value = -150
+    }    
 }
 
-#Do not attack Iraq if they're protected
+#Do not attack iraq if they're protected
 ignore_iraq = {
-	enable = {
-		tag = SOV
-		has_wargoal_against = IRQ
-		OR = {
-			any_country = {
-				OR = {
-					is_in_faction_with = GER
-					is_major = yes
-				}			
-				has_guaranteed = IRQ
-			}
-			OR = {
-				IRQ = {
-					is_in_faction_with = GER
-				}
-				IRQ = {
-					is_in_faction_with = ENG
-				}
-			}		
-		}
-	}
-	abort = {
-		OR = {
-			NOT = {
-				OR = {
-					any_country = {
+    enable = {
+        tag = SOV
+        has_wargoal_against = IRQ
+        OR = {
+            any_country = {
+                OR = {
+                    is_in_faction_with = GER
+                    is_in_faction_with = ENG
+                    is_major = yes
+                }            
+                has_guaranteed = IRQ
+            }
+            any_country = {
+                is_major = yes
+                is_in_faction_with = IRQ
+            }
+            any_country = {
+                OR = {
+                    tag = IRQ
+                    is_in_faction_with = IRQ
+                }
+                has_idea = anti_soviet_pact
+            }
+        }
+    }
+    abort = {
+        OR = {
+            NOT = {
+                OR = {
+                    any_country = {
+                        OR = {
+                            is_in_faction_with = GER
+                            is_in_faction_with = ENG
+                            is_major = yes
+                        }            
+                        has_guaranteed = IRQ
+                    }
+                    any_country = {
+                        is_major = yes
+                        is_in_faction_with = IRQ
+                    }
+                    any_country = {
+                        OR = {
+                            tag = IRQ
+                            is_in_faction_with = IRQ
+                        }
+                        has_idea = anti_soviet_pact
+					}
+					IRQ = {
 						OR = {
-							is_in_faction_with = GER
-							is_major = yes
-						}	
-						has_guaranteed = IRQ
-					}
-					OR = {
-						IRQ = {
-							is_in_faction_with = GER
+							if = {
+								limit = {
+									NOT = {
+										any_country = {
+											has_guaranteed = IRQ
+										}
+									}
+								}
+								alliance_strength_ratio < 0.8
+							}
+							has_war_with = SOV
 						}
-						IRQ = {
-							is_in_faction_with = ENG
-						}
-					}
-				}	
-			}
-			IRQ = {
-				has_war_with = SOV
-			}
-			date > 1945.08.05
-		}	
-	}
+					}					
+                }    
+            }
+            NOT = {
+                has_wargoal_against = IRQ
+            }
+            date > 1944.01.01
+        }    
+    }
 
 	ai_strategy = {
 		type = ignore
@@ -563,6 +694,99 @@ claims_on_poland = {
 	}	
 }
 
+#Do not attack poland if they're protected
+ignore_poland = {
+	enable = {
+        tag = SOV
+        has_wargoal_against = POL
+        OR = {
+            any_country = {
+                OR = {
+                    is_in_faction_with = GER
+                    is_in_faction_with = ENG
+                    is_major = yes
+                }            
+                has_guaranteed = POL
+            }
+            any_country = {
+                is_major = yes
+                is_in_faction_with = POL
+            }
+            any_country = {
+                OR = {
+                    tag = POL
+                    is_in_faction_with = POL
+                }
+                has_idea = anti_soviet_pact
+            }
+        }
+    }
+    abort = {
+        OR = {
+            NOT = {
+                OR = {
+                    any_country = {
+                        OR = {
+                            is_in_faction_with = GER
+                            is_in_faction_with = ENG
+                            is_major = yes
+                        }            
+                        has_guaranteed = POL
+                    }
+                    any_country = {
+                        is_major = yes
+                        is_in_faction_with = POL
+                    }
+                    any_country = {
+                        OR = {
+                            tag = POL
+                            is_in_faction_with = POL
+                        }
+                        has_idea = anti_soviet_pact
+					}
+					POL = {
+						OR = {
+							if = {
+								limit = {
+									NOT = {
+										any_country = {
+											has_guaranteed = POL
+										}
+									}
+								}
+								alliance_strength_ratio < 0.8
+							}
+							has_war_with = SOV
+						}
+					}					
+                }    
+            }
+            NOT = {
+                has_wargoal_against = POL
+            }
+            date > 1944.01.01
+        }    
+    }
+
+	ai_strategy = {
+		type = ignore
+		id = "POL"
+		value = 350
+	}
+
+	ai_strategy = {
+		type = ignore_claim 
+		id = "POL"
+		value = 2000
+	}
+
+	ai_strategy = {
+		type = declare_war 
+		id = "POL"
+		value = -1000
+	}
+}
+
 claims_on_baltic = {
 	enable = {
 		tag = SOV
@@ -598,6 +822,285 @@ claims_on_baltic = {
 	}
 }
 
+#Do not attack lithuania if they're protected
+ignore_lithuania = {
+	enable = {
+        tag = SOV
+        has_wargoal_against = LIT
+        OR = {
+            any_country = {
+                OR = {
+                    is_in_faction_with = GER
+                    is_in_faction_with = ENG
+                    is_major = yes
+                }            
+                has_guaranteed = LIT
+            }
+            any_country = {
+                is_major = yes
+                is_in_faction_with = LIT
+            }
+            any_country = {
+                OR = {
+                    tag = LIT
+                    is_in_faction_with = LIT
+                }
+                has_idea = anti_soviet_pact
+            }
+        }
+    }
+    abort = {
+        OR = {
+            NOT = {
+                OR = {
+                    any_country = {
+                        OR = {
+                            is_in_faction_with = GER
+                            is_in_faction_with = ENG
+                            is_major = yes
+                        }            
+                        has_guaranteed = LIT
+                    }
+                    any_country = {
+                        is_major = yes
+                        is_in_faction_with = LIT
+                    }
+                    any_country = {
+                        OR = {
+                            tag = LIT
+                            is_in_faction_with = LIT
+                        }
+                        has_idea = anti_soviet_pact
+					}
+					LIT = {
+						OR = {
+							if = {
+								limit = {
+									NOT = {
+										any_country = {
+											has_guaranteed = LIT
+										}
+									}
+								}
+								alliance_strength_ratio < 0.8
+							}
+							has_war_with = SOV
+						}
+					}					
+                }    
+            }
+            NOT = {
+                has_wargoal_against = LIT
+            }
+            date > 1944.01.01
+        }    
+    }
+
+	ai_strategy = {
+		type = ignore
+		id = "LIT"
+		value = 350
+	}
+
+	ai_strategy = {
+		type = declare_war 
+		id = "LIT"
+		value = -1000
+	}
+
+	ai_strategy = {
+		type = ignore_claim 
+		id = "LIT"
+		value = 2000
+	}	
+}
+
+#Do not attack latvia if they're protected
+ignore_latvia = {
+	enable = {
+        tag = SOV
+        has_wargoal_against = LAT
+        OR = {
+            any_country = {
+                OR = {
+                    is_in_faction_with = GER
+                    is_in_faction_with = ENG
+                    is_major = yes
+                }            
+                has_guaranteed = LAT
+            }
+            any_country = {
+                is_major = yes
+                is_in_faction_with = LAT
+            }
+            any_country = {
+                OR = {
+                    tag = LAT
+                    is_in_faction_with = LAT
+                }
+                has_idea = anti_soviet_pact
+            }
+        }
+    }
+    abort = {
+        OR = {
+            NOT = {
+                OR = {
+                    any_country = {
+                        OR = {
+                            is_in_faction_with = GER
+                            is_in_faction_with = ENG
+                            is_major = yes
+                        }            
+                        has_guaranteed = LAT
+                    }
+                    any_country = {
+                        is_major = yes
+                        is_in_faction_with = LAT
+                    }
+                    any_country = {
+                        OR = {
+                            tag = LAT
+                            is_in_faction_with = LAT
+                        }
+                        has_idea = anti_soviet_pact
+					}
+					LAT = {
+						OR = {
+							if = {
+								limit = {
+									NOT = {
+										any_country = {
+											has_guaranteed = LAT
+										}
+									}
+								}
+								alliance_strength_ratio < 0.8
+							}
+							has_war_with = SOV
+						}
+					}					
+                }    
+            }
+            NOT = {
+                has_wargoal_against = LAT
+            }
+            date > 1944.01.01
+        }    
+    }
+
+	ai_strategy = {
+		type = ignore
+		id = "LAT"
+		value = 350
+	}
+
+	ai_strategy = {
+		type = declare_war 
+		id = "LAT"
+		value = -1000
+	}
+
+	ai_strategy = {
+		type = ignore_claim 
+		id = "LAT"
+		value = 2000
+	}	
+}
+
+#Do not attack Estonia if they're protected
+ignore_estonia = {
+	enable = {
+        tag = SOV
+        has_wargoal_against = EST
+        OR = {
+            any_country = {
+                OR = {
+                    is_in_faction_with = GER
+                    is_in_faction_with = ENG
+                    is_major = yes
+                }            
+                has_guaranteed = EST
+            }
+            any_country = {
+                is_major = yes
+                is_in_faction_with = EST
+            }
+            any_country = {
+                OR = {
+                    tag = EST
+                    is_in_faction_with = EST
+                }
+                has_idea = anti_soviet_pact
+            }
+        }
+    }
+    abort = {
+        OR = {
+            NOT = {
+                OR = {
+                    any_country = {
+                        OR = {
+                            is_in_faction_with = GER
+                            is_in_faction_with = ENG
+                            is_major = yes
+                        }            
+                        has_guaranteed = EST
+                    }
+                    any_country = {
+                        is_major = yes
+                        is_in_faction_with = EST
+                    }
+                    any_country = {
+                        OR = {
+                            tag = EST
+                            is_in_faction_with = EST
+                        }
+                        has_idea = anti_soviet_pact
+					}
+					EST = {
+						OR = {
+							if = {
+								limit = {
+									NOT = {
+										any_country = {
+											has_guaranteed = EST
+										}
+									}
+								}
+								alliance_strength_ratio < 0.8
+							}
+							has_war_with = SOV
+						}
+					}					
+                }    
+            }
+            NOT = {
+                has_wargoal_against = EST
+            }
+            date > 1944.01.01
+        }    
+    }
+
+	ai_strategy = {
+		type = ignore
+		id = "EST"
+		value = 350
+	}
+
+	ai_strategy = {
+		type = declare_war 
+		id = "EST"
+		value = -1000
+	}
+
+	ai_strategy = {
+		type = ignore_claim 
+		id = "EST"
+		value = 2000
+	}	
+}
+
 claims_on_finland = {
 	enable = {
 		tag = SOV
@@ -623,6 +1126,99 @@ claims_on_finland = {
 	}	
 }
 
+#Do not attack Finland if they're protected
+ignore_finland = {
+	enable = {
+        tag = SOV
+        has_wargoal_against = FIN
+        OR = {
+            any_country = {
+                OR = {
+                    is_in_faction_with = GER
+                    is_in_faction_with = ENG
+                    is_major = yes
+                }            
+                has_guaranteed = FIN
+            }
+            any_country = {
+                is_major = yes
+                is_in_faction_with = FIN
+            }
+            any_country = {
+                OR = {
+                    tag = FIN
+                    is_in_faction_with = FIN
+                }
+                has_idea = anti_soviet_pact
+            }
+        }
+    }
+    abort = {
+        OR = {
+            NOT = {
+                OR = {
+                    any_country = {
+                        OR = {
+                            is_in_faction_with = GER
+                            is_in_faction_with = ENG
+                            is_major = yes
+                        }            
+                        has_guaranteed = FIN
+                    }
+                    any_country = {
+                        is_major = yes
+                        is_in_faction_with = FIN
+                    }
+                    any_country = {
+                        OR = {
+                            tag = FIN
+                            is_in_faction_with = FIN
+                        }
+                        has_idea = anti_soviet_pact
+					}
+					FIN = {
+						OR = {
+							if = {
+								limit = {
+									NOT = {
+										any_country = {
+											has_guaranteed = FIN
+										}
+									}
+								}
+								alliance_strength_ratio < 0.8
+							}
+							has_war_with = SOV
+						}
+					}					
+                }    
+            }
+            NOT = {
+                has_wargoal_against = FIN
+            }
+            date > 1944.01.01
+        }    
+    }
+
+	ai_strategy = {
+		type = ignore
+		id = "FIN"
+		value = 350
+	}
+
+	ai_strategy = {
+		type = declare_war 
+		id = "FIN"
+		value = -1000
+	}
+
+	ai_strategy = {
+		type = ignore_claim 
+		id = "FIN"
+		value = 2000
+	}	
+}
+
 claims_on_romania = {
 	enable = {
 		tag = SOV
@@ -639,6 +1235,99 @@ claims_on_romania = {
 		type = antagonize
 		id = "ROM"			
 		value = 200
+	}	
+}
+
+#Do not attack romania if they're protected
+ignore_romania = {
+	enable = {
+        tag = SOV
+        has_wargoal_against = ROM
+        OR = {
+            any_country = {
+                OR = {
+                    is_in_faction_with = GER
+                    is_in_faction_with = ENG
+                    is_major = yes
+                }            
+                has_guaranteed = ROM
+            }
+            any_country = {
+                is_major = yes
+                is_in_faction_with = ROM
+            }
+            any_country = {
+                OR = {
+                    tag = ROM
+                    is_in_faction_with = ROM
+                }
+                has_idea = anti_soviet_pact
+            }
+        }
+    }
+    abort = {
+        OR = {
+            NOT = {
+                OR = {
+                    any_country = {
+                        OR = {
+                            is_in_faction_with = GER
+                            is_in_faction_with = ENG
+                            is_major = yes
+                        }            
+                        has_guaranteed = ROM
+                    }
+                    any_country = {
+                        is_major = yes
+                        is_in_faction_with = ROM
+                    }
+                    any_country = {
+                        OR = {
+                            tag = ROM
+                            is_in_faction_with = ROM
+                        }
+                        has_idea = anti_soviet_pact
+					}
+					ROM = {
+						OR = {
+							if = {
+								limit = {
+									NOT = {
+										any_country = {
+											has_guaranteed = ROM
+										}
+									}
+								}
+								alliance_strength_ratio < 0.8
+							}
+							has_war_with = SOV
+						}
+					}					
+                }    
+            }
+            NOT = {
+                has_wargoal_against = ROM
+            }
+            date > 1944.01.01
+        }    
+    }
+
+	ai_strategy = {
+		type = ignore
+		id = "ROM"
+		value = 350
+	}
+
+	ai_strategy = {
+		type = declare_war 
+		id = "ROM"
+		value = -1000
+	}
+
+	ai_strategy = {
+		type = ignore_claim 
+		id = "ROM"
+		value = 2000
 	}	
 }
 
