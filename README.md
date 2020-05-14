@@ -3,9 +3,9 @@
 
 [Steam Page](https://steamcommunity.com/sharedfiles/filedetails/?id=2092066524)
 
-Updates are very frequent on our GitHub, however, you should **NOT** try to play with this current version unless it is marked as **_Unstable_** (not recommended to play).
+Updates are very frequent on our GitHub, however, you should **NOT** try to play with this current version unless it is marked as **_Stable_**.
 
-Current version is : **_Stable_**.
+Current version is : **_Unstable_** (not recommended to play).
 
 ## How to LOCALLY install the mod for beta testing :
 
