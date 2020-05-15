@@ -8459,7 +8459,7 @@ focus_tree = {
 		id = SOV_revolution_to_the_utmost
 		x = 91
 		y = 11
-		prerequisite = { focus = SOV_permanent_revolution2}
+		prerequisite = { focus = SOV_permanent_revolution2 }
 		icon = GFX_focus_hol_legacy_of_the_de_zeven_provincien_mutiny
 		cost = 10
 		ai_will_do = {
@@ -8515,7 +8515,7 @@ focus_tree = {
 			country_event = { id = soviets.102 days = 18 }
 		}
 		cancelable = no
-		search_filters = {FOCUS_FILTER_ANNEXATION}
+		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
 			add_ideas = SOV_Terrible_fate
 			remove_ideas = trotskyite_plot
@@ -8526,84 +8526,102 @@ focus_tree = {
 	#Our Right to Believe
 	focus = {
 		id = SOV_right_to_believe
-		x = 17
+		x = 20
 		y = 13
-		icon = GFX_focus_hol_legacy_of_the_de_zeven_provincien_mutiny
-		cost = 10
+		prerequisite = { focus = SOV_terrible_fate }
+		icon = GFX_goal_support_democracy
+		cost = 5
 		ai_will_do = {
 			factor = 8
 		}
 		available = {
 			is_subject = no
 		}
-		search_filters = {FOCUS_FILTER_ANNEXATION}
+		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
-			
+			add_stability = 0.05
+			add_ideas = SOV_Right_believe
 		}
 	}
 
 	#Prepare a Democratic Coup
 	focus = {
 		id = SOV_prepare_democratic_coup
-		x = 17
+		x = 20
 		y = 14
-		icon = GFX_focus_hol_legacy_of_the_de_zeven_provincien_mutiny
-		cost = 10
+		prerequisite = { focus = SOV_right_to_believe }
+		icon = GFX_goal_molotov_ribbentrop_pact
+		cost = 8
 		ai_will_do = {
 			factor = 8
 		}
 		available = {
 			is_subject = no
+			democratic > 0.2
 		}
-		search_filters = {FOCUS_FILTER_ANNEXATION}
+		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
-			
+			add_popularity = {
+				ideology = democratic
+				popularity = 0.1
+			}
+			swap_ideas = {
+				remove_idea = SOV_Right_believe
+				add_idea = SOV_Right_believe2
+			}
 		}
 	}
 
 	#Launch the Insurrection!
 	focus = {
 		id = SOV_launch_insurrection
-		x = 17
+		x = 20
 		y = 15
-		icon = GFX_focus_hol_legacy_of_the_de_zeven_provincien_mutiny
+		prerequisite = { focus = SOV_prepare_democratic_coup }
+		icon = GFX_goal_generic_territory_or_war
 		cost = 10
 		ai_will_do = {
 			factor = 8
 		}
 		available = {
 			is_subject = no
+			democratic > 0.4
 		}
-		search_filters = {FOCUS_FILTER_ANNEXATION}
+		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
-			
+			country_event = { id = soviets.103 days = 1 }
 		}
 	}
 
 	#A country in Chaos
 	focus = {
 		id = SOV_country_in_chaos
-		x = 17
-		y = 15
-		icon = GFX_focus_hol_legacy_of_the_de_zeven_provincien_mutiny
+		x = 20
+		y = 16
+		prerequisite = { focus = SOV_launch_insurrection }
+		icon = GFX_focus_spr_crush_the_revolution
 		cost = 20
 		ai_will_do = {
 			factor = 8
 		}
 		available = {
 			is_subject = no
+			has_government = democratic
 		}
-		search_filters = {FOCUS_FILTER_ANNEXATION}
+		cancelable = no
+		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
-			
+			custom_effect_tooltip = SOV_country_in_chaos_tt
+			remove_ideas = SOV_Terrible_fate
 		}
 	}
 
 	#Trust Alexander Kerensky
 	focus = {
 		id = SOV_trust_alexander
-		x = 15
+		x = 18
 		y = 17
+		prerequisite = { focus = SOV_country_in_chaos }
 		icon = GFX_focus_hol_legacy_of_the_de_zeven_provincien_mutiny
 		cost = 10
 		ai_will_do = {
@@ -8612,17 +8630,24 @@ focus_tree = {
 		available = {
 			is_subject = no
 		}
-		search_filters = {FOCUS_FILTER_ANNEXATION}
+		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
-			
+			set_party_name = { 
+				ideology = democratic 
+				long_name = SOV_trudoviks
+				name = SOV_trudoviks
+			}
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = alexander_kerensky
 		}
 	}
 
 	#Pavel Milyukov's Guidance
 	focus = {
 		id = SOV_pavel_guidance
-		x = 19
+		x = 22
 		y = 17
+		prerequisite = { focus = SOV_country_in_chaos }
 		icon = GFX_focus_hol_legacy_of_the_de_zeven_provincien_mutiny
 		cost = 10
 		ai_will_do = {
@@ -8631,18 +8656,23 @@ focus_tree = {
 		available = {
 			is_subject = no
 		}
-		search_filters = {FOCUS_FILTER_ANNEXATION}
+		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
-			
+			set_party_name = { 
+				ideology = democratic 
+				long_name = SOV_kadets
+				name = SOV_kadets
+			}
 		}
 	}
 
 	#Create the Russian Sphere
 	focus = {
 		id = SOV_create_russian_sphere
-		x = 17
+		x = 20
 		y = 18
-		icon = GFX_focus_hol_legacy_of_the_de_zeven_provincien_mutiny
+		prerequisite = { focus = SOV_trust_alexander focus = SOV_pavel_guidance }
+		icon = GFX_goal_anschluss
 		cost = 10
 		ai_will_do = {
 			factor = 8
@@ -8650,18 +8680,18 @@ focus_tree = {
 		available = {
 			is_subject = no
 		}
-		search_filters = {FOCUS_FILTER_ANNEXATION}
+		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
-			
+			create_faction = russian_sphere
 		}
 	}
 
 	#Investment in the Russian Sphere
 	focus = {
 		id = SOV_investement_russian_sphere
-		x = 17
+		x = 20
 		y = 19
-		icon = GFX_focus_hol_legacy_of_the_de_zeven_provincien_mutiny
+		icon = GFX_goal_generic_positive_trade_relations
 		cost = 10
 		ai_will_do = {
 			factor = 8
@@ -8669,7 +8699,7 @@ focus_tree = {
 		available = {
 			is_subject = no
 		}
-		search_filters = {FOCUS_FILTER_ANNEXATION}
+		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
 			
 		}
@@ -8678,28 +8708,31 @@ focus_tree = {
 	#End the Naval Blockade
 	focus = {
 		id = SOV_end_naval_blockade
-		x = 13
+		x = 16
 		y = 19
-		icon = GFX_focus_hol_legacy_of_the_de_zeven_provincien_mutiny
+		icon = GFX_focus_AST_never_gallipoli
 		cost = 10
 		ai_will_do = {
 			factor = 8
 		}
 		available = {
 			is_subject = no
+			ENG = {
+				has_country_flag = blockade_russian_ports
+			}
 		}
-		search_filters = {FOCUS_FILTER_ANNEXATION}
+		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
-			
+			custom_effect_tooltip = SOV_end_naval_blockade_tt
 		}
 	}
 
 	#Growing Economy
 	focus = {
 		id = SOV_growing_economy
-		x = 19
+		x = 22
 		y = 20
-		icon = GFX_focus_hol_legacy_of_the_de_zeven_provincien_mutiny
+		icon = GFX_focus_spa_the_spanish_miracle
 		cost = 10
 		ai_will_do = {
 			factor = 8
@@ -8707,7 +8740,7 @@ focus_tree = {
 		available = {
 			is_subject = no
 		}
-		search_filters = {FOCUS_FILTER_ANNEXATION}
+		search_filters = {FOCUS_FILTER_POLITICAL FOCUS_FILTER_INDUSTRY}
 		completion_reward = {
 			
 		}
@@ -8716,9 +8749,9 @@ focus_tree = {
 	#New Civilian Rights
 	focus = {
 		id = SOV_new_civilian_rights
-		x = 15
+		x = 18
 		y = 20
-		icon = GFX_focus_hol_legacy_of_the_de_zeven_provincien_mutiny
+		icon = GFX_focus_hol_the_foundations_of_defense
 		cost = 10
 		ai_will_do = {
 			factor = 8
@@ -8726,7 +8759,7 @@ focus_tree = {
 		available = {
 			is_subject = no
 		}
-		search_filters = {FOCUS_FILTER_ANNEXATION}
+		search_filters = {FOCUS_FILTER_POLITICAL FOCUS_FILTER_INDUSTRY}
 		completion_reward = {
 			
 		}
@@ -8735,9 +8768,9 @@ focus_tree = {
 	#Improved Civilian Industry
 	focus = {
 		id = SOV_improved_civilian_industry
-		x = 17
+		x = 20
 		y = 21
-		icon = GFX_focus_hol_legacy_of_the_de_zeven_provincien_mutiny
+		icon = GFX_goal_generic_consumer_goods
 		cost = 10
 		ai_will_do = {
 			factor = 8
@@ -8745,7 +8778,7 @@ focus_tree = {
 		available = {
 			is_subject = no
 		}
-		search_filters = {FOCUS_FILTER_ANNEXATION}
+		search_filters = {FOCUS_FILTER_POLITICAL FOCUS_FILTER_INDUSTRY}
 		completion_reward = {
 			
 		}
@@ -8754,9 +8787,9 @@ focus_tree = {
 	#Reunification
 	focus = {
 		id = SOV_reunification
-		x = 17
+		x = 20
 		y = 22
-		icon = GFX_focus_hol_legacy_of_the_de_zeven_provincien_mutiny
+		icon = GFX_focus_generic_the_giant_wakes
 		cost = 10
 		ai_will_do = {
 			factor = 8
@@ -8764,7 +8797,7 @@ focus_tree = {
 		available = {
 			is_subject = no
 		}
-		search_filters = {FOCUS_FILTER_ANNEXATION}
+		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
 			
 		}
@@ -8773,9 +8806,9 @@ focus_tree = {
 	#Deal with the Decadents
 	focus = {
 		id = SOV_deal_with_decadents
-		x = 15
+		x = 18
 		y = 23
-		icon = GFX_focus_hol_legacy_of_the_de_zeven_provincien_mutiny
+		icon = GFX_goal_generic_major_war
 		cost = 10
 		ai_will_do = {
 			factor = 8
@@ -8783,7 +8816,7 @@ focus_tree = {
 		available = {
 			is_subject = no
 		}
-		search_filters = {FOCUS_FILTER_ANNEXATION}
+		search_filters = {FOCUS_FILTER_ANNEXATION FOCUS_FILTER_POLITICAL}
 		completion_reward = {
 			
 		}
@@ -8792,9 +8825,9 @@ focus_tree = {
 	#Promote Russian Culture
 	focus = {
 		id = SOV_promote_russian_culture
-		x = 19
+		x = 22
 		y = 23
-		icon = GFX_focus_hol_legacy_of_the_de_zeven_provincien_mutiny
+		icon = GFX_focus_generic_treaty
 		cost = 10
 		ai_will_do = {
 			factor = 8
@@ -8802,7 +8835,7 @@ focus_tree = {
 		available = {
 			is_subject = no
 		}
-		search_filters = {FOCUS_FILTER_ANNEXATION}
+		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
 			
 		}
@@ -8811,9 +8844,9 @@ focus_tree = {
 	#Russian Democracy
 	focus = {
 		id = SOV_russian_democracy
-		x = 17
+		x = 20
 		y = 24
-		icon = GFX_focus_hol_legacy_of_the_de_zeven_provincien_mutiny
+		icon = GFX_goal_support_democracy
 		cost = 10
 		ai_will_do = {
 			factor = 8
@@ -8821,7 +8854,7 @@ focus_tree = {
 		available = {
 			is_subject = no
 		}
-		search_filters = {FOCUS_FILTER_ANNEXATION}
+		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
 			
 		}
@@ -8830,9 +8863,9 @@ focus_tree = {
 	#Demand the Return of our land
 	focus = {
 		id = SOV_demand_return_land
-		x = 22
+		x = 25
 		y = 23
-		icon = GFX_focus_hol_legacy_of_the_de_zeven_provincien_mutiny
+		icon = GFX_goal_generic_position_armies
 		cost = 10
 		ai_will_do = {
 			factor = 8
@@ -8840,7 +8873,7 @@ focus_tree = {
 		available = {
 			is_subject = no
 		}
-		search_filters = {FOCUS_FILTER_ANNEXATION}
+		search_filters = {FOCUS_FILTER_ANNEXATION FOCUS_FILTER_POLITICAL}
 		completion_reward = {
 			
 		}
@@ -8849,9 +8882,9 @@ focus_tree = {
 	#Compromise Strategy
 	focus = {
 		id = SOV_compromise_strategy
-		x = 26
+		x = 29
 		y = 23
-		icon = GFX_focus_hol_legacy_of_the_de_zeven_provincien_mutiny
+		icon = GFX_goal_generic_major_alliance
 		cost = 10
 		ai_will_do = {
 			factor = 8
@@ -8859,7 +8892,7 @@ focus_tree = {
 		available = {
 			is_subject = no
 		}
-		search_filters = {FOCUS_FILTER_ANNEXATION}
+		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
 			
 		}
@@ -8868,17 +8901,16 @@ focus_tree = {
 	#Keep Expanding the Russian Sphere
 	focus = {
 		id = SOV_keep_expanding_russian_sphere
-		x = 24
+		x = 27
 		y = 24
-		icon = GFX_focus_hol_legacy_of_the_de_zeven_provincien_mutiny
-		cost = 10
+		icon = GFX_focus_eng_global_defense
 		ai_will_do = {
 			factor = 8
 		}
 		available = {
 			is_subject = no
 		}
-		search_filters = {FOCUS_FILTER_ANNEXATION}
+		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
 			
 		}
@@ -8887,9 +8919,9 @@ focus_tree = {
 	#Reform the Entente
 	focus = {
 		id = SOV_reform_entente
-		x = 30
+		x = 33
 		y = 24
-		icon = GFX_focus_hol_legacy_of_the_de_zeven_provincien_mutiny
+		icon = GFX_focus_fra_french_union
 		cost = 10
 		ai_will_do = {
 			factor = 8
@@ -8897,7 +8929,7 @@ focus_tree = {
 		available = {
 			is_subject = no
 		}
-		search_filters = {FOCUS_FILTER_ANNEXATION}
+		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
 			
 		}
@@ -8906,9 +8938,9 @@ focus_tree = {
 	#Those Who Threaten our Democracy
 	focus = {
 		id = SOV_those_who_threaten_democracy
-		x = 26
+		x = 29
 		y = 25
-		icon = GFX_focus_hol_legacy_of_the_de_zeven_provincien_mutiny
+		icon = GFX_focus_generic_anti_fascist_diplomacy
 		cost = 10
 		ai_will_do = {
 			factor = 8
@@ -8916,7 +8948,7 @@ focus_tree = {
 		available = {
 			is_subject = no
 		}
-		search_filters = {FOCUS_FILTER_ANNEXATION}
+		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
 			
 		}
@@ -8925,9 +8957,9 @@ focus_tree = {
 	#Propose Interventions
 	focus = {
 		id = SOV_propose_interventions
-		x = 24
+		x = 27
 		y = 26
-		icon = GFX_focus_hol_legacy_of_the_de_zeven_provincien_mutiny
+		icon = GFX_goal_generic_national_unity
 		cost = 10
 		ai_will_do = {
 			factor = 8
@@ -8935,7 +8967,7 @@ focus_tree = {
 		available = {
 			is_subject = no
 		}
-		search_filters = {FOCUS_FILTER_ANNEXATION}
+		search_filters = {FOCUS_FILTER_ANNEXATION FOCUS_FILTER_POLITICAL}
 		completion_reward = {
 			
 		}
@@ -8944,9 +8976,9 @@ focus_tree = {
 	#Russia Takes the Lead
 	focus = {
 		id = SOV_russia_takes_the_lead
-		x = 28
+		x = 31
 		y = 26
-		icon = GFX_focus_hol_legacy_of_the_de_zeven_provincien_mutiny
+		icon = GFX_focus_generic_support_the_left_right
 		cost = 10
 		ai_will_do = {
 			factor = 8
@@ -8954,7 +8986,7 @@ focus_tree = {
 		available = {
 			is_subject = no
 		}
-		search_filters = {FOCUS_FILTER_ANNEXATION}
+		search_filters = {FOCUS_FILTER_ANNEXATION FOCUS_FILTER_POLITICAL}
 		completion_reward = {
 			
 		}
@@ -8963,9 +8995,9 @@ focus_tree = {
 	#Perpetual Defense of Liberty
 	focus = {
 		id = SOV_perpetual_defense_liberty
-		x = 26
+		x = 29
 		y = 27
-		icon = GFX_focus_hol_legacy_of_the_de_zeven_provincien_mutiny
+		icon = GFX_focus_focus_fra_fascist_threat
 		cost = 10
 		ai_will_do = {
 			factor = 8
@@ -8973,7 +9005,7 @@ focus_tree = {
 		available = {
 			is_subject = no
 		}
-		search_filters = {FOCUS_FILTER_ANNEXATION}
+		search_filters = {FOCUS_FILTER_ANNEXATION FOCUS_FILTER_POLITICAL}
 		completion_reward = {
 			
 		}
