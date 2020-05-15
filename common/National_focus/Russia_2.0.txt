@@ -3814,10 +3814,10 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_RESEARCH }
 		completion_reward = {
 			add_tech_bonus = {
-    		bonus = 1
-    		uses = 1
-    		category = nuclear
-			}		
+				bonus = 1
+				uses = 1
+				category = nuclear
+			}
 		}
 	}
 
@@ -3842,8 +3842,20 @@ focus_tree = {
 		icon = GFX_focus_generic_strike_at_democracy3
 		search_filters = { FOCUS_FILTER_RESEARCH }
 		completion_reward = {
-			custom_effect_tooltip = SOV_spying_on_the_american_tt
-			custom_effect_tooltip = SOV_spying_on_the_american_tt2
+			if = {
+				limit = {
+					has_dlc = "La Resistance"
+				}
+				custom_effect_tooltip = SOV_spying_on_the_american_tt
+				custom_effect_tooltip = SOV_spying_on_the_american_tt2
+			}
+			else = {
+				add_tech_bonus = {
+					bonus = 1
+					uses = 1
+					category = nuclear
+				}
+			}
 		}
 	}
 
@@ -7111,9 +7123,6 @@ focus_tree = {
 					add_state_core = 59
 				}
 			}
-			ROOT = {
-				release_puppet = DDR
-			}
 			if = {
 				limit = {
 					66 = { is_owned_and_controlled_by = ROOT }
@@ -7168,6 +7177,19 @@ focus_tree = {
 					}
 				}
 				country_event = { id = yaltas.5 days = 1 }
+			}
+			else = {
+				hidden_effect = {
+					DDR = {
+						add_state_core = 67
+						add_state_core = 66
+						add_state_core = 68
+						add_state_core = 63
+					}
+				}
+			}
+			ROOT = {
+				release_puppet = DDR
 			}
 			if = {
 				limit = {
