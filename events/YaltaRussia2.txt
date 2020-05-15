@@ -93,43 +93,91 @@ country_event = {
 
 	fire_only_once = yes
 	
-	timeout_days = 5
+	timeout_days = 2
 
 	trigger = { #Will happen when Germany reaches 80% capitulation to prevent them from capitulating too fast (and thus the event never firing)
 		TAG = SOV
-		SOV = {
-			has_completed_focus = SOV_yalta_conference
-			has_government = communism
-			is_subject = no
-			has_war_with = GER
-			NOT = {
-				has_war_with = USA
-				has_war_with = ENG
-				has_war_with = FRA
-				has_country_flag = yalta_conference_over
-			}
-		}
-		GER = {
-			surrender_progress > 0.8
+		has_completed_focus = SOV_yalta_conference
+		has_government = communism
+		is_subject = no
+		NOT = {
+			has_war_with = USA
+			has_war_with = ENG
+			has_war_with = FRA
+			has_country_flag = yalta_conference_over
 		}
 		OR = {
-			USA = {
-				has_government = democratic
-				has_war_with = GER
-				is_major = yes
-				has_country_flag = usa_accepted_yalta_conference
+			AND = {
+				SOV = {
+					has_war_with = GER
+				}
+				GER = {
+					surrender_progress > 0.75
+				}
+				OR = {
+					USA = {
+						has_government = democratic
+						has_war_with = GER
+						is_major = yes
+						has_country_flag = usa_accepted_yalta_conference
+					}
+					ENG = {
+						has_government = democratic
+						has_war_with = GER
+						is_major = yes
+						has_country_flag = eng_accepted_yalta_conference
+					}
+					FRA = {
+						has_government = democratic
+						has_war_with = GER
+						is_major = yes
+						has_country_flag = fra_accepted_yalta_conference
+					}
+				}
 			}
-			ENG = {
-				has_government = democratic
-				has_war_with = GER
-				is_major = yes
-				has_country_flag = eng_accepted_yalta_conference
-			}
-			FRA = {
-				has_government = democratic
-				has_war_with = GER
-				is_major = yes
-				has_country_flag = fra_accepted_yalta_conference
+			AND = {
+				OR = {
+					USA = {
+						has_government = democratic
+						is_major = yes
+						has_country_flag = usa_accepted_yalta_conference
+					}
+					ENG = {
+						has_government = democratic
+						is_major = yes
+						has_country_flag = eng_accepted_yalta_conference
+					}
+					FRA = {
+						has_government = democratic
+						is_major = yes
+						has_country_flag = fra_accepted_yalta_conference
+					}
+				}
+				OR = {
+					NOT = {
+						country_exists = GER
+					}
+					GER = {
+						is_subject = yes
+						OR = {
+							has_government = democratic
+							has_government = communism
+						}
+					}
+				}
+				NOT = {
+					GER = {
+						has_war_with = SOV
+					}
+					any_country = {
+						OR = {
+							has_country_flag = usa_accepted_yalta_conference
+							has_country_flag = eng_accepted_yalta_conference
+							has_country_flag = fra_accepted_yalta_conference
+						}
+						has_war_with = GER
+					}
+				}
 			}
 		}
 	}
