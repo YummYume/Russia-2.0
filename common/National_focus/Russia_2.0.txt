@@ -8723,7 +8723,7 @@ focus_tree = {
 					}
 				}
 
-				every_country = {
+				every_country = { #Making a second every_country to avoid confusing the PREV tag
 					limit = {
 						OR = {
 							has_country_flag = democratic_russia_chaos_europe
@@ -8747,6 +8747,7 @@ focus_tree = {
 		id = SOV_investement_russian_sphere
 		x = 20
 		y = 19
+		prerequisite = { focus = SOV_create_russian_sphere }
 		icon = GFX_goal_generic_positive_trade_relations
 		cost = 10
 		ai_will_do = {
@@ -8766,6 +8767,7 @@ focus_tree = {
 		id = SOV_end_naval_blockade
 		x = 16
 		y = 19
+		prerequisite = { focus = SOV_create_russian_sphere }
 		icon = GFX_focus_AST_never_gallipoli
 		cost = 10
 		ai_will_do = {
@@ -8788,6 +8790,7 @@ focus_tree = {
 		id = SOV_growing_economy
 		x = 22
 		y = 20
+		prerequisite = { focus = SOV_investement_russian_sphere }
 		icon = GFX_focus_spa_the_spanish_miracle
 		cost = 10
 		ai_will_do = {
@@ -8798,7 +8801,7 @@ focus_tree = {
 		}
 		search_filters = {FOCUS_FILTER_POLITICAL FOCUS_FILTER_INDUSTRY}
 		completion_reward = {
-			
+			add_ideas = growing_russian_economy
 		}
 	}
 
@@ -8807,6 +8810,7 @@ focus_tree = {
 		id = SOV_new_civilian_rights
 		x = 18
 		y = 20
+		prerequisite = { focus = SOV_growing_economy }
 		icon = GFX_focus_hol_the_foundations_of_defense
 		cost = 10
 		ai_will_do = {
@@ -8817,7 +8821,7 @@ focus_tree = {
 		}
 		search_filters = {FOCUS_FILTER_POLITICAL FOCUS_FILTER_INDUSTRY}
 		completion_reward = {
-			
+			add_ideas = SOV_new_civilian_rights_idea
 		}
 	}
 
@@ -8826,8 +8830,9 @@ focus_tree = {
 		id = SOV_improved_civilian_industry
 		x = 20
 		y = 21
+		prerequisite = { focus = SOV_new_civilian_rights }
 		icon = GFX_goal_generic_consumer_goods
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			factor = 8
 		}
@@ -8836,7 +8841,30 @@ focus_tree = {
 		}
 		search_filters = {FOCUS_FILTER_POLITICAL FOCUS_FILTER_INDUSTRY}
 		completion_reward = {
-			
+			random_owned_state = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}	
+			}
+			random_owned_state = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}	
+			}
+			random_owned_state = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}	
+			}
 		}
 	}
 
@@ -8845,6 +8873,7 @@ focus_tree = {
 		id = SOV_reunification
 		x = 20
 		y = 22
+		prerequisite = { focus = SOV_improved_civilian_industry }
 		icon = GFX_focus_generic_the_giant_wakes
 		cost = 10
 		ai_will_do = {
