@@ -8609,6 +8609,11 @@ focus_tree = {
 			is_subject = no
 			has_government = democratic
 		}
+		select_effect = {
+			country_event = { id = soviets.104 days = 40 }
+			country_event = { id = soviets.105 days = 80 }
+			country_event = { id = soviets.106 days = 120 }
+		}
 		cancelable = no
 		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
@@ -8623,20 +8628,26 @@ focus_tree = {
 		x = 18
 		y = 17
 		prerequisite = { focus = SOV_country_in_chaos }
+		mutually_exclusive = { focus = SOV_pavel_guidance }
 		icon = GFX_focus_hol_legacy_of_the_de_zeven_provincien_mutiny
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			factor = 8
 		}
 		available = {
 			is_subject = no
+			has_government = democratic
 		}
 		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
 			set_party_name = { 
 				ideology = democratic 
 				long_name = SOV_trudoviks
-				name = SOV_trudoviks
+				name = SOV_trudoviks_long
+			}
+			swap_ruler_traits = {
+				remove = temporary_leader
+				add = abolished_death_penalty
 			}
 			custom_effect_tooltip = available_political_advisor
 			show_ideas_tooltip = alexander_kerensky
@@ -8649,21 +8660,34 @@ focus_tree = {
 		x = 22
 		y = 17
 		prerequisite = { focus = SOV_country_in_chaos }
+		mutually_exclusive = { focus = SOV_trust_alexander }
 		icon = GFX_focus_hol_legacy_of_the_de_zeven_provincien_mutiny
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			factor = 8
 		}
 		available = {
 			is_subject = no
+			has_government = democratic
 		}
 		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
 			set_party_name = { 
 				ideology = democratic 
 				long_name = SOV_kadets
-				name = SOV_kadets
+				name = SOV_kadets_long
 			}
+			create_country_leader = {
+				name = "Pavel Nikolayevich Milyukov"
+				desc = ""
+				picture = "Portrait_Pavel_Nikolaevich_ru2.dds"
+				ideology = liberalism
+				traits = {
+					stupidity_or_treason
+				}
+			}
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = pavel_milyukov
 		}
 	}
 
@@ -8684,6 +8708,38 @@ focus_tree = {
 		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
 			create_faction = russian_sphere
+			custom_effect_tooltip = SOV_create_russian_sphere_tt
+			hidden_effect = {
+				every_country = {
+					limit = {
+						OR = {
+							has_country_flag = democratic_russia_chaos_europe
+							has_country_flag = democratic_russia_chaos_asia
+							has_country_flag = democratic_russia_chaos_caucasus
+						}
+					}
+					SOV = {
+						# add_to_faction = PREV (not required)
+						puppet = PREV
+					}
+				}
+
+				every_country = {
+					limit = {
+						OR = {
+							has_country_flag = democratic_russia_chaos_europe
+							has_country_flag = democratic_russia_chaos_asia
+							has_country_flag = democratic_russia_chaos_caucasus
+						}
+					}
+					SOV = {
+						set_autonomy = {
+							target = PREV
+							autonomy_state = autonomy_supervised_state
+						}
+					}
+				}
+			}
 		}
 	}
 
@@ -9027,7 +9083,7 @@ focus_tree = {
 		icon = GFX_goal_generic_demand_territory
 		cost = 10
 		ai_will_do = {
-			factor = 
+			factor = 8
 		}
 		available = {
 			is_subject = no
@@ -9046,7 +9102,7 @@ focus_tree = {
 		icon = GFX_goal_generic_major_war
 		cost = 10
 		ai_will_do = {
-			factor = 
+			factor = 8
 		}
 		available = {
 			
@@ -9065,7 +9121,7 @@ focus_tree = {
 		icon = GFX_focus_generic_support_the_left_right
 		cost = 10
 		ai_will_do = {
-			factor = 
+			factor = 8
 		}
 		available = {
 			
@@ -9084,7 +9140,7 @@ focus_tree = {
 		icon = GFX_goal_generic_political_pressure
 		cost = 10
 		ai_will_do = {
-			factor = 
+			factor = 8
 		}
 		available = {
 			
@@ -9103,7 +9159,7 @@ focus_tree = {
 		icon = GFX_focus_generic_tank_production
 		cost = 10
 		ai_will_do = {
-			factor = 
+			factor = 8
 		}
 		available = {
 			
@@ -9123,7 +9179,7 @@ focus_tree = {
 		icon = GFX_goal_generic_military_deal
 		cost = 10
 		ai_will_do = {
-			factor = 
+			factor = 8
 		}
 		available = {
 			
@@ -9143,7 +9199,7 @@ focus_tree = {
 		icon = GFX_goal_anti_comintern_pact
 		cost = 10
 		ai_will_do = {
-			factor = 
+			factor = 8
 		}
 		available = {
 			
@@ -9163,7 +9219,7 @@ focus_tree = {
 		icon = GFX_focus_generic_home_defense
 		cost = 10
 		ai_will_do = {
-			factor = 
+			factor = 8
 		}
 		available = {
 			
@@ -9183,7 +9239,7 @@ focus_tree = {
 		icon = GFX_focus_generic_support_the_left_right
 		cost = 10
 		ai_will_do = {
-			factor = 
+			factor = 8
 		}
 		available = {
 			
@@ -9202,7 +9258,7 @@ focus_tree = {
 		icon = GFX_goal_generic_small_arms
 		cost = 10
 		ai_will_do = {
-			factor = 
+			factor = 8
 		}
 		available = {
 			
@@ -9221,7 +9277,7 @@ focus_tree = {
 		icon = GFX_goal_molotov_ribbentrop_pact
 		cost = 10
 		ai_will_do = {
-			factor = 
+			factor = 8
 		}
 		available = {
 			
@@ -9240,7 +9296,7 @@ focus_tree = {
 		icon = GFX_goal_generic_national_unity
 		cost = 10
 		ai_will_do = {
-			factor = 
+			factor = 8
 		}
 		available = {
 			
@@ -9259,7 +9315,7 @@ focus_tree = {
 		icon = GFX_focus_spa_save_the_alcazar
 		cost = 10
 		ai_will_do = {
-			factor = 
+			factor = 8
 		}
 		available = {
 			
@@ -9278,7 +9334,7 @@ focus_tree = {
 		icon = GFX_goal_generic_neutrality_focus
 		cost = 10
 		ai_will_do = {
-			factor = 
+			factor = 8
 		}
 		available = {
 			
@@ -9297,7 +9353,7 @@ focus_tree = {
 		icon = GFX_goal_generic_forceful_treaty
 		cost = 10
 		ai_will_do = {
-			factor = 
+			factor = 8
 		}
 		available = {
 			
@@ -9317,7 +9373,7 @@ focus_tree = {
 		icon = GFX_goal_demand_sudetenland
 		cost = 10
 		ai_will_do = {
-			factor = 
+			factor = 8
 		}
 		available = {
 			
@@ -9336,7 +9392,7 @@ focus_tree = {
 		icon = GFX_focus_generic_strike_at_democracy1
 		cost = 10
 		ai_will_do = {
-			factor = 
+			factor = 8
 		}
 		available = {
 			
@@ -9355,7 +9411,7 @@ focus_tree = {
 		icon = GFX_goal_generic_attack_allies
 		cost = 10
 		ai_will_do = {
-			factor = 
+			factor = 8
 		}
 		available = {
 			
@@ -9374,7 +9430,7 @@ focus_tree = {
 		icon = GFX_goal_generic_alliance
 		cost = 10
 		ai_will_do = {
-			factor = 
+			factor = 8
 		}
 		available = {
 			
@@ -9394,7 +9450,7 @@ focus_tree = {
 		icon = GFX_goal_generic_dangerous_deal
 		cost = 10
 		ai_will_do = {
-			factor = 
+			factor = 8
 		}
 		available = {
 			
@@ -9414,7 +9470,7 @@ focus_tree = {
 		icon = GFX_focus_attack_germany
 		cost = 10
 		ai_will_do = {
-			factor = 
+			factor = 8
 		}
 		available = {
 			
@@ -9433,7 +9489,7 @@ focus_tree = {
 		icon = GFX_focus_chi_reach_out_to_france
 		cost = 10
 		ai_will_do = {
-			factor = 
+			factor = 8
 		}
 		available = {
 			
@@ -9452,7 +9508,7 @@ focus_tree = {
 		icon = GFX_goal_tfv_sever_ties_with_uk
 		cost = 10
 		ai_will_do = {
-			factor = 
+			factor = 8
 		}
 		available = {
 			
@@ -9472,7 +9528,7 @@ focus_tree = {
 		icon = GFX_focus_generic_provoke_border_clashes
 		cost = 10
 		ai_will_do = {
-			factor = 
+			factor = 8
 		}
 		available = {
 			
@@ -9492,7 +9548,7 @@ focus_tree = {
 		icon = GFX_goal_generic_fortify_city
 		cost = 10
 		ai_will_do = {
-			factor = 
+			factor = 8
 		}
 		available = {
 			
@@ -9511,7 +9567,7 @@ focus_tree = {
 		icon = GFX_focus_befriend_italy
 		cost = 10
 		ai_will_do = {
-			factor = 
+			factor = 8
 		}
 		available = {
 			
@@ -9532,7 +9588,7 @@ focus_tree = {
 		icon = GFX_goal_tfv_strengthen_commonwealth_ties
 		cost = 10
 		ai_will_do = {
-			factor = 
+			factor = 8
 		}
 		available = {
 			
@@ -9551,7 +9607,7 @@ focus_tree = {
 		icon = GFX_focus_generic_polish_deal
 		cost = 10
 		ai_will_do = {
-			factor = 
+			factor = 8
 		}
 		available = {
 			
@@ -9570,7 +9626,7 @@ focus_tree = {
 		icon = GFX_focus_renounce_the_treaty_of_trianon
 		cost = 10
 		ai_will_do = {
-			factor = 
+			factor = 8
 		}
 		available = {
 			
@@ -9589,7 +9645,7 @@ focus_tree = {
 		icon = GFX_focus_rom_royal_dictatorship
 		cost = 10
 		ai_will_do = {
-			factor = 
+			factor = 8
 		}
 		available = {
 			
@@ -9609,7 +9665,7 @@ focus_tree = {
 		icon = GFX_focus_hol_the_foundations_of_defense
 		cost = 10
 		ai_will_do = {
-			factor = 
+			factor = 8
 		}
 		available = {
 			
@@ -9628,7 +9684,7 @@ focus_tree = {
 		icon = GFX_focus_invite_yugoslavia
 		cost = 10
 		ai_will_do = {
-			factor = 
+			factor = 8
 		}
 		available = {
 			
@@ -9647,7 +9703,7 @@ focus_tree = {
 		icon = GFX_goal_generic_major_alliance
 		cost = 10
 		ai_will_do = {
-			factor = 
+			factor = 8
 		}
 		available = {
 			
@@ -9666,7 +9722,7 @@ focus_tree = {
 		icon = GFX_goal_tripartite_pact
 		cost = 10
 		ai_will_do = {
-			factor = 
+			factor = 8
 		}
 		available = {
 			
@@ -9685,7 +9741,7 @@ focus_tree = {
 		icon = GFX_focus_invite_romania
 		cost = 10
 		ai_will_do = {
-			factor = 
+			factor = 8
 		}
 		available = {
 			
@@ -9704,7 +9760,7 @@ focus_tree = {
 		icon = GFX_goal_generic_national_unity
 		cost = 10
 		ai_will_do = {
-			factor = 
+			factor = 8
 		}
 		available = {
 			
@@ -9723,7 +9779,7 @@ focus_tree = {
 		icon = GFX_goal_anschluss
 		cost = 10
 		ai_will_do = {
-			factor = 
+			factor = 8
 		}
 		available = {
 			
