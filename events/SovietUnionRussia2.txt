@@ -607,7 +607,8 @@ country_event = {
 		has_global_flag = SOV_fourth_international_fired
 		NOT = { has_completed_focus = SOV_great_purge }
 		NOT = { has_completed_focus = SOV_avoid_purge }
-		NOT = { has_completed_focus = SOV_great_purge2}
+		NOT = { has_completed_focus = SOV_great_purge2 }
+		NOT = { has_country_flag = no_purgenoncivilwar }
 	}
 
 	mean_time_to_happen = {
@@ -700,6 +701,7 @@ country_event = {
 		custom_effect_tooltip = remove_political_advisor
 		show_ideas_tooltip = SOV_ivan_maisky
 		set_country_flag = purged_maisky
+		set_country_flag = purged_party_members
 		custom_effect_tooltip = only_molotov_will_remain
 		hidden_effect = {
 			remove_ideas = SOV_ivan_maisky
@@ -3015,7 +3017,7 @@ country_event = {
 	}
 }
 
-#Event to Rename Stalingrad - Communist Only
+#Event to Rename Stalingrad
 country_event = {
 	id = soviets.94
 	title = soviets.94.t
@@ -3027,19 +3029,27 @@ country_event = {
 	trigger = {
 		TAG = SOV
 		SOV = {
-			NOT = {
-				OR = {
-					has_country_leader = {
-						name = "Joseph Stalin"
-						ruling_only = yes
+			OR = {
+				NOT = {
+					OR = {
+						has_country_leader = {
+							name = "Joseph Stalin"
+							ruling_only = yes
+						}
+						has_country_leader = {
+							name = "Empty Parliament"
+							ruling_only = yes
+						}
 					}
-					has_country_leader = {
-						name = "Empty Parliament"
-						ruling_only = yes
+					has_war = yes
+				}
+				SOV = {
+					NOT = {
+						has_government = communism
+						has_war = yes
 					}
 				}
-				has_war = yes
-			}
+			}		
 		}
 	}
 
@@ -3116,6 +3126,65 @@ country_event = {
 			}
 		}
 	}
+
+	option = { #Has Democratic Government
+		name = soviets.94.f
+		trigger = {
+			SOV = {
+				has_government = democratic
+			}
+		}
+		set_province_name = { id = 3529 name = "Volgograd"}
+		hidden_effect = {
+			217 = {
+				set_state_name = "Volgograd"
+			}
+		}	
+	}
+
+	option = { #Has Neutral Government
+		name = soviets.94.g
+		trigger = {
+			SOV = {
+				has_government = neutrality
+			}
+		}
+		set_province_name = { id = 3529 name = "Tsaritsyn"}
+		hidden_effect = {
+			217 = {
+				set_state_name = "Tsaritsyn"
+			}
+		}	
+	}
+
+	option = { #Has Fascist Government
+		name = soviets.94.h
+		trigger = {
+			SOV = {
+				has_government = fascism
+			}
+		}
+		set_province_name = { id = 3529 name = "Tsaritsyn"}
+		hidden_effect = {
+			217 = {
+				set_state_name = "Tsaritsyn"
+			}
+		}	
+	}
+
+	option = { #Don't Change
+		name = soviets.94.i
+		trigger = {
+			SOV = {
+				OR = {
+					has_government = fascism
+					has_government = neutrality
+					has_government = democratic
+				}
+			}
+		}
+		add_stability = -0.1	
+	}	
 }
 
 #1939 Start Date
@@ -3850,5 +3919,42 @@ country_event = {
 	option = {
 		name = soviets.106.a
 		custom_effect_tooltip = azr_arm_geo_release_tt
+	}
+}
+
+#Event to Rename Lenningrad - Other Ideologies Only
+country_event = {
+	id = soviets.107
+	title = soviets.107.t
+	desc = soviets.107.d
+	picture = GFX_report_event_german_reichstag_gathering
+
+	fire_only_once = yes
+
+	trigger = {
+		TAG = SOV
+		SOV = {
+			NOT = {
+				has_government = communism
+				has_war = yes
+			}
+		}
+	}
+
+	mean_time_to_happen = { days = 20 }
+
+	option = { #Old Name
+		name = soviets.107.a
+		set_province_name = { id = 3151 name = "Saint Petersburg"}
+		hidden_effect = {
+			195 = {
+				set_state_name = "Saint Petersburg"
+			}
+		}	
+	}
+
+	option = { #Don't Change
+		name = soviets.107.b
+		add_stability = -0.1	
 	}
 }
