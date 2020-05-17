@@ -9082,15 +9082,40 @@ focus_tree = {
 		prerequisite = { focus = SOV_terrible_fate }
 		mutually_exclusive = { focus = SOV_right_to_believe }
 		icon = GFX_goal_generic_demand_territory
-		cost = 10
+		cost = 5
 		ai_will_do = {
-			factor = 8
+			factor = 10
 		}
 		available = {
 			is_subject = no
 		}
 		completion_reward = {
-				
+			if = {
+				limit = {
+					has_idea = SOV_Unhappy_peasants1
+				}
+				remove_ideas = SOV_Unhappy_peasants1
+				add_ideas = SOV_Prepare_second_war
+			}
+			else_if = {
+				limit = {
+					has_idea = SOV_Unhappy_peasants2
+				}
+				remove_ideas = SOV_Unhappy_peasants2
+				add_ideas = SOV_Prepare_second_war
+			}
+			hidden_effect = {
+				every_state = { 
+					limit = {
+						is_owned_by = SOV
+						distance_to = {
+							value < 6000
+							target = 574
+						}
+					}
+					set_state_flag = white_province
+				}
+			}		
 		}
 	}
 
@@ -9101,15 +9126,23 @@ focus_tree = {
 		y = 14
 		prerequisite = { focus = SOV_rally_under_general_cause }
 		icon = GFX_goal_generic_major_war
-		cost = 10
+		cost = 25
 		ai_will_do = {
 			factor = 8
 		}
 		available = {
 			
 		}
+		select_effect = {
+			activate_mission = SOV_second_civil_war_fn
+			set_country_flag = second_civil_war_mission
+		}
 		completion_reward = {
-				
+			custom_effect_tooltip = second_civil_war_tt
+			custom_effect_tooltip = second_civil_war_tt2
+		}
+		hidden_effect = {
+			clr_country_flag = second_civil_war_mission
 		}
 	}
 
@@ -9125,7 +9158,7 @@ focus_tree = {
 			factor = 8
 		}
 		available = {
-			
+			has_civil_war = no
 		}
 		completion_reward = {
 				
