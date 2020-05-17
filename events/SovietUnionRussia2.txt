@@ -3363,6 +3363,10 @@ country_event = {
 	}
 
 	option = {
+		ai_chance = {
+			factor = 33
+			# Place modifier later - if the AI path selected is fascism
+		}
 		name = soviets.102.a
 		add_popularity = {
 			ideology = fascism
@@ -3371,6 +3375,10 @@ country_event = {
 	}
 
 	option = {
+		ai_chance = {
+			factor = 33
+			
+		}
 		name = soviets.102.b
 		add_popularity = {
 			ideology = democratic
@@ -3379,6 +3387,10 @@ country_event = {
 	}
 
 	option = {
+		ai_chance = {
+			factor = 33
+			
+		}
 		name = soviets.102.c
 		add_popularity = {
 			ideology = neutrality
@@ -3397,6 +3409,9 @@ country_event = {
 	is_triggered_only = yes
 
 	option = {
+		ai_chance = {
+			factor = 100
+		}
 		name = soviets.103.a
 		add_stability = -0.1
 		set_politics = {
@@ -3455,6 +3470,8 @@ country_event = {
 		hidden_effect = {
 			release = UKR
 			release = BLR
+			set_variable = { russian_investment@UKR = 0 }
+			set_variable = { russian_investment@BLR = 0 }
 			UKR = {
 				add_ideas = SOV_Unstable_government
 				set_country_flag = democratic_russia_chaos_europe
@@ -3573,6 +3590,9 @@ country_event = {
 	}
 
 	option = {
+		ai_chance = {
+			factor = 100
+		}
 		name = soviets.104.a
 		custom_effect_tooltip = ukr_blr_release_tt
 	}
@@ -3594,6 +3614,11 @@ country_event = {
 			release = TAJ
 			release = UZB
 			release = TMS
+			set_variable = { russian_investment@KAZ = 0 }
+			set_variable = { russian_investment@KYR = 0 }
+			set_variable = { russian_investment@TAJ = 0 }
+			set_variable = { russian_investment@UZB = 0 }
+			set_variable = { russian_investment@TMS = 0 }
 			KAZ = {
 				add_ideas = SOV_Unstable_government
 				set_country_flag = democratic_russia_chaos_asia
@@ -3783,6 +3808,9 @@ country_event = {
 	}
 
 	option = {
+		ai_chance = {
+			factor = 100
+		}
 		name = soviets.105.a
 		custom_effect_tooltip = kaz_kyr_taj_uzb_tms_release_tt
 	}
@@ -3802,6 +3830,9 @@ country_event = {
 			release = AZR
 			release = ARM
 			release = GEO
+			set_variable = { russian_investment@AZR = 0 }
+			set_variable = { russian_investment@ARM = 0 }
+			set_variable = { russian_investment@GEO = 0 }
 			AZR = {
 				add_ideas = SOV_Unstable_government
 				set_country_flag = democratic_russia_chaos_caucasus
@@ -3917,6 +3948,9 @@ country_event = {
 	}
 
 	option = {
+		ai_chance = {
+			factor = 100
+		}
 		name = soviets.106.a
 		custom_effect_tooltip = azr_arm_geo_release_tt
 	}
@@ -3944,6 +3978,9 @@ country_event = {
 	mean_time_to_happen = { days = 20 }
 
 	option = { #Old Name
+		ai_chance = {
+			factor = 100
+		}
 		name = soviets.107.a
 		set_province_name = { id = 3151 name = "Saint Petersburg"}
 		hidden_effect = {
@@ -3954,7 +3991,137 @@ country_event = {
 	}
 
 	option = { #Don't Change
+		ai_chance = {
+			factor = 0
+		}
 		name = soviets.107.b
 		add_stability = -0.1	
+	}
+}
+
+#Democratic Path - Reunification
+country_event = {
+	id = soviets.108
+	title = soviets.108.t
+	desc = soviets.108.d
+	picture = GFX_report_event_german_reichstag_gathering
+
+	is_triggered_only = yes
+
+	option = { #Accept
+		ai_chance = {
+			factor = 10
+			modifier = {
+				factor = 40
+				check_variable = {
+					var = russian_investment@ROOT
+					value = 1
+					compare = equals
+				}
+			}
+			modifier = {
+				factor = 70
+				check_variable = {
+					var = russian_investment@ROOT
+					value = 2
+					compare = equals
+				}
+			}
+			modifier = {
+				factor = 100
+				check_variable = {
+					var = russian_investment@ROOT
+					value = 3
+					compare = equals
+				}
+			}
+		}
+		name = soviets.108.a
+		FROM = {
+			annex_country = {
+				target = ROOT
+				transfer_troops = yes
+			}
+		}
+		SOV = {
+			country_event = { id = soviets.109 }
+		}
+		custom_effect_tooltip = SOV_game_totally_over_TT
+	}
+
+	option = { #Refuse
+		trigger = {
+			check_variable = {
+				var = russian_investment@ROOT
+				value = 3
+				compare = not_equals
+			}
+		}
+		ai_chance = {
+			factor = 90
+			modifier = {
+				factor = 60
+				check_variable = {
+					var = russian_investment@ROOT
+					value = 1
+					compare = equals
+				}
+			}
+			modifier = {
+				factor = 30
+				check_variable = {
+					var = russian_investment@ROOT
+					value = 2
+					compare = equals
+				}
+			}
+			modifier = {
+				factor = 0
+				check_variable = {
+					var = russian_investment@ROOT
+					value = 3
+					compare = equals
+				}
+			}
+		}
+		name = soviets.108.b
+		set_country_flag = sov_refused_reunification
+		SOV = {
+			country_event = { id = soviets.110 }
+		}
+	}
+}
+
+#Democratic Path - Reunification - Country Accepts
+country_event = {
+	id = soviets.109
+	title = soviets.109.t
+	desc = soviets.109.d
+	picture = GFX_report_event_german_reichstag_gathering
+
+	is_triggered_only = yes
+
+	option = { #Yay
+		ai_chance = {
+			factor = 100
+		}
+		name = soviets.109.a
+	}
+}
+
+#Democratic Path - Reunification - Country refuses
+country_event = {
+	id = soviets.110
+	title = soviets.110.t
+	desc = soviets.110.d
+	picture = GFX_report_event_german_reichstag_gathering
+
+	is_triggered_only = yes
+
+	option = { #Oh
+		ai_chance = {
+			factor = 100
+		}
+		name = soviets.110.a
 	}
 }
