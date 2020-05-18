@@ -3377,7 +3377,7 @@ country_event = {
 	option = {
 		ai_chance = {
 			factor = 33
-			
+			# Place modifier later - if the AI path selected is democratic
 		}
 		name = soviets.102.b
 		add_popularity = {
@@ -3389,7 +3389,7 @@ country_event = {
 	option = {
 		ai_chance = {
 			factor = 33
-			
+			# Place modifier later - if the AI path selected is non aligned
 		}
 		name = soviets.102.c
 		add_popularity = {
@@ -3424,7 +3424,6 @@ country_event = {
 		dismantle_faction = yes
 		remove_ideas = SOV_Army_disorganisation
 		hidden_effect = {
-			add_country_leader_trait = temporary_leader
 			set_division_template_lock = {
 				division_template = "Strelkovaya Diviziya"
 				is_locked = no
@@ -4123,5 +4122,57 @@ country_event = {
 			factor = 100
 		}
 		name = soviets.110.a
+	}
+}
+
+# SOV Is Democratic
+country_event = {
+	id = soviets.111
+	
+	trigger = {
+		tag = SOV
+		has_government = democratic
+		NOT = { has_cosmetic_tag = SOV_democratic_russia }
+	}
+
+	mean_time_to_happen = { days = 1 }
+
+	hidden = yes
+
+	immediate = {
+		if = {
+			limit = {
+				OR = {
+					has_completed_focus = SOV_pavel_guidance
+					has_completed_focus = SOV_trust_alexander
+				}
+			}
+			set_cosmetic_tag = SOV_democratic_russia
+		}
+		set_cosmetic_tag = SOV_temp_democratic_russia
+	}
+}
+
+# SOV Isn't Democratic Anymore
+country_event = {
+	id = soviets.112
+	
+	trigger = {
+		tag = SOV
+		NOT = {
+			has_government = democratic
+		}
+		OR = {
+			has_cosmetic_tag = SOV_temp_democratic_russia
+			has_cosmetic_tag = SOV_democratic_russia
+		}
+	}
+
+	mean_time_to_happen = { days = 1 }
+
+	hidden = yes
+
+	immediate = {
+		drop_cosmetic_tag = yes
 	}
 }
