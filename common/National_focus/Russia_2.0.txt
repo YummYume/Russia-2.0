@@ -8581,7 +8581,7 @@ focus_tree = {
 		y = 15
 		prerequisite = { focus = SOV_prepare_democratic_coup }
 		icon = GFX_goal_generic_territory_or_war
-		cost = 10
+		cost = 8
 		ai_will_do = {
 			factor = 8
 		}
@@ -8729,7 +8729,7 @@ focus_tree = {
 		y = 18
 		prerequisite = { focus = SOV_trust_alexander focus = SOV_pavel_guidance }
 		icon = GFX_goal_anschluss
-		cost = 10
+		cost = 8
 		ai_will_do = {
 			factor = 8
 		}
@@ -8753,6 +8753,7 @@ focus_tree = {
 						# add_to_faction = PREV (not required)
 						puppet = PREV
 					}
+					add_ideas = SOV_Guided_by_russia
 				}
 
 				every_country = { #Making a second every_country to avoid confusing the PREV tag
@@ -9059,7 +9060,21 @@ focus_tree = {
 		}
 		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
-			
+			add_ideas = SOV_Promote_russian_culture
+			every_country = {
+				limit = {
+					OR = {
+						has_country_flag = democratic_russia_chaos_europe
+						has_country_flag = democratic_russia_chaos_asia
+						has_country_flag = democratic_russia_chaos_caucasus
+					}
+					has_idea = SOV_Guided_by_russia
+				}
+				swap_ideas = {
+					remove_idea = SOV_Guided_by_russia
+					add_idea = SOV_Guided_by_russia2
+				}
+			}
 		}
 	}
 
@@ -9184,7 +9199,10 @@ focus_tree = {
 		}
 		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
-			
+			swap_ideas = {
+				remove_idea = SOV_growing_russian_economy
+				add_idea = SOV_growing_russian_economy2
+			}
 		}
 	}
 

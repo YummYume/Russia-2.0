@@ -4176,3 +4176,268 @@ country_event = {
 		drop_cosmetic_tag = yes
 	}
 }
+
+# ENG Blockades Russia
+country_event = {
+	id = soviets.113
+	title = soviets.113.t
+	desc = soviets.113.d
+	picture = GFX_report_event_german_reichstag_gathering
+	
+	is_triggered_only = yes
+
+	option = { #Yes!
+		name = soviets.113.a
+		add_ideas = SOV_Blockade_russia
+		SOV = {
+			country_event = { id = soviets.114 days = 1 }
+		}
+		set_country_flag = blockade_russian_ports
+	}
+
+	option = { #No thanks
+		name = soviets.113.b
+	}
+}
+
+# ENG Started the Blockade
+country_event = {
+	id = soviets.114
+	title = soviets.114.t
+	desc = soviets.114.d
+	picture = GFX_report_event_german_reichstag_gathering
+	
+	is_triggered_only = yes
+
+	option = { #Damn
+		name = soviets.114.a
+		add_ideas = SOV_Blockaded_by_eng
+	}
+}
+
+# SOV (Democratic) Asks ENG to stop the blockade
+country_event = {
+	id = soviets.115
+	title = soviets.115.t
+	desc = soviets.115.d
+	picture = GFX_report_event_german_reichstag_gathering
+	
+	is_triggered_only = yes
+
+	option = { #We will stop
+		name = soviets.115.a
+		SOV = {
+			country_event = { id = soviets.116 days = 5 }
+		}
+		remove_ideas = SOV_Blockade_russia
+	}
+
+	option = { #Certainly not
+		name = soviets.115.b
+		SOV = {
+			country_event = { id = soviets.117 days = 5 }
+		}
+	}
+}
+
+# ENG Ends the Blockade
+country_event = {
+	id = soviets.116
+	title = soviets.116.t
+	desc = soviets.116.d
+	picture = GFX_report_event_german_reichstag_gathering
+	
+	is_triggered_only = yes
+
+	option = { #Amazing
+		name = soviets.116.a
+		remove_ideas = SOV_Blockaded_by_eng
+	}
+}
+
+# ENG Won't Stop...
+country_event = {
+	id = soviets.117
+	title = soviets.117.t
+	desc = soviets.117.d
+	picture = GFX_report_event_german_reichstag_gathering
+	
+	is_triggered_only = yes
+
+	option = { #Alright, ask for a compromise
+		name = soviets.117.a
+		ENG = {
+			country_event = { id = soviets.118 days = 5 }
+		}
+	}
+}
+
+# SOV Offers Compromise
+country_event = {
+	id = soviets.118
+	title = soviets.118.t
+	desc = soviets.118.d
+	picture = GFX_report_event_german_reichstag_gathering
+	
+	is_triggered_only = yes
+
+	option = { #We'll gladly accept!
+		name = soviets.118.a
+		modify_timed_idea = {
+			idea = SOV_Blockade_russia
+			days = 365
+		}
+		SOV = {
+			country_event = { id = soviets.119 days = 5 }
+		}
+	}
+
+	option = { #No
+		name = soviets.118.b
+		SOV = {
+			country_event = { id = soviets.120 days = 5 }
+		}
+	}
+
+	option = { #End all diplomatic relations with SOV
+		name = soviets.118.c
+		SOV = {
+			country_event = { id = soviets.121 days = 5 }
+		}
+	}
+}
+
+# ENG Accepts Compromise
+country_event = {
+	id = soviets.119
+	title = soviets.119.t
+	desc = soviets.119.d
+	picture = GFX_report_event_german_reichstag_gathering
+	
+	is_triggered_only = yes
+
+	option = { #Thank god
+		name = soviets.119.a
+		modify_timed_idea = {
+			idea = SOV_Blockaded_by_eng
+			days = 365
+		}
+	}
+}
+
+# ENG Refuses Compromise
+country_event = {
+	id = soviets.120
+	title = soviets.120.t
+	desc = soviets.120.d
+	picture = GFX_report_event_german_reichstag_gathering
+	
+	is_triggered_only = yes
+
+	option = { #Threaten with war
+		name = soviets.120.a
+		ENG = {
+			country_event = { id = soviets.122 days = 5 }
+		}
+	}
+
+	option = { #Give up... For now
+		name = soviets.120.b
+		ENG = {
+			country_event = { id = soviets.123 days = 5 }
+		}
+	}
+}
+
+# ENG Cuts Diplomatic Relations with SOV
+country_event = {
+	id = soviets.121
+	title = soviets.121.t
+	desc = soviets.121.d
+	picture = GFX_report_event_german_reichstag_gathering
+	
+	is_triggered_only = yes
+
+	option = { #Okay...
+		name = soviets.121.a
+	}
+}
+
+# SOV Threatens with War
+country_event = {
+	id = soviets.122
+	title = soviets.122.t
+	desc = soviets.122.d
+	picture = GFX_report_event_german_reichstag_gathering
+	
+	is_triggered_only = yes
+
+	option = { #Alright...
+		name = soviets.122.a
+		SOV = {
+			country_event = { id = soviets.124 days = 5 }
+		}
+		remove_ideas = SOV_Blockade_russia
+	}
+
+	option = { #We're not scared
+		name = soviets.122.b
+		SOV = {
+			country_event = { id = soviets.125 days = 5 }
+		}
+	}
+
+	option = { #End all diplomatic relations with SOV
+		name = soviets.122.c
+		SOV = {
+			country_event = { id = soviets.121 days = 5 }
+		}
+	}
+}
+
+# SOV Gives Up
+country_event = {
+	id = soviets.123
+	title = soviets.123.t
+	desc = soviets.123.d
+	picture = GFX_report_event_german_reichstag_gathering
+	
+	is_triggered_only = yes
+
+	option = { #Ahah
+		name = soviets.123.a
+		set_country_flag = ENG_resists_pressure
+	}
+}
+
+# ENG Finally Ends the Blockade
+country_event = {
+	id = soviets.124
+	title = soviets.124.t
+	desc = soviets.124.d
+	picture = GFX_report_event_german_reichstag_gathering
+	
+	is_triggered_only = yes
+
+	option = { #Amazing
+		name = soviets.124.a
+		remove_ideas = SOV_Blockaded_by_eng
+	}
+}
+
+# ENG Really doesn't care
+country_event = {
+	id = soviets.125
+	title = soviets.125.t
+	desc = soviets.125.d
+	picture = GFX_report_event_german_reichstag_gathering
+	
+	is_triggered_only = yes
+
+	option = { #Prepare a plan for later
+		name = soviets.125.a
+		ENG = {
+			set_country_flag = ENG_resists_pressure
+		}
+	}
+}
