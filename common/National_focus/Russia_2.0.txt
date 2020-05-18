@@ -8248,7 +8248,7 @@ focus_tree = {
 		x = 94
 		y = 6
 		prerequisite = { focus = SOV_fourth_international }
-		icon = GFX_focus_spr_masters_of_our_own_fate
+		icon = GFX_focus_legacy_lenin
 		cost = 5
 		ai_will_do = {
 			factor = 5
@@ -8273,7 +8273,7 @@ focus_tree = {
 		x = 94
 		y = 7
 		prerequisite = { focus = SOV_follow_lenin_legacy }
-		icon = GFX_focus_spr_anarchism_knows_no_borders
+		icon = GFX_focus_Europe_Revolution
 		cost = 8
 		ai_will_do = {
 			factor = 6
@@ -8306,7 +8306,7 @@ focus_tree = {
 		x  = 97
 		y = 8
 		prerequisite = { focus = SOV_follow_lenin_legacy }
-		icon = GFX_focus_por_latin_american_communism
+		icon = GFX_focus_communist_africa
 		cost = 8
 		ai_will_do = {
 			factor = 6
@@ -8339,7 +8339,7 @@ focus_tree = {
 		x = 91
 		y = 8
 		prerequisite = { focus = SOV_follow_lenin_legacy }
-		icon = GFX_focus_hol_gateway_to_europe
+		icon = GFX_focus_Asia_Revolution
 		cost = 8
 		ai_will_do = {
 			factor = 6
@@ -8611,6 +8611,14 @@ focus_tree = {
 			has_government = democratic
 		}
 		select_effect = {
+			hidden_effect = {
+				every_state = {
+					limit = {
+						is_core_of = SOV
+					}
+					set_state_flag = reunification_give_core_back
+				}
+			}
 			country_event = { id = soviets.104 days = 40 }
 			country_event = { id = soviets.105 days = 80 }
 			country_event = { id = soviets.106 days = 120 }
@@ -8890,6 +8898,14 @@ focus_tree = {
 			is_subject = no
 		}
 		select_effect = {
+			hidden_effect = {
+				every_state = {
+					limit = {
+						has_state_flag = reunification_give_core_back
+					}
+					add_state_core = PREV
+				}
+			}
 			set_country_flag = sov_started_reunification
 			every_country = {
 				limit = {
@@ -8958,6 +8974,16 @@ focus_tree = {
 				has_country_flag = sov_refused_reunification
 			}
 		}
+		will_lead_to_war_with = UKR
+		will_lead_to_war_with = BLR
+		will_lead_to_war_with = GEO
+		will_lead_to_war_with = AZR
+		will_lead_to_war_with = ARM
+		will_lead_to_war_with = KAZ
+		will_lead_to_war_with = KYR
+		will_lead_to_war_with = TAJ
+		will_lead_to_war_with = UZB
+		will_lead_to_war_with = TMS
 		search_filters = {FOCUS_FILTER_ANNEXATION FOCUS_FILTER_POLITICAL}
 		completion_reward = {
 			custom_effect_tooltip = SOV_deal_with_decadents_tt
@@ -8973,6 +8999,11 @@ focus_tree = {
 					limit = {
 						has_country_flag = sov_refused_reunification
 					}
+					set_autonomy = {
+						target = PREV
+						autonomy_state = free
+					}
+					leave_faction = yes
 					SOV = {
 						declare_war_on = {
 							target = PREV
@@ -9203,15 +9234,40 @@ focus_tree = {
 		prerequisite = { focus = SOV_terrible_fate }
 		mutually_exclusive = { focus = SOV_right_to_believe }
 		icon = GFX_goal_generic_demand_territory
-		cost = 10
+		cost = 5
 		ai_will_do = {
-			factor = 8
+			factor = 10
 		}
 		available = {
 			is_subject = no
 		}
 		completion_reward = {
-				
+			if = {
+				limit = {
+					has_idea = SOV_Unhappy_peasants1
+				}
+				remove_ideas = SOV_Unhappy_peasants1
+				add_ideas = SOV_Prepare_second_war
+			}
+			else_if = {
+				limit = {
+					has_idea = SOV_Unhappy_peasants2
+				}
+				remove_ideas = SOV_Unhappy_peasants2
+				add_ideas = SOV_Prepare_second_war
+			}
+			hidden_effect = {
+				every_state = { 
+					limit = {
+						is_owned_by = SOV
+						distance_to = {
+							value < 6000
+							target = 574
+						}
+					}
+					set_state_flag = white_province
+				}
+			}		
 		}
 	}
 
@@ -9222,15 +9278,23 @@ focus_tree = {
 		y = 14
 		prerequisite = { focus = SOV_rally_under_general_cause }
 		icon = GFX_goal_generic_major_war
-		cost = 10
+		cost = 25
 		ai_will_do = {
 			factor = 8
 		}
 		available = {
 			
 		}
+		select_effect = {
+			activate_mission = SOV_second_civil_war_fn
+			set_country_flag = second_civil_war_mission
+		}
 		completion_reward = {
-				
+			custom_effect_tooltip = second_civil_war_tt
+			custom_effect_tooltip = second_civil_war_tt2
+		}
+		hidden_effect = {
+			clr_country_flag = second_civil_war_mission
 		}
 	}
 
@@ -9246,7 +9310,7 @@ focus_tree = {
 			factor = 8
 		}
 		available = {
-			
+			has_civil_war = no
 		}
 		completion_reward = {
 				

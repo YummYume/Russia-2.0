@@ -3287,3 +3287,239 @@ SOV_invest_russian_sphere = {
 		}
 	}
 }
+
+SOV_the_second_civil_war_fn = {
+
+	SOV_second_civil_war_fn = {
+
+		icon = GFX_decision_generic_ignite_civil_war
+
+		allowed = {
+			tag = SOV
+		}	
+		available = {
+			has_civil_war = yes
+			has_completed_focus = SOV_second_civil_war
+		}
+		activation = {
+			has_country_flag = second_civil_war_mission
+		}	
+		days_mission_timeout = 175
+		is_good = no
+		timeout_effect = {
+			SOV = {
+				country_event = { id = soviets. }
+			}
+		}
+		complete_effect = {
+			
+		}
+	}
+
+	SOV_relocate_civ_industry = {
+
+		icon = GFX_decision_hol_attract_foreign_investors
+
+		allowed = {
+			tag = SOV
+		}
+		available = {
+			has_civil_war = no
+		}
+		visible = {
+			has_country_flag = second_civil_war_mission
+		}
+
+		ai_will_do = {
+			factor = 10
+		}
+
+		cost = 10
+
+		days_remove = 15
+		remove_effect = {
+	
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = SOV_relocate_civ_industry_tt
+			hidden_effect = {
+				random_owned_state = {
+					limit = {
+						industrial_complex > 0
+						NOT = { 
+							has_state_flag = white_province
+						}		
+					}					
+					remove_building = {
+						type = industrial_complex
+						level = 1
+					}
+				}
+				random_owned_state = {
+					limit = {
+						has_state_flag = white_province	
+					}
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+				}
+			}	
+		}
+	}
+
+	SOV_relocate_arms_industry = {
+
+		icon = GFX_decision_ger_military_buildup
+
+		allowed = {
+			tag = SOV
+		}
+		available = {
+			has_civil_war = no
+		}
+		visible = {
+			has_country_flag = second_civil_war_mission
+		}
+
+		ai_will_do = {
+			factor = 10
+		}
+
+		cost = 20
+
+		days_remove = 15
+		remove_effect = {
+	
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = SOV_relocate_arms_industry_tt
+			hidden_effect = {
+				random_owned_state = {
+					limit = {
+						arms_factory > 0
+						NOT = { 
+							has_state_flag = white_province
+						}		
+					}					
+					remove_building = {
+						type = arms_factory
+						level = 1
+					}
+				}
+				random_owned_state = {
+					limit = {
+						has_state_flag = white_province	
+					}
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+				}
+			}		
+		}
+	}
+
+	SOV_take_control_caucasus = {
+
+		icon = GFX_decision_infiltrate_state
+
+		allowed = {
+			TAG = SOV
+		}
+		available = {
+			has_civil_war = no
+		}
+		visible = {
+			has_country_flag = second_civil_war_mission
+		}
+
+		ai_will_do = {
+			factor = 11
+		}
+
+		cost = 75
+
+		complete_effect = {
+			233 = {
+				set_state_flag = white_province
+			}
+			232 = {
+				set_state_flag = white_province
+			}
+			235 = {
+				
+			}
+		}
+	}
+
+	SOV_debug_white_province = {
+
+		icon = GFX_decision_hol_attract_foreign_investors
+
+		allowed = {
+			tag = SOV
+		}
+		available = {
+			has_civil_war = no
+		}
+		visible = {
+			has_country_flag = second_civil_war_mission
+		}
+
+		ai_will_do = {
+			factor = 10
+		}
+
+		cost = 10
+
+		complete_effect = {
+			every_state = {
+				limit = {
+					has_state_flag = white_province
+				}
+				GER = {
+					set_state_owner = PREV
+				}	
+			}
+		}
+	}
+
+	SOV_debug_back_white_province = {
+
+		icon = GFX_decision_hol_attract_foreign_investors
+
+		allowed = {
+			tag = SOV
+		}
+		available = {
+			has_civil_war = no
+		}
+		visible = {
+			has_country_flag = second_civil_war_mission
+		}
+
+		ai_will_do = {
+			factor = 10
+		}
+
+		cost = 10
+
+		complete_effect = {
+			every_state = {
+				limit = {
+					has_state_flag = white_province
+				}
+				SOV = {
+					set_state_owner = PREV
+				}	
+			}
+		}
+	}
+}
