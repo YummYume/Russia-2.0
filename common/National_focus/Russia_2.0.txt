@@ -8611,6 +8611,14 @@ focus_tree = {
 			has_government = democratic
 		}
 		select_effect = {
+			hidden_effect = {
+				every_state = {
+					limit = {
+						is_core_of = SOV
+					}
+					set_state_flag = reunification_give_core_back
+				}
+			}
 			country_event = { id = soviets.104 days = 40 }
 			country_event = { id = soviets.105 days = 80 }
 			country_event = { id = soviets.106 days = 120 }
@@ -8788,16 +8796,6 @@ focus_tree = {
 		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
 			custom_effect_tooltip = SOV_end_naval_blockade_tt
-			if = {
-				limit = {
-					check_variable = {
-						var = russian_investment@UKR
-						value = 1
-						compare = equals
-					}
-				}
-				add_stability = 5
-			}
 		}
 	}
 
@@ -8900,6 +8898,14 @@ focus_tree = {
 			is_subject = no
 		}
 		select_effect = {
+			hidden_effect = {
+				every_state = {
+					limit = {
+						has_state_flag = reunification_give_core_back
+					}
+					add_state_core = PREV
+				}
+			}
 			set_country_flag = sov_started_reunification
 			every_country = {
 				limit = {
@@ -8968,6 +8974,16 @@ focus_tree = {
 				has_country_flag = sov_refused_reunification
 			}
 		}
+		will_lead_to_war_with = UKR
+		will_lead_to_war_with = BLR
+		will_lead_to_war_with = GEO
+		will_lead_to_war_with = AZR
+		will_lead_to_war_with = ARM
+		will_lead_to_war_with = KAZ
+		will_lead_to_war_with = KYR
+		will_lead_to_war_with = TAJ
+		will_lead_to_war_with = UZB
+		will_lead_to_war_with = TMS
 		search_filters = {FOCUS_FILTER_ANNEXATION FOCUS_FILTER_POLITICAL}
 		completion_reward = {
 			custom_effect_tooltip = SOV_deal_with_decadents_tt
@@ -8983,6 +8999,11 @@ focus_tree = {
 					limit = {
 						has_country_flag = sov_refused_reunification
 					}
+					set_autonomy = {
+						target = PREV
+						autonomy_state = free
+					}
+					leave_faction = yes
 					SOV = {
 						declare_war_on = {
 							target = PREV
