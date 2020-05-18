@@ -3292,7 +3292,7 @@ SOV_the_second_civil_war_fn = {
 
 	SOV_second_civil_war_fn = {
 
-		icon = GFX_decision_generic_ignite_civil_war
+		icon = GFX_decision_generic_nationalism
 
 		allowed = {
 			tag = SOV
@@ -3481,7 +3481,7 @@ SOV_the_second_civil_war_fn = {
 		}
 
 		ai_will_do = {
-			factor = 10
+			factor = 11
 		}
 
 		cost = 60
@@ -3510,7 +3510,7 @@ SOV_the_second_civil_war_fn = {
 		}
 
 		ai_will_do = {
-			factor = 10
+			factor = 11
 		}
 
 		cost = 50
@@ -3522,7 +3522,40 @@ SOV_the_second_civil_war_fn = {
 			}	
 		}	
 
-	}	
+	}
+
+	SOV_buy_weapons = {
+
+		icon = GFX_decision_generic_industry
+
+		allowed = {
+			tag = SOV
+		}
+		available = {
+			has_civil_war = no
+		}
+		visible = {
+			has_country_flag = second_civil_war_mission
+		}
+
+		ai_will_do = {
+			factor = 10
+		}
+
+		cost = 30
+
+		days_remove = 30
+		remove_effect = {
+			
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = buy_weapons
+			hidden_effect = {
+
+			}		
+		}
+	}
 
 	SOV_debug_white_province = {
 
@@ -3585,6 +3618,131 @@ SOV_the_second_civil_war_fn = {
 					set_state_owner = PREV
 				}	
 			}
+		}
+	}
+
+	SOV_sabotage_military_industries = {
+
+		icon = GFX_decision_generic_scorched_earth
+
+		allowed = {
+			tag = SOV
+		}
+		available = {
+			has_civil_war = no
+		}
+		visible = {
+			has_country_flag = second_civil_war_mission
+		}
+
+		ai_will_do = {
+			factor = 10
+		}
+
+		cost = 0
+
+		custom_cost_trigger = {
+			command_power > 25
+		}
+
+		days_remove = 20
+		remove_effect = {
+			
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = sabotage_military
+			hidden_effect = {
+				add_command_power = -25
+				random_owned_state = {
+					limit = {
+						arms_factory > 0
+						NOT = { 
+							has_state_flag = white_province
+						}		
+					}					
+					remove_building = {
+						type = arms_factory
+						level = 1
+					}
+				}				
+			}			
+		}
+	}
+
+	SOV_sabotage_civilian_industries = {
+
+		icon = GFX_decision_generic_scorched_earth
+
+		allowed = {
+			tag = SOV
+		}
+		available = {
+			has_civil_war = no
+		}
+		visible = {
+			has_country_flag = second_civil_war_mission
+		}
+
+		ai_will_do = {
+			factor = 10
+		}
+
+		cost = 0
+
+		custom_cost_trigger = {
+			command_power > 25
+		}
+
+		days_remove = 20
+		remove_effect = {
+			
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = sabotage_civilian
+			hidden_effect = {
+				add_command_power = -25
+
+			}			
+		}
+	}
+
+	SOV_steal_weapons = {
+
+		icon = GFX_decision_generic_intelligence_operation
+
+		allowed = {
+			tag = SOV
+		}
+		available = {
+			has_civil_war = no
+		}
+		visible = {
+			has_country_flag = second_civil_war_mission
+		}
+
+		ai_will_do = {
+			factor = 10
+		}
+
+		cost = 0
+
+		custom_cost_trigger = {
+			command_power > 25
+		}
+
+		days_remove = 20
+		remove_effect = {
+			
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = steal_weapons
+			hidden_effect = {
+				add_command_power = -25
+
+			}			
 		}
 	}
 }
