@@ -8581,7 +8581,7 @@ focus_tree = {
 		y = 15
 		prerequisite = { focus = SOV_prepare_democratic_coup }
 		icon = GFX_goal_generic_territory_or_war
-		cost = 10
+		cost = 8
 		ai_will_do = {
 			factor = 8
 		}
@@ -8622,12 +8622,39 @@ focus_tree = {
 			country_event = { id = soviets.104 days = 40 }
 			country_event = { id = soviets.105 days = 80 }
 			country_event = { id = soviets.106 days = 120 }
+			if = {
+				limit = {
+					OR = {
+						owns_state = 216
+						owns_state = 215
+						owns_state = 213
+					}
+				}
+				FIN = {
+					country_event = { id = finlands.7 days = 45 }
+				}
+			}
+			if = {
+				limit = {
+					owns_state = 655
+				}
+				JAP = {
+					country_event = { id = japans.6 days = 50 }
+				}
+			}
+			ENG = {
+				country_event = { id = soviets.113 days = 100 }
+			}
 		}
 		cancelable = no
 		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
 			custom_effect_tooltip = SOV_country_in_chaos_tt
 			remove_ideas = SOV_Terrible_fate
+			add_timed_idea = {
+				idea = SOV_A_new_beginning
+				days = 140
+			}
 		}
 	}
 
@@ -8649,11 +8676,14 @@ focus_tree = {
 		}
 		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
-			set_politics = {
-				ruling_party = democratic
-				elections_allowed = yes
-			}
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = alexander_kerensky
+			custom_effect_tooltip = SOV_trust_alexander_tt
 			hidden_effect = {
+				set_politics = {
+					ruling_party = democratic
+					elections_allowed = yes
+				}
 				drop_cosmetic_tag = yes
 				set_cosmetic_tag = SOV_democratic_russia
 			}
@@ -8666,8 +8696,6 @@ focus_tree = {
 				remove = temporary_leader
 				add = abolished_death_penalty
 			}
-			custom_effect_tooltip = available_political_advisor
-			show_ideas_tooltip = alexander_kerensky
 		}
 	}
 
@@ -8689,11 +8717,14 @@ focus_tree = {
 		}
 		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
-			set_politics = {
-				ruling_party = democratic
-				elections_allowed = yes
-			}
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = pavel_milyukov
+			custom_effect_tooltip = SOV_pavel_guidance_tt
 			hidden_effect = {
+				set_politics = {
+					ruling_party = democratic
+					elections_allowed = yes
+				}
 				drop_cosmetic_tag = yes
 				set_cosmetic_tag = SOV_democratic_russia
 			}
@@ -8711,8 +8742,6 @@ focus_tree = {
 					stupidity_or_treason
 				}
 			}
-			custom_effect_tooltip = available_political_advisor
-			show_ideas_tooltip = pavel_milyukov
 		}
 	}
 
@@ -8723,7 +8752,7 @@ focus_tree = {
 		y = 18
 		prerequisite = { focus = SOV_trust_alexander focus = SOV_pavel_guidance }
 		icon = GFX_goal_anschluss
-		cost = 10
+		cost = 8
 		ai_will_do = {
 			factor = 8
 		}
@@ -8747,6 +8776,7 @@ focus_tree = {
 						# add_to_faction = PREV (not required)
 						puppet = PREV
 					}
+					add_ideas = SOV_Guided_by_russia
 				}
 
 				every_country = { #Making a second every_country to avoid confusing the PREV tag
@@ -9053,7 +9083,21 @@ focus_tree = {
 		}
 		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
-			
+			add_ideas = SOV_Promote_russian_culture
+			every_country = {
+				limit = {
+					OR = {
+						has_country_flag = democratic_russia_chaos_europe
+						has_country_flag = democratic_russia_chaos_asia
+						has_country_flag = democratic_russia_chaos_caucasus
+					}
+					has_idea = SOV_Guided_by_russia
+				}
+				swap_ideas = {
+					remove_idea = SOV_Guided_by_russia
+					add_idea = SOV_Guided_by_russia2
+				}
+			}
 		}
 	}
 
@@ -9178,7 +9222,10 @@ focus_tree = {
 		}
 		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
-			
+			swap_ideas = {
+				remove_idea = SOV_growing_russian_economy
+				add_idea = SOV_growing_russian_economy2
+			}
 		}
 	}
 
