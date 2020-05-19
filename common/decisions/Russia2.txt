@@ -3426,6 +3426,68 @@ SOV_the_second_civil_war_fn = {
 		}
 	}
 
+	SOV_buy_weapons = {
+
+		icon = GFX_decision_generic_industry
+
+		allowed = {
+			tag = SOV
+		}
+		available = {
+			has_civil_war = no
+		}
+		visible = {
+			has_country_flag = second_civil_war_mission
+		}
+
+		ai_will_do = {
+			factor = 10
+		}
+
+		cost = 30
+
+		days_remove = 30
+		remove_effect = {
+			
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = buy_weapons
+			hidden_effect = {
+
+			}		
+		}
+	}	
+
+	SOV_sympathize_with_ukraine = {
+
+		icon = GFX_decision_generic_political_discourse
+
+		allowed = {
+			TAG = SOV
+		}
+		available = {
+			has_civil_war = no
+		}
+		visible = {
+			has_country_flag = second_civil_war_mission
+		}
+
+		ai_will_do = {
+			factor = 11
+		}
+
+		cost = 75
+
+		complete_effect = {
+			custom_effect_tooltip = sympathize_with_ukraine_civil_war_tt
+			hidden_effect = {
+				set_country_flag = sympathize_with_ukraine
+			}	
+		}	
+
+	}	
+
 	SOV_take_control_caucasus = {
 
 		icon = GFX_decision_infiltrate_state
@@ -3524,39 +3586,6 @@ SOV_the_second_civil_war_fn = {
 
 	}
 
-	SOV_buy_weapons = {
-
-		icon = GFX_decision_generic_industry
-
-		allowed = {
-			tag = SOV
-		}
-		available = {
-			has_civil_war = no
-		}
-		visible = {
-			has_country_flag = second_civil_war_mission
-		}
-
-		ai_will_do = {
-			factor = 10
-		}
-
-		cost = 30
-
-		days_remove = 30
-		remove_effect = {
-			
-		}
-
-		complete_effect = {
-			custom_effect_tooltip = buy_weapons
-			hidden_effect = {
-
-			}		
-		}
-	}
-
 	SOV_debug_white_province = {
 
 		icon = GFX_decision_hol_attract_foreign_investors
@@ -3630,13 +3659,14 @@ SOV_the_second_civil_war_fn = {
 		}
 		available = {
 			has_civil_war = no
+			command_power > 25
 		}
 		visible = {
 			has_country_flag = second_civil_war_mission
 		}
 
 		ai_will_do = {
-			factor = 10
+			factor = 9
 		}
 
 		cost = 0
@@ -3647,25 +3677,13 @@ SOV_the_second_civil_war_fn = {
 
 		days_remove = 20
 		remove_effect = {
-			
+			set_country_flag = SOV_sabotage_mil_1
 		}
 
 		complete_effect = {
 			custom_effect_tooltip = sabotage_military
 			hidden_effect = {
-				add_command_power = -25
-				random_owned_state = {
-					limit = {
-						arms_factory > 0
-						NOT = { 
-							has_state_flag = white_province
-						}		
-					}					
-					remove_building = {
-						type = arms_factory
-						level = 1
-					}
-				}				
+				add_command_power = -25			
 			}			
 		}
 	}
@@ -3679,13 +3697,14 @@ SOV_the_second_civil_war_fn = {
 		}
 		available = {
 			has_civil_war = no
+			command_power > 25
 		}
 		visible = {
 			has_country_flag = second_civil_war_mission
 		}
 
 		ai_will_do = {
-			factor = 10
+			factor = 9
 		}
 
 		cost = 0
@@ -3696,14 +3715,13 @@ SOV_the_second_civil_war_fn = {
 
 		days_remove = 20
 		remove_effect = {
-			
+			set_country_flag = SOV_sabotage_civ_1
 		}
 
 		complete_effect = {
 			custom_effect_tooltip = sabotage_civilian
 			hidden_effect = {
 				add_command_power = -25
-
 			}			
 		}
 	}
@@ -3717,6 +3735,7 @@ SOV_the_second_civil_war_fn = {
 		}
 		available = {
 			has_civil_war = no
+			command_power > 50
 		}
 		visible = {
 			has_country_flag = second_civil_war_mission
@@ -3729,7 +3748,45 @@ SOV_the_second_civil_war_fn = {
 		cost = 0
 
 		custom_cost_trigger = {
-			command_power > 25
+			command_power > 50
+		}
+
+		days_remove = 20
+		remove_effect = {
+			set_country_flag = SOV_steal_weapons_1
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = steal_weapons
+			hidden_effect = {
+				add_command_power = -50
+			}			
+		}
+	}
+
+	SOV_train_caucasus_soldiers = {
+
+		icon = GFX_decision_generic_army_support
+
+		allowed = {
+			tag = SOV
+		}
+		available = {
+			has_civil_war = no
+			command_power > 75
+		}
+		visible = {
+			has_country_flag = control_caucasus
+		}
+
+		ai_will_do = {
+			factor = 11
+		}
+
+		cost = 0
+
+		custom_cost_trigger = {
+			command_power > 75
 		}
 
 		days_remove = 20
@@ -3738,11 +3795,11 @@ SOV_the_second_civil_war_fn = {
 		}
 
 		complete_effect = {
-			custom_effect_tooltip = steal_weapons
+			custom_effect_tooltip = train_caucasian_soldiers
 			hidden_effect = {
-				add_command_power = -25
-
+				add_command_power = -75
+				set_country_flag = train_caucasian_soldiers_civil_war
 			}			
 		}
-	}
+	}	
 }
