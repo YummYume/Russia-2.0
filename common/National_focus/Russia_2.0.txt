@@ -623,9 +623,6 @@ focus_tree = {
 				195 = { is_owned_and_controlled_by = ROOT }
 				217 = { is_owned_and_controlled_by = ROOT }
 			}
-			all_owned_state = {
-				is_controlled_by = ROOT
-			}
 		}
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 		completion_reward = {
@@ -3873,9 +3870,7 @@ focus_tree = {
 		}
 		available = {
 			is_subject = no
-			all_owned_state = {
-				is_controlled_by = ROOT
-			}
+			surrender_progress < 0.25
 			NOT = {
 				has_idea = trotskyite_plot_purged
 			}
@@ -8839,6 +8834,11 @@ focus_tree = {
 				has_country_flag = blockade_russian_ports
 			}
 		}
+		cancel = {
+			ENG = {
+				has_country_flag = cut_all_diplomatic_ties_with_sov
+			}
+		}
 		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
 			custom_effect_tooltip = SOV_end_naval_blockade_tt
@@ -9180,7 +9180,16 @@ focus_tree = {
 		}
 		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
-			
+			add_to_tech_sharing_group = sov_sphere_research
+			custom_effect_tooltip = SOV_keep_expanding_russian_sphere_tt
+			hidden_effect = {
+				every_country = {
+					limit = {
+						is_in_faction_with = SOV
+					}
+					add_to_tech_sharing_group = sov_sphere_research
+				}
+			}
 		}
 	}
 
@@ -9225,6 +9234,12 @@ focus_tree = {
 			swap_ideas = {
 				remove_idea = SOV_growing_russian_economy
 				add_idea = SOV_growing_russian_economy2
+			}
+			if = {
+				limit = {
+					has_idea = SOV_Blockaded_by_eng
+				}
+				custom_effect_tooltip = SOV_those_who_threaten_democracy_tt
 			}
 		}
 	}

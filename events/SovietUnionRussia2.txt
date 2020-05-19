@@ -4336,6 +4336,7 @@ country_event = {
 
 	option = { #Threaten with war
 		name = soviets.120.a
+		add_political_power = -50
 		ENG = {
 			country_event = { id = soviets.122 days = 5 }
 		}
@@ -4360,6 +4361,9 @@ country_event = {
 
 	option = { #Okay...
 		name = soviets.121.a
+		ENG = {
+			set_country_flag = cut_all_diplomatic_ties_with_sov
+		}
 	}
 }
 
@@ -4438,6 +4442,110 @@ country_event = {
 		name = soviets.125.a
 		ENG = {
 			set_country_flag = ENG_resists_pressure
+		}
+	}
+}
+
+# Air Raid Over ENG Ships!
+country_event = {
+	id = soviets.126
+	title = soviets.126.t
+	desc = soviets.126.d
+	picture = GFX_report_event_german_reichstag_gathering
+	
+	is_triggered_only = yes
+
+	option = { #??!
+		name = soviets.126.a
+		destroy_ships = {
+			type = destroyer
+			count = 6
+		}
+		destroy_ships = {
+			type = light_cruiser
+			count = 2
+		}
+		remove_ideas = SOV_Blockade_russia
+		SOV = {
+			country_event = { id = soviets.127 days = 1 }
+		}
+	}
+}
+
+# Air Raid Over ENG Ships!
+country_event = {
+	id = soviets.127
+	title = soviets.127.t
+	desc = soviets.127.d
+	picture = GFX_report_event_german_reichstag_gathering
+	
+	is_triggered_only = yes
+
+	option = { #That's what you get
+		name = soviets.126.a
+		remove_ideas = SOV_Blockaded_by_eng
+		add_war_support = 0.05
+	}
+}
+
+# Final Warning
+country_event = {
+	id = soviets.128
+	title = soviets.128.t
+	desc = soviets.128.d
+	picture = GFX_report_event_german_reichstag_gathering
+	
+	is_triggered_only = yes
+
+	option = { #Alright
+		name = soviets.128.a
+		remove_ideas = SOV_Blockade_russia
+		SOV = {
+			country_event = { id = soviets.129 days = 1 }
+		}
+	}
+
+	option = { #No
+		name = soviets.128.b
+		add_stability = -0.1
+		add_war_support = -0.1
+		SOV = {
+			country_event = { id = soviets.130 days = 1 }
+		}
+	}
+}
+
+# ENG Gives Up
+country_event = {
+	id = soviets.129
+	title = soviets.129.t
+	desc = soviets.129.d
+	picture = GFX_report_event_german_reichstag_gathering
+	
+	is_triggered_only = yes
+
+	option = { #Finally
+		name = soviets.129.a
+		remove_ideas = SOV_Blockaded_by_eng
+	}
+}
+
+# ENG Resists...
+country_event = {
+	id = soviets.130
+	title = soviets.130.t
+	desc = soviets.130.d
+	picture = GFX_report_event_german_reichstag_gathering
+	
+	is_triggered_only = yes
+
+	option = { #Finally
+		name = soviets.130.a
+		add_stability = 0.05
+		add_war_support = 0.05
+		declare_war_on = {
+			target = ENG
+			type = puppet_wargoal_focus
 		}
 	}
 }

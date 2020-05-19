@@ -3746,3 +3746,126 @@ SOV_the_second_civil_war_fn = {
 		}
 	}
 }
+
+SOV_deal_with_britain = {
+	SOV_air_raid_british_ships = {
+
+		icon = GFX_decision_generic_intelligence_operation
+
+		allowed = {
+			tag = SOV
+		}
+		available = {
+			num_of_available_military_factories > 4
+			has_full_control_of_state = 195
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = sov_air_raid_use_mil_tt
+			hidden_effect = {
+				random_owned_state = {
+					limit = {
+						arms_factory > 0
+						NOT = {
+							has_state_flag = give_back_mil_after_air_raid
+						}
+					}
+					remove_building = {
+						type = arms_factory
+						level = 1
+					}
+					set_state_flag = give_back_mil_after_air_raid
+				}
+				random_owned_state = {
+					limit = {
+						arms_factory > 0
+						NOT = {
+							has_state_flag = give_back_mil_after_air_raid
+						}
+					}
+					remove_building = {
+						type = arms_factory
+						level = 1
+					}
+					set_state_flag = give_back_mil_after_air_raid
+				}
+				random_owned_state = {
+					limit = {
+						arms_factory > 0
+						NOT = {
+							has_state_flag = give_back_mil_after_air_raid
+						}
+					}
+					remove_building = {
+						type = arms_factory
+						level = 1
+					}
+					set_state_flag = give_back_mil_after_air_raid
+				}
+				random_owned_state = {
+					limit = {
+						arms_factory > 0
+						NOT = {
+							has_state_flag = give_back_mil_after_air_raid
+						}
+					}
+					remove_building = {
+						type = arms_factory
+						level = 1
+					}
+					set_state_flag = give_back_mil_after_air_raid
+				}
+			}
+		}
+
+		cost = 100
+
+		days_remove = 60
+
+		remove_effect = {
+			ENG = {
+				country_event = { id = soviets.126 days = 1 }
+			}
+			set_country_flag = dealt_with_britain
+			hidden_effect = {
+				every_state = {
+					limit = {
+						has_state_flag = give_back_mil_after_air_raid
+					}
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+				}
+			}
+		}
+	}
+
+	SOV_last_british_ultimatum = {
+
+		icon = GFX_decision_generic_intelligence_operation
+
+		allowed = {
+			tag = SOV
+		}
+
+		ai_will_do = {
+			factor = 0
+		}
+
+		cost = 50
+
+		complete_effect = {
+			ENG = {
+				country_event = { id = soviets.128 days = 1 }
+			}
+			set_country_flag = dealt_with_britain
+			custom_effect_tooltip = will_war_with_uk_if_fail_tt
+		}
+	}
+}
