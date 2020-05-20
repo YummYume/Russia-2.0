@@ -1,8 +1,10 @@
-defined_text = { # Used to know which state the overall investment is currently in (help the player know if he should do the Reunification or not)
+defined_text = { # Used to know which state the overall investment is currently in (helps the player know if (s)he should do the Reunification or not)
 	name = GetInvestmentOverallStatus
 	text = {
 		trigger = {
 			original_tag = SOV
+            set_temp_variable = { weak_investment = sov_country_investment_count }
+            divide_temp_variable = { weak_investment = 3 }
             check_variable = {
                 var = sov_total_investment
                 value = 0
@@ -11,7 +13,7 @@ defined_text = { # Used to know which state the overall investment is currently 
             SOV = {
                 check_variable = {
                     var = sov_total_investment
-                    value = 10
+                    value = weak_investment
                     compare = less_than
                 }
             }
@@ -21,15 +23,20 @@ defined_text = { # Used to know which state the overall investment is currently 
 	text = {
 		trigger = {
 			original_tag = SOV
+            set_temp_variable = { weak_investment = sov_country_investment_count }
+            divide_temp_variable = { weak_investment = 3 }
+            set_temp_variable = { medium_investment = sov_country_investment_count }
+            divide_temp_variable = { medium_investment = 3 }
+            multiply_temp_variable = { medium_investment = 2 }
             check_variable = {
                 var = sov_total_investment
-                value = 10
+                value = weak_investment
                 compare = greater_than_or_equals
             }
             SOV = {
                 check_variable = {
                     var = sov_total_investment
-                    value = 20
+                    value = medium_investment
                     compare = less_than
                 }
             }
@@ -39,10 +46,13 @@ defined_text = { # Used to know which state the overall investment is currently 
     text = {
 		trigger = {
 			original_tag = SOV
+            set_temp_variable = { medium_investment = sov_country_investment_count }
+            divide_temp_variable = { medium_investment = 3 }
+            multiply_temp_variable = { medium_investment = 2 }
             SOV = {
                 check_variable = {
                     var = sov_total_investment
-                    value = 20
+                    value = medium_investment
                     compare = greater_than_or_equals
                 }
             }

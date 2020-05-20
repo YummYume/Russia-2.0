@@ -969,7 +969,7 @@ focus_tree = {
 		x = 34
 		y = 5
 		prerequisite = { focus = SOV_defend_moscow }
-		icon = GFX_focus_Patriotic_War
+		icon = GFX_focus_generic_strike_at_democracy2
 		cost = 5
 		ai_will_do = {
 			factor = 8
@@ -6722,7 +6722,7 @@ focus_tree = {
 		x = 68
 		y = 10
 		prerequisite = { focus = SOV_officially_join_war }
-		icon = GFX_goal_tfv_burn_the_royal_portraits
+		icon = GFX_focus_Patriotic_War
 		cost = 5
 		ai_will_do = {
 			factor = 8
@@ -8756,6 +8756,8 @@ focus_tree = {
 		}
 		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
+			remove_ideas = SOV_Right_believe2
+			add_ideas = SOV_Home_of_perpetual_liberty
 			create_faction = russian_sphere
 			custom_effect_tooltip = SOV_create_russian_sphere_tt
 			hidden_effect = {
@@ -8811,9 +8813,30 @@ focus_tree = {
 		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
 			custom_effect_tooltip = SOV_investment_russian_sphere_tt
-			set_variable = {
-				var = sov_total_investment
-				value = 0
+			hidden_effect = {
+				set_variable = {
+					var = sov_total_investment
+					value = 0
+				}
+				set_variable = {
+					var = sov_country_investment_count
+					value = 0
+				}
+				every_country = {
+					limit = {
+						OR = {
+							has_country_flag = democratic_russia_chaos_europe
+							has_country_flag = democratic_russia_chaos_asia
+							has_country_flag = democratic_russia_chaos_caucasus
+						}
+					}
+					SOV = {
+						add_to_variable = {
+							var = sov_country_investment_count
+							value = 3
+						}
+					}
+				}
 			}
 		}
 	}
@@ -8841,6 +8864,12 @@ focus_tree = {
 				has_country_flag = cut_all_diplomatic_ties_with_sov
 			}
 		}
+		select_effect = {
+			ENG = {
+				country_event = { id = soviets.115 days = 10 }
+			}
+		}
+		cancelable = no
 		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
 			custom_effect_tooltip = SOV_end_naval_blockade_tt
@@ -9214,7 +9243,7 @@ focus_tree = {
 		}
 		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
-			
+			custom_effect_tooltip = SOV_compromise_strategy_tt
 		}
 	}
 
@@ -9236,6 +9265,7 @@ focus_tree = {
 		}
 		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
+			add_ideas = SOV_Expansion_russian_sphere
 			add_to_tech_sharing_group = sov_sphere_research
 			custom_effect_tooltip = SOV_keep_expanding_russian_sphere_tt
 			hidden_effect = {
@@ -9273,6 +9303,7 @@ focus_tree = {
 					has_government = democratic
 					has_government = neutrality
 				}
+				has_capitulated = no
 			}
 		}
 		search_filters = {FOCUS_FILTER_POLITICAL}
@@ -9300,7 +9331,7 @@ focus_tree = {
 		y = 25
 		prerequisite = { focus = SOV_keep_expanding_russian_sphere focus = SOV_reform_entente }
 		icon = GFX_focus_generic_anti_fascist_diplomacy
-		cost = 10
+		cost = 8
 		ai_will_do = {
 			factor = 8
 		}
@@ -9422,6 +9453,16 @@ focus_tree = {
 					}
 					set_state_flag = white_province
 				}
+				every_state = { 
+					limit = {
+						is_owned_by = SOV
+						distance_to = {
+							value > 6000
+							target = 574
+						}
+					}
+					set_state_flag = not_white_province
+				}				
 			}		
 		}
 	}
