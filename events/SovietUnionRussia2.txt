@@ -4544,7 +4544,7 @@ country_event = {
 	option = { #Alright
 		name = soviets.128.a
 		ai_chance = {
-			factor = 65
+			factor = 90
 			modifier = {
 				factor = 100
 				has_civil_war = yes
@@ -4558,7 +4558,7 @@ country_event = {
 
 	option = { #No
 		name = soviets.128.b
-		ai_chance = { factor = 35 }
+		ai_chance = { factor = 10 }
 		add_stability = -0.1
 		add_war_support = -0.1
 		SOV = {
@@ -4617,6 +4617,20 @@ country_event = {
 		name = soviets.131.a
 		hidden_effect = {
 			set_cosmetic_tag = RUS
+			dismantle_faction = yes
+			create_faction = anti_communist_coalition
+			set_politics = {
+				ruling_party = neutrality
+			}
+			set_popularities = {
+				democratic = 33
+				neutrality = 33
+				fascism = 33
+				communism = 1
+			}
+			add_ideas = partial_economic_mobilisation 
+			add_ideas = limited_conscription
+			kill_country_leader = yes
 			every_state = {
 				limit = {
 					has_state_flag = not_white_province
@@ -4626,16 +4640,90 @@ country_event = {
 				}
 			}
 			release = SOU
-			SOU = {
-				release = SOU
-				release = KAZ
-				release = TMS
-				release = TAJ
-				release = UZB
-				release = KYR
-				release = UKR
-				release = BLR
-			}	
+			if= {
+				limit = {
+					SOV = {
+						has_country_flag = control_central_asia
+					}
+				}
+				SOU = {
+					release = KAZ
+					release = KYR
+					release = TAJ
+					release = UZB
+					release = TMS
+				}
+				SOV = {
+					set_autonomy = {
+						target = KAZ
+						autonomy_state = autonomy_supervised_state
+					}
+					set_autonomy = {
+						target = TMS
+						autonomy_state = autonomy_supervised_state
+					}
+				}
+				TMS = {
+					transfer_state = 585
+					transfer_state = 405
+					transfer_state = 742
+					transfer_state = 732
+					add_state_core = 585
+					add_state_core = 405
+					add_state_core = 742
+					add_state_core = 732
+				}
+			}
+			if= {
+				limit = {
+					SOV = {
+						has_country_flag = control_belarus
+					}
+				}
+				SOU = {
+					release = BLR
+				}
+				SOV = {
+					set_autonomy = {
+						target = BLR
+						autonomy_state = autonomy_supervised_state
+					}
+				}
+			}
+			if= {
+				limit = {
+					SOV = {
+						has_country_flag = control_caucasus
+					}
+				}
+				SOU = {
+					release = GEO
+				}
+				SOU = {
+					release = ARM
+				}
+				SOU = {
+					release = AZR
+				}
+				SOV = {
+					set_autonomy = {
+						target = GEO
+						autonomy_state = autonomy_supervised_state
+					}
+				}
+				SOV = {
+					set_autonomy = {
+						target = ARM
+						autonomy_state = autonomy_supervised_state
+					}
+				}
+				SOV = {
+					set_autonomy = {
+						target = AZR
+						autonomy_state = autonomy_supervised_state
+					}
+				}
+			}						
 		}		
 	}
 }
@@ -4648,7 +4736,7 @@ country_event = {
 	picture = GFX_
 
 	trigger = {
-		
+		has_country_flag = buy_weapons_1
 	}
 
 	option = {
@@ -4664,7 +4752,7 @@ country_event = {
 	picture = GFX_
 
 	trigger = {
-		
+		has_country_flag = buy_weapons_1
 	}
 
 	option = {
@@ -4679,7 +4767,7 @@ country_event = {
 	hidden = yes
 
 	trigger = {
-		
+		has_country_flag = buy_weapons_1
 	}
 
 	immediate = {
@@ -4694,7 +4782,7 @@ country_event = {
 	hidden = yes
 
 	trigger = {
-		
+		has_country_flag = buy_weapons_1
 	}
 
 	immediate = {
@@ -4710,7 +4798,7 @@ country_event = {
 	picture = GFX_
 
 	trigger = {
-		
+		has_country_flag = buy_weapons_1
 	}
 
 	option = {
@@ -4727,7 +4815,7 @@ country_event = {
 	fire_only_once = yes
 
 	trigger = {
-		
+		has_country_flag = buy_weapons_1
 	}
 
 	immediate = {
@@ -4744,7 +4832,7 @@ country_event = {
 	fire_only_once = yes
 
 	trigger = {
-		
+		has_country_flag = buy_weapons_1
 	}
 
 	immediate = {
@@ -4762,7 +4850,7 @@ country_event = {
 	fire_only_once = yes
 
 	trigger = {
-		
+		has_country_flag = buy_weapons_1
 	}
 
 	option = {
@@ -4780,7 +4868,7 @@ country_event = {
 	fire_only_once = yes
 
 	trigger = {
-		
+		has_country_flag = buy_weapons_1
 	}
 
 	option = {
@@ -4823,10 +4911,16 @@ country_event = {
 				transfer_state = 213
 			}
 		}
+		SOV = {
+			country_event = { id = soviets.142 days = 1 }
+		}
 	}
 
 	option = { #No
 		name = soviets.141.b
+		SOV = {
+			country_event = { id = soviets.143 days = 1 }
+		}
 	}
 }
 
@@ -4876,11 +4970,15 @@ country_event = {
 		name = soviets.144.a
 		SOV = {
 			transfer_state = 655
+			country_event = { id = soviets.145 days = 1 }
 		}
 	}
 
 	option = { #No
 		name = soviets.144.b
+		SOV = {
+			country_event = { id = soviets.146 days = 1 }
+		}
 	}
 }
 
@@ -5067,5 +5165,275 @@ country_event = {
 
 	immediate = {
 		remove_from_tech_sharing_group = sov_sphere_research
+	}
+}
+
+#Russia Asks for Karelia - Compromise
+country_event = {
+	id = soviets.159
+	title = soviets.159.t
+	desc = soviets.159.d
+	picture = GFX_
+
+	is_triggered_only = yes
+
+	option = { #Okay - We want factories
+		name = soviets.159.a
+		if = {
+			limit = {
+				owns_state = 216
+			}
+			SOV = {
+				transfer_state = 216
+			}
+		}
+		if = {
+			limit = {
+				owns_state = 215
+			}
+			SOV = {
+				transfer_state = 215
+			}
+		}
+		if = {
+			limit = {
+				owns_state = 213
+			}
+			SOV = {
+				transfer_state = 213
+			}
+		}
+		add_timed_idea = {
+			idea = SOV_Received_karelia_payment
+			days = 180
+		}
+		SOV = {
+			diplomatic_relation = {
+				country = ROOT
+				relation = guarantee
+				active = yes
+			}
+			country_event = { soviets.160 days = 1 }
+		}
+	}
+
+	option = { #Okay - We want military aid
+		name = soviets.159.a
+		if = {
+			limit = {
+				owns_state = 216
+			}
+			SOV = {
+				transfer_state = 216
+			}
+		}
+		if = {
+			limit = {
+				owns_state = 215
+			}
+			SOV = {
+				transfer_state = 215
+			}
+		}
+		if = {
+			limit = {
+				owns_state = 213
+			}
+			SOV = {
+				transfer_state = 213
+			}
+		}
+		add_timed_idea = {
+			idea = SOV_Received_karelia_aid
+			days = 180
+		}
+		SOV = {
+			diplomatic_relation = {
+				country = ROOT
+				relation = guarantee
+				active = yes
+			}
+			country_event = { soviets.161 days = 1 }
+		}
+	}
+
+	option = { #No
+		name = soviets.159.b
+		SOV = {
+			country_event = { soviets.162 days = 1 }
+		}
+	}
+}
+
+#We give back Karelia - Industry
+country_event = {
+	id = soviets.160
+	title = soviets.160.t
+	desc = soviets.160.d
+	picture = GFX_
+
+	is_triggered_only = yes
+
+	option = {
+		name = soviets.160.a
+		if = {
+			limit = {
+				NOT = {
+					has_idea = SOV_Karelia_payment
+				}
+			}
+			add_timed_idea = {
+				idea = SOV_Karelia_payment
+				days = 180
+			}
+		}
+	}
+}
+
+#We give back Karelia - Military
+country_event = {
+	id = soviets.161
+	title = soviets.161.t
+	desc = soviets.161.d
+	picture = GFX_
+
+	is_triggered_only = yes
+
+	option = {
+		name = soviets.161.a
+		if = {
+			limit = {
+				NOT = {
+					has_idea = SOV_Karelia_aid
+				}
+			}
+			add_timed_idea = {
+				idea = SOV_Karelia_aid
+				days = 180
+			}
+		}
+	}
+}
+
+#No!
+country_event = {
+	id = soviets.162
+	title = soviets.162.t
+	desc = soviets.162.d
+	picture = GFX_
+
+	is_triggered_only = yes
+
+	option = {
+		name = soviets.162.a
+		create_wargoal = {
+			type = take_state_focus
+			target = FROM
+			generator = { 213 215 216 }
+		}
+	}
+}
+
+#Russia Asks for North Sakhalin
+country_event = {
+	id = soviets.163
+	title = soviets.163.t
+	desc = soviets.163.d
+	picture = GFX_
+
+	is_triggered_only = yes
+
+	option = { #Okay
+		name = soviets.163.a
+		SOV = {
+			transfer_state = 655
+			country_event = { soviets.164 days = 1 }
+		}
+	}
+
+	option = { #No
+		name = soviets.163.b
+		SOV = {
+			country_event = { soviets.165 days = 1 }
+		}
+	}
+}
+
+#We give back North Sakhalin
+country_event = {
+	id = soviets.164
+	title = soviets.164.t
+	desc = soviets.164.d
+	picture = GFX_
+
+	is_triggered_only = yes
+
+	option = {
+		name = soviets.164.a
+
+	}
+}
+
+#No!
+country_event = {
+	id = soviets.165
+	title = soviets.165.t
+	desc = soviets.165.d
+	picture = GFX_
+
+	is_triggered_only = yes
+
+	option = { #Doesn't give a wargoal because why would you declare war over Sakhalin?
+		name = soviets.165.a
+	}
+}
+
+#Russian Culture Promoted!
+country_event = {
+	id = soviets.166
+	title = soviets.166.t
+	desc = soviets.166.d
+	picture = GFX_
+
+	trigger = {
+		is_subject_of = SOV
+		has_country_flag = {
+			flag = russian_culture_promote
+			days > 365
+		}
+	}
+
+	immediate = {
+		clr_country_flag = russian_culture_promote
+	}
+
+	option = { #Okay
+		name = soviets.166.a
+		custom_effect_tooltip = SOV_game_totally_over_TT
+		SOV = {
+			country_event = { soviets.167 days = 1 }
+		}
+	}
+
+	option = { #No
+		name = soviets.166.b
+	}
+}
+
+#FROM Gets Annexed
+country_event = {
+	id = soviets.167
+	title = soviets.167.t
+	desc = soviets.167.d
+	picture = GFX_
+
+	is_triggered_only = yes
+
+	option = {
+		name = soviets.167.a
+		annex_country = {
+			target = FROM
+			transfer_troops = yes
+		}
 	}
 }
