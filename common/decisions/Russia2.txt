@@ -3926,3 +3926,102 @@ SOV_deal_with_britain = {
 		}
 	}
 }
+
+SOV_expand_entente_decision = {
+	SOV_invite_old_entente = {
+	
+		icon = GFX_decision_eng_trade_unions_support
+		
+		fire_only_once = yes
+		
+		days_remove = 10
+
+		allowed = {
+			original_tag = SOV
+		}
+		
+		visible = {
+			FROM = {
+				exists = yes
+			}
+		}
+		
+		target_root_trigger = {
+			has_completed_focus = SOV_reform_entente
+		}
+
+		target_trigger = {
+			FROM = {
+				NOT = { is_in_faction_with = ROOT }
+				OR = {
+					tag = ENG
+					tag = USA
+					tag = JAP
+					tag = ITA
+					tag = SER
+					tag = MNT
+					tag = BEL
+					tag = SAU
+					tag = POR
+					tag = ROM
+					tag = GRE
+					tag = CHI
+					tag = SIA
+					tag = BRA
+				}
+			}
+        }
+
+		available = {
+			OR = {
+				has_opinion = {
+					target = FROM
+					value > 49
+				}
+				FROM = {
+					has_opinion = {
+						target = ROOT
+						value > 49
+					}
+				}
+			}
+			FROM = {
+				is_subject = no
+				OR = {
+					has_government = democratic
+					has_government = neutrality
+				}
+				NOT = {
+					has_war_with = SOV
+				}
+			}
+			if = {
+				limit = {
+					FROM = {
+						tag = ENG
+					}
+				}
+				NOT = {
+					ENG = {
+						has_country_flag = cut_all_diplomatic_ties_with_sov
+					}
+					has_idea = SOV_Blockaded_by_eng
+				}
+			}
+		}
+
+		cost = 50
+		
+		remove_effect = {
+			FROM = {
+				country_event = {
+					id = soviets.69
+				}				
+			}
+		}
+		
+		ai_will_do = {
+			factor = 100
+		}
+	}
+}
