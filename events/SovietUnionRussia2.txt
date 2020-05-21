@@ -3423,6 +3423,10 @@ country_event = {
 		dismantle_faction = yes
 		remove_ideas = SOV_Army_disorganisation
 		hidden_effect = {
+			set_rule = {
+				can_declare_war_on_same_ideology = no
+				can_only_justify_war_on_threat_country = yes
+			}
 			set_division_template_lock = {
 				division_template = "Strelkovaya Diviziya"
 				is_locked = no
@@ -4187,7 +4191,7 @@ country_event = {
 	option = { #Yes!
 		name = soviets.113.a
 		ai_chance = {
-			factor = 75
+			factor = 90
 			modifier = {
 				factor = 0
 				has_civil_war = yes
@@ -4202,7 +4206,13 @@ country_event = {
 
 	option = { #No thanks
 		name = soviets.113.b
-		ai_chance = { factor = 25 }
+		ai_chance = {
+			factor = 10
+			modifier = {
+				factor = 100
+				has_civil_war = yes
+			}
+		}
 	}
 }
 
@@ -4248,7 +4258,13 @@ country_event = {
 
 	option = { #Certainly not
 		name = soviets.115.b
-		ai_chance = { factor = 80 }
+		ai_chance = {
+			factor = 80
+			modifier = {
+				factor = 0
+				has_civil_war = yes
+			}
+		}
 		SOV = {
 			country_event = { id = soviets.117 days = 5 }
 		}
@@ -4268,6 +4284,9 @@ country_event = {
 		name = soviets.116.a
 		ai_chance = { factor = 100 }
 		remove_ideas = SOV_Blockaded_by_eng
+		hidden_effect = {
+			complete_national_focus = SOV_end_naval_blockade
+		}
 	}
 }
 
@@ -4301,7 +4320,7 @@ country_event = {
 	option = { #We'll gladly accept!
 		name = soviets.118.a
 		ai_chance = {
-			factor = 35
+			factor = 45
 			modifier = {
 				factor = 100
 				has_civil_war = yes
@@ -4318,7 +4337,13 @@ country_event = {
 
 	option = { #No
 		name = soviets.118.b
-		ai_chance = { factor = 45 }
+		ai_chance = {
+			factor = 45
+			modifier = {
+				factor = 0
+				has_civil_war = yes
+			}
+		}
 		SOV = {
 			country_event = { id = soviets.120 days = 5 }
 		}
@@ -4326,7 +4351,13 @@ country_event = {
 
 	option = { #End all diplomatic relations with SOV
 		name = soviets.118.c
-		ai_chance = { factor = 20 }	
+		ai_chance = {
+			factor = 10
+			modifier = {
+				factor = 0
+				has_civil_war = yes
+			}
+		}
 		SOV = {
 			country_event = { id = soviets.121 days = 5 }
 		}
@@ -4349,6 +4380,9 @@ country_event = {
 			idea = SOV_Blockaded_by_eng
 			days = 365
 		}
+		hidden_effect = {
+			complete_national_focus = SOV_end_naval_blockade
+		}
 	}
 }
 
@@ -4363,7 +4397,7 @@ country_event = {
 
 	option = { #Threaten with war
 		name = soviets.120.a
-		ai_chance = { factor = 35 }
+		ai_chance = { factor = 50 }
 		add_political_power = -50
 		ENG = {
 			country_event = { id = soviets.122 days = 5 }
@@ -4372,7 +4406,7 @@ country_event = {
 
 	option = { #Give up... For now
 		name = soviets.120.b
-		ai_chance = { factor = 65 }
+		ai_chance = { factor = 50 }
 		ENG = {
 			country_event = { id = soviets.123 days = 5 }
 		}
@@ -4409,7 +4443,7 @@ country_event = {
 	option = { #Alright...
 		name = soviets.122.a
 		ai_chance = {
-			factor = 45
+			factor = 65
 			modifier = {
 				factor = 100
 				has_civil_war = yes
@@ -4423,7 +4457,7 @@ country_event = {
 
 	option = { #We're not scared
 		name = soviets.122.b
-		ai_chance = { factor = 45 }
+		ai_chance = { factor = 15 }
 		SOV = {
 			country_event = { id = soviets.125 days = 5 }
 		}
@@ -4431,7 +4465,7 @@ country_event = {
 
 	option = { #End all diplomatic relations with SOV
 		name = soviets.122.c
-		ai_chance = { factor = 10 }
+		ai_chance = { factor = 20 }
 		SOV = {
 			country_event = { id = soviets.121 days = 5 }
 		}
@@ -4467,6 +4501,9 @@ country_event = {
 		name = soviets.124.a
 		ai_chance = { factor = 100 }
 		remove_ideas = SOV_Blockaded_by_eng
+		hidden_effect = {
+			complete_national_focus = SOV_end_naval_blockade
+		}
 	}
 }
 
@@ -6146,5 +6183,93 @@ country_event = {
 
 	immediate = {
 		remove_ideas = SOV_Joint_military_planning
+	}
+}
+
+#Demand Government Change
+country_event = {
+	id = soviets.170
+	title = soviets.170.t
+	desc = soviets.170.d
+	picture = GFX_
+
+	is_triggered_only = yes
+
+	option = { #Submit
+		name = soviets.170.a
+		ai_chance = {
+			factor = 75
+			modifier = {
+				factor = 15
+				OR = {
+					is_major = yes
+					any_country = {
+						is_major = yes
+						is_in_faction_with = ROOT
+					}
+				}
+			}
+		}
+		SOV = {
+			set_autonomy = {
+				target = ROOT
+				autonomy_state = autonomy_supervised_state
+			}
+			country_event = { id = soviets.171 days = 1 }
+		}
+	}
+
+	option = { #No
+		name = soviets.170.b
+		ai_chance = {
+			factor = 25
+			modifier = {
+				factor = 85
+				OR = {
+					is_major = yes
+					any_country = {
+						is_major = yes
+						is_in_faction_with = ROOT
+					}
+				}
+			}
+		}
+		SOV = {
+			country_event = { id = soviets.172 days = 1 }
+		}
+	}
+}
+
+#FROM Changes Government
+country_event = {
+	id = soviets.171
+	title = soviets.171.t
+	desc = soviets.171.d
+	picture = GFX_
+
+	is_triggered_only = yes
+
+	option = {
+		ai_chance = { factor = 100 }
+		name = soviets.171.a
+	}
+}
+
+#FROM Refuses
+country_event = {
+	id = soviets.172
+	title = soviets.172.t
+	desc = soviets.172.d
+	picture = GFX_
+
+	is_triggered_only = yes
+
+	option = {
+		name = soviets.172.a
+		ai_chance = { factor = 100 }
+		create_wargoal = {
+			type = puppet_wargoal_focus
+			target = FROM
+		}
 	}
 }

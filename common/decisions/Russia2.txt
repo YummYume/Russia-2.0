@@ -3959,3 +3959,78 @@ SOV_expand_entente_decision = {
 		}
 	}
 }
+
+SOV_perpetual_defense_liberty_decisions = {
+	SOV_demand_change_government = {
+	
+		icon = GFX_decision_eng_trade_unions_support
+		
+		fire_only_once = yes
+		
+		days_remove = 30
+
+		allowed = {
+			original_tag = SOV
+		}
+		
+		visible = {
+			FROM = {
+				exists = yes
+			}
+		}
+		
+		target_root_trigger = {
+			has_completed_focus = SOV_perpetual_defense_liberty
+		}
+
+		target_trigger = {
+			FROM = {
+				NOT = {
+					is_in_faction_with = ROOT
+					has_government = democratic
+				}
+				is_neighbor_of = SOV
+			}
+        }
+
+		available = {
+			NOT = {
+				has_country_flag = is_changing_foreign_government
+			}
+			FROM = {
+				is_subject = no
+				NOT = {
+					has_government = democratic
+				}
+				NOT = {
+					has_war_with = SOV
+				}
+			}
+		}
+
+		complete_effect = {
+			set_country_flag = is_changing_foreign_government
+		}
+
+		cost = 50
+		
+		remove_effect = {
+			FROM = {
+				country_event = {
+					id = soviets.170
+				}
+			}
+			clr_country_flag = is_changing_foreign_government
+		}
+		
+		ai_will_do = {
+			factor = 100
+			modifier = {
+				factor = 10
+				FROM = {
+					is_major = yes
+				}
+			}
+		}
+	}
+}
