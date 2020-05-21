@@ -8665,7 +8665,7 @@ focus_tree = {
 		y = 17
 		prerequisite = { focus = SOV_country_in_chaos }
 		mutually_exclusive = { focus = SOV_pavel_guidance }
-		icon = GFX_focus_hol_legacy_of_the_de_zeven_provincien_mutiny
+		icon = GFX_Democracy
 		cost = 5
 		ai_will_do = {
 			factor = 8
@@ -8706,7 +8706,7 @@ focus_tree = {
 		y = 17
 		prerequisite = { focus = SOV_country_in_chaos }
 		mutually_exclusive = { focus = SOV_trust_alexander }
-		icon = GFX_focus_hol_legacy_of_the_de_zeven_provincien_mutiny
+		icon = GFX_Democracy
 		cost = 5
 		ai_will_do = {
 			factor = 8
@@ -8863,13 +8863,19 @@ focus_tree = {
 			ENG = {
 				has_country_flag = blockade_russian_ports
 				NOT = {
-					has_country_flag = cut_all_diplomatic_ties_with_sov
+					OR = {
+						has_country_flag = cut_all_diplomatic_ties_with_sov
+						has_country_flag = ENG_resists_pressure
+					}
 				}
 			}
 		}
 		cancel = {
 			ENG = {
-				has_country_flag = cut_all_diplomatic_ties_with_sov
+				OR = {
+					has_country_flag = cut_all_diplomatic_ties_with_sov
+					has_country_flag = ENG_resists_pressure
+				}
 			}
 		}
 		select_effect = {
@@ -9406,6 +9412,12 @@ focus_tree = {
 		}
 		search_filters = {FOCUS_FILTER_ANNEXATION FOCUS_FILTER_POLITICAL}
 		completion_reward = {
+			hidden_effect = {
+				set_rule = {
+					can_declare_war_on_same_ideology = yes #Apparently this doesn't work
+					can_only_justify_war_on_threat_country = no
+				}
+			}
 			add_war_support = 0.1
 			add_ideas = SOV_Intervention_worldwide
 		}
@@ -9428,7 +9440,7 @@ focus_tree = {
 		}
 		search_filters = {FOCUS_FILTER_ANNEXATION FOCUS_FILTER_POLITICAL}
 		completion_reward = {
-			
+			custom_effect_tooltip = SOV_perpetual_defense_liberty_tt
 		}
 	}
 
