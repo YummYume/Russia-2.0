@@ -5359,11 +5359,23 @@ country_event = {
 	fire_only_once = yes
 
 	trigger = {
-		has_country_flag = buy_weapons_1
+		check_variable = {
+			var = buy_weapons_count
+			value = 0
+			compare = greater_than
+		}
+		#Add a country flag later, like has_country_flag = preparation_over
 	}
 
 	option = {
 		name = soviets.132.a
+		set_temp_variable = { buy_weapons_final_count = buy_weapons_count }
+		multiply_temp_variable = { buy_weapons_final_count = 2500 }
+		add_equipment_to_stockpile = {
+			type = infantry_equipment
+			amount = buy_weapons_final_count
+			producer = SOV
+		}
 	}
 }
 
@@ -5377,11 +5389,31 @@ country_event = {
 	fire_only_once = yes
 
 	trigger = {
-		has_country_flag = buy_weapons_1
+		check_variable = {
+			var = steal_weapons_count
+			value = 0
+			compare = greater_than
+		}
+		#Add a country flag later, like has_country_flag = preparation_over
 	}
 
 	option = {
-		name = soviets.133.a	
+		name = soviets.133.a
+		set_temp_variable = { steal_weapons_final_count = steal_weapons_count }
+		multiply_temp_variable = { steal_weapons_final_count = 1000 }
+		add_equipment_to_stockpile = {
+			type = infantry_equipment
+			amount = steal_weapons_final_count
+			producer = SOV
+		}
+		set_temp_variable = { destroy_weapons_final_count = steal_weapons_count }
+		multiply_temp_variable = { destroy_weapons_final_count = -1000 }
+		SOU = {
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = destroy_weapons_final_count
+			}
+		}
 	}
 }
 
@@ -5394,11 +5426,31 @@ country_event = {
 	hidden = yes
 
 	trigger = {
-		has_country_flag = buy_weapons_1
+		is_in_array = {
+			array = sabotage_military_count
+			value = 1
+		}
+		#Add a country flag later, like has_country_flag = preparation_over
 	}
 
 	immediate = {
-		
+		for_each_loop = {
+			array = sabotage_military_count
+			value = current #Should always be 1 for now, but can be useful in case we want to go deeper with the decisions
+			index = i
+			
+			SOU = {
+				random_owned_controlled_state = {
+					limit = {
+						arms_factory > current
+					}
+					remove_building = {
+						type = arms_factory
+						level = current
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -5411,11 +5463,31 @@ country_event = {
 	fire_only_once = yes
 
 	trigger = {
-		has_country_flag = buy_weapons_1
+		is_in_array = {
+			array = sabotage_civilian_count
+			value = 1
+		}
+		#Add a country flag later, like has_country_flag = preparation_over
 	}
 
 	immediate = {
-		
+		for_each_loop = {
+			array = sabotage_civilian_count
+			value = current #Should always be 1 for now, but can be useful in case we want to go deeper with the decisions
+			index = i
+			
+			SOU = {
+				random_owned_controlled_state = {
+					limit = {
+						arms_factory > current
+					}
+					remove_building = {
+						type = arms_factory
+						level = current
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -5560,6 +5632,7 @@ country_event = {
 	is_triggered_only = yes
 
 	option = { #Okay
+		ai_chance = { factor = 50 }
 		name = soviets.141.a
 		if = {
 			limit = {
@@ -5591,6 +5664,7 @@ country_event = {
 	}
 
 	option = { #No
+		ai_chance = { factor = 50 }
 		name = soviets.141.b
 		SOV = {
 			country_event = { id = soviets.143 days = 1 }
@@ -5608,6 +5682,7 @@ country_event = {
 	is_triggered_only = yes
 
 	option = {
+		ai_chance = { factor = 100 }
 		name = soviets.142.a
 	}
 }
@@ -5622,6 +5697,7 @@ country_event = {
 	is_triggered_only = yes
 
 	option = {
+		ai_chance = { factor = 100 }
 		name = soviets.143.a
 		create_wargoal = {
 			type = take_state_focus
@@ -5641,6 +5717,7 @@ country_event = {
 	is_triggered_only = yes
 
 	option = { #Okay
+		ai_chance = { factor = 50 }
 		name = soviets.144.a
 		SOV = {
 			transfer_state = 655
@@ -5649,6 +5726,7 @@ country_event = {
 	}
 
 	option = { #No
+		ai_chance = { factor = 50 }
 		name = soviets.144.b
 		SOV = {
 			country_event = { id = soviets.146 days = 1 }
@@ -5666,6 +5744,7 @@ country_event = {
 	is_triggered_only = yes
 
 	option = {
+		ai_chance = { factor = 100 }
 		name = soviets.145.a
 	}
 }
@@ -5680,6 +5759,7 @@ country_event = {
 	is_triggered_only = yes
 
 	option = { #Doesn't give a wargoal because why would you declare war over Sakhalin?
+		ai_chance = { factor = 100 }
 		name = soviets.146.a
 	}
 }
@@ -5694,6 +5774,13 @@ country_event = {
 	is_triggered_only = yes
 
 	option = {
+		ai_chance = {
+			factor = 80
+			modifier = {
+				factor = 50
+				is_faction_leader = yes
+			}
+		}
 		name = soviets.151.a
 		SOV = {
 			add_to_faction = FRA
@@ -5702,6 +5789,13 @@ country_event = {
 	}
 
 	option = {
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 50
+				is_faction_leader = yes
+			}
+		}
 		name = soviets.151.b
 		SOV = {
 			country_event = { id = soviets.153 days = 1 }
@@ -5719,6 +5813,7 @@ country_event = {
 	is_triggered_only = yes
 
 	option = {
+		ai_chance = { factor = 100 }
 		name = soviets.152.a
 	}
 }
@@ -5733,6 +5828,7 @@ country_event = {
 	is_triggered_only = yes
 
 	option = {
+		ai_chance = { factor = 100 }
 		name = soviets.153.a
 	}
 }
@@ -5747,6 +5843,22 @@ country_event = {
 	is_triggered_only = yes
 
 	option = {
+		ai_chance = {
+			factor = 80
+			modifier = {
+				factor = 40
+				OR = {
+					is_faction_leader = yes
+					any_country = {
+						is_in_faction_with = ROOT
+						is_major = yes
+					}
+					SOV = {
+						has_war = yes
+					}
+				}
+			}
+		}
 		name = soviets.154.a
 		SOV = {
 			add_to_faction = ROOT
@@ -5755,6 +5867,22 @@ country_event = {
 	}
 
 	option = {
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 60
+				OR = {
+					is_faction_leader = yes
+					any_country = {
+						is_in_faction_with = ROOT
+						is_major = yes
+					}
+					SOV = {
+						has_war = yes
+					}
+				}
+			}
+		}
 		name = soviets.154.b
 		SOV = {
 			country_event = { id = soviets.156 days = 1 }
@@ -5772,6 +5900,7 @@ country_event = {
 	is_triggered_only = yes
 
 	option = {
+		ai_chance = { factor = 100 }
 		name = soviets.155.a
 	}
 }
@@ -5786,6 +5915,7 @@ country_event = {
 	is_triggered_only = yes
 
 	option = {
+		ai_chance = { factor = 100 }
 		name = soviets.156.a
 	}
 }
@@ -5852,6 +5982,7 @@ country_event = {
 	is_triggered_only = yes
 
 	option = { #Okay - We want factories
+		ai_chance = { factor = 40 }
 		name = soviets.159.a
 		if = {
 			limit = {
@@ -5892,6 +6023,7 @@ country_event = {
 	}
 
 	option = { #Okay - We want military aid
+		ai_chance = { factor = 40 }
 		name = soviets.159.a
 		if = {
 			limit = {
@@ -5932,6 +6064,7 @@ country_event = {
 	}
 
 	option = { #No
+		ai_chance = { factor = 20 }
 		name = soviets.159.b
 		SOV = {
 			country_event = { id = soviets.162 days = 1 }
@@ -5949,6 +6082,7 @@ country_event = {
 	is_triggered_only = yes
 
 	option = {
+		ai_chance = { factor = 100 }
 		name = soviets.160.a
 		if = {
 			limit = {
@@ -5974,6 +6108,7 @@ country_event = {
 	is_triggered_only = yes
 
 	option = {
+		ai_chance = { factor = 100 }
 		name = soviets.161.a
 		if = {
 			limit = {
@@ -5999,6 +6134,7 @@ country_event = {
 	is_triggered_only = yes
 
 	option = {
+		ai_chance = { factor = 100 }
 		name = soviets.162.a
 		create_wargoal = {
 			type = take_state_focus
@@ -6018,7 +6154,12 @@ country_event = {
 	is_triggered_only = yes
 
 	option = { #Okay
+		ai_chance = { factor = 80 }
 		name = soviets.163.a
+		add_timed_idea = {
+			idea = SOV_Received_sakhalin_payment
+			days = 180
+		}
 		SOV = {
 			transfer_state = 655
 			country_event = { id = soviets.164 days = 1 }
@@ -6026,6 +6167,7 @@ country_event = {
 	}
 
 	option = { #No
+		ai_chance = { factor = 20 }
 		name = soviets.163.b
 		SOV = {
 			country_event = { id = soviets.165 days = 1 }
@@ -6043,8 +6185,12 @@ country_event = {
 	is_triggered_only = yes
 
 	option = {
+		ai_chance = { factor = 100 }
 		name = soviets.164.a
-
+		add_timed_idea = {
+			idea = SOV_Sakhalin_payment
+			days = 180
+		}
 	}
 }
 
@@ -6058,6 +6204,7 @@ country_event = {
 	is_triggered_only = yes
 
 	option = { #Doesn't give a wargoal because why would you declare war over Sakhalin?
+		ai_chance = { factor = 100 }
 		name = soviets.165.a
 	}
 }
@@ -6082,6 +6229,7 @@ country_event = {
 	}
 
 	option = { #Okay
+		ai_chance = { factor = 100 }
 		name = soviets.166.a
 		custom_effect_tooltip = SOV_game_totally_over_TT
 		SOV = {
@@ -6089,7 +6237,8 @@ country_event = {
 		}
 	}
 
-	option = { #No
+	option = { #No, only if a player somehow wants to play a Russian State
+		ai_chance = { factor = 0 }
 		name = soviets.166.b
 	}
 }
@@ -6104,6 +6253,7 @@ country_event = {
 	is_triggered_only = yes
 
 	option = {
+		ai_chance = { factor = 100 }
 		name = soviets.167.a
 		annex_country = {
 			target = FROM

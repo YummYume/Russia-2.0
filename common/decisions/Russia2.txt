@@ -3032,7 +3032,7 @@ SOV_invest_russian_sphere = {
 	
 		icon = GFX_decision_generic_construction
 		
-		days_remove = 90
+		days_remove = 120
 
 		allowed = {
 			original_tag = SOV
@@ -3157,10 +3157,10 @@ SOV_invest_russian_sphere = {
 					}	
 				}
 				random_owned_state = {
-					add_extra_state_shared_building_slots = 2
+					add_extra_state_shared_building_slots = 1
 					add_building_construction = {
 						type = arms_factory
-						level = 2
+						level = 1
 						instant_build = yes
 					}
 				}
@@ -3184,7 +3184,7 @@ SOV_invest_russian_sphere = {
 	
 		icon = GFX_decision_generic_construction
 		
-		days_remove = 60
+		days_remove = 80
 
 		allowed = {
 			original_tag = SOV
@@ -3336,7 +3336,7 @@ SOV_invest_russian_sphere = {
 	
 		icon = GFX_decision_generic_construction
 		
-		days_remove = 30
+		days_remove = 60
 
 		allowed = {
 			original_tag = SOV
@@ -3634,6 +3634,11 @@ SOV_the_second_civil_war_fn = {
 		}
 		visible = {
 			has_country_flag = second_civil_war_mission
+			check_variable = {
+				var = buy_weapons_count
+				value = 6
+				compare = less_than
+			}
 		}
 
 		ai_will_do = {
@@ -3649,9 +3654,10 @@ SOV_the_second_civil_war_fn = {
 
 		complete_effect = {
 			custom_effect_tooltip = buy_weapons
-			hidden_effect = {
-				set_country_flag = buy_weapons_1
-			}		
+			add_to_variable = {
+				var = buy_weapons_count
+				value = 1
+			}
 		}
 	}	
 
@@ -3807,6 +3813,18 @@ SOV_the_second_civil_war_fn = {
 		}
 		visible = {
 			has_country_flag = second_civil_war_mission
+			any_of = {
+				array = sabotage_military_count
+				value = current
+				index = i
+				
+				set_temp_variable = { sabotage_count = i }
+				check_variable = {
+					var = sabotage_count
+					value = 6
+					compare = less_than
+				}
+			}
 		}
 
 		ai_will_do = {
@@ -3817,14 +3835,15 @@ SOV_the_second_civil_war_fn = {
 
 		days_remove = 20
 		remove_effect = {
-			set_country_flag = SOV_sabotage_mil_1
+
 		}
 
 		complete_effect = {
+			add_to_array = { sabotage_military_count = 1 }
 			custom_effect_tooltip = sabotage_military
 			hidden_effect = {
 				add_command_power = -25			
-			}			
+			}
 		}
 	}
 
@@ -3841,6 +3860,18 @@ SOV_the_second_civil_war_fn = {
 		}
 		visible = {
 			has_country_flag = second_civil_war_mission
+			any_of = {
+				array = sabotage_civilian_count
+				value = current
+				index = i
+				
+				set_temp_variable = { sabotage_count = i }
+				check_variable = {
+					var = sabotage_count
+					value = 6
+					compare = less_than
+				}
+			}
 		}
 
 		ai_will_do = {
@@ -3851,10 +3882,11 @@ SOV_the_second_civil_war_fn = {
 
 		days_remove = 20
 		remove_effect = {
-			set_country_flag = SOV_sabotage_civ_1
+			
 		}
 
 		complete_effect = {
+			add_to_array = { sabotage_civilian_count = 1 }
 			custom_effect_tooltip = sabotage_civilian
 			hidden_effect = {
 				add_command_power = -25
@@ -3875,6 +3907,11 @@ SOV_the_second_civil_war_fn = {
 		}
 		visible = {
 			has_country_flag = second_civil_war_mission
+			check_variable = {
+				var = steal_weapons_count
+				value = 6
+				compare = less_than
+			}
 		}
 
 		ai_will_do = {
@@ -3885,10 +3922,14 @@ SOV_the_second_civil_war_fn = {
 
 		days_remove = 20
 		remove_effect = {
-			set_country_flag = SOV_steal_weapons_1
+			
 		}
 
 		complete_effect = {
+			add_to_variable = {
+				var = steal_weapons_count
+				value = 1
+			}
 			custom_effect_tooltip = steal_weapons
 			hidden_effect = {
 				add_command_power = -50
