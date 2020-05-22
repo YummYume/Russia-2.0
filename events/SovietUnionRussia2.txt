@@ -5374,11 +5374,23 @@ country_event = {
 	fire_only_once = yes
 
 	trigger = {
-		has_country_flag = buy_weapons_1
+		check_variable = {
+			var = buy_weapons_count
+			value = 0
+			compare = greater_than
+		}
+		#Add a country flag later, like has_country_flag = preparation_over
 	}
 
 	option = {
 		name = soviets.132.a
+		set_temp_variable = { buy_weapons_final_count = buy_weapons_count }
+		multiply_temp_variable = { buy_weapons_final_count = 2500 }
+		add_equipment_to_stockpile = {
+			type = infantry_equipment
+			amount = buy_weapons_final_count
+			producer = SOV
+		}
 	}
 }
 
@@ -5392,11 +5404,31 @@ country_event = {
 	fire_only_once = yes
 
 	trigger = {
-		has_country_flag = buy_weapons_1
+		check_variable = {
+			var = steal_weapons_count
+			value = 0
+			compare = greater_than
+		}
+		#Add a country flag later, like has_country_flag = preparation_over
 	}
 
 	option = {
-		name = soviets.133.a	
+		name = soviets.133.a
+		set_temp_variable = { steal_weapons_final_count = steal_weapons_count }
+		multiply_temp_variable = { steal_weapons_final_count = 1000 }
+		add_equipment_to_stockpile = {
+			type = infantry_equipment
+			amount = steal_weapons_final_count
+			producer = SOV
+		}
+		set_temp_variable = { destroy_weapons_final_count = steal_weapons_count }
+		multiply_temp_variable = { destroy_weapons_final_count = -1000 }
+		SOU = {
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = destroy_weapons_final_count
+			}
+		}
 	}
 }
 
@@ -5409,11 +5441,31 @@ country_event = {
 	hidden = yes
 
 	trigger = {
-		has_country_flag = buy_weapons_1
+		is_in_array = {
+			array = sabotage_military_count
+			value = 1
+		}
+		#Add a country flag later, like has_country_flag = preparation_over
 	}
 
 	immediate = {
-		
+		for_each_loop = {
+			array = sabotage_military_count
+			value = current #Should always be 1 for now, but can be useful in case we want to go deeper with the decisions
+			index = i
+			
+			SOU = {
+				random_owned_controlled_state = {
+					limit = {
+						arms_factory > current
+					}
+					remove_building = {
+						type = arms_factory
+						level = current
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -5426,11 +5478,31 @@ country_event = {
 	fire_only_once = yes
 
 	trigger = {
-		has_country_flag = buy_weapons_1
+		is_in_array = {
+			array = sabotage_civilian_count
+			value = 1
+		}
+		#Add a country flag later, like has_country_flag = preparation_over
 	}
 
 	immediate = {
-		
+		for_each_loop = {
+			array = sabotage_civilian_count
+			value = current #Should always be 1 for now, but can be useful in case we want to go deeper with the decisions
+			index = i
+			
+			SOU = {
+				random_owned_controlled_state = {
+					limit = {
+						arms_factory > current
+					}
+					remove_building = {
+						type = arms_factory
+						level = current
+					}
+				}
+			}
+		}
 	}
 }
 
