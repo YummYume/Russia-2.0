@@ -67,16 +67,31 @@ country_event = {
 			add_to_faction = UKR
 			give_guarantee = UKR
 		}
-		UKR = {
-			add_opinion_modifier = {
-				target = SOU
-				modifier = guarantee_our_independence_second_civil
+		hidden_effect = {
+			UKR = {
+				add_opinion_modifier = {
+					target = SOU
+					modifier = guarantee_our_independence_second_civil
+				}
+				add_opinion_modifier = {
+					target = SOV
+					modifier = our_ennemy_second_civil
+				}
+				add_ideas = SOV_communis_influence_second
 			}
-			add_opinion_modifier = {
-				target = SOV
-				modifier = our_ennemy_second_civil
+			SOV = {
+				add_opinion_modifier = {
+					target = SOV
+					modifier = our_ennemy_second_civil
+				}
 			}
-		}
+			SOU = {
+				add_opinion_modifier = {
+					target = UKR
+					modifier = guarantee_ukraine_independence
+				}
+			}
+		}	
 	}
 }
 
@@ -142,5 +157,80 @@ country_event = {
 		UKR = {
 			add_ideas = SOV_neutrality_second
 		}
+	}
+}
+
+#Soviets Ask Us to stay neutral 
+country_event = {
+	id = ukrains.7
+	title = ukrains.7.t
+	desc = ukrains.7.d
+	picture = GFX_report_event_british_inspect_troops
+
+	is_triggered_only = yes
+
+	option = { #Accepts
+		name = ukrains.7.a
+		ai_chance = {
+			factor = 0
+			modifier = {
+				factor = 100
+				SOV = {
+					has_country_flag = sympathize_with_ukraine
+				}	
+			}
+		}
+		SOV = {
+			country_event = { id = ukrains.8 hours = 6 }
+		}
+	}
+
+	option = { #Refuse
+		name = ukrains.7.b
+		ai_chance = {
+			factor = 100
+			modifier = {
+				factor = 0
+				SOV = {
+					has_country_flag = sympathize_with_ukraine
+				}	
+			}
+		}
+		SOV = {
+			country_event = { id = ukrains.9 hours = 6 }
+		}
+	}
+}
+
+#Ukraine Has Accepted
+country_event = {
+	id = ukrains.8
+	title = ukrains.8.t
+	desc = ukrains.8.d
+	picture = GFX_report_event_soviet_german_soldier_handshake
+
+	is_triggered_only = yes
+
+	option = { #Good
+		name = ukrains.8.a
+		ai_chance = { factor = 100 }
+		UKR = {
+			add_ideas = SOV_neutrality_second
+		}
+	}
+}
+
+#Ukraine Has Refused
+country_event = {
+	id = ukrains.9
+	title = ukrains.9.t
+	desc = ukrains.9.d
+	picture = GFX_report_event_ger_civil_war
+
+	is_triggered_only = yes
+
+	option = { #Damn
+		name = ukrains.9.a
+		ai_chance = { factor = 100 }
 	}
 }
