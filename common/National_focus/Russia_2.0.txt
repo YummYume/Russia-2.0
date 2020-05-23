@@ -10422,15 +10422,37 @@ focus_tree = {
 		mutually_exclusive = { focus = SOV_reform_entente }
 		prerequisite = { focus = SOV_contact_german_exiles }
 		icon = GFX_focus_hol_the_foundations_of_defense
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			factor = 8
 		}
 		available = {
-			
+			is_subject = no
+			has_government = neutrality
+			is_major = yes
 		}
 		completion_reward = {
-				
+			if = {
+				limit = {
+					NOT = {
+						is_faction_leader = yes
+					}
+				}
+				create_faction = slavic_alliance
+			}
+			else = {
+				set_faction_name = slavic_alliance
+			}
+			add_to_tech_sharing_group = sov_slavic_research
+			custom_effect_tooltip = SOV_slavic_alliance_tt
+			hidden_effect = {
+				every_country = {
+					limit = {
+						is_in_faction_with = SOV
+					}
+					add_to_tech_sharing_group = sov_slavic_research
+				}
+			}
 		}
 	}
 
@@ -10441,15 +10463,29 @@ focus_tree = {
 		y = 25
 		prerequisite = { focus = SOV_slavic_alliance }
 		icon = GFX_focus_invite_yugoslavia
-		cost = 10
+		cost = 4
 		ai_will_do = {
 			factor = 8
 		}
 		available = {
-			
+			is_faction_leader = yes
+			is_subject = no
+			has_government = neutrality
+			NOT = {
+				has_war_with = YUG
+			}
+			YUG = {
+				exists = yes
+				NOT = {
+					is_faction_leader = yes
+				}
+				is_subject = no
+			}
 		}
 		completion_reward = {
-				
+			YUG = {
+				country_event = { id = soviets.178 days = 1 }
+			}
 		}
 	}
 
@@ -10460,15 +10496,29 @@ focus_tree = {
 		y = 25
 		prerequisite = { focus = SOV_slavic_alliance }
 		icon = GFX_goal_generic_major_alliance
-		cost = 10
+		cost = 4
 		ai_will_do = {
 			factor = 8
 		}
 		available = {
-			
+			is_faction_leader = yes
+			is_subject = no
+			has_government = neutrality
+			NOT = {
+				has_war_with = CZE
+			}
+			CZE = {
+				exists = yes
+				NOT = {
+					is_faction_leader = yes
+				}
+				is_subject = no
+			}
 		}
 		completion_reward = {
-				
+			CZE = {
+				country_event = { id = soviets.178 days = 1 }
+			}
 		}
 	}
 	
@@ -10479,15 +10529,29 @@ focus_tree = {
 		y = 26
 		prerequisite = { focus = SOV_slavic_alliance }
 		icon = GFX_goal_tripartite_pact
-		cost = 10
+		cost = 4
 		ai_will_do = {
 			factor = 8
 		}
 		available = {
-			
+			is_faction_leader = yes
+			is_subject = no
+			has_government = neutrality
+			NOT = {
+				has_war_with = HUN
+			}
+			HUN = {
+				exists = yes
+				NOT = {
+					is_faction_leader = yes
+				}
+				is_subject = no
+			}
 		}
 		completion_reward = {
-				
+			HUN = {
+				country_event = { id = soviets.181 days = 1 }
+			}
 		}
 	}
 	
@@ -10498,15 +10562,29 @@ focus_tree = {
 		y = 26
 		prerequisite = { focus = SOV_slavic_alliance }
 		icon = GFX_focus_invite_romania
-		cost = 10
+		cost = 4
 		ai_will_do = {
 			factor = 8
 		}
 		available = {
-			
+			is_faction_leader = yes
+			is_subject = no
+			has_government = neutrality
+			NOT = {
+				has_war_with = ROM
+			}
+			ROM = {
+				exists = yes
+				NOT = {
+					is_faction_leader = yes
+				}
+				is_subject = no
+			}
 		}
 		completion_reward = {
-				
+			ROM = {
+				country_event = { id = soviets.181 days = 1 }
+			}
 		}
 	}
 	
@@ -10517,15 +10595,70 @@ focus_tree = {
 		y = 27
 		prerequisite = { focus = SOV_slavic_alliance }
 		icon = GFX_goal_generic_national_unity
-		cost = 10
+		cost = 4
 		ai_will_do = {
 			factor = 8
 		}
 		available = {
-			
+			is_faction_leader = yes
+			is_subject = no
+			has_government = neutrality
+			OR = {
+				AND = {
+					NOT = {
+						has_war_with = EST
+					}
+					EST = {
+						exists = yes
+						NOT = {
+							is_faction_leader = yes
+						}
+						is_subject = no
+					}
+				}
+				AND = {
+					NOT = {
+						has_war_with = LAT
+					}
+					LAT = {
+						exists = yes
+						NOT = {
+							is_faction_leader = yes
+						}
+						is_subject = no
+					}
+				}
+				AND = {
+					NOT = {
+						has_war_with = LIT
+					}
+					LIT = {
+						exists = yes
+						NOT = {
+							is_faction_leader = yes
+						}
+						is_subject = no
+					}
+				}
+			}
 		}
 		completion_reward = {
-				
+			custom_effect_tooltip = SOV_invite_baltics_tt
+			every_country = {
+				limit = {
+					OR = {
+						tag = EST
+						tag = LAT
+						tag = LIT
+					}
+					NOT = {
+						is_faction_leader = yes
+						has_war_with = SOV
+					}
+					is_subject = no
+				}
+				country_event = { id = soviets.178 days = 1 }
+			}
 		}
 	}
 	
@@ -10536,15 +10669,29 @@ focus_tree = {
 		y = 27
 		prerequisite = { focus = SOV_slavic_alliance }
 		icon = GFX_goal_anschluss
-		cost = 10
+		cost = 4
 		ai_will_do = {
 			factor = 8
 		}
 		available = {
-			
+			is_faction_leader = yes
+			is_subject = no
+			has_government = neutrality
+			NOT = {
+				has_war_with = BUL
+			}
+			BUL = {
+				exists = yes
+				NOT = {
+					is_faction_leader = yes
+				}
+				is_subject = no
+			}
 		}
 		completion_reward = {
-				
+			BUL = {
+				country_event = { id = soviets.178 days = 1 }
+			}
 		}
 	}	
 }

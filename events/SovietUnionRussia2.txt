@@ -4360,6 +4360,10 @@ country_event = {
 				has_civil_war = yes
 			}
 		}
+		add_opinion_modifier = {
+			target = SOV
+			modifier = cut_diplomatic_ties
+		}
 		SOV = {
 			country_event = { id = soviets.121 days = 5 }
 		}
@@ -4427,6 +4431,10 @@ country_event = {
 	option = { #Okay...
 		name = soviets.121.a
 		ai_chance = { factor = 100 }
+		add_opinion_modifier = {
+			target = ENG
+			modifier = cut_diplomatic_ties
+		}
 		ENG = {
 			set_country_flag = cut_all_diplomatic_ties_with_sov
 		}
@@ -4468,6 +4476,10 @@ country_event = {
 	option = { #End all diplomatic relations with SOV
 		name = soviets.122.c
 		ai_chance = { factor = 20 }
+		add_opinion_modifier = {
+			target = SOV
+			modifier = cut_diplomatic_ties
+		}
 		SOV = {
 			country_event = { id = soviets.121 days = 5 }
 		}
@@ -7026,5 +7038,197 @@ country_event = {
 			type = destroyer
 			target = SOU
 		}
+	}
+}
+
+#Invite Slavic Nation
+country_event = {
+	id = soviets.178
+	title = soviets.178.t
+	desc = soviets.178.d
+	picture = GFX_
+
+	is_triggered_only = yes
+
+	option = { #Join
+		name = soviets.178.a
+		ai_chance = {
+			factor = 100
+			modifier = {
+				factor = 50
+				any_country = {
+					is_major = yes
+					has_war_with = SOV
+				}
+			}
+		}
+		SOV = {
+			add_to_faction = ROOT
+			country_event = { id = soviets.179 days = 1 }
+		}
+	}
+
+	option = { #Refuse
+		name = soviets.178.b
+		ai_chance = {
+			factor = 0
+			modifier = {
+				factor = 50
+				any_country = {
+					is_major = yes
+					has_war_with = SOV
+				}
+			}
+		}
+		SOV = {
+			country_event = { id = soviets.180 days = 1 }
+		}
+	}
+}
+
+#FROM Changes Government
+country_event = {
+	id = soviets.179
+	title = soviets.179.t
+	desc = soviets.179.d
+	picture = GFX_
+
+	is_triggered_only = yes
+
+	option = {
+		ai_chance = { factor = 100 }
+		name = soviets.179.a
+	}
+}
+
+#FROM Refuses
+country_event = {
+	id = soviets.180
+	title = soviets.180.t
+	desc = soviets.180.d
+	picture = GFX_
+
+	is_triggered_only = yes
+
+	option = {
+		name = soviets.180.a
+		ai_chance = { factor = 100 }
+	}
+}
+
+#Invite Non Slavic Nation
+country_event = {
+	id = soviets.181
+	title = soviets.181.t
+	desc = soviets.181.d
+	picture = GFX_
+
+	is_triggered_only = yes
+
+	option = { #Join
+		name = soviets.181.a
+		ai_chance = {
+			factor = 75
+			modifier = {
+				factor = 25
+				any_country = {
+					is_major = yes
+					has_war_with = SOV
+				}
+			}
+		}
+		SOV = {
+			add_to_faction = ROOT
+			country_event = { id = soviets.182 days = 1 }
+		}
+	}
+
+	option = { #Refuse
+		name = soviets.181.b
+		ai_chance = {
+			factor = 25
+			modifier = {
+				factor = 75
+				any_country = {
+					is_major = yes
+					has_war_with = SOV
+				}
+			}
+		}
+		SOV = {
+			country_event = { id = soviets.183 days = 1 }
+		}
+	}
+}
+
+#FROM Changes Government
+country_event = {
+	id = soviets.182
+	title = soviets.182.t
+	desc = soviets.182.d
+	picture = GFX_
+
+	is_triggered_only = yes
+
+	option = {
+		ai_chance = { factor = 100 }
+		name = soviets.182.a
+	}
+}
+
+#FROM Refuses
+country_event = {
+	id = soviets.183
+	title = soviets.183.t
+	desc = soviets.183.d
+	picture = GFX_
+
+	is_triggered_only = yes
+
+	option = {
+		name = soviets.183.a
+		ai_chance = { factor = 100 }
+	}
+}
+
+#Add Country to the Slavic Research Agreement
+country_event = {
+	id = soviets.184
+	
+	hidden = yes
+
+	trigger = {
+		country_exists = SOV
+		SOV = {
+			has_completed_focus = SOV_slavic_alliance
+		}
+		NOT = {
+			tag = SOV
+			is_in_tech_sharing_group = sov_slavic_research
+		}
+		is_in_faction_with = SOV
+	}
+
+	immediate = {
+		add_to_tech_sharing_group = sov_slavic_research
+	}
+}
+
+#Remove Country from the Slavic Research Agreement
+country_event = {
+	id = soviets.185
+	
+	hidden = yes
+
+	trigger = {
+		is_in_tech_sharing_group = sov_slavic_research
+		NOT = {
+			tag = SOV
+			is_in_faction_with = SOV
+		}
+	}
+
+	immediate = {
+		remove_from_tech_sharing_group = sov_slavic_research
 	}
 }
