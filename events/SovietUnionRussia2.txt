@@ -2039,10 +2039,10 @@ country_event = {
 			name = "Joseph Stalin"
 			ruling_only = yes
 		}
-		date > 1953.03.05
+		date > 1953.02.05
 	}
 	
-	mean_time_to_happen = { days = 10 }
+	mean_time_to_happen = { days = 2 }
 	
 	option = { #new Leader
 		name = soviets.60.a
@@ -4655,7 +4655,89 @@ country_event = {
 	option = { #Civil War
 		name = soviets.131.a
 		hidden_effect = {
-									
+			SOU = {
+				declare_war_on = {
+					target = SOV
+					type = annex_everything
+				}
+				declare_war_on = {
+					target = KAZ
+					type = annex_everything
+				}
+				declare_war_on = {
+					target = TMS
+					type = annex_everything
+				}
+				declare_war_on = {
+					target = AZR
+					type = annex_everything
+				}
+				declare_war_on = {
+					target = GEO
+					type = annex_everything
+				}
+				declare_war_on = {
+					target = ARM
+					type = annex_everything
+				}
+				declare_war_on = {
+					target = BLR
+					type = annex_everything
+				}
+				add_state_core = 207
+				add_state_core = 206
+				add_state_core = 241
+				add_state_core = 204
+				add_state_core = 194
+				add_state_core = 231
+				add_state_core = 229
+				add_state_core = 230
+				add_state_core = 407
+				add_state_core = 406
+				add_state_core = 402
+				add_state_core = 587
+				add_state_core = 583
+				add_state_core = 404
+				add_state_core = 590
+				add_state_core = 586
+				add_state_core = 206
+				add_state_core = 584
+				add_state_core = 585
+				add_state_core = 405
+				add_state_core = 742
+				add_state_core = 732
+			}
+			every_state = {
+				limit = {
+					has_state_flag = not_white_province
+					is_owned_by = SOU
+				}
+				SOV = {
+					add_state_core = PREV
+				}
+			}
+			every_state = {
+				limit = {
+					has_state_flag = white_province
+				}
+				SOU = {
+					add_state_core = PREV
+				}
+			}
+			if = {
+				limit = {
+					UKR = {
+						is_in_faction_with = SOV
+					}
+				}
+				SOU = {
+					declare_war_on = {
+						target = UKR
+						type = annex_everything
+					}
+				}	
+			}
+			clr_country_flag = preparation_done
 		}		
 	}
 }
@@ -4670,7 +4752,8 @@ country_event = {
 	fire_only_once = yes
 
 	trigger = {
-		has_country_flag = preparation_done
+		has_country_flag = buy_weaps
+		has_country_flag = preparation_done2
 		check_variable = {
 			var = buy_weapons_count
 			value = 0
@@ -4679,7 +4762,7 @@ country_event = {
 		#Add a country flag later, like has_country_flag = preparation_over
 	}
 
-	mean_time_to_happen = { hours = 6 }
+	mean_time_to_happen = { days = 1 }
 
 	option = {
 		name = soviets.132.a
@@ -4690,6 +4773,7 @@ country_event = {
 			amount = buy_weapons_final_count
 			producer = SOV
 		}
+		clr_country_flag = buy_weaps
 	}
 }
 
@@ -4703,7 +4787,8 @@ country_event = {
 	fire_only_once = yes
 
 	trigger = {
-		has_country_flag = preparation_done
+		has_country_flag = steal_weaps
+		has_country_flag = preparation_done2
 		check_variable = {
 			var = steal_weapons_count
 			value = 0
@@ -4712,7 +4797,7 @@ country_event = {
 		#Add a country flag later, like has_country_flag = preparation_over
 	}
 
-	mean_time_to_happen = { hours = 6 }
+	mean_time_to_happen = { days = 1 }
 
 	option = {
 		name = soviets.133.a
@@ -4731,6 +4816,7 @@ country_event = {
 				amount = destroy_weapons_final_count
 			}
 		}
+		clr_country_flag = steal_weaps
 	}
 }
 
@@ -4740,10 +4826,11 @@ country_event = {
 
 	fire_only_once = yes
 
-	hidden = yes
+	hidden = no
 
 	trigger = {
-		has_country_flag = preparation_done
+		has_country_flag = sabotage_mils
+		has_country_flag = preparation_done2
 		is_in_array = {
 			array = sabotage_military_count
 			value = 1
@@ -4771,6 +4858,7 @@ country_event = {
 				}
 			}
 		}
+		clr_country_flag = sabotage_mils
 	}
 }
 
@@ -4778,12 +4866,13 @@ country_event = {
 country_event = {
 	id = soviets.135
 
-	hidden = yes
+	hidden = no
 
 	fire_only_once = yes
 
 	trigger = {
-		has_country_flag = preparation_done
+		has_country_flag = sabotage_civs
+		has_country_flag = preparation_done2
 		is_in_array = {
 			array = sabotage_civilian_count
 			value = 1
@@ -4794,6 +4883,10 @@ country_event = {
 	mean_time_to_happen = { days = 6 }
 
 	immediate = {
+
+	}
+
+	option = {
 		for_each_loop = {
 			array = sabotage_civilian_count
 			value = current #Should always be 1 for now, but can be useful in case we want to go deeper with the decisions
@@ -4811,6 +4904,7 @@ country_event = {
 				}
 			}
 		}
+		clr_country_flag = sabotage_civs
 	}
 }
 
@@ -4833,6 +4927,17 @@ country_event = {
 		}
 		UKR = {
 			country_event = { id = ukrains.1 hours = 6 }
+			hidden_effect = {
+				set_politics = {
+					ruling_party = neutrality
+				}
+				set_popularities = {
+					democratic = 25
+					neutrality = 45
+					fascism = 15
+					communism = 15
+				}
+			}	
 		}
 	}
 
@@ -4844,6 +4949,17 @@ country_event = {
 		}
 		UKR = {
 			country_event = { id = ukrains.4 hours = 6 }
+			hidden_effect = {
+				set_politics = {
+					ruling_party = neutrality
+				}
+				set_popularities = {
+					democratic = 25
+					neutrality = 45
+					fascism = 15
+					communism = 15
+				}
+			}
 		}
 	}
 
@@ -4860,6 +4976,17 @@ country_event = {
 		}	
 		UKR = {
 			country_event = { id = ukrains.7 hours = 6 }
+			hidden_effect = {
+				set_politics = {
+					ruling_party = neutrality
+				}
+				set_popularities = {
+					democratic = 25
+					neutrality = 45
+					fascism = 15
+					communism = 15
+				}
+			}
 		}
 	}
 
@@ -5732,19 +5859,19 @@ country_event = {
 			SOV = {
 				set_autonomy = {
 					target = GEO
-					autonomy_state = autonomy_supervised_state
+					autonomy_state = autonomy_dominion
 				}
 			}
 			SOV = {
 				set_autonomy = {
 					target = ARM
-					autonomy_state = autonomy_supervised_state
+					autonomy_state = autonomy_dominion
 				}
 			}
 			SOV = {
 				set_autonomy = {
 					target = AZR
-					autonomy_state = autonomy_supervised_state
+					autonomy_state = autonomy_dominion
 				}
 			}
 			GEO = {
@@ -5765,6 +5892,10 @@ country_event = {
 						infantry = { x = 0 y = 2 }
 						infantry = { x = 0 y = 3 }
 					}
+				}
+				set_division_template_lock = {
+					division_template = "Georgian Imperial Division"
+					is_locked = yes
 				}
 				capital_scope = {
 					create_unit = {
@@ -5812,6 +5943,10 @@ country_event = {
 						infantry = { x = 0 y = 3 }
 					}
 				}
+				set_division_template_lock = {
+					division_template = "Armenian Imperial Division"
+					is_locked = yes
+				}
 				capital_scope = {
 					create_unit = {
 						division = "name = \"1st Armenian Imperial Division\" division_template = \"Armenian Imperial Division\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
@@ -5849,6 +5984,10 @@ country_event = {
 						infantry = { x = 0 y = 2 }
 						infantry = { x = 0 y = 3 }
 					}
+				}
+				set_division_template_lock = {
+					division_template = "Azerbaijan Imperial Division"
+					is_locked = yes
 				}
 				capital_scope = {
 					create_unit = {
@@ -6027,7 +6166,6 @@ country_event = {
 								cavalry = { x = 0 y = 1 }
 								cavalry = { x = 0 y = 2 }
 								cavalry = { x = 0 y = 3 }
-								cavalry = { x = 0 y = 4 }
 							}
 						}
 						set_division_template_lock = {
@@ -6164,11 +6302,11 @@ country_event = {
 			SOV = {
 				set_autonomy = {
 					target = KAZ
-					autonomy_state = autonomy_supervised_state
+					autonomy_state = autonomy_dominion
 				}
 				set_autonomy = {
 					target = TMS
-					autonomy_state = autonomy_supervised_state
+					autonomy_state = autonomy_dominion
 				}
 			}
 			TMS = {
@@ -6204,6 +6342,10 @@ country_event = {
 					support = {
 						engineer = { x = 0 y = 0 }
 					}
+				}
+				set_division_template_lock = {
+					division_template = "Kazakh Imperial Division"
+					is_locked = yes
 				}
 				capital_scope = {
 					create_unit = {
@@ -6257,6 +6399,14 @@ country_event = {
 						instant_build = yes
 					}
 				}
+				random_owned_state = {
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = industrial_complex
+						level = 2
+						instant_build = yes
+					}
+				}
 				division_template = {
 					name = "Turkmenistan Imperial Division"
 					priority = 1
@@ -6267,6 +6417,10 @@ country_event = {
 						infantry = { x = 0 y = 3 }
 						infantry = { x = 0 y = 4 }
 					}
+				}
+				set_division_template_lock = {
+					division_template = "Turkmenistan Imperial Division"
+					is_locked = yes
 				}
 				capital_scope = {
 					create_unit = {
@@ -6328,7 +6482,7 @@ country_event = {
 			SOV = {
 				set_autonomy = {
 					target = BLR
-					autonomy_state = autonomy_supervised_state
+					autonomy_state = autonomy_dominion
 				}
 			}
 			BLR = {
@@ -6349,6 +6503,10 @@ country_event = {
 						infantry = { x = 0 y = 2 }
 						infantry = { x = 0 y = 3 }
 					}
+				}
+				set_division_template_lock = {
+					division_template = "Belarusian Imperial Division"
+					is_locked = yes
 				}
 				capital_scope = {
 					create_unit = {
@@ -6434,5 +6592,419 @@ country_event = {
 				}
 			}
 		}		
+	}
+}
+
+#Spawn Elite Division if the Player Has the Country Flag
+country_event = {
+	id = soviets.176
+
+	hidden = yes
+
+	is_triggered_only = yes
+
+	immediate = {
+		if= {
+			limit = {
+				SOV = {
+					has_country_flag = train_elite_soldiers_civil_war
+				}
+			}
+			SOV = {
+				division_template = {
+					name = "gvardeyskaya pekhotnaya diviziya"
+					priority = 2
+					regiments = {
+						infantry = { x = 0 y = 0 }
+						infantry = { x = 0 y = 1 }
+						infantry = { x = 0 y = 2 }
+						infantry = { x = 0 y = 3 }
+						infantry = { x = 0 y = 4 }
+						infantry = { x = 1 y = 0 }
+						infantry = { x = 1 y = 1 }
+						infantry = { x = 1 y = 2 }
+						infantry = { x = 1 y = 3 }
+						infantry = { x = 1 y = 4 }
+						artillery_brigade = { x = 2 y = 0 }
+					}
+					support = {
+						engineer = { x = 0 y = 0 }
+						recon = { x = 0 y = 1 }
+						artillery = { x = 0 y = 2 }
+					}
+				}
+				division_template = {
+					name = "Gvardeyskaya kavaleriyskaya diviziya"
+					priority = 2
+					regiments = {
+						cavalry = { x = 0 y = 0 }
+						cavalry = { x = 0 y = 1 }
+						cavalry = { x = 0 y = 2 }
+						cavalry = { x = 0 y = 3 }
+						cavalry = { x = 0 y = 4 }
+						cavalry = { x = 1 y = 0 }
+					}
+					support = {
+						engineer = { x = 0 y = 0 }
+						recon = { x = 0 y = 1 }
+						artillery = { x = 0 y = 2 }
+					}
+				}
+				570 = {
+					create_unit = {
+						division = "name = \"1ya Gvardeyskaya Pekhotnaya Diviziya\" division_template = \"gvardeyskaya pekhotnaya diviziya\" start_experience_factor = 0.6 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"2ya Gvardeyskaya Pekhotnaya Diviziya\" division_template = \"gvardeyskaya pekhotnaya diviziya\" start_experience_factor = 0.6 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"3ya Gvardeyskaya Pekhotnaya Diviziya\" division_template = \"gvardeyskaya pekhotnaya diviziya\" start_experience_factor = 0.6 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"1ya Gvardeyskaya Kavaleriyskaya Diviziya\" division_template = \"Gvardeyskaya kavaleriyskaya diviziya\" start_experience_factor = 0.6 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"2ya Gvardeyskaya Kavaleriyskaya Diviziya\" division_template = \"Gvardeyskaya kavaleriyskaya diviziya\" start_experience_factor = 0.6 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+				}
+			}
+		}	
+	}	
+}
+
+#Transfer Navy
+country_event = {
+	id = soviets.177
+
+	hidden = yes
+
+	is_triggered_only = yes
+
+	immediate = {
+		transfer_ship = {
+			prefer_name = "Marat"
+			type = battleship
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Oktyabrskaya Revolutsiya"
+			type = battleship
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Engels"
+			type = destroyer
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Artyom"
+			type = destroyer
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Volodarskiy"
+			type = destroyer
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Yakov Sverdlov"
+			type = destroyer
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Frunze"
+			type = destroyer
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Lenin"
+			type = destroyer
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Voykov"
+			type = destroyer
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Rykov"
+			type = destroyer
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Karl Libknekht"
+			type = destroyer
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Shch-301"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Shch-302"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Shch-303"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Shch-304"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Shch-305"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Shch-306"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Shch-307"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Shch-308"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Shch-113"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Shch-114"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Shch-115"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Shch-116"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Shch-117"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Shch-118"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Shch-119"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Shch-120"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Shch-201"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Shch-202"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Shch-203"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Shch-204"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Shch-309"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Uritskiy"
+			type = destroyer
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Stalin"
+			type = destroyer
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Shch-101"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Shch-102"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Shch-103"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Shch-104"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Shch-105"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Shch-106"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Shch-107"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Shch-108"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Shch-109"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Shch-110"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Shch-111"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Shch-112"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "L-1"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "L-2"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "L-3"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "D-1"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "D-2"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "D-3"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "D-4"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "D-5"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "D-6"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Marti"
+			type = light_cruiser
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "B-2"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "L-55"
+			type = submarine
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Dzerzhinskiy"
+			type = destroyer
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Nezamozhnik"
+			type = destroyer
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Petrovskiy"
+			type = destroyer
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Shaumyan"
+			type = destroyer
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Izyaslav"
+			type = destroyer
+			target = SOU
+		}
+		transfer_ship = {
+			prefer_name = "Kalinin"
+			type = destroyer
+			target = SOU
+		}
 	}
 }
