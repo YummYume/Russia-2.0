@@ -9550,17 +9550,24 @@ focus_tree = {
 					delete_unit_template_and_units = {
 						division_template = "Vozdushno-Desantnaya Brigada"
 					}
-				}					
+				}
+				remove_ideas = SOV_Prepare_second_war
+				remove_ideas = SOV_Terrible_fate
+				remove_ideas = SOV_Army_disorganisation
+				add_ideas = SOV_Supply_line
 				clr_country_flag = second_civil_war_mission
-				country_event = { id = soviets.173 }
-				country_event = { id = soviets.174 }
-				country_event = { id = soviets.175 }
-				country_event = { id = soviets.136 days = 2 }
+				country_event = { id = soviets.173 hours = 1 }
+				country_event = { id = soviets.174 hours = 1 }
+				country_event = { id = soviets.175 hours = 1 }
+				country_event = { id = soviets.176 }
+				country_event = { id = soviets.177 }
+				country_event = { id = soviets.136 days = 1 }
 				set_country_flag = preparation_done
+				set_country_flag = preparation_done2
 				set_cosmetic_tag = WMA
 				dismantle_faction = yes
 				create_faction = anti_communist_coalition
-				kill_country_leader = yes
+				retire_ideology_leader = communism
 				set_politics = {
 					ruling_party = neutrality
 				}
@@ -9570,7 +9577,27 @@ focus_tree = {
 					fascism = 33
 					communism = 1
 				}
-				add_ideas = partial_economic_mobilisation 
+				create_country_leader = {
+					name = "Anton Denikin"
+					desc = "POLITICS_ANTON_DENIKIN_DESC"
+					picture = "Portrait_Soviet_Anton_IvanovichMilitary.dds"
+					expire = "1947.8.8"
+					ideology = despotism
+					traits = {
+						war_veteran
+					}
+				}
+				create_field_marshal = {
+					name = "Anton Ivanovich Denikin"
+					picture = "Portrait_Soviet_Anton_IvanovichMilitary.dds"
+					traits = { infantry_leader bearer_of_artillery offensive_doctrine }
+					skill = 5
+					attack_skill = 5
+					defense_skill = 2
+					planning_skill = 4
+					logistics_skill = 4
+				}
+				add_ideas = war_economy 
 				add_ideas = limited_conscription
 				every_state = {
 					limit = {
@@ -9584,8 +9611,13 @@ focus_tree = {
 				SOU = {
 					create_faction = Comintern
 					release = UKR
+					load_focus_tree = soviet2_focus
+					unlock_national_focus = SOV_great_purge2
 				}	
 				UKR = {
+					set_politics = {
+						ruling_party = neutrality
+					}					
 					transfer_state = 137
 					add_state_core = 137
 					random_owned_state = {
@@ -9632,6 +9664,14 @@ focus_tree = {
 						support = {
 							engineer = { x = 0 y = 0 }
 						}
+					}
+					set_division_template_lock = {
+						division_template = "Ukrainian Division"
+						is_locked = yes
+					}
+					set_division_template_lock = {
+						division_template = "Ukrainian Mechanized Division"
+						is_locked = yes
 					}
 					201 = {
 						create_unit = {
@@ -9812,7 +9852,7 @@ focus_tree = {
 							owner = UKR
 						}									
 					}
-				}				
+				}
 			}
 		}
 	}
@@ -9824,7 +9864,7 @@ focus_tree = {
 		y = 15
 		prerequisite = { focus = SOV_second_civil_war }
 		icon = GFX_focus_generic_support_the_left_right
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			factor = 8
 		}
@@ -9848,7 +9888,7 @@ focus_tree = {
 		y = 16
 		prerequisite = { focus = SOV_bring_back_old_life }
 		icon = GFX_goal_generic_political_pressure
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			factor = 8
 		}
@@ -9867,7 +9907,7 @@ focus_tree = {
 		y = 17
 		prerequisite = { focus = SOV_military_junta }
 		icon = GFX_focus_generic_tank_production
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			factor = 8
 		}
@@ -9890,7 +9930,7 @@ focus_tree = {
 		prerequisite = { focus = SOV_rebuild_industry }
 		mutually_exclusive = { focus = SOV_destroy_communist }
 		icon = GFX_goal_generic_military_deal
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			factor = 8
 		}
@@ -9910,7 +9950,7 @@ focus_tree = {
 		prerequisite = { focus = SOV_rebuild_industry }
 		mutually_exclusive = { focus = SOV_appease_communist }
 		icon = GFX_goal_anti_comintern_pact
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			factor = 8
 		}

@@ -1,7 +1,8 @@
 # Russia Reworked
 ## A Complete Soviet Rework for Hearts of Iron IV
 
-[Steam Page](https://steamcommunity.com/sharedfiles/filedetails/?id=2092066524)
+- [Steam Page](https://steamcommunity.com/sharedfiles/filedetails/?id=2092066524)
+- [Discord Link](https://discord.gg/xf5PUxK)
 
 Updates are very frequent on our GitHub, however, you should **NOT** try to play with this current version unless it is marked as **_Stable_**.
 
