@@ -10,9 +10,9 @@ country_event = {
 	title = germanys.1.t
 	desc = germanys.1.d
 	picture = GFX_report_event_fascist_speech
-	
+
 	is_triggered_only = yes
-	
+
 	option = {
 		name = germanys.1.a
 		ai_chance = {
@@ -31,7 +31,7 @@ country_event = {
 					}
 				}
 			}
-			every_state = { 
+			every_state = {
 	    		limit = {
 	    			is_owned_by = SOV
 	    			distance_to = {
@@ -84,6 +84,268 @@ country_event = {
 		name = germanys.2.a
 		ai_chance = {
 			factor = 100
+		}
+	}
+}
+
+#Germany Gets Event to Split Czechoslovakia
+country_event = {
+	id = germanys.3
+	title = germanys.3.t
+	desc = germanys.3.d
+	picture = GFX_report_event_hungary_refused
+
+	is_triggered_only = yes
+
+	option = { #Accept
+		name = germanys.3.a
+		ai_chance = {
+			factor = 80
+		}
+		every_state = {
+			limit = {
+				OR = {
+					state = 664
+					state = 70
+					state = 71
+					state = 73
+				}
+				OR = {
+					is_controlled_by = GER
+					any_country = {
+						is_subject_of = GER
+						controls_state = PREV
+					}
+				}
+			}
+			SOV = {
+				transfer_state = PREV
+				country_event = { id = germanys.4 days = 1 }
+				diplomatic_relation = {
+				    country = GER
+				    relation = non_aggression_pact
+				    active = yes
+				}
+			}
+		}
+	}
+
+	option = { #Refuse
+		name = germanys.3.b
+		ai_chance = {
+			factor = 20
+		}
+		SOV = {
+			country_event = { id = germanys.5 days = 1 }
+		}
+	}
+}
+
+#Germany Accepts
+country_event = {
+	id = germanys.4
+	title = germanys.4.t
+	desc = germanys.4.d
+	picture = GFX_report_event_hungary_refused
+
+	is_triggered_only = yes
+
+	option = { #Amazing
+		name = germanys.4.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#Germany Refuses
+country_event = {
+	id = germanys.5
+	title = germanys.5.t
+	desc = germanys.5.d
+	picture = GFX_report_event_hungary_refused
+
+	is_triggered_only = yes
+
+	option = { #Damn Germany
+		name = germanys.5.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#SOV Requests Alliance
+country_event = {
+	id = germanys.6
+	title = germanys.6.t
+	desc = germanys.6.d
+	picture = GFX_report_event_hungary_refused
+
+	is_triggered_only = yes
+
+	option = { #Accept
+		name = germanys.6.a
+		ai_chance = {
+			factor = 60
+		}
+		SOV = {
+			if = {
+				limit = {
+					OR = {
+						GER = {
+							controls_state = 102
+						}
+						any_country = {
+							is_subject_of = GER
+							controls_state = 102
+						}
+					}
+				}
+				transfer_state = 102
+			}
+			country_event = { id = germanys.7 days = 1 }
+			if = {
+				limit = {
+					is_faction_leader = yes
+				}
+				add_to_faction = GER
+			}
+			else_if = {
+				limit = {
+					GER = {
+						is_faction_leader = yes
+					}
+				}
+				GER = {
+					add_to_faction = SOV
+				}
+			}
+			else = {
+				create_faction = russo_german_alliance
+				add_to_faction = GER
+			}
+		}
+	}
+
+	option = { #Refuse
+		name = germanys.6.b
+		ai_chance = {
+			factor = 40
+		}
+		SOV = {
+			country_event = { id = germanys.8 days = 1 }
+		}
+	}
+}
+
+#Germany Accepts
+country_event = {
+	id = germanys.7
+	title = germanys.7.t
+	desc = germanys.7.d
+	picture = GFX_report_event_hungary_refused
+
+	is_triggered_only = yes
+
+	option = { #Amazing
+		name = germanys.7.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#Germany Refuses
+country_event = {
+	id = germanys.8
+	title = germanys.8.t
+	desc = germanys.8.d
+	picture = GFX_report_event_hungary_refused
+
+	is_triggered_only = yes
+
+	option = { #Damn Germany
+		name = germanys.8.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#SOV Backstabs
+country_event = {
+	id = germanys.9
+	title = germanys.9.t
+	desc = germanys.9.d
+	picture = GFX_report_event_hungary_refused
+
+	is_triggered_only = yes
+
+	option = { #Accept
+		name = germanys.9.a
+		ai_chance = {
+			factor = 60
+		}
+		every_state = {
+			limit = {
+				has_state_flag = slavic_states
+				is_controlled_by = GER
+			}
+			SOV = {
+				transfer_state = PREV
+			}
+		}
+		SOV = {
+			country_event = { id = germanys.10 days = 1 }
+		}
+	}
+
+	option = { #Refuse
+		name = germanys.9.b
+		ai_chance = {
+			factor = 40
+		}
+		SOV = {
+			country_event = { id = germanys.11 days = 1 }
+		}
+	}
+}
+
+#Germany Accepts
+country_event = {
+	id = germanys.10
+	title = germanys.10.t
+	desc = germanys.10.d
+	picture = GFX_report_event_hungary_refused
+
+	is_triggered_only = yes
+
+	option = { #Amazing
+		name = germanys.10.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#Germany Refuses
+country_event = {
+	id = germanys.11
+	title = germanys.11.t
+	desc = germanys.11.d
+	picture = GFX_report_event_hungary_refused
+
+	is_triggered_only = yes
+
+	option = { #Get Wargoal
+		name = germanys.11.a
+		ai_chance = {
+			factor = 100
+		}
+		create_wargoal = {
+			type = annex_everything
+			target = GER
 		}
 	}
 }

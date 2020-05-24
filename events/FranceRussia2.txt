@@ -10,16 +10,16 @@ country_event = {
 	title = frances.1.t
 	desc = frances.1.d
 	picture = GFX_report_event_stalin_meeting
-	
+
 	is_triggered_only = yes
-	
+
 	option = {
 		ai_chance = {
 			factor = 60
 			modifier = {
 				has_government = communism
 				factor = 100
-			}	
+			}
 		}
 		name = frances.1.a
 		SOV = { add_to_faction = FRA }
@@ -34,14 +34,14 @@ country_event = {
 			modifier = {
 				has_government = communism
 				factor = 0
-			}	
-		}	
+			}
+		}
 		name = frances.1.b
 		hidden_effect = {
 			SOV = {
 				country_event = { id = frances.2 days = 1 }
 			}
-		}	
+		}
 	}
 }
 
@@ -59,5 +59,99 @@ country_event = {
 			factor = 100
 		}
 		name = frances.2.a
+	}
+}
+
+# Ask France to remove its guarantees
+country_event = {
+	id = frances.3
+	title = frances.3.t
+	desc = frances.3.d
+	picture = GFX_report_event_stalin_meeting
+
+	is_triggered_only = yes
+
+	option = {
+		ai_chance = {
+			factor = 75
+			modifier = {
+				has_war = yes
+				factor = 100
+			}
+		}
+		name = frances.1.a
+		every_country = {
+			limit = {
+				is_guaranteed_by = FRA
+				any_state = {
+					has_state_flag = slavic_states
+					is_controlled_by = PREV
+				}
+			}
+			FRA = {
+				diplomatic_relation = {
+					country = PREV
+				  relation = guarantee
+				  active = no
+				}
+			}
+		}
+		diplomatic_relation = {
+			country = SOV
+			relation = non_aggression_pact
+			active = yes
+		}
+		set_country_flag = signed_slavic_pact
+		SOV = {
+			country_event = { id = frances.4 days = 1 }
+		}
+	}
+
+	option = {
+		ai_chance = {
+			factor = 25
+			modifier = {
+				has_war = yes
+				factor = 0
+			}
+		}
+		name = frances.1.b
+		SOV = {
+			country_event = { id = frances.5 days = 1 }
+		}
+	}
+}
+
+#France Accepts
+country_event = {
+	id = frances.4
+	title = frances.4.t
+	desc = frances.4.d
+	picture = GFX_report_event_degaulle_churchill
+
+	is_triggered_only = yes
+
+	option = { #Thank you
+		ai_chance = {
+			factor = 100
+		}
+		name = frances.4.a
+	}
+}
+
+#France Refuses
+country_event = {
+	id = frances.5
+	title = frances.5.t
+	desc = frances.5.d
+	picture = GFX_report_event_degaulle_churchill
+
+	is_triggered_only = yes
+
+	option = { #Damn
+		ai_chance = {
+			factor = 100
+		}
+		name = frances.5.a
 	}
 }
