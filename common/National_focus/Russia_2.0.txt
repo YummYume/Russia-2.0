@@ -9613,6 +9613,7 @@ focus_tree = {
 					release = UKR
 					load_focus_tree = soviet2_focus
 					unlock_national_focus = SOV_great_purge2
+					set_cosmetic_tag = SOU
 				}
 				UKR = {
 					set_politics = {
@@ -10135,10 +10136,11 @@ focus_tree = {
 			factor = 8
 		}
 		available = {
-
+			is_subject = no
+			has_government = neutrality
 		}
 		completion_reward = {
-
+			add_ideas = SOV_Asserting_dominance
 		}
 	}
 
@@ -10185,7 +10187,7 @@ focus_tree = {
 				71 = { set_state_flag = slavic_states }
 				72 = { set_state_flag = slavic_states }
 				73 = { set_state_flag = slavic_states }
-				644 = { set_state_flag = slavic_states }
+				664 = { set_state_flag = slavic_states }
 				211 = { set_state_flag = slavic_states }
 				212 = { set_state_flag = slavic_states }
 				48 = { set_state_flag = slavic_states }
@@ -10198,6 +10200,7 @@ focus_tree = {
 				104 = { set_state_flag = slavic_states }
 				103 = { set_state_flag = slavic_states }
 				105 = { set_state_flag = slavic_states }
+				102 = { set_state_flag = slavic_states }
 				every_state = {
 					limit = {
 						has_state_flag = slavic_states
@@ -10228,17 +10231,29 @@ focus_tree = {
 			is_major = yes
 		}
 		bypass = {
-			NOT = {
-				any_state = {
-					NOT = {
-						is_controlled_by = ROOT
+			custom_trigger_tooltip = {
+				tooltip = SOV_unite_slavic_nations_tt
+				NOT = {
+					any_state = {
+						NOT = {
+							is_controlled_by = ROOT
+						}
+						has_state_flag = slavic_states
 					}
-					has_state_flag = slavic_states
 				}
 			}
 		}
 		completion_reward = {
-
+			custom_effect_tooltip = SOV_unite_slavic_nations_tt2
+			every_other_country = {
+				limit = {
+					any_state = {
+						has_state_flag = slavic_states
+						is_controlled_by = PREV
+					}
+				}
+				country_event = { id = generics.15 days = 1 }
+			}
 		}
 	}
 
@@ -10249,7 +10264,7 @@ focus_tree = {
 		y = 23
 		prerequisite = { focus = SOV_announce_our_ambitions }
 		icon = GFX_goal_generic_alliance
-		cost = 10
+		cost = 8
 		ai_will_do = {
 			factor = 8
 		}
@@ -10291,6 +10306,15 @@ focus_tree = {
 					}
 				}
 				OR = {
+					72 = {
+						is_controlled_by = GER
+					}
+					any_country = {
+						is_subject_of = GER
+						controls_state = 72
+					}
+				}
+				OR = {
 					73 = {
 						is_controlled_by = GER
 					}
@@ -10316,7 +10340,7 @@ focus_tree = {
 		prerequisite = { focus = SOV_german_russian_pact }
 		mutually_exclusive = { focus = SOV_betray_germany }
 		icon = GFX_goal_generic_dangerous_deal
-		cost = 10
+		cost = 8
 		ai_will_do = {
 			factor = 8
 		}
@@ -10351,11 +10375,18 @@ focus_tree = {
 		prerequisite = { focus = SOV_german_russian_pact }
 		mutually_exclusive = { focus = SOV_alliance_with_germany_junta }
 		icon = GFX_focus_attack_germany
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			factor = 8
 		}
 		available = {
+			custom_trigger_tooltip = {
+				tooltip = SOV_betray_germany_tt
+				any_state = {
+					is_controlled_by = GER
+					has_state_flag = slavic_states
+				}
+			}
 			is_subject = no
 			has_government = neutrality
 			GER = {
@@ -10364,6 +10395,7 @@ focus_tree = {
 				}
 			}
 		}
+		will_lead_to_war_with = GER
 		completion_reward = {
 			GER = {
 				country_event = { id = germanys.9 days = 1 }
@@ -10378,7 +10410,7 @@ focus_tree = {
 		y = 23
 		prerequisite = { focus = SOV_announce_our_ambitions }
 		icon = GFX_focus_chi_reach_out_to_france
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			factor = 8
 		}
@@ -10592,7 +10624,7 @@ focus_tree = {
 				controls_state = 71
 				controls_state = 72
 				controls_state = 73
-				controls_state = 644
+				controls_state = 664
 			}
 			custom_trigger_tooltip = {
 				tooltip = SOV_slavic_empire_bul_states
@@ -10611,6 +10643,7 @@ focus_tree = {
 				controls_state = 104
 				controls_state = 103
 				controls_state = 105
+				controls_state = 102
 			}
 		}
 		completion_reward = {
@@ -10621,43 +10654,14 @@ focus_tree = {
 			set_global_flag = SOV_became_slavic_empire
 			custom_effect_tooltip = SOV_slavic_empire_tt
 			hidden_effect = {
-				add_state_core = 91
-				add_state_core = 93
-				add_state_core = 94
-				add_state_core = 95
-				add_state_core = 96
-				add_state_core = 784
-				add_state_core = 97
-				add_state_core = 92
-				add_state_core = 88
-				add_state_core = 90
-				add_state_core = 762
-				add_state_core = 10
-				add_state_core = 98
-				add_state_core = 87
-				add_state_core = 11
-				add_state_core = 189
-				add_state_core = 12
-				add_state_core = 190
-				add_state_core = 191
-				add_state_core = 13
-				add_state_core = 70
-				add_state_core = 71
-				add_state_core = 72
-				add_state_core = 73
-				add_state_core = 644
-				add_state_core = 211
-				add_state_core = 212
-				add_state_core = 48
-				add_state_core = 106
-				add_state_core = 107
-				add_state_core = 108
-				add_state_core = 764
-				add_state_core = 45
-				add_state_core = 109
-				add_state_core = 104
-				add_state_core = 103
-				add_state_core = 105
+				every_state = {
+					limit = {
+						has_state_flag = slavic_states
+					}
+					SOV = {
+						add_state_core = PREV
+					}
+				}
 			}
 		}
 	}
