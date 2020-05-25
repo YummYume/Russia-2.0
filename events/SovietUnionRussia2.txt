@@ -4703,6 +4703,23 @@ country_event = {
 						target = UKR
 						type = annex_everything
 					}
+					add_state_core = 201
+					add_state_core = 202
+					add_state_core = 193
+					add_state_core = 225
+					add_state_core = 259
+					add_state_core = 221
+					add_state_core = 228
+					add_state_core = 227
+					add_state_core = 200
+					add_state_core = 226
+					add_state_core = 196
+					add_state_core = 201
+					add_state_core = 197
+					add_state_core = 203
+					add_state_core = 192
+					add_state_core = 198
+					add_state_core = 199
 				}	
 			}
 			clr_country_flag = preparation_done
@@ -4984,11 +5001,18 @@ country_event = {
 	fire_only_once = yes
 
 	trigger = {
-		has_country_flag = buy_weapons_1
+		SOU = {
+			has_war_with = SOV
+			surrender_progress > 0.6
+		}
 	}
 
+	mean_time_to_happen = { days = 1 }
+
 	immediate = {
-		
+		SOU = {
+			set_country_flag = sou_near_capitulation
+		}
 	}
 }
 
@@ -5001,47 +5025,82 @@ country_event = {
 	fire_only_once = yes
 
 	trigger = {
-		has_country_flag = buy_weapons_1
+		SOV = {
+			has_war_with = SOU
+			surrender_progress > 0.6
+		}
 	}
 
+	mean_time_to_happen = { days = 1 }
+
 	immediate = {
-		
+		SOV = {
+			set_country_flag = sov_near_capitulation
+		}
 	}
 }
 
 #SOU Get Annexed if Puppet or Still Free After the Civil War
 country_event = {
 	id = soviets.139
-	title = soviets.139.t
-	desc = soviets.139.d
-	picture = GFX_
+
+	hidden = yes
 
 	fire_only_once = yes
 
 	trigger = {
-		has_country_flag = buy_weapons_1
+		TAG = SOV
+		SOU = {
+			OR = {
+				exists = yes
+				is_subject_of = SOV
+			}
+			has_war = no
+			has_country_flag = sou_near_capitulation
+		}
 	}
 
-	option = {
-		
+	mean_time_to_happen = { days = 1 }
+
+	immediate = {
+		SOV = {
+			annex_country = {
+				target = SOU
+				transfer_troops = no
+			}
+		}	
 	}
 }
 
 #RUS Get Annexed if Puppet or Still Free After the Civil War
 country_event = {
 	id = soviets.140
-	title = soviets.140.t
-	desc = soviets.140.d
-	picture = GFX_
+
+	hidden = yes
 
 	fire_only_once = yes
 
 	trigger = {
-		has_country_flag = buy_weapons_1
+		TAG = SOU
+		has_country_flag = sov_near_capitulation
+		SOV = {
+			OR = {
+				exists = yes
+				is_subject_of = SOU
+			}
+			has_war = no
+		}
 	}
 
-	option = {
-		
+	mean_time_to_happen = { days = 1 }
+
+	immediate = {
+		SOU = {
+			annex_country = {
+				target = SOV
+				transfer_troops = no
+			}
+		}
 	}
 }
 
@@ -6271,6 +6330,39 @@ country_event = {
 				}
 			}
 		}
+		else_if = {
+			limit = {
+				AND = {
+					SOV = {
+						NOT = {
+							has_country_flag = control_caucasus
+						}
+					}
+					OR = {
+						country_exists = GEO
+						country_exists = AZR
+						country_exists = ARM
+					}	
+				}
+			}
+			SOU = {
+				annex_country = {
+					target = ARM
+					transfer_troops = no
+				}
+				annex_country = {
+					target = GEO
+					transfer_troops = no
+				}
+				annex_country = {
+					target = AZR
+					transfer_troops = no
+				}
+				add_state_core = 231
+				add_state_core = 230
+				add_state_core = 229
+			}
+		}
 	}
 }
 
@@ -6467,6 +6559,61 @@ country_event = {
 				}
 			}				
 		}
+		else_if = {
+			limit = {
+				AND = {
+					SOV = {
+						NOT = {
+							has_country_flag = control_central_asia
+						}
+					}
+					OR = {
+						country_exists = KAZ
+						country_exists = TMS
+						country_exists = UZB
+						country_exists = TAJ
+						country_exists = KYR
+					}	
+				}
+			}
+			SOU = {
+				annex_country = {
+					target = KAZ
+					transfer_troops = no
+				}
+				annex_country = {
+					target = TMS
+					transfer_troops = no
+				}
+				annex_country = {
+					target = UZB
+					transfer_troops = no
+				}
+				annex_country = {
+					target = TAJ
+					transfer_troops = no
+				}
+				annex_country = {
+					target = KYR
+					transfer_troops = no
+				}
+				transfer_state = 407
+				transfer_state = 406
+				add_state_core = 407
+				add_state_core = 406
+				add_state_core = 402
+				add_state_core = 587
+				add_state_core = 583
+				add_state_core = 404
+				add_state_core = 590
+				add_state_core = 586
+				add_state_core = 732
+				add_state_core = 742
+				add_state_core = 405
+				add_state_core = 585
+				add_state_core = 584
+			}
+		}
 	}
 }
 
@@ -6605,6 +6752,29 @@ country_event = {
 					}
 				}
 			}
+		}
+		else_if = {
+			limit = {
+				AND = {
+					SOV = {
+						NOT = {
+							has_country_flag = control_belarus
+						}
+					}
+					country_exists = BLR
+				}
+			}
+			SOU = {
+				annex_country = {
+					target = BLR
+					transfer_troops = no
+				}
+				add_state_core = 207
+				add_state_core = 206
+				add_state_core = 241
+				add_state_core = 204
+				add_state_core = 194
+			}
 		}		
 	}
 }
@@ -6627,7 +6797,7 @@ country_event = {
 			SOV = {
 				division_template = {
 					name = "gvardeyskaya pekhotnaya diviziya"
-					priority = 2
+					priority = 1
 					regiments = {
 						infantry = { x = 0 y = 0 }
 						infantry = { x = 0 y = 1 }
@@ -6649,7 +6819,7 @@ country_event = {
 				}
 				division_template = {
 					name = "Gvardeyskaya kavaleriyskaya diviziya"
-					priority = 2
+					priority = 1
 					regiments = {
 						cavalry = { x = 0 y = 0 }
 						cavalry = { x = 0 y = 1 }
@@ -7362,6 +7532,120 @@ country_event = {
 					targeted_alliance = SOV 
 					enemy = SOU
 					hostility_reason = anti_soviet_alliance
+				}
+			}
+		}
+	}
+}
+
+#End of the Civil War - Aftermath
+country_event = {
+	id = soviets.190
+	title = soviets.190.t
+	desc = soviets.190.d
+	picture = GFX_
+
+	fire_only_once = yes
+
+	trigger = {
+		TAG = SOV
+		NOT = {
+			country_exists = SOU
+		}
+		has_war = no
+		has_country_flag = second_civil_war_in_progress
+	}
+
+	option = {
+		name = soviets.190.a
+		set_country_flag = second_civil_war_over
+		clr_country_flag = second_civil_war_in_progress
+		every_country = {
+			limit = {
+				is_subject_of = SOV
+			}
+			SOV = {
+				set_autonomy = {
+					target = PREV
+					autonomy_state = autonomy_free
+				}
+			}	
+		}
+		every_state = {
+			limit = {
+				is_core_of = SOU
+			}
+			remove_core_of = SOU
+		}
+		if = {
+			limit = {
+				has_country_flag = control_central_asia
+			}
+			KAZ = {
+				transfer_state = 406
+				transfer_state = 407
+				transfer_state = 589
+				transfer_state = 588
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = control_caucasus
+			}
+			delete_unit_template_and_units = {
+				division_template = "Kavkazskaya kazach'ya diviziya"
+			}
+		}
+		else_if = {
+			limit = {
+				has_country_flag = train_caucasian_soldiers_civil_war
+			}
+			delete_unit_template_and_units = {
+				division_template = "Opytnyy Kavkazskaya kazach'ya diviziya"
+			}
+			delete_unit_template_and_units = {
+				division_template = "Kavkazskaya kazach'ya diviziya"
+			}
+		}
+		add_threat = -10
+		remove_ideas = SOV_Supply_line
+		remove_ideas = SOV_Second_civil_war
+		dismantle_faction = yes
+	}
+}
+
+#SOU Annex SOV puppets if it's AI controlled and almost at 100% surrender
+country_event = {
+	id = soviets.191
+
+	hidden = yes
+
+	fire_only_once = yes
+
+	trigger = {
+		TAG = SOU
+		has_war = yes
+		SOV = {
+			AND = {
+				exists = yes
+				surrender_progress > 0.85
+			}
+			has_country_flag = sov_near_capitulation
+			is_ai = yes
+		}
+	}
+
+	mean_time_to_happen = { days = 1 }
+
+	immediate = {
+		every_country = {
+			limit = {
+				is_subject_of = SOV
+			}
+			SOU = {
+				annex_country = {
+					target = PREV
+					transfer_troops = no
 				}
 			}
 		}
