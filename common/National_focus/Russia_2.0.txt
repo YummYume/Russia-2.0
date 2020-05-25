@@ -10640,7 +10640,7 @@ focus_tree = {
 	#German-Russian Pact
 	focus = {
 		id = SOV_german_russian_pact
-		x = 48
+		x = 49
 		y = 23
 		prerequisite = { focus = SOV_announce_our_ambitions }
 		icon = GFX_goal_generic_alliance
@@ -10715,7 +10715,7 @@ focus_tree = {
 	#Alliance With Germany
 	focus = {
 		id = SOV_alliance_with_germany_junta
-		x = 49
+		x = 50
 		y = 24
 		prerequisite = { focus = SOV_german_russian_pact }
 		mutually_exclusive = { focus = SOV_betray_germany }
@@ -10750,7 +10750,7 @@ focus_tree = {
 	#Betray Germany
 	focus = {
 		id = SOV_betray_germany
-		x = 47
+		x = 48
 		y = 24
 		prerequisite = { focus = SOV_german_russian_pact }
 		mutually_exclusive = { focus = SOV_alliance_with_germany_junta }
@@ -10786,7 +10786,7 @@ focus_tree = {
 	#Agreement With France
 	focus = {
 		id = SOV_agreement_france
-		x = 50
+		x = 52
 		y = 23
 		prerequisite = { focus = SOV_announce_our_ambitions }
 		icon = GFX_focus_chi_reach_out_to_france
@@ -10822,7 +10822,7 @@ focus_tree = {
 	focus = {
 		id = SOV_slavic_empire
 		x = 46
-		y = 25
+		y = 24
 		prerequisite = { focus = SOV_unite_slavic_nations }
 		icon = GFX_goal_tfv_sever_ties_with_uk
 		cost = 10
@@ -11050,7 +11050,7 @@ focus_tree = {
 	focus = {
 		id = SOV_extend_influence
 		x = 45
-		y = 26
+		y = 25
 		prerequisite = { focus = SOV_slavic_empire }
 		mutually_exclusive = { focus = SOV_protect_influence }
 		icon = GFX_focus_generic_provoke_border_clashes
@@ -11066,22 +11066,22 @@ focus_tree = {
 		completion_reward = {
 			add_ideas = SOV_Extend_influence_idea
 			custom_effect_tooltip = SOV_extend_influence_tt
-			hidden_effect = {
-				every_country = {
-					limit = {
-						is_major = yes
-						NOT = {
-							is_in_faction_with = ROOT
-						}
-						capital_scope = {
-							OR = {
-								is_on_continent = europe
-								is_on_continent = asia
-								is_on_continent = middle_east
-								is_on_continent = africa
-							}
+			every_country = {
+				limit = {
+					is_major = yes
+					NOT = {
+						is_in_faction_with = ROOT
+					}
+					capital_scope = {
+						OR = {
+							is_on_continent = europe
+							is_on_continent = asia
+							is_on_continent = middle_east
+							is_on_continent = africa
 						}
 					}
+				}
+				hidden_effect = {
 					ROOT = {
 						create_wargoal = {
 							type = annex_everything
@@ -11097,7 +11097,7 @@ focus_tree = {
 	focus = {
 		id = SOV_protect_influence
 		x = 47
-		y = 26
+		y = 25
 		prerequisite = { focus = SOV_slavic_empire }
 		mutually_exclusive = { focus = SOV_extend_influence }
 		icon = GFX_goal_generic_fortify_city
@@ -11119,18 +11119,65 @@ focus_tree = {
 	focus = {
 		id = SOV_convince_italy
 		x = 44
-		y = 24
-		prerequisite = { focus = SOV_contact_german_exiles focus = SOV_unite_slavic_nations }
+		y = 23
+		prerequisite = { focus = SOV_fate_poland focus = SOV_announce_our_ambitions }
 		icon = GFX_focus_befriend_italy
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			factor = 8
 		}
 		available = {
-
+			is_subject = no
+			has_government = neutrality
+			if = {
+				limit = {
+					has_completed_focus = SOV_restoration_tsar
+				}
+				is_faction_leader = yes
+				ITA = {
+					NOT = {
+						has_government = communism
+						owns_state = 103
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					has_completed_focus = SOV_firm_hand
+				}
+				is_major = yes
+				any_state = {
+					has_state_flag = slavic_states
+					OR = {
+						is_claimed_by = ITA
+						is_controlled_by = ITA
+					}
+				}
+			}
+			ITA = {
+				is_subject = no
+			}
 		}
 		completion_reward = {
-
+			if = {
+				limit = {
+					has_completed_focus = SOV_restoration_tsar
+				}
+				ITA = {
+					country_event = { id = italys.1 days = 1 }
+				}
+			}
+			else_if = {
+				limit = {
+					has_completed_focus = SOV_firm_hand
+				}
+				ITA = {
+					country_event = { id = italys.6 days = 1 }
+				}
+			}
+			else = {
+				custom_effect_tooltip = SOV_convince_italy_tt
+			}
 		}
 	}
 
