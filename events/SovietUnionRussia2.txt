@@ -4668,56 +4668,12 @@ country_event = {
 		name = soviets.131.a
 		hidden_effect = {
 			SOU = {
+				load_focus_tree = soviet2_focus
+				unlock_national_focus = SOV_great_purge2
 				declare_war_on = {
 					target = SOV
 					type = annex_everything
 				}
-				declare_war_on = {
-					target = KAZ
-					type = annex_everything
-				}
-				declare_war_on = {
-					target = TMS
-					type = annex_everything
-				}
-				declare_war_on = {
-					target = AZR
-					type = annex_everything
-				}
-				declare_war_on = {
-					target = GEO
-					type = annex_everything
-				}
-				declare_war_on = {
-					target = ARM
-					type = annex_everything
-				}
-				declare_war_on = {
-					target = BLR
-					type = annex_everything
-				}
-				add_state_core = 207
-				add_state_core = 206
-				add_state_core = 241
-				add_state_core = 204
-				add_state_core = 194
-				add_state_core = 231
-				add_state_core = 229
-				add_state_core = 230
-				add_state_core = 407
-				add_state_core = 406
-				add_state_core = 402
-				add_state_core = 587
-				add_state_core = 583
-				add_state_core = 404
-				add_state_core = 590
-				add_state_core = 586
-				add_state_core = 206
-				add_state_core = 584
-				add_state_core = 585
-				add_state_core = 405
-				add_state_core = 742
-				add_state_core = 732
 			}
 			every_state = {
 				limit = {
@@ -4750,6 +4706,11 @@ country_event = {
 				}	
 			}
 			clr_country_flag = preparation_done
+			SOV = {
+				country_event = { id = soviets.187 }
+				country_event = { id = soviets.188 }
+				country_event = { id = soviets.189 }
+			}
 		}		
 	}
 }
@@ -4765,7 +4726,7 @@ country_event = {
 
 	trigger = {
 		has_country_flag = buy_weaps
-		has_country_flag = preparation_done2
+		has_country_flag = second_civil_war_in_progress
 		check_variable = {
 			var = buy_weapons_count
 			value = 0
@@ -4800,7 +4761,7 @@ country_event = {
 
 	trigger = {
 		has_country_flag = steal_weaps
-		has_country_flag = preparation_done2
+		has_country_flag = second_civil_war_in_progress
 		check_variable = {
 			var = steal_weapons_count
 			value = 0
@@ -4842,7 +4803,7 @@ country_event = {
 
 	trigger = {
 		has_country_flag = sabotage_mils
-		has_country_flag = preparation_done2
+		has_country_flag = second_civil_war_in_progress
 		is_in_array = {
 			array = sabotage_military_count
 			value = 1
@@ -4884,7 +4845,7 @@ country_event = {
 
 	trigger = {
 		has_country_flag = sabotage_civs
-		has_country_flag = preparation_done2
+		has_country_flag = second_civil_war_in_progress
 		is_in_array = {
 			array = sabotage_civilian_count
 			value = 1
@@ -5887,6 +5848,9 @@ country_event = {
 				release = GEO
 				release = AZR
 				release = ARM
+				add_state_core = 231
+				add_state_core = 230
+				add_state_core = 229
 			}
 			SOV = {
 				set_autonomy = {
@@ -6178,8 +6142,6 @@ country_event = {
 								infantry = { x = 0 y = 4 }
 								infantry = { x = 1 y = 0 }
 								infantry = { x = 1 y = 1 }
-								infantry = { x = 1 y = 2 }
-								infantry = { x = 1 y = 3 }
 							}
 							support = {
 								engineer = { x = 0 y = 0 }
@@ -6330,6 +6292,21 @@ country_event = {
 			SOU = {
 				release = KAZ
 				release = TMS
+				transfer_state = 407
+				transfer_state = 406
+				add_state_core = 407
+				add_state_core = 406
+				add_state_core = 402
+				add_state_core = 587
+				add_state_core = 583
+				add_state_core = 404
+				add_state_core = 590
+				add_state_core = 586
+				add_state_core = 732
+				add_state_core = 742
+				add_state_core = 405
+				add_state_core = 585
+				add_state_core = 584
 			}
 			SOV = {
 				set_autonomy = {
@@ -6510,6 +6487,11 @@ country_event = {
 			}
 			SOU = {
 				release = BLR
+				add_state_core = 207
+				add_state_core = 206
+				add_state_core = 241
+				add_state_core = 204
+				add_state_core = 194
 			}
 			SOV = {
 				set_autonomy = {
@@ -7230,5 +7212,158 @@ country_event = {
 
 	immediate = {
 		remove_from_tech_sharing_group = sov_slavic_research
+	}
+}
+
+#Opinion Factor for SOU - Civil War
+country_event = {
+	id = soviets.186
+	
+	hidden = yes
+
+	is_triggered_only = yes
+
+	immediate = {
+		SOU = {
+			add_opinion_modifier = {
+				target = EST
+				modifier = neutral_second_war
+			}
+			add_opinion_modifier = {
+				target = LAT
+				modifier = neutral_second_war
+			}
+			add_opinion_modifier = {
+				target = FIN
+				modifier = neutral_second_war
+			}
+			add_opinion_modifier = {
+				target = POL
+				modifier = neutral_second_war
+			}
+		}
+		EST = {
+			add_opinion_modifier = {
+				target = SOU
+				modifier = neutral_second_war
+			}
+		}
+		LAT = {
+			add_opinion_modifier = {
+				target = SOU
+				modifier = neutral_second_war
+			}
+		}
+		FIN = {
+			add_opinion_modifier = {
+				target = SOU
+				modifier = neutral_second_war
+			}
+		}
+		POL = {
+			add_opinion_modifier = {
+				target = SOU
+				modifier = neutral_second_war
+			}
+		}
+	}
+}
+
+#Event to Add Liberated Countries (Caucasus) Without Creating Too Much World Tension
+country_event = {
+	id = soviets.187
+	
+	hidden = yes
+
+	is_triggered_only = yes
+
+	immediate = {
+		if = {
+			limit = {
+				SOV = {
+					has_country_flag = control_caucasus
+				}
+			}
+			GEO = {
+				add_to_war = { 
+					targeted_alliance = SOV 
+					enemy = SOU
+					hostility_reason = anti_soviet_alliance
+				}
+			}
+			ARM = {
+				add_to_war = { 
+					targeted_alliance = SOV 
+					enemy = SOU
+					hostility_reason = anti_soviet_alliance
+				}
+			}
+			AZR = {
+				add_to_war = { 
+					targeted_alliance = SOV 
+					enemy = SOU
+					hostility_reason = anti_soviet_alliance
+				}
+			}
+		}
+	}
+}
+
+#Event to Add Liberated Countries (Central Asia) Without Creating Too Much World Tension
+country_event = {
+	id = soviets.188
+	
+	hidden = yes
+
+	is_triggered_only = yes
+
+	immediate = {
+		if = {
+			limit = {
+				SOV = {
+					has_country_flag = control_central_asia
+				}
+			}
+			KAZ = {
+				add_to_war = { 
+					targeted_alliance = SOV 
+					enemy = SOU
+					hostility_reason = anti_soviet_alliance
+				}
+			}
+			TMS = {
+				add_to_war = { 
+					targeted_alliance = SOV 
+					enemy = SOU
+					hostility_reason = anti_soviet_alliance
+				}
+			}
+		}
+	}
+}
+
+#Event to Add Liberated Countries (Belarus) Without Creating Too Much World Tension
+country_event = {
+	id = soviets.189
+	
+	hidden = yes
+
+	is_triggered_only = yes
+
+	immediate = {
+		if = {
+			limit = {
+				SOV = {
+					has_country_flag = control_belarus
+				}
+			}
+			BLR = {
+				add_to_war = { 
+					targeted_alliance = SOV 
+					enemy = SOU
+					hostility_reason = anti_soviet_alliance
+				}
+			}
+		}
 	}
 }
