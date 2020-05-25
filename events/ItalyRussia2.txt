@@ -1,0 +1,229 @@
+###########################
+# Italianr Events
+###########################
+
+add_namespace = italys
+
+# Invite Italy
+country_event = {
+	id = italys.1
+	title = italys.1.t
+	desc = italys.1.d
+	picture = GFX_report_event_stalin_meeting
+
+	is_triggered_only = yes
+
+	option = {
+		ai_chance = {
+			factor = 80
+			modifier = {
+				has_government = neutrality
+				factor = 100
+			}
+		}
+		name = italys.1.a
+		SOV = {
+			add_to_faction = ITA
+			country_event = { id = italys.2 days = 1 }
+		}
+		set_country_flag = accepted_russian_deal
+	}
+
+	option = {
+		ai_chance = {
+			factor = 20
+			modifier = {
+				has_government = neutrality
+				factor = 0
+			}
+		}
+		name = italys.1.b
+		SOV = {
+			country_event = { id = italys.3 days = 1 }
+		}
+	}
+}
+
+#Italy Accepts
+country_event = {
+	id = italys.2
+	title = italys.2.t
+	desc = italys.2.d
+	picture = GFX_report_event_degaulle_churchill
+
+	is_triggered_only = yes
+
+	option = {
+		ai_chance = {
+			factor = 100
+		}
+		name = italys.2.a
+	}
+}
+
+#Italy Refuses
+country_event = {
+	id = italys.3
+	title = italys.3.t
+	desc = italys.3.d
+	picture = GFX_report_event_degaulle_churchill
+
+	is_triggered_only = yes
+
+	option = {
+		ai_chance = {
+			factor = 100
+		}
+		name = italys.2.a
+	}
+}
+
+#Must Give 103 to Italy
+country_event = {
+	id = italys.4
+	title = italys.4.t
+	desc = italys.4.d
+	picture = GFX_report_event_degaulle_churchill
+
+	fire_only_once = yes
+
+	trigger = {
+		controls_state = 103
+		OR = {
+			is_in_faction_with = SOV
+			tag = SOV
+			is_subject_of = SOV
+		}
+		NOT = {
+			tag = ITA
+		}
+		ITA = {
+			is_in_faction_with = SOV
+			has_country_flag = accepted_russian_deal
+			NOT = {
+				owns_state = 103
+			}
+		}
+	}
+
+	option = {
+		ai_chance = {
+			factor = 100
+		}
+		name = italys.4.a
+		ITA = {
+			transfer_state = 103
+			country_event = { id = italys.5 days = 1 }
+		}
+	}
+}
+
+#103 Transfered!
+country_event = {
+	id = italys.5
+	title = italys.5.t
+	desc = italys.5.d
+	picture = GFX_report_event_degaulle_churchill
+
+	is_triggered_only = yes
+
+	option = {
+		ai_chance = {
+			factor = 100
+		}
+		name = italys.5.a
+	}
+}
+
+# Ask Italy to Back Off the Slavic States
+country_event = {
+	id = italys.6
+	title = italys.6.t
+	desc = italys.6.d
+	picture = GFX_report_event_stalin_meeting
+
+	is_triggered_only = yes
+
+	option = {
+		ai_chance = {
+			factor = 60
+			modifier = {
+				has_war = yes
+				factor = 90
+			}
+		}
+		name = italys.1.a
+		diplomatic_relation = {
+			country = SOV
+			relation = non_aggression_pact
+			active = yes
+		}
+		every_state = {
+			limit = {
+				has_state_flag = slavic_states
+				is_claimed_by = ITA
+			}
+			remove_claim_by = ITA
+		}
+		every_state = {
+			limit = {
+				has_state_flag = slavic_states
+				is_controlled_by = ITA
+			}
+			SOV = {
+				transfer_state = PREV
+			}
+		}
+		SOV = {
+			country_event = { id = italys.7 days = 1 }
+		}
+	}
+
+	option = {
+		ai_chance = {
+			factor = 40
+			modifier = {
+				has_war = yes
+				factor = 10
+			}
+		}
+		name = italys.1.b
+		SOV = {
+			country_event = { id = italys.8 days = 1 }
+		}
+	}
+}
+
+#Italy Accepts
+country_event = {
+	id = italys.7
+	title = italys.7.t
+	desc = italys.7.d
+	picture = GFX_report_event_degaulle_churchill
+
+	is_triggered_only = yes
+
+	option = {
+		ai_chance = {
+			factor = 100
+		}
+		name = italys.7.a
+	}
+}
+
+#Italy Refuses
+country_event = {
+	id = italys.8
+	title = italys.8.t
+	desc = italys.8.d
+	picture = GFX_report_event_degaulle_churchill
+
+	is_triggered_only = yes
+
+	option = {
+		ai_chance = {
+			factor = 100
+		}
+		name = italys.8.a
+	}
+}
