@@ -190,6 +190,7 @@ country_event = {
 			factor = 60
 		}
 		SOV = {
+			set_country_flag = german_alliance_incident
 			if = {
 				limit = {
 					OR = {
@@ -346,6 +347,73 @@ country_event = {
 		create_wargoal = {
 			type = annex_everything
 			target = GER
+		}
+	}
+}
+
+#Germany Slav Incident
+country_event = {
+	id = germanys.12
+	title = germanys.12.t
+	desc = germanys.12.d
+	picture = GFX_report_event_hungary_refused
+
+	trigger = {
+		tag = SOV
+		is_in_faction_with = GER
+		has_completed_focus = SOV_alliance_with_germany_junta
+		has_country_flag = {
+		    flag = german_alliance_incident
+		    days > 180
+		}
+	}
+
+	option = { #It's okay
+		name = germanys.12.a
+		ai_chance = {
+			factor = 0
+		}
+		add_stability = -0.2
+		clr_country_flag = german_alliance_incident
+		set_country_flag = german_alliance_incident
+	}
+
+	option = { #Leave GER
+		name = germanys.12.b
+		ai_chance = {
+			factor = 100
+		}
+		if = {
+			limit = {
+				is_faction_leader = yes
+			}
+			GER = {
+				leave_faction = yes
+			}
+		}
+		else = {
+			leave_faction = yes
+		}
+		clr_country_flag = german_alliance_incident
+		GER = {
+			country_event = { id = germanys.13 days = 1 }
+		}
+	}
+}
+
+#SOV Leaves Faction (or kicks us)
+country_event = {
+	id = germanys.13
+	title = germanys.13.t
+	desc = germanys.13.d
+	picture = GFX_report_event_hungary_refused
+
+	is_triggered_only = yes
+
+	option = { #Uh...
+		name = germanys.13.a
+		ai_chance = {
+			factor = 100
 		}
 	}
 }
