@@ -9584,7 +9584,7 @@ focus_tree = {
 						picture = "Portrait_Soviet_Alexander_Gorbatov.dds"
 					traits = { career_officer cavalry_officer }
 					skill = 3
-					
+
 					attack_skill = 2
 					defense_skill = 3
 					planning_skill = 2
@@ -9595,7 +9595,7 @@ focus_tree = {
 					picture = "Portrait_Soviet_Andrey_Vlasov.dds"
 					traits = { winter_specialist infantry_officer }
 					skill = 3
-					
+
 					attack_skill = 3
 					defense_skill = 3
 					planning_skill = 1
@@ -9606,7 +9606,7 @@ focus_tree = {
 					picture = "Portrait_Soviet_Konstantin_Rokossovsky.dds"
 					traits = {  armor_officer trait_cautious brilliant_strategist }
 					skill = 4
-					
+
 					attack_skill = 3
 					defense_skill = 4
 					planning_skill = 2
@@ -9756,7 +9756,7 @@ focus_tree = {
 						name = "Ivan Chernyakhovsky"
 						picture = "Portrait_Soviet_Ivan_Chernyakhovsky.dds"
 						traits = { armor_officer }
-						skill = 1 
+						skill = 1
 						attack_skill = 1
 						defense_skill = 1
 						planning_skill = 1
@@ -9786,7 +9786,7 @@ focus_tree = {
 						name = "Grigory Kulik"
 						picture = "Portrait_Soviet_Grigory_Kulik.dds"
 						traits = { old_guard career_officer politically_connected inflexible_strategist }
-						skill = 1	
+						skill = 1
 						attack_skill = 1
 						defense_skill = 1
 						planning_skill = 1
@@ -9816,7 +9816,7 @@ focus_tree = {
 						name = "Andrey Yeryomenko"
 						picture = "Portrait_Soviet_Andrey_Yeryomenko.dds"
 						traits = { cavalry_officer trait_reckless }
-						skill = 1 
+						skill = 1
 						attack_skill = 1
 						defense_skill = 1
 						planning_skill = 1
@@ -9826,7 +9826,7 @@ focus_tree = {
 						name = "Georgiy Zakharov"
 						picture = "Portrait_Soviet_Georgiy_Zakharov.dds"
 						traits = { career_officer }
-						skill = 1 
+						skill = 1
 						attack_skill = 1
 						defense_skill = 1
 						planning_skill = 1
@@ -9876,7 +9876,7 @@ focus_tree = {
 						name = "Ivan Fedyuninsky"
 						picture = "Portrait_Soviet_Ivan_Fedyuninsky.dds"
 						traits = { infantry_officer }
-						skill = 1 
+						skill = 1
 						attack_skill = 1
 						defense_skill = 1
 						planning_skill = 1
@@ -9896,7 +9896,7 @@ focus_tree = {
 						name = "Kuzma Galitsky"
 						picture = "Portrait_Soviet_Kuzma_Galitsky.dds"
 						traits = { infantry_officer }
-						skill = 1 
+						skill = 1
 						attack_skill = 1
 						defense_skill = 1
 						planning_skill = 1
@@ -9927,7 +9927,7 @@ focus_tree = {
 						picture = "Portrait_Soviet_Kirill_Moskalenko.dds"
 						traits = {  }
 						skill = 3
-						
+
 						attack_skill = 2
 						defense_skill = 2
 						planning_skill = 3
@@ -9937,7 +9937,7 @@ focus_tree = {
 						name = "Dmitry Lelyushenko"
 						picture = "Portrait_Soviet_Dmitri_Danilovich_Lelyushenko.dds"
 						traits = {armor_officer trait_reckless  }
-						skill = 1 
+						skill = 1
 						attack_skill = 1
 						defense_skill = 1
 						planning_skill = 1
@@ -9957,7 +9957,7 @@ focus_tree = {
 						name = "Rodion Malinovsky"
 						picture = "Portrait_Soviet_Rodion_Malinovsky.dds"
 						traits = { career_officer old_guard trait_cautious politically_connected }
-						skill = 1 
+						skill = 1
 						attack_skill = 1
 						defense_skill = 1
 						planning_skill = 1
@@ -10623,14 +10623,21 @@ focus_tree = {
 			is_major = yes
 		}
 		bypass = {
-			custom_trigger_tooltip = {
-				tooltip = SOV_unite_slavic_nations_tt
-				NOT = {
+			if = {
+				limit = {
 					any_state = {
-						NOT = {
-							is_controlled_by = ROOT
-						}
 						has_state_flag = slavic_states
+					}
+				}
+				custom_trigger_tooltip = {
+					tooltip = SOV_unite_slavic_nations_tt
+					NOT = {
+						any_state = {
+							NOT = {
+								is_controlled_by = ROOT
+							}
+							has_state_flag = slavic_states
+						}
 					}
 				}
 			}
@@ -11259,15 +11266,17 @@ focus_tree = {
 		y = 23
 		prerequisite = { focus = SOV_fate_poland }
 		icon = GFX_focus_rom_royal_dictatorship
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			factor = 8
 		}
 		available = {
-
+			is_subject = no
+			is_major = yes
+			has_government = neutrality
 		}
 		completion_reward = {
-
+			country_event = { id = soviets.192 days = 2 }
 		}
 	}
 
