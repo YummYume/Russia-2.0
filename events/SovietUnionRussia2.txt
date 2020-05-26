@@ -5346,6 +5346,13 @@ country_event = {
 			add_to_faction = ROOT
 			country_event = { id = soviets.155 days = 1 }
 		}
+		ROOT = {
+			add_ai_strategy = {
+				type = alliance
+				id = SOV
+				value = 200
+			}
+		}
 	}
 
 	option = {
@@ -7218,6 +7225,22 @@ country_event = {
 			add_to_faction = ROOT
 			country_event = { id = soviets.179 days = 1 }
 		}
+		add_opinion_modifier = {
+			target = FROM
+			modifier = russian_diplomats
+		}
+		ROOT = {
+			add_ai_strategy = {
+				type = alliance
+				id = SOV
+				value = 200
+			}
+			add_ai_strategy = {
+				type = befriend
+				id = SOV
+				value = 200
+			}
+		}
 	}
 
 	option = { #Refuse
@@ -7238,7 +7261,7 @@ country_event = {
 	}
 }
 
-#FROM Changes Government
+#FROM Accepts
 country_event = {
 	id = soviets.179
 	title = soviets.179.t
@@ -7292,6 +7315,22 @@ country_event = {
 		SOV = {
 			add_to_faction = ROOT
 			country_event = { id = soviets.182 days = 1 }
+		}
+		add_opinion_modifier = {
+			target = FROM
+			modifier = russian_diplomats
+		}
+		ROOT = {
+			add_ai_strategy = {
+				type = alliance
+				id = SOV
+				value = 200
+			}
+			add_ai_strategy = {
+				type = befriend
+				id = SOV
+				value = 200
+			}
 		}
 	}
 
@@ -7571,46 +7610,49 @@ country_event = {
 				}
 			}
 		}
-		every_state = {
-			limit = {
-				is_core_of = SOU
+		hidden_effect = {
+			every_state = {
+				limit = {
+					is_core_of = SOU
+				}
+				remove_core_of = SOU
 			}
-			remove_core_of = SOU
-		}
-		if = {
-			limit = {
-				has_country_flag = control_central_asia
+			if = {
+				limit = {
+					has_country_flag = control_central_asia
+				}
+				KAZ = {
+					transfer_state = 406
+					transfer_state = 407
+					transfer_state = 589
+					transfer_state = 588
+				}
 			}
-			KAZ = {
-				transfer_state = 406
-				transfer_state = 407
-				transfer_state = 589
-				transfer_state = 588
+			if = {
+				limit = {
+					has_country_flag = control_caucasus
+				}
+				delete_unit_template_and_units = {
+					division_template = "Kavkazskaya kazach'ya diviziya"
+				}
 			}
-		}
-		if = {
-			limit = {
-				has_country_flag = control_caucasus
+			else_if = {
+				limit = {
+					has_country_flag = train_caucasian_soldiers_civil_war
+				}
+				delete_unit_template_and_units = {
+					division_template = "Opytnyy Kavkazskaya kazach'ya diviziya"
+				}
+				delete_unit_template_and_units = {
+					division_template = "Kavkazskaya kazach'ya diviziya"
+				}
 			}
-			delete_unit_template_and_units = {
-				division_template = "Kavkazskaya kazach'ya diviziya"
-			}
-		}
-		else_if = {
-			limit = {
-				has_country_flag = train_caucasian_soldiers_civil_war
-			}
-			delete_unit_template_and_units = {
-				division_template = "Opytnyy Kavkazskaya kazach'ya diviziya"
-			}
-			delete_unit_template_and_units = {
-				division_template = "Kavkazskaya kazach'ya diviziya"
-			}
-		}
+		}	
 		add_threat = -10
 		remove_ideas = SOV_Supply_line
 		remove_ideas = SOV_Second_civil_war
 		dismantle_faction = yes
+		add_ideas = low_economic_mobilisation  
 	}
 }
 
