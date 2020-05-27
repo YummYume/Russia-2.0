@@ -11438,10 +11438,84 @@ focus_tree = {
 			factor = 8
 		}
 		available = {
-
+			is_subject = no
+			has_government = neutrality
 		}
 		completion_reward = {
+			# 1 = opposed ; 2 = neutral ; 3 = support
 
+			add_to_array = { monarchy_houses_russia = 1 }
+			add_to_array = { monarchy_houses_russia = 2 }
+			add_to_array = { monarchy_houses_russia = 3 }
+			add_to_array = { monarchy_houses_russia = 4 }
+			add_to_array = { monarchy_houses_russia = 5 }
+			add_to_array = { monarchy_houses_russia = 6 }
+			add_to_array = { monarchy_houses_russia = 7 }
+			add_to_array = { monarchy_houses_russia = 8 }
+			add_to_array = { monarchy_houses_russia = 9 }
+			add_to_array = { monarchy_houses_russia = 10 }
+
+			set_variable = { houses_russia_half_index = 0 }
+			for_each_loop = {
+			    array = monarchy_houses_russia
+
+			    add_to_variable = { houses_russia_half_index = 1 }
+			}
+			divide_variable = {
+			    var = houses_russia_half_index
+			    value = 2
+			}
+
+			# set_variable = { debug_house_count = 0 }
+			for_each_loop = {
+			    array = monarchy_houses_russia
+			    value = current
+			    index = i
+
+				set_temp_variable = { current_value = current }
+				set_temp_variable = { current_index = i }
+				set_variable = { house_russia@var:current_value = 1 }
+				if = {
+					limit = {
+						check_variable = {
+						    var = current_index
+						    value = houses_russia_half_index
+						    compare = less_than
+						}
+					}
+					randomize_variable = {
+						var = house_russia@var:current_value
+						distribution = uniform
+						min = 1
+						max = 2
+					}
+				}
+				else = {
+					randomize_variable = {
+						var = house_russia@var:current_value
+						distribution = uniform
+						min = 2
+						max = 3
+					}
+				}
+				round_variable = house_russia@var:current_value
+			    # add_to_variable = { debug_house_count = house_russia@var:current_value }
+			}
+
+			for_each_loop = {
+			    array = monarchy_houses_russia
+				value = current
+			    index = i
+
+				set_temp_variable = { current_value = current }
+				set_temp_variable = { current_index = i }
+
+				add_to_array = {
+					array = monarchy_houses_russia
+					value = house_russia@var:current_value
+					index = current_index
+				}
+			}
 		}
 	}
 
