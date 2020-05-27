@@ -253,3 +253,86 @@ country_event = {
 		ai_chance = { factor = 100 }
 	}
 }
+
+#Ukraine Gets Event to Intervene in the Second Civil War
+country_event = {
+	id = ukrains.10
+	title = ukrains.10.t
+	desc = ukrains.10.d
+	picture = GFX_
+
+	fire_only_once = yes
+
+	trigger = {
+		TAG = UKR
+		UKR = {
+			has_country_flag = refused_neutrality
+		}
+		SOU = {
+			has_war_with = SOV
+			surrender_progress > 0.7
+		}
+	}
+
+	mean_time_to_happen = { days = 1 }
+
+	option = { #Help SOU
+		name = ukrains.10.a
+		ai_chance = { factor = 25 }
+		SOU = {
+			add_to_faction = UKR
+		}
+		UKR = {
+			add_to_war = {
+				targeted_alliance = SOU
+				enemy = SOV
+				hostility_reason = help_soviet_union
+			}
+		}
+	}
+
+	option = { #Help SOV
+		name = ukrains.10.b
+		ai_chance = { factor = 35 }
+		SOV = {
+			country_event = { id = ukrains.11 hours = 1 }
+		}
+	}
+
+	option = { #Join Nobody
+		name = ukrains.10.c
+		ai_chance = { factor = 40 }
+	}
+}
+
+#SOV Gets Event for Ukrainian Help
+country_event = {
+	id = ukrains.11
+	title = ukrains.11.t
+	desc = ukrains.11.d
+	picture = GFX_
+
+	is_triggered_only = yes
+
+	option = { #Accept
+		name = ukrains.11.a
+		ai_chance = { factor = 50 }
+		SOV = {
+			add_to_faction = UKR
+			set_country_flag = sympathize_with_ukraine
+		}
+		UKR = {
+			add_to_war = {
+				targeted_alliance = SOV
+				enemy = SOU
+				hostility_reason = anti_soviet_alliance
+			}
+		}
+		custom_effect_tooltip = accept_help_ukraine
+	}
+
+	option = { #Refuse
+		name = ukrains.11.b
+		ai_chance = { factor = 50 }
+	}	 
+}
