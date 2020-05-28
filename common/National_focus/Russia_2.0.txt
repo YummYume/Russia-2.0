@@ -11504,6 +11504,7 @@ focus_tree = {
 				}
 				round_variable = house_russia@var:current_value
 			    # add_to_variable = { debug_house_count = house_russia@var:current_value }
+				add_political_power = 10
 			}
 
 			for_each_loop = {
@@ -11540,13 +11541,15 @@ focus_tree = {
 			is_neighbor_of = POL
 		}
 		bypass = {
-			OR = {
-				POL = {
+			POL = {
+				OR = {
 					is_subject_of = SOV
 					exists = no
+					has_war_with = SOV
 				}
 			}
 		}
+		will_lead_to_war_with = POL
 		completion_reward = {
 			country_event = { id = polands.4 days = 1 }
 		}
@@ -11570,10 +11573,14 @@ focus_tree = {
 			FIN = {
 				exists = yes
 				is_subject = no
+				NOT = {
+					has_war_with = SOV
+				}
 			}
 		}
+		will_lead_to_war_with = FIN
 		completion_reward = {
-
+			country_event = { id = finlands.9 days = 1 }
 		}
 	}
 

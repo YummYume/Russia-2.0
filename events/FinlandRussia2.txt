@@ -10,9 +10,9 @@ country_event = {
 	title = finlands.1.t
 	desc = finlands.1.d
 	picture = GFX_report_event_soviet_tanks_snow
-	
+
 	is_triggered_only = yes
-	
+
 	option = { # Accept demands
 		name = finlands.1.a
 		ai_chance = {
@@ -105,7 +105,7 @@ country_event = {
 	title = finlands.2.t
 	desc = finlands.2.d
 	picture = GFX_report_event_finnish_soldiers_snow
-	
+
 	is_triggered_only = yes
 
 	option = {
@@ -113,13 +113,13 @@ country_event = {
 	}
 }
 
-#Finland proposes its own annexiation 
+#Finland proposes its own annexiation
 country_event = {
 	id = finlands.3
 	title = finlands.3.t
 	desc = finlands.3.d
 	picture = GFX_report_event_communist_leader
-	
+
 	trigger = {
 		SOV = { has_government = communism }
 		TAG = FIN
@@ -127,10 +127,10 @@ country_event = {
 			AND = {
 				has_government = communism
 				is_subject_of = SOV
-			}	
+			}
 		}
 	}
-	
+
 	mean_time_to_happen = {
 		days = 650
 	}
@@ -138,7 +138,7 @@ country_event = {
 	option = { #let's become one with the union
 		name = finlands.3.a
 		ai_chance = { factor = 90 }
-		SOV = { 
+		SOV = {
 			country_event = { days = 2 id = soviets.12 }
 		}
 	}
@@ -155,12 +155,12 @@ country_event = {
 	title = finlands.4.t
 	desc = finlands.4.d
 	picture = GFX_report_event_soviet_finnish_pact
-	
+
 	is_triggered_only = yes
-	
+
 	option = {
 		name = finlands.4.a
-		SOV = { 
+		SOV = {
 			transfer_state = 146
 			transfer_state = 147
 			transfer_state = 722
@@ -177,9 +177,9 @@ country_event = {
 	title = finlands.5.t
 	desc = finlands.5.d
 	picture = GFX_report_event_soviet_tanks_snow
-	
+
 	is_triggered_only = yes
-	
+
 	option = {
 		name = finlands.5.a
 		create_wargoal = {
@@ -188,7 +188,7 @@ country_event = {
 			generator = { 146 147 722 }
 		}
 		hidden_effect = {
-			news_event = { days = 1 id = newsrussia2.2 }				
+			news_event = { days = 1 id = newsrussia2.2 }
 		}
 	}
 }
@@ -274,5 +274,186 @@ country_event = {
 	option = { # Damn You...
 		name = finlands.8.a
 		ai_chance = { factor = 100 }
+	}
+}
+
+# Fate of Finland
+country_event = {
+	id = finlands.9
+	title = finlands.9.t
+	desc = finlands.9.d
+	picture = GFX_report_event_finnish_tanks_01
+
+	is_triggered_only = yes
+
+	option = { #Ask for a puppet
+		trigger = {
+			FIN = {
+				is_subject = no
+			}
+		}
+		name = finlands.9.a
+		FIN = {
+			country_event = { id = finlands.10 days = 1 }
+		}
+	}
+
+	option = { #Ask for Alliance
+		name = finlands.9.b
+		FIN = {
+			country_event = { id = finlands.13 days = 1 }
+		}
+	}
+
+	option = { #Just attack them
+		name = finlands.9.c
+		create_wargoal = {
+			type = puppet_wargoal_focus
+			target = FIN
+		}
+	}
+}
+
+# Ask Finland to be puppet
+country_event = {
+	id = finlands.10
+	title = finlands.10.t
+	desc = finlands.10.d
+	picture = GFX_report_event_finnish_tanks_01
+
+	is_triggered_only = yes
+
+	option = { #Okay...
+		name = finlands.10.a
+		SOV = {
+			puppet = FIN
+			hidden_effect = {
+				set_autonomy = {
+				    target = FIN
+				    autonomy_state = autonomy_dominion
+				}
+			}
+			country_event = { id = finlands.11 days = 1 }
+		}
+	}
+
+	option = { #No
+		name = finlands.10.b
+		SOV = {
+			country_event = { id = finlands.12 days = 1 }
+		}
+	}
+}
+
+# Finland Accepts Puppet
+country_event = {
+	id = finlands.11
+	title = finlands.11.t
+	desc = finlands.11.d
+	picture = GFX_report_event_finnish_tanks_01
+
+	is_triggered_only = yes
+
+	option = {
+		name = finlands.11.a
+	}
+}
+
+# Finland Refuses Puppet
+country_event = {
+	id = finlands.12
+	title = finlands.12.t
+	desc = finlands.12.d
+	picture = GFX_report_event_finnish_tanks_01
+
+	is_triggered_only = yes
+
+	option = {
+		name = finlands.12.a
+		create_wargoal = {
+			type = puppet_wargoal_focus
+			target = FIN
+		}
+	}
+}
+
+#Demand Finnish Alliance
+country_event = {
+	id = finlands.13
+	title = finlands.13.t
+	desc = finlands.13.d
+	picture = GFX_report_event_finnish_tanks_01
+
+	is_triggered_only = yes
+
+	option = { #Accept
+		name = finlands.13.a
+		ai_chance = {
+			factor = 80
+		}
+		SOV = {
+			if = {
+				limit = {
+					is_faction_leader = yes
+					FIN = {
+						NOT = {
+							OR = {
+								is_faction_leader = yes
+								is_subject = yes
+							}
+						}
+					}
+				}
+				add_to_faction = FIN
+			}
+			else = {
+				diplomatic_relation = {
+				    country = FIN
+				    relation = non_aggression_pact
+				    active = yes
+				}
+			}
+			give_guarantee = FIN
+			ROOT = {
+				give_guarantee = SOV
+			}
+			country_event = { id = finlands.14 days = 1 }
+		}
+	}
+
+	option = {
+		name = finlands.13.b
+		ai_chance = { factor = 20 }
+		SOV = {
+			country_event = { id = finlands.15 days = 1 }
+		}
+	}
+}
+
+# Finland Accepts Alliance
+country_event = {
+	id = finlands.14
+	title = finlands.14.t
+	desc = finlands.14.d
+	picture = GFX_report_event_finnish_tanks_01
+
+	is_triggered_only = yes
+
+	option = {
+		name = finlands.14.a
+	}
+}
+
+# Finland Refuses Alliance
+country_event = {
+	id = finlands.15
+	title = finlands.15.t
+	desc = finlands.15.d
+	picture = GFX_report_event_finnish_tanks_01
+
+	is_triggered_only = yes
+
+	option = {
+		name = finlands.15.a
 	}
 }
