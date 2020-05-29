@@ -4706,7 +4706,7 @@ SOV_destroy_communist_resistance = {
 					clr_country_flag = central_russia_raids
 					set_country_flag = central_russia_done
 				}
-			}	
+			}
 		}
 
 		complete_effect = {
@@ -4723,7 +4723,7 @@ SOV_destroy_communist_resistance = {
 						type = infantry_equipment
 						amount = -5000
 					}
-				}	
+				}
 			}
 		}
 	}
@@ -4841,7 +4841,7 @@ SOV_destroy_communist_resistance = {
 					clr_country_flag = kuban_region_raids
 					set_country_flag = kuban_region_done
 				}
-			}	
+			}
 		}
 
 		complete_effect = {
@@ -4858,7 +4858,7 @@ SOV_destroy_communist_resistance = {
 						type = infantry_equipment
 						amount = -2500
 					}
-				}	
+				}
 			}
 		}
 	}
@@ -4976,7 +4976,7 @@ SOV_destroy_communist_resistance = {
 					clr_country_flag = transvolga_region_raids
 					set_country_flag = transvolga_region_done
 				}
-			}	
+			}
 		}
 
 		complete_effect = {
@@ -4993,7 +4993,7 @@ SOV_destroy_communist_resistance = {
 						type = infantry_equipment
 						amount = -2500
 					}
-				}	
+				}
 			}
 		}
 	}
@@ -5107,7 +5107,7 @@ SOV_destroy_communist_resistance = {
 					clr_country_flag = urals_region_raids
 					set_country_flag = urals_region_done
 				}
-			}	
+			}
 		}
 
 		complete_effect = {
@@ -5124,7 +5124,7 @@ SOV_destroy_communist_resistance = {
 						type = infantry_equipment
 						amount = -1000
 					}
-				}	
+				}
 			}
 		}
 	}
@@ -5241,7 +5241,7 @@ SOV_destroy_communist_resistance = {
 					clr_country_flag = artic_region_raids
 					set_country_flag = artic_region_done
 				}
-			}	
+			}
 		}
 
 		complete_effect = {
@@ -5258,7 +5258,7 @@ SOV_destroy_communist_resistance = {
 						type = infantry_equipment
 						amount = -1500
 					}
-				}	
+				}
 			}
 		}
 	}
@@ -5374,7 +5374,7 @@ SOV_destroy_communist_resistance = {
 					clr_country_flag = siberia_region_raids
 					set_country_flag = siberia_region_done
 				}
-			}	
+			}
 		}
 
 		complete_effect = {
@@ -5391,7 +5391,7 @@ SOV_destroy_communist_resistance = {
 						type = infantry_equipment
 						amount = -1500
 					}
-				}	
+				}
 			}
 		}
 	}
@@ -5511,7 +5511,7 @@ SOV_destroy_communist_resistance = {
 					clr_country_flag = novgorod_region_raids
 					set_country_flag = novgorod_region_done
 				}
-			}	
+			}
 		}
 
 		complete_effect = {
@@ -5528,7 +5528,7 @@ SOV_destroy_communist_resistance = {
 						type = infantry_equipment
 						amount = -2500
 					}
-				}	
+				}
 			}
 		}
 	}
@@ -5574,7 +5574,7 @@ SOV_destroy_communist_resistance = {
 	}
 
 	SOV_partisan_attack = {
-		
+
 		icon = GFX_decision_generic_scorched_earth
 
 		allowed = {
@@ -5660,7 +5660,7 @@ SOV_buy_guns_foreign_country = {
 				NOT = {
 					has_idea = SOV_Communist_resistance3
 				}
-			}	
+			}
 		}
 
 		visible = {
@@ -5686,7 +5686,7 @@ SOV_buy_guns_foreign_country = {
 				value = 1
 			}
 			set_country_flag = shipment_in_progress
-		}		
+		}
 
 		remove_effect = {
 			SOV = {
@@ -5697,7 +5697,7 @@ SOV_buy_guns_foreign_country = {
 			}
 			clr_country_flag = shipment_in_progress
 		}
-	}	
+	}
 
 	SOV_medium_shipment = {
 
@@ -5721,7 +5721,7 @@ SOV_buy_guns_foreign_country = {
 				NOT = {
 					has_idea = SOV_Communist_resistance3
 				}
-			}	
+			}
 		}
 
 		visible = {
@@ -5782,7 +5782,7 @@ SOV_buy_guns_foreign_country = {
 				NOT = {
 					has_idea = SOV_Communist_resistance3
 				}
-			}	
+			}
 		}
 
 		visible = {
@@ -5825,4 +5825,226 @@ SOV_buy_guns_foreign_country = {
 SOV_appease_communist = {
 
 
+}
+
+SOV_monarchy_congress = {
+
+	#Have to do each house one by one because Paradox doesn't allow the use of a foreach here
+	SOV_monarchy_support_house_1 = {
+		icon = GFX_decision_generic_prepare_civil_war
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = less_than_3
+				check_variable = {
+					var = house_russia@1
+					value = 3
+					compare = less_than
+				}
+			}
+			NOT = {
+				has_country_flag = is_supporting_house
+			}
+		}
+
+		cost = house_russia_pp_cost@1
+
+		days_remove = house_russia_pp_cost@1
+
+		complete_effect = {
+			set_country_flag = is_supporting_house
+
+			add_to_variable = {
+				var = house_russia@1
+				value = 1
+			}
+
+			remove_from_array = {
+				array = monarchy_houses_russia
+				index = 1
+			}
+
+			add_to_array = {
+				array = monarchy_houses_russia
+				value = house_russia@1
+				index = 1
+			}
+
+			clear_variable = house_russia_opposed
+			clear_variable = house_russia_neutral
+			clear_variable = house_russia_support
+			set_variable = { house_russia_opposed = 0 }
+			set_variable = { house_russia_neutral = 0 }
+			set_variable = { house_russia_support = 0 }
+
+			for_each_loop = {
+			    array = monarchy_houses_russia
+				value = current
+			    index = i
+
+				set_temp_variable = { current_value = current }
+				set_temp_variable = { current_index = i }
+
+				if = {
+					limit = {
+						check_variable = {
+							var = house_russia@var:current_value
+							value = 1
+							compare = equals
+						}
+					}
+					set_variable = { house_russia_pp_cost@var:current_value = 30 }
+					add_to_variable = {
+						var = house_russia_opposed
+						value = 1
+					}
+				}
+				else_if = {
+					limit = {
+						check_variable = {
+							var = house_russia@var:current_value
+							value = 2
+							compare = equals
+						}
+					}
+					set_variable = { house_russia_pp_cost@var:current_value = 20 }
+					add_to_variable = {
+						var = house_russia_neutral
+						value = 1
+					}
+				}
+				else_if = {
+					limit = {
+						check_variable = {
+							var = house_russia@var:current_value
+							value = 3
+							compare = equals
+						}
+					}
+					set_variable = { house_russia_pp_cost@var:current_value = 10 }
+					add_to_variable = {
+						var = house_russia_support
+						value = 1
+					}
+				}
+			}
+		}
+
+		remove_effect = {
+			clr_country_flag = is_supporting_house
+		}
+	}
+
+	SOV_monarchy_support_house_2 = {
+		icon = GFX_decision_generic_prepare_civil_war
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = less_than_3
+				check_variable = {
+					var = house_russia@2
+					value = 3
+					compare = less_than
+				}
+			}
+			NOT = {
+				has_country_flag = is_supporting_house
+			}
+		}
+
+		cost = house_russia_pp_cost@2
+
+		days_remove = house_russia_pp_cost@2
+
+		complete_effect = {
+			set_country_flag = is_supporting_house
+
+			add_to_variable = {
+				var = house_russia@2
+				value = 1
+			}
+
+			remove_from_array = {
+				array = monarchy_houses_russia
+				index = 2
+			}
+
+			add_to_array = {
+				array = monarchy_houses_russia
+				value = house_russia@2
+				index = 2
+			}
+
+			clear_variable = house_russia_opposed
+			clear_variable = house_russia_neutral
+			clear_variable = house_russia_support
+			set_variable = { house_russia_opposed = 0 }
+			set_variable = { house_russia_neutral = 0 }
+			set_variable = { house_russia_support = 0 }
+
+			for_each_loop = {
+			    array = monarchy_houses_russia
+				value = current
+			    index = i
+
+				set_temp_variable = { current_value = current }
+				set_temp_variable = { current_index = i }
+
+				if = {
+					limit = {
+						check_variable = {
+							var = house_russia@var:current_value
+							value = 1
+							compare = equals
+						}
+					}
+					set_variable = { house_russia_pp_cost@var:current_value = 30 }
+					add_to_variable = {
+						var = house_russia_opposed
+						value = 1
+					}
+				}
+				else_if = {
+					limit = {
+						check_variable = {
+							var = house_russia@var:current_value
+							value = 2
+							compare = equals
+						}
+					}
+					set_variable = { house_russia_pp_cost@var:current_value = 20 }
+					add_to_variable = {
+						var = house_russia_neutral
+						value = 1
+					}
+				}
+				else_if = {
+					limit = {
+						check_variable = {
+							var = house_russia@var:current_value
+							value = 3
+							compare = equals
+						}
+					}
+					set_variable = { house_russia_pp_cost@var:current_value = 10 }
+					add_to_variable = {
+						var = house_russia_support
+						value = 1
+					}
+				}
+			}
+		}
+
+		remove_effect = {
+			clr_country_flag = is_supporting_house
+		}
+	}
 }
