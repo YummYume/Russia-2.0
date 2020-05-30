@@ -4706,7 +4706,7 @@ SOV_destroy_communist_resistance = {
 					clr_country_flag = central_russia_raids
 					set_country_flag = central_russia_done
 				}
-			}	
+			}
 		}
 
 		complete_effect = {
@@ -4723,7 +4723,7 @@ SOV_destroy_communist_resistance = {
 						type = infantry_equipment
 						amount = -5000
 					}
-				}	
+				}
 			}
 		}
 	}
@@ -4841,7 +4841,7 @@ SOV_destroy_communist_resistance = {
 					clr_country_flag = kuban_region_raids
 					set_country_flag = kuban_region_done
 				}
-			}	
+			}
 		}
 
 		complete_effect = {
@@ -4858,7 +4858,7 @@ SOV_destroy_communist_resistance = {
 						type = infantry_equipment
 						amount = -2500
 					}
-				}	
+				}
 			}
 		}
 	}
@@ -4976,7 +4976,7 @@ SOV_destroy_communist_resistance = {
 					clr_country_flag = transvolga_region_raids
 					set_country_flag = transvolga_region_done
 				}
-			}	
+			}
 		}
 
 		complete_effect = {
@@ -4993,7 +4993,7 @@ SOV_destroy_communist_resistance = {
 						type = infantry_equipment
 						amount = -2500
 					}
-				}	
+				}
 			}
 		}
 	}
@@ -5107,7 +5107,7 @@ SOV_destroy_communist_resistance = {
 					clr_country_flag = urals_region_raids
 					set_country_flag = urals_region_done
 				}
-			}	
+			}
 		}
 
 		complete_effect = {
@@ -5124,7 +5124,7 @@ SOV_destroy_communist_resistance = {
 						type = infantry_equipment
 						amount = -1000
 					}
-				}	
+				}
 			}
 		}
 	}
@@ -5241,7 +5241,7 @@ SOV_destroy_communist_resistance = {
 					clr_country_flag = artic_region_raids
 					set_country_flag = artic_region_done
 				}
-			}	
+			}
 		}
 
 		complete_effect = {
@@ -5258,7 +5258,7 @@ SOV_destroy_communist_resistance = {
 						type = infantry_equipment
 						amount = -1500
 					}
-				}	
+				}
 			}
 		}
 	}
@@ -5374,7 +5374,7 @@ SOV_destroy_communist_resistance = {
 					clr_country_flag = siberia_region_raids
 					set_country_flag = siberia_region_done
 				}
-			}	
+			}
 		}
 
 		complete_effect = {
@@ -5391,7 +5391,7 @@ SOV_destroy_communist_resistance = {
 						type = infantry_equipment
 						amount = -1500
 					}
-				}	
+				}
 			}
 		}
 	}
@@ -5511,7 +5511,7 @@ SOV_destroy_communist_resistance = {
 					clr_country_flag = novgorod_region_raids
 					set_country_flag = novgorod_region_done
 				}
-			}	
+			}
 		}
 
 		complete_effect = {
@@ -5528,7 +5528,7 @@ SOV_destroy_communist_resistance = {
 						type = infantry_equipment
 						amount = -2500
 					}
-				}	
+				}
 			}
 		}
 	}
@@ -5578,7 +5578,7 @@ SOV_destroy_communist_resistance = {
 	}
 
 	SOV_partisan_attack = {
-		
+
 		icon = GFX_decision_generic_scorched_earth
 
 		allowed = {
@@ -5664,7 +5664,7 @@ SOV_buy_guns_foreign_country = {
 				NOT = {
 					has_idea = SOV_Communist_resistance3
 				}
-			}	
+			}
 		}
 
 		visible = {
@@ -5694,7 +5694,7 @@ SOV_buy_guns_foreign_country = {
 				value = 1
 			}
 			set_country_flag = shipment_in_progress
-		}		
+		}
 
 		remove_effect = {
 			SOV = {
@@ -5705,7 +5705,7 @@ SOV_buy_guns_foreign_country = {
 			}
 			clr_country_flag = shipment_in_progress
 		}
-	}	
+	}
 
 	SOV_medium_shipment = {
 
@@ -5729,7 +5729,7 @@ SOV_buy_guns_foreign_country = {
 				NOT = {
 					has_idea = SOV_Communist_resistance3
 				}
-			}	
+			}
 		}
 
 		visible = {
@@ -5794,7 +5794,7 @@ SOV_buy_guns_foreign_country = {
 				NOT = {
 					has_idea = SOV_Communist_resistance3
 				}
-			}	
+			}
 		}
 
 		visible = {
@@ -5836,6 +5836,284 @@ SOV_buy_guns_foreign_country = {
 			clr_country_flag = shipment_in_progress
 		}
 	}
+}
+
+SOV_appease_communist = {
+
+	SOV_return_the_lands = {
+
+		icon = GFX_decision_generic_decision
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+
+		}
+
+		visible = {
+			has_completed_focus = SOV_appease_communist
+		}
+
+		fire_only_once = yes
+
+		cost = 50
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		modifier = {
+			civilian_factory_use = 15
+		}
+
+		days_remove = 70
+
+		complete_effect = {
+			
+		}
+
+		remove_effect = {
+			swap_ideas = {
+				remove_idea = SOV_Communist_resistance2
+				add_idea = SOV_Communist_resistance4
+			}
+			set_country_flag = returned_lands
+		}
+	}
+
+	SOV_concession_workers = {
+
+		icon = GFX_decision_generic_industry
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			has_country_flag = returned_lands
+			custom_trigger_tooltip = {
+				tooltip = concession_workers_tt
+				has_country_flag = higher_wages
+				has_country_flag = hollidays_workers
+				has_country_flag = more_rights_workers
+			}
+		}
+
+		visible = {
+			has_completed_focus = SOV_appease_communist
+		}
+
+		fire_only_once = yes
+
+		cost = 25
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		complete_effect = {
+			swap_ideas = {
+				remove_idea = SOV_Communist_resistance4
+				add_idea = SOV_Communist_resistance5
+			}
+			SOV = {
+				add_popularity = {
+					ideology = communism
+					popularity = -0.15
+				}
+			}
+			set_country_flag = appease_the_workers
+		}
+	}
+
+	SOV_concession_peasants = {
+
+		icon = GFX_decision_generic_political_rally
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			has_country_flag = appease_the_workers
+			custom_trigger_tooltip = {
+				tooltip = concession_peasants_tt
+				has_country_flag = give_land_peasants
+				has_country_flag = encourage_peasants
+				has_country_flag = kulaks_restored
+			}
+		}
+
+		visible = {
+			has_completed_focus = SOV_appease_communist
+		}
+
+		fire_only_once = yes
+
+		cost = 25
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		complete_effect = {
+			swap_ideas = {
+				remove_idea = SOV_Communist_resistance5
+				add_idea = SOV_Communist_resistance6
+			}
+			SOV = {
+				add_popularity = {
+					ideology = communism
+					popularity = -0.15
+				}
+			}
+			set_country_flag = appease_the_peasants
+		}
+	}
+
+	SOV_concession_army = {
+
+		icon = GFX_decision_generic_army_support
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			has_country_flag = appease_the_peasants
+			custom_trigger_tooltip = {
+				tooltip = concession_army_tt
+				has_country_flag = arrest_generals
+				has_country_flag = compensate_generals
+				has_country_flag = reorganise_army
+			}
+		}
+
+		visible = {
+			has_completed_focus = SOV_appease_communist
+		}
+
+		fire_only_once = yes
+
+		cost = 25
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		complete_effect = {
+			swap_ideas = {
+				remove_idea = SOV_Communist_resistance6
+				add_idea = SOV_Communist_resistance7
+			}
+			SOV = {
+				add_popularity = {
+					ideology = communism
+					popularity = -0.15
+				}
+			}
+			set_country_flag = appease_the_army
+		}
+	}
+
+	SOV_ask_factories_owner_higher_wage = {
+
+		icon = GFX_decision_hol_attract_foreign_investors
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+
+		}
+
+		visible = {
+			has_completed_focus = SOV_appease_communist
+		}
+
+		fire_only_once = yes
+
+		cost = 50
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		complete_effect = {
+			add_timed_idea = {
+				idea = SOV_Higher_wages
+				days = 180
+			}
+			set_country_flag = higher_wages
+		}
+	}
+
+	SOV_give_more_hollidays = {
+
+		icon = GFX_decision_eng_blackshirt_march
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+
+		}
+
+		visible = {
+			has_completed_focus = SOV_appease_communist
+		}
+
+		fire_only_once = yes
+
+		cost = 50
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		complete_effect = {
+			add_timed_idea = {
+				idea = SOV_Less_work
+				days = 85
+			}
+			set_country_flag = hollidays_workers
+		}
+	}
+
+	SOV_give_more_rights_workers = {
+
+		icon = GFX_decision_eng_trade_unions_support
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+
+		}
+
+		visible = {
+			has_completed_focus = SOV_appease_communist
+		}
+
+		fire_only_once = yes
+
+		cost = 75
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		complete_effect = {
+			add_stability = 0.05
+			set_country_flag = more_rights_workers
+		}
+	}
+
 }
 
 SOV_appease_communist = {
@@ -6425,6 +6703,880 @@ SOV_appease_communist = {
 				add_popularity = {
 					ideology = communism
 					popularity = -0.15
+				}
+			}
+		}
+	}
+}
+
+SOV_monarchy_congress = {
+
+	#Have to do each house one by one because Paradox doesn't allow the use of a foreach here
+	SOV_monarchy_support_house_1 = {
+		icon = GFX_decision_generic_prepare_civil_war
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = less_than_3_house_1
+				check_variable = {
+					var = house_russia@1
+					value = 3
+					compare = less_than
+				}
+			}
+			NOT = {
+				has_country_flag = is_supporting_house
+			}
+		}
+
+		cost = house_russia_pp_cost@1
+
+		days_remove = house_russia_pp_cost@1
+
+		complete_effect = {
+			set_country_flag = is_supporting_house
+		}
+
+		remove_effect = {
+			clr_country_flag = is_supporting_house
+
+			add_to_variable = {
+				var = house_russia@1
+				value = 1
+			}
+
+			remove_from_array = {
+				array = monarchy_houses_russia
+				index = 1
+			}
+
+			add_to_array = {
+				array = monarchy_houses_russia
+				value = house_russia@1
+				index = 1
+			}
+
+			if = {
+				limit = {
+					check_variable = {
+						var = house_russia@1
+						value = 2
+						compare = equals
+					}
+				}
+				set_variable = { house_russia_pp_cost@1 = 20 }
+				add_to_variable = {
+					var = house_russia_neutral
+					value = 1
+				}
+				subtract_from_variable = {
+					var = house_russia_opposed
+					value = 1
+				}
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						var = house_russia@1
+						value = 3
+						compare = equals
+					}
+				}
+				set_variable = { house_russia_pp_cost@1 = 10 }
+				add_to_variable = {
+					var = house_russia_support
+					value = 1
+				}
+				subtract_from_variable = {
+					var = house_russia_neutral
+					value = 1
+				}
+			}
+		}
+	}
+
+	SOV_monarchy_support_house_2 = {
+		icon = GFX_decision_generic_prepare_civil_war
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = less_than_3_house_2
+				check_variable = {
+					var = house_russia@2
+					value = 3
+					compare = less_than
+				}
+			}
+			NOT = {
+				has_country_flag = is_supporting_house
+			}
+		}
+
+		cost = house_russia_pp_cost@2
+
+		days_remove = house_russia_pp_cost@2
+
+		complete_effect = {
+			set_country_flag = is_supporting_house
+		}
+
+		remove_effect = {
+			clr_country_flag = is_supporting_house
+
+			add_to_variable = {
+				var = house_russia@2
+				value = 1
+			}
+
+			remove_from_array = {
+				array = monarchy_houses_russia
+				index = 2
+			}
+
+			add_to_array = {
+				array = monarchy_houses_russia
+				value = house_russia@2
+				index = 2
+			}
+
+			if = {
+				limit = {
+					check_variable = {
+						var = house_russia@2
+						value = 2
+						compare = equals
+					}
+				}
+				set_variable = { house_russia_pp_cost@2 = 20 }
+				add_to_variable = {
+					var = house_russia_neutral
+					value = 1
+				}
+				subtract_from_variable = {
+					var = house_russia_opposed
+					value = 1
+				}
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						var = house_russia@2
+						value = 3
+						compare = equals
+					}
+				}
+				set_variable = { house_russia_pp_cost@2 = 10 }
+				add_to_variable = {
+					var = house_russia_support
+					value = 1
+				}
+				subtract_from_variable = {
+					var = house_russia_neutral
+					value = 1
+				}
+			}
+		}
+	}
+
+	SOV_monarchy_support_house_3 = {
+		icon = GFX_decision_generic_prepare_civil_war
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = less_than_3_house_3
+				check_variable = {
+					var = house_russia@3
+					value = 3
+					compare = less_than
+				}
+			}
+			NOT = {
+				has_country_flag = is_supporting_house
+			}
+		}
+
+		cost = house_russia_pp_cost@3
+
+		days_remove = house_russia_pp_cost@3
+
+		complete_effect = {
+			set_country_flag = is_supporting_house
+		}
+
+		remove_effect = {
+			clr_country_flag = is_supporting_house
+
+			add_to_variable = {
+				var = house_russia@3
+				value = 1
+			}
+
+			remove_from_array = {
+				array = monarchy_houses_russia
+				index = 3
+			}
+
+			add_to_array = {
+				array = monarchy_houses_russia
+				value = house_russia@3
+				index = 3
+			}
+
+			if = {
+				limit = {
+					check_variable = {
+						var = house_russia@3
+						value = 2
+						compare = equals
+					}
+				}
+				set_variable = { house_russia_pp_cost@3 = 20 }
+				add_to_variable = {
+					var = house_russia_neutral
+					value = 1
+				}
+				subtract_from_variable = {
+					var = house_russia_opposed
+					value = 1
+				}
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						var = house_russia@3
+						value = 3
+						compare = equals
+					}
+				}
+				set_variable = { house_russia_pp_cost@3 = 10 }
+				add_to_variable = {
+					var = house_russia_support
+					value = 1
+				}
+				subtract_from_variable = {
+					var = house_russia_neutral
+					value = 1
+				}
+			}
+		}
+	}
+
+	SOV_monarchy_support_house_4 = {
+		icon = GFX_decision_generic_prepare_civil_war
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = less_than_3_house_4
+				check_variable = {
+					var = house_russia@4
+					value = 3
+					compare = less_than
+				}
+			}
+			NOT = {
+				has_country_flag = is_supporting_house
+			}
+		}
+
+		cost = house_russia_pp_cost@4
+
+		days_remove = house_russia_pp_cost@4
+
+		complete_effect = {
+			set_country_flag = is_supporting_house
+		}
+
+		remove_effect = {
+			clr_country_flag = is_supporting_house
+
+			add_to_variable = {
+				var = house_russia@4
+				value = 1
+			}
+
+			remove_from_array = {
+				array = monarchy_houses_russia
+				index = 4
+			}
+
+			add_to_array = {
+				array = monarchy_houses_russia
+				value = house_russia@4
+				index = 4
+			}
+
+			if = {
+				limit = {
+					check_variable = {
+						var = house_russia@4
+						value = 2
+						compare = equals
+					}
+				}
+				set_variable = { house_russia_pp_cost@4 = 20 }
+				add_to_variable = {
+					var = house_russia_neutral
+					value = 1
+				}
+				subtract_from_variable = {
+					var = house_russia_opposed
+					value = 1
+				}
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						var = house_russia@4
+						value = 3
+						compare = equals
+					}
+				}
+				set_variable = { house_russia_pp_cost@4 = 10 }
+				add_to_variable = {
+					var = house_russia_support
+					value = 1
+				}
+				subtract_from_variable = {
+					var = house_russia_neutral
+					value = 1
+				}
+			}
+		}
+	}
+
+	SOV_monarchy_support_house_5 = {
+		icon = GFX_decision_generic_prepare_civil_war
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = less_than_3_house_5
+				check_variable = {
+					var = house_russia@5
+					value = 3
+					compare = less_than
+				}
+			}
+			NOT = {
+				has_country_flag = is_supporting_house
+			}
+		}
+
+		cost = house_russia_pp_cost@5
+
+		days_remove = house_russia_pp_cost@5
+
+		complete_effect = {
+			set_country_flag = is_supporting_house
+		}
+
+		remove_effect = {
+			clr_country_flag = is_supporting_house
+
+			add_to_variable = {
+				var = house_russia@5
+				value = 1
+			}
+
+			remove_from_array = {
+				array = monarchy_houses_russia
+				index = 5
+			}
+
+			add_to_array = {
+				array = monarchy_houses_russia
+				value = house_russia@5
+				index = 5
+			}
+
+			if = {
+				limit = {
+					check_variable = {
+						var = house_russia@5
+						value = 2
+						compare = equals
+					}
+				}
+				set_variable = { house_russia_pp_cost@5 = 20 }
+				add_to_variable = {
+					var = house_russia_neutral
+					value = 1
+				}
+				subtract_from_variable = {
+					var = house_russia_opposed
+					value = 1
+				}
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						var = house_russia@5
+						value = 3
+						compare = equals
+					}
+				}
+				set_variable = { house_russia_pp_cost@5 = 10 }
+				add_to_variable = {
+					var = house_russia_support
+					value = 1
+				}
+				subtract_from_variable = {
+					var = house_russia_neutral
+					value = 1
+				}
+			}
+		}
+	}
+
+	SOV_monarchy_support_house_6 = {
+		icon = GFX_decision_generic_prepare_civil_war
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = less_than_3_house_6
+				check_variable = {
+					var = house_russia@6
+					value = 3
+					compare = less_than
+				}
+			}
+			NOT = {
+				has_country_flag = is_supporting_house
+			}
+		}
+
+		cost = house_russia_pp_cost@6
+
+		days_remove = house_russia_pp_cost@6
+
+		complete_effect = {
+			set_country_flag = is_supporting_house
+		}
+
+		remove_effect = {
+			clr_country_flag = is_supporting_house
+
+			add_to_variable = {
+				var = house_russia@6
+				value = 1
+			}
+
+			remove_from_array = {
+				array = monarchy_houses_russia
+				index = 6
+			}
+
+			add_to_array = {
+				array = monarchy_houses_russia
+				value = house_russia@6
+				index = 6
+			}
+
+			if = {
+				limit = {
+					check_variable = {
+						var = house_russia@6
+						value = 2
+						compare = equals
+					}
+				}
+				set_variable = { house_russia_pp_cost@6 = 20 }
+				add_to_variable = {
+					var = house_russia_neutral
+					value = 1
+				}
+				subtract_from_variable = {
+					var = house_russia_opposed
+					value = 1
+				}
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						var = house_russia@6
+						value = 3
+						compare = equals
+					}
+				}
+				set_variable = { house_russia_pp_cost@6 = 10 }
+				add_to_variable = {
+					var = house_russia_support
+					value = 1
+				}
+				subtract_from_variable = {
+					var = house_russia_neutral
+					value = 1
+				}
+			}
+		}
+	}
+
+	SOV_monarchy_support_house_7 = {
+		icon = GFX_decision_generic_prepare_civil_war
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = less_than_3_house_7
+				check_variable = {
+					var = house_russia@7
+					value = 3
+					compare = less_than
+				}
+			}
+			NOT = {
+				has_country_flag = is_supporting_house
+			}
+		}
+
+		cost = house_russia_pp_cost@7
+
+		days_remove = house_russia_pp_cost@7
+
+		complete_effect = {
+			set_country_flag = is_supporting_house
+		}
+
+		remove_effect = {
+			clr_country_flag = is_supporting_house
+
+			add_to_variable = {
+				var = house_russia@7
+				value = 1
+			}
+
+			remove_from_array = {
+				array = monarchy_houses_russia
+				index = 7
+			}
+
+			add_to_array = {
+				array = monarchy_houses_russia
+				value = house_russia@7
+				index = 7
+			}
+
+			if = {
+				limit = {
+					check_variable = {
+						var = house_russia@7
+						value = 2
+						compare = equals
+					}
+				}
+				set_variable = { house_russia_pp_cost@7 = 20 }
+				add_to_variable = {
+					var = house_russia_neutral
+					value = 1
+				}
+				subtract_from_variable = {
+					var = house_russia_opposed
+					value = 1
+				}
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						var = house_russia@7
+						value = 3
+						compare = equals
+					}
+				}
+				set_variable = { house_russia_pp_cost@7 = 10 }
+				add_to_variable = {
+					var = house_russia_support
+					value = 1
+				}
+				subtract_from_variable = {
+					var = house_russia_neutral
+					value = 1
+				}
+			}
+		}
+	}
+
+	SOV_monarchy_support_house_8 = {
+		icon = GFX_decision_generic_prepare_civil_war
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = less_than_3_house_8
+				check_variable = {
+					var = house_russia@8
+					value = 3
+					compare = less_than
+				}
+			}
+			NOT = {
+				has_country_flag = is_supporting_house
+			}
+		}
+
+		cost = house_russia_pp_cost@8
+
+		days_remove = house_russia_pp_cost@8
+
+		complete_effect = {
+			set_country_flag = is_supporting_house
+		}
+
+		remove_effect = {
+			clr_country_flag = is_supporting_house
+
+			add_to_variable = {
+				var = house_russia@8
+				value = 1
+			}
+
+			remove_from_array = {
+				array = monarchy_houses_russia
+				index = 8
+			}
+
+			add_to_array = {
+				array = monarchy_houses_russia
+				value = house_russia@8
+				index = 8
+			}
+
+			if = {
+				limit = {
+					check_variable = {
+						var = house_russia@8
+						value = 2
+						compare = equals
+					}
+				}
+				set_variable = { house_russia_pp_cost@8 = 20 }
+				add_to_variable = {
+					var = house_russia_neutral
+					value = 1
+				}
+				subtract_from_variable = {
+					var = house_russia_opposed
+					value = 1
+				}
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						var = house_russia@8
+						value = 3
+						compare = equals
+					}
+				}
+				set_variable = { house_russia_pp_cost@8 = 10 }
+				add_to_variable = {
+					var = house_russia_support
+					value = 1
+				}
+				subtract_from_variable = {
+					var = house_russia_neutral
+					value = 1
+				}
+			}
+		}
+	}
+
+	SOV_monarchy_support_house_9 = {
+		icon = GFX_decision_generic_prepare_civil_war
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = less_than_3_house_9
+				check_variable = {
+					var = house_russia@9
+					value = 3
+					compare = less_than
+				}
+			}
+			NOT = {
+				has_country_flag = is_supporting_house
+			}
+		}
+
+		cost = house_russia_pp_cost@9
+
+		days_remove = house_russia_pp_cost@9
+
+		complete_effect = {
+			set_country_flag = is_supporting_house
+		}
+
+		remove_effect = {
+			clr_country_flag = is_supporting_house
+
+			add_to_variable = {
+				var = house_russia@9
+				value = 1
+			}
+
+			remove_from_array = {
+				array = monarchy_houses_russia
+				index = 9
+			}
+
+			add_to_array = {
+				array = monarchy_houses_russia
+				value = house_russia@9
+				index = 9
+			}
+
+			if = {
+				limit = {
+					check_variable = {
+						var = house_russia@9
+						value = 2
+						compare = equals
+					}
+				}
+				set_variable = { house_russia_pp_cost@9 = 20 }
+				add_to_variable = {
+					var = house_russia_neutral
+					value = 1
+				}
+				subtract_from_variable = {
+					var = house_russia_opposed
+					value = 1
+				}
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						var = house_russia@9
+						value = 3
+						compare = equals
+					}
+				}
+				set_variable = { house_russia_pp_cost@9 = 10 }
+				add_to_variable = {
+					var = house_russia_support
+					value = 1
+				}
+				subtract_from_variable = {
+					var = house_russia_neutral
+					value = 1
+				}
+			}
+		}
+	}
+
+	SOV_monarchy_support_house_10 = {
+		icon = GFX_decision_generic_prepare_civil_war
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = less_than_3_house_10
+				check_variable = {
+					var = house_russia@10
+					value = 3
+					compare = less_than
+				}
+			}
+			NOT = {
+				has_country_flag = is_supporting_house
+			}
+		}
+
+		cost = house_russia_pp_cost@10
+
+		days_remove = house_russia_pp_cost@10
+
+		complete_effect = {
+			set_country_flag = is_supporting_house
+		}
+
+		remove_effect = {
+			clr_country_flag = is_supporting_house
+
+			add_to_variable = {
+				var = house_russia@10
+				value = 1
+			}
+
+			remove_from_array = {
+				array = monarchy_houses_russia
+				index = 10
+			}
+
+			add_to_array = {
+				array = monarchy_houses_russia
+				value = house_russia@10
+				index = 10
+			}
+
+			if = {
+				limit = {
+					check_variable = {
+						var = house_russia@10
+						value = 2
+						compare = equals
+					}
+				}
+				set_variable = { house_russia_pp_cost@10 = 20 }
+				add_to_variable = {
+					var = house_russia_neutral
+					value = 1
+				}
+				subtract_from_variable = {
+					var = house_russia_opposed
+					value = 1
+				}
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						var = house_russia@10
+						value = 3
+						compare = equals
+					}
+				}
+				set_variable = { house_russia_pp_cost@10 = 10 }
+				add_to_variable = {
+					var = house_russia_support
+					value = 1
+				}
+				subtract_from_variable = {
+					var = house_russia_neutral
+					value = 1
 				}
 			}
 		}

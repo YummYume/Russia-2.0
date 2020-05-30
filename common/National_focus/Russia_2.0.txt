@@ -11531,6 +11531,9 @@ focus_tree = {
 			    value = 2
 			}
 
+			set_variable = { house_russia_opposed = 0 }
+			set_variable = { house_russia_neutral = 0 }
+			set_variable = { house_russia_support = 0 }
 			# set_variable = { debug_house_count = 0 }
 			for_each_loop = {
 			    array = monarchy_houses_russia
@@ -11564,23 +11567,49 @@ focus_tree = {
 					}
 				}
 				round_variable = house_russia@var:current_value
-			    # add_to_variable = { debug_house_count = house_russia@var:current_value }
-				add_political_power = 10
-			}
-
-			for_each_loop = {
-			    array = monarchy_houses_russia
-				value = current
-			    index = i
-
-				set_temp_variable = { current_value = current }
-				set_temp_variable = { current_index = i }
-
-				add_to_array = {
-					array = monarchy_houses_russia
-					value = house_russia@var:current_value
-					index = current_index
+				if = {
+					limit = {
+						check_variable = {
+							var = house_russia@var:current_value
+							value = 1
+							compare = equals
+						}
+					}
+					set_variable = { house_russia_pp_cost@var:current_value = 30 }
+					add_to_variable = {
+						var = house_russia_opposed
+						value = 1
+					}
 				}
+				else_if = {
+					limit = {
+						check_variable = {
+							var = house_russia@var:current_value
+							value = 2
+							compare = equals
+						}
+					}
+					set_variable = { house_russia_pp_cost@var:current_value = 20 }
+					add_to_variable = {
+						var = house_russia_neutral
+						value = 1
+					}
+				}
+				else_if = {
+					limit = {
+						check_variable = {
+							var = house_russia@var:current_value
+							value = 3
+							compare = equals
+						}
+					}
+					set_variable = { house_russia_pp_cost@var:current_value = 10 }
+					add_to_variable = {
+						var = house_russia_support
+						value = 1
+					}
+				}
+			    # add_to_variable = { debug_house_count = house_russia@var:current_value }
 			}
 		}
 	}
