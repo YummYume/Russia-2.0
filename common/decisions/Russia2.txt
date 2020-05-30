@@ -7314,7 +7314,10 @@ SOV_monarchy_congress = {
 
 		available = {
 			NOT = {
-				has_idea = war_economy
+				OR = {
+					has_idea = war_economy
+					has_idea = tot_economic_mobilisation
+				}
 			}
 			has_war = no
 			has_war_support > 0.55
@@ -7347,6 +7350,54 @@ SOV_monarchy_congress = {
 		complete_effect = {
 			ROOT = {
 				add_ideas = war_economy
+			}
+		}
+	}
+
+	SOV_raise_taxes = {
+		
+		icon = GFX_decision_hol_attract_foreign_investors
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			NOT = {
+				has_country_flag = has_enacted_law
+			}
+			custom_trigger_tooltip = {
+				tooltip = SOV_war_economy_law_parl_support_tt
+				check_variable = {
+					var = house_russia_support
+					value = 5
+					compare = greater_than_or_equals
+				}
+			}	
+			custom_trigger_tooltip = {
+				tooltip = SOV_war_economy_law_parl_opposition_tt
+				check_variable = {
+					var = house_russia_support
+					value = 2
+					compare = less_than_or_equals
+				}			
+			}
+		}
+
+		cost = 0
+
+		complete_effect = {
+			ROOT = {
+				add_timed_idea = {
+					idea = SOV_Higher_taxes
+					days = 365
+				}
+				set_country_flag = has_enacted_law
+			}
+			hidden_effect = {
+				ROOT = {
+					country_event = { id = soviets.211 days = 365 }
+				}		
 			}
 		}
 	}
