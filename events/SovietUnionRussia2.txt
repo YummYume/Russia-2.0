@@ -8266,12 +8266,18 @@ country_event = {
 
 	option = { #Bring Bakc Monarchy
 		name = soviets.210.a
+		ai_chance = {
+			factor = 50
+		}
 		custom_effect_tooltip = monarchist_restoration_possible
 		set_country_flag = monarchist_restoration_path
 	}
 
 	option = { #Become Junta
 		name = soviets.210.b
+		ai_chance = {
+			factor = 50
+		}
 		custom_effect_tooltip = military_junta_possible
 		set_country_flag = military_junta_leader
 	}
@@ -8288,6 +8294,9 @@ country_event = {
 
 	option = { #Remove Country Flag
 		name = soviets.211.a
+		ai_chance = {
+			factor = 100
+		}
 		custom_effect_tooltip = new_law_enact_possible
 	}
 }
@@ -8305,6 +8314,183 @@ country_event = {
 		name = soviets.212.a
 		set_country_flag = SOV_has_constitutional_monarchy
 		add_stability = 0.05
+		add_stability = 0.05
 		custom_effect_tooltip = SOV_unlock_constitutional_monarchy_tt
+	}
+}
+
+#vassalize of Ukraine - Reintegrate the Lost State
+country_event = {
+	id = soviets.213
+	title = soviets.213.t
+	desc = soviets.213.d
+	picture = GFX_report_event_german_troops
+
+	is_triggered_only = yes
+
+	option = { #Accepts and Become Puppets
+		name = soviets.213.a
+		ai_chance = {
+			factor = 40
+			modifier = {
+				factor = 80
+				SOV = {
+					has_country_flag = sympathize_with_ukraine
+				}
+			}
+		}
+		if = {
+			limit = {
+				SOV = {
+					has_country_flag = sympathize_with_ukraine
+				}
+			}
+			SOV = {
+				set_autonomy = {
+					target = UKR
+					autonomy_state = autonomy_dominion
+				}
+				country_event = { id = soviets.214 hours = 6 }
+			}
+		}
+		else = {
+			SOV = {
+				set_autonomy = {
+					target = UKR
+					autonomy_state = autonomy_puppet
+				}
+				country_event = { id = soviets.214 hours = 6 }
+			}
+		}
+	}
+
+	option = { #Refuse and Stay Independent - Gets National Spirit
+		name = soviets.213.b
+		ai_chance = {
+			factor = 60
+			modifier = {
+				factor = 20
+				SOV = {
+					has_country_flag = sympathize_with_ukraine
+				}
+			}
+		}
+		SOV = {
+			create_wargoal = {
+				type = annex_everything
+				target = UKR
+			}
+			country_event = { id = soviets.215 hours = 6 }
+		}
+		set_country_flag = ukr_refused_vassalization_process
+		UKR = {
+			add_ideas = SOV_Fight_for_independence
+		}
+	}
+}
+
+#Ukraine Accepts Vassalizaion
+country_event = {
+	id = soviets.214
+	title = soviets.214.t
+	desc = soviets.214.d
+	picture = GFX_report_event_molotov_ribentrop_handshake
+
+	is_triggered_only = yes
+
+	option = { #Nice
+		name = soviets.214.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#Ukraine Refuse Vassalizaion
+country_event = {
+	id = soviets.215
+	title = soviets.215.t
+	desc = soviets.215.d
+	picture = GFX_report_event_soviet_in_riga
+
+	is_triggered_only = yes
+
+	option = { #Damn
+		name = soviets.215.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#"Lost States" Received Russian Vassalization offer
+country_event = {
+	id = soviets.216
+	title = soviets.216.t
+	desc = soviets.216.d
+	picture = GFX_report_event_german_troops
+
+	is_triggered_only = yes
+
+	option = { #Accepts and Become Puppets
+		name = soviets.216.a
+		ai_chance = {
+			factor = 80
+		}
+		SOV = {
+			set_autonomy = {
+				target = ROOT
+				autonomy_state = autonomy_puppet
+			}
+			country_event = { id = soviets.217 hours = 6 }
+		}
+	}
+
+	option = { #Refuse and Stay Independent
+		name = soviets.216.b
+		ai_chance = {
+			factor = 20
+		}
+		SOV = {
+			create_wargoal = {
+				type = annex_everything
+				target = ROOT
+			}
+			country_event = { id = soviets.218 hours = 6 }
+		}
+	}
+}
+
+#Lost State Accepts Vassalizaion
+country_event = {
+	id = soviets.217
+	title = soviets.217.t
+	desc = soviets.217.d
+	picture = GFX_report_event_molotov_ribentrop_handshake
+
+	is_triggered_only = yes
+
+	option = { #Nice
+		name = soviets.217.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#Lost State Refuse Vassalizaion
+country_event = {
+	id = soviets.218
+	title = soviets.218.t
+	desc = soviets.218.d
+	picture = GFX_report_event_soviet_in_riga
+
+	is_triggered_only = yes
+
+	option = { #Damn
+		name = soviets.218.a
+		ai_chance = {
+			factor = 100
+		}
 	}
 }
