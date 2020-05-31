@@ -439,3 +439,80 @@ country_event = {
 		}
 	}
 }
+
+#SOV Threatens
+country_event = {
+	id = germanys.14
+	title = germanys.14.t
+	desc = germanys.14.d
+	picture = GFX_report_event_hungary_refused
+
+	is_triggered_only = yes
+
+	option = { #Okay...
+		name = germanys.14.a
+		ai_chance = {
+			factor = 10
+			modifier = {
+				factor = 40
+				surrender_progress > 0.25
+			}
+		}
+		SOV = {
+			puppet = GER
+			country_event = { id = germanys.15 days = 1 }
+		}
+	}
+
+	option = { #No!
+		name = germanys.14.b
+		ai_chance = {
+			factor = 90
+			modifier = {
+				factor = 60
+				surrender_progress > 0.25
+			}
+		}
+		SOV = {
+			country_event = { id = germanys.16 days = 1 }
+		}
+	}
+}
+
+#GER Accepts
+country_event = {
+	id = germanys.15
+	title = germanys.15.t
+	desc = germanys.15.d
+	picture = GFX_report_event_hungary_refused
+
+	is_triggered_only = yes
+
+	option = { #Easy
+		name = germanys.15.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#GER Refuses
+country_event = {
+	id = germanys.16
+	title = germanys.16.t
+	desc = germanys.16.d
+	picture = GFX_report_event_hungary_refused
+
+	is_triggered_only = yes
+
+	option = { #You die then
+		name = germanys.16.a
+		ai_chance = {
+			factor = 100
+		}
+		create_wargoal = {
+		    type = puppet_wargoal_focus
+		    target = GER
+		}
+	}
+}
