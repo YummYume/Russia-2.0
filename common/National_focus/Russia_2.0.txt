@@ -5531,10 +5531,6 @@ focus_tree = {
 					division_template = "Mekhanizirovaniy Korpus"
 					is_locked = no
 				}
-				set_division_template_lock = {
-					division_template = "Vozdushno-Desantnaya Brigada"
-					is_locked = no
-				}
 			}
 		}
 	}
@@ -7499,10 +7495,6 @@ focus_tree = {
 					division_template = "Mekhanizirovaniy Korpus"
 					is_locked = no
 				}
-				set_division_template_lock = {
-					division_template = "Vozdushno-Desantnaya Brigada"
-					is_locked = no
-				}
 			}
 		}
 	}
@@ -7571,10 +7563,6 @@ focus_tree = {
 				}
 				set_division_template_lock = {
 					division_template = "Mekhanizirovaniy Korpus"
-					is_locked = no
-				}
-				set_division_template_lock = {
-					division_template = "Vozdushno-Desantnaya Brigada"
 					is_locked = no
 				}
 			}
@@ -7699,10 +7687,6 @@ focus_tree = {
 				}
 				set_division_template_lock = {
 					division_template = "Mekhanizirovaniy Korpus"
-					is_locked = no
-				}
-				set_division_template_lock = {
-					division_template = "Vozdushno-Desantnaya Brigada"
 					is_locked = no
 				}
 			}
@@ -9572,7 +9556,7 @@ focus_tree = {
 				country_event = { id = soviets.173 hours = 1 }
 				country_event = { id = soviets.174 hours = 1 }
 				country_event = { id = soviets.175 hours = 1 }
-				country_event = { id = soviets.176 }
+				country_event = { id = soviets.176 hours = 1 }
 				country_event = { id = soviets.177 }
 				country_event = { id = soviets.136 days = 1 }
 				set_country_flag = preparation_done
@@ -10393,6 +10377,24 @@ focus_tree = {
 							owner = UKR
 						}
 					}
+					delete_unit_template_and_units = {
+						division_template = "Strelkovaya Diviziya"
+					}
+					delete_unit_template_and_units = {
+						division_template = "Gornostrelkovaya Diviziya"
+					}
+					delete_unit_template_and_units = {
+						division_template = "Motostrelkovaya Diviziya"
+					}
+					delete_unit_template_and_units = {
+						division_template = "Kavaleriyskaya Diviziya"
+					}
+					delete_unit_template_and_units = {
+						division_template = "NKVD Pogranichnaya Diviziya"
+					}
+					delete_unit_template_and_units = {
+						division_template = "Mekhanizirovaniy Korpus"
+					}
 				}
 			}
 		}
@@ -10738,18 +10740,46 @@ focus_tree = {
 		available = {
 
 		}
+		bypass = {
+			NOT = {
+				country_exists = UKR
+				country_exists = BLR
+				country_exists = KAZ
+				country_exists = TMS
+				country_exists = GEO
+				country_exists = AZR
+				country_exists = ARM
+			}
+		}
 		completion_reward = {
 			UKR = {
 				country_event = { id = soviets.213 hours = 3 }
 			}
 			custom_effect_tooltip = ukraine_core_lost_state
-			every_state = {
-				limit = {
-					is_owned_and_controlled_by = UKR
-					is_core_of = UKR
+			hidden_effect = {
+				if = {
+					limit = {
+						has_country_flag = sympathize_with_ukraine
+					}
+					set_variable = {
+						var = stability_hit_ukraine
+						value = -15
+					}
 				}
-				add_core_of = SOV
-			}
+				else = {
+					set_variable = {
+						var = stability_hit_ukraine
+						value = -10
+					}
+				}
+				every_state = {
+					limit = {
+						is_owned_and_controlled_by = UKR
+						is_core_of = UKR
+					}
+					add_core_of = SOV
+				}
+			}	
 			if = {
 				limit = {
 					has_country_flag = control_caucasus
@@ -10764,16 +10794,18 @@ focus_tree = {
 					country_event = { id = soviets.216 hours = 3 }
 				}
 				custom_effect_tooltip = caucasian_core_lost_state
-				every_state = {
-					limit = {
-						OR = {
-							is_core_of = GEO
-							is_core_of = AZR
-							is_core_of = ARM
-						}	
+				hidden_effect = {
+					every_state = {
+						limit = {
+							OR = {
+								is_core_of = GEO
+								is_core_of = AZR
+								is_core_of = ARM
+							}	
+						}
+						add_core_of = SOV
 					}
-					add_core_of = SOV
-				}
+				}	
 			}
 			if = {
 				limit = {
@@ -10786,17 +10818,19 @@ focus_tree = {
 					country_event = { id = soviets.216 hours = 3 }
 				}
 				custom_effect_tooltip = central_asia_core_lost_state
-				every_state = {
-					limit = {
-						OR = {
-							is_core_of = KAZ
-							is_owned_and_controlled_by = KAZ
-							is_core_of = TMS
-							is_owned_and_controlled_by = TMS
+				hidden_effect = {
+					every_state = {
+						limit = {
+							OR = {
+								is_core_of = KAZ
+								is_owned_and_controlled_by = KAZ
+								is_core_of = TMS
+								is_owned_and_controlled_by = TMS
+							}
 						}
+						add_core_of = SOV
 					}
-					add_core_of = SOV
-				}
+				}	
 			}
 			if = {
 				limit = {
@@ -10806,13 +10840,15 @@ focus_tree = {
 					country_event = { id = soviets.216 hours = 3 }
 				}
 				custom_effect_tooltip = belarus_core_lost_state
-				every_state = {
-					limit = {
-						is_owned_and_controlled_by = BLR
-						is_core_of = BLR
+				hidden_effect = {
+					every_state = {
+						limit = {
+							is_owned_and_controlled_by = BLR
+							is_core_of = BLR
+						}
+						add_core_of = SOV
 					}
-					add_core_of = SOV
-				}
+				}	
 			}
 		}
 	}

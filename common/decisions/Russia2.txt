@@ -3634,7 +3634,7 @@ SOV_the_second_civil_war_fn = {
 			has_country_flag = second_civil_war_mission
 			check_variable = {
 				var = buy_weapons_count
-				value = 6
+				value = 7
 				compare = less_than
 			}
 		}
@@ -4600,7 +4600,7 @@ SOV_destroy_communist_resistance = {
 		}
 
 		available = {
-			command_power > 25
+			command_power > 20
 		}
 
 		visible = {
@@ -4654,7 +4654,7 @@ SOV_destroy_communist_resistance = {
 		complete_effect = {
 			custom_effect_tooltip = SOV_send_recon_team_central_russia_tt
 			hidden_effect = {
-				add_command_power = -25
+				add_command_power = -20
 			}
 		}
 	}
@@ -4737,7 +4737,7 @@ SOV_destroy_communist_resistance = {
 		}
 
 		available = {
-			command_power > 25
+			command_power > 20
 		}
 
 		visible = {
@@ -4791,7 +4791,7 @@ SOV_destroy_communist_resistance = {
 		complete_effect = {
 			custom_effect_tooltip = SOV_send_recon_team_kuban_region_tt
 			hidden_effect = {
-				add_command_power = -25
+				add_command_power = -20
 			}
 		}
 	}
@@ -4872,7 +4872,7 @@ SOV_destroy_communist_resistance = {
 		}
 
 		available = {
-			command_power > 25
+			command_power > 20
 		}
 
 		visible = {
@@ -4926,7 +4926,7 @@ SOV_destroy_communist_resistance = {
 		complete_effect = {
 			custom_effect_tooltip = SOV_send_recon_team_transvolga_region_tt
 			hidden_effect = {
-				add_command_power = -25
+				add_command_power = -20
 			}
 		}
 	}
@@ -5007,7 +5007,7 @@ SOV_destroy_communist_resistance = {
 		}
 
 		available = {
-			command_power > 25
+			command_power > 20
 		}
 
 		visible = {
@@ -5061,7 +5061,7 @@ SOV_destroy_communist_resistance = {
 		complete_effect = {
 			custom_effect_tooltip = SOV_send_recon_team_urals_region_tt
 			hidden_effect = {
-				add_command_power = -25
+				add_command_power = -20
 			}
 		}
 	}
@@ -5138,7 +5138,7 @@ SOV_destroy_communist_resistance = {
 		}
 
 		available = {
-			command_power > 25
+			command_power > 20
 		}
 
 		visible = {
@@ -5192,7 +5192,7 @@ SOV_destroy_communist_resistance = {
 		complete_effect = {
 			custom_effect_tooltip = SOV_send_recon_team_artic_region_tt
 			hidden_effect = {
-				add_command_power = -25
+				add_command_power = -20
 			}
 		}
 	}
@@ -5272,7 +5272,7 @@ SOV_destroy_communist_resistance = {
 		}
 
 		available = {
-			command_power > 25
+			command_power > 20
 		}
 
 		visible = {
@@ -5326,7 +5326,7 @@ SOV_destroy_communist_resistance = {
 		complete_effect = {
 			custom_effect_tooltip = SOV_send_recon_team_siberia_region_tt
 			hidden_effect = {
-				add_command_power = -25
+				add_command_power = -20
 			}
 		}
 	}
@@ -5405,7 +5405,7 @@ SOV_destroy_communist_resistance = {
 		}
 
 		available = {
-			command_power > 25
+			command_power > 20
 		}
 
 		visible = {
@@ -5459,7 +5459,7 @@ SOV_destroy_communist_resistance = {
 		complete_effect = {
 			custom_effect_tooltip = SOV_send_recon_team_novgorod_region_tt
 			hidden_effect = {
-				add_command_power = -25
+				add_command_power = -20
 			}
 		}
 	}
@@ -5735,7 +5735,7 @@ SOV_buy_guns_foreign_country = {
 		visible = {
 			check_variable = {
 				var = medium_equipment
-				value = 4
+				value = 3
 				compare = less_than
 			}
 			has_completed_focus = SOV_buying_equipment
@@ -7627,6 +7627,216 @@ SOV_monarchy_congress = {
 			hidden_effect = {
 				country_event = { id = soviets.211 days = 365 }
 			}
+		}
+	}
+}
+
+SOV_reintegrate_lost_states = {
+	
+	SOV_integrate_ukraine = { #Version if you didn't sympathized with the Ukrainian and if they for some reasons agree
+
+		icon = GFX_decision_infiltrate_state
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			UKR = {
+				is_subject_of = SOV
+			}
+		}
+
+		visible = {
+			NOT = {
+				has_country_flag = sympathize_with_ukraine
+			}
+		}
+
+		fire_only_once = yes
+
+		cost = 100
+
+		complete_effect = { #Test, not the final version
+			set_temp_variable = { stability_calculator_ukraine_1 = stability_hit_ukraine }
+			multiply_temp_variable = 0.03
+			multiply_temp_variable = { stability_calculator_ukraine_1 = 0.03 }
+			set_temp_variable = { army_transfer_calculator_ukr = army_transfer_ukr_lost }
+			multiply_temp_variable = 0.2
+			multiply_temp_variable = { army_transfer_calculator_ukr = 0.2 }
+			UKR = {
+				transfer_units_fraction = {
+					target = SOV
+					size = army_transfer_calculator_ukr
+					army_ratio = army_transfer_calculator_ukr
+					stockpile_ratio = army_transfer_calculator_ukr
+				}
+			}		
+			SOV = {						
+				annex_country = {
+					target = UKR
+				}
+				add_stability = stability_calculator_ukraine_1
+			}
+			SOV = {
+				hidden_effect = {
+					country_event = { id = soviets.219 hours = 1 }
+				}
+			}
+		}
+	}
+
+	SOV_integrate_ukraine_2 = { #Version if you did sympathized with the Ukrainian
+
+		icon = GFX_decision_infiltrate_state
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			UKR = {
+				is_subject_of = SOV
+			}
+		}
+
+		visible = {
+			has_country_flag = sympathize_with_ukraine
+		}
+
+		fire_only_once = yes
+
+		cost = 100
+
+		complete_effect = {
+			set_temp_variable = { stability_calculator_ukraine_2 = stability_hit_ukraine }
+			multiply_temp_variable = 0.03
+			multiply_temp_variable = { stability_calculator_ukraine_2 = 0.03 }
+			set_temp_variable = { army_transfer_calculator_ukr = army_transfer_ukr_lost }
+			multiply_temp_variable = 0.20
+			multiply_temp_variable = { army_transfer_calculator_ukr = 0.20 }			
+			UKR = {
+				transfer_units_fraction = {
+					target = SOV
+					size = army_transfer_calculator_ukr
+					army_ratio = army_transfer_calculator_ukr
+					stockpile_ratio = army_transfer_calculator_ukr
+				}
+			}			
+			SOV = {
+				annex_country = {
+					target = UKR
+				}
+				add_stability = stability_calculator_ukraine_2
+			}
+			SOV = {
+				hidden_effect = {
+					country_event = { id = soviets.219 hours = 1 }
+				}
+			}
+		}
+	}
+
+	SOV_reinforce_imperial_ties_ukraine = {
+		
+		icon = GFX_decision_eng_ally_imperialist_coup
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			UKR = {
+				is_subject_of = SOV
+			}
+		}
+
+		visible = {
+			NOT = {
+				check_variable = {
+					var = stability_hit_ukraine
+					value = 5
+					compare = equals
+				}
+			}
+		}
+
+		cost = 25
+
+		days_remove = 30
+
+		remove_effect = {
+			
+		}
+
+		complete_effect = {
+			add_to_variable = {
+				var = stability_hit_ukraine
+				value = 1
+			}			
+		}
+	}
+
+	SOV_army_integration_ukraine = {
+				
+		icon = GFX_decision_generic_army_support
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			UKR = {
+				is_subject_of = SOV
+			}
+			if = {
+				limit = {
+					has_country_flag = sympathize_with_ukraine
+				}
+				custom_trigger_tooltip = {
+					tooltip = SOV_army_integration_ukraine1_tt
+					check_variable = {
+						var = stability_hit_ukraine
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			else = {
+				custom_trigger_tooltip = {
+					tooltip = SOV_army_integration_ukraine2_tt
+					check_variable = {
+						var = stability_hit_ukraine
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}	
+		}
+
+		visible = {
+			NOT = {
+				check_variable = {
+					var = army_transfer_ukr_lost
+					value = 5
+					compare = equals
+				}
+			}
+		}
+
+		cost = 25
+
+		days_remove = 0
+
+		remove_effect = {
+			
+		}
+
+		complete_effect = {
+			add_to_variable = {
+				var = army_transfer_ukr_lost
+				value = 1
+			}			
 		}
 	}
 }
