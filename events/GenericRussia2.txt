@@ -316,6 +316,9 @@ country_event = {
 	is_triggered_only = yes
 
 	option = { #Accept
+		trigger = {
+			is_subject = no
+		}
 		ai_chance = {
 			factor = 75
 			modifier = {
@@ -338,13 +341,38 @@ country_event = {
 			}
 		}
 		name = generics.15.a
-		every_state = {
+		if = {
 			limit = {
-				is_controlled_by = ROOT
-				has_state_flag = slavic_states
+				FROM = {
+					is_subject_of = ROOT
+				}
+			}
+			custom_effect_tooltip = FROM_is_puppet_slavic_states
+			every_state = {
+				limit = {
+					is_controlled_by = FROM
+					has_state_flag = slavic_states
+				}
+				SOV = {
+					transfer_state = PREV
+				}
+			}
+			FROM = {
+				country_event = { id = generics.18 days = 1 }
+			}
+		}
+		else = {
+			every_state = {
+				limit = {
+					is_controlled_by = ROOT
+					has_state_flag = slavic_states
+				}
+				SOV = {
+					transfer_state = PREV
+				}
 			}
 			SOV = {
-				transfer_state = PREV
+				country_event = { id = generics.16 days = 1 }
 			}
 		}
 		if = {
@@ -355,12 +383,12 @@ country_event = {
 			}
 			custom_effect_tooltip = SOV_game_totally_over_TT
 		}
-		SOV = {
-			country_event = { id = generics.16 days = 1 }
-		}
 	}
 
 	option = { #Refuse
+		trigger = {
+			is_subject = no
+		}
 		ai_chance = {
 			factor = 25
 			modifier = {
@@ -383,8 +411,39 @@ country_event = {
 			}
 		}
 		name = generics.15.b
-		SOV = {
-			country_event = { id = generics.17 days = 1 }
+		if = {
+			limit = {
+				FROM = {
+					is_subject_of = ROOT
+				}
+			}
+			custom_effect_tooltip = FROM_is_puppet_slavic_states
+			FROM = {
+				country_event = { id = generics.19 days = 1 }
+			}
+		}
+		else = {
+			SOV = {
+				country_event = { id = generics.17 days = 1 }
+			}
+		}
+	}
+
+	option = { #We should ask our master first
+		trigger = {
+			is_subject = yes
+			NOT = {
+				FROM = {
+					tag = OVERLORD
+				}
+			}
+		}
+		ai_chance = {
+			factor = 100
+		}
+		name = generics.15.c
+		OVERLORD = {
+			country_event = { id = generics.15 days = 1 }
 		}
 	}
 }
@@ -414,5 +473,43 @@ country_event = {
 
 	option = { #Too bad
 		name = generics.17.a
+		create_wargoal = {
+		    type = annex_everything
+		    target = FROM
+		}
+	}
+}
+
+#We Accept (Puppet)
+country_event = {
+	id = generics.18
+	title = generics.18.t
+	desc = generics.18.d
+	picture = GFX_report_event_hitler_handshake
+
+	is_triggered_only = yes
+
+	option = { #Okay
+		name = generics.18.a
+		SOV = {
+			country_event = { id = generics.16 days = 1 }
+		}
+	}
+}
+
+#We Refuse (Puppet)
+country_event = {
+	id = generics.19
+	title = generics.19.t
+	desc = generics.19.d
+	picture = GFX_report_event_generic_parliament
+
+	is_triggered_only = yes
+
+	option = { #Too bad
+		name = generics.19.a
+		SOV = {
+			country_event = { id = generics.17 days = 1 }
+		}
 	}
 }

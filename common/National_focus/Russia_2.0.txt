@@ -4054,7 +4054,8 @@ focus_tree = {
 			OR = {
 				has_completed_focus = SOV_great_purge2
 				has_completed_focus = SOV_consolidate_true_communism
-				has_completed_focus = SOV_terrible_fate
+				has_completed_focus = SOV_country_in_chaos
+				has_completed_focus = SOV_bring_back_old_life
 			}
 			has_civil_war = no
 		}
@@ -5388,6 +5389,9 @@ focus_tree = {
 		available = {
 			has_government = communism
 			is_subject = no
+			NOT = {
+				has_completed_focus = SOV_terrible_fate
+			}
 		}
 		select_effect = {
 			country_event = { id = soviets.24 days = 1 }
@@ -5811,12 +5815,20 @@ focus_tree = {
 			has_government = communism
 			is_major = yes
 			is_subject = no
-			has_civil_war = no
+			custom_trigger_tooltip = {
+				tooltip = SOV_foreign_policy_tt
+				has_civil_war = no
+				SOV = {
+					NOT = {
+						has_country_flag = second_civil_war_in_progress
+					}
+				}
+			}
 		}
 		search_filters = { FOCUS_FILTER_COMMUNISM_STALIN_RUSSIA FOCUS_FILTER_POLITICAL }
 		completion_reward = {
 			add_political_power = 75
-			custom_effect_tooltip = SOV_foreign_policy_tt
+			custom_effect_tooltip = SOV_foreign_policy_tt2
 			hidden_effect = {
 				SOV = {
 					country_event = { id = soviets.28 }
@@ -7392,6 +7404,9 @@ focus_tree = {
 		available = {
 			has_government = communism
 			is_subject = no
+			NOT = {
+				has_completed_focus = SOV_terrible_fate
+			}
 		}
 		search_filters = { FOCUS_FILTER_COMMUNISM_TROTSKY_RUSSIA }
 		completion_reward = {
@@ -8463,15 +8478,16 @@ focus_tree = {
 		completion_reward = {
 			custom_effect_tooltip = SOV_revolution_to_the_utmost_tt
 			unlock_decision_tooltip = SOV_end_revolution
-			hidden_effect = {
-				every_other_country = {
-					limit = {
-						NOT = {
-							is_in_faction_with = ROOT
-							has_government = communism
-						}
-						is_major = yes
+			custom_effect_tooltip = SOV_revolution_to_the_utmost_tt2
+			every_other_country = {
+				limit = {
+					NOT = {
+						is_in_faction_with = ROOT
+						has_government = communism
 					}
+					is_major = yes
+				}
+				hidden_effect = {
 					ROOT = {
 						create_wargoal = {
 					    	type = puppet_wargoal_focus
@@ -10786,7 +10802,7 @@ focus_tree = {
 					}
 					add_core_of = SOV
 				}
-			}	
+			}
 			if = {
 				limit = {
 					has_country_flag = control_caucasus
@@ -10808,11 +10824,11 @@ focus_tree = {
 								is_core_of = GEO
 								is_core_of = AZR
 								is_core_of = ARM
-							}	
+							}
 						}
 						add_core_of = SOV
 					}
-				}	
+				}
 			}
 			if = {
 				limit = {
@@ -10837,7 +10853,7 @@ focus_tree = {
 						}
 						add_core_of = SOV
 					}
-				}	
+				}
 			}
 			if = {
 				limit = {
@@ -10855,7 +10871,7 @@ focus_tree = {
 						}
 						add_core_of = SOV
 					}
-				}	
+				}
 			}
 		}
 	}
@@ -11178,11 +11194,13 @@ focus_tree = {
 		available = {
 			is_subject = no
 			has_government = neutrality
-			NOT = {
-				GER = {
-					has_government = democratic
-					has_government = communism
-					has_war_with = SOV
+			GER = {
+				NOT = {
+					has_war_with = ROOT
+				}
+				OR = {
+					has_government = fascism
+					has_government = neutrality
 				}
 			}
 			NOT = {
