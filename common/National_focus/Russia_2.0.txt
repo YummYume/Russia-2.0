@@ -10643,6 +10643,7 @@ focus_tree = {
 						}
 					}
 				}
+				custom_effect_tooltip = SOV_restoration_tsar_tt
 				set_temp_variable = { communist_resistance_penalty = party_popularity@communism }
 				multiply_temp_variable = { communist_resistance_penalty = -1 }
 				add_stability = communist_resistance_penalty
@@ -10678,6 +10679,34 @@ focus_tree = {
 				}
 			}
 			set_cosmetic_tag = RUS
+			add_ideas = SOV_Tsar_we_trust
+			if = {
+				limit = {
+					any_country = {
+						is_subject_of = SOV
+						NOT = {
+							has_autonomy_state = autonomy_imperial_governorates
+						}
+					}
+				}
+				every_country = {
+					limit = {
+						is_subject_of = SOV
+						NOT = {
+							has_autonomy_state = autonomy_imperial_governorates
+						}
+					}
+					hidden_effect = {
+						SOV = {
+							set_autonomy = {
+							    target = PREV
+								autonomy_state = autonomy_imperial_governorates
+							}
+						}
+					}
+					custom_effect_tooltip = SOV_restoration_tsar_tt2
+				}
+			}
 		}
 	}
 
@@ -10713,6 +10742,7 @@ focus_tree = {
 						}
 					}
 				}
+				custom_effect_tooltip = SOV_restoration_tsar_tt
 				set_temp_variable = { communist_resistance_penalty = party_popularity@communism }
 				multiply_temp_variable = { communist_resistance_penalty = -1 }
 				add_stability = communist_resistance_penalty
@@ -10731,6 +10761,7 @@ focus_tree = {
 				}
 			}
 			set_cosmetic_tag = RUS
+			add_ideas = SOV_Denikin_trust
 		}
 	}
 
@@ -11099,6 +11130,10 @@ focus_tree = {
 			custom_effect_tooltip = SOV_unite_slavic_nations_tt2
 			every_other_country = {
 				limit = {
+					NOT = {
+						is_subject_of = SOV
+						is_in_faction_with = SOV
+					}
 					any_state = {
 						has_state_flag = slavic_states
 						is_controlled_by = PREV
