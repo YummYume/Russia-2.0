@@ -6,8 +6,11 @@ focus_tree = {
 		factor = 0
 
 		modifier = {
-			add = 10
-			tag = SOV
+			add = 15
+			OR = {
+				tag = SOV
+				tag = SOU
+			}	
 		}
 	}
 
@@ -5534,6 +5537,16 @@ focus_tree = {
 					division_template = "Mekhanizirovaniy Korpus"
 					is_locked = no
 				}
+				division_template = {
+					name = "Vozdushno-Desantnaya Brigada"			# Airborne Brigade
+					is_locked = no
+					division_names_group = SOV_PAR_01
+				
+					regiments = {
+						paratrooper = { x = 0 y = 0 }
+						paratrooper = { x = 0 y = 1 }
+					}
+				}
 			}
 		}
 	}
@@ -7703,6 +7716,16 @@ focus_tree = {
 					division_template = "Mekhanizirovaniy Korpus"
 					is_locked = no
 				}
+				division_template = {
+					name = "Vozdushno-Desantnaya Brigada"			# Airborne Brigade
+					is_locked = no
+					division_names_group = SOV_PAR_01
+				
+					regiments = {
+						paratrooper = { x = 0 y = 0 }
+						paratrooper = { x = 0 y = 1 }
+					}
+				}
 			}
 		}
 	}
@@ -8518,6 +8541,9 @@ focus_tree = {
 		}
 		select_effect = {
 			country_event = { id = soviets.102 days = 18 }
+		}
+		cancel = {
+			has_completed_focus = SOV_great_purge2
 		}
 		cancelable = no
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
@@ -9587,6 +9613,7 @@ focus_tree = {
 				country_event = { id = soviets.176 hours = 1 }
 				country_event = { id = soviets.177 }
 				country_event = { id = soviets.136 days = 1 }
+				country_event = { id = soviets.227 days = 15 }
 				set_country_flag = preparation_done
 				set_country_flag = second_civil_war_in_progress
 				set_cosmetic_tag = WMA
@@ -10619,7 +10646,7 @@ focus_tree = {
 		prerequisite = { focus = SOV_destroy_communist focus = SOV_appease_communist }
 		mutually_exclusive = { focus = SOV_firm_hand }
 		icon = GFX_focus_generic_home_defense
-		cost = 10
+		cost = 8
 		ai_will_do = {
 			factor = 8
 		}
@@ -10646,6 +10673,13 @@ focus_tree = {
 				set_temp_variable = { communist_resistance_penalty = party_popularity@communism }
 				multiply_temp_variable = { communist_resistance_penalty = -1 }
 				add_stability = communist_resistance_penalty
+				remove_ideas = SOV_Communist_resistance2
+				hidden_effect = {
+					remove_ideas = SOV_Communist_resistance4
+					remove_ideas = SOV_Communist_resistance5
+					remove_ideas = SOV_Communist_resistance6
+					remove_ideas = SOV_Communist_resistance7
+				}
 			}
 			hidden_effect = {
 				retire_country_leader = yes
@@ -10667,7 +10701,7 @@ focus_tree = {
 			}
 			else = {
 				create_country_leader = {
-					name = "Kirill Vladimirovich"
+					name = "Vladimir Kirillovich"
 					desc = "POLITICS_VLADIMIR_KIRILLOVICH_DESC"
 					picture = "Portrait_Vladimir_Kirillovich.dds"
 					expire = "1965.1.1"
@@ -10689,7 +10723,7 @@ focus_tree = {
 		prerequisite = { focus = SOV_destroy_communist focus = SOV_appease_communist }
 		mutually_exclusive = { focus = SOV_restoration_tsar }
 		icon = GFX_focus_generic_support_the_left_right
-		cost = 10
+		cost = 8
 		ai_will_do = {
 			factor = 8
 		}
@@ -10716,6 +10750,13 @@ focus_tree = {
 				set_temp_variable = { communist_resistance_penalty = party_popularity@communism }
 				multiply_temp_variable = { communist_resistance_penalty = -1 }
 				add_stability = communist_resistance_penalty
+				remove_ideas = SOV_Communist_resistance2
+				hidden_effect = {
+					remove_ideas = SOV_Communist_resistance4
+					remove_ideas = SOV_Communist_resistance5
+					remove_ideas = SOV_Communist_resistance6
+					remove_ideas = SOV_Communist_resistance7
+				}
 			}
 			hidden_effect = {
 				retire_country_leader = yes
@@ -11857,6 +11898,11 @@ focus_tree = {
 			is_subject = no
 			is_major = yes
 			has_government = neutrality
+			NOT = {
+				GER = {
+					has_completed_focus = GER_revive_the_kaiserreich
+				}
+			}
 		}
 		bypass = {
 			GER = {

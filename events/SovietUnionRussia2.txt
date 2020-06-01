@@ -2944,7 +2944,7 @@ country_event = {
 
 	option = { #Reconciliation
 		name = soviets.91.c
-		add_political_power = -300
+		add_political_power = -200
 		add_stability = -0.2
 		remove_ideas = SOV_vyacheslav_molotov
 		remove_ideas = ivan_konev
@@ -4663,7 +4663,6 @@ country_event = {
 		name = soviets.131.a
 		hidden_effect = {
 			SOU = {
-				load_focus_tree = soviet2_focus
 				unlock_national_focus = SOV_great_purge2
 				declare_war_on = {
 					target = SOV
@@ -7624,6 +7623,12 @@ country_event = {
 			limit = {
 				is_subject_of = SOV
 			}
+			add_ideas = SOV_Isolation
+		}
+		every_country = {
+			limit = {
+				is_subject_of = SOV
+			}
 			SOV = {
 				set_autonomy = {
 					target = PREV
@@ -7728,16 +7733,33 @@ country_event = {
 		ai_chance = {
 			factor = 100
 		}
+		set_temp_variable = { random_factor = 0 }
+		randomize_temp_variable = {
+			var = random_factor
+			distribution = uniform
+			min = 0
+			max = 100
+		}
+		round_variable = random_factor
 		hidden_effect = {
-			random_list = {
-				50 = {
-					country_event = soviets.193
+			if = {
+				limit = {
+					check_variable = {
+						var = random_factor
+						value = 50
+						compare = less_than_or_equals
+					}
 				}
-				50 = {
-					country_event = soviets.194
+				SOV = {
+					country_event = { id = soviets.193 hours = 2 }
 				}
 			}
-		}
+			else = {
+				SOV = {
+					country_event = { id = soviets.194 hours = 2 }
+				}
+			}
+		}	
 	}
 
 	option = { #No
@@ -7780,16 +7802,33 @@ country_event = {
 		ai_chance = {
 			factor = 75
 		}
+		set_temp_variable = { random_factor = 0 }
+		randomize_temp_variable = {
+			var = random_factor
+			distribution = uniform
+			min = 0
+			max = 100
+		}
+		round_variable = random_factor
 		hidden_effect = {
-			random_list = {
-				75 = {
-					country_event = soviets.195
+			if = {
+				limit = {
+					check_variable = {
+						var = random_factor
+						value = 75
+						compare = less_than_or_equals
+					}
 				}
-				25 = {
-					country_event = soviets.196
+				SOV = {
+					country_event = { id = soviets.195 hours = 2 }
 				}
 			}
-		}
+			else = {
+				SOV = {
+					country_event = { id = soviets.196 hours = 2 }
+				}
+			}
+		}		
 	}
 
 	option = { #Ask one more time
@@ -7797,16 +7836,33 @@ country_event = {
 		ai_chance = {
 			factor = 25
 		}
+		set_temp_variable = { random_factor = 0 }
+		randomize_temp_variable = {
+			var = random_factor
+			distribution = uniform
+			min = 0
+			max = 100
+		}
+		round_variable = random_factor
 		hidden_effect = {
-			random_list = {
-				50 = {
-					country_event = soviets.193
+			if = {
+				limit = {
+					check_variable = {
+						var = random_factor
+						value = 50
+						compare = less_than_or_equals
+					}
 				}
-				50 = {
-					country_event = soviets.196
+				SOV = {
+					country_event = { id = soviets.193 hours = 2 }
 				}
 			}
-		}
+			else = {
+				SOV = {
+					country_event = { id = soviets.196 hours = 2 }
+				}
+			}
+		}		
 	}
 
 	option = { #Ok then, bye
@@ -8347,7 +8403,7 @@ country_event = {
 	}
 }
 
-#vassalize of Ukraine - Reintegrate the Lost State
+#vassalization of Ukraine - Reintegrate the Lost State
 country_event = {
 	id = soviets.213
 	title = soviets.213.t
@@ -8380,6 +8436,7 @@ country_event = {
 					autonomy_state = autonomy_dominion
 				}
 				country_event = { id = soviets.214 hours = 6 }
+				set_country_flag = ukraine_no_imperial_govern
 			}
 		}
 		else = {
@@ -8642,5 +8699,589 @@ country_event = {
 			division_template = "Belarusian Imperial Division"
 			is_locked = no
 		}
+	}
+}
+
+#Tsar's Death. His Son Takes Over
+country_event = {
+	id = soviets.226
+	title = soviets.226.t
+	desc = soviets.226.d
+	picture = GFX_report_event_generic_funeral
+
+	fire_only_once = yes
+
+	trigger = {
+		has_country_leader = {
+			name = "Kirill Vladimirovich"
+			ruling_only = yes
+		}
+		date > 1938.10.12
+	}
+
+	mean_time_to_happen = {
+		days =  10
+	}
+
+	option = {
+		name = soviets.226.a
+		ai_chance = {
+			factor = 100
+		}
+		hidden_effect = {
+			kill_country_leader = yes
+		}
+		create_country_leader = {
+			name = "Vladimir Kirillovich"
+			desc = "POLITICS_VLADIMIR_KIRILLOVICH_DESC"
+			picture = "Portrait_Vladimir_Kirillovich.dds"
+			expire = "1965.1.1"
+			ideology = despotism
+			traits = {
+			
+			}
+		}	
+	}
+}
+
+#Option to Cedes South Sakhalin to Japan if In Second Civil War
+country_event = {
+	id = soviets.227
+	title = soviets.227.t
+	desc = soviets.227.d
+	picture = GFX_report_event_japan_europe_pact
+
+	is_triggered_only = yes
+
+	option = { #Ask Non-Agression Pact for North Sakhalin
+		name = soviets.227.a
+		ai_chance = {
+			factor = 100
+		}
+		JAP = {
+			country_event = { id = japans.8 hours = 2 }
+		}
+	}
+
+	option = { #Never
+		name = soviets.227.b
+		ai_chance = {
+			factor = 0
+		}
+	}
+}
+
+#Germany Has Been Defeated and the Negotiation Was Succesful - Bring Back German Monarchy
+country_event = {
+	id = soviets.228
+	title = soviets.228.t
+	desc = soviets.228.d
+	picture = GFX_report_event_german_reichstag_gathering
+
+	fire_only_once = yes
+
+	trigger = {
+		TAG = SOV
+		has_war = no
+		SOV = {
+			is_subject = no
+		}
+		OR = {
+			has_country_flag = ger_exiles_accept_puppet
+			has_country_flag = ger_exiles_accept_puppet_reduced
+			has_country_flag = ger_exiles_accept_no_puppet
+		}
+		OR = {
+			AND = {
+				NOT = {
+					country_exists = GER
+				}
+				OR = {
+					SOV = {
+						any_owned_state = {
+							is_core_of = GER
+						}
+					}	
+					any_country = {
+						any_owned_state = {
+							is_core_of = GER
+						}
+						is_in_faction_with = SOV
+					}
+				}
+			}	
+			GER = {
+				is_subject_of = SOV
+			}
+			any_country = {
+				GER = {
+					is_subject_of = PREV
+				}
+				is_in_faction_with = SOV
+			}
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 10
+	}
+
+	option = {
+		name = soviets.228.a
+		if = {
+			limit = {
+				has_country_flag = ger_exiles_accept_puppet
+			}
+			SOV = {
+				release_autonomy = {
+					target = GER
+					autonomy_state = autonomy_puppet
+					freedom_level = 0.5
+				}
+			}
+			GER = {
+				set_politics = {
+					ruling_party = neutrality
+					elections_allowed = no
+				}
+				hidden_effect = {
+					add_popularity = {
+						ideology = communism
+						popularity = 0.15
+					}
+					add_popularity = {
+						ideology = democratic
+						popularity = 0.25
+					}
+					add_popularity = {
+						ideology = fascism
+						popularity = 0.10
+					}
+					add_popularity = {
+						ideology = neutrality
+						popularity = 0.50
+					}
+				}
+				create_country_leader = {
+					name = "Wilhelm II"
+					desc = "POLITICS_WILHELM_II_DESC"
+					picture = GFX_portrait_ger_wilhelm_ii
+					expire = "1965.1.1"
+					ideology = despotism
+					traits = {
+						anti_democrat imperial_connections
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_country_flag = ger_exiles_accept_puppet_reduced
+			}
+			SOV = {
+				release_autonomy = {
+					target = GER
+					autonomy_state = autonomy_dominion
+					freedom_level = 0.5
+				}
+			}
+			GER = {
+				set_politics = {
+					ruling_party = neutrality
+					elections_allowed = no
+				}
+				hidden_effect = {
+					add_popularity = {
+						ideology = communism
+						popularity = 0.15
+					}
+					add_popularity = {
+						ideology = democratic
+						popularity = 0.25
+					}
+					add_popularity = {
+						ideology = fascism
+						popularity = 0.10
+					}
+					add_popularity = {
+						ideology = neutrality
+						popularity = 0.50
+					}
+				}
+				create_country_leader = {
+					name = "Wilhelm II"
+					desc = "POLITICS_WILHELM_II_DESC"
+					picture = GFX_portrait_ger_wilhelm_ii
+					expire = "1965.1.1"
+					ideology = despotism
+					traits = {
+						anti_democrat imperial_connections
+					}
+				}
+			}
+		}
+		else = {
+			SOV = {
+				release = GER
+				add_to_faction = GER
+			}
+			GER = {
+				add_ai_strategy = {
+					type = alliance
+					id = SOV
+					value = 200
+				}
+				set_politics = {
+					ruling_party = neutrality
+					elections_allowed = no
+				}
+				hidden_effect = {
+					add_popularity = {
+						ideology = communism
+						popularity = 0.15
+					}
+					add_popularity = {
+						ideology = democratic
+						popularity = 0.25
+					}
+					add_popularity = {
+						ideology = fascism
+						popularity = 0.10
+					}
+					add_popularity = {
+						ideology = neutrality
+						popularity = 0.50
+					}
+				}
+				create_country_leader = {
+					name = "Wilhelm II"
+					desc = "POLITICS_WILHELM_II_DESC"
+					picture = GFX_portrait_ger_wilhelm_ii
+					expire = "1965.1.1"
+					ideology = despotism
+					traits = {
+						anti_democrat imperial_connections
+					}
+				}
+			}
+			if = {
+				limit = {
+					GER = {
+						is_subject = yes
+					}
+				}
+				PREV = {
+					set_autonomy = {
+						target = GER
+						autonomy_state = autonomy_free
+					}
+				}
+			}
+		}
+		every_state = {
+			limit = {
+				is_core_of = GER
+				any_country = {
+					is_in_faction_with = SOV #GER or ROOT or whatever
+					owns_state = PREV
+					NOT = { TAG = GER }
+				}
+			}
+			GER = {
+				transfer_state = PREV
+			}
+		}		
+		every_country = {
+			limit = {
+				any_state = {
+					is_owned_by = PREV
+					is_core_of = GER
+				}
+				NOT = {
+					TAG = GER
+					is_in_faction_with = SOV 
+				}
+			}
+			country_event = { id = soviets.229 days = 1 }
+		}
+	}
+}
+
+#Russian Ultimatum to Return the Land of Germany
+country_event = {
+	id = soviets.229
+	title = soviets.229.t
+	desc = soviets.229.d
+	picture = GFX_report_event_german_troops
+
+	is_triggered_only = yes
+
+	option = { #Return the Land
+		name = soviets.229.a
+		ai_chance = {
+			factor = 80
+			modifier = {
+				factor = 40
+				is_major = yes
+			}
+		}
+		every_owned_state = {
+			limit = {
+				is_core_of = GER
+			}
+			GER = {
+				transfer_state = PREV
+			}
+		}
+		SOV = {
+			country_event = { id = soviets.230 hours = 6 }
+		}
+	}
+
+	option = { #Never
+		name = soviets.229.b
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 60
+				is_major = yes
+			}
+		}
+		every_owned_state = {
+			limit = {
+				is_core_of = GER
+			}
+			PREV.PREV = {
+				add_resistance = 70
+			}
+		}		
+		SOV = {
+			country_event = { id = soviets.231 hours = 6 }
+		}
+	}
+}
+
+#FROM Accepts
+country_event = {
+	id = soviets.230
+	title = soviets.230.t
+	desc = soviets.230.d
+	picture = GFX_report_event_molotov_ribentrop_handshake
+
+	is_triggered_only = yes
+
+	option = { #Nice
+		name = soviets.230.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#FROM Refused
+country_event = {
+	id = soviets.231
+	title = soviets.231.t
+	desc = soviets.231.d
+	picture = GFX_report_event_nra_march
+
+	is_triggered_only = yes
+
+	option = { #Nice
+		name = soviets.231.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#Cannot Reinstore the German Monarchy - Player Gets Event Telling Him What to do
+country_event = {
+	id = soviets.232
+	title = soviets.232.t
+	desc = soviets.232.d
+	picture = GFX_report_event_german_reichstag_gathering
+
+	fire_only_once = yes
+
+	trigger = {
+		TAG = SOV
+		has_war = no
+		SOV = {
+			is_subject = no
+		}
+		OR = {
+			has_country_flag = ger_exiles_accept_puppet
+			has_country_flag = ger_exiles_accept_puppet_reduced
+			has_country_flag = ger_exiles_accept_no_puppet
+		}
+		any_country = {
+			GER = {
+				is_subject_of = PREV
+			}
+			NOT = {
+				is_in_faction_with = SOV
+			}	
+		}
+		NOT = {
+			GER = {
+				is_subject_of = SOV
+			}
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 10
+	}
+
+	option = { #Send Ultimatum
+		name = soviets.232.a
+		ai_chance = {
+			factor = 100
+		}
+		every_country = {
+			limit = {
+				NOT = {
+					is_in_faction_with = SOV
+				}
+				GER = {
+					is_subject_of = PREV
+				}
+			}
+			country_event = { id = soviets.233 days = 2 }
+		}
+	}
+
+	option = { #Declare War
+		name = soviets.232.b
+		ai_chance = {
+			factor = 0
+		}
+		SOV = {
+			declare_war_on = {
+				target = GER
+				type = puppet_wargoal_focus
+			}
+		}
+	}
+
+	option = { #Do Nothing
+		name = soviets.232.c
+		ai_chance = {
+			factor = 0
+		}
+		custom_effect_tooltip = anger_german_monarchist
+		clr_country_flag = ger_exiles_accept_puppet
+		clr_country_flag = ger_exiles_accept_puppet_reduced
+		clr_country_flag = ger_exiles_accept_no_puppet
+	}
+}
+
+#Russian Ultimatum to Cede Germany
+country_event = {
+	id = soviets.233
+	title = soviets.233.t
+	desc = soviets.233.d
+	picture = GFX_report_event_german_troops
+
+	is_triggered_only = yes
+
+	option = { #Cede Germany
+		name = soviets.233.a
+		ai_chance = {
+			factor = 80
+			modifier = {
+				factor = 60
+				is_major = yes
+			}
+		}
+		every_country = {
+			limit = {
+				GER = {
+					is_subject_of = PREV
+				}
+				NOT = {
+					is_in_faction_with = SOV
+				}
+			}
+			PREV = {
+				set_autonomy = {
+					target = GER
+					autonomy_state = autonomy_free
+				}	
+			}
+		}
+		SOV = {
+			country_event = { id = soviets.234 hours = 6 }
+		}
+	}
+
+	option = { #Never
+		name = soviets.233.b
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 40
+				is_major = yes
+			}
+		}
+		custom_effect_tooltip = war_over_germany_overlord		
+		SOV = {
+			country_event = { id = soviets.235 hours = 6 }
+		}
+	}
+}
+
+#FROM Accepts
+country_event = {
+	id = soviets.234
+	title = soviets.234.t
+	desc = soviets.234.d
+	picture = GFX_report_event_molotov_ribentrop_handshake
+
+	is_triggered_only = yes
+
+	option = { #Nice
+		name = soviets.234.a
+		ai_chance = {
+			factor = 100
+		}
+		SOV = {
+			set_autonomy = {
+				target = GER
+				autonomy_state = autonomy_puppet
+			}
+		}		
+	}
+}
+
+#FROM Refuse
+country_event = {
+	id = soviets.235
+	title = soviets.235.t
+	desc = soviets.235.d
+	picture = GFX_report_event_degaulle_churchill
+
+	is_triggered_only = yes
+
+	option = { #Give Up
+		name = soviets.235.a
+		ai_chance = {
+			factor = 100
+		}
+		add_stability = -0.05		
+	}
+
+	option = { #Declare War
+		name = soviets.235.b
+		ai_chance = {
+			factor = 0
+		}
+		SOV = {
+			declare_war_on = {
+				target = GER
+				type = puppet_wargoal_focus
+			}
+		}	
 	}
 }
