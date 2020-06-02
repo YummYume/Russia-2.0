@@ -1654,6 +1654,16 @@ country_event = {
 					division_template = "Mekhanizirovaniy Korpus"
 					is_locked = no
 				}
+				division_template = {
+					name = "Vozdushno-Desantnaya Brigada"
+					is_locked = no
+					division_names_group = SOV_PAR_01
+				
+					regiments = {
+						paratrooper = { x = 0 y = 0 }
+						paratrooper = { x = 0 y = 1 }
+					}
+				}
 			}
 			news_event = { id = newsrussia2.29 days = 1 }
 			swap_ideas = {
@@ -3450,6 +3460,16 @@ country_event = {
 				division_template = "Mekhanizirovaniy Korpus"
 				is_locked = no
 			}
+			division_template = {
+				name = "Vozdushno-Desantnaya Brigada"
+				is_locked = no
+				division_names_group = SOV_PAR_01
+			
+				regiments = {
+					paratrooper = { x = 0 y = 0 }
+					paratrooper = { x = 0 y = 1 }
+				}
+			}
 		}
 	}
 }
@@ -4663,7 +4683,6 @@ country_event = {
 		name = soviets.131.a
 		hidden_effect = {
 			SOU = {
-				unlock_national_focus = SOV_great_purge2
 				declare_war_on = {
 					target = SOV
 					type = annex_everything
@@ -4693,10 +4712,6 @@ country_event = {
 					}
 				}
 				SOU = {
-					declare_war_on = {
-						target = UKR
-						type = annex_everything
-					}
 					add_state_core = 201
 					add_state_core = 202
 					add_state_core = 193
@@ -4714,6 +4729,13 @@ country_event = {
 					add_state_core = 192
 					add_state_core = 198
 					add_state_core = 199
+				}
+				UKR = {
+					add_to_war = {
+						targeted_alliance = SOV
+						enemy = SOU
+						hostility_reason = anti_soviet_alliance
+					}
 				}
 			}
 			clr_country_flag = preparation_done
@@ -8751,9 +8773,10 @@ country_event = {
 			expire = "1965.1.1"
 			ideology = despotism
 			traits = {
-			
+				Heir_of_the_Tsar
 			}
-		}	
+		}
+		add_stability = -0.15	
 	}
 }
 
@@ -9295,6 +9318,31 @@ country_event = {
 				target = GER
 				type = puppet_wargoal_focus
 			}
+		}	
+	}
+}
+
+#Event To Relocate the Capital to St Petersburg
+country_event = {
+	id = soviets.236
+	title = soviets.236.t
+	desc = soviets.236.d
+	picture = GFX_report_event_generic_military_parade
+
+	is_triggered_only = yes
+
+	option = { #Restore the Old Capital
+		name = soviets.236.a
+		ai_chance = {
+			factor = 80
+		}
+		set_capital = 195	
+	}
+
+	option = { #We'll Change It Later
+		name = soviets.236.b
+		ai_chance = {
+			factor = 20
 		}	
 	}
 }
