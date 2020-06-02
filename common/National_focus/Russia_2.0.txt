@@ -10,7 +10,7 @@ focus_tree = {
 			OR = {
 				tag = SOV
 				tag = SOU
-			}	
+			}
 		}
 	}
 
@@ -5541,7 +5541,7 @@ focus_tree = {
 					name = "Vozdushno-Desantnaya Brigada"			# Airborne Brigade
 					is_locked = no
 					division_names_group = SOV_PAR_01
-				
+
 					regiments = {
 						paratrooper = { x = 0 y = 0 }
 						paratrooper = { x = 0 y = 1 }
@@ -7720,7 +7720,7 @@ focus_tree = {
 					name = "Vozdushno-Desantnaya Brigada"			# Airborne Brigade
 					is_locked = no
 					division_names_group = SOV_PAR_01
-				
+
 					regiments = {
 						paratrooper = { x = 0 y = 0 }
 						paratrooper = { x = 0 y = 1 }
@@ -8546,7 +8546,7 @@ focus_tree = {
 			has_completed_focus = SOV_great_purge2
 		}
 		cancelable = no
-		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
+		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
 		completion_reward = {
 			add_ideas = SOV_Terrible_fate
 			remove_ideas = trotskyite_plot
@@ -9361,7 +9361,7 @@ focus_tree = {
 			}
 			date > 1939.01.01
 		}
-		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
+		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA }
 		completion_reward = {
 			if = {
 				limit = {
@@ -9505,6 +9505,7 @@ focus_tree = {
 		available = {
 			is_subject = no
 		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
 		completion_reward = {
 			remove_ideas = SOV_Unhappy_peasants1
 			add_ideas = SOV_Prepare_second_war
@@ -9550,7 +9551,7 @@ focus_tree = {
 			factor = 8
 		}
 		available = {
-
+			is_subject = no
 		}
 		select_effect = {
 			activate_mission = SOV_second_civil_war_fn
@@ -9572,6 +9573,7 @@ focus_tree = {
 				value = 0
 			}
 		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
 		completion_reward = {
 			custom_effect_tooltip = second_civil_war_tt
 			custom_effect_tooltip = second_civil_war_tt2
@@ -10472,7 +10474,9 @@ focus_tree = {
 			}
 			has_country_flag = second_civil_war_over
 			is_subject = no
+			has_government = neutrality
 		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
 		completion_reward = {
 			add_timed_idea = {
 				idea = SOV_Old_way_life
@@ -10499,7 +10503,9 @@ focus_tree = {
 		}
 		available = {
 			is_subject = no
+			has_government = neutrality
 		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
 		completion_reward = {
 			add_ideas = SOV_Communist_resistance
 			hidden_effect = {
@@ -10524,7 +10530,9 @@ focus_tree = {
 		}
 		available = {
 			is_subject = no
+			has_government = neutrality
 		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
 		completion_reward = {
 			add_timed_idea = {
 				idea = SOV_Rebuild_industry
@@ -10547,7 +10555,9 @@ focus_tree = {
 		}
 		available = {
 			is_subject = no
+			has_government = neutrality
 		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
 		completion_reward = {
 			swap_ideas = {
 				remove_idea = SOV_Communist_resistance
@@ -10571,7 +10581,9 @@ focus_tree = {
 		}
 		available = {
 			is_subject = no
+			has_government = neutrality
 		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
 		completion_reward = {
 			swap_ideas = {
 				remove_idea = SOV_Communist_resistance
@@ -10652,9 +10664,11 @@ focus_tree = {
 		}
 		available = {
 			is_subject = no
+			has_government = neutrality
 			neutrality > 0.4
 			has_country_flag = monarchist_restoration_path
 		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA }
 		completion_reward = {
 			if = {
 				limit = {
@@ -10758,9 +10772,11 @@ focus_tree = {
 		}
 		available = {
 			is_subject = no
+			has_government = neutrality
 			neutrality > 0.4
 			has_country_flag = military_junta_leader
 		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
 		completion_reward = {
 			if = {
 				limit = {
@@ -10803,6 +10819,14 @@ focus_tree = {
 			}
 			set_cosmetic_tag = RUS
 			add_ideas = SOV_Denikin_trust
+			if = {
+				limit = {
+					NOT = {
+						is_faction_leader = yes
+					}
+				}
+				create_faction = moscow_pact
+			}
 		}
 	}
 
@@ -10818,8 +10842,10 @@ focus_tree = {
 			factor = 8
 		}
 		available = {
-
+			is_subject = no
+			has_government = neutrality
 		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
 		completion_reward = {
 			custom_effect_tooltip = SOV_buying_equipment_tt
 			custom_effect_tooltip = SOV_buying_equipment_decision_tt
@@ -10838,7 +10864,8 @@ focus_tree = {
 			factor = 8
 		}
 		available = {
-
+			is_subject = no
+			has_government = neutrality
 		}
 		bypass = {
 			NOT = {
@@ -10851,6 +10878,7 @@ focus_tree = {
 				country_exists = ARM
 			}
 		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
 		completion_reward = {
 			UKR = {
 				country_event = { id = soviets.213 hours = 3 }
@@ -10965,8 +10993,10 @@ focus_tree = {
 			factor = 8
 		}
 		available = {
-
+			is_subject = no
+			has_government = neutrality
 		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
 		completion_reward = {
 			add_timed_idea = {
 				idea = SOV_Concessions_communist
@@ -10990,6 +11020,7 @@ focus_tree = {
 			is_subject = no
 			has_government = neutrality
 		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA }
 		completion_reward = {
 			country_event = { id = soviets.198 days = 1 }
 		}
@@ -11010,6 +11041,7 @@ focus_tree = {
 			is_subject = no
 			has_government = neutrality
 		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA }
 		completion_reward = {
 			add_stability = 0.1
 			add_political_power = 100
@@ -11034,6 +11066,7 @@ focus_tree = {
 				has_government = fascism
 			}
 		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
 		completion_reward = {
 			add_ideas = SOV_Church_power_1
 			custom_effect_tooltip = SOV_control_church_tt
@@ -11056,6 +11089,7 @@ focus_tree = {
 			is_subject = no
 			has_government = neutrality
 		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
 		completion_reward = {
 			add_ideas = SOV_Asserting_dominance
 		}
@@ -11077,6 +11111,7 @@ focus_tree = {
 			has_government = neutrality
 			is_major = yes
 		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
 		completion_reward = {
 			hidden_effect = {
 				89 = { set_state_flag = slavic_states }
@@ -11167,6 +11202,7 @@ focus_tree = {
 				}
 			}
 		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
 		completion_reward = {
 			custom_effect_tooltip = SOV_unite_slavic_nations_tt2
 			every_other_country = {
@@ -11253,6 +11289,7 @@ focus_tree = {
 				}
 			}
 		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
 		completion_reward = {
 			GER = {
 				country_event = { id = germanys.3 days = 1 }
@@ -11290,6 +11327,7 @@ focus_tree = {
 				}
 			}
 		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
 		completion_reward = {
 			GER = {
 				country_event = { id = germanys.6 days = 1 }
@@ -11325,6 +11363,7 @@ focus_tree = {
 				}
 			}
 		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
 		will_lead_to_war_with = GER
 		completion_reward = {
 			GER = {
@@ -11361,6 +11400,7 @@ focus_tree = {
 				has_completed_focus = SOV_alliance_with_germany_junta
 			}
 		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
 		completion_reward = {
 			FRA = {
 				country_event = { id = frances.3 days = 1 }
@@ -11576,6 +11616,7 @@ focus_tree = {
 				controls_state = 102
 			}
 		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
 		completion_reward = {
 			add_stability = 0.1
 			SOV = {
@@ -11613,6 +11654,7 @@ focus_tree = {
 			has_government = neutrality
 			is_major = yes
 		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
 		completion_reward = {
 			add_ideas = SOV_Extend_influence_idea
 			custom_effect_tooltip = SOV_extend_influence_tt
@@ -11660,6 +11702,7 @@ focus_tree = {
 			has_government = neutrality
 			is_major = yes
 		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
 		completion_reward = {
 			add_ideas = SOV_Protect_legacy
 		}
@@ -11708,6 +11751,7 @@ focus_tree = {
 				is_subject = no
 			}
 		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
 		completion_reward = {
 			if = {
 				limit = {
@@ -11748,6 +11792,7 @@ focus_tree = {
 			is_subject = no
 			has_government = neutrality
 		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA }
 		completion_reward = {
 			country_event = { id = soviets.212 days = 1 }
 
@@ -11883,6 +11928,7 @@ focus_tree = {
 				}
 			}
 		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA }
 		will_lead_to_war_with = POL
 		completion_reward = {
 			country_event = { id = polands.4 days = 1 }
@@ -11912,6 +11958,7 @@ focus_tree = {
 				}
 			}
 		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA }
 		will_lead_to_war_with = FIN
 		completion_reward = {
 			country_event = { id = finlands.9 days = 1 }
@@ -11947,6 +11994,7 @@ focus_tree = {
 				}
 			}
 		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA }
 		completion_reward = {
 			country_event = { id = soviets.192 days = 2 }
 		}
@@ -11969,6 +12017,7 @@ focus_tree = {
 			has_government = neutrality
 			is_major = yes
 		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA }
 		completion_reward = {
 			if = {
 				limit = {
@@ -12020,6 +12069,7 @@ focus_tree = {
 				is_subject = no
 			}
 		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA }
 		completion_reward = {
 			YUG = {
 				country_event = { id = soviets.178 days = 1 }
@@ -12053,6 +12103,7 @@ focus_tree = {
 				is_subject = no
 			}
 		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA }
 		completion_reward = {
 			CZE = {
 				country_event = { id = soviets.178 days = 1 }
@@ -12086,6 +12137,7 @@ focus_tree = {
 				is_subject = no
 			}
 		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA }
 		completion_reward = {
 			HUN = {
 				country_event = { id = soviets.181 days = 1 }
@@ -12119,6 +12171,7 @@ focus_tree = {
 				is_subject = no
 			}
 		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA }
 		completion_reward = {
 			ROM = {
 				country_event = { id = soviets.181 days = 1 }
@@ -12180,6 +12233,7 @@ focus_tree = {
 				}
 			}
 		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA }
 		completion_reward = {
 			custom_effect_tooltip = SOV_invite_baltics_tt
 			every_country = {
@@ -12226,6 +12280,7 @@ focus_tree = {
 				is_subject = no
 			}
 		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA }
 		completion_reward = {
 			BUL = {
 				country_event = { id = soviets.178 days = 1 }
