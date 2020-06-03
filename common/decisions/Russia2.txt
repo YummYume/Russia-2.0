@@ -7372,7 +7372,7 @@ SOV_monarchy_congress = {
 			}
 		}
 
-		cost = 10
+		cost = 50
 
 		complete_effect = {
 			add_ideas = war_economy
@@ -7484,7 +7484,7 @@ SOV_monarchy_congress = {
 			}
 		}
 
-		cost = 10
+		cost = 50
 
 		complete_effect = {
 			add_ideas = SOV_Develop_new_ressources
@@ -7583,6 +7583,561 @@ SOV_monarchy_congress = {
 					}
 				}
 			}
+		}
+	}
+
+	SOV_tsarist_military_training = {
+
+		icon = GFX_decision_generic_intelligence_operation
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = SOV_tsarist_military_training_support_tt
+				check_variable = {
+					var = house_russia_support
+					value = 5
+					compare = greater_than_or_equals
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = SOV_tsarist_military_training_opposition_tt
+				check_variable = {
+					var = house_russia_opposed
+					value = 2
+					compare = less_than_or_equals
+				}
+			}
+		}
+
+		cost = 50
+
+		complete_effect = {
+			add_ideas = SOV_Tsarist_military
+			custom_effect_tooltip = SOV_2_houses_go_opposition
+			set_temp_variable = { success_count = 0 }
+			set_temp_variable = { random_count_array = 0 }
+			while_loop_effect = {
+				break = end_array
+    			limit = {
+					check_variable = {
+						var = success_count
+						value = 2
+						compare = less_than
+					}
+				}
+
+				for_each_loop = {
+				    array = monarchy_houses_russia
+					value = current
+	    			index = i
+				    break = end_array
+
+				    if = {
+						limit = {
+							check_variable = {
+								var = house_russia@var:current
+								value = 3
+								compare = equals
+							}
+						}
+						randomize_temp_variable = {
+							var = random_count_array
+							distribution = uniform
+							min = 1
+							max = 2
+						}
+						round_temp_variable = random_count_array
+						if = {
+							limit = {
+								check_variable = {
+									var = random_count_array
+									value = 1
+									compare = equals
+								}
+							}
+							set_variable = { house_russia_pp_cost@var:current = 30 }
+							add_to_variable = {
+								var = house_russia_opposed
+								value = 1
+							}
+							subtract_from_variable = {
+								var = house_russia_support
+								value = 1
+							}
+							subtract_from_variable = {
+								var = house_russia@var:current
+								value = 2
+							}
+							add_to_temp_variable = { success_count = 1 }
+							if = {
+								limit = {
+									check_variable = {
+										var = success_count
+										value = 2
+										compare = equals
+									}
+								}
+								add_to_temp_variable = { end_array = 1 }
+							}
+						}
+						else = {
+							# Nothing happens, the loop will keep going
+						}
+					}
+				}
+			}
+		}
+	}
+
+	SOV_civilian_industry_improvement = {
+
+		icon = GFX_decision_generic_construction
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = SOV_civilian_industry_improvement_opposition_tt
+				check_variable = {
+					var = house_russia_opposed
+					value = 9
+					compare = less_than_or_equals
+				}
+			}
+		}
+
+		cost = 25
+
+		days_remove = 40
+
+		complete_effect = {
+			set_temp_variable = { success_count = 0 }
+			set_temp_variable = { random_count_array = 0 }
+			while_loop_effect = {
+				break = end_array
+    			limit = {
+					check_variable = {
+						var = success_count
+						value = 1
+						compare = less_than
+					}
+				}
+
+				for_each_loop = {
+				    array = monarchy_houses_russia
+					value = current
+	    			index = i
+				    break = end_array
+
+				    if = {
+						limit = {
+							OR = {
+								check_variable = {
+									var = house_russia@var:current
+									value = 3
+									compare = equals
+								}
+								check_variable = {
+									var = house_russia@var:current
+									value = 2
+									compare = equals
+								}
+							}
+						}
+						randomize_temp_variable = {
+							var = random_count_array
+							distribution = uniform
+							min = 1
+							max = 2
+						}
+						round_temp_variable = random_count_array
+						if = {
+							limit = {
+								check_variable = {
+									var = random_count_array
+									value = 1
+									compare = equals
+								}
+							}
+							if = {
+								limit = {
+									check_variable = {
+										var = house_russia@var:current
+										value = 3
+										compare = equals
+									}
+								}
+								set_variable = { house_russia_pp_cost@var:current = 20 }
+								add_to_variable = {
+									var = house_russia_neutral
+									value = 1
+								}
+								subtract_from_variable = {
+									var = house_russia_support
+									value = 1
+								}
+								subtract_from_variable = {
+									var = house_russia@var:current
+									value = 1
+								}
+							}
+							else = {
+								limit = {
+									check_variable = {
+										var = house_russia@var:current
+										value = 2
+										compare = equals
+									}
+								}
+								set_variable = { house_russia_pp_cost@var:current = 30 }
+								add_to_variable = {
+									var = house_russia_opposed
+									value = 1
+								}
+								subtract_from_variable = {
+									var = house_russia_neutral
+									value = 1
+								}
+								subtract_from_variable = {
+									var = house_russia@var:current
+									value = 1
+								}
+							}
+							add_to_temp_variable = { success_count = 1 }
+							if = {
+								limit = {
+									check_variable = {
+										var = success_count
+										value = 1
+										compare = equals
+									}
+								}
+								add_to_temp_variable = { end_array = 1 }
+							}
+						}
+						else = {
+							# Nothing happens, the loop will keep going
+						}
+					}
+				}
+			}
+		}
+
+		remove_effect = {
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			custom_effect_tooltip = SOV_1_random_house_go_opposition
+		}
+	}
+
+	SOV_military_industry_improvement = {
+
+		icon = GFX_decision_ger_military_buildup
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = SOV_military_industry_improvement_opposition_tt
+				check_variable = {
+					var = house_russia_opposed
+					value = 9
+					compare = less_than_or_equals
+				}
+			}
+		}
+
+		cost = 25
+
+		days_remove = 40
+
+		complete_effect = {
+			set_temp_variable = { success_count = 0 }
+			set_temp_variable = { random_count_array = 0 }
+			while_loop_effect = {
+				break = end_array
+    			limit = {
+					check_variable = {
+						var = success_count
+						value = 1
+						compare = less_than
+					}
+				}
+
+				for_each_loop = {
+				    array = monarchy_houses_russia
+					value = current
+	    			index = i
+				    break = end_array
+
+				    if = {
+						limit = {
+							OR = {
+								check_variable = {
+									var = house_russia@var:current
+									value = 3
+									compare = equals
+								}
+								check_variable = {
+									var = house_russia@var:current
+									value = 2
+									compare = equals
+								}
+							}
+						}
+						randomize_temp_variable = {
+							var = random_count_array
+							distribution = uniform
+							min = 1
+							max = 2
+						}
+						round_temp_variable = random_count_array
+						if = {
+							limit = {
+								check_variable = {
+									var = random_count_array
+									value = 1
+									compare = equals
+								}
+							}
+							if = {
+								limit = {
+									check_variable = {
+										var = house_russia@var:current
+										value = 3
+										compare = equals
+									}
+								}
+								set_variable = { house_russia_pp_cost@var:current = 20 }
+								add_to_variable = {
+									var = house_russia_neutral
+									value = 1
+								}
+								subtract_from_variable = {
+									var = house_russia_support
+									value = 1
+								}
+								subtract_from_variable = {
+									var = house_russia@var:current
+									value = 1
+								}
+							}
+							else = {
+								limit = {
+									check_variable = {
+										var = house_russia@var:current
+										value = 2
+										compare = equals
+									}
+								}
+								set_variable = { house_russia_pp_cost@var:current = 30 }
+								add_to_variable = {
+									var = house_russia_opposed
+									value = 1
+								}
+								subtract_from_variable = {
+									var = house_russia_neutral
+									value = 1
+								}
+								subtract_from_variable = {
+									var = house_russia@var:current
+									value = 1
+								}
+							}
+							add_to_temp_variable = { success_count = 1 }
+							if = {
+								limit = {
+									check_variable = {
+										var = success_count
+										value = 1
+										compare = equals
+									}
+								}
+								add_to_temp_variable = { end_array = 1 }
+							}
+						}
+						else = {
+							# Nothing happens, the loop will keep going
+						}
+					}
+				}
+			}
+		}
+
+		remove_effect = {
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			custom_effect_tooltip = SOV_1_random_house_go_opposition
+		}
+	}
+
+	SOV_naval_industry_improvement = {
+
+		icon = GFX_decision_generic_naval
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = SOV_naval_industry_improvement_opposition_tt
+				check_variable = {
+					var = house_russia_opposed
+					value = 9
+					compare = less_than_or_equals
+				}
+			}
+		}
+
+		cost = 25
+
+		days_remove = 40
+
+		complete_effect = {
+			set_temp_variable = { success_count = 0 }
+			set_temp_variable = { random_count_array = 0 }
+			while_loop_effect = {
+				break = end_array
+    			limit = {
+					check_variable = {
+						var = success_count
+						value = 1
+						compare = less_than
+					}
+				}
+
+				for_each_loop = {
+				    array = monarchy_houses_russia
+					value = current
+	    			index = i
+				    break = end_array
+
+				    if = {
+						limit = {
+							OR = {
+								check_variable = {
+									var = house_russia@var:current
+									value = 3
+									compare = equals
+								}
+								check_variable = {
+									var = house_russia@var:current
+									value = 2
+									compare = equals
+								}
+							}
+						}
+						randomize_temp_variable = {
+							var = random_count_array
+							distribution = uniform
+							min = 1
+							max = 2
+						}
+						round_temp_variable = random_count_array
+						if = {
+							limit = {
+								check_variable = {
+									var = random_count_array
+									value = 1
+									compare = equals
+								}
+							}
+							if = {
+								limit = {
+									check_variable = {
+										var = house_russia@var:current
+										value = 3
+										compare = equals
+									}
+								}
+								set_variable = { house_russia_pp_cost@var:current = 20 }
+								add_to_variable = {
+									var = house_russia_neutral
+									value = 1
+								}
+								subtract_from_variable = {
+									var = house_russia_support
+									value = 1
+								}
+								subtract_from_variable = {
+									var = house_russia@var:current
+									value = 1
+								}
+							}
+							else = {
+								limit = {
+									check_variable = {
+										var = house_russia@var:current
+										value = 2
+										compare = equals
+									}
+								}
+								set_variable = { house_russia_pp_cost@var:current = 30 }
+								add_to_variable = {
+									var = house_russia_opposed
+									value = 1
+								}
+								subtract_from_variable = {
+									var = house_russia_neutral
+									value = 1
+								}
+								subtract_from_variable = {
+									var = house_russia@var:current
+									value = 1
+								}
+							}
+							add_to_temp_variable = { success_count = 1 }
+							if = {
+								limit = {
+									check_variable = {
+										var = success_count
+										value = 1
+										compare = equals
+									}
+								}
+								add_to_temp_variable = { end_array = 1 }
+							}
+						}
+						else = {
+							# Nothing happens, the loop will keep going
+						}
+					}
+				}
+			}
+		}
+
+		remove_effect = {
+			random_owned_controlled_state = {
+				limit = {
+					is_coastal = yes
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes
+				}
+			}
+			custom_effect_tooltip = SOV_1_random_house_go_opposition
 		}
 	}
 
@@ -7779,6 +8334,50 @@ SOV_monarchy_congress = {
 		}
 	}
 
+	SOV_alaskan_deal = {
+
+		icon = GFX_decision_generic_operation
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = SOV_alaskan_deal_tt
+				check_variable = {
+					var = house_russia_support
+					value = 6
+					compare = greater_than_or_equals
+				}
+			}
+		}
+
+		visible = {
+			any_country = {
+				owns_state = 463
+				has_civil_war = no
+				is_subject = no
+				NOT = {
+					has_war_with = SOV
+					tag = SOV
+				}
+			}
+		}
+
+		complete_effect = {
+			add_state_claim = 463
+			every_other_country = {
+				limit = {
+					owns_state = 463
+				}
+				country_event = { id = americas.8 days = 1 }
+			}
+		}
+	}
+
 	SOV_intervention_germany = {
 
 		icon = GFX_decision_generic_tank
@@ -7786,6 +8385,8 @@ SOV_monarchy_congress = {
 		allowed = {
 			original_tag = SOV
 		}
+
+		fire_only_once = yes
 
 		available = {
 			custom_trigger_tooltip = {
