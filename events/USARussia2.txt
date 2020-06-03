@@ -10,14 +10,14 @@ country_event = {
 	title = americas.1.t
 	desc = americas.1.d
 	picture = GFX_report_event_generic_sign_treaty1
-	
+
 	is_triggered_only = yes
-	
+
 	option = { #Accepts
 		ai_chance = { factor = 75 }
 		name = americas.1.a
-		SOV = { 
-			add_to_faction = USA 
+		SOV = {
+			add_to_faction = USA
 			country_event = { id = americas.2 days = 1 }
 		}
 		USA = {
@@ -40,14 +40,14 @@ country_event = {
 	title = americas.2.t
 	desc = americas.2.d
 	picture = GFX_report_event_hitler_handshake
-	
+
 	is_triggered_only = yes
-	
+
 	option = { #Good
 		name = americas.2.a
 		hidden_effect = {
 			news_event = { id = newsrussia2.46 days = 1 }
-		}			
+		}
 	}
 }
 
@@ -57,9 +57,9 @@ country_event = {
 	title = americas.3.t
 	desc = americas.3.d
 	picture = GFX_report_event_generic_parliament
-	
+
 	is_triggered_only = yes
-	
+
 	option = { #Bad
 		name = americas.3.a
 	}
@@ -107,7 +107,7 @@ country_event = {
 	option = { #Refuse
 		ai_chance = {
 			factor = 0
-		}	
+		}
 		name = americas.4.b
 		SOV = {
 			country_event = { days = 1 id = americas.6 }
@@ -284,7 +284,7 @@ country_event = {
 					}
 				}
 				set_nationality = USA
-			}		
+			}
 
 			every_state = {
 				limit = {
@@ -317,5 +317,99 @@ country_event = {
 		}
 		add_stability = keep_union_stability_loss
 		add_war_support = keep_union_war_support_loss
+	}
+}
+
+#Alaskan Purchase
+country_event = {
+	id = americas.8
+	title = americas.8.t
+	desc = americas.8.d
+	picture = GFX_report_event_german_troops
+
+	is_triggered_only = yes
+
+	option = { #Alright
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 20
+				463 = {
+					is_core_of = ROOT
+				}
+			}
+		}
+		name = americas.8.a
+		if = {
+			limit = {
+				463 = {
+					is_core_of = ROOT
+				}
+			}
+			remove_state_core = 463
+		}
+		add_timed_idea = {
+		    idea = SOV_Alaskan_payment_received
+		    days = 180
+		}
+		SOV = {
+			country_event = americas.9
+			transfer_state = 463
+		}
+	}
+
+	option = { #No
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 80
+				463 = {
+					is_core_of = ROOT
+				}
+			}
+		}
+		name = americas.8.b
+		SOV = {
+			country_event = americas.10
+		}
+	}
+}
+
+#Alaska Holder Accepts
+country_event = {
+	id = americas.9
+	title = americas.9.t
+	desc = americas.9.d
+	picture = GFX_report_event_german_troops
+
+	is_triggered_only = yes
+
+	option = { #Yay
+		ai_chance = {
+			factor = 100
+		}
+		name = americas.9.a
+		add_state_core = 463
+		add_timed_idea = {
+		    idea = SOV_Alaskan_payment
+		    days = 180
+		}
+	}
+}
+
+#Alaska Holder Refuses
+country_event = {
+	id = americas.10
+	title = americas.10.t
+	desc = americas.10.d
+	picture = GFX_report_event_german_troops
+
+	is_triggered_only = yes
+
+	option = { #Oh
+		ai_chance = {
+			factor = 100
+		}
+		name = americas.10.a
 	}
 }
