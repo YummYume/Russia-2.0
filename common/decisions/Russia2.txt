@@ -8472,10 +8472,8 @@ SOV_reintegrate_lost_states = {
 
 		complete_effect = {
 			set_temp_variable = { stability_calculator_ukraine_1 = stability_hit_ukraine }
-			multiply_temp_variable = 0.05
 			multiply_temp_variable = { stability_calculator_ukraine_1 = 0.05 }
 			set_temp_variable = { army_transfer_calculator_ukr = army_transfer_ukr_lost }
-			multiply_temp_variable = 0.2
 			multiply_temp_variable = { army_transfer_calculator_ukr = 0.2 }
 			custom_effect_tooltip = transfer_ukr_army_tt
 			hidden_effect = {
@@ -8526,10 +8524,8 @@ SOV_reintegrate_lost_states = {
 
 		complete_effect = {
 			set_temp_variable = { stability_calculator_ukraine_2 = stability_hit_ukraine }
-			multiply_temp_variable = 0.05
 			multiply_temp_variable = { stability_calculator_ukraine_2 = 0.05 }
 			set_temp_variable = { army_transfer_calculator_ukr = army_transfer_ukr_lost }
-			multiply_temp_variable = 0.20
 			multiply_temp_variable = { army_transfer_calculator_ukr = 0.20 }
 			custom_effect_tooltip = transfer_ukr_army_tt
 			hidden_effect = {
@@ -8584,10 +8580,8 @@ SOV_reintegrate_lost_states = {
 
 		complete_effect = {
 			set_temp_variable = { stability_calculator_belarus = stability_hit_belarus }
-			multiply_temp_variable = 0.03
 			multiply_temp_variable = { stability_calculator_belarus = 0.03 }
 			set_temp_variable = { army_transfer_calculator_belarus = army_transfer_blr_lost }
-			multiply_temp_variable = 0.20
 			multiply_temp_variable = { army_transfer_calculator_belarus = 0.20 }
 			custom_effect_tooltip = transfer_blr_army_tt
 			hidden_effect = {
@@ -8641,10 +8635,8 @@ SOV_reintegrate_lost_states = {
 
 		complete_effect = {
 			set_temp_variable = { stability_calculator_georgia = stability_hit_georgia }
-			multiply_temp_variable = 0.03
 			multiply_temp_variable = { stability_calculator_georgia = 0.03 }
 			set_temp_variable = { army_transfer_calculator_georgia = army_transfer_geo_lost }
-			multiply_temp_variable = 0.20
 			multiply_temp_variable = { army_transfer_calculator_georgia = 0.20 }
 			custom_effect_tooltip = transfer_geo_army_tt
 			hidden_effect = {
@@ -8698,10 +8690,8 @@ SOV_reintegrate_lost_states = {
 
 		complete_effect = {
 			set_temp_variable = { stability_calculator_azr = stability_hit_azr_idk }
-			multiply_temp_variable = 0.03
 			multiply_temp_variable = { stability_calculator_azr = 0.03 }
 			set_temp_variable = { army_transfer_calculator_azr = army_transfer_azr_lost }
-			multiply_temp_variable = 0.20
 			multiply_temp_variable = { army_transfer_calculator_azr = 0.20 }
 			custom_effect_tooltip = transfer_azr_army_tt
 			hidden_effect = {
@@ -8755,10 +8745,8 @@ SOV_reintegrate_lost_states = {
 
 		complete_effect = {
 			set_temp_variable = { stability_calculator_armenia = stability_hit_armenia }
-			multiply_temp_variable = 0.03
 			multiply_temp_variable = { stability_calculator_armenia = 0.03 }
 			set_temp_variable = { army_transfer_calculator_arm = army_transfer_arm_lost }
-			multiply_temp_variable = 0.20
 			multiply_temp_variable = { army_transfer_calculator_arm = 0.20 }
 			custom_effect_tooltip = transfer_arm_army_tt
 			hidden_effect = {
@@ -8812,10 +8800,8 @@ SOV_reintegrate_lost_states = {
 
 		complete_effect = {
 			set_temp_variable = { stability_calculator_kaz = stability_hit_kaz }
-			multiply_temp_variable = 0.03
 			multiply_temp_variable = { stability_calculator_kaz = 0.03 }
 			set_temp_variable = { army_transfer_calculator_kaz = army_transfer_kaz_lost }
-			multiply_temp_variable = 0.20
 			multiply_temp_variable = { army_transfer_calculator_kaz = 0.20 }
 			custom_effect_tooltip = transfer_kaz_army_tt
 			hidden_effect = {
@@ -8869,10 +8855,8 @@ SOV_reintegrate_lost_states = {
 
 		complete_effect = {
 			set_temp_variable = { stability_calculator_tms = stability_hit_tms }
-			multiply_temp_variable = 0.03
 			multiply_temp_variable = { stability_calculator_tms = 0.03 }
 			set_temp_variable = { army_transfer_calculator_tms = army_transfer_tms_lost }
-			multiply_temp_variable = 0.20
 			multiply_temp_variable = { army_transfer_calculator_tms = 0.20 }
 			custom_effect_tooltip = transfer_tms_army_tt
 			hidden_effect = {
@@ -8908,16 +8892,33 @@ SOV_reintegrate_lost_states = {
 		}
 
 		available = {
-			custom_trigger_tooltip = {
-				tooltip = reinforce_imperial_ties_ukraine_tt
-				NOT = {
-					check_variable = {
-						var = stability_hit_ukraine
-						value = 3
-						compare = equals
+			if = {
+				limit = {
+					has_country_flag = sympathize_with_ukraine
+				}
+				custom_trigger_tooltip = {
+					tooltip = reinforce_imperial_ties_ukraine_tt
+					NOT = {
+						check_variable = {
+							var = stability_hit_ukraine
+							value = 3
+							compare = equals
+						}
 					}
 				}
-			}	
+			}
+			else = {
+				custom_trigger_tooltip = {
+					tooltip = reinforce_imperial_ties_ukraine_tt2
+					NOT = {
+						check_variable = {
+							var = stability_hit_ukraine
+							value = 3
+							compare = equals
+						}
+					}
+				}
+			}
 		}
 
 		visible = {
@@ -8931,7 +8932,7 @@ SOV_reintegrate_lost_states = {
 		days_remove = 30
 
 		remove_effect = {
-
+			custom_effect_tooltip = stability_ukr_upgrade_original_tt
 		}
 
 		complete_effect = {
