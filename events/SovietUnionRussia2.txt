@@ -7697,6 +7697,44 @@ country_event = {
 					division_template = "Kavkazskaya kazach'ya diviziya"
 				}
 			}
+			582 = {
+				remove_province_modifier = {
+					static_modifiers = { urals_secret }
+					province = 4383
+					province = 12200
+					province = 7373
+					province = 4311
+					province = 7300
+					province = 10185
+					province = 4265 
+				}
+			}
+			573 = {
+				remove_province_modifier = {
+					static_modifiers = { urals_secret }
+					province = 12117
+					province = 10329
+					province = 11223
+					province = 7320
+					province = 4758
+					province = 237
+					province = 11307
+					province = 278 
+				}
+			}
+			581 = {
+				remove_province_modifier = {
+					static_modifiers = { urals_secret }
+					province = 10216
+					province = 4874
+					province = 12659
+					province = 7824
+					province = 10551
+					province = 10677
+					province = 12502
+					province = 13076
+				}
+			}
 		}
 		add_threat = -10
 		remove_ideas = SOV_Supply_line
@@ -8911,16 +8949,33 @@ country_event = {
 						popularity = 0.50
 					}
 				}
-				create_country_leader = {
-					name = "Wilhelm II"
-					desc = "POLITICS_WILHELM_II_DESC"
-					picture = GFX_portrait_ger_wilhelm_ii
-					expire = "1965.1.1"
-					ideology = despotism
-					traits = {
-						anti_democrat imperial_connections
+				if = {
+					limit = {
+						date < 1941.06.04
+					}
+					create_country_leader = {
+						name = "Wilhelm II"
+						desc = "POLITICS_WILHELM_II_DESC"
+						picture = GFX_portrait_ger_wilhelm_ii
+						expire = "1965.1.1"
+						ideology = despotism
+						traits = {
+							anti_democrat imperial_connections
+						}
 					}
 				}
+				else = {
+					create_country_leader = {
+						name = "Wilhelm III"
+						desc = "POLITICS_WILHELM_III_DESC"
+						picture = GFX_portrait_ger_wilhelm_iii
+						expire = "1965.1.1"
+						ideology = despotism
+						traits = {
+							popular_figurehead2
+						}
+					}
+				}	
 			}
 		}
 		else_if = {
@@ -8957,14 +9012,31 @@ country_event = {
 						popularity = 0.50
 					}
 				}
-				create_country_leader = {
-					name = "Wilhelm II"
-					desc = "POLITICS_WILHELM_II_DESC"
-					picture = GFX_portrait_ger_wilhelm_ii
-					expire = "1965.1.1"
-					ideology = despotism
-					traits = {
-						anti_democrat imperial_connections
+				if = {
+					limit = {
+						date < 1941.06.04
+					}
+					create_country_leader = {
+						name = "Wilhelm II"
+						desc = "POLITICS_WILHELM_II_DESC"
+						picture = GFX_portrait_ger_wilhelm_ii
+						expire = "1965.1.1"
+						ideology = despotism
+						traits = {
+							anti_democrat imperial_connections
+						}
+					}
+				}
+				else = {
+					create_country_leader = {
+						name = "Wilhelm III"
+						desc = "POLITICS_WILHELM_III_DESC"
+						picture = GFX_portrait_ger_wilhelm_iii
+						expire = "1965.1.1"
+						ideology = despotism
+						traits = {
+							popular_figurehead2
+						}
 					}
 				}
 				set_country_flag = GER_dominion_no_imperial
@@ -9003,14 +9075,31 @@ country_event = {
 						popularity = 0.50
 					}
 				}
-				create_country_leader = {
-					name = "Wilhelm II"
-					desc = "POLITICS_WILHELM_II_DESC"
-					picture = GFX_portrait_ger_wilhelm_ii
-					expire = "1965.1.1"
-					ideology = despotism
-					traits = {
-						anti_democrat imperial_connections
+				if = {
+					limit = {
+						date < 1941.06.04
+					}
+					create_country_leader = {
+						name = "Wilhelm II"
+						desc = "POLITICS_WILHELM_II_DESC"
+						picture = GFX_portrait_ger_wilhelm_ii
+						expire = "1965.1.1"
+						ideology = despotism
+						traits = {
+							anti_democrat imperial_connections
+						}
+					}
+				}
+				else = {
+					create_country_leader = {
+						name = "Wilhelm III"
+						desc = "POLITICS_WILHELM_III_DESC"
+						picture = GFX_portrait_ger_wilhelm_iii
+						expire = "1965.1.1"
+						ideology = despotism
+						traits = {
+							popular_figurehead2
+						}
 					}
 				}
 			}
@@ -9032,7 +9121,10 @@ country_event = {
 			limit = {
 				is_core_of = GER
 				any_country = {
-					is_in_faction_with = SOV #GER or ROOT or whatever
+					OR = {
+						is_in_faction_with = SOV #GER or ROOT or whatever
+						is_subject_of = SOV
+					}	
 					owns_state = PREV
 					NOT = { TAG = GER }
 				}
@@ -9041,7 +9133,7 @@ country_event = {
 				transfer_state = PREV
 			}
 		}
-		every_country = {
+		every_other_country = {
 			limit = {
 				any_state = {
 					is_owned_by = PREV
@@ -9050,6 +9142,7 @@ country_event = {
 				NOT = {
 					TAG = GER
 					is_in_faction_with = SOV
+					is_subject_of = SOV
 				}
 			}
 			country_event = { id = soviets.229 days = 1 }
@@ -9189,7 +9282,7 @@ country_event = {
 		ai_chance = {
 			factor = 100
 		}
-		every_country = {
+		every_other_country = {
 			limit = {
 				NOT = {
 					is_in_faction_with = SOV
@@ -10286,5 +10379,289 @@ country_event = {
 			factor = 100
 		}
 		add_manpower = -2000
+	}
+}
+
+#Poland After War - Puppet and Germany is Subjetc
+country_event = {
+	id = soviets.248
+	title = soviets.248.t
+	desc = soviets.248.d
+	picture = GFX_report_event_hol_cabinet_gerbrandy
+
+	fire_only_once = yes
+
+	trigger = {
+		TAG = SOV
+		has_country_flag = poland_accept_imperial_puppet
+		is_subject = no
+		has_war = no
+		has_government = neutrality
+		OR = {
+			has_country_flag = ger_exiles_accept_puppet
+			has_country_flag = ger_exiles_accept_puppet_reduced
+		}		
+		GER = {
+			is_subject_of = SOV
+		}
+		POL = {
+			is_subject_of = SOV
+		}
+		5 = {
+			is_owned_and_controlled_by = GER
+		}
+		763 = {
+			is_owned_and_controlled_by = GER
+		}
+		63 = {
+			is_owned_and_controlled_by = GER
+		}
+		68 = {
+			is_owned_and_controlled_by = GER
+		}
+		66 = {
+			is_owned_and_controlled_by = GER
+		}
+		67 = {
+			is_owned_and_controlled_by = GER
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 10
+	}
+
+	option = { #Ask to Trade Land for the Three Nations
+		name = soviets.248.a
+		ai_chance = {
+			factor = 70
+		}
+		GER = {
+			country_event = { id = soviets.249 days = 1 }
+		}
+	}
+
+	option = { #We'll Give Eastern Germany for Eastern Poland 
+		name = soviets.248.b
+		ai_chance = {
+			factor = 10
+		}
+		SOV = {
+			transfer_state = 96
+			transfer_state = 784
+			transfer_state = 95
+			transfer_state = 94
+			transfer_state = 93
+			transfer_state = 91
+			transfer_state = 89
+			add_state_core = 96
+			add_state_core = 784
+			add_state_core = 95
+			add_state_core = 94
+			add_state_core = 93
+			add_state_core = 91
+			add_state_core = 89
+		}
+		POL = {
+			transfer_state = 5
+			transfer_state = 763
+			transfer_state = 67
+			transfer_state = 66
+			transfer_state = 68
+			transfer_state = 63
+			add_state_core = 5
+			add_state_core = 763
+			add_state_core = 67
+			add_state_core = 66
+			add_state_core = 68
+			add_state_core = 63
+			if = {
+				limit = {
+					188 = {
+						is_owned_and_controlled_by = GER
+					}
+				}
+				POL = {
+					transfer_state = 188
+					add_state_core = 188
+				}	
+			}
+		}
+		custom_effect_tooltip = anger_germany_poland_deal
+		hidden_effect = {
+			GER = {
+				add_ideas = SOV_German_independence_movement
+			}
+		}
+	}
+
+	option = { #Give Back the German Lands
+		name = soviets.248.c
+		ai_chance = {
+			factor = 20
+		}
+		GER = {
+			transfer_state = 86
+			transfer_state = 85
+			add_state_core = 86
+			add_state_core = 85
+		}
+	}
+}
+
+#German Proposition to exchange Konigsberg for Poznan
+country_event = {
+	id = soviets.249
+	title = soviets.249.t
+	desc = soviets.249.d
+	picture = GFX_report_event_hol_cabinet_gerbrandy
+
+	is_triggered_only = yes
+
+	option = { #It's a Good Deal
+		name = soviets.249.a
+		ai_chance = {
+			factor = 90
+		}
+		SOV = {
+			country_event = { id = soviets.250 hours = 10 }
+		}
+	}
+
+	option = { #Are They Insane !
+		name = soviets.249.b
+		ai_chance = {
+			factor = 10
+		}
+		SOV = {
+			country_event = { id = soviets.251 hours = 10 }
+		}
+	}
+}
+
+#Germany Accepts the Deal
+country_event = {
+	id = soviets.250
+	title = soviets.250.t
+	desc = soviets.250.d
+	picture = GFX_report_event_soviet_german_soldier_handshake
+
+	is_triggered_only = yes
+
+	option = { #Good
+		name = soviets.250.a
+		ai_chance = {
+			factor = 100
+		}
+		SOV = {
+			transfer_state = 96
+			transfer_state = 784
+			transfer_state = 95
+			transfer_state = 94
+			transfer_state = 93
+			transfer_state = 91
+			transfer_state = 89
+			add_state_core = 96
+			add_state_core = 784
+			add_state_core = 95
+			add_state_core = 94
+			add_state_core = 93
+			add_state_core = 91
+			add_state_core = 89
+		}
+		POL = {
+			transfer_state = 5
+			transfer_state = 763
+			add_state_core = 5
+			add_state_core = 763
+		}
+		GER = {
+			transfer_state = 86
+			add_state_core = 86
+		}
+	}
+}
+
+#Germany Refused Proposition to exchange Konigsberg for Poznan
+country_event = {
+	id = soviets.251
+	title = soviets.251.t
+	desc = soviets.251.d
+	picture = GFX_report_event_poland_rejects
+
+	is_triggered_only = yes
+
+	option = { #Damn
+		name = soviets.251.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#Gets event to Get Poland as A Puppet or Integrate Them After Germany Has Been Puppeted by SOV
+country_event = {
+	id = soviets.252
+	title = soviets.252.t
+	desc = soviets.252.d
+	picture = GFX_report_event_generic_conference
+
+	fire_only_once = yes
+
+	trigger = {
+		TAG = SOV
+		has_country_flag = has_given_eastern_poland
+		is_subject = no
+		has_war = no
+		has_government = neutrality
+		OR = {
+			has_country_flag = ger_exiles_accept_puppet
+			has_country_flag = ger_exiles_accept_puppet_reduced
+		}		
+		GER = {
+			OR = {
+				is_subject_of = SOV
+				AND = {
+					is_in_faction_with = SOV
+					has_government = neutrality
+				}
+			}		
+		}
+		NOT = {
+			POL = {
+				is_subjecc_of = SOV
+			}
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 10
+	}
+
+	option = { #Ask Poland to Become a Puppet
+		name = soviets.252.a
+		ai_chance = {
+			factor = 50
+		}
+		POL = {
+			country_event = { id = soviets.253 days = 1 }
+		}
+	}
+
+	option = { #Ask Poland to Integrate With Us
+		name = soviets.252.b
+		ai_chance = {
+			factor = 50
+		}
+		POL = {
+			country_event = { id = soviets.254 days = 1 }
+		}
+	}
+
+	option = { #Let's Leave Them Alone
+		name = soviets.252.c
+		ai_chance = {
+			factor = 0
+		}
 	}
 }
