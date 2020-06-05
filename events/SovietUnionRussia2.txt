@@ -10422,7 +10422,7 @@ country_event = {
 	}
 }
 
-#Poland After War - Puppet and Germany is Subjetc
+#Poland After War - Puppet and Germany is Subject
 country_event = {
 	id = soviets.248
 	title = soviets.248.t
@@ -11050,6 +11050,158 @@ country_event = {
 				type = arms_factory
 				level = 1
 				instant_build = yes
+			}
+		}
+	}
+}
+
+#Gets Event to Choose Poland's Fate if They Refused Any Offers
+country_event = {
+	id = soviets.254
+	title = soviets.254.t
+	desc = soviets.254.d
+	picture = GFX_report_event_generic_conference
+
+	fire_only_once = yes
+
+	trigger = {
+		TAG = SOV
+		NOT = {
+			OR = {
+				has_country_flag = has_given_eastern_poland
+				has_country_flag = poland_accept_imperial_puppet
+			}
+		}
+		is_subject = no
+		has_war = no
+		has_government = neutrality
+		OR = {
+			has_country_flag = ger_exiles_accept_puppet
+			has_country_flag = ger_exiles_accept_puppet_reduced
+			has_country_flag = ger_exiles_accept_no_puppet
+		}		
+		GER = {
+			OR = {
+				is_subject_of = SOV
+				AND = {
+					is_in_faction_with = SOV
+					has_government = neutrality
+				}
+			}		
+		}
+		NOT = {
+			POL = {
+				is_subject_of = SOV
+			}
+		}
+		country_exists = POL
+	}
+
+	mean_time_to_happen = {
+		days = 10
+	}
+
+	option = { #Repartionante the Land Between Germany and Russia
+		name = soviets.254.a
+		ai_chance = {
+			factor = 33
+		}
+		POL = {
+			country_event = { id = polands.17 days = 1 }
+		}
+	}
+
+	option = { #Just Return the Stolen Land
+		name = soviets.254.b
+		ai_chance = {
+			factor = 33
+		}
+		POL = {
+			country_event = { id = polands.20 days = 1 }
+		}
+	}
+
+	option = { #Ask Them to Become Puppet
+		name = soviets.254.c
+		ai_chance = {
+			factor = 33
+		}
+		POL = {
+			country_event = { id = polands.23 days = 1 }
+		}
+	}
+}
+
+#Gets Event Germany want to regain it's old territories if SOV Owned Them
+country_event = {
+	id = soviets.255
+	title = soviets.255.t
+	desc = soviets.255.d
+	picture = GFX_report_event_generic_parliament
+
+	fire_only_once = yes
+
+	trigger = {
+		TAG = SOV
+		is_subject = no
+		has_war = no
+		has_government = neutrality
+		OR = {
+			has_country_flag = ger_exiles_accept_puppet
+			has_country_flag = ger_exiles_accept_puppet_reduced
+			has_country_flag = ger_exiles_accept_no_puppet
+		}		
+		GER = {
+			OR = {
+				is_subject_of = SOV
+				AND = {
+					is_in_faction_with = SOV
+					has_government = neutrality
+				}
+			}		
+		}
+		85 = {
+			is_owned_and_controlled_by = SOV
+		}
+		86 = {
+			is_owned_and_controlled_by = SOV
+		}
+	}
+
+	option = { #Return German Lands
+		name = soviets.255.a
+		ai_chance = {
+			factor = 100
+		}
+		GER = {
+			transfer_state = 86
+			transfer_state = 85
+			add_state_core = 85
+			add_state_core = 86
+		}
+	}
+
+	option = { #Don't Return German Lands
+		name = soviets.255.b
+		ai_chance = {
+			factor = 100
+		}
+		if = {
+			limit = {
+				GER = {
+					is_subject_of = SOV
+				}
+			}
+			custom_effect_tooltip = anger_germany_poland_deal
+			hidden_effect = {
+				GER = {
+					add_ideas = SOV_German_independence_movement
+				}
+			}
+		}
+		else = {
+			GER = {
+				leave_faction = yes
 			}
 		}
 	}
