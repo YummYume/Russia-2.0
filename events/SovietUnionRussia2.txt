@@ -1658,7 +1658,7 @@ country_event = {
 					name = "Vozdushno-Desantnaya Brigada"
 					is_locked = no
 					division_names_group = SOV_PAR_01
-				
+
 					regiments = {
 						paratrooper = { x = 0 y = 0 }
 						paratrooper = { x = 0 y = 1 }
@@ -3464,7 +3464,7 @@ country_event = {
 				name = "Vozdushno-Desantnaya Brigada"
 				is_locked = no
 				division_names_group = SOV_PAR_01
-			
+
 				regiments = {
 					paratrooper = { x = 0 y = 0 }
 					paratrooper = { x = 0 y = 1 }
@@ -5271,14 +5271,45 @@ country_event = {
 		ai_chance = {
 			factor = 80
 			modifier = {
-				factor = 50
+				factor = 30
 				is_faction_leader = yes
 			}
 		}
 		name = soviets.151.a
 		SOV = {
-			add_to_faction = FRA
+			if = {
+				limit = {
+					FRA = {
+						is_faction_leader = yes
+					}
+				}
+				every_country = {
+					limit = {
+						is_in_faction_with = FRA
+					}
+					SOV = {
+						add_to_faction = PREV
+					}
+				}
+			}
+			else = {
+				add_to_faction = FRA
+			}
 			country_event = { id = soviets.152 days = 1 }
+		}
+	}
+
+	option = {
+		ai_chance = {
+			factor = 0
+			modifier = {
+				factor = 50
+				is_faction_leader = yes
+			}
+		}
+		name = soviets.151.b
+		SOV = {
+			country_event = { id = soviets.254 days = 1 }
 		}
 	}
 
@@ -5286,11 +5317,11 @@ country_event = {
 		ai_chance = {
 			factor = 20
 			modifier = {
-				factor = 50
+				factor = 20
 				is_faction_leader = yes
 			}
 		}
-		name = soviets.151.b
+		name = soviets.151.c
 		SOV = {
 			country_event = { id = soviets.153 days = 1 }
 		}
@@ -5354,8 +5385,26 @@ country_event = {
 			}
 		}
 		name = soviets.154.a
-		SOV = {
+		every_country = {
+			limit = {
+				is_in_faction_with = SOV
+				is_faction_leader = yes
+			}
 			add_to_faction = ROOT
+			if = {
+				limit = {
+					any_country = {
+						is_in_faction_with = SOV
+						is_faction_leader = yes
+						NOT = {
+							tag = SOV
+						}
+					}
+				}
+				country_event = { id = soviets.257 days = 1 }
+			}
+		}
+		SOV = {
 			country_event = { id = soviets.155 days = 1 }
 		}
 		ROOT = {
@@ -5363,6 +5412,26 @@ country_event = {
 				type = alliance
 				id = SOV
 				value = 200
+			}
+		}
+		if = {
+			limit = {
+				SOV = {
+					is_faction_leader = no
+				}
+			}
+			every_country = {
+				limit = {
+					is_in_faction_with = SOV
+					is_faction_leader = yes
+				}
+				ROOT = {
+					add_ai_strategy = {
+						type = alliance
+						id = PREV
+						value = 200
+					}
+				}
 			}
 		}
 	}
@@ -7706,7 +7775,7 @@ country_event = {
 					province = 4311
 					province = 7300
 					province = 10185
-					province = 4265 
+					province = 4265
 				}
 			}
 			573 = {
@@ -7719,7 +7788,7 @@ country_event = {
 					province = 4758
 					province = 237
 					province = 11307
-					province = 278 
+					province = 278
 				}
 			}
 			581 = {
@@ -8828,7 +8897,7 @@ country_event = {
 				Heir_of_the_Tsar
 			}
 		}
-		add_stability = -0.15	
+		add_stability = -0.15
 	}
 }
 
@@ -8976,7 +9045,7 @@ country_event = {
 							popular_figurehead2
 						}
 					}
-				}	
+				}
 			}
 		}
 		else_if = {
@@ -9125,7 +9194,7 @@ country_event = {
 					OR = {
 						is_in_faction_with = SOV #GER or ROOT or whatever
 						is_subject_of = SOV
-					}	
+					}
 					owns_state = PREV
 					NOT = { TAG = GER }
 				}
@@ -9444,14 +9513,14 @@ country_event = {
 		ai_chance = {
 			factor = 80
 		}
-		set_capital = 195	
+		set_capital = 195
 	}
 
 	option = { #We'll Change It Later
 		name = soviets.236.b
 		ai_chance = {
 			factor = 20
-		}	
+		}
 	}
 }
 
@@ -9474,7 +9543,7 @@ country_event = {
 			NOT = {
 				has_country_flag = second_civil_war_in_progress
 			}
-		}	
+		}
 	}
 
 	fire_only_once = yes
@@ -9483,7 +9552,7 @@ country_event = {
 		days = 15
 	}
 
-	option = { #Let's Recruit Them 
+	option = { #Let's Recruit Them
 		name = soviets.237.a
 		ai_chance = {
 			factor = 100
@@ -9689,7 +9758,7 @@ country_event = {
 		name = soviets.237.b
 		ai_chance = {
 			factor = 0
-		}	
+		}
 	}
 }
 
@@ -9733,7 +9802,7 @@ country_event = {
 				is_core_of = SOV
 				any_country = {
 					owns_state = PREV
-					NOT = { 
+					NOT = {
 						TAG = SOV
 						TAG = TAN
 						TAG = JAP
@@ -9757,7 +9826,7 @@ country_event = {
 				expire = "1953.3.1"
 				ideology = stalinism
 				traits = {
-					
+
 				}
 			}
 			set_popularities = {
@@ -9790,7 +9859,7 @@ country_event = {
 					province = 4311
 					province = 7300
 					province = 10185
-					province = 4265 
+					province = 4265
 				}
 			}
 			573 = {
@@ -9803,7 +9872,7 @@ country_event = {
 					province = 4758
 					province = 237
 					province = 11307
-					province = 278 
+					province = 278
 				}
 			}
 			581 = {
@@ -9818,7 +9887,7 @@ country_event = {
 					province = 12502
 					province = 13076
 				}
-			}			
+			}
 			every_unit_leader = {
 				retire = yes
 			}
@@ -9933,7 +10002,7 @@ country_event = {
 				name = "Ivan Chernyakhovsky"
 				picture = "Portrait_Soviet_Ivan_Chernyakhovsky.dds"
 				traits = { armor_officer }
-				skill = 1 
+				skill = 1
 				attack_skill = 1
 				defense_skill = 1
 				planning_skill = 1
@@ -9963,7 +10032,7 @@ country_event = {
 				name = "Grigory Kulik"
 				picture = "Portrait_Soviet_Grigory_Kulik.dds"
 				traits = { old_guard career_officer politically_connected inflexible_strategist }
-				skill = 1	
+				skill = 1
 				attack_skill = 1
 				defense_skill = 1
 				planning_skill = 1
@@ -9993,7 +10062,7 @@ country_event = {
 				name = "Andrey Yeryomenko"
 				picture = "Portrait_Soviet_Andrey_Yeryomenko.dds"
 				traits = { cavalry_officer trait_reckless }
-				skill = 1 
+				skill = 1
 				attack_skill = 1
 				defense_skill = 1
 				planning_skill = 1
@@ -10003,7 +10072,7 @@ country_event = {
 				name = "Georgiy Zakharov"
 				picture = "Portrait_Soviet_Georgiy_Zakharov.dds"
 				traits = { career_officer }
-				skill = 1 
+				skill = 1
 				attack_skill = 1
 				defense_skill = 1
 				planning_skill = 1
@@ -10064,7 +10133,7 @@ country_event = {
 				name = "Ivan Fedyuninsky"
 				picture = "Portrait_Soviet_Ivan_Fedyuninsky.dds"
 				traits = { infantry_officer }
-				skill = 1 
+				skill = 1
 				attack_skill = 1
 				defense_skill = 1
 				planning_skill = 1
@@ -10084,7 +10153,7 @@ country_event = {
 				name = "Kuzma Galitsky"
 				picture = "Portrait_Soviet_Kuzma_Galitsky.dds"
 				traits = { infantry_officer }
-				skill = 1 
+				skill = 1
 				attack_skill = 1
 				defense_skill = 1
 				planning_skill = 1
@@ -10134,7 +10203,7 @@ country_event = {
 				name = "Dmitry Lelyushenko"
 				picture = "Portrait_Soviet_Dmitri_Danilovich_Lelyushenko.dds"
 				traits = {armor_officer trait_reckless  }
-				skill = 1 
+				skill = 1
 				attack_skill = 1
 				defense_skill = 1
 				planning_skill = 1
@@ -10154,7 +10223,7 @@ country_event = {
 				name = "Rodion Malinovsky"
 				picture = "Portrait_Soviet_Rodion_Malinovsky.dds"
 				traits = { career_officer old_guard trait_cautious politically_connected }
-				skill = 1 
+				skill = 1
 				attack_skill = 1
 				defense_skill = 1
 				planning_skill = 1
@@ -10214,7 +10283,7 @@ country_event = {
 				is_core_of = SOV
 				any_country = {
 					owns_state = PREV
-					NOT = { 
+					NOT = {
 						TAG = SOV
 						TAG = TAN
 						TAG = JAP
@@ -10260,7 +10329,7 @@ country_event = {
 				is_core_of = SOV
 				any_country = {
 					owns_state = PREV
-					NOT = { 
+					NOT = {
 						TAG = SOV
 						TAG = TAN
 						TAG = JAP
@@ -10300,7 +10369,7 @@ country_event = {
 				is_core_of = SOV
 				any_country = {
 					owns_state = PREV
-					NOT = { 
+					NOT = {
 						TAG = SOV
 						TAG = TAN
 						TAG = JAP
@@ -10441,7 +10510,7 @@ country_event = {
 			has_country_flag = ger_exiles_accept_puppet
 			has_country_flag = ger_exiles_accept_puppet_reduced
 			has_country_flag = ger_exiles_accept_no_puppet
-		}		
+		}
 		GER = {
 			OR = {
 				is_subject_of = SOV
@@ -10449,7 +10518,7 @@ country_event = {
 					is_in_faction_with = SOV
 					has_government = neutrality
 				}
-			}		
+			}
 		}
 		POL = {
 			is_subject_of = SOV
@@ -10489,7 +10558,7 @@ country_event = {
 		}
 	}
 
-	option = { #We'll Give Eastern Germany for Eastern Poland 
+	option = { #We'll Give Eastern Germany for Eastern Poland
 		name = soviets.248.b
 		ai_chance = {
 			factor = 10
@@ -10537,7 +10606,7 @@ country_event = {
 				POL = {
 					transfer_state = 188
 					add_state_core = 188
-				}	
+				}
 			}
 		}
 		custom_effect_tooltip = anger_germany_poland_deal
@@ -10671,7 +10740,7 @@ country_event = {
 			has_country_flag = ger_exiles_accept_puppet
 			has_country_flag = ger_exiles_accept_puppet_reduced
 			has_country_flag = ger_exiles_accept_no_puppet
-		}		
+		}
 		GER = {
 			OR = {
 				is_subject_of = SOV
@@ -10679,7 +10748,7 @@ country_event = {
 					is_in_faction_with = SOV
 					has_government = neutrality
 				}
-			}		
+			}
 		}
 		NOT = {
 			POL = {
@@ -11055,11 +11124,113 @@ country_event = {
 	}
 }
 
-#Gets Event to Choose Poland's Fate if They Refused Any Offers
+#France Asks for Leadership
 country_event = {
 	id = soviets.254
 	title = soviets.254.t
 	desc = soviets.254.d
+	picture = GFX_report_event_worried_french
+
+	is_triggered_only = yes
+
+	option = { #Okay
+		ai_chance = { factor = 80 }
+		name = soviets.254.a
+		FRA = {
+			if = {
+				limit = {
+					FRA = {
+						is_faction_leader = yes
+					}
+				}
+				set_faction_name = entente_reformed
+			}
+			else = {
+				create_faction = entente_reformed
+			}
+			if = {
+				limit = {
+					SOV = {
+						is_faction_leader = yes
+					}
+				}
+				every_country = {
+					limit = {
+						is_in_faction_with = SOV
+					}
+					FRA = {
+						add_to_faction = PREV
+					}
+				}
+			}
+			else = {
+				add_to_faction = SOV
+			}
+		}
+		FRA = {
+			country_event = { id = soviets.255 days = 1 }
+		}
+	}
+
+	option = {
+		ai_chance = { factor = 20 }
+		name = soviets.254.a
+		FRA = {
+			country_event = { id = soviets.256 days = 1 }
+		}
+	}
+}
+
+#We say yes
+country_event = {
+	id = soviets.255
+	title = soviets.255.t
+	desc = soviets.255.d
+	picture = GFX_report_event_poland_rejects
+
+	is_triggered_only = yes
+
+	option = {
+		ai_chance = { factor = 100 }
+		name = soviets.255.a
+	}
+}
+
+#We say no
+country_event = {
+	id = soviets.256
+	title = soviets.256.t
+	desc = soviets.256.d
+	picture = GFX_report_event_poland_rejects
+
+	is_triggered_only = yes
+
+	option = {
+		ai_chance = { factor = 100 }
+		name = soviets.256.a
+	}
+}
+
+#SOV Invites a Country
+country_event = {
+	id = soviets.257
+	title = soviets.257.t
+	desc = soviets.257.d
+	picture = GFX_report_event_poland_rejects
+
+	is_triggered_only = yes
+
+	option = { #Okay
+		ai_chance = { factor = 100 }
+		name = soviets.257.a
+	}
+}
+
+#Gets Event to Choose Poland's Fate if They Refused Any Offers
+country_event = {
+	id = soviets.258
+	title = soviets.258.t
+	desc = soviets.258.d
 	picture = GFX_report_event_generic_conference
 
 	fire_only_once = yes
@@ -11102,7 +11273,7 @@ country_event = {
 	}
 
 	option = { #Repartionante the Land Between Germany and Russia
-		name = soviets.254.a
+		name = soviets.258.a
 		ai_chance = {
 			factor = 33
 		}
@@ -11112,7 +11283,7 @@ country_event = {
 	}
 
 	option = { #Just Return the Stolen Land
-		name = soviets.254.b
+		name = soviets.258.b
 		ai_chance = {
 			factor = 33
 		}
@@ -11122,7 +11293,7 @@ country_event = {
 	}
 
 	option = { #Ask Them to Become Puppet
-		name = soviets.254.c
+		name = soviets.258.c
 		ai_chance = {
 			factor = 33
 		}
@@ -11134,9 +11305,9 @@ country_event = {
 
 #Gets Event Germany want to regain it's old territories if SOV Owned Them
 country_event = {
-	id = soviets.255
-	title = soviets.255.t
-	desc = soviets.255.d
+	id = soviets.259
+	title = soviets.259.t
+	desc = soviets.259.d
 	picture = GFX_report_event_generic_parliament
 
 	fire_only_once = yes
@@ -11169,7 +11340,7 @@ country_event = {
 	}
 
 	option = { #Return German Lands
-		name = soviets.255.a
+		name = soviets.259.a
 		ai_chance = {
 			factor = 100
 		}
@@ -11182,7 +11353,7 @@ country_event = {
 	}
 
 	option = { #Don't Return German Lands
-		name = soviets.255.b
+		name = soviets.259.b
 		ai_chance = {
 			factor = 100
 		}
