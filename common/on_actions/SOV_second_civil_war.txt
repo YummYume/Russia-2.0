@@ -47,52 +47,52 @@ on_actions = {
 		}
 	}
 
-		#SOV Gets Annexed By SOU and Receive Events
-		on_capitulation = {
-			effect = {
+	#SOV Gets Annexed By SOU and Receive Events
+	on_capitulation = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						tag = SOV
+					}
+					FROM = {
+						tag = SOU
+					}
+				}
+				every_state = {
+					limit = {
+						is_owned_by = ROOT
+					}
+					FROM = {
+						transfer_state = PREV
+					}
+				}
 				if = {
 					limit = {
-						ROOT = {
-							tag = SOV
-						}
-						FROM = {
-							tag = SOU
+						UKR = {
+							OR = {
+								is_in_faction_with = ROOT
+								has_war_with = FROM
+							}
 						}
 					}
 					every_state = {
 						limit = {
-							is_owned_by = ROOT
+							is_owned_by = UKR
 						}
 						FROM = {
 							transfer_state = PREV
+							add_state_core = PREV
 						}
 					}
-					if = {
-						limit = {
-							UKR = {
-								OR = {
-									is_in_faction_with = ROOT
-									has_war_with = FROM
-								}
-							}
-						}
-						every_state = {
-							limit = {
-								is_owned_by = UKR
-							}
-							FROM = {
-								transfer_state = PREV
-								add_state_core = PREV
-							}
-						}
-					}
-					FROM = {
-						country_event = { id = soviets.238 hours = 3 }
-						news_event = { id = newsrussia2.68 days = 1 }
-					}
-					
 				}
+				FROM = {
+					country_event = { id = soviets.238 hours = 3 }
+					news_event = { id = newsrussia2.68 days = 1 }
+				}
+				
 			}
 		}
+	}
 
 }
