@@ -4928,6 +4928,7 @@ country_event = {
 			}
 		}
 		UKR = {
+			custom_effect_tooltip = ukraine_may_join_soviet_side
 			country_event = { id = ukrains.1 hours = 6 }
 			hidden_effect = {
 				set_politics = {
@@ -5052,7 +5053,7 @@ country_event = {
 	}
 }
 
-#SOU Get Annexed if Puppet or Still Free After the Civil War
+#SOU Get Annexed if Puppet or Still Free After the Civil War for Some Reasons
 country_event = {
 	id = soviets.139
 
@@ -5067,8 +5068,10 @@ country_event = {
 				exists = yes
 				is_subject_of = SOV
 			}
-			has_war = no
 			has_country_flag = sou_near_capitulation
+		}
+		NOT = {
+			has_war_with = SOU
 		}
 	}
 
@@ -7697,15 +7700,7 @@ country_event = {
 
 	fire_only_once = yes
 
-	trigger = {
-		TAG = SOV
-		NOT = {
-			country_exists = SOU
-		}
-		has_war = no
-		has_country_flag = second_civil_war_in_progress
-		has_government = neutrality
-	}
+	is_triggered_only = yes
 
 	option = {
 		name = soviets.190.a
@@ -7758,6 +7753,7 @@ country_event = {
 			else_if = {
 				limit = {
 					has_country_flag = train_caucasian_soldiers_civil_war
+					has_country_flag = control_caucasus
 				}
 				delete_unit_template_and_units = {
 					division_template = "Opytnyy Kavkazskaya kazach'ya diviziya"
@@ -7804,6 +7800,45 @@ country_event = {
 					province = 13076
 				}
 			}
+			if = {
+				limit = {
+					has_equipment = {
+						infantry_equipment > 40000
+					}
+				}
+				add_equipment_to_stockpile = {
+					type = infantry_equipment
+					amount = -40000
+				}
+			}
+			else_if = {
+				limit = {
+					has_equipment = {
+						infantry_equipment > 30000
+					}
+					has_equipment = {
+						infantry_equipment < 40000
+					}
+				}
+				add_equipment_to_stockpile = {
+					type = infantry_equipment
+					amount = -30000
+				}
+			}
+			else_if = {
+				limit = {
+					has_equipment = {
+						infantry_equipment > 20000
+					}
+					has_equipment = {
+						infantry_equipment < 30000
+					}
+				}
+				add_equipment_to_stockpile = {
+					type = infantry_equipment
+					amount = -20000
+				}
+			}
 		}
 		add_threat = -5
 		remove_ideas = SOV_Supply_line
@@ -7828,7 +7863,7 @@ country_event = {
 		has_war = yes
 		SOV = {
 			exists = yes
-			surrender_progress > 0.85
+			surrender_progress > 0.75
 			has_country_flag = sov_near_capitulation
 			is_ai = yes
 		}
@@ -11375,5 +11410,175 @@ country_event = {
 				leave_faction = yes
 			}
 		}
+	}
+}
+
+#End of the Civil War - Aftermath If For Some Reason the Events Wasn't Triggered After the Capitulation
+country_event = {
+	id = soviets.260
+	title = soviets.260.t
+	desc = soviets.260.d
+	picture = GFX_report_event_generic_ruins
+
+	fire_only_once = yes
+
+	trigger = {
+		TAG = SOV
+		NOT = {
+			country_exists = SOU
+		}
+		has_war = no
+		has_country_flag = second_civil_war_in_progress
+		NOT = {
+			has_country_flag = second_civil_war_over
+		}
+		has_government = neutrality
+	}
+
+	option = {
+		name = soviets.260.a
+		set_country_flag = second_civil_war_over
+		clr_country_flag = second_civil_war_in_progress
+		every_country = {
+			limit = {
+				is_subject_of = SOV
+			}
+			add_ideas = SOV_Isolation
+		}
+		every_country = {
+			limit = {
+				is_subject_of = SOV
+			}
+			SOV = {
+				set_autonomy = {
+					target = PREV
+					autonomy_state = autonomy_free
+				}
+			}
+		}
+		custom_effect_tooltip = end_civil_war_focus
+		hidden_effect = {
+			every_state = {
+				limit = {
+					is_core_of = SOU
+				}
+				remove_core_of = SOU
+			}
+			if = {
+				limit = {
+					has_country_flag = control_central_asia
+				}
+				KAZ = {
+					transfer_state = 406
+					transfer_state = 407
+					transfer_state = 589
+					transfer_state = 588
+				}
+			}
+			if = {
+				limit = {
+					has_country_flag = control_caucasus
+				}
+				delete_unit_template_and_units = {
+					division_template = "Kavkazskaya kazach'ya diviziya"
+				}
+			}
+			else_if = {
+				limit = {
+					has_country_flag = train_caucasian_soldiers_civil_war
+					has_country_flag = control_caucasus
+				}
+				delete_unit_template_and_units = {
+					division_template = "Opytnyy Kavkazskaya kazach'ya diviziya"
+				}
+				delete_unit_template_and_units = {
+					division_template = "Kavkazskaya kazach'ya diviziya"
+				}
+			}
+			582 = {
+				remove_province_modifier = {
+					static_modifiers = { urals_secret }
+					province = 4383
+					province = 12200
+					province = 7373
+					province = 4311
+					province = 7300
+					province = 10185
+					province = 4265
+				}
+			}
+			573 = {
+				remove_province_modifier = {
+					static_modifiers = { urals_secret }
+					province = 12117
+					province = 10329
+					province = 11223
+					province = 7320
+					province = 4758
+					province = 237
+					province = 11307
+					province = 278
+				}
+			}
+			581 = {
+				remove_province_modifier = {
+					static_modifiers = { urals_secret }
+					province = 10216
+					province = 4874
+					province = 12659
+					province = 7824
+					province = 10551
+					province = 10677
+					province = 12502
+					province = 13076
+				}
+			}
+			if = {
+				limit = {
+					has_equipment = {
+						infantry_equipment > 40000
+					}
+				}
+				add_equipment_to_stockpile = {
+					type = infantry_equipment
+					amount = -40000
+				}
+			}
+			else_if = {
+				limit = {
+					has_equipment = {
+						infantry_equipment > 30000
+					}
+					has_equipment = {
+						infantry_equipment < 40000
+					}
+				}
+				add_equipment_to_stockpile = {
+					type = infantry_equipment
+					amount = -30000
+				}
+			}
+			else_if = {
+				limit = {
+					has_equipment = {
+						infantry_equipment > 20000
+					}
+					has_equipment = {
+						infantry_equipment < 30000
+					}
+				}
+				add_equipment_to_stockpile = {
+					type = infantry_equipment
+					amount = -20000
+				}
+			}
+		}
+		add_threat = -5
+		remove_ideas = SOV_Supply_line
+		remove_ideas = SOV_Second_civil_war
+		remove_ideas = SOV_Urals_secret
+		remove_ideas = SOV_Slow_industry
+		dismantle_faction = yes
+		add_ideas = low_economic_mobilisation
 	}
 }

@@ -1,0 +1,51 @@
+on_actions = {
+
+	#SOU Gets Annexed By SOV and Receive Events
+	on_capitulation = {
+		effect = {
+			if = {
+				limit = {
+					SOU = {
+						has_war_with = SOV
+					}	
+					SOV = {
+						has_country_flag = second_civil_war_in_progress
+					}
+				}
+				every_state = {
+					limit = {
+						is_core_of = SOU
+						is_owned_by = SOU
+					}
+					SOV = {
+						transfer_state = PREV
+					}
+				}
+				if = {
+					limit = {
+						UKR = {
+							OR = {
+								is_in_faction_with = SOU
+								has_war_with = SOV
+							}
+						}
+					}
+					every_state = {
+						limit = {
+							is_core_of = UKR
+							is_owned_by = UKR
+						}
+						SOV = {
+							transfer_state = PREV
+							add_state_core = PREV
+						}
+					}
+				}
+				SOV = {
+					country_event = { id = soviets.190 hours = 3 }
+				}
+			}
+		}
+	}
+
+}
