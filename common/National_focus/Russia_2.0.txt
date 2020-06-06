@@ -26,7 +26,14 @@ focus_tree = {
 		}
 		available = {
 			is_subject = no
-			219 = { is_owned_and_controlled_by = ROOT }
+			custom_trigger_tooltip = {
+				tooltip = SOV_start_five_year_plan_tt
+				any_state = {
+					is_owned_by = ROOT
+					is_capital = yes
+					is_fully_controlled_by = ROOT
+				}
+			}
 		}
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 		completion_reward = {
@@ -36,19 +43,23 @@ focus_tree = {
 				uses = 2
 				category = industry
 			}
-			219 = {
-			add_extra_state_shared_building_slots = 3
-			add_building_construction = {
-				type = industrial_complex
-				level = 3
-				instant_build = yes
+			every_state = {
+				limit = {
+					is_capital = yes
+					is_owned_and_controlled_by = ROOT
+				}
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = industrial_complex
+					level = 3
+					instant_build = yes
 				}
 			}
 			if = {
 				limit = {
 					has_idea = SOV_Unhappy_peasants1
 				}
-				custom_effect_tooltip = SOV_start_five_year_plans_tt
+				custom_effect_tooltip = SOV_start_five_year_plans_tt2
 			}
 		}
 	}
@@ -794,13 +805,21 @@ focus_tree = {
 			custom_trigger_tooltip = {
 				tooltip = SOV_move_industry_urals_tt
 				573 = {
-				is_owned_and_controlled_by = ROOT
+					is_owned_and_controlled_by = ROOT
 				}
 				582 = {
 					is_owned_and_controlled_by = ROOT
 				}
 			}
-			has_civil_war = no
+			custom_trigger_tooltip = {
+				tooltip = SOV_move_industry_urals_tt2
+				has_civil_war = no
+				SOV = {
+					NOT = {
+						has_country_flag = second_civil_war_in_progress
+					}
+				}
+			}
 		}
 		bypass = {
 			NOT = { 219 = { is_owned_and_controlled_by = ROOT } }
@@ -813,7 +832,7 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_ARMY_RUSSIA }
 		continue_if_invalid = yes
 		completion_reward = {
-			custom_effect_tooltip = SOV_move_industry_urals_tt2
+			custom_effect_tooltip = SOV_move_industry_urals_tt3
 		}
 	}
 
@@ -3217,11 +3236,19 @@ focus_tree = {
 			NOT = {
 				has_idea = SOV_Exiled_russia
 			}
-			has_civil_war = no
+			custom_trigger_tooltip = {
+				tooltip = SOV_russian_expansion_tt
+				has_civil_war = no
+				SOV = {
+					NOT = {
+						has_country_flag = second_civil_war_in_progress
+					}
+				}
+			}
 		}
 		search_filters = {FOCUS_FILTER_ANNEXATION}
 		completion_reward = {
-			custom_effect_tooltip = SOV_russian_expansion_tt
+			custom_effect_tooltip = SOV_russian_expansion_tt2
 			hidden_effect = {
 				add_state_claim = 91
 				add_state_claim = 89
@@ -3241,7 +3268,7 @@ focus_tree = {
 				add_state_claim = 78
 				add_state_claim = 80
 			}
-			custom_effect_tooltip = SOV_russian_expansion_tt2
+			custom_effect_tooltip = SOV_russian_expansion_tt3
 		}
 	}
 
@@ -3602,11 +3629,22 @@ focus_tree = {
 			factor = 5
 		}
 		available = {
-			219 = { is_owned_and_controlled_by = ROOT }
+			custom_trigger_tooltip = {
+				tooltip = SOV_expand_the_civ_indu_mosc_tt
+				any_state = {
+					is_owned_by = ROOT
+					is_capital = yes
+					is_fully_controlled_by = ROOT
+				}
+			}
 		}
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 		completion_reward = {
-			219 = {
+			every_state = {
+				limit = {
+					is_capital = yes
+					is_owned_and_controlled_by = ROOT
+				}
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = industrial_complex
@@ -3667,11 +3705,22 @@ focus_tree = {
 			factor = 5
 		}
 		available = {
-			219 = { is_owned_and_controlled_by = ROOT }
+			custom_trigger_tooltip = {
+				tooltip = SOV_armament_efforts_tt
+				any_state = {
+					is_owned_by = ROOT
+					is_capital = yes
+					is_fully_controlled_by = ROOT
+				}
+			}
 		}
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 		completion_reward = {
-			219 = {
+			every_state = {
+				limit = {
+					is_capital = yes
+					is_owned_and_controlled_by = ROOT
+				}
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = arms_factory
@@ -3730,17 +3779,26 @@ focus_tree = {
 		icon = GFX_focus_prc_agrarian_socialism
 		cost = 12
 		available = {
-			219 = { is_owned_and_controlled_by = ROOT }
-			all_owned_state = {
-				is_controlled_by = ROOT
+			custom_trigger_tooltip = {
+				tooltip = SOV_heavy_industry_tt
+				any_state = {
+					is_owned_by = ROOT
+					is_capital = yes
+					is_fully_controlled_by = ROOT
+				}
 			}
+			num_of_controlled_states > 5
 		}
 		ai_will_do = {
 			factor = 6
 		}
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 		completion_reward = {
-			219 = {
+			every_state = {
+				limit = {
+					is_capital = yes
+					is_owned_and_controlled_by = ROOT
+				}
 				add_extra_state_shared_building_slots = 4
 				add_building_construction = {
 					type = industrial_complex
@@ -3755,7 +3813,7 @@ focus_tree = {
 				}
 			}
 
-			random_owned_state = {
+			random_owned_controlled_state = {
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = industrial_complex
@@ -3764,7 +3822,7 @@ focus_tree = {
 				}
 			}
 
-			random_owned_state = {
+			random_owned_controlled_state = {
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = arms_factory
@@ -4058,9 +4116,8 @@ focus_tree = {
 				has_completed_focus = SOV_great_purge2
 				has_completed_focus = SOV_consolidate_true_communism
 				has_completed_focus = SOV_country_in_chaos
-				has_completed_focus = SOV_bring_back_old_life
+				has_completed_focus = SOV_second_civil_war
 			}
-			has_civil_war = no
 		}
 		search_filters = { FOCUS_FILTER_ARMY_RUSSIA }
 		completion_reward = {
