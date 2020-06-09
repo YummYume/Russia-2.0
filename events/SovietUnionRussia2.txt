@@ -4343,7 +4343,10 @@ country_event = {
 				has_civil_war = yes
 			}
 		}
-		modify_timed_idea = {
+		hidden_effect = {
+			remove_ideas = SOV_Blockade_russia
+		}
+		add_timed_idea = {
 			idea = SOV_Blockade_russia
 			days = 365
 		}
@@ -4397,12 +4400,13 @@ country_event = {
 	option = { #Thank god
 		name = soviets.119.a
 		ai_chance = { factor = 100 }
-		modify_timed_idea = {
-			idea = SOV_Blockaded_by_eng
-			days = 365
-		}
 		hidden_effect = {
 			complete_national_focus = SOV_end_naval_blockade
+			remove_ideas = SOV_Blockaded_by_eng
+		}
+		add_timed_idea = {
+			idea = SOV_Blockaded_by_eng
+			days = 365
 		}
 	}
 }
@@ -8317,6 +8321,7 @@ country_event = {
 					planning_skill = 4
 					logistics_skill = 5
 				}
+				clr_country_flag = ennemy_second_civil_war_georgy_zhu
 			}
 		}
 		else_if = {
@@ -8393,6 +8398,7 @@ country_event = {
 					logistics_skill = 5
 				}
 			}
+			clr_country_flag = ennemy_second_civil_war_konev
 		}
 		else_if = {
 			limit = {
@@ -8468,6 +8474,7 @@ country_event = {
 					logistics_skill = 2
 				}
 			}
+			clr_country_flag = ennemy_second_civil_war_vasilevsky
 		}
 		else_if = {
 			limit = {
@@ -8628,6 +8635,7 @@ country_event = {
 				country_event = { id = soviets.214 hours = 6 }
 			}
 		}
+		remove_ideas = SOV_Isolation
 	}
 
 	option = { #Refuse and Stay Independent - Gets National Spirit
@@ -8722,6 +8730,7 @@ country_event = {
 					autonomy_state = autonomy_puppet
 				}
 			}
+			remove_ideas = SOV_Isolation
 			country_event = { id = soviets.217 hours = 6 }
 		}
 	}
@@ -9027,7 +9036,7 @@ country_event = {
 			SOV = {
 				release_autonomy = {
 					target = GER
-					autonomy_state = autonomy_puppet
+					autonomy_state = autonomy_imperial_governorates
 					freedom_level = 0.5
 				}
 			}
@@ -9251,6 +9260,96 @@ country_event = {
 				}
 			}
 			country_event = { id = soviets.229 days = 1 }
+		}
+		every_state = {
+			limit = {
+				is_core_of = AUS
+				NOT = {
+					is_core_of = ITA
+				}
+				any_country = {
+					OR = {
+						is_in_faction_with = SOV
+						is_subject_of = SOV
+						TAG = SOV
+					}
+					owns_state = PREV
+				}
+			}
+			AUS = {
+				transfer_state = PREV
+			}
+			SOV = {
+				set_autonomy = {
+					target = AUS
+					autonomy_state = autonomy_puppet
+				}
+			}
+		}
+		if = {
+			limit = {
+				POL = {
+					is_subject_of = SOV
+				}
+				SOV = {
+					has_country_flag = poland_accept_imperial_puppet
+				}
+			}
+			every_state = {
+				limit = {
+					is_core_of = POL
+					any_country = {
+						OR = {
+							TAG = SOV
+							TAG = GER
+							is_in_faction_with = SOV
+							is_subject_of = SOV
+						}
+						owns_state = PREV
+					}
+				}
+				POL = {
+					transfer_state = PREV
+				}
+			}
+		}
+		every_state = {
+			limit = {
+				is_core_of = CZE
+				any_country = {
+					OR = {
+						is_in_faction_with = SOV
+						is_subject_of = SOV
+						TAG = SOV
+					}
+					owns_state = PREV
+				}
+			}
+			CZE = {
+				transfer_state = PREV
+			}
+			SOV = {
+				set_autonomy = {
+					target = CZE
+					autonomy_state = autonomy_puppet
+				}
+			}	
+		}
+		every_state = {
+			limit = {
+				is_core_of = FRA
+				any_country = {
+					OR = {
+						is_in_faction_with = SOV
+						is_subject_of = SOV
+						TAG = SOV
+					}
+					owns_state = PREV
+				}
+			}
+			FRA = {
+				transfer_state = PREV
+			}	
 		}
 	}
 }
@@ -11576,5 +11675,173 @@ country_event = {
 		remove_ideas = SOV_Slow_industry
 		dismantle_faction = yes
 		add_ideas = low_economic_mobilisation
+	}
+}
+
+#Communist Generals desert their post after Democratic Insurection
+country_event = {
+	id = soviets.261
+	title = soviets.261.t
+	desc = soviets.261.d
+	picture = GFX_report_event_soviet_tank_parade
+
+	is_triggered_only = yes
+
+	option = {
+		name = soviets.261.a
+		ai_chance = {
+			factor = 100
+		}
+		custom_effect_tooltip = deserting_communist_generals
+		hidden_effect = {
+			remove_unit_leader = 410
+			remove_ideas = georgy_zhukov
+			remove_unit_leader = 408
+			remove_ideas = ivan_konev
+			remove_unit_leader = 405
+			remove_ideas = kliment_voroshilov
+			remove_unit_leader = 407
+			remove_ideas = aleksandr_vasilevsky
+			remove_unit_leader = 510
+			remove_ideas = boris_shaposhnikov
+			set_temp_variable = { random_factor = 0 }
+			randomize_temp_variable = {
+				var = random_factor_mikhail
+				distribution = uniform
+				min = 0
+				max = 100
+			}
+			round_variable = random_factor_mikhail
+			if = {
+				limit = {
+					check_variable = {
+						var = random_factor_mikhail
+						value = 50
+						compare = less_than_or_equals
+					}
+				}
+				remove_unit_leader = 401
+				remove_ideas = boris_shaposhnikov
+				set_country_flag = mikhail_deserted
+			}
+			set_country_flag = has_deserted_military
+		}	
+	}
+}
+
+#White Generals are Comming Back to the Country to Offer their Service
+country_event = {
+	id = soviets.262
+	title = soviets.262.t
+	desc = soviets.262.d
+	picture = GFX_report_event_soviet_tank_parade
+
+	is_triggered_only = yes
+
+	option = {
+		name = soviets.262.a
+		ai_chance = {
+			factor = 100
+		}
+		custom_effect_tooltip = white_generals_comming_dems
+		hidden_effect = {
+			create_field_marshal = {
+				name = "Anton Ivanovich Denikin"
+				picture = "Portrait_Soviet_Anton_IvanovichMilitary.dds"
+				traits = { infantry_leader bearer_of_artillery offensive_doctrine }
+				skill = 5
+				attack_skill = 5
+				defense_skill = 2
+				planning_skill = 4
+				logistics_skill = 4
+			}
+			create_corps_commander = {
+				name = "Boris Shteifon"
+				picture = "Portrait_Boris_Shteifon.dds"
+				traits = { war_hero trickster }
+				skill = 3
+				attack_skill = 3
+				defense_skill = 2
+				planning_skill = 3
+				logistics_skill = 2
+			}
+			create_field_marshal = {
+				name = "Alexander Rodzyanko"
+				picture = "Portrait_Alexander_Rodzyanko.dds"
+				traits = { inspirational_leader cavalry_officer }
+				skill = 3
+				attack_skill = 3
+				defense_skill = 2
+				planning_skill = 4
+				logistics_skill = 2
+			}
+			create_corps_commander = {
+				name = "Pavel Bermondt-Avalov"
+				picture = "Portrait_Pavel_Bermondt_Avalov.dds"
+				traits = { infantry_officer }
+				skill = 3
+				attack_skill = 3
+				defense_skill = 2
+				planning_skill = 2
+				logistics_skill = 3
+			}
+			create_corps_commander = {
+				name = "Pyotr Krasnov"
+				picture = "Portrait_Pyotr_Nikolayevich_Krasnov.dds"
+				traits = { trait_reckless infantry_officer trait_mountaineer }
+				skill = 4
+				attack_skill = 4
+				defense_skill = 3
+				planning_skill = 4
+				logistics_skill = 3
+			}
+			set_country_flag = soviet_generals_deserted
+		}	
+	}
+}
+
+#Events If Poland Agreee to Become an Imperial Subject and It Owns Danzig, Poznan and Katowice
+country_event = {
+	id = soviets.263
+	title = soviets.263.t
+	desc = soviets.263.d
+	picture = GFX_report_event_molotov_signing_pact
+
+	fire_only_once = yes
+
+	trigger = {
+		TAG = SOV
+		has_government = neutrality
+		is_subject = no
+		has_country_flag = poland_accept_imperial_puppet
+		GER = {
+			has_government = fascism
+		}
+		has_completed_focus = SOV_fate_poland
+		POL = {
+			is_subject_of = SOV
+		}
+
+	}
+
+	mean_time_to_happen = {
+		days = 10
+	}
+
+	option = { #Give Back the German Territories
+		name = soviets.263.a
+		ai_chance = {
+			factor = 100
+		}
+		GER = {
+			country_event = { id = germanys.17 days = 1 }
+		}
+	}
+
+	option = { #Poland Will Keep It's Territories
+		name = soviets.263.b
+		ai_chance = {
+			factor = 0
+		}
 	}
 }

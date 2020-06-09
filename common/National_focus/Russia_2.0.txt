@@ -8739,6 +8739,7 @@ focus_tree = {
 			country_event = { id = soviets.104 days = 40 }
 			country_event = { id = soviets.105 days = 80 }
 			country_event = { id = soviets.106 days = 120 }
+			country_event = { id = soviets.261 days = 20 }
 			if = {
 				limit = {
 					OR = {
@@ -8803,6 +8804,7 @@ focus_tree = {
 				}
 				drop_cosmetic_tag = yes
 				set_cosmetic_tag = SOV_democratic_russia
+				country_event = { id = soviets.262 days = 25 }
 			}
 			set_party_name = {
 				ideology = democratic
@@ -8844,6 +8846,7 @@ focus_tree = {
 				}
 				drop_cosmetic_tag = yes
 				set_cosmetic_tag = SOV_democratic_russia
+				country_event = { id = soviets.262 days = 25 }
 			}
 			set_party_name = {
 				ideology = democratic
@@ -9439,6 +9442,7 @@ focus_tree = {
 					has_government = democratic
 					has_government = neutrality
 				}
+				is_subject = no
 				has_capitulated = no
 			}
 			date > 1939.01.01
@@ -9704,6 +9708,11 @@ focus_tree = {
 				country_event = { id = soviets.253 hours = 1 }
 				set_country_flag = preparation_done
 				set_country_flag = second_civil_war_in_progress
+				set_country_flag = ennemy_second_civil_war
+				set_country_flag = ennemy_second_civil_war_mikhail
+				set_country_flag = ennemy_second_civil_war_georgy_zhu
+				set_country_flag = ennemy_second_civil_war_konev
+				set_country_flag = ennemy_second_civil_war_vasilevsky
 				set_cosmetic_tag = WMA
 				dismantle_faction = yes
 				create_faction = anti_communist_coalition
@@ -9811,6 +9820,7 @@ focus_tree = {
 				}
 				create_corps_commander = {
 					name = "Mikhail Diterikhs"
+					id = 511
 					picture = "Portrait_Mikhail_Diterikhs.dds"
 					traits = {  }
 					skill = 2
@@ -11182,6 +11192,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
 		completion_reward = {
+			add_political_power = 50
 			add_timed_idea = {
 				idea = SOV_Concessions_communist
 				days = 365
@@ -11968,7 +11979,7 @@ focus_tree = {
 		prerequisite = { focus = SOV_restoration_tsar }
 		prerequisite = { focus = SOV_reintegrate_lost_state }
 		icon = GFX_goal_tfv_strengthen_commonwealth_ties
-		cost = 10
+		cost = 8
 		ai_will_do = {
 			factor = 8
 		}
@@ -12101,7 +12112,13 @@ focus_tree = {
 		available = {
 			is_subject = no
 			has_government = neutrality
-			is_neighbor_of = POL
+			OR = {
+				is_neighbor_of = POL
+				any_country = {
+					is_subject_of = SOV
+					is_neighbor_of = POL
+				}
+			}	
 		}
 		bypass = {
 			POL = {
