@@ -128,6 +128,11 @@ country_event = {
 				}
 			}
 		}
+		hidden_effect = {
+			news_event = {
+				id = newsrussia2.107 days = 2
+			}
+		}
 	}
 
 	option = { #Refuse
@@ -154,6 +159,22 @@ country_event = {
 		name = germanys.4.a
 		ai_chance = {
 			factor = 100
+		}
+		every_state = {
+			limit = {
+				has_state_flag = german_slavic_state
+				OR = {
+					is_controlled_by = SOV
+					any_country = {
+						is_subject_of = SOV
+						controls_state = PREV
+					}
+				}
+			}
+			GER = {
+				transfer_state = PREV
+				add_state_claim = PREV
+			}
 		}
 	}
 }
@@ -187,7 +208,7 @@ country_event = {
 	option = { #Accept
 		name = germanys.6.a
 		ai_chance = {
-			factor = 60
+			factor = 99
 		}
 		SOV = {
 			set_country_flag = german_alliance_incident
@@ -208,7 +229,11 @@ country_event = {
 			country_event = { id = germanys.7 days = 1 }
 			if = {
 				limit = {
-					is_faction_leader = yes
+					GER = {
+						NOT = {
+							is_faction_leader = yes
+						}	
+					}
 				}
 				add_to_faction = GER
 				set_faction_name = moscow_berlin_pact
@@ -228,12 +253,24 @@ country_event = {
 				add_to_faction = GER
 			}
 		}
+		GER = {
+			add_ai_strategy = {
+				type = alliance
+				id = SOV
+				value = 200
+			}
+		}
+		hidden_effect = {
+			news_event = {
+				id = newsrussia2.108 days = 2
+			}
+		}
 	}
 
 	option = { #Refuse
 		name = germanys.6.b
 		ai_chance = {
-			factor = 40
+			factor = 1
 		}
 		SOV = {
 			country_event = { id = germanys.8 days = 1 }

@@ -11348,7 +11348,6 @@ focus_tree = {
 				92 = { set_state_flag = slavic_states }
 				88 = { set_state_flag = slavic_states }
 				90 = { set_state_flag = slavic_states }
-				762 = { set_state_flag = slavic_states }
 				10 = { set_state_flag = slavic_states }
 				98 = { set_state_flag = slavic_states }
 				87 = { set_state_flag = slavic_states }
@@ -11363,6 +11362,10 @@ focus_tree = {
 				72 = { set_state_flag = slavic_states }
 				73 = { set_state_flag = slavic_states }
 				664 = { set_state_flag = slavic_states }
+				75 = { set_state_flag = slavic_states_czech }
+				74 = { set_state_flag = slavic_states_czech }
+				9 = { set_state_flag = slavic_states_czech }
+				69 = { set_state_flag = slavic_states_czech }
 				211 = { set_state_flag = slavic_states }
 				212 = { set_state_flag = slavic_states }
 				48 = { set_state_flag = slavic_states }
@@ -11376,9 +11379,16 @@ focus_tree = {
 				103 = { set_state_flag = slavic_states }
 				105 = { set_state_flag = slavic_states }
 				102 = { set_state_flag = slavic_states }
+				86 = { set_state_flag = german_slavic_state }
+				85 = { set_state_flag = german_slavic_state }
+				762 = { set_state_flag = german_slavic_state }
+				188 = { set_state_flag = german_slavic_state }
 				every_state = {
 					limit = {
-						has_state_flag = slavic_states
+						OR = {
+							has_state_flag = slavic_states
+							has_state_flag = slavic_states_czech
+						}
 					}
 					ROOT = {
 						add_state_claim = PREV
@@ -11434,11 +11444,21 @@ focus_tree = {
 			every_other_country = {
 				limit = {
 					NOT = {
-						is_subject_of = SOV
-						is_in_faction_with = SOV
+						OR = {
+							AND = {
+								is_subject_of = SOV
+								is_in_faction_with = SOV
+							}
+							TAG = GER
+							TAG = ITA
+						}
 					}
 					any_state = {
-						has_state_flag = slavic_states
+						OR = {
+							has_state_flag = slavic_states
+							has_state_flag = slavic_states_czech
+							has_state_flag = german_slavic_state
+						}	
 						is_controlled_by = PREV
 					}
 				}
@@ -11472,63 +11492,61 @@ focus_tree = {
 					has_war_with = SOV
 				}
 			}
-			OR = {
+			custom_trigger_tooltip = {
+				tooltip = german_russian_pact_tt_slo
 				OR = {
-					664 = {
-						is_controlled_by = GER
+					OR = {
+						664 = {
+							is_controlled_by = GER
+						}
+						any_country = {
+							is_subject_of = GER
+							controls_state = 664
+						}
 					}
-					any_country = {
-						is_subject_of = GER
-						controls_state = 664
+					OR = {
+						70 = {
+							is_controlled_by = GER
+						}
+						any_country = {
+							is_subject_of = GER
+							controls_state = 70
+						}
+					}
+					OR = {
+						71 = {
+							is_controlled_by = GER
+						}
+						any_country = {
+							is_subject_of = GER
+							controls_state = 71
+						}
+					}
+					OR = {
+						72 = {
+							is_controlled_by = GER
+						}
+						any_country = {
+							is_subject_of = GER
+							controls_state = 72
+						}
+					}
+					OR = {
+						73 = {
+							is_controlled_by = GER
+						}
+						any_country = {
+							is_subject_of = GER
+							controls_state = 73
+						}
 					}
 				}
-				OR = {
-					70 = {
-						is_controlled_by = GER
-					}
-					any_country = {
-						is_subject_of = GER
-						controls_state = 70
-					}
-				}
-				OR = {
-					71 = {
-						is_controlled_by = GER
-					}
-					any_country = {
-						is_subject_of = GER
-						controls_state = 71
-					}
-				}
-				OR = {
-					72 = {
-						is_controlled_by = GER
-					}
-					any_country = {
-						is_subject_of = GER
-						controls_state = 72
-					}
-				}
-				OR = {
-					73 = {
-						is_controlled_by = GER
-					}
-					any_country = {
-						is_subject_of = GER
-						controls_state = 73
-					}
-				}
-			}
+			}	
 		}
 		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
 		completion_reward = {
 			GER = {
 				country_event = { id = germanys.3 days = 1 }
-			}
-			hidden_effect = {
-				news_event = {
-					id = newsrussia2.107 days = 1
-				}
 			}
 		}
 	}
@@ -11568,11 +11586,6 @@ focus_tree = {
 			GER = {
 				country_event = { id = germanys.6 days = 1 }
 			}
-			hidden_effect = {
-				news_event = {
-					id = newsrussia2.108 days = 1
-				}
-			}
 		}
 	}
 
@@ -11593,7 +11606,10 @@ focus_tree = {
 				tooltip = SOV_betray_germany_tt
 				any_state = {
 					is_controlled_by = GER
-					has_state_flag = slavic_states
+					OR = {
+						has_state_flag = slavic_states
+						has_state_flag = slavic_states_czech
+					}	
 				}
 			}
 			is_subject = no
@@ -11612,7 +11628,7 @@ focus_tree = {
 			}
 			hidden_effect = {
 				news_event = {
-					id = newsrussia2.109 days = 1
+					id = newsrussia2.109 days = 5
 				}
 			}
 		}
@@ -11814,7 +11830,6 @@ focus_tree = {
 				controls_state = 92
 				controls_state = 88
 				controls_state = 90
-				controls_state = 762
 				controls_state = 10
 				controls_state = 98
 				controls_state = 87
@@ -11835,14 +11850,6 @@ focus_tree = {
 				controls_state = 13
 			}
 			custom_trigger_tooltip = {
-				tooltip = SOV_slavic_empire_cze_states
-				controls_state = 70
-				controls_state = 71
-				controls_state = 72
-				controls_state = 73
-				controls_state = 664
-			}
-			custom_trigger_tooltip = {
 				tooltip = SOV_slavic_empire_bul_states
 				controls_state = 211
 				controls_state = 212
@@ -11861,6 +11868,24 @@ focus_tree = {
 				controls_state = 105
 				controls_state = 102
 			}
+			custom_trigger_tooltip = {
+				tooltip = SOV_slavic_empire_slo_states
+				OR = {
+					AND = {
+						controls_state = 70
+						controls_state = 71
+						controls_state = 73
+						controls_state = 664
+					}
+					AND = {
+						controls_state = 72
+						controls_state = 74
+						controls_state = 75
+						controls_state = 69
+						controls_state = 9
+					}
+				}	
+			}
 		}
 		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
 		completion_reward = {
@@ -11874,6 +11899,7 @@ focus_tree = {
 				every_state = {
 					limit = {
 						has_state_flag = slavic_states
+						has_state_flag = slavic_states_czech
 					}
 					SOV = {
 						add_state_core = PREV
