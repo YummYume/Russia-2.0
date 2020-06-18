@@ -65,3 +65,94 @@ country_event = {
 		}
 	}
 }
+
+#SOV Is Not Communist Anymore, Take Over the Communist Governement?
+country_event = {
+	id = mongolias.3
+	title = mongolias.3.t
+	desc = mongolias.3.d
+	picture = GFX_report_event_generic_read_write
+	
+	trigger = {
+		tag = MON
+		has_government = communism
+		is_subject = no
+		SOV = {
+			NOT = {
+				has_government = communism
+				has_war_with = MON
+				is_subject = yes
+				has_civil_war = yes
+				has_country_flag = second_civil_war_in_progress
+			}
+			OR = {
+				has_completed_focus = SOV_launch_insurrection
+				has_completed_focus = SOV_bring_back_old_life
+				# has_completed_focus = SOV_fascist
+			}
+		}
+	}
+
+	fire_only_once = yes
+	
+	option = { #Become Democratic
+		name = mongolias.3.a
+		ai_chance = {
+			factor = 80
+		}
+		trigger = {
+			SOV = {
+				has_government = democratic
+			}
+		}
+		set_politics = {
+			ruling_party = democratic
+		}
+	}
+
+	option = { #Become Non-Alligned
+		name = mongolias.3.b
+		ai_chance = {
+			factor = 80
+		}
+		trigger = {
+			SOV = {
+				has_government = neutrality
+			}
+		}
+		set_politics = {
+			ruling_party = neutrality
+		}
+	}
+
+	option = { #Become Fascist
+		name = mongolias.3.c
+		ai_chance = {
+			factor = 60
+		}
+		trigger = {
+			SOV = {
+				has_government = fascism
+			}
+		}
+		set_politics = {
+			ruling_party = fascism
+		}
+		SOV = {
+			puppet = ROOT
+		}
+	}
+
+	option = { #Remain Communist
+		name = mongolias.3.e
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 40
+				SOV = {
+					has_government = fascism
+				}
+			}
+		}
+	}
+}
