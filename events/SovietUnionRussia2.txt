@@ -7936,7 +7936,7 @@ country_event = {
 		remove_ideas = SOV_Slow_industry
 		dismantle_faction = yes
 		add_ideas = low_economic_mobilisation
-		add_ideas = SOV_Workers_strike
+		add_ideas = SOV_Political_Unstability
 	}
 }
 
@@ -11774,7 +11774,7 @@ country_event = {
 		remove_ideas = SOV_Slow_industry
 		dismantle_faction = yes
 		add_ideas = low_economic_mobilisation
-		add_ideas = SOV_Workers_strike
+		add_ideas = SOV_Political_Unstability
 	}
 }
 
@@ -11984,5 +11984,35 @@ country_event = {
 			factor = 100
 		}
 		name = soviets.265.a
+	}
+}
+
+#Remove Political Insecurity Idea if more than 5% Surrender Progress
+country_event = {
+	id = soviets.266
+	title = soviets.266.t
+	desc = soviets.266.d
+	picture = GFX_report_event_soldiers_marching
+
+	trigger = {
+		tag = SOV
+		has_idea = SOV_Political_Unstability
+		surrender_progress > 0.05
+	}
+
+	fire_only_once = yes
+
+	mean_time_to_happen = {
+		days = 10
+	}
+
+	option = { #Thank you
+		ai_chance = {
+			factor = 100
+		}
+		name = soviets.266.a
+		add_political_power = -100
+		add_war_support = 0.1
+		remove_ideas = SOV_Political_Unstability
 	}
 }
