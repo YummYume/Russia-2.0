@@ -324,11 +324,18 @@ country_event = {
 	option = { #Accept
 		name = germanys.9.a
 		ai_chance = {
-			factor = 60
+			factor = 40
+			modifier = {
+				factor = 60
+				surrender_progress > 0.10
+			}
 		}
 		every_state = {
 			limit = {
-				has_state_flag = slavic_states
+				OR = {
+					has_state_flag = slavic_states
+					has_state_flag = slavic_states_czech
+				}	
 				is_controlled_by = GER
 			}
 			SOV = {
@@ -343,7 +350,11 @@ country_event = {
 	option = { #Refuse
 		name = germanys.9.b
 		ai_chance = {
-			factor = 40
+			factor = 60
+			modifier = {
+				factor = 40
+				surrender_progress > 0.10
+			}
 		}
 		SOV = {
 			country_event = { id = germanys.11 days = 1 }
@@ -617,7 +628,7 @@ country_event = {
 	}
 }
 
-#Germany Accept It's Rightful Territories
+#Germany Refuse It's Rightful Territories
 country_event = {
 	id = germanys.19
 	title = germanys.19.t
@@ -630,6 +641,49 @@ country_event = {
 		name = germanys.19.a
 		ai_chance = {
 			factor = 100
+		}
+	}
+}
+
+#Russo-German Pact Polish Land
+country_event = {
+	id = germanys.20
+	title = germanys.20.t
+	desc = germanys.20.d
+	picture = GFX_report_event_hitler_croatia_handshake
+
+	trigger = {
+		tag = SOV
+		has_government = neutrality
+		has_completed_focus = SOV_german_russian_pact
+		any_state = {
+			limit = {
+				has_state_flag = german_slavic_state
+				is_owned_and_controlled_by = SOV
+			}
+		}
+	}
+
+	fire_only_once = yes
+
+	mean_time_to_happen = {
+		days = 35
+	}
+
+	option = { #We Must Respect the Treaty
+		name = germanys.20.a
+		ai_chance = {
+			factor = 100
+		}
+		every_state = {
+			limit = {
+				has_state_flag = german_slavic_state
+				is_owned_and_controlled_by = SOV
+			}
+			GER = {
+				transfer_state = PREV
+				add_state_claim = PREV
+			}
 		}
 	}
 }
