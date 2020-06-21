@@ -11626,7 +11626,7 @@ country_event = {
 	}
 
 	mean_time_to_happen = {
-		days = 10
+		days = 70
 	}
 
 	option = {
@@ -12161,3 +12161,70 @@ country_event = {
 		}	
 	}
 }
+
+#Hidden Event to Kick Retarded (Communist Portugal) Countries Who Shouldn't be in faction with the Russian during the Second Civil War
+country_event = {
+	id = soviets.268
+
+	trigger = {
+		NOT = {
+			TAG = SOV
+			TAG = UKR
+			TAG = BLR
+			TAG = KAZ
+			TAG = TMS
+			TAG = GEO
+			TAG = ARM
+			TAG = AZR
+			is_subject = yes
+		}
+		SOV = {
+			has_country_flag = second_civil_war_in_progress
+			has_war = yes
+		}
+		any_country = {
+			is_in_faction_with = SOV
+			NOT = {
+				TAG = UKR
+				TAG = BLR
+				TAG = KAZ
+				TAG = TMS
+				TAG = GEO
+				TAG = ARM
+				TAG = AZR
+			}
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 10
+	}
+
+	hidden = yes
+
+	immediate = {
+		every_country = {
+			limit = {
+				is_in_faction_with = SOV
+				NOT = {
+					TAG = UKR
+					TAG = BLR
+					TAG = KAZ
+					TAG = TMS
+					TAG = GEO
+					TAG = ARM
+					TAG = AZR
+					TAG = SOV
+				}
+			}
+			leave_faction = yes
+			white_peace = SOU
+			if = {
+				limit = {
+					has_war_with = UKR
+				}
+				white_peace = UKR
+			}
+		}	
+	}
+}	
