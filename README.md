@@ -37,14 +37,20 @@ The AI can play the Soviet Union, some factors have been added, as well as an ai
 
 Do **NOT** upload this mod as your own.
 
+## What is currently available on this version?
+
+- All the features included in the Steam version
+- Democratic Path
+- 2 Non-Aligned Paths
+- Unique mechanics for each path
+- Some rebalance, more events, more generals
+
 ## What is to come?
 
-- Democratic path
 - Fascist path
-- Non-aligned path
 - AI Improvements
 - Bug fixes
-- New focus icons, event images, etc... (not a priority!)
+- New focus icons, event images, etc...
 - Balance update
 - Anything that goes through our mind
 

@@ -5202,26 +5202,53 @@ focus_tree = {
 			add_ideas = SOV_Russia_flagship
 			custom_effect_tooltip = SOV_flagship_russia_tt
 			hidden_effect = {
-				create_equipment_variant = {
-					name = "Rovetskaya Rossiya"
-					type = ship_hull_heavy_4
-					parent_version = 0
-					modules = {
-						fixed_ship_battery_slot = ship_heavy_battery_3
-						fixed_ship_anti_air_slot = ship_anti_air_4
-						fixed_ship_fire_control_system_slot = ship_fire_control_system_3
-						fixed_ship_radar_slot = ship_radar_3
-						fixed_ship_engine_slot = heavy_ship_engine_4
-						fixed_ship_secondaries_slot = dp_ship_secondaries
-						fixed_ship_armor_slot = ship_armor_bb_3
-						front_1_custom_slot = ship_heavy_battery_3
-						mid_1_custom_slot = ship_anti_air_4
-						mid_2_custom_slot = dp_ship_secondaries
-						mid_3_custom_slot = ship_airplane_launcher_2
-						rear_1_custom_slot = ship_heavy_battery_3
+				if = {
+					limit = {
+						has_government = communism
 					}
+					create_equipment_variant = {
+						name = "Sovetskaya Rossiya"
+						type = ship_hull_heavy_4
+						parent_version = 0
+						modules = {
+							fixed_ship_battery_slot = ship_heavy_battery_3
+							fixed_ship_anti_air_slot = ship_anti_air_4
+							fixed_ship_fire_control_system_slot = ship_fire_control_system_3
+							fixed_ship_radar_slot = ship_radar_3
+							fixed_ship_engine_slot = heavy_ship_engine_4
+							fixed_ship_secondaries_slot = dp_ship_secondaries
+							fixed_ship_armor_slot = ship_armor_bb_3
+							front_1_custom_slot = ship_heavy_battery_3
+							mid_1_custom_slot = ship_anti_air_4
+							mid_2_custom_slot = dp_ship_secondaries
+							mid_3_custom_slot = ship_airplane_launcher_2
+							rear_1_custom_slot = ship_heavy_battery_3
+						}
+					}
+					load_oob = "SOV_sovetskaya_rossiya"
 				}
-				load_oob = "SOV_rovetskaya_rossiya"
+				else = {
+					create_equipment_variant = {
+						name = "Rovetskaya Rossiya"
+						type = ship_hull_heavy_4
+						parent_version = 0
+						modules = {
+							fixed_ship_battery_slot = ship_heavy_battery_3
+							fixed_ship_anti_air_slot = ship_anti_air_4
+							fixed_ship_fire_control_system_slot = ship_fire_control_system_3
+							fixed_ship_radar_slot = ship_radar_3
+							fixed_ship_engine_slot = heavy_ship_engine_4
+							fixed_ship_secondaries_slot = dp_ship_secondaries
+							fixed_ship_armor_slot = ship_armor_bb_3
+							front_1_custom_slot = ship_heavy_battery_3
+							mid_1_custom_slot = ship_anti_air_4
+							mid_2_custom_slot = dp_ship_secondaries
+							mid_3_custom_slot = ship_airplane_launcher_2
+							rear_1_custom_slot = ship_heavy_battery_3
+						}
+					}
+					load_oob = "SOV_rovetskaya_rossiya"
+				}
 			}
 		}
 	}
@@ -9597,7 +9624,7 @@ focus_tree = {
 		y = 13
 		prerequisite = { focus = SOV_terrible_fate }
 		mutually_exclusive = { focus = SOV_right_to_believe }
-		icon = GFX_goal_generic_demand_territory
+		icon = GFX_Denikins_Cause
 		cost = 5
 		ai_will_do = {
 			factor = 10
@@ -9605,7 +9632,7 @@ focus_tree = {
 		available = {
 			is_subject = no
 		}
-		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_POLITICAL }
 		completion_reward = {
 			remove_ideas = SOV_Unhappy_peasants1
 			add_ideas = SOV_Prepare_second_war
@@ -9645,7 +9672,7 @@ focus_tree = {
 		x = 48
 		y = 14
 		prerequisite = { focus = SOV_rally_under_denikin_cause }
-		icon = GFX_goal_generic_major_war
+		icon = GFX_Second_Civil_War
 		cost = 20
 		ai_will_do = {
 			factor = 8
@@ -10628,7 +10655,7 @@ focus_tree = {
 			is_subject = no
 			has_government = neutrality
 		}
-		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_MANPOWER }
 		completion_reward = {
 			custom_effect_tooltip = SOV_war_against_bolshevism_tt
 		}
@@ -10682,7 +10709,7 @@ focus_tree = {
 			is_subject = no
 			has_government = neutrality
 		}
-		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_STABILITY }
 		completion_reward = {
 			add_ideas = SOV_Communist_resistance
 			hidden_effect = {
@@ -10696,6 +10723,8 @@ focus_tree = {
 			}
 			drop_cosmetic_tag = yes
 			set_cosmetic_tag = RPMJ
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = SOV_vladimir_kirillovich
 		}
 	}
 
@@ -10714,7 +10743,7 @@ focus_tree = {
 			is_subject = no
 			has_government = neutrality
 		}
-		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_INDUSTRY }
 		completion_reward = {
 			add_timed_idea = {
 				idea = SOV_Rebuild_industry
@@ -10739,7 +10768,7 @@ focus_tree = {
 			is_subject = no
 			has_government = neutrality
 		}
-		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_POLITICAL }
 		completion_reward = {
 			swap_ideas = {
 				remove_idea = SOV_Communist_resistance
@@ -10850,7 +10879,7 @@ focus_tree = {
 			neutrality > 0.4
 			has_country_flag = monarchist_restoration_path
 		}
-		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA }
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_STABILITY }
 		completion_reward = {
 			if = {
 				limit = {
@@ -11073,7 +11102,7 @@ focus_tree = {
 				country_exists = ARM
 			}
 		}
-		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_ANNEXATION }
 		completion_reward = {
 			custom_effect_tooltip = SOV_reintegrate_lost_state_tt
 			UKR = {
@@ -11222,7 +11251,7 @@ focus_tree = {
 			is_subject = no
 			has_government = neutrality
 		}
-		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_POLITICAL }
 		completion_reward = {
 			add_political_power = 50
 			add_timed_idea = {
@@ -11247,7 +11276,7 @@ focus_tree = {
 			is_subject = no
 			has_government = neutrality
 		}
-		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA }
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_INDUSTRY }
 		completion_reward = {
 			country_event = { id = soviets.198 days = 1 }
 		}
@@ -11268,7 +11297,7 @@ focus_tree = {
 			is_subject = no
 			has_government = neutrality
 		}
-		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA }
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY }
 		completion_reward = {
 			add_stability = 0.1
 			add_political_power = 100
@@ -11293,7 +11322,7 @@ focus_tree = {
 				has_government = fascism
 			}
 		}
-		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
+		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY }
 		completion_reward = {
 			add_ideas = SOV_Church_power_1
 			custom_effect_tooltip = SOV_control_church_tt
@@ -11339,7 +11368,7 @@ focus_tree = {
 			has_government = neutrality
 			is_major = yes
 		}
-		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
+		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_ANNEXATION }
 		completion_reward = {
 			hidden_effect = {
 				89 = { set_state_flag = slavic_states }
@@ -11443,7 +11472,7 @@ focus_tree = {
 				}
 			}
 		}
-		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
+		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_ANNEXATION }
 		will_lead_to_war_with = CZE
 		will_lead_to_war_with = YUG
 		will_lead_to_war_with = ROM
@@ -11558,7 +11587,7 @@ focus_tree = {
 				}
 			}	
 		}
-		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
+		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_ANNEXATION }
 		completion_reward = {
 			GER = {
 				country_event = { id = germanys.3 days = 1 }
@@ -11635,7 +11664,7 @@ focus_tree = {
 				}
 			}
 		}
-		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
+		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_ANNEXATION }
 		will_lead_to_war_with = GER
 		completion_reward = {
 			GER = {
@@ -11904,7 +11933,7 @@ focus_tree = {
 				}	
 			}
 		}
-		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
+		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_STABILITY FOCUS_FILTER_ANNEXATION }
 		completion_reward = {
 			add_stability = 0.1
 			SOV = {
@@ -11946,7 +11975,7 @@ focus_tree = {
 			has_government = neutrality
 			is_major = yes
 		}
-		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
+		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_ANNEXATION }
 		completion_reward = {
 			add_ideas = SOV_Extend_influence_idea
 			custom_effect_tooltip = SOV_extend_influence_tt
@@ -12084,7 +12113,7 @@ focus_tree = {
 			is_subject = no
 			has_government = neutrality
 		}
-		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA }
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_MANPOWER }
 		completion_reward = {
 			country_event = { id = soviets.212 days = 1 }
 
@@ -12226,7 +12255,7 @@ focus_tree = {
 				}
 			}
 		}
-		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA }
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_ANNEXATION }
 		will_lead_to_war_with = POL
 		completion_reward = {
 			country_event = { id = polands.4 days = 1 }
@@ -12256,7 +12285,7 @@ focus_tree = {
 				}
 			}
 		}
-		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA }
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_ANNEXATION }
 		will_lead_to_war_with = FIN
 		completion_reward = {
 			country_event = { id = finlands.9 days = 1 }
@@ -12287,7 +12316,7 @@ focus_tree = {
 				}
 			}
 		}
-		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA }
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_ANNEXATION }
 		completion_reward = {
 			country_event = { id = soviets.192 days = 2 }
 		}
