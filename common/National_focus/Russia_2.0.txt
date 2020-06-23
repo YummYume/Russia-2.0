@@ -11528,9 +11528,10 @@ focus_tree = {
 	#German-Russian Pact
 	focus = {
 		id = SOV_german_russian_pact
-		x = 49
+		x = 51
 		y = 23
 		prerequisite = { focus = SOV_announce_our_ambitions }
+		mutually_exclusive = { focus = SOV_unthinkable_alliance }
 		icon = GFX_goal_generic_alliance
 		cost = 8
 		ai_will_do = {
@@ -11544,6 +11545,7 @@ focus_tree = {
 					has_government = democratic
 					has_war_with = SOV
 				}
+				is_subject = no
 			}
 			custom_trigger_tooltip = {
 				tooltip = german_russian_pact_tt_slo
@@ -11607,7 +11609,7 @@ focus_tree = {
 	#Alliance With Germany
 	focus = {
 		id = SOV_alliance_with_germany_junta
-		x = 50
+		x = 52
 		y = 24
 		prerequisite = { focus = SOV_german_russian_pact }
 		mutually_exclusive = { focus = SOV_betray_germany }
@@ -11646,7 +11648,7 @@ focus_tree = {
 	#Betray Germany
 	focus = {
 		id = SOV_betray_germany
-		x = 48
+		x = 50
 		y = 24
 		prerequisite = { focus = SOV_german_russian_pact }
 		mutually_exclusive = { focus = SOV_alliance_with_germany_junta }
@@ -11689,10 +11691,39 @@ focus_tree = {
 		}
 	}
 
+	#The Unthinkablke Alliance
+	focus = {
+		id = SOV_unthinkable_alliance
+		x = 54
+		y = 23
+		prerequisite = { focus = SOV_announce_our_ambitions }
+		mutually_exclusive = { focus = SOV_german_russian_pact }
+		icon = GFX_focus_chi_collaboration_with_the_japanese
+		cost = 8
+		ai_will_do = {
+			factor = 8
+		}
+		available = {
+			always = no
+			is_subject = no
+			OR = {
+				has_government = neutrality
+				has_government = fascism
+			}
+			JAP = {
+				is_subject = no
+			}
+		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_ANNEXATION }
+		completion_reward = {
+
+		}
+	}
+
 	#Agreement With France
 	focus = {
 		id = SOV_agreement_france
-		x = 52
+		x = 48
 		y = 23
 		prerequisite = { focus = SOV_announce_our_ambitions }
 		icon = GFX_focus_chi_reach_out_to_france
@@ -11729,7 +11760,7 @@ focus_tree = {
 	#Clamp Down the Non Slavic 
 	focus = {
 		id = SOV_clamp_down_romania
-		x = 52
+		x = 48
 		y = 24
 		prerequisite = { focus = SOV_agreement_france }
 		icon = GFX_goal_generic_major_war
