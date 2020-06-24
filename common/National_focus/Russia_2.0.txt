@@ -3245,6 +3245,13 @@ focus_tree = {
 				has_idea = SOV_Exiled_russia
 			}
 			custom_trigger_tooltip = {
+				tooltip = SOV_russian_expansion_tt4
+				NOT = {
+					has_idea = SOV_Political_Unstability
+					has_idea = SOV_Political_Unstability2	
+				}
+			}	
+			custom_trigger_tooltip = {
 				tooltip = SOV_russian_expansion_tt
 				has_civil_war = no
 				SOV = {
@@ -11236,7 +11243,18 @@ focus_tree = {
 					}
 				}
 			}
-			add_political_power = 125
+			if = {
+				limit = {
+					has_completed_focus = SOV_destroy_communist
+				}
+				add_political_power = 125
+			}
+			else_if = {
+				limit = {
+					has_completed_focus = SOV_appease_communist
+				}
+				add_political_power = 50
+			}
 			hidden_effect = {
 				news_event = {
 					id = newsrussia2.84 hours = 12
@@ -11288,6 +11306,8 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_INDUSTRY }
 		completion_reward = {
 			country_event = { id = soviets.198 days = 1 }
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = SOV_peter_krutitsy
 		}
 	}
 
@@ -11694,7 +11714,7 @@ focus_tree = {
 	#The Unthinkablke Alliance
 	focus = {
 		id = SOV_unthinkable_alliance
-		x = 54
+		x = 55
 		y = 23
 		prerequisite = { focus = SOV_announce_our_ambitions }
 		mutually_exclusive = { focus = SOV_german_russian_pact }
@@ -11704,7 +11724,6 @@ focus_tree = {
 			factor = 8
 		}
 		available = {
-			always = no
 			is_subject = no
 			OR = {
 				has_government = neutrality
@@ -11712,9 +11731,177 @@ focus_tree = {
 			}
 			JAP = {
 				is_subject = no
+				NOT = {
+					has_government = democratic
+					has_government = communism
+				}
 			}
 		}
 		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_ANNEXATION }
+		completion_reward = {
+			JAP = {
+				country_event = { id = japans.11 days = 1 }
+			}
+		}
+	}
+
+	#Cooperation with the Japanes Military
+	focus = {
+		id = SOV_cooperation_japanese_military
+		x = 54
+		y = 24
+		prerequisite = { focus = SOV_unthinkable_alliance }
+		mutually_exclusive = { focus = SOV_economic_cooperation_japan }
+		icon = GFX_focus_generic_japanese_imperial_glory
+		cost = 10
+		ai_will_do = {
+			factor = 8
+		}
+		available = {
+			is_subject = no
+			OR = {
+				has_government = neutrality
+				has_government = fascism
+			}
+		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_ANNEXATION }
+		completion_reward = {
+			custom_effect_tooltip = SOV_cooperation_japanese_military_tt
+			show_ideas_tooltip = SOV_Russian_japan_mil_coop
+			hidden_effect = {
+				add_ideas = SOV_Russian_japan_mil_coop
+				JAP = {
+					add_ideas = SOV_Russian_japan_mil_coop
+				}
+			}	
+			hidden_effect = {
+				set_rule = {
+					can_use_kamikaze_pilots = yes
+				}
+			}
+			custom_effect_tooltip = kamikaze_focus_tooltip
+			custom_effect_tooltip = unlock_last_stand_russia
+		}
+	}
+
+	#Close Cooperation with the Kenpeitai
+	focus = {
+		id = SOV_close_cooperation_kenpeitai
+		x = 54
+		y = 25
+		prerequisite = { focus = SOV_cooperation_japanese_military }
+		icon = GFX_goal_generic_intelligence_exchange
+		cost = 10
+		ai_will_do = {
+			factor = 8
+		}
+		available = {
+			is_subject = no
+			OR = {
+				has_government = neutrality
+				has_government = fascism
+			}
+		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_ANNEXATION }
+		completion_reward = {
+
+		}
+	}
+
+	#Economic Cooperation with Japan
+	focus = {
+		id = SOV_economic_cooperation_japan
+		x = 56
+		y = 24
+		prerequisite = { focus = SOV_unthinkable_alliance }
+		mutually_exclusive = { focus = SOV_cooperation_japanese_military }
+		icon = GFX_focus_generic_treaty
+		cost = 10
+		ai_will_do = {
+			factor = 8
+		}
+		available = {
+			is_subject = no
+			OR = {
+				has_government = neutrality
+				has_government = fascism
+			}
+		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_ANNEXATION }
+		completion_reward = {
+
+		}
+	}
+
+	#Joint Research Cooperation
+	focus = {
+		id = SOV_joint_research_cooperation_japan
+		x = 56
+		y = 25
+		prerequisite = { focus = SOV_economic_cooperation_japan }
+		icon = GFX_goal_generic_scientific_exchange
+		cost = 10
+		ai_will_do = {
+			factor = 8
+		}
+		available = {
+			is_subject = no
+			OR = {
+				has_government = neutrality
+				has_government = fascism
+			}
+		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_ANNEXATION }
+		completion_reward = {
+
+		}
+	}
+
+	#Japanese Trust
+	focus = {
+		id = SOV_japanese_trust
+		x = 55
+		y = 26
+		prerequisite = { focus = SOV_joint_research_cooperation_japan focus = SOV_close_cooperation_kenpeitai }
+		icon = GFX_focus_generic_diplomatic_treaty
+		cost = 8
+		ai_will_do = {
+			factor = 8
+		}
+		available = {
+			is_subject = no
+			OR = {
+				has_government = neutrality
+				has_government = fascism
+			}
+		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_ANNEXATION }
+		completion_reward = {
+			remove_ideas = SOV_Japanese_concession
+			JAP = {
+				remove_ideas = SOV_Russian_concession_jap
+			}
+		}
+	}
+
+	#Stance on the Sino-Japanese Conflict
+	focus = {
+		id = SOV_stance_sino_japan_conflict
+		x = 58
+		y = 24
+		prerequisite = { focus = SOV_unthinkable_alliance }
+		icon = GFX_focus_attack_china
+		cost = 8
+		ai_will_do = {
+			factor = 8
+		}
+		available = {
+			is_subject = no
+			has_government = fascism
+			NOT = {
+				has_war_with = CHI
+			}
+		}
 		completion_reward = {
 
 		}
@@ -11757,9 +11944,9 @@ focus_tree = {
 		}
 	}
 
-	#Clamp Down the Non Slavic 
+	#The Few Obstacles Left
 	focus = {
-		id = SOV_clamp_down_romania
+		id = SOV_few_obstacles_left
 		x = 48
 		y = 24
 		prerequisite = { focus = SOV_agreement_france }
