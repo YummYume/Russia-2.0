@@ -12442,8 +12442,8 @@ focus_tree = {
 	#Invite Yugoslavia
 	focus = {
 		id = SOV_invite_yugoslavia
-		x = 36
-		y = 25
+		x = 38
+		y = 27
 		prerequisite = { focus = SOV_slavic_alliance }
 		icon = GFX_focus_invite_yugoslavia
 		cost = 4
@@ -12465,12 +12465,28 @@ focus_tree = {
 					exists = yes
 					NOT = {
 						is_faction_leader = yes
+						is_in_faction_with = SOV
 					}
 					is_subject = no
 				}
 			}
 			else {
-
+				any_country = {
+					OR = {
+						tag = SER
+						tag = CRO
+						tag = BOS
+						tag = SLV
+						tag = MNT
+						tag = MAC
+					}
+					NOT = {
+						is_faction_leader = yes
+						has_war_with = SOV
+						is_in_faction_with = SOV
+					}
+					is_subject = no
+				}
 			}
 		}
 		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA }
@@ -12488,8 +12504,20 @@ focus_tree = {
 					limit = {
 						OR = {
 							tag = SER
+							tag = CRO
+							tag = BOS
+							tag = SLV
+							tag = MNT
+							tag = MAC
 						}
+						NOT = {
+							is_faction_leader = yes
+							has_war_with = SOV
+							is_in_faction_with = SOV
+						}
+						is_subject = no
 					}
+					country_event = { id = soviets.178 days = 1 }
 				}
 			}
 		}
@@ -12517,6 +12545,7 @@ focus_tree = {
 				exists = yes
 				NOT = {
 					is_faction_leader = yes
+					is_in_faction_with = SOV
 				}
 				is_subject = no
 			}
@@ -12551,6 +12580,7 @@ focus_tree = {
 				exists = yes
 				NOT = {
 					is_faction_leader = yes
+					is_in_faction_with = SOV
 				}
 				is_subject = no
 			}
@@ -12585,6 +12615,7 @@ focus_tree = {
 				exists = yes
 				NOT = {
 					is_faction_leader = yes
+					is_in_faction_with = SOV
 				}
 				is_subject = no
 			}
@@ -12600,8 +12631,8 @@ focus_tree = {
 	#Invite Baltics
 	focus = {
 		id = SOV_invite_baltics
-		x = 38
-		y = 27
+		x = 36
+		y = 25
 		prerequisite = { focus = SOV_slavic_alliance }
 		icon = GFX_improve_relations_baltics
 		cost = 4
@@ -12621,6 +12652,7 @@ focus_tree = {
 						exists = yes
 						NOT = {
 							is_faction_leader = yes
+							is_in_faction_with = SOV
 						}
 						is_subject = no
 					}
@@ -12633,6 +12665,7 @@ focus_tree = {
 						exists = yes
 						NOT = {
 							is_faction_leader = yes
+							is_in_faction_with = SOV
 						}
 						is_subject = no
 					}
@@ -12645,6 +12678,7 @@ focus_tree = {
 						exists = yes
 						NOT = {
 							is_faction_leader = yes
+							is_in_faction_with = SOV
 						}
 						is_subject = no
 					}
@@ -12664,6 +12698,7 @@ focus_tree = {
 					NOT = {
 						is_faction_leader = yes
 						has_war_with = SOV
+						is_in_faction_with = SOV
 					}
 					is_subject = no
 				}
@@ -12694,6 +12729,7 @@ focus_tree = {
 				exists = yes
 				NOT = {
 					is_faction_leader = yes
+					is_in_faction_with = SOV
 				}
 				is_subject = no
 			}
@@ -12702,6 +12738,22 @@ focus_tree = {
 		completion_reward = {
 			BUL = {
 				country_event = { id = soviets.178 days = 1 }
+			}
+			if = {
+				limit = {
+					YUG = {
+						is_in_faction_with = SOV
+					}
+				}
+				custom_effect_tooltip = SOV_invite_bulgaria_tt
+			}
+			else_if = {
+				limit = {
+					MAC = {
+						is_in_faction_with = SOV
+					}
+				}
+				custom_effect_tooltip = SOV_invite_bulgaria_tt2
 			}
 		}
 	}
