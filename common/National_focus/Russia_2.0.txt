@@ -11780,7 +11780,6 @@ focus_tree = {
 				}
 			}
 			custom_effect_tooltip = kamikaze_focus_tooltip
-			custom_effect_tooltip = unlock_last_stand_russia
 		}
 	}
 
@@ -11804,7 +11803,15 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_ANNEXATION }
 		completion_reward = {
-
+			custom_effect_tooltip = SOV_cooperation_japanese_military_tt
+			show_ideas_tooltip = SOV_Russian_japan_agency_coop
+			hidden_effect = {
+				add_ideas = SOV_Russian_japan_agency_coop
+				JAP = {
+					add_ideas = SOV_Russian_japan_agency_coop
+				}
+			}
+			custom_effect_tooltip = unlock_special_ability_russia
 		}
 	}
 
@@ -11877,9 +11884,17 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_ANNEXATION }
 		completion_reward = {
-			remove_ideas = SOV_Japanese_concession
-			JAP = {
-				remove_ideas = SOV_Russian_concession_jap
+			if = {
+				limit = {
+					has_completed_focus = SOV_firm_hand
+				}
+				remove_ideas = SOV_Japanese_concession
+				JAP = {
+					remove_ideas = SOV_Russian_concession_jap
+				}
+			}
+			else = {
+				custom_effect_tooltip = SOV_convince_italy_tt
 			}
 		}
 	}
@@ -11933,6 +11948,20 @@ focus_tree = {
 			has_government = neutrality
 			NOT = {
 				has_completed_focus = SOV_alliance_with_germany_junta
+			}
+		}
+		bypass = {
+			NOT = {
+				custom_trigger_tooltip = {
+					tooltip = SOV_agreement_france_tt2
+					any_country = { #IT WORKS
+						is_guaranteed_by = FRA
+						any_state = {
+							has_state_flag = slavic_states
+							is_controlled_by = PREV
+						}
+					}
+				}
 			}
 		}
 		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
