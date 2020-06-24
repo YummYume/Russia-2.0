@@ -5948,7 +5948,7 @@ focus_tree = {
 		x = 74
 		y = 6
 		prerequisite = { focus = SOV_foreign_policy }
-		icon = GFX_goal_anschluss
+		icon = GFX_Comintern_ru2
 		cost = 5
 		ai_will_do = {
 			factor = 4
@@ -8136,7 +8136,7 @@ focus_tree = {
 		x = 82
 		y = 7
 		prerequisite = { focus = SOV_expand_international }
-		icon = GFX_focus_Europe_Meetings
+		icon = GFX_invite_communist_minors
 		cost = 5
 		ai_will_do = {
 			factor = 6
@@ -10775,6 +10775,10 @@ focus_tree = {
 				remove_idea = SOV_Communist_resistance
 				add_idea = SOV_Communist_resistance2
 			}
+			swap_ideas = {
+				remove_idea = SOV_Political_Unstability
+				add_idea = SOV_Political_Unstability2
+			}
 			custom_effect_tooltip = SOV_appease_communist_tt
 		}
 	}
@@ -10800,6 +10804,10 @@ focus_tree = {
 			swap_ideas = {
 				remove_idea = SOV_Communist_resistance
 				add_idea = SOV_Communist_resistance3
+			}
+			swap_ideas = {
+				remove_idea = SOV_Political_Unstability
+				add_idea = SOV_Political_Unstability2
 			}
 			custom_effect_tooltip = SOV_destroy_communist_tt
 			hidden_effect = {
@@ -10944,7 +10952,7 @@ focus_tree = {
 			drop_cosmetic_tag = yes
 			set_cosmetic_tag = RUS
 			add_ideas = SOV_Tsar_we_trust
-			remove_ideas = SOV_Political_Unstability
+			remove_ideas = SOV_Political_Unstability2
 			if = {
 				limit = {
 					any_country = {
@@ -11043,7 +11051,7 @@ focus_tree = {
 			drop_cosmetic_tag = yes
 			set_cosmetic_tag = NRG
 			add_ideas = SOV_Denikin_trust
-			remove_ideas = SOV_Political_Unstability
+			remove_ideas = SOV_Political_Unstability2
 			if = {
 				limit = {
 					NOT = {
@@ -11520,10 +11528,11 @@ focus_tree = {
 	#German-Russian Pact
 	focus = {
 		id = SOV_german_russian_pact
-		x = 49
+		x = 51
 		y = 23
 		prerequisite = { focus = SOV_announce_our_ambitions }
-		icon = GFX_goal_generic_alliance
+		mutually_exclusive = { focus = SOV_unthinkable_alliance }
+		icon = GFX_Russo_German_alliance
 		cost = 8
 		ai_will_do = {
 			factor = 8
@@ -11536,6 +11545,7 @@ focus_tree = {
 					has_government = democratic
 					has_war_with = SOV
 				}
+				is_subject = no
 			}
 			custom_trigger_tooltip = {
 				tooltip = german_russian_pact_tt_slo
@@ -11599,7 +11609,7 @@ focus_tree = {
 	#Alliance With Germany
 	focus = {
 		id = SOV_alliance_with_germany_junta
-		x = 50
+		x = 52
 		y = 24
 		prerequisite = { focus = SOV_german_russian_pact }
 		mutually_exclusive = { focus = SOV_betray_germany }
@@ -11638,7 +11648,7 @@ focus_tree = {
 	#Betray Germany
 	focus = {
 		id = SOV_betray_germany
-		x = 48
+		x = 50
 		y = 24
 		prerequisite = { focus = SOV_german_russian_pact }
 		mutually_exclusive = { focus = SOV_alliance_with_germany_junta }
@@ -11681,10 +11691,39 @@ focus_tree = {
 		}
 	}
 
+	#The Unthinkablke Alliance
+	focus = {
+		id = SOV_unthinkable_alliance
+		x = 54
+		y = 23
+		prerequisite = { focus = SOV_announce_our_ambitions }
+		mutually_exclusive = { focus = SOV_german_russian_pact }
+		icon = GFX_focus_chi_collaboration_with_the_japanese
+		cost = 8
+		ai_will_do = {
+			factor = 8
+		}
+		available = {
+			always = no
+			is_subject = no
+			OR = {
+				has_government = neutrality
+				has_government = fascism
+			}
+			JAP = {
+				is_subject = no
+			}
+		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_ANNEXATION }
+		completion_reward = {
+
+		}
+	}
+
 	#Agreement With France
 	focus = {
 		id = SOV_agreement_france
-		x = 52
+		x = 48
 		y = 23
 		prerequisite = { focus = SOV_announce_our_ambitions }
 		icon = GFX_focus_chi_reach_out_to_france
@@ -11721,10 +11760,10 @@ focus_tree = {
 	#Clamp Down the Non Slavic 
 	focus = {
 		id = SOV_clamp_down_romania
-		x = 52
+		x = 48
 		y = 24
 		prerequisite = { focus = SOV_agreement_france }
-		icon = GFX_goal_generic_major_war
+		icon = GFX_few_obstacles_left
 		cost = 8
 		ai_will_do = {
 			factor = 8
@@ -11738,7 +11777,12 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
 		completion_reward = {
-
+			ROM = {
+				country_event = { id = soviets.270 days = 1 }
+			}
+			HUN = {
+				country_event = { id = soviets.270 days = 1 }
+			}
 		}
 	}
 
@@ -11748,7 +11792,7 @@ focus_tree = {
 		x = 46
 		y = 24
 		prerequisite = { focus = SOV_unite_slavic_nations }
-		icon = GFX_goal_tfv_sever_ties_with_uk
+		icon = GFX_slavic_empire
 		cost = 10
 		ai_will_do = {
 			factor = 8
@@ -12457,7 +12501,7 @@ focus_tree = {
 		x = 42
 		y = 25
 		prerequisite = { focus = SOV_slavic_alliance }
-		icon = GFX_goal_generic_major_alliance
+		icon = GFX_Improve_relations_czechoslovakia
 		cost = 4
 		ai_will_do = {
 			factor = 8
@@ -12491,7 +12535,7 @@ focus_tree = {
 		x = 37
 		y = 26
 		prerequisite = { focus = SOV_slavic_alliance }
-		icon = GFX_goal_tripartite_pact
+		icon = GFX_Improve_relations_hungary
 		cost = 4
 		ai_will_do = {
 			factor = 8
@@ -12559,7 +12603,7 @@ focus_tree = {
 		x = 38
 		y = 27
 		prerequisite = { focus = SOV_slavic_alliance }
-		icon = GFX_goal_generic_national_unity
+		icon = GFX_improve_relations_baltics
 		cost = 4
 		ai_will_do = {
 			factor = 8
@@ -12634,7 +12678,7 @@ focus_tree = {
 		x = 40
 		y = 27
 		prerequisite = { focus = SOV_slavic_alliance }
-		icon = GFX_goal_anschluss
+		icon = GFX_Improve_relations_bulgaria
 		cost = 4
 		ai_will_do = {
 			factor = 8

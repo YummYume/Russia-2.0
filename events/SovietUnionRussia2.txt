@@ -2126,6 +2126,9 @@ country_event = {
 		}
 		name = soviets.61.a
 		set_country_flag = konstantin_rodzaevsky_executed
+		hidden_effect = {
+			retire_ideology_leader = fascism
+		}	
 		add_stability = 0.1
 	}
 
@@ -11965,7 +11968,7 @@ country_event = {
 	trigger = {
 		tag = SOV
 		has_idea = SOV_Political_Unstability
-		surrender_progress > 0.05
+		surrender_progress > 0.1
 	}
 
 	fire_only_once = yes
@@ -12197,9 +12200,96 @@ country_event = {
 		days = 1
 	}
 
+	fire_only_once = yes
+
 	hidden = yes
 
 	immediate = {
 		remove_ideas = anti_soviet_pact
+	}
+}
+
+#Ultimatum to Romania and Hungary
+country_event = {
+	id = soviets.270
+	title = soviets.270.t
+	desc = soviets.270.d
+	picture = GFX_report_event_german_troops
+
+	is_triggered_only = yes
+
+	option = { #We Have to Accept for our Survival
+		name = soviets.270.a
+		ai_chance = {
+			factor = 60
+			modifier = {
+				factor = 20
+				is_in_faction = yes
+			}
+		}
+		SOV = {
+			country_event = { id = soviets.271 days = 1 }	
+		}
+	}
+
+	option = { #We Won't Let them Control our Country ! 
+		name = soviets.270.b
+		ai_chance = {
+			factor = 40
+			modifier = {
+				factor = 80
+				is_in_faction = yes
+			}
+		}
+		custom_effect_tooltip = lead_to_war_against_russian_junta
+		SOV = {
+			country_event = { id = soviets.272 days = 1 }	
+		}
+	}
+}
+
+#From Accpet Ultimatum
+country_event = {
+	id = soviets.271
+	title = soviets.271.t
+	desc = soviets.271.d
+	picture = GFX_report_event_hol_cabinet_gerbrandy
+
+	is_triggered_only = yes
+
+	option = { #We Have to Accept for our Survival
+		name = soviets.271.a
+		ai_chance = {
+			factor = 100
+		}
+		SOV = {
+			set_autonomy = {
+				target = FROM
+				autonomy_state = autonomy_dominion
+			}
+		}
+	}
+}
+
+#From Refused Ultimatum
+country_event = {
+	id = soviets.272
+	title = soviets.272.t
+	desc = soviets.272.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #We Have to Accept for our Survival
+		name = soviets.272.a
+		ai_chance = {
+			factor = 100
+		}
+		SOV = {
+			create_wargoal = {
+				type = puppet_wargoal_focus
+				target = FROM
+			}
+		}
 	}
 }
