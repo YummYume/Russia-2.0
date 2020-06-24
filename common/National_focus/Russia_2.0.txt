@@ -12410,21 +12410,43 @@ focus_tree = {
 			is_faction_leader = yes
 			is_subject = no
 			has_government = neutrality
-			NOT = {
-				has_war_with = YUG
-			}
-			YUG = {
-				exists = yes
-				NOT = {
-					is_faction_leader = yes
+			if = {
+				limit = {
+					country_exists = YUG
 				}
-				is_subject = no
+				NOT = {
+					has_war_with = YUG
+				}
+				YUG = {
+					exists = yes
+					NOT = {
+						is_faction_leader = yes
+					}
+					is_subject = no
+				}
+			}
+			else {
+
 			}
 		}
 		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA }
 		completion_reward = {
-			YUG = {
-				country_event = { id = soviets.178 days = 1 }
+			if = {
+				limit = {
+					country_exists = YUG
+				}
+				YUG = {
+					country_event = { id = soviets.178 days = 1 }
+				}
+			}
+			else = {
+				every_country = {
+					limit = {
+						OR = {
+							tag = SER
+						}
+					}
+				}
 			}
 		}
 	}
