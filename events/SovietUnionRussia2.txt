@@ -7401,9 +7401,20 @@ country_event = {
 	option = { #Join
 		name = soviets.178.a
 		ai_chance = {
-			factor = 100
+			factor = 75
 			modifier = {
-				factor = 50
+				factor = 5
+				tag = BUL
+				any_country = {
+					OR = {
+						tag = SOV
+						tag = MAC
+					}
+					is_in_faction_with = SOV
+				}
+			}
+			modifier = {
+				factor = 25
 				any_country = {
 					is_major = yes
 					has_war_with = SOV
@@ -7412,7 +7423,7 @@ country_event = {
 		}
 		SOV = {
 			add_to_faction = ROOT
-			country_event = { id = soviets.179 days = 1 }
+			country_event = { id = soviets.182 days = 1 }
 		}
 		add_opinion_modifier = {
 			target = FROM
@@ -7430,19 +7441,48 @@ country_event = {
 				value = 200
 			}
 		}
-		hidden_effect = {
-			news_event = {
-				id = newsrussia2.96 days = 2
+	}
+
+	option = { #Demand Claims
+		name = soviets.178.b
+		ai_chance = {
+			factor = 25
+			modifier = {
+				factor = 75
+				any_country = {
+					OR = {
+						tag = SOV
+						tag = MAC
+					}
+					is_in_faction_with = SOV
+				}
 			}
+		}
+		trigger = {
+			tag = BUL
+		}
+		SOV = {
+			country_event = { id = soviets.183 days = 1 }
 		}
 	}
 
 	option = { #Refuse
-		name = soviets.178.b
+		name = soviets.178.c
 		ai_chance = {
-			factor = 0
+			factor = 25
 			modifier = {
-				factor = 50
+				factor = 20
+				tag = BUL
+				any_country = {
+					OR = {
+						tag = SOV
+						tag = MAC
+					}
+					is_in_faction_with = SOV
+				}
+			}
+			modifier = {
+				factor = 75
 				any_country = {
 					is_major = yes
 					has_war_with = SOV
@@ -7450,7 +7490,7 @@ country_event = {
 			}
 		}
 		SOV = {
-			country_event = { id = soviets.180 days = 1 }
+			country_event = { id = soviets.183 days = 1 }
 		}
 	}
 }
@@ -11958,7 +11998,7 @@ country_event = {
 	}
 }
 
-#Remove Political Insecurity Idea if more than 5% Surrender Progress
+#Remove Political Insecurity Idea if more than 10% Surrender Progress
 country_event = {
 	id = soviets.266
 	title = soviets.266.t
