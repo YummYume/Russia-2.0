@@ -217,7 +217,7 @@ country_event = {
 			factor = 20
 		}
 		SOV = {
-			country_event = { id = japans.10 hours =3 }
+			country_event = { id = japans.10 hours = 3 }
 		}
 	}
 }
@@ -254,5 +254,316 @@ country_event = {
 	option = { #Damn
 		name = japans.10.a
 		ai_chance = { factor = 100 }
+	}
+}
+
+#Japan Receive Russian Proposition to Form an Alliance
+country_event = {
+	id = japans.11
+	title = japans.11.t
+	desc = japans.11.d
+	picture = GFX_report_event_generic_read_write
+
+	is_triggered_only = yes
+
+	option = { #We Will Only Accept if they are ready to make some conscession
+		name = japans.11.a
+		trigger = {
+			SOV = {
+				has_completed_focus = SOV_firm_hand
+				has_government = neutrality
+			}
+		}
+		ai_chance = { factor = 100 }
+		SOV = {
+			country_event = { id = japans.12 days = 1 }
+		}
+	}
+
+	option = { #We Will Accept
+		name = japans.11.b
+		trigger = {
+			SOV = {
+				has_completed_focus = SOV_new_way_life
+				has_government = fascism
+			}
+		}
+		ai_chance = { factor = 100 }
+		SOV = {
+			country_event = { id = japans.16 days = 1 }
+		}
+		if = {
+			limit = {
+				SOV = {
+					is_faction_leader = no
+				}
+				JAP = {
+					is_faction_leader = yes
+				}
+			}
+			JAP = {
+				add_to_faction = SOV
+			}
+		}
+		else_if = {
+			limit = {
+				SOV = {
+					is_faction_leader = yes
+				}
+				JAP = {
+					is_faction_leader = no
+				}
+			}
+			SOV = {
+				add_to_faction = JAP
+			}
+		}
+		else = {
+			SOV = {
+				create_faction = russo_japanese_alliance
+				add_to_faction = JAP
+			}
+		}
+		JAP = {
+			add_ai_strategy = {
+				type = befriend
+				id = SOV
+				value = 200
+			}
+		}
+		JAP = {
+			add_ai_strategy = {
+				type = alliance
+				id = SOV
+				value = 500
+			}
+		}
+		SOV = {
+			add_ai_strategy = {
+				type = befriend
+				id = JAP
+				value = 200
+			}
+		}
+		SOV = {
+			add_ai_strategy = {
+				type = befriend
+				id = JAP
+				value = 500
+			}
+		}
+	}
+
+	option = { #We Won't Join These Rats
+		name = japans.11.c
+		ai_chance = {
+			factor = 0
+		}
+		SOV = {
+			country_event = { id = japans.17 days = 1 }
+		}
+	}
+}
+
+#Japan Wants Concession From Us
+country_event = {
+	id = japans.12
+	title = japans.12.t
+	desc = japans.12.d
+	picture = GFX_report_event_generic_conference
+
+	is_triggered_only = yes
+
+	option = { #Accept
+		name = japans.12.a
+		ai_chance = {
+			factor = 80
+		}
+		SOV = {
+			show_ideas_tooltip = SOV_Japanese_concession
+		}
+		if = {
+			limit = {
+				SOV = {
+					owns_state = 655
+				}		
+			}
+			JAP = {
+				transfer_state = 655
+			}
+		}
+		JAP = {
+			country_event = { id = japans.13 days = 1 }
+		}
+	}
+
+	option = { #Refuse
+		name = japans.12.b
+		ai_chance = {
+			factor = 20
+		}
+		JAP = {
+			country_event = { id = japans.14 days = 1 }
+		}
+	}
+}
+
+#Russia Accepts the Concession
+country_event = {
+	id = japans.13
+	title = japans.13.t
+	desc = japans.13.d
+	picture = GFX_report_event_japan_europe_pact
+
+	is_triggered_only = yes
+
+	option = { #They Are Worthy of Our Trust
+		name = japans.13.a
+		ai_chance = {
+			factor = 100
+		}
+		hidden_effect = {
+			SOV = {
+				add_ideas = SOV_Japanese_concession
+			}
+		}
+		add_ideas = SOV_Russian_concession_jap
+		if = {
+			limit = {
+				SOV = {
+					NOT = {
+						is_faction_leader = yes
+					}	
+				}
+				JAP = {
+					is_faction_leader = yes
+				}
+			}
+			JAP = {
+				add_to_faction = SOV
+			}
+		}
+		else_if = {
+			limit = {
+				SOV = {
+					is_faction_leader = yes
+				}
+				JAP = {
+					NOT = {
+						is_faction_leader = yes
+					}	
+				}
+			}
+			SOV = {
+				dismantle_faction = yes
+				create_faction = russo_japanese_alliance
+				add_to_faction = JAP
+			}
+		}
+		else = {	
+			SOV = {
+				create_faction = russo_japanese_alliance
+				add_to_faction = JAP
+			}
+		}
+		SOV = {
+			country_event = { id = japans.15 days = 1 }
+		}
+		JAP = {
+			add_ai_strategy = {
+				type = befriend
+				id = SOV
+				value = 200
+			}
+		}
+		JAP = {
+			add_ai_strategy = {
+				type = alliance
+				id = SOV
+				value = 500
+			}
+		}
+		SOV = {
+			add_ai_strategy = {
+				type = befriend
+				id = JAP
+				value = 200
+			}
+		}
+		SOV = {
+			add_ai_strategy = {
+				type = befriend
+				id = JAP
+				value = 500
+			}
+		}
+	}
+}
+
+#Russia Refuse the Concession
+country_event = {
+	id = japans.14
+	title = japans.14.t
+	desc = japans.14.d
+	picture = GFX_report_event_japanese_siam_politicians
+
+	is_triggered_only = yes
+
+	option = { #We Knew they would Refuse
+		name = japans.14.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#Japans Accepts the Concession
+country_event = {
+	id = japans.15
+	title = japans.15.t
+	desc = japans.15.d
+	picture = GFX_report_event_japanese_reply
+
+	is_triggered_only = yes
+
+	option = { #May Our Alliance and Friendship Last Long Enough
+		name = japans.15.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#Japans Accepts Our Alliance Proposition
+country_event = {
+	id = japans.16
+	title = japans.16.t
+	desc = japans.16.d
+	picture = GFX_report_event_japanese_parade
+
+	is_triggered_only = yes
+
+	option = { #May Our Alliance and Friendship Last Long Enough
+		name = japans.16.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#Japans Refused Our Alliance Proposition
+country_event = {
+	id = japans.17
+	title = japans.17.t
+	desc = japans.17.d
+	picture = GFX_report_event_japanese_transport_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Those Damn Rats !
+		name = japans.17.a
+		ai_chance = {
+			factor = 100
+		}
 	}
 }
