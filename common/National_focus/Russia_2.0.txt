@@ -6,7 +6,7 @@ focus_tree = {
 		factor = 0
 
 		modifier = {
-			add = 15
+			add = 1000
 			OR = {
 				tag = SOV
 				tag = SOU
@@ -3305,6 +3305,11 @@ focus_tree = {
 			NOT = {
 				has_idea = SOV_Exiled_russia
 			}
+			FIN = {
+				NOT = {
+					is_subject_of = SOV
+				}
+			}
 		}
 		search_filters = {FOCUS_FILTER_ANNEXATION}
 		completion_reward = {
@@ -3317,14 +3322,11 @@ focus_tree = {
 						is_subject = yes
 					}
 				}
-				every_country = {
-					limit = {
-						FIN = {
-							is_subject_of = PREV
-						}
+				FIN = {
+					OVERLORD = {
+						country_event = { id = finlands.1 }
+						custom_effect_tooltip = SOV_red_finland_tt
 					}
-					country_event = { id = finlands.1 }
-					custom_effect_tooltip = SOV_red_finland_tt
 				}
 			}
 			else = {
@@ -12718,21 +12720,18 @@ focus_tree = {
 			has_government = neutrality
 			if = {
 				limit = {
-					country_exists = YUG
-				}
-				NOT = {
-					has_war_with = YUG
-				}
-				YUG = {
-					exists = yes
 					NOT = {
-						is_faction_leader = yes
-						is_in_faction_with = SOV
+						country_exists = YUG
 					}
-					is_subject = no
+					OR = {
+						country_exists = SER
+						country_exists = CRO
+						country_exists = BOS
+						country_exists = SLV
+						country_exists = MNT
+						country_exists = MAC
+					}
 				}
-			}
-			else {
 				any_country = {
 					OR = {
 						tag = SER
@@ -12750,26 +12749,36 @@ focus_tree = {
 					is_subject = no
 				}
 			}
+			else {
+				NOT = {
+					has_war_with = YUG
+				}
+				YUG = {
+					exists = yes
+					NOT = {
+						is_faction_leader = yes
+						is_in_faction_with = SOV
+					}
+					is_subject = no
+				}
+			}
 		}
 		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA }
 		completion_reward = {
 			if = {
 				limit = {
-					country_exists = YUG
-				}
-				YUG = {
-					country_event = { id = soviets.178 days = 1 }
-				}
-				if = {
-					limit = {
-						BUL = {
-							is_in_faction_with = SOV
-						}
+					NOT = {
+						country_exists = YUG
 					}
-					custom_effect_tooltip = SOV_invite_yugoslavia_tt
+					OR = {
+						country_exists = SER
+						country_exists = CRO
+						country_exists = BOS
+						country_exists = SLV
+						country_exists = MNT
+						country_exists = MAC
+					}
 				}
-			}
-			else = {
 				every_country = {
 					limit = {
 						OR = {
@@ -12796,6 +12805,19 @@ focus_tree = {
 						}
 					}
 					custom_effect_tooltip = SOV_invite_yugoslavia_tt2
+				}
+			}
+			else = {
+				YUG = {
+					country_event = { id = soviets.178 days = 1 }
+				}
+				if = {
+					limit = {
+						BUL = {
+							is_in_faction_with = SOV
+						}
+					}
+					custom_effect_tooltip = SOV_invite_yugoslavia_tt
 				}
 			}
 		}
