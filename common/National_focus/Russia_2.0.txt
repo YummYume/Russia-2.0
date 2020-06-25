@@ -11781,7 +11781,7 @@ focus_tree = {
 		prerequisite = { focus = SOV_unthinkable_alliance }
 		mutually_exclusive = { focus = SOV_economic_cooperation_japan }
 		icon = GFX_focus_generic_japanese_imperial_glory
-		cost = 10
+		cost = 8
 		ai_will_do = {
 			factor = 8
 		}
@@ -11851,7 +11851,7 @@ focus_tree = {
 		prerequisite = { focus = SOV_unthinkable_alliance }
 		mutually_exclusive = { focus = SOV_cooperation_japanese_military }
 		icon = GFX_focus_generic_treaty
-		cost = 10
+		cost = 8
 		ai_will_do = {
 			factor = 8
 		}
@@ -11864,7 +11864,14 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
 		completion_reward = {
-
+			custom_effect_tooltip = SOV_economic_cooperation_japan_tt
+			show_ideas_tooltip = SOV_Russian_japan_industry_coop
+			hidden_effect = {
+				add_ideas = SOV_Russian_japan_industry_coop
+				JAP = {
+					add_ideas = SOV_Russian_japan_industry_coop
+				}
+			}
 		}
 	}
 
@@ -11888,7 +11895,19 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_RESEARCH }
 		completion_reward = {
-
+			custom_effect_tooltip = SOV_joint_research_cooperation_japan_tt
+			show_ideas_tooltip = SOV_Russian_japan_research_coop
+			custom_effect_tooltip = SOV_joint_research_cooperation_japan_tt2
+			hidden_effect = {
+				add_ideas = SOV_Russian_japan_research_coop
+				JAP = {
+					add_ideas = SOV_Russian_japan_research_coop
+				}
+				add_to_tech_sharing_group = sov_jap_research_treaty
+				JAP = {
+					add_to_tech_sharing_group = sov_jap_research_treaty
+				}
+			}
 		}
 	}
 
@@ -11944,6 +11963,7 @@ focus_tree = {
 			NOT = {
 				has_war_with = CHI
 			}
+			always = no
 		}
 		search_filters = { FOCUS_FILTER_ANNEXATION }
 		completion_reward = {
@@ -12025,27 +12045,57 @@ focus_tree = {
 		will_lead_to_war_with = ROM
 		will_lead_to_war_with = HUN
 		completion_reward = {
-			ROM = {
-				country_event = { id = soviets.270 days = 1 }
-			}
 			if = {
 				limit = {
 					ROM = {
-						is_guaranteed_by = FRA
+						is_subject = no
 					}
 				}
-				custom_effect_tooltip = SOV_few_obstacles_left_tt
+				ROM = {
+					country_event = { id = soviets.270 days = 1 }
+				}
+				if = {
+					limit = {
+						ROM = {
+							is_guaranteed_by = FRA
+						}
+					}
+					custom_effect_tooltip = SOV_few_obstacles_left_tt
+				}
 			}
-			HUN = {
-				country_event = { id = soviets.270 days = 1 }
+			else = {
+				ROM = {
+					OVERLORD = {
+						country_event = { id = soviets.274 days = 1 }
+					}
+				}
+				custom_effect_tooltip = SOV_few_obstacles_left_tt2
 			}
 			if = {
 				limit = {
 					HUN = {
-						is_guaranteed_by = FRA
+						is_subject = no
 					}
 				}
-				custom_effect_tooltip = SOV_few_obstacles_left_tt2
+				HUN = {
+					country_event = { id = soviets.270 days = 1 }
+				}
+				if = {
+					limit = {
+						HUN = {
+							is_guaranteed_by = FRA
+						}
+					}
+					custom_effect_tooltip = SOV_few_obstacles_left_tt3
+				}
+			}
+			else = {
+				HUN = {
+					OVERLORD = {
+						country_event = { id = soviets.273 days = 1 }
+					}
+				}
+				custom_effect_tooltip = SOV_few_obstacles_left_tt4
 			}
 		}
 	}
