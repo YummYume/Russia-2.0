@@ -11127,33 +11127,47 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_ANNEXATION }
 		completion_reward = {
 			custom_effect_tooltip = SOV_reintegrate_lost_state_tt
-			UKR = {
-				country_event = { id = soviets.213 hours = 3 }
-			}
-			custom_effect_tooltip = ukraine_core_lost_state
-			hidden_effect = {
-				if = {
-					limit = {
-						has_country_flag = sympathize_with_ukraine
-					}
-					set_variable = {
-						var = stability_hit_ukraine
-						value = -10
-					}
+			if = {
+				limit = {
+					country_exists = UKR
 				}
-				else = {
-					set_variable = {
-						var = stability_hit_ukraine
-						value = -5
-					}
+				UKR = {
+					country_event = { id = soviets.213 hours = 3 }
 				}
-				every_state = {
-					limit = {
-						is_owned_and_controlled_by = UKR
-						is_core_of = UKR
+				custom_effect_tooltip = ukraine_core_lost_state
+				hidden_effect = {
+					if = {
+						limit = {
+							has_country_flag = sympathize_with_ukraine
+						}
+						set_variable = {
+							var = stability_hit_ukraine
+							value = -10
+						}
 					}
-					add_core_of = SOV
-				}
+					else_if = {
+						limit = {
+							country_exists = UKR
+							NOT = {
+								has_country_flag = sympathize_with_ukraine	
+							}
+						}
+						set_variable = {
+							var = stability_hit_ukraine
+							value = -5
+						}
+					}
+					every_state = {
+						limit = {
+							is_owned_and_controlled_by = UKR
+							is_core_of = UKR
+							NOT = {
+								is_owned_and_controlled_by = POL
+							}
+						}
+						add_core_of = SOV
+					}
+				}	
 			}
 			if = {
 				limit = {
@@ -11253,7 +11267,7 @@ focus_tree = {
 				limit = {
 					has_completed_focus = SOV_destroy_communist
 				}
-				add_political_power = 125
+				add_political_power = 100
 			}
 			else_if = {
 				limit = {
@@ -11757,6 +11771,9 @@ focus_tree = {
 				has_government = neutrality
 				has_government = fascism
 			}
+			NOT = {
+				has_war_with = JAP
+			}
 			JAP = {
 				is_subject = no
 				NOT = {
@@ -11793,6 +11810,7 @@ focus_tree = {
 		}
 		available = {
 			is_subject = no
+			is_in_faction_with = JAP
 			OR = {
 				has_government = neutrality
 				has_government = fascism
@@ -11830,6 +11848,7 @@ focus_tree = {
 		}
 		available = {
 			is_subject = no
+			is_in_faction_with = JAP
 			OR = {
 				has_government = neutrality
 				has_government = fascism
@@ -11863,6 +11882,7 @@ focus_tree = {
 		}
 		available = {
 			is_subject = no
+			is_in_faction_with = JAP
 			OR = {
 				has_government = neutrality
 				has_government = fascism
@@ -11894,6 +11914,7 @@ focus_tree = {
 		}
 		available = {
 			is_subject = no
+			is_in_faction_with = JAP
 			OR = {
 				has_government = neutrality
 				has_government = fascism
@@ -11930,6 +11951,7 @@ focus_tree = {
 		}
 		available = {
 			is_subject = no
+			is_in_faction_with = JAP
 			OR = {
 				has_government = neutrality
 				has_government = fascism
