@@ -5146,7 +5146,7 @@ country_event = {
 
 	option = { #Ask Them to Join Us - Has Country Flag
 		name = soviets.136.b
-		ai_chance = { factor = 100 }
+		ai_chance = { factor = 200 }
 		trigger = {
 			has_country_flag = sympathize_with_ukraine
 		}
@@ -5190,7 +5190,7 @@ country_event = {
 					communism = 15
 				}
 			}
-		}
+		}	
 	}
 
 	option = { #Declare War on Them for Some Random Reason ?!
@@ -5201,6 +5201,20 @@ country_event = {
 		declare_war_on = {
 			target = UKR
 			type = annex_everything
+		}
+		hidden_effect = {
+			SOU = {
+				give_military_access = UKR
+			}
+			UKR = {
+				give_military_access = SOU
+				set_popularities = {
+					democratic = 25
+					neutrality = 45
+					fascism = 15
+					communism = 15
+				}
+			}
 		}
 	}
 }
@@ -8024,7 +8038,21 @@ country_event = {
 			if = {
 				limit = {
 					has_equipment = {
+						infantry_equipment > 50000
+					}
+				}
+				add_equipment_to_stockpile = {
+					type = infantry_equipment
+					amount = -50000
+				}	
+			}
+			if = {
+				limit = {
+					has_equipment = {
 						infantry_equipment > 40000
+					}
+					has_equipment = {
+						infantry_equipment < 50000
 					}
 				}
 				add_equipment_to_stockpile = {
@@ -8122,20 +8150,20 @@ country_event = {
 		ai_chance = {
 			factor = 100
 		}
-		set_temp_variable = { random_factor = 0 }
+		set_temp_variable = { random_factor_german_exilee = 0 }
 		randomize_temp_variable = {
-			var = random_factor
+			var = random_factor_german_exilee
 			distribution = uniform
 			min = 0
 			max = 100
 		}
-		round_variable = random_factor
+		round_variable = random_factor_german_exilee
 		hidden_effect = {
 			if = {
 				limit = {
 					check_variable = {
-						var = random_factor
-						value = 50
+						var = random_factor_german_exilee
+						value = 40
 						compare = less_than_or_equals
 					}
 				}
@@ -8191,19 +8219,19 @@ country_event = {
 		ai_chance = {
 			factor = 75
 		}
-		set_temp_variable = { random_factor = 0 }
+		set_temp_variable = { random_factor_german_exilee2 = 0 }
 		randomize_temp_variable = {
-			var = random_factor
+			var = random_factor_german_exilee2
 			distribution = uniform
 			min = 0
 			max = 100
 		}
-		round_variable = random_factor
+		round_variable = random_factor_german_exilee2
 		hidden_effect = {
 			if = {
 				limit = {
 					check_variable = {
-						var = random_factor
+						var = random_factor_german_exilee2
 						value = 75
 						compare = less_than_or_equals
 					}
@@ -8225,19 +8253,19 @@ country_event = {
 		ai_chance = {
 			factor = 25
 		}
-		set_temp_variable = { random_factor = 0 }
+		set_temp_variable = { random_factor_german_exilee = 0 }
 		randomize_temp_variable = {
-			var = random_factor
+			var = random_factor_german_exilee
 			distribution = uniform
 			min = 0
 			max = 100
 		}
-		round_variable = random_factor
+		round_variable = random_factor_german_exilee
 		hidden_effect = {
 			if = {
 				limit = {
 					check_variable = {
-						var = random_factor
+						var = random_factor_german_exilee
 						value = 50
 						compare = less_than_or_equals
 					}
@@ -8355,12 +8383,15 @@ country_event = {
 
 	is_triggered_only = yes
 
+	immediate = {
+		clr_country_flag = central_russia_claims
+	}
+
 	option = { #Noice
 		name = soviets.199.a
 		ai_chance = {
 			factor = 100
 		}
-		clr_country_flag = central_russia_claims
 		set_country_flag = central_russia_raids
 		custom_effect_tooltip = recon_successful_central_russia
 	}
@@ -8393,12 +8424,15 @@ country_event = {
 
 	is_triggered_only = yes
 
+	immediate = {
+		clr_country_flag = kuban_region_claims
+	}
+
 	option = { #Noice
 		name = soviets.201.a
 		ai_chance = {
 			factor = 100
 		}
-		clr_country_flag = kuban_region_claims
 		set_country_flag = kuban_region_raids
 		custom_effect_tooltip = recon_successful_kuban_region
 	}
@@ -8413,12 +8447,15 @@ country_event = {
 
 	is_triggered_only = yes
 
+	immediate = {
+		clr_country_flag = transvolga_region_claims
+	}
+
 	option = { #Noice
 		name = soviets.202.a
 		ai_chance = {
 			factor = 100
 		}
-		clr_country_flag = transvolga_region_claims
 		set_country_flag = transvolga_region_raids
 		custom_effect_tooltip = recon_successful_transvolga_region
 	}
@@ -8433,12 +8470,15 @@ country_event = {
 
 	is_triggered_only = yes
 
+	immediate = {
+		clr_country_flag = urals_region_claims
+	}
+
 	option = { #Noice
 		name = soviets.203.a
 		ai_chance = {
 			factor = 100
 		}
-		clr_country_flag = urals_region_claims
 		set_country_flag = urals_region_raids
 		custom_effect_tooltip = recon_successful_urals_region
 	}
@@ -8453,12 +8493,15 @@ country_event = {
 
 	is_triggered_only = yes
 
+	immediate = {
+		clr_country_flag = artic_region_claims
+	}
+
 	option = { #Noice
 		name = soviets.204.a
 		ai_chance = {
 			factor = 100
 		}
-		clr_country_flag = artic_region_claims
 		set_country_flag = artic_region_raids
 		custom_effect_tooltip = recon_successful_artic_region
 	}
@@ -8473,12 +8516,15 @@ country_event = {
 
 	is_triggered_only = yes
 
+	immediate = {
+		clr_country_flag = siberia_region_claims
+	}
+
 	option = { #Noice
 		name = soviets.205.a
 		ai_chance = {
 			factor = 100
 		}
-		clr_country_flag = siberia_region_claims
 		set_country_flag = siberia_region_raids
 		custom_effect_tooltip = recon_successful_siberia_region
 	}
@@ -8493,12 +8539,15 @@ country_event = {
 
 	is_triggered_only = yes
 
+	immediate = {
+		clr_country_flag = novgorod_region_claims
+	}
+
 	option = { #Noice
 		name = soviets.206.a
 		ai_chance = {
 			factor = 100
 		}
-		clr_country_flag = novgorod_region_claims
 		set_country_flag = novgorod_region_raids
 		custom_effect_tooltip = recon_successful_novgorod_region
 	}
@@ -9255,10 +9304,26 @@ country_event = {
 				has_country_flag = ger_exiles_accept_puppet
 			}
 			SOV = {
-				release_autonomy = {
-					target = GER
-					autonomy_state = autonomy_imperial_governorates
-					freedom_level = 0.5
+				if = {
+					limit = {
+						NOT = {
+							country_exists = GER
+						}
+					}
+					release_autonomy = {
+						target = GER
+						autonomy_state = autonomy_imperial_governorates
+						freedom_level = 0.5
+					}
+				}
+				else_if = {
+					limit = {
+						country_exists = GER
+					}
+					set_autonomy = {
+						target = GER
+						autonomy_state = autonomy_imperial_governorates
+					}
 				}
 			}
 			GER = {
@@ -9267,21 +9332,11 @@ country_event = {
 					elections_allowed = no
 				}
 				hidden_effect = {
-					add_popularity = {
-						ideology = communism
-						popularity = 0.15
-					}
-					add_popularity = {
-						ideology = democratic
-						popularity = 0.25
-					}
-					add_popularity = {
-						ideology = fascism
-						popularity = 0.10
-					}
-					add_popularity = {
-						ideology = neutrality
-						popularity = 0.50
+					set_popularities = {
+						democratic = 25
+						neutrality = 50
+						fascism = 10
+						communism = 15
 					}
 				}
 				if = {
@@ -9318,10 +9373,29 @@ country_event = {
 				has_country_flag = ger_exiles_accept_puppet_reduced
 			}
 			SOV = {
-				release_autonomy = {
-					target = GER
-					autonomy_state = autonomy_dominion
-					freedom_level = 0.5
+				if = {
+					limit = {
+						NOT = {
+							country_exists = GER
+						}
+					}
+					release_autonomy = {
+						target = GER
+						autonomy_state = autonomy_dominion
+						freedom_level = 0.5
+					}
+				}
+				else_if = {
+					limit = {
+						country_exists = GER
+					}
+					set_autonomy = {
+						target = GER
+						autonomy_state = autonomy_dominion
+					}
+					GER = {
+						set_cosmetic_tag = GEC
+					}
 				}
 			}
 			GER = {
@@ -9330,21 +9404,11 @@ country_event = {
 					elections_allowed = no
 				}
 				hidden_effect = {
-					add_popularity = {
-						ideology = communism
-						popularity = 0.15
-					}
-					add_popularity = {
-						ideology = democratic
-						popularity = 0.25
-					}
-					add_popularity = {
-						ideology = fascism
-						popularity = 0.10
-					}
-					add_popularity = {
-						ideology = neutrality
-						popularity = 0.50
+					set_popularities = {
+						democratic = 25
+						neutrality = 50
+						fascism = 10
+						communism = 15
 					}
 				}
 				if = {
@@ -9375,11 +9439,22 @@ country_event = {
 					}
 				}
 				set_country_flag = GER_dominion_no_imperial
+				set_country_flag = germany_no_imperial_transform
 			}
 		}
 		else = {
 			SOV = {
-				release = GER
+				if = {
+					limit = {
+						GER = {
+							is_subject_of = SOV
+						}
+					}
+					release_puppet = GER
+				}
+				else = {
+					release = GER
+				}	
 				add_to_faction = GER
 			}
 			GER = {
@@ -9393,21 +9468,11 @@ country_event = {
 					elections_allowed = no
 				}
 				hidden_effect = {
-					add_popularity = {
-						ideology = communism
-						popularity = 0.15
-					}
-					add_popularity = {
-						ideology = democratic
-						popularity = 0.25
-					}
-					add_popularity = {
-						ideology = fascism
-						popularity = 0.10
-					}
-					add_popularity = {
-						ideology = neutrality
-						popularity = 0.50
+					set_popularities = {
+						democratic = 25
+						neutrality = 50
+						fascism = 10
+						communism = 15
 					}
 				}
 				if = {
@@ -9577,6 +9642,7 @@ country_event = {
 				id = newsrussia2.97 days = 2
 			}	
 		}
+		set_country_flag = restoration_german_monarchy_kaiser
 	}
 }
 
@@ -10876,24 +10942,7 @@ country_event = {
 			is_subject_of = SOV
 		}
 		country_exists = POL
-		5 = {
-			is_owned_and_controlled_by = GER
-		}
-		763 = {
-			is_owned_and_controlled_by = GER
-		}
-		63 = {
-			is_owned_and_controlled_by = GER
-		}
-		68 = {
-			is_owned_and_controlled_by = GER
-		}
-		66 = {
-			is_owned_and_controlled_by = GER
-		}
-		67 = {
-			is_owned_and_controlled_by = GER
-		}
+		has_country_flag = restoration_german_monarchy_kaiser
 	}
 
 	mean_time_to_happen = {
@@ -10918,6 +10967,24 @@ country_event = {
 		trigger = {
 			GER = {
 				is_subject_of = SOV
+			}
+			5 = {
+				is_owned_by = GER
+			}
+			763 = {
+				is_owned_by = GER
+			}
+			63 = {
+				is_owned_by = GER
+			}
+			68 = {
+				is_owned_by = GER
+			}
+			66 = {
+				is_owned_by = GER
+			}
+			67 = {
+				is_owned_by = GER
 			}
 		}
 		SOV = {
@@ -10982,6 +11049,22 @@ country_event = {
 			transfer_state = 85
 			add_state_core = 86
 			add_state_core = 85
+		}
+		every_state = {
+			limit = {
+				is_owned_by = POL
+				is_core_of = GER
+			}
+			GER = {
+				transfer_state = PREV
+			}
+		}
+	}
+
+	option = { #Do Nothing
+		name = soviets.248.e
+		ai_chance = {
+			factor = 0
 		}
 	}
 }
@@ -11056,6 +11139,20 @@ country_event = {
 			transfer_state = 86
 			add_state_core = 86
 		}
+		every_state = {
+			limit = {
+				is_owned_by = POL
+				is_core_of = GER
+				NOT = {
+					state = 5
+					state = 763
+					state = 85
+				}
+			}
+			GER = {
+				transfer_state = PREV
+			}
+		}
 		hidden_effect = {
 			news_event = {
 				id = newsrussia2.98 days = 1
@@ -11116,6 +11213,7 @@ country_event = {
 			}
 		}
 		country_exists = POL
+		has_country_flag = restoration_german_monarchy_kaiser
 	}
 
 	mean_time_to_happen = {
@@ -11626,6 +11724,7 @@ country_event = {
 			}
 		}
 		country_exists = POL
+		has_country_flag = restoration_german_monarchy_kaiser
 	}
 
 	mean_time_to_happen = {
@@ -11661,9 +11760,16 @@ country_event = {
 			country_event = { id = polands.23 days = 1 }
 		}
 	}
+
+	option = { #Do Nothing
+		name = soviets.258.e
+		ai_chance = {
+			factor = 0
+		}
+	}
 }
 
-#Gets Event Germany want to regain it's old territories if SOV Owned Them
+#Gets Event Germany want to regain it's old territories if SOV Owns Them
 country_event = {
 	id = soviets.259
 	title = soviets.259.t
