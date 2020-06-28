@@ -7548,6 +7548,7 @@ focus_tree = {
 			MEX = {
 				set_global_flag = MEX_Trotsky_return
 			}
+			set_country_flag = SOV_purge_started
 			ROOT = {
 				set_country_flag = trotsky_coming_back
 				set_country_flag = counter_purge
@@ -7769,6 +7770,18 @@ focus_tree = {
 			hidden_effect = {
 				kill_country_leader = yes
 				news_event = { id = newsrussia2.31 days = 1 }
+				if = {
+					limit = {
+						MEX = {
+							has_country_leader = {
+								name = "Leon Trotsky"
+							}
+						}
+					}
+					MEX = {
+						kill_country_leader = yes
+					}
+				}
 			}
 			create_country_leader = {
 				name = "Leon Trotsky"
@@ -8394,7 +8407,7 @@ focus_tree = {
 			has_government = communism
 			is_subject = no
 			has_country_leader = {
-			    name = "Leon Trotsky"
+				name = "Leon Trotsky"
 			}
 		}
 		search_filters = { FOCUS_FILTER_COMMUNISM_TROTSKY_RUSSIA FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY }
@@ -11475,12 +11488,12 @@ focus_tree = {
 				10 = { set_state_flag = slavic_states }
 				98 = { set_state_flag = slavic_states }
 				87 = { set_state_flag = slavic_states }
-				11 = { set_state_flag = slavic_states }
-				189 = { set_state_flag = slavic_states }
-				12 = { set_state_flag = slavic_states }
-				190 = { set_state_flag = slavic_states }
-				191 = { set_state_flag = slavic_states }
-				13 = { set_state_flag = slavic_states }
+				11 = { set_state_flag = baltic_states_slav }
+				189 = { set_state_flag = baltic_states_slav }
+				12 = { set_state_flag = baltic_states_slav }
+				190 = { set_state_flag = baltic_states_slav }
+				191 = { set_state_flag = baltic_states_slav }
+				13 = { set_state_flag = baltic_states_slav }
 				70 = { set_state_flag = slavic_states }
 				71 = { set_state_flag = slavic_states }
 				72 = { set_state_flag = slavic_states }
@@ -11506,7 +11519,7 @@ focus_tree = {
 				86 = { set_state_flag = german_slavic_state }
 				85 = { set_state_flag = german_slavic_state }
 				762 = { set_state_flag = german_slavic_state }
-				188 = { set_state_flag = german_slavic_state }
+				188 = { set_state_flag = german_baltic_state }
 				every_state = {
 					limit = {
 						OR = {
@@ -11568,9 +11581,6 @@ focus_tree = {
 		will_lead_to_war_with = ROM
 		will_lead_to_war_with = HUN
 		will_lead_to_war_with = POL
-		will_lead_to_war_with = EST
-		will_lead_to_war_with = LAT
-		will_lead_to_war_with = LIT
 		will_lead_to_war_with = BUL
 		will_lead_to_war_with = GER
 		completion_reward = {
@@ -12311,21 +12321,6 @@ focus_tree = {
 				controls_state = 87
 			}
 			custom_trigger_tooltip = {
-				tooltip = SOV_slavic_empire_lit_states
-				controls_state = 11
-				controls_state = 189
-			}
-			custom_trigger_tooltip = {
-				tooltip = SOV_slavic_empire_lat_states
-				controls_state = 12
-				controls_state = 190
-			}
-			custom_trigger_tooltip = {
-				tooltip = SOV_slavic_empire_est_states
-				controls_state = 191
-				controls_state = 13
-			}
-			custom_trigger_tooltip = {
 				tooltip = SOV_slavic_empire_bul_states
 				controls_state = 211
 				controls_state = 212
@@ -12371,6 +12366,7 @@ focus_tree = {
 			}
 			set_global_flag = SOV_became_slavic_empire
 			custom_effect_tooltip = SOV_slavic_empire_tt
+			custom_effect_tooltip = SOV_slavic_empire_tt2
 			hidden_effect = {
 				every_state = {
 					limit = {
@@ -12378,6 +12374,18 @@ focus_tree = {
 							has_state_flag = slavic_states
 							has_state_flag = slavic_states_czech
 						}	
+					}
+					SOV = {
+						add_state_core = PREV
+					}
+				}
+				every_state = {
+					limit = {
+						OR = {
+							has_state_flag = baltic_states_slav
+							has_state_flag = german_baltic_state
+						}
+						is_owned_by = SOV
 					}
 					SOV = {
 						add_state_core = PREV
