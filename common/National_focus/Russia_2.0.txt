@@ -12033,6 +12033,12 @@ focus_tree = {
 				JAP = {
 					add_to_tech_sharing_group = sov_jap_research_treaty
 				}
+				every_country = {
+					limit = {
+						is_in_faction_with = SOV
+					}
+					add_to_tech_sharing_group = sov_jap_research_treaty
+				}
 			}
 		}
 	}
@@ -12067,6 +12073,21 @@ focus_tree = {
 					remove_ideas = SOV_Russian_concession_jap
 				}
 			}
+			else_if = {
+				limit = {
+					has_country_leader = {
+						name = "Konstantin Rodzaevsky"
+					}
+				}
+				custom_effect_tooltip = SOV_japanese_trust_japan_tt
+				show_ideas_tooltip = SOV_Japanese_friendship
+				hidden_effect = {
+					add_ideas = SOV_Japanese_friendship
+					JAP = {
+						add_ideas = SOV_Japanese_friendship
+					}
+				}	
+			}
 			else = {
 				custom_effect_tooltip = SOV_convince_italy_tt
 			}
@@ -12087,14 +12108,26 @@ focus_tree = {
 		available = {
 			is_subject = no
 			has_government = fascism
+			is_in_faction_with = JAP
 			NOT = {
 				has_war_with = CHI
+				is_in_faction_with = CHI
+				is_subject_of = SOV
+				is_subject_of = JAP
 			}
-			always = no
 		}
-		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_FASCIST_KONSTANTIN_RUSSIA FOCUS_FILTER_ANNEXATION }
+		search_filters = { FOCUS_FILTER_FASCIST_KONSTANTIN_RUSSIA FOCUS_FILTER_ANNEXATION }
+		will_lead_to_war_with = CHI
+		will_lead_to_war_with = PRC
+		will_lead_to_war_with = SHX
+		will_lead_to_war_with = XSM
+		will_lead_to_war_with = SIK
+		will_lead_to_war_with = TIB
+		will_lead_to_war_with = YUN
+		will_lead_to_war_with = GXC
 		completion_reward = {
-
+			custom_effect_tooltip = SOV_stance_sino_japan_conflict_tt
+			country_event = { id = chinas.1 days = 1 }
 		}
 	}
 
