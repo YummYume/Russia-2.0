@@ -38,6 +38,7 @@ country_event = {
 					has_war_with = CHI
 				}
 			}
+			country_exists = CHI
 		}
 		ai_chance = {
 			factor = 60
@@ -53,9 +54,54 @@ country_event = {
 			JAP = {
 				has_war_with = CHI
 			}
+			country_exists = CHI
 		}
 		ai_chance = {
 			factor = 60
+			modifier = {
+				factor = 10
+				CHI = {
+					is_in_faction_with = ENG
+				}
+			}
+		}
+		JAP = {
+			country_event = { id = japans.19 hours = 12 }
+		}
+	}
+
+	option = { #We Should Try to Appease the Situation - Trying to create Peace Between China and Jap
+		name = chinas.1.c
+		trigger = {
+			country_exists = CHI
+		}
+		ai_chance = {
+			factor = 40
+			modifier = {
+				factor = 0
+				CHI = {
+					surrender_progress > 0.75
+				}
+			}
+		}
+		CHI = {
+			country_event = { id = chinas.6 hours = 12 }
+		}
+		custom_effect_tooltip = sino_japanese_negotiation_surrender
+	}
+
+	option = { #Do Nothing
+		name = chinas.1.e
+		ai_chance = {
+			factor = 10
+		}
+		if = {
+			limit = {
+				NOT = {
+					country_exists = CHI
+				}
+			}
+			custom_effect_tooltip = china_not_exist_because_dead
 		}
 	}
 }
@@ -126,5 +172,93 @@ country_event = {
 			factor = 100
 		}
 
+	}
+}
+
+#Japan Accept our Help
+country_event = {
+	id = chinas.4
+	title = chinas.4.t
+	desc = chinas.4.d
+	picture = GFX_report_event_soviet_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Nice
+		name = chinas.4.a
+		ai_chance = {
+			factor = 100
+		}
+		SOV = {
+			add_to_war = { 
+				targeted_alliance = JAP 
+				enemy = CHI 
+				hostility_reason = sino_japanese_conflict
+			}
+			add_ai_strategy = {
+				type = conquer
+				id = CHI
+				value = 100
+			}
+		}
+		CHI = {
+			add_ai_strategy = {
+				type = antagonize
+				id = SOV
+				value = 100
+			}
+		}
+	}
+}
+
+#Japan Refuse our Help
+country_event = {
+	id = chinas.5
+	title = chinas.5.t
+	desc = chinas.5.d
+	picture = GFX_report_event_hungary_refused
+
+	is_triggered_only = yes
+
+	option = { #Damn
+		name = chinas.5.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#China Gets Event From SOV to See if they Want Peace With the Japanese
+country_event = {
+	id = chinas.6
+	title = chinas.6.t
+	desc = {
+		text = chinas.6.d_1
+		trigger = {
+			NOT = {
+				CHI = {
+					has_war_with = JAP
+				}
+			}
+		}
+	}
+	desc = {
+		text = chinas.6.d_2
+		trigger = {
+			CHI = {
+				has_war_with = JAP
+			}
+		}
+	}
+	picture = GFX_report_event_chinese_officers
+
+	is_triggered_only = yes
+
+	option = { #Accept the Negotiation
+		name = chinas.6.a
+	}
+
+	option = { #Refuse to Negotiate
+		chinas.6.b
 	}
 }

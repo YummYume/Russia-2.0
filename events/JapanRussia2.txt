@@ -589,6 +589,13 @@ country_event = {
 		name = japans.18.a
 		ai_chance = {
 			factor = 90
+			modifier = {
+				factor = 0
+				any_country = {
+					is_major = yes
+					has_war_with = JAP
+				}
+			}
 		}
 		SOV = {
 			country_event = { id = chinas.2 hours = 12 }
@@ -599,9 +606,58 @@ country_event = {
 		name = japans.18.b
 		ai_chance = {
 			factor = 10
+			modifier = {
+				factor = 100
+				any_country = {
+					is_major = yes
+					has_war_with = JAP
+				}
+			}
 		}
 		SOV = {
 			country_event = { id = chinas.3 hours = 12 }
+		}
+    }
+}
+
+#Japan Receive Event to let Russia Join the War
+country_event = {
+	id = japans.19
+	title = japans.19.t
+	desc = japans.19.d
+	picture = GFX_report_event_soviet_tanks
+
+	is_triggered_only = yes
+
+	option = { #Accpets
+		name = japans.18.a
+		ai_chance = {
+			factor = 90
+			modifier = {
+				factor = 0
+				CHI = {
+					surrender_progress > 0.75
+				}
+			}
+		}
+		SOV = {
+			country_event = { id = chinas.4 hours = 12 }
+		}
+	}
+
+	option = { #Refuse
+		name = japans.18.b
+		ai_chance = {
+			factor = 10
+			modifier = {
+				factor = 100
+				CHI = {
+					surrender_progress > 0.75
+				}
+			}
+		}
+		SOV = {
+			country_event = { id = chinas.5 hours = 12 }
 		}
     }
 }
