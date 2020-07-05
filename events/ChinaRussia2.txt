@@ -1,0 +1,130 @@
+###########################
+# Chinese Events
+###########################
+
+add_namespace = chinas
+
+#SOV Gets Event to Choose their Stance on the Sino-Japanese Conflicts
+country_event = {
+	id = chinas.1
+	title = chinas.1.t
+	desc = {
+		text = chinas.1.d_1
+		trigger = {
+			JAP = {
+				NOT = {
+					has_war_with = CHI
+				}
+			}
+		}
+	}
+	desc = {
+		text = chinas.1.d_2
+		trigger = {
+			JAP = {
+				has_war_with = CHI
+			}
+		}
+	} 
+	picture = GFX_report_event_chinese_soldiers_running
+
+	is_triggered_only = yes
+
+	option = { # Propose to Japan to Invade China
+		name = chinas.1.a
+		trigger = {
+			NOT = {
+				JAP = {
+					has_war_with = CHI
+				}
+			}
+		}
+		ai_chance = {
+			factor = 60
+		}
+		JAP = {
+			country_event = { id = japans.18 hours = 12 }
+		}
+	}
+
+	option = { #We Want to Help our Ally JAP - when JAP is in War Against China
+		name = chinas.1.b
+		trigger = {
+			JAP = {
+				has_war_with = CHI
+			}
+		}
+		ai_chance = {
+			factor = 60
+		}
+	}
+}
+
+#Japan Accept our Joint Invasion
+country_event = {
+	id = chinas.2
+	title = chinas.2.t
+	desc = chinas.2.d
+	picture = GFX_report_event_soviet_german_soldier_handshake
+
+	is_triggered_only = yes
+
+	option = { #Nice
+		name = chinas.2.a
+		ai_chance = {
+			factor = 100
+		}
+		SOV = {
+			create_wargoal = {
+				type = annex_everything
+				target = CHI
+			}
+			add_ai_strategy = {
+				type = conquer
+				id = CHI
+				value = 100
+			}
+		}
+		JAP = {
+			create_wargoal = {
+				type = annex_everything
+				target = CHI
+			}
+			add_ai_strategy = {
+				type = conquer
+				id = CHI
+				value = 100
+			}
+		}
+		CHI = {
+			add_ai_strategy = {
+				type = antagonize
+				id = SOV
+				value = 100
+			}
+			add_ai_strategy = {
+				type = antagonize
+				id = JAP
+				value = 100
+			}
+		}
+	}
+}
+
+#Japan Refuse our Proposition of a Joint Invasion
+country_event = {
+	id = chinas.3
+	title = chinas.3.t
+	desc = chinas.3.d
+	picture = GFX_report_event_second_vienna_award_pact
+
+	is_triggered_only = yes
+
+	option = { #Coward !
+		name = chinas.3.a
+		ai_chance = {
+			factor = 100
+		}
+
+	}
+}

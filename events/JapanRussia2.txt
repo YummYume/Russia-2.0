@@ -295,7 +295,7 @@ country_event = {
 		if = {
 			limit = {
 				SOV = {
-					is_faction_leader = no
+					is_in_faction = no
 				}
 				JAP = {
 					is_faction_leader = yes
@@ -311,7 +311,7 @@ country_event = {
 					is_faction_leader = yes
 				}
 				JAP = {
-					is_faction_leader = no
+					is_in_faction = no
 				}
 			}
 			SOV = {
@@ -351,6 +351,14 @@ country_event = {
 				id = JAP
 				value = 500
 			}
+		}
+		if = {
+			limit = {
+				has_government = neutrality
+				has_completed_focus = JAP_support_the_kodoha_faction
+				is_ai = yes
+			}
+			unlock_national_focus = JAP_technological_exchange
 		}
 	}
 
@@ -566,4 +574,34 @@ country_event = {
 			factor = 100
 		}
 	}
+}
+
+#Japan Receive Event to Invade China With Russia
+country_event = {
+	id = japans.18
+	title = japans.18.t
+	desc = japans.18.d
+	picture = GFX_report_event_chinese_officers
+
+	is_triggered_only = yes
+
+	option = { #Accpets
+		name = japans.18.a
+		ai_chance = {
+			factor = 90
+		}
+		SOV = {
+			country_event = { id = chinas.2 hours = 12 }
+		}
+	}
+
+	option = { #Refuse
+		name = japans.18.b
+		ai_chance = {
+			factor = 10
+		}
+		SOV = {
+			country_event = { id = chinas.3 hours = 12 }
+		}
+    }
 }
