@@ -561,8 +561,25 @@ country_event = {
 	is_triggered_only = yes
 
 	option = { #Establish open borders
+		ai_chance = {
+			factor = 80
+			modifier {
+				factor = 35
+				NOT = {
+					has_government = fascism
+				}
+			}
+		}
 		name = generics.21.a
-		set_country_flag = opened_manchurian_border
+		set_country_flag = FROM_opened_manchurian_border
+		if = {
+			limit = {
+				tag = MAN
+				is_subject = yes
+				has_government = fascism
+			}
+			custom_effect_tooltip = might_help_against_japan_tt
+		}
 		add_popularity = {
 			ideology = fascism
 			popularity = 0.1
@@ -574,27 +591,48 @@ country_event = {
 		}
 		SOV = {
 			country_event = { id = generics.22 days = 1 }
+			set_country_flag = opened_manchurian_border
 		}
 	}
 
 	option = { #Authorize small exchanges
+		ai_chance = {
+			factor = 20
+			modifier {
+				factor = 45
+				NOT = {
+					has_government = fascism
+				}
+			}
+		}
 		name = generics.21.b
-		set_country_flag = small_exchanges_manchurian_border
+		set_country_flag = FROM_small_exchanges_manchurian_border
 		add_popularity = {
 			ideology = fascism
 			popularity = 0.05
 		}
 		SOV = {
 			country_event = { id = generics.23 days = 1 }
+			set_country_flag = small_exchanges_manchurian_border
 		}
 	}
 
 	option = { #Refuse
+		ai_chance = {
+			factor = 0
+			modifier {
+				factor = 20
+				NOT = {
+					has_government = fascism
+				}
+			}
+		}
 		name = generics.21.c
-		set_country_flag = refused_manchurian_border
+		set_country_flag = FROM_refused_manchurian_border
 		add_stability = -0.1
 		SOV = {
 			country_event = { id = generics.24 days = 1 }
+			set_country_flag = refused_manchurian_border
 		}
 	}
 }
@@ -639,9 +677,139 @@ country_event = {
 	desc = generics.24.d
 	picture = GFX_report_event_soviet_soldiers_tank
 
+	fire_only_once = yes
+
 	is_triggered_only = yes
 
 	option = { #What
 		name = generics.24.a
 	}
 }
+
+#25% of the Fascists Exiles transfered
+country_event = {
+	id = generics.25
+	title = generics.25.t
+	desc = generics.25.d
+	picture = GFX_report_event_soviet_soldiers_tank
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = SOV
+		is_subject = no
+		has_government = fascism
+		OR = {
+			has_country_flag = {
+				flag = opened_manchurian_border
+				days > 91
+			}
+			has_country_flag = {
+				flag = small_exchanges_manchurian_border
+				days > 182
+			}
+		}
+	}
+
+	option = { #Good
+		name = generics.25.a
+		set_country_flag = SOV_25_percent_fascist_exile
+	}
+}
+
+#50% of the Fascists Exiles transfered
+country_event = {
+	id = generics.26
+	title = generics.26.t
+	desc = generics.26.d
+	picture = GFX_report_event_soviet_soldiers_tank
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = SOV
+		is_subject = no
+		has_government = fascism
+		OR = {
+			has_country_flag = {
+				flag = opened_manchurian_border
+				days > 182
+			}
+			has_country_flag = {
+				flag = small_exchanges_manchurian_border
+				days > 365
+			}
+		}
+	}
+
+	option = { #Good
+		name = generics.26.a
+		set_country_flag = SOV_50_percent_fascist_exile
+	}
+}
+
+#75% of the Fascists Exiles transfered
+country_event = {
+	id = generics.27
+	title = generics.27.t
+	desc = generics.27.d
+	picture = GFX_report_event_soviet_soldiers_tank
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = SOV
+		is_subject = no
+		has_government = fascism
+		OR = {
+			has_country_flag = {
+				flag = opened_manchurian_border
+				days > 273
+			}
+			has_country_flag = {
+				flag = small_exchanges_manchurian_border
+				days > 546
+			}
+		}
+	}
+
+	option = { #Good
+		name = generics.27.a
+		set_country_flag = SOV_75_percent_fascist_exile
+	}
+}
+
+#100% of the Fascists Exiles transfered
+country_event = {
+	id = generics.28
+	title = generics.28.t
+	desc = generics.28.d
+	picture = GFX_report_event_soviet_soldiers_tank
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = SOV
+		is_subject = no
+		has_government = fascism
+		OR = {
+			has_country_flag = {
+				flag = opened_manchurian_border
+				days > 365
+			}
+			has_country_flag = {
+				flag = small_exchanges_manchurian_border
+				days > 730
+			}
+		}
+	}
+
+	option = { #Good
+		name = generics.28.a
+		set_country_flag = SOV_100_percent_fascist_exile
+	}
+}
+
+#TODO Add an event to directly transfer all the fascists exiles if you control state 761
+#TODO Add an event to propose help to Manchukuo if they declare independence against Japan and accepted the open borders
+#TODO Localization + tooltips
