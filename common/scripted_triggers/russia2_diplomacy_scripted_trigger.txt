@@ -21,4 +21,69 @@
 #	}
 #}
 
-#TODO Can't cancel military access while fascist exiles are still being transfered
+#Can't cancel military access while fascist exiles are still being transfered
+DIPLOMACY_REVOKE_MILACC_ENABLE_TRIGGER = {
+    if = {
+        limit = {
+            has_country_flag = {
+				flag = FROM_opened_manchurian_border
+				days < 365
+			}
+            FROM = {
+                has_country_flag = opened_manchurian_border
+            }
+        }
+        custom_trigger_tooltip = {
+			tooltip = RULE_CANT_CANCEL_MILACC_SOV
+			always = no
+		}
+    }
+    else_if = {
+        limit = {
+            has_country_flag = {
+				flag = opened_manchurian_border
+				days < 365
+			}
+            FROM = {
+                has_country_flag = FROM_opened_manchurian_border
+            }
+        }
+        custom_trigger_tooltip = {
+			tooltip = RULE_CANT_CANCEL_MILACC_FROM
+			always = no
+		}
+    }
+}
+
+DIPLOMACY_REVOKE_OFFER_MILACC_ENABLE_TRIGGER = {
+    if = {
+        limit = {
+            has_country_flag = {
+                flag = FROM_opened_manchurian_border
+                days < 365
+            }
+            FROM = {
+                has_country_flag = opened_manchurian_border
+            }
+        }
+        custom_trigger_tooltip = {
+            tooltip = RULE_CANT_REVOKE_OFFER_MILACC_SOV
+            always = no
+        }
+    }
+    else_if = {
+        limit = {
+            has_country_flag = {
+                flag = opened_manchurian_border
+                days < 365
+            }
+            FROM = {
+                has_country_flag = FROM_opened_manchurian_border
+            }
+        }
+        custom_trigger_tooltip = {
+            tooltip = RULE_CANT_REVOKE_OFFER_MILACC_FROM
+            always = no
+        }
+    }
+}
