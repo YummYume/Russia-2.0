@@ -142,6 +142,7 @@ country_event = {
 				value = 100
 			}
 		}
+		custom_effect_tooltip = china_and_other_chinese_nations_gets_buff
 		CHI = {
 			add_ai_strategy = {
 				type = antagonize
@@ -153,7 +154,35 @@ country_event = {
 				id = JAP
 				value = 100
 			}
+			hidden_effect = {
+				add_timed_idea = {
+					idea = SOV_Russian_japan_knocking_doors
+					days = 1460
+				}
+			}
 		}
+		hidden_effect = {
+			every_country = {
+				limit = {
+					OR = {
+						TAG = PRC
+						TAG = SIK
+						TAG = XSM
+						TAG = SHX
+						TAG = GXC
+						TAG = YUN
+					}
+					is_in_faction_with = CHI
+					NOT = {
+						TAG = CHI
+					}
+				}
+				add_timed_idea = {
+					idea = SOV_Russian_japan_knocking_doors
+					days = 1460
+				}
+			}
+		}	
 	}
 }
 
@@ -171,7 +200,6 @@ country_event = {
 		ai_chance = {
 			factor = 100
 		}
-
 	}
 }
 
@@ -208,6 +236,7 @@ country_event = {
 				value = 100
 			}
 		}
+		add_ideas = SOV_army_not_ready_chi
 	}
 }
 
@@ -321,13 +350,13 @@ country_event = {
 			factor = 100
 		}
 		SOV = {
-			country_event = { id = japans.19 days = 2 }
+			country_event = { id = chinas.11 days = 2 }
 		}
 		JAP = {
-			country_event = { id = japans.19 days = 1 }
+			country_event = { id = chinas.12 days = 1 }
 		}
 		CHI = {
-
+			country_event = { id = chinas.12 days = 1 }
 		}
 	}
 
@@ -337,10 +366,10 @@ country_event = {
 			factor = 0
 		}
 		JAP = {
-			country_event = { id = japans.19 hours = 16 }
+			country_event = { id = chinas.13 hours = 16 }
 		}
 		CHI = {
-
+			country_event = { id = chinas.13 hours = 16 }
 		}
 	}
 }
@@ -367,6 +396,369 @@ country_event = {
 
 	option = { #Rip the Negotiations
 		name = chinas.10.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#Start of the Negotiation - Russia
+country_event = {
+	id = chinas.11
+	title = chinas.11.t
+	desc = chinas.11.d
+	picture = GFX_report_event_generic_conference
+
+	is_triggered_only = yes
+
+	option = { #Let the Conference Begins !
+		name = chinas.11.a
+		ai_chance = {
+			factor = 100
+		}
+		SOV = {
+			country_event = { id = chinas.14 days = 1 }
+		}
+	}
+}
+
+#Event for Jap and China to receive to alert them that the negotiation are beginning
+country_event = {
+	id = chinas.12
+	title = chinas.12.t
+	desc = chinas.12.d
+	picture = GFX_report_event_generic_conference
+
+	is_triggered_only = yes
+
+	option = { #Let's Wait
+		name = chinas.12.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+
+#Event for Jap and China to alert them that the Russian dropped the Negotiation Offer
+country_event = {
+	id = chinas.13
+	title = chinas.13.t
+	desc = chinas.13.d
+	picture = GFX_report_event_generic_conference
+
+	is_triggered_only = yes
+
+	option = { #What a Waste of Time ...
+		name = chinas.13.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#Fate of the Occupied territory
+country_event = {
+	id = chinas.14
+	title = chinas.14.t
+	desc = chinas.14.d
+	picture = GFX_report_event_generic_conference
+
+	is_triggered_only = yes
+
+	option = { #Give all the Claims
+		name = chinas.14.a
+		ai_chance = {
+			factor = 30
+		}
+		SOV = {
+			country_event = { id = chinas.18 days = 2 }
+		}
+		hidden_effect = {
+			CHI = {
+				country_event = { id = chinas.15 days = 1 }
+			}
+			JAP = {
+				country_event = { id = chinas.15 days = 1 }
+			}
+		}
+	}
+
+	option = { #Give Only Northern China
+		name = chinas.14.b
+		ai_chance = {
+			factor = 50
+		}
+		SOV = {
+			country_event = { id = chinas.18 days = 2 }
+		}
+		hidden_effect = {
+			CHI = {
+				country_event = { id = chinas.16 days = 1 }
+			}
+			JAP = {
+				country_event = { id = chinas.16 days = 1 }
+			}
+		}
+	}
+
+	option = { #China Shouldn't Give any land to Japan
+		name = chinas.14.c
+		ai_chance = {
+			factor = 20
+		}
+		SOV = {
+			country_event = { id = chinas.18 days = 2 }
+		}
+		hidden_effect = {
+			CHI = {
+				country_event = { id = chinas.17 days = 1 }
+			}
+			JAP = {
+				country_event = { id = chinas.17 days = 1 }
+			}
+		}
+	}
+}
+
+#Russia Has Choosed Option A for the Land Problem - Jap and Chi gets notified
+country_event = {
+	id = chinas.15
+	title = chinas.15.t
+	desc = chinas.15.d
+	picture = GFX_report_event_japan_europe_pact
+
+	is_triggered_only = yes
+
+	option = { #Option for Japan
+		name = chinas.15.a
+		trigger = {
+			TAG = JAP
+		}
+		ai_chance = {
+			factor = 100
+		}
+	}
+
+	option = { #Option for China
+		name = chinas.15.b
+		trigger = {
+			TAG = CHI
+		}
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#Russia Has Choosed Option B for the Land Problem - Jap and Chi gets notified
+country_event = {
+	id = chinas.16
+	title = chinas.16.t
+	desc = chinas.16.d
+	picture = GFX_report_event_japan_europe_pact
+
+	is_triggered_only = yes
+
+	option = { #Option for Japan
+		name = chinas.16.a
+		trigger = {
+			TAG = JAP
+		}
+		ai_chance = {
+			factor = 100
+		}
+	}
+
+	option = { #Option for China
+		name = chinas.16.b
+		trigger = {
+			TAG = CHI
+		}
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#Russia Has Choosed Option C for the Land Problem - Jap and Chi gets notified
+country_event = {
+	id = chinas.17
+	title = chinas.17.t
+	desc = chinas.17.d
+	picture = GFX_report_event_japan_europe_pact
+
+	is_triggered_only = yes
+
+	option = { #Option for Japan
+		name = chinas.17.a
+		trigger = {
+			TAG = JAP
+		}
+		ai_chance = {
+			factor = 100
+		}
+	}
+
+	option = { #Option for China
+		name = chinas.17.b
+		trigger = {
+			TAG = CHI
+		}
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#Question of the concessions
+country_event = {
+	id = chinas.18
+	title = chinas.18.t
+	desc = chinas.18.d
+	picture = GFX_report_event_generic_conference
+
+	is_triggered_only = yes
+
+	option = { #China Will Have to Pay Concessions
+		name = chinas.18.a
+		ai_chance = {
+			factor = 30
+		}
+		SOV = {
+			country_event = { id = chinas.22 days = 2 }
+		}
+		hidden_effect = {
+			CHI = {
+				country_event = { id = chinas.19 days = 1 }
+			}
+			JAP = {
+				country_event = { id = chinas.19 days = 1 }
+			}
+		}
+	}
+
+	option = { #We Will Pay the Concessions for China
+		name = chinas.18.b
+		ai_chance = {
+			factor = 50
+		}
+		SOV = {
+			country_event = { id = chinas.22 days = 2 }
+		}
+		hidden_effect = {
+			CHI = {
+				country_event = { id = chinas.20 days = 1 }
+			}
+			JAP = {
+				country_event = { id = chinas.20 days = 1 }
+			}
+		}
+	}
+
+	option = { #China is not Going to pay Any Concession
+		name = chinas.18.c
+		ai_chance = {
+			factor = 20
+		}
+		SOV = {
+			country_event = { id = chinas.22 days = 2 }
+		}
+		hidden_effect = {
+			CHI = {
+				country_event = { id = chinas.21 days = 1 }
+			}
+			JAP = {
+				country_event = { id = chinas.21 days = 1 }
+			}
+		}
+	}
+}
+
+#Russia Has Choosed Option A for the Concession Problem - Jap and Chi gets notified
+country_event = {
+	id = chinas.19
+	title = chinas.19.t
+	desc = chinas.19.d
+	picture = GFX_report_event_japan_europe_pact
+
+	is_triggered_only = yes
+
+	option = { #Option for Japan
+		name = chinas.19.a
+		trigger = {
+			TAG = JAP
+		}
+		ai_chance = {
+			factor = 100
+		}
+	}
+
+	option = { #Option for China
+		name = chinas.19.b
+		trigger = {
+			TAG = CHI
+		}
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#Russia Has Choosed Option B for the Concession Problem - Jap and Chi gets notified
+country_event = {
+	id = chinas.20
+	title = chinas.20.t
+	desc = chinas.20.d
+	picture = GFX_report_event_japan_europe_pact
+
+	is_triggered_only = yes
+
+	option = { #Option for Japan
+		name = chinas.20.a
+		trigger = {
+			TAG = JAP
+		}
+		ai_chance = {
+			factor = 100
+		}
+	}
+
+	option = { #Option for China
+		name = chinas.20.b
+		trigger = {
+			TAG = CHI
+		}
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#Russia Has Choosed Option C for the Concession Problem - Jap and Chi gets notified
+country_event = {
+	id = chinas.21
+	title = chinas.21.t
+	desc = chinas.21.d
+	picture = GFX_report_event_japan_europe_pact
+
+	is_triggered_only = yes
+
+	option = { #Option for Japan
+		name = chinas.21.a
+		trigger = {
+			TAG = JAP
+		}
+		ai_chance = {
+			factor = 100
+		}
+	}
+
+	option = { #Option for China
+		name = chinas.21.b
+		trigger = {
+			TAG = CHI
+		}
 		ai_chance = {
 			factor = 100
 		}
