@@ -13564,23 +13564,32 @@ focus_tree = {
 			is_subject = no
 			fascism > 0.3
 		}
-		bypass = {
-			controls_state = 761
-		}
 		search_filters = { FOCUS_FILTER_FASCIST_KONSTANTIN_RUSSIA FOCUS_FILTER_FASCIST_ANASTASY_RUSSIA }
 		completion_reward = {
-			country_event = { id = soviets.280 hours = 10 }
 			if = {
 				limit = {
 					NOT = {
-						controls_state = 761
+						OR = {
+							controls_state = 761
+							any_country = {
+								OR = {
+									is_in_faction_with = ROOT
+									is_subject_of = ROOT
+								}
+								controls_state = 761
+							}
+						}
 					}
 				}
+				country_event = { id = soviets.280 hours = 10 }
 				761 = {
 					CONTROLLER = {
 						country_event = { id = manchukuos.1 days = 2 }
 					}
 				}
+			}
+			else = {
+				#TODO country event for Konstantin's return
 			}
 		}
 	}
@@ -13600,9 +13609,6 @@ focus_tree = {
 			is_subject = no
 			has_government = fascism
 		}
-		bypass = {
-			controls_state = 761
-		}
 		search_filters = { FOCUS_FILTER_FASCIST_KONSTANTIN_RUSSIA FOCUS_FILTER_FASCIST_ANASTASY_RUSSIA }
 		completion_reward = {
 			hidden_effect = {
@@ -13611,10 +13617,23 @@ focus_tree = {
 			}
 			custom_effect_tooltip = SOV_russia_women_fascist_movement_tt
 			custom_effect_tooltip = SOV_russia_women_fascist_movement_tt2
+			swap_ideas = {
+				remove_idea = SOV_Political_Unstability
+				add_idea = SOV_Political_Unstability2
+			}
 			if = {
 				limit = {
 					NOT = {
-						controls_state = 761
+						OR = {
+							controls_state = 761
+							any_country = {
+								OR = {
+									is_in_faction_with = ROOT
+									is_subject_of = ROOT
+								}
+								controls_state = 761
+							}
+						}
 					}
 				}
 				761 = {
@@ -13622,6 +13641,9 @@ focus_tree = {
 						country_event = { id = generics.21 days = 2 }
 					}
 				}
+			}
+			else = {
+				#TODO country event for direct transfer of the Fascist Exiles
 			}
 		}
 	}
@@ -13911,10 +13933,11 @@ focus_tree = {
 		}
 		available = {
 			is_subject = no
+			has_government = fascism
 		}
 		search_filters = { FOCUS_FILTER_FASCIST_ANASTASY_RUSSIA }
 		completion_reward = {
-	
+			add_ideas = SOV_Matter_life_and_death
 		}
 	}
 
@@ -13965,7 +13988,7 @@ focus_tree = {
 		y = 20
 		prerequisite = { focus = SOV_matter_of_life_and_death }
 		icon = GFX_focus_eng_concessions_to_the_trade_unions
-		cost = 10
+		cost = 8
 		ai_will_do = {
 			factor = 8
 		}
@@ -13974,7 +13997,34 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_FASCIST_ANASTASY_RUSSIA }
 		completion_reward = {
-	
+			add_ideas = SOV_Impose_order
+			if = {
+				limit = {
+					any_country = {
+						is_subject_of = SOV
+						NOT = {
+							has_autonomy_state = autonomy_state_magistrate
+						}
+					}
+				}
+				every_country = {
+					limit = {
+						is_subject_of = SOV
+						NOT = {
+							has_autonomy_state = autonomy_state_magistrate
+						}
+					}
+					hidden_effect = {
+						SOV = {
+							set_autonomy = {
+							    target = PREV
+								autonomy_state = autonomy_state_magistrate
+							}
+						}
+					}
+					custom_effect_tooltip = SOV_imposing_orders_tt
+				}
+			}
 		}
 	}
 
