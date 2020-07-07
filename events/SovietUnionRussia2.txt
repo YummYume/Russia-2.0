@@ -12843,3 +12843,117 @@ country_event = {
 		}
 	}
 }
+
+#Remove the modifiers if the idea is not valid anymore
+country_event = {
+	id = soviets.281
+
+	hidden = yes
+
+	trigger = {
+		tag = SOV
+		NOT = {
+			is_subject = no
+			has_government = fascism
+			has_idea = SOV_Women_fascist_movement
+			has_idea = SOV_Otdel_bezopasnosti
+		}
+		OR = {
+			has_dynamic_modifier = {
+				modifier = fascist_women_modifiers
+			}
+			has_dynamic_modifier = {
+				modifier = fascist_security_modifiers
+			}
+		}
+	}
+
+	fire_only_once = yes
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	immediate = {
+		if = {
+			limit = {
+				has_dynamic_modifier = {
+					modifier = fascist_women_modifiers
+				}
+			}
+			remove_dynamic_modifier = {
+				modifier = fascist_women_modifiers
+			}
+		}
+		if = {
+			limit = {
+				has_dynamic_modifier = {
+					modifier = fascist_security_modifiers
+				}
+			}
+			remove_dynamic_modifier = {
+				modifier = fascist_security_modifiers
+			}
+		}
+	}
+}
+
+#TODO tooltips & localization
+#The Fate of Anastasy
+country_event = {
+	id = soviets.282
+	title = soviets.282.t
+	desc = soviets.282.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Accept his return
+		name = soviets.282.a
+		ai_chance = {
+			factor = 50
+		}
+		add_stability = 0.05
+		#TODO chain events, Anastasy will easily be able to take over
+	}
+
+	option = { #Keep small contacts with him
+		name = soviets.282.b
+		ai_chance = {
+			factor = 25
+		}
+		#TODO chain events, power struggle
+	}
+
+	option = { #Refuse his return
+		name = soviets.282.c
+		ai_chance = {
+			factor = 15
+		}
+		#TODO chain events, Anastasy might try to bring in the big guns
+	}
+
+	option = { #Demand the controller of 366 (Florida) to arrest him
+		name = soviets.282.e
+		trigger = {
+			NOT = {
+				controls_state = 366
+			}
+		}
+		ai_chance = {
+			factor = 10
+		}
+		#TODO if the controller of 366 accepts, Anastasy is bye bye, but big stability loss
+	}
+
+	option = { #Arrest him
+		name = soviets.282.f
+		trigger = {
+			controls_state = 366
+		}
+		ai_chance = {
+			factor = 10
+		}
+		#This is just in case you control 366, very unlikely
+	}
+}

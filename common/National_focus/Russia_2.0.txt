@@ -12231,12 +12231,18 @@ focus_tree = {
 			is_subject = no
 			has_government = neutrality
 			OR = {
-				country_exists = ROM
-				country_exists = HUN
-			}
-			NOT = {
-				has_war_with = HUN
-				has_war_with = ROM
+				AND = {
+					NOT = {
+						has_war_with = ROM
+					}
+					country_exists = ROM
+				}
+				AND = {
+					NOT = {
+						has_war_with = HUN
+					}
+					country_exists = HUN
+				}
 			}
 		}
 		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_ANNEXATION }
@@ -12245,55 +12251,78 @@ focus_tree = {
 		completion_reward = {
 			if = {
 				limit = {
-					ROM = {
-						is_subject = no
+					NOT = {
+						has_war_with = ROM
 					}
-				}
-				ROM = {
-					country_event = { id = soviets.270 days = 1 }
 				}
 				if = {
 					limit = {
 						ROM = {
-							is_guaranteed_by = FRA
+							is_subject = no
 						}
 					}
-					custom_effect_tooltip = SOV_few_obstacles_left_tt
+					ROM = {
+						country_event = { id = soviets.270 days = 1 }
+					}
+					if = {
+						limit = {
+							ROM = {
+								is_guaranteed_by = FRA
+							}
+						}
+						custom_effect_tooltip = SOV_few_obstacles_left_tt
+					}
+				}
+				else = {
+					ROM = {
+						OVERLORD = {
+							country_event = { id = soviets.274 days = 1 }
+						}
+					}
+					custom_effect_tooltip = SOV_few_obstacles_left_tt2
 				}
 			}
 			else = {
-				ROM = {
-					OVERLORD = {
-						country_event = { id = soviets.274 days = 1 }
-					}
-				}
-				custom_effect_tooltip = SOV_few_obstacles_left_tt2
+				custom_effect_tooltip = SOV_few_obstacles_left_cant_war_rom
 			}
 			if = {
 				limit = {
-					HUN = {
-						is_subject = no
+					NOT = {
+						has_war_with = HUN
 					}
-				}
-				HUN = {
-					country_event = { id = soviets.270 days = 1 }
 				}
 				if = {
 					limit = {
 						HUN = {
-							is_guaranteed_by = FRA
+							is_subject = no
+							NOT = {
+								has_war_with = ROOT
+							}
 						}
 					}
-					custom_effect_tooltip = SOV_few_obstacles_left_tt3
+					HUN = {
+						country_event = { id = soviets.270 days = 1 }
+					}
+					if = {
+						limit = {
+							HUN = {
+								is_guaranteed_by = FRA
+							}
+						}
+						custom_effect_tooltip = SOV_few_obstacles_left_tt3
+					}
+				}
+				else = {
+					HUN = {
+						OVERLORD = {
+							country_event = { id = soviets.273 days = 1 }
+						}
+					}
+					custom_effect_tooltip = SOV_few_obstacles_left_tt4
 				}
 			}
 			else = {
-				HUN = {
-					OVERLORD = {
-						country_event = { id = soviets.273 days = 1 }
-					}
-				}
-				custom_effect_tooltip = SOV_few_obstacles_left_tt4
+				custom_effect_tooltip = SOV_few_obstacles_left_cant_war_hun
 			}
 		}
 	}
@@ -13600,27 +13629,40 @@ focus_tree = {
 			if = {
 				limit = {
 					NOT = {
-						OR = {
-							controls_state = 761
-							any_country = {
-								OR = {
-									is_in_faction_with = ROOT
-									is_subject_of = ROOT
-								}
+						has_country_flag = konstantin_rodzaevsky_executed
+					}
+				}
+				if = {
+					limit = {
+						NOT = {
+							OR = {
 								controls_state = 761
+								any_country = {
+									OR = {
+										is_in_faction_with = ROOT
+										is_subject_of = ROOT
+									}
+									controls_state = 761
+								}
 							}
 						}
 					}
-				}
-				country_event = { id = soviets.280 hours = 10 }
-				761 = {
-					CONTROLLER = {
-						country_event = { id = manchukuos.1 days = 2 }
+					country_event = { id = soviets.280 hours = 10 }
+					761 = {
+						CONTROLLER = {
+							country_event = { id = manchukuos.1 days = 2 }
+						}
 					}
+				}
+				else = {
+					#TODO country event for Konstantin's return
+				}
+				hidden_effect = {
+					country_event = { id = soviets.282 days = 100 }
 				}
 			}
 			else = {
-				#TODO country event for Konstantin's return
+				#TODO Event where Anastasy directly comes back (in case Konstantin was executed for some reasons)
 			}
 		}
 	}
@@ -13947,7 +13989,20 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_FASCIST_ANASTASY_RUSSIA }
 		completion_reward = {
+			create_country_leader = {
+				name = "Anastasy Vonsyatsky"
+				desc = "POLITICS_ANASTASY_VONSYATSKY_DESC"
+				picture = "Portrait_Anastasy_Vonsyatsky.dds"
+				expire = "1965.1.1"
+				ideology = fascism_ideology
+				traits = {
+					dictator
+					different_kind_of_fascism
+				}
+			}
 			remove_ideas = SOV_Political_Unstability2
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = baydalakov
 		}
 	}
 	
@@ -14025,6 +14080,8 @@ focus_tree = {
 		}
 		available = {
 			is_subject = no
+			has_government = fascism
+			is_major = yes
 		}
 		search_filters = { FOCUS_FILTER_FASCIST_ANASTASY_RUSSIA }
 		completion_reward = {
