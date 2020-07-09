@@ -12904,7 +12904,7 @@ country_event = {
 	id = soviets.282
 	title = soviets.282.t
 	desc = soviets.282.d
-	picture = GFX_report_event_hungarian_soldiers
+	picture = GFX_russia2event_anastasy_vonsiatsky
 
 	is_triggered_only = yes
 
@@ -12930,18 +12930,18 @@ country_event = {
 	}
 
 	option = { #Refuse his return
-		name = soviets.298.c
+		name = soviets.282.c
 		ai_chance = {
 			factor = 15
 		}
 		add_stability = -0.05
 		hidden_effect = {
-			country_event = { id = soviets.283 days = 100 }
+			country_event = { id = soviets.298 days = 100 }
 		}
 	}
 
 	option = { #Demand the controller of 366 (Florida) to arrest him
-		name = soviets.305.e
+		name = soviets.282.e
 		trigger = {
 			NOT = {
 				controls_state = 366
@@ -12954,14 +12954,14 @@ country_event = {
 		hidden_effect = {
 			366 = {
 				CONTROLLER = {
-					country_event = { id = soviets.283 days = 10 }
+					country_event = { id = soviets.305 days = 10 }
 				}
 			}
 		}
 	}
 
 	option = { #Arrest him
-		name = soviets.309.f
+		name = soviets.282.f
 		trigger = {
 			controls_state = 366
 		}
@@ -12970,7 +12970,7 @@ country_event = {
 		}
 		add_stability = -0.1
 		hidden_effect = {
-			country_event = { id = soviets.283 days = 10 }
+			country_event = { id = soviets.309 days = 10 }
 		}
 		#This is just in case you control 366, very unlikely
 	}
@@ -13207,6 +13207,7 @@ country_event = {
 		ai_chance = {
 			factor = 50
 		}
+		add_stability = 0.05
 		hidden_effect = {
 			country_event = { id = soviets.291 days = 75 }
 		}
@@ -13325,6 +13326,7 @@ country_event = {
 		ai_chance = {
 			factor = 50
 		}
+		add_political_power = -50
 		hidden_effect = {
 			country_event = { id = soviets.294 days = 50 }
 		}
@@ -13731,7 +13733,7 @@ country_event = {
 
 	is_triggered_only = yes
 
-	option = {
+	option = { #Arrest him
 		name = soviets.305.a
 		ai_chance = {
 			factor = 100
@@ -13740,12 +13742,21 @@ country_event = {
 				has_government = fascism
 			}
 		}
+		add_popularity = {
+			ideology = fascism
+			popularity = -0.5
+		}
+		add_political_power = 25
 		SOV = {
 			country_event = { id = soviets.306 days = 10 }
+			add_opinion_modifier = {
+				target = ROOT
+				modifier = arrested_anastasy
+			}
 		}
 	}
 
-	option = {
+	option = { #No
 		name = soviets.305.b
 		ai_chance = {
 			factor = 0
@@ -13754,8 +13765,13 @@ country_event = {
 				has_government = fascism
 			}
 		}
+		add_political_power = 50
 		SOV = {
 			country_event = { id = soviets.307 days = 10 }
+			add_opinion_modifier = {
+				target = ROOT
+				modifier = refused_arrest
+			}
 		}
 	}
 }
@@ -13775,6 +13791,10 @@ country_event = {
 			factor = 100
 		}
 		add_stability = -0.1
+		add_opinion_modifier = {
+			target = FROM
+			modifier = arrested_anastasy
+		}
 		custom_effect_tooltip = SOV_can_have_konstantin_tt
 		set_country_flag = law_triumphed_over_order
 		set_country_flag = anastasy_still_in_america
@@ -13794,6 +13814,10 @@ country_event = {
 		name = soviets.307.a
 		ai_chance = {
 			factor = 100
+		}
+		add_opinion_modifier = {
+			target = FROM
+			modifier = refused_arrest
 		}
 		hidden_effect = {
 			country_event = { id = soviets.308 days = 100 }
