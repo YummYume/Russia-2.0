@@ -588,7 +588,7 @@ country_event = {
 	option = { #Accpets
 		name = japans.18.a
 		ai_chance = {
-			factor = 90
+			factor = 95
 			modifier = {
 				factor = 0
 				any_country = {
@@ -605,7 +605,7 @@ country_event = {
 	option = { #Refuse
 		name = japans.18.b
 		ai_chance = {
-			factor = 10
+			factor = 5
 			modifier = {
 				factor = 100
 				any_country = {
@@ -709,4 +709,63 @@ country_event = {
 			}
 		}
     }
+}
+
+#Japan Receive Event to Negotiate with CHI
+country_event = {
+	id = japans.21
+	title = japans.21.t
+	desc = japans.21.d
+	picture = GFX_report_event_chinese_soldiers_city_ruin
+
+	is_triggered_only = yes
+
+	option = { #Leave the Faction in Protest
+		name = japans.21.a
+		ai_chance = {
+			factor = 100
+		}
+		leave_faction = yes
+		SOV = {
+			country_event = { id = japans.22 }
+		}
+		JAP = {
+			add_ai_strategy = {
+				type = antagonize
+				id = SOV
+				value = 600
+			}
+			add_ai_strategy = {
+				type = antagonize
+				id = event_target:WTT_current_china_leader
+				value = 200
+			}
+		}
+	}
+
+	option = { #We Just Have to Trust Them
+		name = japans.21.b
+		ai_chance = {
+			factor = 0
+		}
+		add_war_support = -0.40
+		add_stability = -0.50
+    }
+}
+
+#Japans Leave our Faction to Protests the Sino-Japanese treaty
+country_event = {
+	id = japans.22
+	title = japans.22.t
+	desc = japans.22.d
+	picture = GFX_report_event_japanese_transport_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Those Damn idiots !
+		name = japans.22.a
+		ai_chance = {
+			factor = 100
+		}
+	}
 }
