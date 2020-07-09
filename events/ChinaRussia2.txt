@@ -13,7 +13,7 @@ country_event = {
 		trigger = {
 			JAP = {
 				NOT = {
-					has_war_with = CHI
+					has_war_with = event_target:WTT_current_china_leader
 				}
 			}
 		}
@@ -22,7 +22,7 @@ country_event = {
 		text = chinas.1.d_2
 		trigger = {
 			JAP = {
-				has_war_with = CHI
+				has_war_with = event_target:WTT_current_china_leader
 			}
 		}
 	} 
@@ -35,10 +35,13 @@ country_event = {
 		trigger = {
 			NOT = {
 				JAP = {
-					has_war_with = CHI
+					has_war_with = event_target:WTT_current_china_leader
+				}
+				event_target:WTT_current_china_leader = {
+					is_subject_of = JAP
 				}
 			}
-			country_exists = CHI
+			country_exists = event_target:WTT_current_china_leader
 		}
 		ai_chance = {
 			factor = 60
@@ -52,15 +55,15 @@ country_event = {
 		name = chinas.1.b
 		trigger = {
 			JAP = {
-				has_war_with = CHI
+				has_war_with = event_target:WTT_current_china_leader
 			}
-			country_exists = CHI
+			country_exists = event_target:WTT_current_china_leader
 		}
 		ai_chance = {
 			factor = 60
 			modifier = {
 				factor = 10
-				CHI = {
+				event_target:WTT_current_china_leader = {
 					is_in_faction_with = ENG
 				}
 			}
@@ -73,18 +76,23 @@ country_event = {
 	option = { #We Should Try to Appease the Situation - Trying to create Peace Between China and Jap
 		name = chinas.1.c
 		trigger = {
-			country_exists = CHI
+			country_exists = event_target:WTT_current_china_leader
+			NOT = {
+				event_target:WTT_current_china_leader = {
+					is_subject = yes
+				}
+			}
 		}
 		ai_chance = {
 			factor = 40
 			modifier = {
 				factor = 0
-				CHI = {
+				event_target:WTT_current_china_leader = {
 					surrender_progress > 0.75
 				}
 			}
 		}
-		CHI = {
+		event_target:WTT_current_china_leader = {
 			country_event = { id = chinas.6 hours = 12 }
 		}
 		custom_effect_tooltip = sino_japanese_negotiation_surrender
@@ -97,8 +105,13 @@ country_event = {
 		}
 		if = {
 			limit = {
-				NOT = {
-					country_exists = CHI
+				OR = { 
+					NOT = {
+						country_exists = event_target:WTT_current_china_leader
+					}
+					event_target:WTT_current_china_leader = {
+						is_subject = yes
+					}
 				}
 			}
 			custom_effect_tooltip = china_not_exist_because_dead
@@ -123,27 +136,27 @@ country_event = {
 		SOV = {
 			create_wargoal = {
 				type = annex_everything
-				target = CHI
+				target = event_target:WTT_current_china_leader
 			}
 			add_ai_strategy = {
 				type = conquer
-				id = CHI
+				id = event_target:WTT_current_china_leader
 				value = 100
 			}
 		}
 		JAP = {
 			create_wargoal = {
 				type = annex_everything
-				target = CHI
+				target = event_target:WTT_current_china_leader
 			}
 			add_ai_strategy = {
 				type = conquer
-				id = CHI
+				id = event_target:WTT_current_china_leader
 				value = 100
 			}
 		}
 		custom_effect_tooltip = china_and_other_chinese_nations_gets_buff
-		CHI = {
+		event_target:WTT_current_china_leader = {
 			add_ai_strategy = {
 				type = antagonize
 				id = SOV
@@ -164,17 +177,10 @@ country_event = {
 		hidden_effect = {
 			every_country = {
 				limit = {
-					OR = {
-						TAG = PRC
-						TAG = SIK
-						TAG = XSM
-						TAG = SHX
-						TAG = GXC
-						TAG = YUN
-					}
-					is_in_faction_with = CHI
+					is_literally_china = yes
+					is_in_faction_with = event_target:WTT_current_china_leader
 					NOT = {
-						TAG = CHI
+						TAG = event_target:WTT_current_china_leader
 					}
 				}
 				add_timed_idea = {
@@ -218,18 +224,17 @@ country_event = {
 			factor = 100
 		}
 		SOV = {
-			add_to_war = { 
-				targeted_alliance = JAP 
-				enemy = CHI 
-				hostility_reason = sino_japanese_conflict
+			declare_war_on = {
+				target = event_target:WTT_current_china_leader
+				type = annex_everything
 			}
 			add_ai_strategy = {
 				type = conquer
-				id = CHI
+				id = event_target:WTT_current_china_leader
 				value = 100
 			}
 		}
-		CHI = {
+		event_target:WTT_current_china_leader = {
 			add_ai_strategy = {
 				type = antagonize
 				id = SOV
@@ -265,7 +270,7 @@ country_event = {
 		text = chinas.6.d_1
 		trigger = {
 			NOT = {
-				CHI = {
+				event_target:WTT_current_china_leader = {
 					has_war_with = JAP
 				}
 			}
@@ -274,7 +279,7 @@ country_event = {
 	desc = {
 		text = chinas.6.d_2
 		trigger = {
-			CHI = {
+			event_target:WTT_current_china_leader = {
 				has_war_with = JAP
 			}
 		}
@@ -285,6 +290,10 @@ country_event = {
 
 	option = { #Accept the Negotiation
 		name = chinas.6.a
+		ai_chance = {
+			factor = 100
+		}
+		custom_effect_tooltip = if_we_join_we_wont_leave_china
 		SOV = {
 			country_event = { id = chinas.7 hours = 16 }
 		}
@@ -292,6 +301,9 @@ country_event = {
 
 	option = { #Refuse to Negotiate
 		name = chinas.6.b
+		ai_chance = {
+			factor = 0
+		}
 		SOV = {
 			country_event = { id = chinas.8 hours = 16 }
 		}
@@ -313,7 +325,7 @@ country_event = {
 			factor = 100
 		}
 		JAP = {
-			country_event = { id = japans.19 hours = 16 }
+			country_event = { id = japans.20 hours = 16 }
 		}
 	}
 }
@@ -355,7 +367,7 @@ country_event = {
 		JAP = {
 			country_event = { id = chinas.12 days = 1 }
 		}
-		CHI = {
+		event_target:WTT_current_china_leader = {
 			country_event = { id = chinas.12 days = 1 }
 		}
 	}
@@ -368,7 +380,7 @@ country_event = {
 		JAP = {
 			country_event = { id = chinas.13 hours = 16 }
 		}
-		CHI = {
+		event_target:WTT_current_china_leader = {
 			country_event = { id = chinas.13 hours = 16 }
 		}
 	}
@@ -387,7 +399,7 @@ country_event = {
 	desc = { #Is China
 		text = chinas.10.d_2
 		trigger = {
-			TAG = CHI
+			TAG = event_target:WTT_current_china_leader
 		}
 	}
 	picture = GFX_report_event_japanese_siam_politicians
@@ -416,8 +428,19 @@ country_event = {
 		ai_chance = {
 			factor = 100
 		}
+		custom_effect_tooltip = choose_carefully_your_alliance_sino_jap
 		SOV = {
 			country_event = { id = chinas.14 days = 1 }
+		}
+		hidden_effect = {
+			set_variable = {
+				var = china_conference_happy
+				value = 0
+			}
+			set_variable = {
+				var = japan_not_happy_conference
+				value = 0
+			}
 		}
 	}
 }
@@ -471,15 +494,62 @@ country_event = {
 		ai_chance = {
 			factor = 30
 		}
+		trigger = {
+			country_exists = event_target:WTT_current_china_leader
+			NOT = {
+				event_target:WTT_current_china_leader = {
+					is_subject = yes
+				}
+			}
+		}
 		SOV = {
-			country_event = { id = chinas.18 days = 2 }
+			country_event = { id = chinas.18 days = 4 }
 		}
 		hidden_effect = {
-			CHI = {
+			event_target:WTT_current_china_leader = {
 				country_event = { id = chinas.15 days = 1 }
 			}
 			JAP = {
 				country_event = { id = chinas.15 days = 1 }
+			}
+			595 = {
+				set_state_flag = japanese_claimed_land_treaty
+			}
+			596 = {
+				set_state_flag = japanese_claimed_land_treaty
+			}
+			598 = {
+				set_state_flag = japanese_claimed_land_treaty
+			}
+			597 = {
+				set_state_flag = japanese_claimed_land_treaty
+			}
+			614 = {
+				set_state_flag = japanese_claimed_land_treaty
+			}
+			608 = {
+				set_state_flag = japanese_claimed_land_treaty
+			}
+			743 = {
+				set_state_flag = japanese_claimed_land_treaty
+			}
+			615 = {
+				set_state_flag = japanese_claimed_land_treaty
+			}
+			621 = {
+				set_state_flag = japanese_claimed_land_treaty
+			}
+			593 = {
+				set_state_flag = japanese_claimed_land_treaty
+			}
+			592 = {
+				set_state_flag = japanese_claimed_land_treaty
+			}
+			594 = {
+				set_state_flag = japanese_claimed_land_treaty
+			}
+			591 = {
+				set_state_flag = japanese_claimed_land_treaty
 			}
 		}
 	}
@@ -489,15 +559,45 @@ country_event = {
 		ai_chance = {
 			factor = 50
 		}
+		trigger = {
+			country_exists = event_target:WTT_current_china_leader
+			NOT = {
+				event_target:WTT_current_china_leader = {
+					is_subject = yes
+				}
+			}
+		}
 		SOV = {
-			country_event = { id = chinas.18 days = 2 }
+			country_event = { id = chinas.18 days = 4 }
 		}
 		hidden_effect = {
-			CHI = {
+			event_target:WTT_current_china_leader = {
 				country_event = { id = chinas.16 days = 1 }
 			}
 			JAP = {
 				country_event = { id = chinas.16 days = 1 }
+			}
+			608 = {
+				set_state_flag = japanese_claimed_land_treaty
+			}
+			614 = {
+				set_state_flag = japanese_claimed_land_treaty
+			}
+			597 = {
+				set_state_flag = japanese_claimed_land_treaty
+			}
+			743 = {
+				set_state_flag = japanese_claimed_land_treaty
+			}
+			615 = {
+				set_state_flag = japanese_claimed_land_treaty
+			}
+			621 = {
+				set_state_flag = japanese_claimed_land_treaty
+			}
+			add_to_variable = {
+			    var = china_conference_happy
+			    value = 1
 			}
 		}
 	}
@@ -507,17 +607,51 @@ country_event = {
 		ai_chance = {
 			factor = 20
 		}
+		trigger = {
+			country_exists = event_target:WTT_current_china_leader
+			NOT = {
+				event_target:WTT_current_china_leader = {
+					is_subject = yes
+				}
+			}
+		}
 		SOV = {
-			country_event = { id = chinas.18 days = 2 }
+			country_event = { id = chinas.18 days = 4 }
 		}
 		hidden_effect = {
-			CHI = {
+			event_target:WTT_current_china_leader = {
 				country_event = { id = chinas.17 days = 1 }
 			}
 			JAP = {
 				country_event = { id = chinas.17 days = 1 }
 			}
+			add_to_variable = {
+			    var = china_conference_happy
+			    value = 1
+			}
+			add_to_variable = {
+			    var = japan_not_happy_conference
+			    value = 1
+			}
 		}
+	}
+
+	option = {
+		name = chinas.14.e
+		ai_chance = {
+			factor = 1
+		}
+		trigger = {
+			OR = {
+				NOT = {
+					country_exists = event_target:WTT_current_china_leader
+				}
+				event_target:WTT_current_china_leader= {
+					is_subject = yes
+				}
+			}
+		}
+		custom_effect_tooltip = china_has_been_annexed_during_conference
 	}
 }
 
@@ -543,7 +677,7 @@ country_event = {
 	option = { #Option for China
 		name = chinas.15.b
 		trigger = {
-			TAG = CHI
+			TAG = event_target:WTT_current_china_leader
 		}
 		ai_chance = {
 			factor = 100
@@ -573,7 +707,7 @@ country_event = {
 	option = { #Option for China
 		name = chinas.16.b
 		trigger = {
-			TAG = CHI
+			TAG = event_target:WTT_current_china_leader
 		}
 		ai_chance = {
 			factor = 100
@@ -603,7 +737,7 @@ country_event = {
 	option = { #Option for China
 		name = chinas.17.b
 		trigger = {
-			TAG = CHI
+			TAG = event_target:WTT_current_china_leader
 		}
 		ai_chance = {
 			factor = 100
@@ -625,16 +759,62 @@ country_event = {
 		ai_chance = {
 			factor = 30
 		}
-		SOV = {
-			country_event = { id = chinas.22 days = 2 }
+		trigger = {
+			country_exists = event_target:WTT_current_china_leader
+			NOT = {
+				event_target:WTT_current_china_leader = {
+					is_subject = yes
+				}
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					MAN = {
+						is_subject_of = JAP
+					}
+					AND = {
+						716 = {
+							is_owned_by = JAP
+						}
+						328 = {
+							is_owned_by = JAP
+						}
+						717 = {
+							is_owned_by = JAP
+						}
+						714 = {
+							is_owned_by = JAP
+						}
+						761 = {
+							is_owned_by = JAP
+						}
+						715 = {
+							is_owned_by = JAP
+						}
+						610 = {
+							is_owned_by = JAP
+						}
+					}
+				}	
+			}
+			SOV = {
+				country_event = { id = chinas.22 days = 4 }
+			}
+		}
+		else = {
+			SOV = {
+				country_event = { id = chinas.26 days = 4 }
+			}
 		}
 		hidden_effect = {
-			CHI = {
+			event_target:WTT_current_china_leader = {
 				country_event = { id = chinas.19 days = 1 }
 			}
 			JAP = {
 				country_event = { id = chinas.19 days = 1 }
 			}
+			set_country_flag = china_pay_concession_japan
 		}
 	}
 
@@ -643,15 +823,65 @@ country_event = {
 		ai_chance = {
 			factor = 50
 		}
-		SOV = {
-			country_event = { id = chinas.22 days = 2 }
+		trigger = {
+			country_exists = event_target:WTT_current_china_leader
+			NOT = {
+				event_target:WTT_current_china_leader = {
+					is_subject = yes
+				}
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					MAN = {
+						is_subject_of = JAP
+					}
+					AND = {
+						716 = {
+							is_owned_by = JAP
+						}
+						328 = {
+							is_owned_by = JAP
+						}
+						717 = {
+							is_owned_by = JAP
+						}
+						714 = {
+							is_owned_by = JAP
+						}
+						761 = {
+							is_owned_by = JAP
+						}
+						715 = {
+							is_owned_by = JAP
+						}
+						610 = {
+							is_owned_by = JAP
+						}
+					}
+				}	
+			}
+			SOV = {
+				country_event = { id = chinas.22 days = 4 }
+			}
+		}
+		else = {
+			SOV = {
+				country_event = { id = chinas.26 days = 4 }
+			}
 		}
 		hidden_effect = {
-			CHI = {
+			event_target:WTT_current_china_leader = {
 				country_event = { id = chinas.20 days = 1 }
 			}
 			JAP = {
 				country_event = { id = chinas.20 days = 1 }
+			}
+			set_country_flag = russia_will_pay_concession_instead_china
+			add_to_variable = {
+			    var = china_conference_happy
+			    value = 1
 			}
 		}
 	}
@@ -661,17 +891,88 @@ country_event = {
 		ai_chance = {
 			factor = 20
 		}
-		SOV = {
-			country_event = { id = chinas.22 days = 2 }
+		trigger = {
+			country_exists = event_target:WTT_current_china_leader
+			NOT = {
+				event_target:WTT_current_china_leader = {
+					is_subject = yes
+				}
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					MAN = {
+						is_subject_of = JAP
+					}
+					AND = {
+						716 = {
+							is_owned_by = JAP
+						}
+						328 = {
+							is_owned_by = JAP
+						}
+						717 = {
+							is_owned_by = JAP
+						}
+						714 = {
+							is_owned_by = JAP
+						}
+						761 = {
+							is_owned_by = JAP
+						}
+						715 = {
+							is_owned_by = JAP
+						}
+						610 = {
+							is_owned_by = JAP
+						}
+					}
+				}	
+			}
+			SOV = {
+				country_event = { id = chinas.22 days = 4 }
+			}
+		}
+		else = {
+			SOV = {
+				country_event = { id = chinas.26 days = 4 }
+			}
 		}
 		hidden_effect = {
-			CHI = {
+			event_target:WTT_current_china_leader = {
 				country_event = { id = chinas.21 days = 1 }
 			}
 			JAP = {
 				country_event = { id = chinas.21 days = 1 }
 			}
+			add_to_variable = {
+			    var = china_conference_happy
+			    value = 1
+			}
+			add_to_variable = {
+			    var = japan_not_happy_conference
+			    value = 1
+			}
 		}
+	}
+
+	option = { #China Is Dead
+		name = chinas.18.e
+		ai_chance = {
+			factor = 1
+		}
+		trigger = {
+			OR = {
+				NOT = {
+					country_exists = event_target:WTT_current_china_leader
+				}
+				event_target:WTT_current_china_leader= {
+					is_subject = yes
+				}
+			}
+		}
+		custom_effect_tooltip = china_has_been_annexed_during_conference
 	}
 }
 
@@ -697,7 +998,7 @@ country_event = {
 	option = { #Option for China
 		name = chinas.19.b
 		trigger = {
-			TAG = CHI
+			TAG = event_target:WTT_current_china_leader
 		}
 		ai_chance = {
 			factor = 100
@@ -727,7 +1028,7 @@ country_event = {
 	option = { #Option for China
 		name = chinas.20.b
 		trigger = {
-			TAG = CHI
+			TAG = event_target:WTT_current_china_leader
 		}
 		ai_chance = {
 			factor = 100
@@ -757,10 +1058,426 @@ country_event = {
 	option = { #Option for China
 		name = chinas.21.b
 		trigger = {
-			TAG = CHI
+			TAG = event_target:WTT_current_china_leader
 		}
 		ai_chance = {
 			factor = 100
 		}
+	}
+}
+
+#Fate of Manchuko
+country_event = {
+	id = chinas.22
+	title = chinas.22.t
+	desc = chinas.22.d
+	picture = GFX_report_event_generic_conference
+
+	is_triggered_only = yes
+
+	option = { #This Has Nothing to do With our Condference
+		name = chinas.22.a
+		ai_chance = {
+			factor = 30
+		}
+		trigger = {
+			country_exists = event_target:WTT_current_china_leader
+			NOT = {
+				event_target:WTT_current_china_leader = {
+					is_subject = yes
+				}
+			}
+		}
+		SOV = {
+			country_event = { id = chinas.26 days = 4 }
+		}
+		hidden_effect = {
+			event_target:WTT_current_china_leader = {
+				country_event = { id = chinas.23 days = 1 }
+			}
+			JAP = {
+				country_event = { id = chinas.23 days = 1 }
+			}
+		}
+	}
+
+	option = { #Open Borders for MAN 
+		name = chinas.22.b
+		ai_chance = {
+			factor = 50
+		}
+		trigger = {
+			country_exists = event_target:WTT_current_china_leader
+			NOT = {
+				event_target:WTT_current_china_leader = {
+					is_subject = yes
+				}
+			}
+		}
+		SOV = {
+			country_event = { id = chinas.26 days = 4 }
+		}
+		hidden_effect = {
+			event_target:WTT_current_china_leader = {
+				country_event = { id = chinas.24 days = 1 }
+			}
+			JAP = {
+				country_event = { id = chinas.24 days = 1 }
+			}
+			set_country_flag = open_borders_in_manchuria
+			add_to_variable = {
+			    var = china_conference_happy
+			    value = 1
+			}
+		}
+	}
+
+	option = { #Decrease Autonomy
+		name = chinas.22.c
+		ai_chance = {
+			factor = 20
+		}
+		SOV = {
+			country_event = { id = chinas.26 days = 4 }
+		}
+		trigger = {
+			country_exists = event_target:WTT_current_china_leader
+			NOT = {
+				event_target:WTT_current_china_leader = {
+					is_subject = yes
+				}
+			}
+		}
+		hidden_effect = {
+			event_target:WTT_current_china_leader = {
+				country_event = { id = chinas.25 days = 1 }
+			}
+			JAP = {
+				country_event = { id = chinas.25 days = 1 }
+			}
+			set_country_flag = increase_manchu_autonomy
+			add_to_variable = {
+			    var = china_conference_happy
+			    value = 1
+			}
+			add_to_variable = {
+			    var = japan_not_happy_conference
+			    value = 1
+			}
+		}
+	}
+
+	option = { #China is Dead
+		name = chinas.22.e
+		ai_chance = {
+			factor = 1
+		}
+		trigger = {
+			OR = {
+				NOT = {
+					country_exists = event_target:WTT_current_china_leader
+				}
+				event_target:WTT_current_china_leader= {
+					is_subject = yes
+				}
+			}
+		}
+		custom_effect_tooltip = china_has_been_annexed_during_conference
+	}
+}
+
+#Russia Has Choosed Option A for the Manchurian Problem - Jap and Chi gets notified
+country_event = {
+	id = chinas.23
+	title = chinas.23.t
+	desc = chinas.23.d
+	picture = GFX_report_event_japan_europe_pact
+
+	is_triggered_only = yes
+
+	option = { #Option for Japan
+		name = chinas.23.a
+		trigger = {
+			TAG = JAP
+		}
+		ai_chance = {
+			factor = 100
+		}
+	}
+
+	option = { #Option for China
+		name = chinas.23.b
+		trigger = {
+			TAG = event_target:WTT_current_china_leader
+		}
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#Russia Has Choosed Option B for the Manchurian Problem - Jap and Chi gets notified
+country_event = {
+	id = chinas.24
+	title = chinas.24.t
+	desc = chinas.24.d
+	picture = GFX_report_event_japan_europe_pact
+
+	is_triggered_only = yes
+
+	option = { #Option for Japan
+		name = chinas.24.a
+		trigger = {
+			TAG = JAP
+		}
+		ai_chance = {
+			factor = 100
+		}
+	}
+
+	option = { #Option for China
+		name = chinas.24.b
+		trigger = {
+			TAG = event_target:WTT_current_china_leader
+		}
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#Russia Has Choosed Option C for the Manchurian Problem - Jap and Chi gets notified
+country_event = {
+	id = chinas.25
+	title = chinas.25.t
+	desc = chinas.25.d
+	picture = GFX_report_event_japan_europe_pact
+
+	is_triggered_only = yes
+
+	option = { #Option for Japan
+		name = chinas.25.a
+		trigger = {
+			TAG = JAP
+		}
+		ai_chance = {
+			factor = 100
+		}
+	}
+
+	option = { #Option for China
+		name = chinas.25.b
+		trigger = {
+			TAG = event_target:WTT_current_china_leader
+		}
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#The Conference is Over
+country_event = {
+	id = chinas.26
+	title = chinas.26.t
+	desc = chinas.26.d
+	picture = GFX_report_event_japanese_chinese_surrender
+
+	is_triggered_only = yes
+
+	option = { #Let's hope this will Resolve the Conflict
+		name = chinas.26.a
+		ai_chance = {
+			factor = 100
+		}
+		trigger = {
+			country_exists = event_target:WTT_current_china_leader
+			NOT = {
+				event_target:WTT_current_china_leader = {
+					is_subject = yes
+				}
+			}
+		}
+		every_country = { #TODO Custom Tooltip Because the Base Game Doesn't understand sometimes 
+			limit = {
+				is_literally_china = yes
+				has_war_with = JAP
+				NOT = {
+					TAG = MAN
+				}
+			}
+			white_peace = JAP
+		}
+		every_country = {
+			limit = {
+				TAG = event_target:WTT_current_china_leader
+				is_in_faction = yes
+				NOT = {
+					is_faction_leader = yes
+				}
+			}
+			leave_faction = yes	
+		}
+		every_country = {
+			limit = {
+				is_literally_china = yes
+				is_in_faction = yes
+				NOT = {
+					is_in_faction_with = event_target:WTT_current_china_leader
+					has_war_with = event_target:WTT_current_china_leader
+				}
+				NOT = {
+					TAG = MAN
+				}
+			}
+			leave_faction = yes
+			event_target:WTT_current_china_leader = {
+				add_to_faction = PREV
+			}
+		}
+		every_state = {
+			limit = {
+				has_state_flag = japanese_claimed_land_treaty
+				OR = {
+					any_country = {
+						OR = {
+							AND = {
+								is_literally_china = yes
+								is_in_faction_with = event_target:WTT_current_china_leader
+								is_ai = yes
+							}
+							TAG = event_target:WTT_current_china_leader
+						}		
+						owns_state = PREV
+					}
+				}
+			}
+			JAP = {
+				add_state_claim = PREV
+				transfer_state = PREV
+			}
+		}
+
+		if = {
+			limit = {
+				has_country_flag = china_pay_concession_japan
+			}
+			event_target:WTT_current_china_leader = {
+				add_timed_idea = {
+					idea = SOV_China_concession_japan_treaty
+					days = 930
+				}
+			}
+			JAP = {
+				add_timed_idea = {
+					idea = SOV_Japan_receive_concessions_treaty
+					days = 930
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_country_flag = russia_will_pay_concession_instead_china
+			}
+			SOV = {
+				add_timed_idea = {
+					idea = SOV_Russia_concession_japan_treaty
+					days = 930
+				}
+			}
+			JAP = {
+				add_timed_idea = {
+					idea = SOV_Japan_receive_concessions_treaty
+					days = 930
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = open_borders_in_manchuria
+			}
+			every_country = {
+				limit = {
+					OR = {
+						AND = {
+							country_exists = MAN
+							TAG = MAN
+						}
+						AND = {
+							TAG = JAP
+							NOT = {
+								country_exists = MAN
+							}
+						}
+					}
+				}
+				add_timed_idea = {
+					idea = SOV_Open_borders_with_china
+					days = 720
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = increase_manchu_autonomy
+				country_exists = MAN
+				MAN = {
+					is_subject_of = JAP
+				}	
+			}
+			JAP = {
+				set_autonomy = {
+					target = MAN
+					autonomy_state = autonomy_wtt_imperial_associate 
+				}
+			}	
+		}
+		else_if = {
+			limit = {
+				has_country_flag = increase_manchu_autonomy
+				NOT = {
+					country_exists = MAN
+				}
+			}
+			JAP = {
+				release_autonomy = {
+					target = MAN
+					autonomy_state = autonomy_wtt_imperial_associate 
+					freedom_level = 0.5
+				}
+			}	
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					check_variable = {
+						var = japan_not_happy_conference
+						value = 2
+						compare = greater_than_or_equals 
+					}
+				}
+				JAP= {
+					country_event = { id = japans.21 days = 15 }
+				}
+			}
+		}
+	}
+
+	option = { #China is Dead
+		name = chinas.26.b
+		ai_chance = {
+			factor = 1
+		}
+		trigger = {
+			OR = {
+				NOT = {
+					country_exists = event_target:WTT_current_china_leader
+				}
+				event_target:WTT_current_china_leader= {
+					is_subject = yes
+				}
+			}
+		}
+		custom_effect_tooltip = china_has_been_annexed_during_conference
 	}
 }
