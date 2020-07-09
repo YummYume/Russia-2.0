@@ -12840,6 +12840,7 @@ country_event = {
 		}
 		hidden_effect = {
 			set_cosmetic_tag = RFP
+			country_event = { id = soviets.282 days = 100 }
 		}
 	}
 }
@@ -12898,13 +12899,12 @@ country_event = {
 	}
 }
 
-#TODO tooltips & localization
 #The Fate of Anastasy
 country_event = {
 	id = soviets.282
 	title = soviets.282.t
 	desc = soviets.282.d
-	picture = GFX_report_event_hungarian_soldiers
+	picture = GFX_russia2event_anastasy_vonsiatsky
 
 	is_triggered_only = yes
 
@@ -12914,7 +12914,9 @@ country_event = {
 			factor = 50
 		}
 		add_stability = 0.05
-		#TODO chain events, Anastasy will easily be able to take over
+		hidden_effect = {
+			country_event = { id = soviets.283 days = 100 }
+		}
 	}
 
 	option = { #Keep small contacts with him
@@ -12922,7 +12924,9 @@ country_event = {
 		ai_chance = {
 			factor = 25
 		}
-		#TODO chain events, power struggle
+		hidden_effect = {
+			country_event = { id = soviets.290 days = 100 }
+		}
 	}
 
 	option = { #Refuse his return
@@ -12930,7 +12934,10 @@ country_event = {
 		ai_chance = {
 			factor = 15
 		}
-		#TODO chain events, Anastasy might try to bring in the big guns
+		add_stability = -0.05
+		hidden_effect = {
+			country_event = { id = soviets.298 days = 100 }
+		}
 	}
 
 	option = { #Demand the controller of 366 (Florida) to arrest him
@@ -12943,7 +12950,14 @@ country_event = {
 		ai_chance = {
 			factor = 10
 		}
-		#TODO if the controller of 366 accepts, Anastasy is bye bye, but big stability loss
+		add_stability = -0.1
+		hidden_effect = {
+			366 = {
+				CONTROLLER = {
+					country_event = { id = soviets.305 days = 10 }
+				}
+			}
+		}
 	}
 
 	option = { #Arrest him
@@ -12954,6 +12968,902 @@ country_event = {
 		ai_chance = {
 			factor = 10
 		}
+		add_stability = -0.1
+		hidden_effect = {
+			country_event = { id = soviets.309 days = 10 }
+		}
 		#This is just in case you control 366, very unlikely
 	}
 }
+
+#Anastasy Vonsyatsky Arrives
+country_event = {
+	id = soviets.283
+	title = soviets.283.t
+	desc = soviets.283.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Welcome back
+		name = soviets.283.a
+		ai_chance = {
+			factor = 100
+		}
+		hidden_effect = {
+			country_event = { id = soviets.284 days = 50 }
+		}
+	}
+}
+
+#The Place of Anastasy
+country_event = {
+	id = soviets.284
+	title = soviets.284.t
+	desc = soviets.284.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Minister
+		name = soviets.284.a
+		ai_chance = {
+			factor = 75
+		}
+		add_war_support = 0.05
+		hidden_effect = {
+			country_event = { id = soviets.285 days = 75 }
+		}
+	}
+
+	option = { #Let him rule with Konstantin
+		name = soviets.284.b
+		ai_chance = {
+			factor = 25
+		}
+		add_political_power = -200
+		hidden_effect = {
+			country_event = { id = soviets.289 days = 50 }
+		}
+	}
+}
+
+#Dinner in the Kremlin
+country_event = {
+	id = soviets.285
+	title = soviets.285.t
+	desc = soviets.285.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Popcorn please
+		name = soviets.285.a
+		ai_chance = {
+			factor = 100
+		}
+		hidden_effect = {
+			country_event = { id = soviets.286 days = 50 }
+		}
+	}
+}
+
+#Konstantin falls (not dead yet)
+country_event = {
+	id = soviets.286
+	title = soviets.286.t
+	desc = soviets.286.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = {
+		name = soviets.286.a
+		ai_chance = {
+			factor = 100
+		}
+		add_political_power = -25
+		set_temp_variable = { konstantin_death_factor = 0 }
+		randomize_temp_variable = {
+			var = konstantin_death_factor
+			distribution = uniform
+			min = 1
+			max = 2
+		}
+		round_variable = konstantin_death_factor
+		if = { #Dead
+			limit = {
+				check_variable = {
+					var = konstantin_death_factor
+					value = 1
+					compare = equals
+				}
+			}
+			hidden_effect = {
+				country_event = { id = soviets.287 days = 50 }
+			}
+		}
+		else = { #Not dead
+			hidden_effect = {
+				country_event = { id = soviets.288 days = 50 }
+			}
+		}
+	}
+}
+
+#Konstantin Dies
+country_event = {
+	id = soviets.287
+	title = soviets.287.t
+	desc = soviets.287.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Anastasy wins
+		name = soviets.287.a
+		ai_chance = {
+			factor = 100
+		}
+		add_political_power = -100
+		create_country_leader = {
+			name = "Anastasy Vonsyatsky"
+			desc = "POLITICS_ANASTASY_VONSYATSKY_DESC"
+			picture = "Portrait_Anastasy_Vonsyatsky.dds"
+			expire = "1965.1.1"
+			ideology = fascism_ideology
+			traits = {
+				dictator
+			}
+		}
+		custom_effect_tooltip = SOV_can_have_anastasy_tt
+		set_country_flag = order_triumphed_over_law
+	}
+}
+
+#Konstantin Survives
+country_event = {
+	id = soviets.288
+	title = soviets.288.t
+	desc = soviets.288.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Too late, Anastasy already won
+		name = soviets.288.a
+		ai_chance = {
+			factor = 75
+		}
+		add_stability = -0.1
+		create_country_leader = {
+			name = "Anastasy Vonsyatsky"
+			desc = "POLITICS_ANASTASY_VONSYATSKY_DESC"
+			picture = "Portrait_Anastasy_Vonsyatsky.dds"
+			expire = "1965.1.1"
+			ideology = fascism_ideology
+			traits = {
+				dictator
+			}
+		}
+		custom_effect_tooltip = SOV_can_have_anastasy_tt
+		set_country_flag = order_triumphed_over_law
+	}
+
+	option = { #The guards manage to stop him at the last moment
+		name = soviets.288.a
+		ai_chance = {
+			factor = 25
+		}
+		add_stability = -0.1
+		add_war_support = -0.1
+		custom_effect_tooltip = SOV_can_have_konstantin_tt
+		set_country_flag = law_triumphed_over_order
+	}
+}
+
+#Konstantin Assassinated
+country_event = {
+	id = soviets.289
+	title = soviets.289.t
+	desc = soviets.289.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Anastasy wins
+		name = soviets.289.a
+		ai_chance = {
+			factor = 100
+		}
+		add_stability = -0.15
+		add_war_support = 0.05
+		create_country_leader = {
+			name = "Anastasy Vonsyatsky"
+			desc = "POLITICS_ANASTASY_VONSYATSKY_DESC"
+			picture = "Portrait_Anastasy_Vonsyatsky.dds"
+			expire = "1965.1.1"
+			ideology = fascism_ideology
+			traits = {
+				dictator
+			}
+		}
+		custom_effect_tooltip = SOV_can_have_anastasy_tt
+		set_country_flag = order_triumphed_over_law
+	}
+}
+
+#The Second Letter
+country_event = {
+	id = soviets.290
+	title = soviets.290.t
+	desc = soviets.290.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Let him return
+		name = soviets.290.a
+		ai_chance = {
+			factor = 50
+		}
+		add_stability = 0.05
+		hidden_effect = {
+			country_event = { id = soviets.291 days = 75 }
+		}
+	}
+
+	option = { #Let him return under heavy surveillance
+		name = soviets.290.b
+		ai_chance = {
+			factor = 50
+		}
+		hidden_effect = {
+			country_event = { id = soviets.294 days = 200 }
+		}
+	}
+}
+
+#The Few Warnings
+country_event = {
+	id = soviets.291
+	title = soviets.291.t
+	desc = soviets.291.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Listen to them and arrest him (might backfire)
+		name = soviets.291.a
+		ai_chance = {
+			factor = 50
+		}
+		add_political_power = -100
+		add_stability = -0.05
+		set_temp_variable = { konstantin_death_factor = 0 }
+		randomize_temp_variable = {
+			var = konstantin_death_factor
+			distribution = uniform
+			min = 1
+			max = 4
+		}
+		round_variable = konstantin_death_factor
+		if = { #Dead
+			limit = {
+				check_variable = {
+					var = konstantin_death_factor
+					value = 3
+					compare = less_than_or_equals
+				}
+			}
+			hidden_effect = {
+				country_event = { id = soviets.297 days = 50 }
+			}
+		}
+		else = { #Not dead
+			hidden_effect = {
+				country_event = { id = soviets.294 days = 25 }
+			}
+		}
+	}
+
+	option = { #Ignore them
+		name = soviets.291.b
+		ai_chance = {
+			factor = 50
+		}
+		add_political_power = 15
+		hidden_effect = {
+			country_event = { id = soviets.292 days = 50 }
+		}
+	}
+}
+
+#Anastasy's proposal
+country_event = {
+	id = soviets.292
+	title = soviets.292.t
+	desc = soviets.292.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Yes
+		name = soviets.292.a
+		ai_chance = {
+			factor = 50
+		}
+		add_political_power = -50
+		set_temp_variable = { konstantin_death_factor = 0 }
+		randomize_temp_variable = {
+			var = konstantin_death_factor
+			distribution = uniform
+			min = 1
+			max = 4
+		}
+		round_variable = konstantin_death_factor
+		if = { #Dead
+			limit = {
+				check_variable = {
+					var = konstantin_death_factor
+					value = 3
+					compare = less_than_or_equals
+				}
+			}
+			hidden_effect = {
+				country_event = { id = soviets.293 days = 100 }
+			}
+		}
+		else = { #Not dead
+			hidden_effect = {
+				country_event = { id = soviets.295 days = 50 }
+			}
+		}
+	}
+
+	option = { #No
+		name = soviets.292.b
+		ai_chance = {
+			factor = 50
+		}
+		add_political_power = -50
+		hidden_effect = {
+			country_event = { id = soviets.294 days = 50 }
+		}
+	}
+}
+
+#The Great Betrayal
+country_event = {
+	id = soviets.293
+	title = soviets.293.t
+	desc = soviets.293.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Anastasy wins
+		name = soviets.293.a
+		ai_chance = {
+			factor = 100
+		}
+		add_stability = -0.1
+		create_country_leader = {
+			name = "Anastasy Vonsyatsky"
+			desc = "POLITICS_ANASTASY_VONSYATSKY_DESC"
+			picture = "Portrait_Anastasy_Vonsyatsky.dds"
+			expire = "1965.1.1"
+			ideology = fascism_ideology
+			traits = {
+				dictator
+			}
+		}
+		custom_effect_tooltip = SOV_can_have_anastasy_tt
+		set_country_flag = order_triumphed_over_law
+	}
+}
+
+#Anastasy Opposes Konstantin
+country_event = {
+	id = soviets.294
+	title = soviets.294.t
+	desc = soviets.294.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Hurry
+		name = soviets.294.a
+		ai_chance = {
+			factor = 50
+		}
+		set_temp_variable = { konstantin_death_factor = 0 }
+		randomize_temp_variable = {
+			var = konstantin_death_factor
+			distribution = uniform
+			min = 1
+			max = 4
+		}
+		round_variable = konstantin_death_factor
+		if = { #Dead
+			limit = {
+				check_variable = {
+					var = konstantin_death_factor
+					value = 3
+					compare = less_than_or_equals
+				}
+			}
+			hidden_effect = {
+				country_event = { id = soviets.296 days = 50 }
+			}
+		}
+		else = { #Not dead
+			hidden_effect = {
+				country_event = { id = soviets.295 days = 50 }
+			}
+		}
+	}
+
+	option = { #Not hurry
+		name = soviets.294.b
+		ai_chance = {
+			factor = 50
+		}
+		set_temp_variable = { konstantin_death_factor = 0 }
+		randomize_temp_variable = {
+			var = konstantin_death_factor
+			distribution = uniform
+			min = 1
+			max = 4
+		}
+		round_variable = konstantin_death_factor
+		if = { #Dead
+			limit = {
+				check_variable = {
+					var = konstantin_death_factor
+					value = 3
+					compare = less_than_or_equals
+				}
+			}
+			hidden_effect = {
+				country_event = { id = soviets.296 days = 50 }
+			}
+		}
+		else = { #Not dead
+			hidden_effect = {
+				country_event = { id = soviets.295 days = 50 }
+			}
+		}
+	}
+}
+
+#Anastasy Arrested
+country_event = {
+	id = soviets.295
+	title = soviets.295.t
+	desc = soviets.295.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = {
+		name = soviets.295.a
+		ai_chance = {
+			factor = 100
+		}
+		add_political_power = 50
+		custom_effect_tooltip = SOV_can_have_konstantin_tt
+		set_country_flag = law_triumphed_over_order
+	}
+}
+
+#Assassination of Konstantin
+country_event = {
+	id = soviets.296
+	title = soviets.296.t
+	desc = soviets.296.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = {
+		name = soviets.296.a
+		ai_chance = {
+			factor = 100
+		}
+		add_stability = -0.1
+		create_country_leader = {
+			name = "Anastasy Vonsyatsky"
+			desc = "POLITICS_ANASTASY_VONSYATSKY_DESC"
+			picture = "Portrait_Anastasy_Vonsyatsky.dds"
+			expire = "1965.1.1"
+			ideology = fascism_ideology
+			traits = {
+				dictator
+			}
+		}
+		custom_effect_tooltip = SOV_can_have_anastasy_tt
+		set_country_flag = order_triumphed_over_law
+	}
+}
+
+#Anastasy Deported
+country_event = {
+	id = soviets.297
+	title = soviets.297.t
+	desc = soviets.297.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Uh
+		name = soviets.297.a
+		ai_chance = {
+			factor = 100
+		}
+		add_political_power = 50
+		custom_effect_tooltip = SOV_can_have_konstantin_tt
+		set_country_flag = law_triumphed_over_order
+	}
+}
+
+#The Prepared Return of Anastasy
+country_event = {
+	id = soviets.298
+	title = soviets.298.t
+	desc = soviets.298.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Sabotage his plane
+		name = soviets.298.a
+		ai_chance = {
+			factor = 75
+		}
+		add_political_power = -200
+		set_temp_variable = { konstantin_death_factor = 0 }
+		randomize_temp_variable = {
+			var = konstantin_death_factor
+			distribution = uniform
+			min = 1
+			max = 4
+		}
+		round_variable = konstantin_death_factor
+		if = { #Dead
+			limit = {
+				check_variable = {
+					var = konstantin_death_factor
+					value = 3
+					compare = less_than_or_equals
+				}
+			}
+			hidden_effect = {
+				country_event = { id = soviets.300 days = 75 }
+			}
+		}
+		else = { #Not dead
+			hidden_effect = {
+				country_event = { id = soviets.299 days = 50 }
+			}
+		}
+	}
+
+	option = { #Who cares
+		name = soviets.298.b
+		ai_chance = {
+			factor = 25
+		}
+		hidden_effect = {
+			country_event = { id = soviets.299 days = 50 }
+		}
+	}
+}
+
+#Anastasy Returns
+country_event = {
+	id = soviets.299
+	title = soviets.299.t
+	desc = soviets.299.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Use force
+		name = soviets.299.a
+		ai_chance = {
+			factor = 75
+		}
+		add_stability = -0.15
+		hidden_effect = {
+			country_event = { id = soviets.301 days = 100 }
+		}
+	}
+
+	option = { #Let him be
+		name = soviets.299.b
+		ai_chance = {
+			factor = 25
+		}
+		add_political_power = -50
+		hidden_effect = {
+			country_event = { id = soviets.302 days = 50 }
+		}
+	}
+}
+
+#Anastasy Dies
+country_event = {
+	id = soviets.300
+	title = soviets.300.t
+	desc = soviets.300.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Oops
+		name = soviets.300.a
+		ai_chance = {
+			factor = 100
+		}
+		add_political_power = -50
+		custom_effect_tooltip = SOV_can_have_konstantin_tt
+		set_country_flag = law_triumphed_over_order
+	}
+}
+
+#Anastasy Arrested
+country_event = {
+	id = soviets.301
+	title = soviets.301.t
+	desc = soviets.301.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = {
+		name = soviets.301.a
+		ai_chance = {
+			factor = 100
+		}
+		add_political_power = 50
+		custom_effect_tooltip = SOV_can_have_konstantin_tt
+		set_country_flag = law_triumphed_over_order
+	}
+}
+
+#A Great Menace
+country_event = {
+	id = soviets.302
+	title = soviets.302.t
+	desc = soviets.302.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Ok
+		name = soviets.302.a
+		ai_chance = {
+			factor = 100
+		}
+		set_temp_variable = { konstantin_death_factor = 0 }
+		randomize_temp_variable = {
+			var = konstantin_death_factor
+			distribution = uniform
+			min = 1
+			max = 4
+		}
+		round_variable = konstantin_death_factor
+		if = { #Dead
+			limit = {
+				check_variable = {
+					var = konstantin_death_factor
+					value = 3
+					compare = less_than_or_equals
+				}
+			}
+			hidden_effect = {
+				country_event = { id = soviets.303 days = 100 }
+			}
+		}
+		else = { #Not dead
+			hidden_effect = {
+				country_event = { id = soviets.304 days = 100 }
+			}
+		}
+	}
+}
+
+#Anastasy's coup
+country_event = {
+	id = soviets.303
+	title = soviets.303.t
+	desc = soviets.303.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = {
+		name = soviets.303.a
+		ai_chance = {
+			factor = 100
+		}
+		create_country_leader = {
+			name = "Anastasy Vonsyatsky"
+			desc = "POLITICS_ANASTASY_VONSYATSKY_DESC"
+			picture = "Portrait_Anastasy_Vonsyatsky.dds"
+			expire = "1965.1.1"
+			ideology = fascism_ideology
+			traits = {
+				dictator
+			}
+		}
+		custom_effect_tooltip = SOV_can_have_anastasy_tt
+		set_country_flag = order_triumphed_over_law
+	}
+}
+
+#Failed coup
+country_event = {
+	id = soviets.304
+	title = soviets.304.t
+	desc = soviets.304.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = {
+		name = soviets.304.a
+		ai_chance = {
+			factor = 100
+		}
+		add_stability = 0.05
+		add_political_power = -100
+		custom_effect_tooltip = SOV_can_have_konstantin_tt
+		set_country_flag = law_triumphed_over_order
+	}
+}
+
+#FROM (366 CONTROLLER) gets event "The Arrestation of Anastasy Vonsyatsky"
+country_event = {
+	id = soviets.305
+	title = soviets.305.t
+	desc = soviets.305.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Arrest him
+		name = soviets.305.a
+		ai_chance = {
+			factor = 100
+			modifier = {
+				factor = 50
+				has_government = fascism
+			}
+		}
+		add_popularity = {
+			ideology = fascism
+			popularity = -0.5
+		}
+		add_political_power = 25
+		SOV = {
+			country_event = { id = soviets.306 days = 10 }
+			add_opinion_modifier = {
+				target = ROOT
+				modifier = arrested_anastasy
+			}
+		}
+	}
+
+	option = { #No
+		name = soviets.305.b
+		ai_chance = {
+			factor = 0
+			modifier = {
+				factor = 50
+				has_government = fascism
+			}
+		}
+		add_political_power = 50
+		SOV = {
+			country_event = { id = soviets.307 days = 10 }
+			add_opinion_modifier = {
+				target = ROOT
+				modifier = refused_arrest
+			}
+		}
+	}
+}
+
+#FROM accepts
+country_event = {
+	id = soviets.306
+	title = soviets.306.t
+	desc = soviets.306.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = {
+		name = soviets.306.a
+		ai_chance = {
+			factor = 100
+		}
+		add_stability = -0.1
+		add_opinion_modifier = {
+			target = FROM
+			modifier = arrested_anastasy
+		}
+		custom_effect_tooltip = SOV_can_have_konstantin_tt
+		set_country_flag = law_triumphed_over_order
+		set_country_flag = anastasy_still_in_america
+	}
+}
+
+#FROM refuses
+country_event = {
+	id = soviets.307
+	title = soviets.307.t
+	desc = soviets.307.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = {
+		name = soviets.307.a
+		ai_chance = {
+			factor = 100
+		}
+		add_opinion_modifier = {
+			target = FROM
+			modifier = refused_arrest
+		}
+		hidden_effect = {
+			country_event = { id = soviets.308 days = 100 }
+		}
+	}
+}
+
+#Anastasy Intercepted
+country_event = {
+	id = soviets.308
+	title = soviets.308.t
+	desc = soviets.308.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Goodbye
+		name = soviets.308.a
+		ai_chance = {
+			factor = 100
+		}
+		add_stability = -0.15
+		custom_effect_tooltip = SOV_can_have_konstantin_tt
+		set_country_flag = law_triumphed_over_order
+	}
+}
+
+#The Arrestation of Anastasy Vonsyatsky (if you control 366)
+country_event = {
+	id = soviets.309
+	title = soviets.309.t
+	desc = soviets.309.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = {
+		name = soviets.309.a
+		ai_chance = {
+			factor = 100
+		}
+		add_political_power = 50
+		custom_effect_tooltip = SOV_can_have_konstantin_tt
+		set_country_flag = law_triumphed_over_order
+	}
+}
+
+#TODO Tsar marriage (just an event that gives like 100pp)
+#TODO Anton Denikin resigns if fascists take power
