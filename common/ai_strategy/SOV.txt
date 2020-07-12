@@ -337,29 +337,29 @@ ignore_turkey = {
 								}
 							}
 						}
-									#set_temp_variable = { total_faction_strength = 0 }
-									#any_of = {
-									#	array = TUR.faction_members
-									#	value = current
-									#	index = i
-										
-									#	add_to_temp_variable = {
-									#		var = total_faction_strength
-									#		value = current.num_divisions
-									#	}
-									#	check_variable = {
-									#		var = SOV.num_divisions
-									#		value = total_faction_strength
-									#		compare = greater_than
-									#	}
-									#}
-									#print_variables = {
-									#	file = log_file
-									#	text = header_text
-									#	append = yes
-									#	print_global = yes
-									#	var_list = { SOV.num_divisions total_faction_strength TUR.faction_members }
-									#}
+						#set_temp_variable = { total_faction_strength = 0 }
+						#any_of = {
+						#	array = TUR.faction_members
+						#	value = current
+						#	index = i
+							
+						#	add_to_temp_variable = {
+						#		var = total_faction_strength
+						#		value = current.num_divisions
+						#	}
+						#	check_variable = {
+						#		var = SOV.num_divisions
+						#		value = total_faction_strength
+						#		compare = greater_than
+						#	}
+						#}
+						#print_variables = {
+						#	file = log_file
+						#	text = header_text
+						#	append = yes
+						#	print_global = yes
+						#	var_list = { SOV.num_divisions total_faction_strength TUR.faction_members }
+						#}
 					}
 					has_war_with = SOV
 				}
@@ -1381,7 +1381,7 @@ japan_ally = {
 		tag = SOV
 		SOV = {
 			has_country_flag = SOV_ally_japan
-		}	
+		}
 		country_exists = JAP
 	}
 	abort = {
@@ -1416,7 +1416,7 @@ japan_refuse_south = {
 
 	ai_strategy = {
 		type = antagonize
-		id = JAP
+		id = "JAP"
 		value = 50
 	}
 }
@@ -1437,12 +1437,12 @@ germany_ally = {
 	ai_strategy = {
 		type = befriend
 		id = "GER"			
-		value = 200
+		value = 100
 	}
 	ai_strategy = {
 		type = alliance
 		id = "GER"			
-		value = 200
+		value = 50
 	}	
 }
 
@@ -3226,7 +3226,7 @@ SOV_stop_plane_production = {
 
 #Build less light tanks & guns if stockpile is too high
 SOV_stockpile_less_tanks_guns = {
-	allowed = {
+	enable = {
 		tag = SOV
 		OR = {
 			stockpile_ratio = {
@@ -3250,7 +3250,7 @@ SOV_stockpile_less_tanks_guns = {
 
 #Build more of the equipment needed (mostly artillery and medium tanks)
 SOV_build_more_needed_equipment_artillery = {
-	allowed = {
+	enable = {
 		tag = SOV
 		date > 1940.01.01
 		stockpile_ratio = {
@@ -3275,7 +3275,7 @@ SOV_build_more_needed_equipment_artillery = {
 }
 
 SOV_build_more_needed_equipment_medium_tanks = {
-	allowed = {
+	enable = {
 		tag = SOV
 		date > 1940.01.01
 		stockpile_ratio = {
@@ -3317,5 +3317,66 @@ SOV_stop_prospecting_resources = {
 		type = pp_spend_priority
 		id = advisors
 		value = 500
+	}
+}
+
+#Doesn't work (or does it?)
+SOV_dont_contain_root_russian_agreement = {
+	enable = {
+		has_idea = SOV_Root_russian_pact
+	}
+
+	abort = {
+		NOT = {
+			has_idea = SOV_Root_russian_pact
+		}
+	}
+
+	ai_strategy = {
+		type = contain
+		id = "SOV"
+		value = -1000
+	}
+
+	ai_strategy = {
+		type = alliance
+		id = "SOV"
+		value = -20
+	}
+}
+
+#SOV Will not help any country who's at war with people who signed the agreement
+SOV_respect_root_russian_agreement_sov = {
+	reversed = yes
+
+	allowed = {
+		original_tag = SOV
+	}
+
+	enable = {
+		any_of_scopes = {
+			array = enemies
+			has_idea = SOV_Root_russian_pact
+		}
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = support
+		id = "SOV"
+		value = -1000
+	}
+
+	ai_strategy = {
+		type = alliance
+		id = "SOV"
+		value = -1000
+	}
+
+	ai_strategy = {
+		type = send_volunteers_desire
+		id = "SOV"
+		value = -1000
 	}
 }

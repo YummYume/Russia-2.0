@@ -13865,5 +13865,313 @@ country_event = {
 	}
 }
 
+#Neutralize Foreign Nuisance Event
+country_event = {
+	id = soviets.310
+	title = soviets.310.t
+	desc = soviets.310.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Sure
+		name = soviets.310.a
+		ai_chance = {
+			factor = 75
+			modifier = {
+				factor = 100
+				has_government = fascism
+			}
+		}
+		add_stability = 0.05
+		add_timed_idea = {
+			idea = SOV_Root_russian_pact
+			days = 730
+		}
+		set_country_flag = accepted_russian_root_agreement
+		diplomatic_relation = {
+			country = SOV
+			relation = non_aggression_pact
+			active = yes
+		}
+		SOV = {
+			country_event = { id = soviets.311 days = 1 }
+		}
+	}
+
+	option = { #Refuse
+		name = soviets.310.b
+		ai_chance = {
+			factor = 25
+			modifier = {
+				factor = 0
+				has_government = fascism
+			}
+		}
+		add_political_power = 50
+		SOV = {
+			country_event = { id = soviets.312 days = 1 }
+		}
+	}
+}
+
+#FROM Accepts
+country_event = {
+	id = soviets.311
+	title = soviets.311.t
+	desc = soviets.311.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Nice
+		name = soviets.311.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#FROM Refuses
+country_event = {
+	id = soviets.312
+	title = soviets.312.t
+	desc = soviets.312.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Why
+		name = soviets.312.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#Broken ROOT-Russian Agreement
+country_event = {
+	id = soviets.313
+	title = soviets.313.t
+	desc = soviets.313.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	trigger = {
+		has_idea = SOV_Root_russian_pact
+		has_war_with = SOV
+	}
+
+	immediate = {
+		hidden_effect = {
+			remove_ideas = SOV_Root_russian_pact
+		}
+	}
+
+	option = { #Oh
+		name = soviets.313.a
+		ai_chance = {
+			factor = 100
+		}
+		if = {
+			limit = {
+				has_offensive_war_with = SOV
+			}
+			set_temp_variable = { stability_loss_fascism_factor = ROOT.party_popularity@fascism }
+			multiply_temp_variable = { stability_loss_fascism_factor = -1 }
+			clamp_temp_variable = {
+				var = stability_loss_fascism_factor
+				min = -0.25
+				max = -0.1
+			}
+			add_stability = stability_loss_fascism_factor
+		}
+		else = { #Won't punish the player too hard if SOV is the attacker
+			add_stability = -0.05
+		}
+		hidden_effect = {
+			SOV = {
+				country_event = soviets.314
+			}
+			clr_country_flag = accepted_russian_root_agreement
+			every_country = {
+				limit = {
+					has_country_flag = is_target_of_russia_with_agreement
+				}
+				ROOT = {
+					add_ai_strategy = {
+						type = support
+						id = PREV
+						value = 1000
+					}
+
+					add_ai_strategy = {
+						type = alliance
+						id = PREV
+						value = 1000
+					}
+
+					add_ai_strategy = {
+						type = send_volunteers_desire
+						id = PREV
+						value = 1000
+					}
+				}
+			}
+		}
+	}
+}
+
+#FROM Breaks the pact
+country_event = {
+	id = soviets.314
+	title = soviets.314.t
+	desc = soviets.314.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Uh
+		name = soviets.314.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#Policy of Agression
+country_event = {
+	id = soviets.315
+	title = soviets.315.t
+	desc = soviets.315.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = {
+		name = soviets.315.a
+		ai_chance = {
+			factor = 30
+		}
+		add_ideas = SOV_Policy_aggression1
+		custom_effect_tooltip = SOV_konstantin_can_justify
+		clr_country_flag = SOV_konstantin_no_justify_allowed
+	}
+
+	option = {
+		name = soviets.315.b
+		ai_chance = {
+			factor = 40
+		}
+		add_ideas = SOV_Policy_aggression2
+		custom_effect_tooltip = SOV_konstantin_can_justify
+		clr_country_flag = SOV_konstantin_no_justify_allowed
+	}
+
+	option = {
+		name = soviets.315.c
+		ai_chance = {
+			factor = 30
+		}
+		add_ideas = SOV_Policy_aggression3
+		custom_effect_tooltip = SOV_konstantin_can_justify
+		clr_country_flag = SOV_konstantin_no_justify_allowed
+	}
+}
+
+#Our Future Foes
+country_event = {
+	id = soviets.316
+	title = soviets.316.t
+	desc = soviets.316.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Europe
+		name = soviets.316.a
+		ai_chance = {
+			factor = 40
+		}
+		custom_effect_tooltip = SOV_future_foes_tt1
+		set_country_flag = SOV_fascist_focus_on_europe
+	}
+
+	option = { #Asia
+		trigger = {
+			has_completed_focus = SOV_the_tables_have_turned
+		}
+		name = soviets.316.b
+		ai_chance = {
+			factor = 30
+		}
+		custom_effect_tooltip = SOV_future_foes_tt2
+		set_country_flag = SOV_fascist_focus_on_asia
+	}
+
+	option = { #America
+		trigger = {
+			has_completed_focus = SOV_the_lawyer_remains
+		}
+		name = soviets.316.c
+		ai_chance = {
+			factor = 30
+		}
+		custom_effect_tooltip = SOV_future_foes_tt3
+		set_country_flag = SOV_fascist_focus_on_america
+	}
+
+	option = { #Defense
+		name = soviets.316.e
+		ai_chance = {
+			factor = 30
+		}
+		add_stability = 0.05
+		custom_effect_tooltip = SOV_future_foes_tt4
+		set_country_flag = SOV_fascist_focus_on_defense
+	}
+}
+
+#Undo the hostile behaviors towards Russian enemies
+country_event = {
+	id = soviets.317
+	
+	hidden = yes
+
+	trigger = {
+		has_country_flag = accepted_russian_root_agreement
+		NOT = {
+			has_idea = SOV_Root_russian_pact
+		}
+	}
+
+	immediate = {
+		clr_country_flag = accepted_russian_root_agreement
+		every_country = {
+			limit = {
+				has_country_flag = is_target_of_russia_with_agreement
+			}
+			ROOT = {
+				add_ai_strategy = {
+					type = support
+					id = PREV
+					value = 1000
+				}
+
+				add_ai_strategy = {
+					type = alliance
+					id = PREV
+					value = 1000
+				}
+
+				add_ai_strategy = {
+					type = send_volunteers_desire
+					id = PREV
+					value = 1000
+				}
+			}
+		}
+	}
+}
+
 #TODO Tsar marriage (just an event that gives like 100pp)
 #TODO Anton Denikin resigns if fascists take power
