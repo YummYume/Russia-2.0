@@ -10118,137 +10118,619 @@ SOV_fascist_women_movement_decisions = {
 
 SOV_custom_formable_nations_endgame = {
 
-	form_scandinavia_russian_fascist = {
+	form_north_america_continent = {
 
 		icon = GFX_decision_eng_trade_unions_support
 
 		available = {
-			OR = {
-				SOV = {
-					owns_state = 146
-					controls_state = 146
-					owns_state = 111
-					controls_state = 111
-					owns_state = 149
-					controls_state = 149
-					owns_state = 150
-					controls_state = 150
-					owns_state = 148
-					controls_state = 148
-					owns_state = 147
-					controls_state = 147
-					owns_state = 722
-					controls_state = 722
-					owns_state = 144
-					controls_state = 144
-					owns_state = 666
-					controls_state = 666
-					owns_state = 143
-					controls_state = 143
-					owns_state = 38
-					controls_state = 38
-					owns_state = 110
-					controls_state = 110
-					owns_state = 142
-					controls_state = 142
-					owns_state = 140
-					controls_state = 140
-					owns_state = 141
-					controls_state = 141
-					owns_state = 139
-					controls_state = 139
-					owns_state = 138
-					controls_state = 138
-					owns_state = 37
-					controls_state = 37
-					owns_state = 99
-					controls_state = 99
-				}
-				any_country = {
-					is_subject_of = SOV
-					owns_state = 146
-					controls_state = 146
-					owns_state = 111
-					controls_state = 111
-					owns_state = 149
-					controls_state = 149
-					owns_state = 150
-					controls_state = 150
-					owns_state = 148
-					controls_state = 148
-					owns_state = 147
-					controls_state = 147
-					owns_state = 722
-					controls_state = 722
-					owns_state = 144
-					controls_state = 144
-					owns_state = 666
-					controls_state = 666
-					owns_state = 143
-					controls_state = 143
-					owns_state = 38
-					controls_state = 38
-					owns_state = 110
-					controls_state = 110
-					owns_state = 142
-					controls_state = 142
-					owns_state = 140
-					controls_state = 140
-					owns_state = 141
-					controls_state = 141
-					owns_state = 139
-					controls_state = 139
-					owns_state = 138
-					controls_state = 138
-					owns_state = 37
-					controls_state = 37
-					owns_state = 99
-					controls_state = 99
-				}
-			}	
+			any_state = {
+				has_state_flag = north_america_fascist_nation_puppet
+				is_controlled_by = ROOT
+			}
 		}
 
 
 		fire_only_once = yes
-
-		cost = 50
 
 	   ai_will_do = {
 		   factor = 100
 	   }
 
 		complete_effect = {
-			SCN = {
-				add_state_core = 146
-				add_state_core = 111
-				add_state_core = 149
-				add_state_core = 150
-				add_state_core = 148
-				add_state_core = 147
-				add_state_core = 722
-				add_state_core = 144
-				add_state_core = 666
-				add_state_core = 143
-				add_state_core = 38
-				add_state_core = 110
-				add_state_core = 142
-				add_state_core = 140
-				add_state_core = 141
-				add_state_core = 139
-				add_state_core = 138
-				add_state_core = 37
-				add_state_core = 99
-				add_state_core = 145
-				add_state_core = 124
-				set_cosmetic_tag = SCNC
+			every_state = {
+				limit = {
+					has_state_flag = north_america_fascist_nation_puppet
+				}
+				NAF = {
+					add_state_core = PREV
+				}	
 			}
-			SOV = {
-				release_autonomy = {
-					target = SCN
-					autonomy_state = autonomy_dominion
-					freedom_level = 0.5
+			if = {
+				limit = {
+					has_idea = SOV_Impose_order
+				}
+				SOV = {
+					release_autonomy = {
+						target = NAF
+						autonomy_state = autonomy_state_magistrate
+						freedom_level = 0.5
+					}
+				}
+
+			}
+			else = {
+				SOV = {
+					release_autonomy = {
+						target = NAF
+						autonomy_state = autonomy_reichsprotectorate
+						freedom_level = 0.5
+					}
 				}
 			}
+			NAF = {
+				if = {
+					limit = { has_dlc = "Man the Guns" }
+						load_oob = "USA_1939_naval_mtg"
+					else = {
+						load_oob = "USA_1939_naval_legacy"
+					}
+				}
+				load_oob = "USA_1936"
+				set_cosmetic_tag = NAFC
+			}
+			if= {
+				limit = {
+					has_completed_focus = SOV_the_tables_have_turned
+				}
+				NAF = {
+					create_country_leader = {
+						name = "Anastasy Vonsyatsky"
+						desc = "POLITICS_ANASTASY_VONSYATSKY_DESC"
+						picture = "Portrait_Anastasy_Vonsyatsky.dds"
+						expire = "1965.1.1"
+						ideology = fascism_ideology
+						traits = {
+							#
+						}
+					}
+				}
+			}
+	    }
+	}
+
+	form_central_america_continent = {
+
+		icon = GFX_decision_eng_trade_unions_support
+
+		available = {
+			any_state = {
+				has_state_flag = central_america_fascist_nation_puppet
+				is_controlled_by = ROOT
+			}
+		}
+
+
+		fire_only_once = yes
+
+	   ai_will_do = {
+		   factor = 100
 	   }
+
+		complete_effect = {
+			every_state = {
+				limit = {
+					has_state_flag = central_america_fascist_nation_puppet
+				}
+				CAF = {
+					add_state_core = PREV
+				}	
+			}
+			if = {
+				limit = {
+					has_idea = SOV_Impose_order
+				}
+				SOV = {
+					release_autonomy = {
+						target = CAF
+						autonomy_state = autonomy_state_magistrate
+						freedom_level = 0.5
+					}
+				}
+
+			}
+			else = {
+				SOV = {
+					release_autonomy = {
+						target = CAF
+						autonomy_state = autonomy_reichsprotectorate
+						freedom_level = 0.5
+					}
+				}
+			}
+			CAF = {
+				load_oob = "ELS_1939"
+				set_cosmetic_tag = CAFC
+			}
+		}
+	}
+
+	form_south_america_continent = {
+
+		icon = GFX_decision_eng_trade_unions_support
+
+		available = {
+			any_state = {
+				has_state_flag = south_america_fascist_nation_puppet
+				is_controlled_by = ROOT
+			}
+		}
+
+
+		fire_only_once = yes
+
+	   ai_will_do = {
+		   factor = 100
+	   }
+
+		complete_effect = {
+			every_state = {
+				limit = {
+					has_state_flag = south_america_fascist_nation_puppet
+				}
+				SAR = {
+					add_state_core = PREV
+				}	
+			}
+			if = {
+				limit = {
+					has_idea = SOV_Impose_order
+				}
+				SOV = {
+					release_autonomy = {
+						target = SAR
+						autonomy_state = autonomy_state_magistrate
+						freedom_level = 0.5
+					}
+				}
+
+			}
+			else = {
+				SOV = {
+					release_autonomy = {
+						target = SAR
+						autonomy_state = autonomy_reichsprotectorate
+						freedom_level = 0.5
+					}
+				}
+			}
+			SAR = {
+				load_oob = "BRA_1939"
+				if = {
+					limit = { not = { has_dlc = "Man the Guns" } }
+					set_technology = {
+						basic_submarine = 1
+						basic_destroyer = 1
+					}
+					load_oob = "BRA_1939_naval_legacy"
+				}
+				if = {
+					limit = { has_dlc = "Man the Guns" }
+					set_technology = {
+						basic_ship_hull_light = 1
+					}
+					load_oob = "BRA_1939_naval"
+				}
+				set_cosmetic_tag = SARC
+			}
+		}	
+	}
+
+	form_caraibe_continent = {
+
+		icon = GFX_decision_eng_trade_unions_support
+
+		available = {
+			any_state = {
+				has_state_flag = caraibe_america_fascist_nation_puppet
+				is_controlled_by = ROOT
+			}
+		}
+
+
+		fire_only_once = yes
+
+	   ai_will_do = {
+		   factor = 100
+	   }
+
+		complete_effect = {
+			every_state = {
+				limit = {
+					has_state_flag = caraibe_america_fascist_nation_puppet
+				}
+				CAI = {
+					add_state_core = PREV
+				}	
+			}
+			if = {
+				limit = {
+					has_idea = SOV_Impose_order
+				}
+				SOV = {
+					release_autonomy = {
+						target = CAI
+						autonomy_state = autonomy_state_magistrate
+						freedom_level = 0.5
+					}
+				}
+
+			}
+			else = {
+				SOV = {
+					release_autonomy = {
+						target = CAI
+						autonomy_state = autonomy_reichsprotectorate
+						freedom_level = 0.5
+					}
+				}
+			}
+			CAI = {
+				load_oob = "CUB_1939"
+				set_cosmetic_tag = CAIC
+			}
+		}
+	}
+
+	form_middle_east_continent = {
+
+		icon = GFX_decision_eng_trade_unions_support
+
+		available = {
+			any_state = {
+				has_state_flag = middle_east_fascist_nation_puppet
+				is_controlled_by = ROOT
+			}
+		}
+
+
+		fire_only_once = yes
+
+	   ai_will_do = {
+		   factor = 100
+	   }
+
+		complete_effect = {
+			every_state = {
+				limit = {
+					has_state_flag = middle_east_fascist_nation_puppet
+				}
+				MEF = {
+					add_state_core = PREV
+				}	
+			}
+			if = {
+				limit = {
+					has_idea = SOV_Impose_order
+				}
+				SOV = {
+					release_autonomy = {
+						target = MEF
+						autonomy_state = autonomy_state_magistrate
+						freedom_level = 0.5
+					}
+				}
+
+			}
+			else = {
+				SOV = {
+					release_autonomy = {
+						target = MEF
+						autonomy_state = autonomy_reichsprotectorate
+						freedom_level = 0.5
+					}
+				}
+			}
+			MEF = {
+				load_oob = "SAU_1939"
+				set_cosmetic_tag = MEFC
+			}
+		}
+	}
+
+	form_africa_russia_continent = {
+
+		icon = GFX_decision_eng_trade_unions_support
+
+		available = {
+			any_state = {
+				has_state_flag = africa_fascist_nation_puppet
+				is_controlled_by = ROOT
+			}
+		}
+
+
+		fire_only_once = yes
+
+	   ai_will_do = {
+		   factor = 100
+	   }
+
+		complete_effect = {
+			every_state = {
+				limit = {
+					has_state_flag = africa_fascist_nation_puppet
+				}
+				AFF = {
+					add_state_core = PREV
+				}	
+			}
+			if = {
+				limit = {
+					has_idea = SOV_Impose_order
+				}
+				SOV = {
+					release_autonomy = {
+						target = AFF
+						autonomy_state = autonomy_state_magistrate
+						freedom_level = 0.5
+					}
+				}
+
+			}
+			else = {
+				SOV = {
+					release_autonomy = {
+						target = AFF
+						autonomy_state = autonomy_reichsprotectorate
+						freedom_level = 0.5
+					}
+				}
+			}
+			AFF = {
+				load_oob = "ETH_1936"
+				set_cosmetic_tag = AFFC
+			}
+		}
+	}
+
+	form_south_asia_russia_continent = {
+
+		icon = GFX_decision_eng_trade_unions_support
+
+		available = {
+			any_state = {
+				has_state_flag = south_asia_fascist_nation_puppet
+				is_controlled_by = ROOT
+			}
+		}
+
+
+		fire_only_once = yes
+
+	   ai_will_do = {
+		   factor = 100
+	   }
+
+		complete_effect = {
+			every_state = {
+				limit = {
+					has_state_flag = south_asia_fascist_nation_puppet
+				}
+				SFR = {
+					add_state_core = PREV
+				}	
+			}
+			if = {
+				limit = {
+					has_idea = SOV_Impose_order
+				}
+				SOV = {
+					release_autonomy = {
+						target = SFR
+						autonomy_state = autonomy_state_magistrate
+						freedom_level = 0.5
+					}
+				}
+
+			}
+			else = {
+				SOV = {
+					release_autonomy = {
+						target = SFR
+						autonomy_state = autonomy_reichsprotectorate
+						freedom_level = 0.5
+					}
+				}
+			}
+			SFR = {
+				load_oob = "RAJ_1939"
+				set_cosmetic_tag = SFRC
+			}
+		}
+	}
+
+	form_south_east_asia_russia_continent = {
+
+		icon = GFX_decision_eng_trade_unions_support
+
+		available = {
+			any_state = {
+				has_state_flag = south_east_asia_fascist_nation_puppet
+				is_controlled_by = ROOT
+			}
+		}
+
+
+		fire_only_once = yes
+
+	   ai_will_do = {
+		   factor = 100
+	   }
+
+		complete_effect = {
+			every_state = {
+				limit = {
+					has_state_flag = south_east_asia_fascist_nation_puppet
+				}
+				SEA = {
+					add_state_core = PREV
+				}	
+			}
+			if = {
+				limit = {
+					has_idea = SOV_Impose_order
+				}
+				SOV = {
+					release_autonomy = {
+						target = SEA
+						autonomy_state = autonomy_state_magistrate
+						freedom_level = 0.5
+					}
+				}
+
+			}
+			else = {
+				SOV = {
+					release_autonomy = {
+						target = SEA
+						autonomy_state = autonomy_reichsprotectorate
+						freedom_level = 0.5
+					}
+				}
+			}
+			SEA = {
+				load_oob = "MAL_1939"
+				set_cosmetic_tag = SEAC
+			}
+		}
+	}
+
+	form_east_asia_russia_continent = {
+
+		icon = GFX_decision_eng_trade_unions_support
+
+		available = {
+			any_state = {
+				has_state_flag = east_asia_fascist_nation_puppet
+				is_controlled_by = ROOT
+			}
+		}
+
+
+		fire_only_once = yes
+
+	   ai_will_do = {
+		   factor = 100
+	   }
+
+		complete_effect = {
+			every_state = {
+				limit = {
+					has_state_flag = east_asia_fascist_nation_puppet
+				}
+				EAR = {
+					add_state_core = PREV
+				}	
+			}
+			if = {
+				limit = {
+					has_idea = SOV_Impose_order
+				}
+				SOV = {
+					release_autonomy = {
+						target = EAR
+						autonomy_state = autonomy_state_magistrate
+						freedom_level = 0.5
+					}
+				}
+
+			}
+			else = {
+				SOV = {
+					release_autonomy = {
+						target = EAR
+						autonomy_state = autonomy_reichsprotectorate
+						freedom_level = 0.5
+					}
+				}
+			}
+			EAR = {
+				load_oob = "JAP_1939"
+				set_cosmetic_tag = EARC
+			}
+			if= {
+				limit = {
+					has_completed_focus = SOV_the_lawyer_remains
+				}
+				EAR = {
+					create_country_leader = {
+						name = "Konstantin Rodzaevsky"
+						desc = "POLITICS_KONSTANTIN_RODZAEVSKY_DESC"
+						picture = "Portrait_Soviet_Konstantin_Rodzaevsky.dds"
+						expire = "1953.3.1"
+						ideology = fascism_ideology
+						traits = {
+							
+						}
+					}
+				}
+			}
+		}
+	}
+
+	form_oceania_russia_continent = {
+
+		icon = GFX_decision_eng_trade_unions_support
+
+		available = {
+			any_state = {
+				has_state_flag = oceania_fascist_nation_puppet
+				is_controlled_by = ROOT
+			}
+		}
+
+
+		fire_only_once = yes
+
+	   ai_will_do = {
+		   factor = 100
+	   }
+
+		complete_effect = {
+			every_state = {
+				limit = {
+					has_state_flag = oceania_fascist_nation_puppet
+				}
+				OCE = {
+					add_state_core = PREV
+				}	
+			}
+			if = {
+				limit = {
+					has_idea = SOV_Impose_order
+				}
+				SOV = {
+					release_autonomy = {
+						target = OCE
+						autonomy_state = autonomy_state_magistrate
+						freedom_level = 0.5
+					}
+				}
+
+			}
+			else = {
+				SOV = {
+					release_autonomy = {
+						target = OCE
+						autonomy_state = autonomy_reichsprotectorate
+						freedom_level = 0.5
+					}
+				}
+			}
+			OCE = {
+				load_oob = "AST_1939"
+				set_cosmetic_tag = OCEC
+			}
+		}
 	}
 }
