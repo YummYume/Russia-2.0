@@ -105,4 +105,108 @@ on_actions = {
 		}
 	}
 
+	#Countries with the Russian agreement will not mess with Russian affairs
+	on_declare_war = {
+		effect = {
+			if = {
+				limit = {
+					tag = SOV
+					any_country = {
+						has_idea = SOV_Root_russian_pact
+					}
+				}
+				hidden_effect = {
+					FROM = {
+						set_country_flag = is_target_of_russia_with_agreement
+					}
+					every_country = {
+						limit = {
+							has_idea = SOV_Root_russian_pact
+						}
+
+						add_ai_strategy = {
+							type = support
+							id = FROM
+							value = -1000
+						}
+
+						add_ai_strategy = {
+							type = alliance
+							id = FROM
+							value = -1000
+						}
+
+						add_ai_strategy = {
+							type = send_volunteers_desire
+							id = FROM
+							value = -1000
+						}
+					}
+				}
+			}
+		}
+	}
+
+	#Undo the hostile behaviors towards Russian enemy
+	on_capitulation = {
+		effect = {
+			if = {
+				limit = {
+					FROM = {
+						has_country_flag = is_target_of_russia_with_agreement
+					}
+				}
+				hidden_effect = {
+					FROM = {
+						clr_country_flag = is_target_of_russia_with_agreement
+					}
+					every_country = {
+						limit = {
+							has_idea = SOV_Root_russian_pact
+						}
+
+						add_ai_strategy = {
+							type = support
+							id = FROM
+							value = 1000
+						}
+
+						add_ai_strategy = {
+							type = alliance
+							id = FROM
+							value = 1000
+						}
+
+						add_ai_strategy = {
+							type = send_volunteers_desire
+							id = FROM
+							value = 1000
+						}
+					}
+				}
+			}
+		}
+	}
+
+	#Testing
+	#on_declare_war = {
+		#effect = {
+			#if = {
+				#limit = {
+					#has_idea = SOV_Root_russian_pact
+					#FROM = {
+						#OR = {
+							#tag = SOV
+							#is_in_faction_with = SOV
+							#is_guaranteed_by = SOV
+							#is_subject_of = SOV
+						#}
+					#}
+				#}
+				#ROOT = {
+					#custom_effect_tooltip = warning_SOV_at_war_with_respect_agreement
+				#}
+			#}
+		#}
+	#}
 }
