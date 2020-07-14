@@ -4305,9 +4305,10 @@ SOV_expand_entente_decision = {
 }
 
 SOV_perpetual_defense_liberty_decisions = {
+
 	SOV_demand_change_government = {
 
-		icon = GFX_decision_eng_trade_unions_support
+		icon = GFX_decision_hol_war_on_pacifism
 
 		fire_only_once = yes
 
@@ -4317,9 +4318,22 @@ SOV_perpetual_defense_liberty_decisions = {
 			original_tag = SOV
 		}
 
+		target_array = neighbors
+
 		visible = {
 			FROM = {
-				exists = yes
+				NOT = {
+					is_subject_of = ROOT
+					if = {
+						limit = {
+							NOT = {
+								has_government = democratic
+							}
+						}
+						is_in_faction_with = ROOT
+					}
+					has_capitulated = yes
+				}
 			}
 		}
 
@@ -4330,7 +4344,9 @@ SOV_perpetual_defense_liberty_decisions = {
 		target_trigger = {
 			FROM = {
 				NOT = {
+					is_subject_of = ROOT
 					is_in_faction_with = ROOT
+					has_capitulated = yes
 					has_government = democratic
 					tag = POL
 					tag = LIT
@@ -4338,9 +4354,17 @@ SOV_perpetual_defense_liberty_decisions = {
 					tag = EST
 					tag = ROM
 				}
-				is_neighbor_of = SOV
+				any_owned_state = {
+					is_controlled_by = FROM
+					is_capital = yes
+				}
 			}
     	}
+
+		highlight_states = {
+			is_owned_and_controlled_by = FROM
+			is_capital = yes
+		}
 
 		available = {
 			NOT = {
@@ -4352,7 +4376,7 @@ SOV_perpetual_defense_liberty_decisions = {
 					has_government = democratic
 				}
 				NOT = {
-					has_war_with = SOV
+					has_war_with = ROOT
 				}
 			}
 		}
@@ -10937,6 +10961,119 @@ SOV_focus_fascist_defense = {
 		targeted_modifier = {
 			tag = FROM
 			defense_bonus_against = 0.15
+		}
+	}
+}
+
+SOV_expand_russian_dominance = {
+
+	SOV_demande_border_state = {
+
+		icon = GFX_decision_generic_tank
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+		target_array = neighbors
+
+		target_root_trigger = {
+			has_completed_focus = SOV_new_russian_era
+		}
+
+		target_trigger = {
+			FROM = {
+				NOT = {
+					is_major = yes
+					is_in_faction_with = ROOT
+					has_capitulated = yes
+				}
+				any_owned_state = {
+					is_controlled_by = FROM
+					is_capital = yes
+				}
+			}
+        }
+
+		highlight_states = {
+			is_owned_and_controlled_by = FROM
+			is_capital = yes
+		}
+
+		available = {
+			is_major = yes
+			NOT = {
+				has_country_flag = is_building_up_border_fascist
+			}
+			FROM = {
+				NOT = {
+					has_war_with = ROOT
+				}
+			}
+		}
+
+		cost = 50
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		days_remove = 15
+
+		remove_effect = {
+			FROM = {
+				clr_country_flag = is_target_of_SOV_fascist
+			}
+			hidden_effect = {
+				country_event = soviets.319
+			}
+			custom_effect_tooltip = SOV_event_tooltip_fate_of
+		}
+
+		complete_effect = {
+			FROM = {
+				country_event = soviets.331
+				set_country_flag = is_target_of_SOV_fascist
+				activate_mission = SOV_is_building_up_against_from
+				save_global_event_target_as = SOV_target_country_fascist
+			}
+			set_country_flag = is_building_up_border_fascist
+		}
+	}
+}
+
+SOV_build_up_border_from = {
+
+	SOV_is_building_up_against_from = {
+
+		icon = GFX_decision_generic_civil_support
+
+		allowed = {
+			tag = HAW
+		}
+
+		available = {
+			NOT = {
+				has_country_flag = is_target_of_SOV_fascist
+			}
+		}
+
+		visible = {
+			has_country_flag = is_target_of_SOV_fascist
+		}
+
+		days_mission_timeout = 15
+
+		is_good = no
+
+		timeout_effect = {
+
+		}
+
+		complete_effect = {
+
 		}
 	}
 }

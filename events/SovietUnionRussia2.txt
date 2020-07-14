@@ -12911,7 +12911,21 @@ country_event = {
 	option = { #Accept his return
 		name = soviets.282.a
 		ai_chance = {
-			factor = 50
+			factor = 40
+			modifier = {
+				factor = 100
+				has_game_rule = {
+					rule = SOV_ai_behavior
+					option = ANASTASY_FASCIST
+				}
+			}
+			modifier = {
+				factor = 0
+				has_game_rule = {
+					rule = SOV_ai_behavior
+					option = KONSTANTIN_FASCIST
+				}
+			}
 		}
 		add_stability = 0.05
 		hidden_effect = {
@@ -12922,7 +12936,21 @@ country_event = {
 	option = { #Keep small contacts with him
 		name = soviets.282.b
 		ai_chance = {
-			factor = 25
+			factor = 30
+			modifier = {
+				factor = 0
+				has_game_rule = {
+					rule = SOV_ai_behavior
+					option = ANASTASY_FASCIST
+				}
+			}
+			modifier = {
+				factor = 0
+				has_game_rule = {
+					rule = SOV_ai_behavior
+					option = KONSTANTIN_FASCIST
+				}
+			}
 		}
 		hidden_effect = {
 			country_event = { id = soviets.290 days = 100 }
@@ -12932,7 +12960,24 @@ country_event = {
 	option = { #Refuse his return
 		name = soviets.282.c
 		ai_chance = {
-			factor = 15
+			factor = 20
+			modifier = {
+				factor = 0
+				has_game_rule = {
+					rule = SOV_ai_behavior
+					option = ANASTASY_FASCIST
+				}
+			}
+			modifier = {
+				factor = 100
+				has_game_rule = {
+					rule = SOV_ai_behavior
+					option = KONSTANTIN_FASCIST
+				}
+				NOT = {
+					controls_state = 366
+				}
+			}
 		}
 		add_stability = -0.05
 		hidden_effect = {
@@ -12949,6 +12994,20 @@ country_event = {
 		}
 		ai_chance = {
 			factor = 10
+			modifier = {
+				factor = 0
+				has_game_rule = {
+					rule = SOV_ai_behavior
+					option = ANASTASY_FASCIST
+				}
+			}
+			modifier = {
+				factor = 0
+				has_game_rule = {
+					rule = SOV_ai_behavior
+					option = KONSTANTIN_FASCIST
+				}
+			}
 		}
 		add_stability = -0.1
 		hidden_effect = {
@@ -12967,6 +13026,21 @@ country_event = {
 		}
 		ai_chance = {
 			factor = 10
+			modifier = {
+				factor = 0
+				has_game_rule = {
+					rule = SOV_ai_behavior
+					option = ANASTASY_FASCIST
+				}
+			}
+			modifier = {
+				factor = 100
+				has_game_rule = {
+					rule = SOV_ai_behavior
+					option = KONSTANTIN_FASCIST
+				}
+				controls_state = 366
+			}
 		}
 		add_stability = -0.1
 		hidden_effect = {
@@ -13009,6 +13083,13 @@ country_event = {
 		name = soviets.284.a
 		ai_chance = {
 			factor = 75
+			modifier = {
+				factor = 0
+				has_game_rule = {
+					rule = SOV_ai_behavior
+					option = ANASTASY_FASCIST
+				}
+			}
 		}
 		add_war_support = 0.05
 		hidden_effect = {
@@ -13020,6 +13101,13 @@ country_event = {
 		name = soviets.284.b
 		ai_chance = {
 			factor = 25
+			modifier = {
+				factor = 100
+				has_game_rule = {
+					rule = SOV_ai_behavior
+					option = ANASTASY_FASCIST
+				}
+			}
 		}
 		add_political_power = -200
 		hidden_effect = {
@@ -13520,6 +13608,13 @@ country_event = {
 		name = soviets.298.a
 		ai_chance = {
 			factor = 75
+			modifier = {
+				factor = 100
+				has_game_rule = {
+					rule = SOV_ai_behavior
+					option = KONSTANTIN_FASCIST
+				}
+			}
 		}
 		add_political_power = -200
 		set_temp_variable = { konstantin_death_factor = 0 }
@@ -13553,6 +13648,13 @@ country_event = {
 		name = soviets.298.b
 		ai_chance = {
 			factor = 25
+			modifier = {
+				factor = 0
+				has_game_rule = {
+					rule = SOV_ai_behavior
+					option = KONSTANTIN_FASCIST
+				}
+			}
 		}
 		hidden_effect = {
 			country_event = { id = soviets.299 days = 50 }
@@ -13573,6 +13675,13 @@ country_event = {
 		name = soviets.299.a
 		ai_chance = {
 			factor = 75
+			modifier = {
+				factor = 100
+				has_game_rule = {
+					rule = SOV_ai_behavior
+					option = KONSTANTIN_FASCIST
+				}
+			}
 		}
 		add_stability = -0.15
 		hidden_effect = {
@@ -13584,6 +13693,13 @@ country_event = {
 		name = soviets.299.b
 		ai_chance = {
 			factor = 25
+			modifier = {
+				factor = 0
+				has_game_rule = {
+					rule = SOV_ai_behavior
+					option = KONSTANTIN_FASCIST
+				}
+			}
 		}
 		add_political_power = -50
 		hidden_effect = {
@@ -14169,6 +14285,421 @@ country_event = {
 					value = 1000
 				}
 			}
+		}
+	}
+}
+
+#Used for AI strategy, should work fine now, using event instead of on_action to avoid bugs and performance issues
+country_event = {
+	id = soviets.318
+	
+	hidden = yes
+
+	trigger = {
+		OR = {
+			SOV = {
+				AND = {
+					has_war = yes
+					has_country_flag = {
+						flag = SOV_ai_strategy_count_enemy_planes
+						days > 7
+					}
+				}
+			}
+			has_global_flag = {
+				flag = SOV_ai_strategy_count_enemy_planes_global
+				days > 15
+			}
+		}
+	}
+
+	immediate = {
+		clr_country_flag = SOV_ai_strategy_count_enemy_planes
+		set_country_flag = SOV_ai_strategy_count_enemy_planes
+		clr_global_flag = SOV_ai_strategy_count_enemy_planes_global
+		set_global_flag = SOV_ai_strategy_count_enemy_planes_global
+		set_variable = { plane_count_enemy_sov = 0 }
+		for_each_scope_loop = {
+			array = SOV.enemies
+			break = end_array
+			
+			set_temp_variable = { temp_var_plane_count = num_deployed_planes }
+			SOV = {
+				add_to_variable = { plane_count_enemy_sov = temp_var_plane_count }
+			}
+		}
+	}
+}
+
+#The fate of FROM
+country_event = {
+	id = soviets.319
+	title = soviets.319.t
+	desc = soviets.319.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Demande puppet
+		name = soviets.319.a
+		ai_chance = {
+			factor = 30
+		}
+		event_target:SOV_target_country_fascist = {
+			country_event = { id = soviets.320 days = 1 }
+		}
+		#clear_global_event_target = SOV_target_country_fascist
+		#Resets anyways, and causes errors for the next events for some reasons
+	}
+
+	option = { #Demande annex
+		name = soviets.319.b
+		ai_chance = {
+			factor = 40
+		}
+		event_target:SOV_target_country_fascist = {
+			country_event = { id = soviets.323 days = 1 }
+		}
+		#clear_global_event_target = SOV_target_country_fascist
+	}
+
+	option = { #Enforce military access
+		name = soviets.319.c
+		ai_chance = {
+			factor = 30
+		}
+		event_target:SOV_target_country_fascist = {
+			country_event = { id = soviets.326 days = 1 }
+		}
+		#clear_global_event_target = SOV_target_country_fascist
+	}
+}
+
+#SOV Demands Puppet
+country_event = {
+	id = soviets.320
+	title = soviets.320.t
+	desc = soviets.320.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Ok
+		name = soviets.320.a
+		ai_chance = {
+			factor = 50
+		}
+		if = {
+			limit = {
+				SOV = {
+					has_idea = SOV_Impose_order
+				}
+			}
+			SOV = {
+				set_autonomy = {
+					target = ROOT
+					autonomy_state = autonomy_state_magistrate
+				}
+				country_event = { id = soviets.321 days = 1 }
+			}
+		}
+		else = {
+			SOV = {
+				set_autonomy = {
+					target = ROOT
+					autonomy_state = autonomy_puppet
+				}
+				country_event = { id = soviets.321 days = 1 }
+			}
+		}
+	}
+
+	option = { #No
+		name = soviets.320.b
+		ai_chance = {
+			factor = 50
+		}
+		country_event = { id = soviets.322 days = 1 }
+	}
+}
+
+#FROM Accepts
+country_event = {
+	id = soviets.321
+	title = soviets.321.t
+	desc = soviets.321.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Yay
+		name = soviets.321.a
+		ai_chance = {
+			factor = 100
+		}
+		clr_country_flag = is_building_up_border_fascist
+	}
+}
+
+#FROM Refuses
+country_event = {
+	id = soviets.322
+	title = soviets.322.t
+	desc = soviets.322.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Oh
+		name = soviets.322.a
+		ai_chance = {
+			factor = 100
+		}
+		create_wargoal = {
+			type = annex_everything
+			target = FROM
+		}
+		clr_country_flag = is_building_up_border_fascist
+	}
+}
+
+#SOV Demands Annex
+country_event = {
+	id = soviets.323
+	title = soviets.323.t
+	desc = soviets.323.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Ok
+		name = soviets.323.a
+		ai_chance = {
+			factor = 60
+		}
+		custom_effect_tooltip = SOV_game_totally_over_TT
+		SOV = {
+			annex_country = {
+				target = ROOT
+				transfer_troops = no
+			}
+			country_event = { id = soviets.324 days = 1 }
+		}
+	}
+
+	option = { #No
+		name = soviets.323.b
+		ai_chance = {
+			factor = 40
+		}
+		country_event = { id = soviets.325 days = 1 }
+	}
+}
+
+#FROM Accepts
+country_event = {
+	id = soviets.324
+	title = soviets.324.t
+	desc = soviets.324.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Yay
+		name = soviets.324.a
+		ai_chance = {
+			factor = 100
+		}
+		clr_country_flag = is_building_up_border_fascist
+	}
+}
+
+#FROM Refuses
+country_event = {
+	id = soviets.325
+	title = soviets.325.t
+	desc = soviets.325.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Oh
+		name = soviets.325.a
+		ai_chance = {
+			factor = 100
+		}
+		create_wargoal = {
+			type = annex_everything
+			target = FROM
+		}
+		clr_country_flag = is_building_up_border_fascist
+	}
+}
+
+#SOV Demands Enforced Military Access
+country_event = {
+	id = soviets.326
+	title = soviets.326.t
+	desc = soviets.326.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Ok
+		name = soviets.326.a
+		ai_chance = {
+			factor = 80
+		}
+		set_country_flag = SOV_enforced_military_access
+		SOV = {
+			diplomatic_relation = {
+				country = ROOT
+				relation = military_access
+				active = yes
+			}
+			country_event = { id = soviets.327 days = 1 }
+		}
+	}
+
+	option = { #No
+		name = soviets.326.b
+		ai_chance = {
+			factor = 40
+		}
+		country_event = { id = soviets.328 days = 1 }
+	}
+}
+
+#FROM Accepts
+country_event = {
+	id = soviets.327
+	title = soviets.327.t
+	desc = soviets.327.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Yay
+		name = soviets.327.a
+		ai_chance = {
+			factor = 100
+		}
+		clr_country_flag = is_building_up_border_fascist
+	}
+}
+
+#FROM Refuses
+country_event = {
+	id = soviets.328
+	title = soviets.328.t
+	desc = soviets.328.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Oh
+		name = soviets.328.a
+		ai_chance = {
+			factor = 100
+		}
+		create_wargoal = {
+			type = annex_everything
+			target = FROM
+		}
+		clr_country_flag = is_building_up_border_fascist
+	}
+}
+
+#Enforced military access ends!
+country_event = {
+	id = soviets.329
+	title = soviets.329.t
+	desc = soviets.329.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	trigger = {
+		has_country_flag = {
+			flag = SOV_enforced_military_access
+			days > 730
+		}
+	}
+
+	immediate = {
+		clr_country_flag = SOV_enforced_military_access
+	}
+
+	option = { #Yes
+		name = soviets.329.a
+		ai_chance = {
+			factor = 100
+		}
+		custom_effect_tooltip = can_cancel_military_access_from_SOV
+		hidden_effect = {
+			SOV = {
+				country_event = soviets.332
+			}
+		}
+	}
+}
+
+#SOV ends enforced military access
+country_event = {
+	id = soviets.330
+	title = soviets.330.t
+	desc = soviets.330.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	trigger = {
+		NOT = {
+			gives_military_access_to = SOV
+		}
+		has_country_flag = SOV_enforced_military_access
+	}
+
+	immediate = {
+		clr_country_flag = SOV_enforced_military_access
+	}
+
+	option = { #Yes
+		name = soviets.330.a
+		ai_chance = {
+			factor = 100
+		}
+		custom_effect_tooltip = can_cancel_military_access_from_SOV
+	}
+}
+
+#SOV building up on border
+country_event = {
+	id = soviets.331
+	title = soviets.331.t
+	desc = soviets.331.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Fuck
+		name = soviets.331.a
+		ai_chance = {
+			factor = 100
+		}
+		custom_effect_tooltip = revolutions_event_tt
+	}
+}
+
+#Military Access from FROM ends
+country_event = {
+	id = soviets.332
+	title = soviets.332.t
+	desc = soviets.332.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Oh
+		name = soviets.332.a
+		ai_chance = {
+			factor = 100
 		}
 	}
 }

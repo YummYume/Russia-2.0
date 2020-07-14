@@ -21,6 +21,8 @@
 #	}
 #}
 
+#PLEASE Paradox just let us write our own files, we literally have to copy-paste your whole triggers every time
+
 #Can't cancel military access while fascist exiles are still being transfered
 DIPLOMACY_REVOKE_MILACC_ENABLE_TRIGGER = {
     if = {
@@ -86,11 +88,94 @@ DIPLOMACY_REVOKE_OFFER_MILACC_ENABLE_TRIGGER = {
             always = no
         }
     }
+	if = {
+		limit = {
+			has_country_flag = SOV_enforced_military_access
+			FROM = {
+				original_tag = SOV
+			}
+		}
+		custom_trigger_tooltip = {
+            tooltip = RULE_CANT_REVOKE_OFFER_MILACC_FROM_ENFORCED_ACCESS
+            always = no
+        }
+	}
 }
 
 DIPLOMACY_GENERATE_WARGOAL_ENABLE_TRIGGER = {
     if = {
+		limit = {
+			has_game_rule = {
+				rule = allow_wargoals
+				option = ALWAYS_FREE
+			}
+		}
+		hidden_trigger = {
+			always = yes
+		}
+	}
+	if = {
+		limit = {
+			has_game_rule = {
+				rule = allow_wargoals
+				option = LIMITED
+			}
+		}
+		hidden_trigger = {
+			always = yes
+		}
+	}
+	if = {
+		limit = {
+			has_game_rule = {
+				rule = allow_wargoals
+				option = FREE_25
+			}
+		}
+		threat>0.24
+	}
+	if = {
+		limit = {
+			has_game_rule = {
+				rule = allow_wargoals
+				option = FREE_50
+			}
+		}
+		threat>0.49
+	}
+	if = {
+		limit = {
+			has_game_rule = {
+				rule = allow_wargoals
+				option = FREE_75
+			}
+		}
+		threat>0.74
+	}
+	if = {
+		limit = {
+			has_game_rule = {
+				rule = allow_wargoals
+				option = FREE_100
+			}
+		}
+		threat>0.99
+	}
+	if = {
+		limit = {
+			has_game_rule = {
+				rule = allow_wargoals
+				option = FOCUSES_ONLY
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_WARGOALS_BLOCKED_TT
+			always = no
+		}
+	}
+    if = {
         limit = {
+            tag = SOV
             has_idea = SOV_Army_disorganisation
         }
         custom_trigger_tooltip = {
@@ -100,6 +185,7 @@ DIPLOMACY_GENERATE_WARGOAL_ENABLE_TRIGGER = {
     }
     else_if = {
         limit = {
+            tag = SOV
             OR = {
                 has_idea = SOV_Political_Unstability
                 has_idea = SOV_Political_Unstability2
@@ -112,11 +198,343 @@ DIPLOMACY_GENERATE_WARGOAL_ENABLE_TRIGGER = {
     }
     else_if = {
         limit = {
+            tag = SOV
             has_country_flag = SOV_konstantin_no_justify_allowed
         }
         custom_trigger_tooltip = {
             tooltip = RULE_CANT_JUSTIFY_KONSTANTIN
             always = no
+        }
+    }
+}
+
+DIPLOMACY_RELEASE_NATION_ENABLE_TRIGGER = {
+    if = {
+		limit = {
+			has_game_rule = {
+				rule = allow_release_nations
+				option = FREE
+			}
+			OR = {
+				NOT = { has_dlc = "Man the Guns" }
+				NOT = { original_tag = ENG }
+			}
+			OR = {
+				NOT = { has_dlc = "La Resistance" }
+				NOT = { original_tag = SPR }
+			}
+		}
+        hidden_trigger = {
+            always = yes
+        }
+	}
+	if = {
+		limit = {
+			has_game_rule = {
+				rule = allow_release_nations
+				option = FREE
+			}
+			has_dlc = "Man the Guns"
+			original_tag = ENG
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_ALLOW_RELEASE_NATIONS_NOT_BRITAIN_TOOLTIP
+			NOT = { FROM = { tag = MLT } }
+			NOT = { FROM = { tag = CYP } }
+			NOT = { FROM = { tag = PAL } }
+			NOT = { FROM = { tag = ISR } }
+			NOT = { FROM = { tag = JOR } }
+			NOT = {
+				AND = {
+					FROM = { tag = EGY }
+					is_ironman = no
+				}
+			}
+			NOT = { FROM = { tag = KUW } }
+			NOT = { FROM = { tag = QAT } }
+			NOT = { FROM = { tag = UAE } }
+			NOT = { FROM = { tag = BLZ } }
+			NOT = { FROM = { tag = BAH } }
+			NOT = { FROM = { tag = JAM } }
+			NOT = { FROM = { tag = TRI } }
+			NOT = { FROM = { tag = BAS } }
+			NOT = { FROM = { tag = GYA } }
+			NOT = { FROM = { tag = SRL } }
+			NOT = { FROM = { tag = MLD } }
+			NOT = { FROM = { tag = FIJ } }
+			NOT = { FROM = { tag = BRM } }
+			NOT = { FROM = { tag = SUD } }
+			NOT = { FROM = { tag = SOM } }
+			NOT = { FROM = { tag = UGA } }
+			NOT = { FROM = { tag = KEN } }
+			NOT = { FROM = { tag = TZN } }
+			NOT = { FROM = { tag = ZAM } }
+			NOT = { FROM = { tag = MLW } }
+			NOT = { FROM = { tag = ZIM } }
+			NOT = { FROM = { tag = BOT } }
+			NOT = { FROM = { tag = NGA } }
+			NOT = { FROM = { tag = GHA } }
+			NOT = { FROM = { tag = SIE } }
+			NOT = { FROM = { tag = GAM } }
+		}
+	}
+	if = {
+		limit = {
+			has_game_rule = {
+				rule = allow_release_nations
+				option = FREE
+			}
+			has_dlc = "La Resistance"
+			original_tag = SPR
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_ALLOW_RELEASE_NATIONS_SPAIN_TOOLTIP
+			has_global_flag = scw_over
+		}
+	}
+	if = {
+		limit = {
+			has_game_rule = {
+				rule = allow_release_nations
+				option = FREE
+			}
+			has_dlc = "La Resistance"
+			original_tag = SPR
+			has_completed_focus = SPR_masters_of_our_own_fate
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_ALLOW_RELEASE_NATIONS_ANARCHIST_SPAIN_TOOLTIP
+			NOT = { original_tag = SPR }
+		}
+	}
+	if = {
+		limit = {
+			has_game_rule = {
+				rule = allow_release_nations
+				option = PEACE_ONLY
+			}
+			OR = {
+				NOT = { has_dlc = "Man the Guns" }
+				NOT = { original_tag = ENG }
+			}
+			OR = {
+				NOT = { has_dlc = "La Resistance" }
+				NOT = { original_tag = SPR }
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_ALLOW_RELEASE_NATIONS_PEACE_ONLY_TOOLTIP
+			has_war = no
+		}
+	}
+	if = {
+		limit = {
+			has_game_rule = {
+				rule = allow_release_nations
+				option = PEACE_ONLY
+			}
+			has_dlc = "Man the Guns"
+			original_tag = ENG
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_ALLOW_RELEASE_NATIONS_PEACE_ONLY_TOOLTIP
+			has_war = no
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_ALLOW_RELEASE_NATIONS_NOT_BRITAIN_TOOLTIP
+			NOT = { FROM = { tag = MLT } }
+			NOT = { FROM = { tag = CYP } }
+			NOT = { FROM = { tag = PAL } }
+			NOT = { FROM = { tag = ISR } }
+			NOT = { FROM = { tag = JOR } }
+			NOT = { FROM = { tag = EGY } }
+			NOT = { FROM = { tag = KUW } }
+			NOT = { FROM = { tag = QAT } }
+			NOT = { FROM = { tag = UAE } }
+			NOT = { FROM = { tag = BLZ } }
+			NOT = { FROM = { tag = BAH } }
+			NOT = { FROM = { tag = JAM } }
+			NOT = { FROM = { tag = TRI } }
+			NOT = { FROM = { tag = BAS } }
+			NOT = { FROM = { tag = GYA } }
+			NOT = { FROM = { tag = SRL } }
+			NOT = { FROM = { tag = MLD } }
+			NOT = { FROM = { tag = FIJ } }
+			NOT = { FROM = { tag = BRM } }
+			NOT = { FROM = { tag = SUD } }
+			NOT = { FROM = { tag = SOM } }
+			NOT = { FROM = { tag = UGA } }
+			NOT = { FROM = { tag = KEN } }
+			NOT = { FROM = { tag = TZN } }
+			NOT = { FROM = { tag = ZAM } }
+			NOT = { FROM = { tag = MLW } }
+			NOT = { FROM = { tag = ZIM } }
+			NOT = { FROM = { tag = BOT } }
+			NOT = { FROM = { tag = NGA } }
+			NOT = { FROM = { tag = GHA } }
+			NOT = { FROM = { tag = SIE } }
+			NOT = { FROM = { tag = GAM } }
+		}
+	}
+	if = {
+		limit = {
+			has_game_rule = {
+				rule = allow_release_nations
+				option = PEACE_ONLY
+			}
+			has_dlc = "La Resistance"
+			original_tag = SPR
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_ALLOW_RELEASE_NATIONS_PEACE_ONLY_TOOLTIP
+			has_war = no
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_ALLOW_RELEASE_NATIONS_SPAIN_TOOLTIP
+			has_global_flag = scw_over
+		}
+	}
+	if = {
+		limit = {
+			has_game_rule = {
+				rule = allow_release_nations
+				option = BLOCKED
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_ALLOW_RELEASE_NATIONS_BLOCKED_TOOLTIP
+			always = no
+		}
+	}
+    if = {
+        limit = {
+            original_tag = SOV
+            has_idea = SOV_Army_disorganisation
+        }
+        custom_trigger_tooltip = {
+            tooltip = RULE_CANT_RELEASE_ARMY_DISORGANISATION
+            FROM = {
+                NOT = {
+                    tag = UKR
+                    tag = BLR
+                    tag = GEO
+                    tag = AZR
+                    tag = ARM
+                    tag = TMS
+                    tag = KAZ
+                    tag = UZB
+                    tag = TAJ
+                    tag = KYR
+                }
+            }
+        }
+    }
+    if = {
+        limit = {
+            original_tag = SOV
+            has_completed_focus = SOV_rally_under_denikin_cause
+            NOT = {
+                has_country_flag = second_civil_war_over
+                OR = {
+                    has_completed_focus = SOV_bring_back_old_life
+                    has_completed_focus = SOV_new_way_life
+                }
+            }
+        }
+        custom_trigger_tooltip = {
+            tooltip = RULE_CANT_RELEASE_SECOND_CIVIL_WAR
+            FROM = {
+                NOT = {
+                    tag = UKR
+                    tag = BLR
+                    tag = GEO
+                    tag = AZR
+                    tag = ARM
+                    tag = TMS
+                    tag = KAZ
+                    tag = UZB
+                    tag = TAJ
+                    tag = KYR
+                }
+            }
+        }
+    }
+    if = {
+        limit = {
+            original_tag = SOV
+            has_completed_focus = SOV_right_to_believe
+            NOT = {
+                has_completed_focus = SOV_reunification
+            }
+        }
+        custom_trigger_tooltip = {
+            tooltip = RULE_CANT_RELEASE_REUNIFICATION
+            FROM = {
+                NOT = {
+                    tag = UKR
+                    tag = BLR
+                    tag = GEO
+                    tag = AZR
+                    tag = ARM
+                    tag = TMS
+                    tag = KAZ
+                    tag = UZB
+                    tag = TAJ
+                    tag = KYR
+                }
+            }
+        }
+    }
+    if = {
+        limit = {
+            original_tag = SOV
+            has_completed_focus = SOV_bring_back_old_life
+            NOT = {
+                has_completed_focus = SOV_reintegrate_lost_state
+            }
+        }
+        custom_trigger_tooltip = {
+            tooltip = RULE_CANT_RELEASE_LOST_STATE
+            FROM = {
+                NOT = {
+                    tag = UKR
+                    tag = BLR
+                    tag = GEO
+                    tag = AZR
+                    tag = ARM
+                    tag = TMS
+                    tag = KAZ
+                    tag = UZB
+                    tag = TAJ
+                    tag = KYR
+                }
+            }
+        }
+    }
+    if = {
+        limit = {
+            original_tag = SOV
+            has_completed_focus = SOV_new_way_life
+            NOT = {
+                has_completed_focus = SOV_russian_nationalism
+            }
+        }
+        custom_trigger_tooltip = {
+            tooltip = RULE_CANT_RELEASE_RUSSIAN_NATIONALISM
+            FROM = {
+                NOT = {
+                    tag = UKR
+                    tag = BLR
+                    tag = GEO
+                    tag = AZR
+                    tag = ARM
+                    tag = TMS
+                    tag = KAZ
+                    tag = UZB
+                    tag = TAJ
+                    tag = KYR
+                }
+            }
         }
     }
 }
