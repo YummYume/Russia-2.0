@@ -3188,44 +3188,68 @@ ignore_japanese_puppets = {
 	}
 }
 
-#Do not focus on planes if the enemy outnumbers you at least 2 to 1
+#Do not focus on planes if the enemy outnumbers you at least 2 to 1 and produce AA instead
 SOV_stop_plane_production = {
+	allowed = {
+		original_tag = SOV
+	}
+
 	enable = {
-		tag = SOV
+		original_tag = SOV
 		has_war = yes
-		# set_temp_variable = { plane_count_sov_by_2 = SOV.num_deployed_planes }
-		# multiply_temp_variable = { plane_count_sov_by_2 = 2 }
-		# any_country = {
-		#	 has_war_with = SOV
-		#	 has_deployed_air_force_size = {
-		#	 size > plane_count_sov_by_2
-		#	 }
-		# }
-		alliance_strength_ratio < -1.5
+		set_temp_variable = { plane_count_sov_by_2 = SOV.num_deployed_planes }
+		multiply_temp_variable = { plane_count_sov_by_2 = 2 }
+		check_variable = {
+			var = plane_count_sov_by_2
+			value = plane_count_enemy_sov
+			compare = less_than
+		}
 	}
 
 	abort_when_not_enabled = yes
 
 	ai_strategy = {
+		type = equipment_production_factor
+		id = anti_air
+		value = 50
+	}
+
+	ai_strategy = {
 		type = air_factory_balance
-		value = -500
+		value = -100
 	}
 
 	ai_strategy = {
 		type = equipment_production_factor
 		id = fighter
-		value = -10
+		value = -25
 	}
 
 	ai_strategy = {
 		type = equipment_production_factor
 		id = tactical_bomber
-		value = -10
+		value = -25
+	}
+
+	ai_strategy = {
+		type = equipment_production_factor
+		id = strategic_bomber
+		value = -50
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = anti_air
+		value = 10
 	}
 }
 
 #Build less light tanks & guns if stockpile is too high
 SOV_stockpile_less_tanks_guns = {
+	allowed = {
+		original_tag = SOV
+	}
+
 	enable = {
 		tag = SOV
 		OR = {
@@ -3250,6 +3274,10 @@ SOV_stockpile_less_tanks_guns = {
 
 #Build more of the equipment needed (mostly artillery and medium tanks)
 SOV_build_more_needed_equipment_artillery = {
+	allowed = {
+		original_tag = SOV
+	}
+
 	enable = {
 		tag = SOV
 		date > 1940.01.01
@@ -3275,6 +3303,10 @@ SOV_build_more_needed_equipment_artillery = {
 }
 
 SOV_build_more_needed_equipment_medium_tanks = {
+	allowed = {
+		original_tag = SOV
+	}
+
 	enable = {
 		tag = SOV
 		date > 1940.01.01
@@ -3320,7 +3352,7 @@ SOV_stop_prospecting_resources = {
 	}
 }
 
-#Doesn't work (or does it?)
+#Agreement members will not try to stop SOV
 SOV_dont_contain_root_russian_agreement = {
 	enable = {
 		has_idea = SOV_Root_russian_pact
@@ -3378,5 +3410,70 @@ SOV_respect_root_russian_agreement_sov = {
 		type = send_volunteers_desire
 		id = "SOV"
 		value = -1000
+	}
+}
+
+#SOV Will try to not mess with agreement members
+SOV_do_not_mess_agreement_sov = {
+	reversed = yes
+
+	allowed = {
+		original_tag = SOV
+	}
+
+	enable = {
+		has_idea = SOV_Root_russian_pact
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = contain
+		id = "SOV"
+		value = -1000
+	}
+
+	ai_strategy = {
+		type = alliance
+		id = "SOV"
+		value = -20
+	}
+}
+
+prepare_fight_russia_from = {
+
+	enable = {
+		OR = {
+			has_country_flag = is_target_of_SOV_fascist
+			has_country_flag = is_target_of_SOV_democratic
+		}
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = prepare_for_war
+		id = SOV
+		value = 100
+	}
+}
+
+prepare_fight_from_russia = {
+
+	reversed = yes
+
+	enable = {
+		OR = {
+			has_country_flag = is_target_of_SOV_fascist
+			has_country_flag = is_target_of_SOV_democratic
+		}
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = prepare_for_war
+		id = "SOV"
+		value = 100
 	}
 }
