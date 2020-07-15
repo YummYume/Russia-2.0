@@ -10161,65 +10161,346 @@ SOV_custom_formable_nations_endgame = {
 	   }
 
 		complete_effect = {
-			every_state = {
-				limit = {
-					has_state_flag = north_america_fascist_nation_puppet
-				}
-				NAF = {
-					add_state_core = PREV
-				}	
-			}
-			if = {
-				limit = {
-					has_idea = SOV_Impose_order
-				}
-				SOV = {
-					release_autonomy = {
-						target = NAF
-						autonomy_state = autonomy_state_magistrate
-						freedom_level = 0.5
+			custom_effect_tooltip = form_north_america_continent_tt
+			hidden_effect = {
+				every_state = {
+					limit = {
+						has_state_flag = north_america_fascist_nation_puppet
+						NOT = {
+							is_claimed_by = SOV
+						}
 					}
+					NAF = {
+						add_state_core = PREV
+					}	
 				}
-
-			}
-			else = {
-				SOV = {
-					release_autonomy = {
-						target = NAF
-						autonomy_state = autonomy_reichsprotectorate
-						freedom_level = 0.5
-					}
-				}
-			}
-			NAF = {
 				if = {
-					limit = { has_dlc = "Man the Guns" }
-						load_oob = "USA_1939_naval_mtg"
-					else = {
-						load_oob = "USA_1939_naval_legacy"
+					limit = {
+						has_idea = SOV_Impose_order
+					}
+					SOV = {
+						release_autonomy = {
+							target = NAF
+							autonomy_state = autonomy_state_magistrate
+							freedom_level = 0.5
+						}
+					}
+
+				}
+				else = {
+					SOV = {
+						release_autonomy = {
+							target = NAF
+							autonomy_state = autonomy_reichsprotectorate
+							freedom_level = 0.5
+						}
 					}
 				}
-				load_oob = "USA_1936"
-				set_cosmetic_tag = NAFC
-			}
-			if= {
-				limit = {
-					has_completed_focus = SOV_the_tables_have_turned
+				every_state = {
+					limit = {
+						has_state_flag = north_america_fascist_nation_puppet
+						is_claimed_by = SOV
+					}
+					NAF = {
+						add_state_core = PREV
+					}	
 				}
 				NAF = {
-					create_country_leader = {
-						name = "Anastasy Vonsyatsky"
-						desc = "POLITICS_ANASTASY_VONSYATSKY_DESC"
-						picture = "Portrait_Anastasy_Vonsyatsky.dds"
-						expire = "1965.1.1"
-						ideology = fascism_ideology
-						traits = {
-							#
+					division_template = {
+						name = "North American Order Division"
+						priority = 1
+						regiments = {
+							infantry = { x = 0 y = 0 }
+							infantry = { x = 0 y = 1 }
+							infantry = { x = 0 y = 2 }
+							infantry = { x = 0 y = 3 }
+							infantry = { x = 0 y = 4 }
+							infantry = { x = 1 y = 0 }
+							infantry = { x = 1 y = 1 }
+							infantry = { x = 1 y = 2 }
+							infantry = { x = 1 y = 3 }
+							infantry = { x = 1 y = 4 }
+							infantry = { x = 2 y = 0 }
+							infantry = { x = 2 y = 1 }
+							artillery_brigade = { x = 2 y = 2 }
+							artillery_brigade = { x = 2 y = 3 }
+							infantry = { x = 3 y = 0 }
+							infantry = { x = 3 y = 1 }
+							artillery_brigade = { x = 3 y = 2 }
+							artillery_brigade = { x = 3 y = 3 }
+						}
+						support = {
+							engineer = { x = 0 y = 0 }
+							artillery = { x = 0 y = 1 }
+						}
+					}
+					division_template = {
+						name = "North America Tank"
+						priority = 2
+						regiments = {
+							medium_armor = { x = 0 y = 0 }
+							medium_armor = { x = 0 y = 1 }
+							medium_armor = { x = 0 y = 2 }
+							medium_armor = { x = 0 y = 3 }
+							medium_armor = { x = 0 y = 4 }
+							medium_armor = { x = 1 y = 0 }
+							medium_armor = { x = 1 y = 1 }
+							medium_armor = { x = 1 y = 2 }
+							medium_armor = { x = 1 y = 3 }
+							medium_armor = { x = 1 y = 4 }
+							motorized = { x = 2 y = 0 }
+							motorized = { x = 2 y = 1 }
+							motorized = { x = 2 y = 2 }
+							motorized = { x = 2 y = 3 }
+							motorized = { x = 2 y = 4 }
+							motorized = { x = 3 y = 0 }
+							motorized = { x = 3 y = 1 }
+							motorized = { x = 3 y = 2 }
+							motorized = { x = 3 y = 3 }
+							motorized = { x = 3 y = 4 }
+						}
+						support = {
+							light_tank_recon = { x = 0 y = 0 }
+							engineer = { x = 0 y = 1 }
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"1st North American Order Division\" division_template = \"North American Order Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = NAF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"2nd North American Order Division\" division_template = \"North American Order Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = NAF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"3rd North American Order Division\" division_template = \"North American Order Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = NAF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"4th North American Order Division\" division_template = \"North American Order Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = NAF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"5th North American Order Division\" division_template = \"North American Order Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = NAF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"6th North American Order Division\" division_template = \"North American Order Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = NAF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"7th North American Order Division\" division_template = \"North American Order Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = NAF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"8th North American Order Division\" division_template = \"North American Order Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = NAF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"9th North American Order Division\" division_template = \"North American Order Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = NAF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"10th North American Order Division\" division_template = \"North American Order Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = NAF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"11th North American Order Division\" division_template = \"North American Order Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = NAF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"11th North American Order Division\" division_template = \"North American Order Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = NAF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"12th North American Order Division\" division_template = \"North American Order Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = NAF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"13th North American Order Division\" division_template = \"North American Order Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = NAF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"14th North American Order Division\" division_template = \"North American Order Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = NAF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"15th North American Order Division\" division_template = \"North American Order Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = NAF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"16th North American Order Division\" division_template = \"North American Order Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = NAF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"17th North American Order Division\" division_template = \"North American Order Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = NAF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"18th North American Order Division\" division_template = \"North American Order Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = NAF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"19th North American Order Division\" division_template = \"North American Order Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = NAF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"20th North American Order Division\" division_template = \"North American Order Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = NAF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"21th North American Order Division\" division_template = \"North American Order Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = NAF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"22th North American Order Division\" division_template = \"North American Order Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = NAF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"23th North American Order Division\" division_template = \"North American Order Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = NAF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"24th North American Order Division\" division_template = \"North American Order Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = NAF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"25th North American Order Division\" division_template = \"North American Order Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = NAF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"26th North American Order Division\" division_template = \"North American Order Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = NAF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"27th North American Order Division\" division_template = \"North American Order Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = NAF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"28th North American Order Division\" division_template = \"North American Order Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = NAF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"1st North America Tank\" division_template = \"North America Tank\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = NAF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"2nd North America Tank\" division_template = \"North America Tank\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = NAF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"3rd North America Tank\" division_template = \"North America Tank\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = NAF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"4th North America Tank\" division_template = \"North America Tank\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = NAF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"5th North America Tank\" division_template = \"North America Tank\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = NAF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"6th North America Tank\" division_template = \"North America Tank\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = NAF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"7th North America Tank\" division_template = \"North America Tank\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = NAF
+						}
+					}
+					set_cosmetic_tag = NAFC
+				}
+				if= {
+					limit = {
+						has_completed_focus = SOV_the_tables_have_turned
+					}
+					NAF = {
+						create_country_leader = {
+							name = "Anastasy Vonsyatsky"
+							desc = "POLITICS_ANASTASY_VONSYATSKY_DESC"
+							picture = "Portrait_Anastasy_Vonsyatsky.dds"
+							expire = "1965.1.1"
+							ideology = fascism_ideology
+							traits = {
+								#
+							}
 						}
 					}
 				}
 			}
-	    }
+		}
 	}
 
 	form_central_america_continent = {
@@ -10241,41 +10522,99 @@ SOV_custom_formable_nations_endgame = {
 	   }
 
 		complete_effect = {
-			every_state = {
-				limit = {
-					has_state_flag = central_america_fascist_nation_puppet
+			custom_effect_tooltip = form_central_america_continent_tt
+			hidden_effect = {
+				every_state = {
+					limit = {
+						has_state_flag = central_america_fascist_nation_puppet
+						NOT = {
+							is_claimed_by = SOV
+						}
+					}
+					CAF = {
+						add_state_core = PREV
+					}	
+				}
+				if = {
+					limit = {
+						has_idea = SOV_Impose_order
+					}
+					SOV = {
+						release_autonomy = {
+							target = CAF
+							autonomy_state = autonomy_state_magistrate
+							freedom_level = 0.5
+						}
+					}
+
+				}
+				else = {
+					SOV = {
+						release_autonomy = {
+							target = CAF
+							autonomy_state = autonomy_reichsprotectorate
+							freedom_level = 0.5
+						}
+					}
+				}
+				every_state = {
+					limit = {
+						has_state_flag = central_america_fascist_nation_puppet
+						is_claimed_by = SOV
+					}
+					CAF = {
+						add_state_core = PREV
+					}	
 				}
 				CAF = {
-					add_state_core = PREV
-				}	
-			}
-			if = {
-				limit = {
-					has_idea = SOV_Impose_order
-				}
-				SOV = {
-					release_autonomy = {
-						target = CAF
-						autonomy_state = autonomy_state_magistrate
-						freedom_level = 0.5
+					division_template = {
+						name = "Central American Garrison Division"
+						priority = 1
+						regiments = {
+							infantry = { x = 0 y = 0 }
+							infantry = { x = 0 y = 1 }
+							infantry = { x = 0 y = 2 }
+							infantry = { x = 0 y = 3 }
+							infantry = { x = 0 y = 4 }
+							infantry = { x = 1 y = 0 }
+							infantry = { x = 1 y = 1 }
+							infantry = { x = 1 y = 2 }
+							infantry = { x = 1 y = 3 }
+							infantry = { x = 1 y = 4 }
+						}
+						support = {
+							engineer = { x = 0 y = 0 }
+							artillery = { x = 0 y = 1 }
+						}
+					}	
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"1st Central American Garrison Division\" division_template = \"Central American Garrison Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = CAF
+						}
 					}
-				}
-
-			}
-			else = {
-				SOV = {
-					release_autonomy = {
-						target = CAF
-						autonomy_state = autonomy_reichsprotectorate
-						freedom_level = 0.5
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"2nd Central American Garrison Division\" division_template = \"Central American Garrison Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = CAF
+						}
 					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"3rd Central American Garrison Division\" division_template = \"Central American Garrison Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = CAF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"4th Central American Garrison Division\" division_template = \"Central American Garrison Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = CAF
+						}
+					}
+					set_cosmetic_tag = CAFC
 				}
 			}
-			CAF = {
-				load_oob = "ELS_1939"
-				set_cosmetic_tag = CAFC
-			}
-		}
+		}	
 	}
 
 	form_south_america_continent = {
@@ -10297,56 +10636,131 @@ SOV_custom_formable_nations_endgame = {
 	   }
 
 		complete_effect = {
-			every_state = {
-				limit = {
-					has_state_flag = south_america_fascist_nation_puppet
+			custom_effect_tooltip = form_south_america_continent_tt
+			hidden_effect = {
+				every_state = {
+					limit = {
+						has_state_flag = south_america_fascist_nation_puppet
+						NOT = {
+							is_claimed_by = SOV
+						}
+					}
+					SAR = {
+						add_state_core = PREV
+					}	
+				}
+				if = {
+					limit = {
+						has_idea = SOV_Impose_order
+					}
+					SOV = {
+						release_autonomy = {
+							target = SAR
+							autonomy_state = autonomy_state_magistrate
+							freedom_level = 0.5
+						}
+					}
+
+				}
+				else = {
+					SOV = {
+						release_autonomy = {
+							target = SAR
+							autonomy_state = autonomy_reichsprotectorate
+							freedom_level = 0.5
+						}
+					}
+				}
+				every_state = {
+					limit = {
+						has_state_flag = south_america_fascist_nation_puppet
+						is_claimed_by = SOV
+					}
+					SAR = {
+						add_state_core = PREV
+					}	
 				}
 				SAR = {
-					add_state_core = PREV
-				}	
-			}
-			if = {
-				limit = {
-					has_idea = SOV_Impose_order
-				}
-				SOV = {
-					release_autonomy = {
-						target = SAR
-						autonomy_state = autonomy_state_magistrate
-						freedom_level = 0.5
+					division_template = {
+						name = "South American Jungle Guerrilla Division"
+						priority = 1
+						regiments = {
+							infantry = { x = 0 y = 0 }
+							infantry = { x = 0 y = 1 }
+							infantry = { x = 0 y = 2 }
+							infantry = { x = 0 y = 3 }
+							infantry = { x = 0 y = 4 }
+							infantry = { x = 1 y = 0 }
+							infantry = { x = 1 y = 1 }
+							infantry = { x = 1 y = 2 }
+							infantry = { x = 1 y = 3 }
+							infantry = { x = 1 y = 4 }
+							infantry = { x = 2 y = 0 }
+							infantry = { x = 2 y = 1 }
+							artillery_brigade = { x = 2 y = 2 }
+							artillery_brigade = { x = 2 y = 3 }
+							infantry = { x = 3 y = 0 }
+							infantry = { x = 3 y = 1 }
+							artillery_brigade = { x = 3 y = 2 }
+							artillery_brigade = { x = 3 y = 3 }
+						}
+						support = {
+							engineer = { x = 0 y = 0 }
+							artillery = { x = 0 y = 1 }
+						}
 					}
-				}
-
-			}
-			else = {
-				SOV = {
-					release_autonomy = {
-						target = SAR
-						autonomy_state = autonomy_reichsprotectorate
-						freedom_level = 0.5
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"1st South American Jungle Guerrilla Division\" division_template = \"South American Jungle Guerrilla Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = SAR
+						}
 					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"2nd South American Jungle Guerrilla Division\" division_template = \"South American Jungle Guerrilla Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = SAR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"3rd South American Jungle Guerrilla Division\" division_template = \"South American Jungle Guerrilla Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = SAR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"4th South American Jungle Guerrilla Division\" division_template = \"South American Jungle Guerrilla Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = SAR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"5th South American Jungle Guerrilla Division\" division_template = \"South American Jungle Guerrilla Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = SAR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"6th South American Jungle Guerrilla Division\" division_template = \"South American Jungle Guerrilla Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = SAR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"7th South American Jungle Guerrilla Division\" division_template = \"South American Jungle Guerrilla Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = SAR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"8th South American Jungle Guerrilla Division\" division_template = \"South American Jungle Guerrilla Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = SAR
+						}
+					}
+					set_cosmetic_tag = SARC
 				}
 			}
-			SAR = {
-				load_oob = "BRA_1939"
-				if = {
-					limit = { not = { has_dlc = "Man the Guns" } }
-					set_technology = {
-						basic_submarine = 1
-						basic_destroyer = 1
-					}
-					load_oob = "BRA_1939_naval_legacy"
-				}
-				if = {
-					limit = { has_dlc = "Man the Guns" }
-					set_technology = {
-						basic_ship_hull_light = 1
-					}
-					load_oob = "BRA_1939_naval"
-				}
-				set_cosmetic_tag = SARC
-			}
-		}	
+		}
 	}
 
 	form_caraibe_continent = {
@@ -10368,39 +10782,132 @@ SOV_custom_formable_nations_endgame = {
 	   }
 
 		complete_effect = {
-			every_state = {
-				limit = {
-					has_state_flag = caraibe_america_fascist_nation_puppet
+			custom_effect_tooltip = form_caraibe_continent_tt
+			hidden_effect = {
+				every_state = {
+					limit = {
+						has_state_flag = caraibe_america_fascist_nation_puppet
+						NOT = {
+							is_claimed_by = SOV
+						}
+					}
+					CAI = {
+						add_state_core = PREV
+					}	
+				}
+				if = {
+					limit = {
+						has_idea = SOV_Impose_order
+					}
+					SOV = {
+						release_autonomy = {
+							target = CAI
+							autonomy_state = autonomy_state_magistrate
+							freedom_level = 0.5
+						}
+					}
+
+				}
+				else = {
+					SOV = {
+						release_autonomy = {
+							target = CAI
+							autonomy_state = autonomy_reichsprotectorate
+							freedom_level = 0.5
+						}
+					}
+				}
+				every_state = {
+					limit = {
+						has_state_flag = caraibe_america_fascist_nation_puppet
+						is_claimed_by = SOV
+					}
+					CAI = {
+						add_state_core = PREV
+					}	
 				}
 				CAI = {
-					add_state_core = PREV
-				}	
-			}
-			if = {
-				limit = {
-					has_idea = SOV_Impose_order
-				}
-				SOV = {
-					release_autonomy = {
-						target = CAI
-						autonomy_state = autonomy_state_magistrate
-						freedom_level = 0.5
+					division_template = {
+						name = "Caribbean Garrison Division"
+						priority = 1
+						regiments = {
+							infantry = { x = 0 y = 0 }
+							infantry = { x = 0 y = 1 }
+							infantry = { x = 0 y = 2 }
+							infantry = { x = 0 y = 3 }
+							infantry = { x = 0 y = 4 }
+							infantry = { x = 1 y = 0 }
+							infantry = { x = 1 y = 1 }
+							infantry = { x = 1 y = 2 }
+							infantry = { x = 1 y = 3 }
+							infantry = { x = 1 y = 4 }
+						}
+						support = {
+							engineer = { x = 0 y = 0 }
+						}
 					}
-				}
-
-			}
-			else = {
-				SOV = {
-					release_autonomy = {
-						target = CAI
-						autonomy_state = autonomy_reichsprotectorate
-						freedom_level = 0.5
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"1st Caribbean Garrison Division\" division_template = \"Caribbean Garrison Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = CAI
+						}
 					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"2nd Caribbean Garrison Division\" division_template = \"Caribbean Garrison Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = CAI
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"3rd Caribbean Garrison Division\" division_template = \"Caribbean Garrison Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = CAI
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"4th Caribbean Garrison Division\" division_template = \"Caribbean Garrison Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = CAI
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"5th Caribbean Garrison Division\" division_template = \"Caribbean Garrison Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = CAI
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"6th Caribbean Garrison Division\" division_template = \"Caribbean Garrison Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = CAI
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"7th Caribbean Garrison Division\" division_template = \"Caribbean Garrison Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = CAI
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"8th Caribbean Garrison Division\" division_template = \"Caribbean Garrison Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = CAI
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"9th Caribbean Garrison Division\" division_template = \"Caribbean Garrison Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = CAI
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"10th Caribbean Garrison Division\" division_template = \"Caribbean Garrison Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = CAI
+						}
+					}
+					set_cosmetic_tag = CAIC
 				}
-			}
-			CAI = {
-				load_oob = "CUB_1939"
-				set_cosmetic_tag = CAIC
 			}
 		}
 	}
@@ -10424,39 +10931,157 @@ SOV_custom_formable_nations_endgame = {
 	   }
 
 		complete_effect = {
-			every_state = {
-				limit = {
-					has_state_flag = middle_east_fascist_nation_puppet
+			custom_effect_tooltip = form_middle_east_continent_tt
+			hidden_effect = {
+				every_state = {
+					limit = {
+						has_state_flag = middle_east_fascist_nation_puppet
+						NOT = {
+							is_claimed_by = SOV
+						}
+					}
+					MEF = {
+						add_state_core = PREV
+					}	
+				}
+				if = {
+					limit = {
+						has_idea = SOV_Impose_order
+					}
+					SOV = {
+						release_autonomy = {
+							target = MEF
+							autonomy_state = autonomy_state_magistrate
+							freedom_level = 0.5
+						}
+					}
+
+				}
+				else = {
+					SOV = {
+						release_autonomy = {
+							target = MEF
+							autonomy_state = autonomy_reichsprotectorate
+							freedom_level = 0.5
+						}
+					}
+				}
+				every_state = {
+					limit = {
+						has_state_flag = middle_east_fascist_nation_puppet
+						is_claimed_by = SOV
+					}
+					MEF = {
+						add_state_core = PREV
+					}	
 				}
 				MEF = {
-					add_state_core = PREV
-				}	
-			}
-			if = {
-				limit = {
-					has_idea = SOV_Impose_order
-				}
-				SOV = {
-					release_autonomy = {
-						target = MEF
-						autonomy_state = autonomy_state_magistrate
-						freedom_level = 0.5
+					division_template = {
+						name = "Allah's Division"
+						priority = 1
+						regiments = {
+							infantry = { x = 0 y = 0 }
+							infantry = { x = 0 y = 1 }
+							infantry = { x = 0 y = 2 }
+							infantry = { x = 0 y = 3 }
+							infantry = { x = 0 y = 4 }
+							infantry = { x = 1 y = 0 }
+							infantry = { x = 1 y = 1 }
+							infantry = { x = 1 y = 2 }
+							infantry = { x = 1 y = 3 }
+							infantry = { x = 1 y = 4 }
+						}
+						support = {
+							engineer = { x = 0 y = 0 }
+							artillery = { x = 0 y = 1 }
+						}
 					}
-				}
-
-			}
-			else = {
-				SOV = {
-					release_autonomy = {
-						target = MEF
-						autonomy_state = autonomy_reichsprotectorate
-						freedom_level = 0.5
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"1st Allah's Division\" division_template = \"Allah's Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = MEF
+						}
 					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"2nd Allah's Division\" division_template = \"Allah's Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = MEF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"3rd Allah's Division\" division_template = \"Allah's Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = MEF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"4th Allah's Division\" division_template = \"Allah's Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = MEF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"5th Allah's Division\" division_template = \"Allah's Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = MEF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"6th Allah's Division\" division_template = \"Allah's Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = MEF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"7th Allah's Division\" division_template = \"Allah's Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = MEF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"8th Allah's Division\" division_template = \"Allah's Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = MEF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"9th Allah's Division\" division_template = \"Allah's Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = MEF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"10th Allah's Division\" division_template = \"Allah's Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = MEF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"11th Allah's Division\" division_template = \"Allah's Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = MEF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"12th Allah's Division\" division_template = \"Allah's Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = MEF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"13th Allah's Division\" division_template = \"Allah's Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = MEF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"14th Allah's Division\" division_template = \"Allah's Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = MEF
+						}
+					}
+					set_cosmetic_tag = MEFC
 				}
-			}
-			MEF = {
-				load_oob = "SAU_1939"
-				set_cosmetic_tag = MEFC
 			}
 		}
 	}
@@ -10480,39 +11105,181 @@ SOV_custom_formable_nations_endgame = {
 	   }
 
 		complete_effect = {
-			every_state = {
-				limit = {
-					has_state_flag = africa_fascist_nation_puppet
+			custom_effect_tooltip = form_africa_continent_tt
+			hidden_effect = {
+				every_state = {
+					limit = {
+						has_state_flag = africa_fascist_nation_puppet
+						NOT = {
+							is_claimed_by = SOV
+						}
+					}
+					AFF = {
+						add_state_core = PREV
+					}	
+				}
+				if = {
+					limit = {
+						has_idea = SOV_Impose_order
+					}
+					SOV = {
+						release_autonomy = {
+							target = AFF
+							autonomy_state = autonomy_state_magistrate
+							freedom_level = 0.5
+						}
+					}
+
+				}
+				else = {
+					SOV = {
+						release_autonomy = {
+							target = AFF
+							autonomy_state = autonomy_reichsprotectorate
+							freedom_level = 0.5
+						}
+					}
+				}
+				every_state = {
+					limit = {
+						has_state_flag = africa_fascist_nation_puppet
+						is_claimed_by = SOV
+					}
+					AFF = {
+						add_state_core = PREV
+					}	
 				}
 				AFF = {
-					add_state_core = PREV
-				}	
-			}
-			if = {
-				limit = {
-					has_idea = SOV_Impose_order
-				}
-				SOV = {
-					release_autonomy = {
-						target = AFF
-						autonomy_state = autonomy_state_magistrate
-						freedom_level = 0.5
+					division_template = {
+						name = "African's Empire Division"
+						priority = 1
+						regiments = {
+							infantry = { x = 0 y = 0 }
+							infantry = { x = 0 y = 1 }
+							infantry = { x = 0 y = 2 }
+							infantry = { x = 0 y = 3 }
+							infantry = { x = 0 y = 4 }
+							infantry = { x = 1 y = 0 }
+							infantry = { x = 1 y = 1 }
+							infantry = { x = 1 y = 2 }
+							infantry = { x = 1 y = 3 }
+							infantry = { x = 1 y = 4 }
+						}
+						support = {
+							engineer = { x = 0 y = 0 }
+							artillery = { x = 0 y = 1 }
+						}
 					}
-				}
-
-			}
-			else = {
-				SOV = {
-					release_autonomy = {
-						target = AFF
-						autonomy_state = autonomy_reichsprotectorate
-						freedom_level = 0.5
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"1st African's Empire Division\" division_template = \"African's Empire Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = AFF
+						}
 					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"2nd African's Empire Division\" division_template = \"African's Empire Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = AFF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"3rd African's Empire Division\" division_template = \"African's Empire Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = AFF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"4th African's Empire Division\" division_template = \"African's Empire Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = AFF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"5th African's Empire Division\" division_template = \"African's Empire Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = AFF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"6th African's Empire Division\" division_template = \"African's Empire Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = AFF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"7th African's Empire Division\" division_template = \"African's Empire Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = AFF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"8th African's Empire Division\" division_template = \"African's Empire Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = AFF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"9th African's Empire Division\" division_template = \"African's Empire Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = AFF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"10th African's Empire Division\" division_template = \"African's Empire Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = AFF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"11th African's Empire Division\" division_template = \"African's Empire Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = AFF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"12th African's Empire Division\" division_template = \"African's Empire Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = AFF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"13th African's Empire Division\" division_template = \"African's Empire Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = AFF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"14th African's Empire Division\" division_template = \"African's Empire Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = AFF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"15th African's Empire Division\" division_template = \"African's Empire Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = AFF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"16th African's Empire Division\" division_template = \"African's Empire Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = AFF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"17th African's Empire Division\" division_template = \"African's Empire Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = AFF
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"18th African's Empire Division\" division_template = \"African's Empire Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = AFF
+						}
+					}
+					set_cosmetic_tag = AFFC
 				}
-			}
-			AFF = {
-				load_oob = "ETH_1936"
-				set_cosmetic_tag = AFFC
 			}
 		}
 	}
@@ -10536,39 +11303,205 @@ SOV_custom_formable_nations_endgame = {
 	   }
 
 		complete_effect = {
-			every_state = {
-				limit = {
-					has_state_flag = south_asia_fascist_nation_puppet
+			custom_effect_tooltip = form_south_asia_continent_tt
+			hidden_effect = {
+				every_state = {
+					limit = {
+						has_state_flag = south_asia_fascist_nation_puppet
+						NOT = {
+							is_claimed_by = SOV
+						}
+					}
+					SFR = {
+						add_state_core = PREV
+					}	
+				}
+				if = {
+					limit = {
+						has_idea = SOV_Impose_order
+					}
+					SOV = {
+						release_autonomy = {
+							target = SFR
+							autonomy_state = autonomy_state_magistrate
+							freedom_level = 0.5
+						}
+					}
+
+				}
+				else = {
+					SOV = {
+						release_autonomy = {
+							target = SFR
+							autonomy_state = autonomy_reichsprotectorate
+							freedom_level = 0.5
+						}
+					}
+				}
+				every_state = {
+					limit = {
+						has_state_flag = south_asia_fascist_nation_puppet
+						is_claimed_by = SOV
+					}
+					SFR = {
+						add_state_core = PREV
+					}	
 				}
 				SFR = {
-					add_state_core = PREV
-				}	
-			}
-			if = {
-				limit = {
-					has_idea = SOV_Impose_order
-				}
-				SOV = {
-					release_autonomy = {
-						target = SFR
-						autonomy_state = autonomy_state_magistrate
-						freedom_level = 0.5
+					division_template = {
+						name = "Hindu's Division"
+						priority = 1
+						regiments = {
+							infantry = { x = 0 y = 0 }
+							infantry = { x = 0 y = 1 }
+							infantry = { x = 0 y = 2 }
+							infantry = { x = 0 y = 3 }
+							infantry = { x = 0 y = 4 }
+							infantry = { x = 1 y = 0 }
+							infantry = { x = 1 y = 1 }
+							infantry = { x = 1 y = 2 }
+							infantry = { x = 1 y = 3 }
+							infantry = { x = 1 y = 4 }
+						}
+						support = {
+							engineer = { x = 0 y = 0 }
+							artillery = { x = 0 y = 1 }
+						}
 					}
-				}
-
-			}
-			else = {
-				SOV = {
-					release_autonomy = {
-						target = SFR
-						autonomy_state = autonomy_reichsprotectorate
-						freedom_level = 0.5
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"1st Hindu's Division\" division_template = \"Hindu's Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = SFR
+						}
 					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"2nd Hindu's Division\" division_template = \"Hindu's Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = SFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"3rd Hindu's Division\" division_template = \"Hindu's Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = SFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"4th Hindu's Division\" division_template = \"Hindu's Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = SFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"5th Hindu's Division\" division_template = \"Hindu's Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = SFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"6th Hindu's Division\" division_template = \"Hindu's Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = SFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"7th Hindu's Division\" division_template = \"Hindu's Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = SFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"8th Hindu's Division\" division_template = \"Hindu's Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = SFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"9th Hindu's Division\" division_template = \"Hindu's Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = SFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"10th Hindu's Division\" division_template = \"Hindu's Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = SFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"11th Hindu's Division\" division_template = \"Hindu's Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = SFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"12th Hindu's Division\" division_template = \"Hindu's Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = SFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"13th Hindu's Division\" division_template = \"Hindu's Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = SFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"14th Hindu's Division\" division_template = \"Hindu's Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = SFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"15th Hindu's Division\" division_template = \"Hindu's Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = SFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"16th Hindu's Division\" division_template = \"Hindu's Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = SFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"17th Hindu's Division\" division_template = \"Hindu's Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = SFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"18th Hindu's Division\" division_template = \"Hindu's Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = SFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"19th Hindu's Division\" division_template = \"Hindu's Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = SFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"20th Hindu's Division\" division_template = \"Hindu's Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = SFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"21th Hindu's Division\" division_template = \"Hindu's Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = SFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"22th Hindu's Division\" division_template = \"Hindu's Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = SFR
+						}
+					}
+					set_cosmetic_tag = SFRC
 				}
-			}
-			SFR = {
-				load_oob = "RAJ_1939"
-				set_cosmetic_tag = SFRC
 			}
 		}
 	}
@@ -10592,39 +11525,151 @@ SOV_custom_formable_nations_endgame = {
 	   }
 
 		complete_effect = {
-			every_state = {
-				limit = {
-					has_state_flag = south_east_asia_fascist_nation_puppet
+			custom_effect_tooltip = form_south_east_asia_continent_tt
+			hidden_effect = {
+				every_state = {
+					limit = {
+						has_state_flag = south_east_asia_fascist_nation_puppet
+						NOT = {
+							is_claimed_by = SOV
+						}
+					}
+					SEA = {
+						add_state_core = PREV
+					}	
+				}
+				if = {
+					limit = {
+						has_idea = SOV_Impose_order
+					}
+					SOV = {
+						release_autonomy = {
+							target = SEA
+							autonomy_state = autonomy_state_magistrate
+							freedom_level = 0.5
+						}
+					}
+
+				}
+				else = {
+					SOV = {
+						release_autonomy = {
+							target = SEA
+							autonomy_state = autonomy_reichsprotectorate
+							freedom_level = 0.5
+						}
+					}
+				}
+				every_state = {
+					limit = {
+						has_state_flag = south_east_asia_fascist_nation_puppet
+						is_claimed_by = SOV
+					}
+					SEA = {
+						add_state_core = PREV
+					}	
 				}
 				SEA = {
-					add_state_core = PREV
-				}	
-			}
-			if = {
-				limit = {
-					has_idea = SOV_Impose_order
-				}
-				SOV = {
-					release_autonomy = {
-						target = SEA
-						autonomy_state = autonomy_state_magistrate
-						freedom_level = 0.5
+					division_template = {
+						name = "Guerrilla Division"
+						priority = 1
+						regiments = {
+							infantry = { x = 0 y = 0 }
+							infantry = { x = 0 y = 1 }
+							infantry = { x = 0 y = 2 }
+							infantry = { x = 0 y = 3 }
+							infantry = { x = 0 y = 4 }
+							infantry = { x = 1 y = 0 }
+							infantry = { x = 1 y = 1 }
+							infantry = { x = 1 y = 2 }
+							infantry = { x = 1 y = 3 }
+							infantry = { x = 1 y = 4 }
+						}
+						support = {
+							engineer = { x = 0 y = 0 }
+							artillery = { x = 0 y = 1 }
+						}
 					}
-				}
-
-			}
-			else = {
-				SOV = {
-					release_autonomy = {
-						target = SEA
-						autonomy_state = autonomy_reichsprotectorate
-						freedom_level = 0.5
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"1st Guerrilla Division\" division_template = \"Guerrilla Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = SEA
+						}
 					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"2nd Guerrilla Division\" division_template = \"Guerrilla Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = SEA
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"3rd Guerrilla Division\" division_template = \"Guerrilla Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = SEA
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"4th Guerrilla Division\" division_template = \"Guerrilla Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = SEA
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"5th Guerrilla Division\" division_template = \"Guerrilla Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = SEA
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"6th Guerrilla Division\" division_template = \"Guerrilla Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = SEA
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"7th Guerrilla Division\" division_template = \"Guerrilla Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = SEA
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"8th Guerrilla Division\" division_template = \"Guerrilla Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = SEA
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"9th Guerrilla Division\" division_template = \"Guerrilla Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = SEA
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"10th Guerrilla Division\" division_template = \"Guerrilla Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = SEA
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"11th Guerrilla Division\" division_template = \"Guerrilla Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = SEA
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"12th Guerrilla Division\" division_template = \"Guerrilla Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = SEA
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"13th Guerrilla Division\" division_template = \"Guerrilla Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = SEA
+						}
+					}
+					set_cosmetic_tag = SEAC
 				}
-			}
-			SEA = {
-				load_oob = "MAL_1939"
-				set_cosmetic_tag = SEAC
 			}
 		}
 	}
@@ -10648,53 +11693,305 @@ SOV_custom_formable_nations_endgame = {
 	   }
 
 		complete_effect = {
-			every_state = {
-				limit = {
-					has_state_flag = east_asia_fascist_nation_puppet
-				}
-				EAR = {
-					add_state_core = PREV
-				}	
-			}
-			if = {
-				limit = {
-					has_idea = SOV_Impose_order
-				}
-				SOV = {
-					release_autonomy = {
-						target = EAR
-						autonomy_state = autonomy_state_magistrate
-						freedom_level = 0.5
+			custom_effect_tooltip = form_east_asia_continent_tt
+			hidden_effect = {
+				every_state = {
+					limit = {
+						has_state_flag = east_asia_fascist_nation_puppet
+						NOT = {
+							is_claimed_by = SOV
+						}
 					}
+					EAR = {
+						add_state_core = PREV
+					}	
 				}
+				if = {
+					limit = {
+						has_idea = SOV_Impose_order
+					}
+					SOV = {
+						release_autonomy = {
+							target = EAR
+							autonomy_state = autonomy_state_magistrate
+							freedom_level = 0.5
+						}
+					}
 
-			}
-			else = {
-				SOV = {
-					release_autonomy = {
-						target = EAR
-						autonomy_state = autonomy_reichsprotectorate
-						freedom_level = 0.5
+				}
+				else = {
+					SOV = {
+						release_autonomy = {
+							target = EAR
+							autonomy_state = autonomy_reichsprotectorate
+							freedom_level = 0.5
+						}
 					}
 				}
-			}
-			EAR = {
-				load_oob = "JAP_1939"
-				set_cosmetic_tag = EARC
-			}
-			if= {
-				limit = {
-					has_completed_focus = SOV_the_lawyer_remains
+				every_state = {
+					limit = {
+						has_state_flag = east_asia_fascist_nation_puppet
+						is_claimed_by = SOV
+					}
+					EAR = {
+						add_state_core = PREV
+					}	
 				}
 				EAR = {
-					create_country_leader = {
-						name = "Konstantin Rodzaevsky"
-						desc = "POLITICS_KONSTANTIN_RODZAEVSKY_DESC"
-						picture = "Portrait_Soviet_Konstantin_Rodzaevsky.dds"
-						expire = "1953.3.1"
-						ideology = fascism_ideology
-						traits = {
-							
+					division_template = {
+						name = "East Asian Imperial Division"
+						priority = 1
+						regiments = {
+							infantry = { x = 0 y = 0 }
+							infantry = { x = 0 y = 1 }
+							infantry = { x = 0 y = 2 }
+							infantry = { x = 0 y = 3 }
+							infantry = { x = 0 y = 4 }
+							infantry = { x = 1 y = 0 }
+							infantry = { x = 1 y = 1 }
+							infantry = { x = 1 y = 2 }
+							infantry = { x = 1 y = 3 }
+							infantry = { x = 2 y = 0 }
+							infantry = { x = 2 y = 1 }
+							infantry = { x = 2 y = 2 }
+							infantry = { x = 2 y = 3 }
+							infantry = { x = 2 y = 4 }
+							infantry = { x = 3 y = 0 }
+							infantry = { x = 3 y = 1 }
+							infantry = { x = 3 y = 2 }
+							infantry = { x = 3 y = 3 }
+							infantry = { x = 3 y = 4 }
+							infantry = { x = 4 y = 0 }
+							infantry = { x = 4 y = 1 }
+							infantry = { x = 4 y = 2 }
+							infantry = { x = 4 y = 3 }
+							infantry = { x = 4 y = 4 }
+						}
+						support = {
+							engineer = { x = 0 y = 0 }
+							artillery = { x = 0 y = 1 }
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"1st East Asian Imperial Division\" division_template = \"East Asian Imperial Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EAR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"2snd East Asian Imperial Division\" division_template = \"East Asian Imperial Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EAR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"3rd East Asian Imperial Division\" division_template = \"East Asian Imperial Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EAR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"4th East Asian Imperial Division\" division_template = \"East Asian Imperial Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EAR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"5th East Asian Imperial Division\" division_template = \"East Asian Imperial Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EAR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"6th East Asian Imperial Division\" division_template = \"East Asian Imperial Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EAR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"7th East Asian Imperial Division\" division_template = \"East Asian Imperial Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EAR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"8th East Asian Imperial Division\" division_template = \"East Asian Imperial Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EAR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"9th East Asian Imperial Division\" division_template = \"East Asian Imperial Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EAR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"10th East Asian Imperial Division\" division_template = \"East Asian Imperial Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EAR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"11th East Asian Imperial Division\" division_template = \"East Asian Imperial Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EAR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"12th East Asian Imperial Division\" division_template = \"East Asian Imperial Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EAR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"13th East Asian Imperial Division\" division_template = \"East Asian Imperial Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EAR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"14th East Asian Imperial Division\" division_template = \"East Asian Imperial Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EAR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"15th East Asian Imperial Division\" division_template = \"East Asian Imperial Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EAR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"16th East Asian Imperial Division\" division_template = \"East Asian Imperial Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EAR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"17th East Asian Imperial Division\" division_template = \"East Asian Imperial Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EAR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"18th East Asian Imperial Division\" division_template = \"East Asian Imperial Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EAR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"19th East Asian Imperial Division\" division_template = \"East Asian Imperial Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EAR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"20th East Asian Imperial Division\" division_template = \"East Asian Imperial Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EAR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"21th East Asian Imperial Division\" division_template = \"East Asian Imperial Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EAR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"22th East Asian Imperial Division\" division_template = \"East Asian Imperial Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EAR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"23th East Asian Imperial Division\" division_template = \"East Asian Imperial Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EAR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"24th East Asian Imperial Division\" division_template = \"East Asian Imperial Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EAR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"25th East Asian Imperial Division\" division_template = \"East Asian Imperial Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EAR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"26th East Asian Imperial Division\" division_template = \"East Asian Imperial Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EAR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"27th East Asian Imperial Division\" division_template = \"East Asian Imperial Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EAR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"28th East Asian Imperial Division\" division_template = \"East Asian Imperial Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EAR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"29th East Asian Imperial Division\" division_template = \"East Asian Imperial Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EAR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"30th East Asian Imperial Division\" division_template = \"East Asian Imperial Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EAR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"31th East Asian Imperial Division\" division_template = \"East Asian Imperial Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EAR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"32th East Asian Imperial Division\" division_template = \"East Asian Imperial Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EAR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"33th East Asian Imperial Division\" division_template = \"East Asian Imperial Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EAR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"34th East Asian Imperial Division\" division_template = \"East Asian Imperial Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EAR
+						}
+					}
+					set_cosmetic_tag = EARC
+				}
+				if= {
+					limit = {
+						has_completed_focus = SOV_the_lawyer_remains
+					}
+					EAR = {
+						create_country_leader = {
+							name = "Konstantin Rodzaevsky"
+							desc = "POLITICS_KONSTANTIN_RODZAEVSKY_DESC"
+							picture = "Portrait_Soviet_Konstantin_Rodzaevsky.dds"
+							expire = "1953.3.1"
+							ideology = fascism_ideology
+							traits = {
+								
+							}
 						}
 					}
 				}
@@ -10721,39 +12018,1483 @@ SOV_custom_formable_nations_endgame = {
 	   }
 
 		complete_effect = {
+			custom_effect_tooltip = form_oceania_continent_tt
+			hidden_effect = {
+				every_state = {
+					limit = {
+						has_state_flag = oceania_fascist_nation_puppet
+						NOT = {
+							is_claimed_by = SOV
+						}
+					}
+					OCE = {
+						add_state_core = PREV
+					}	
+				}
+				if = {
+					limit = {
+						has_idea = SOV_Impose_order
+					}
+					SOV = {
+						release_autonomy = {
+							target = OCE
+							autonomy_state = autonomy_state_magistrate
+							freedom_level = 0.5
+						}
+					}
+
+				}
+				else = {
+					SOV = {
+						release_autonomy = {
+							target = OCE
+							autonomy_state = autonomy_reichsprotectorate
+							freedom_level = 0.5
+						}
+					}
+				}
+				every_state = {
+					limit = {
+						has_state_flag = oceania_fascist_nation_puppet
+						is_claimed_by = SOV
+					}
+					OCE = {
+						add_state_core = PREV
+					}	
+				}
+				OCE = {
+					division_template = {
+						name = "Island Garrison Division"
+						priority = 1
+						regiments = {
+							infantry = { x = 0 y = 0 }
+							infantry = { x = 0 y = 1 }
+							infantry = { x = 0 y = 2 }
+							infantry = { x = 0 y = 3 }
+							infantry = { x = 0 y = 4 }
+							infantry = { x = 1 y = 0 }
+							infantry = { x = 1 y = 1 }
+							infantry = { x = 1 y = 2 }
+							infantry = { x = 1 y = 3 }
+							infantry = { x = 1 y = 4 }
+						}
+						support = {
+							engineer = { x = 0 y = 0 }
+							artillery = { x = 0 y = 1 }
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"1st Island Garrison Division\" division_template = \"Island Garrison Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = OCE
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"2nd Island Garrison Division\" division_template = \"Island Garrison Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = OCE
+						}
+					}
+					random_owned_controlled_state = {	
+						create_unit = {
+							division = "name = \"3rd Island Garrison Division\" division_template = \"Island Garrison Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = OCE
+						}
+					}
+					random_owned_controlled_state = {	
+						create_unit = {
+							division = "name = \"4th Island Garrison Division\" division_template = \"Island Garrison Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = OCE
+						}
+					}
+					random_owned_controlled_state = {	
+						create_unit = {
+							division = "name = \"5th Island Garrison Division\" division_template = \"Island Garrison Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = OCE
+						}
+					}
+					random_owned_controlled_state = {	
+						create_unit = {
+							division = "name = \"6th Island Garrison Division\" division_template = \"Island Garrison Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = OCE
+						}
+					}
+					random_owned_controlled_state = {	
+						create_unit = {
+							division = "name = \"7th Island Garrison Division\" division_template = \"Island Garrison Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = OCE
+						}	
+					}
+					set_cosmetic_tag = OCEC
+				}
+			}
+		}
+	}
+
+	form_europe_russia_continent = {
+
+		icon = GFX_decision_eng_trade_unions_support
+
+		available = {
+			any_state = {
+				has_state_flag = europe_fascist_nation_puppet
+				is_controlled_by = ROOT
+				NOT = {
+					is_claimed_by = SOV
+				}
+			}
+		}
+
+
+		fire_only_once = yes
+
+	   ai_will_do = {
+		   factor = 100
+	   }
+
+		complete_effect = {
+			custom_effect_tooltip = form_europe_continent_tt
+			hidden_effect = {
+				every_state = {
+					limit = {
+						has_state_flag = europe_fascist_nation_puppet
+						NOT = {
+							is_claimed_by = SOV
+						}
+					}
+					EUR = {
+						add_state_core = PREV
+					}	
+				}
+				if = {
+					limit = {
+						has_idea = SOV_Impose_order
+					}
+					SOV = {
+						release_autonomy = {
+							target = EUR
+							autonomy_state = autonomy_state_magistrate
+							freedom_level = 0.5
+						}
+					}
+
+				}
+				else = {
+					SOV = {
+						release_autonomy = {
+							target = EUR
+							autonomy_state = autonomy_reichsprotectorate
+							freedom_level = 0.5
+						}
+					}
+				}
+				every_state = { #Fix Bug
+					limit = {
+						has_state_flag = europe_fascist_nation_puppet
+						is_claimed_by = SOV
+					}
+					EUR = {
+						add_state_core = PREV
+					}	
+				}
+				EUR = {
+					division_template = {
+						name = "European Peacekeeper Division"
+						priority = 1
+						regiments = {
+							infantry = { x = 0 y = 0 }
+							infantry = { x = 0 y = 1 }
+							infantry = { x = 0 y = 2 }
+							infantry = { x = 0 y = 3 }
+							infantry = { x = 0 y = 4 }
+							infantry = { x = 1 y = 0 }
+							infantry = { x = 1 y = 1 }
+							infantry = { x = 1 y = 2 }
+							infantry = { x = 1 y = 3 }
+							infantry = { x = 1 y = 4 }
+							infantry = { x = 2 y = 0 }
+							infantry = { x = 2 y = 1 }
+							artillery_brigade = { x = 2 y = 2 }
+							artillery_brigade = { x = 2 y = 3 }
+							infantry = { x = 3 y = 0 }
+							infantry = { x = 3 y = 1 }
+							artillery_brigade = { x = 3 y = 2 }
+							artillery_brigade = { x = 3 y = 3 }
+						}
+						support = {
+							engineer = { x = 0 y = 0 }
+							artillery = { x = 0 y = 1 }
+						}
+					}
+					division_template = {
+						name = "European Tank"
+						priority = 2
+						regiments = {
+							medium_armor = { x = 0 y = 0 }
+							medium_armor = { x = 0 y = 1 }
+							medium_armor = { x = 0 y = 2 }
+							medium_armor = { x = 0 y = 3 }
+							medium_armor = { x = 0 y = 4 }
+							medium_armor = { x = 1 y = 0 }
+							medium_armor = { x = 1 y = 1 }
+							medium_armor = { x = 1 y = 2 }
+							medium_armor = { x = 1 y = 3 }
+							medium_armor = { x = 1 y = 4 }
+							motorized = { x = 2 y = 0 }
+							motorized = { x = 2 y = 1 }
+							motorized = { x = 2 y = 2 }
+							motorized = { x = 2 y = 3 }
+							motorized = { x = 2 y = 4 }
+							motorized = { x = 3 y = 0 }
+							motorized = { x = 3 y = 1 }
+							motorized = { x = 3 y = 2 }
+							motorized = { x = 3 y = 3 }
+							motorized = { x = 3 y = 4 }
+						}
+						support = {
+							light_tank_recon = { x = 0 y = 0 }
+							engineer = { x = 0 y = 1 }
+						}
+					}
+					random_owned_controlled_state = {	
+						create_unit = {
+							division = "name = \"1st European Peacekeeper Division\" division_template = \"European Peacekeeper Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EUR
+						}	
+					}
+					random_owned_controlled_state = {	
+						create_unit = {
+							division = "name = \"2nd European Peacekeeper Division\" division_template = \"European Peacekeeper Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EUR
+						}	
+					}
+					random_owned_controlled_state = {	
+						create_unit = {
+							division = "name = \"3rd European Peacekeeper Division\" division_template = \"European Peacekeeper Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EUR
+						}	
+					}
+					random_owned_controlled_state = {	
+						create_unit = {
+							division = "name = \"4th European Peacekeeper Division\" division_template = \"European Peacekeeper Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EUR
+						}	
+					}
+					random_owned_controlled_state = {	
+						create_unit = {
+							division = "name = \"5th European Peacekeeper Division\" division_template = \"European Peacekeeper Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EUR
+						}	
+					}
+					random_owned_controlled_state = {	
+						create_unit = {
+							division = "name = \"6th European Peacekeeper Division\" division_template = \"European Peacekeeper Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EUR
+						}	
+					}
+					random_owned_controlled_state = {	
+						create_unit = {
+							division = "name = \"7th European Peacekeeper Division\" division_template = \"European Peacekeeper Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EUR
+						}	
+					}
+					random_owned_controlled_state = {	
+						create_unit = {
+							division = "name = \"8th European Peacekeeper Division\" division_template = \"European Peacekeeper Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EUR
+						}	
+					}
+					random_owned_controlled_state = {	
+						create_unit = {
+							division = "name = \"9th European Peacekeeper Division\" division_template = \"European Peacekeeper Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EUR
+						}	
+					}
+					random_owned_controlled_state = {	
+						create_unit = {
+							division = "name = \"10th European Peacekeeper Division\" division_template = \"European Peacekeeper Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EUR
+						}	
+					}
+					random_owned_controlled_state = {	
+						create_unit = {
+							division = "name = \"11th European Peacekeeper Division\" division_template = \"European Peacekeeper Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EUR
+						}	
+					}
+					random_owned_controlled_state = {	
+						create_unit = {
+							division = "name = \"12th European Peacekeeper Division\" division_template = \"European Peacekeeper Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EUR
+						}	
+					}
+					random_owned_controlled_state = {	
+						create_unit = {
+							division = "name = \"13th European Peacekeeper Division\" division_template = \"European Peacekeeper Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EUR
+						}	
+					}
+					random_owned_controlled_state = {	
+						create_unit = {
+							division = "name = \"14th European Peacekeeper Division\" division_template = \"European Peacekeeper Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EUR
+						}	
+					}
+					random_owned_controlled_state = {	
+						create_unit = {
+							division = "name = \"15th European Peacekeeper Division\" division_template = \"European Peacekeeper Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EUR
+						}	
+					}
+					random_owned_controlled_state = {	
+						create_unit = {
+							division = "name = \"16th European Peacekeeper Division\" division_template = \"European Peacekeeper Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EUR
+						}	
+					}
+					random_owned_controlled_state = {	
+						create_unit = {
+							division = "name = \"17th European Peacekeeper Division\" division_template = \"European Peacekeeper Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EUR
+						}	
+					}
+					random_owned_controlled_state = {	
+						create_unit = {
+							division = "name = \"18th European Peacekeeper Division\" division_template = \"European Peacekeeper Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EUR
+						}	
+					}
+					random_owned_controlled_state = {	
+						create_unit = {
+							division = "name = \"19th European Peacekeeper Division\" division_template = \"European Peacekeeper Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EUR
+						}	
+					}
+					random_owned_controlled_state = {	
+						create_unit = {
+							division = "name = \"20th European Peacekeeper Division\" division_template = \"European Peacekeeper Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EUR
+						}	
+					}
+					random_owned_controlled_state = {	
+						create_unit = {
+							division = "name = \"21th European Peacekeeper Division\" division_template = \"European Peacekeeper Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EUR
+						}	
+					}
+					random_owned_controlled_state = {	
+						create_unit = {
+							division = "name = \"22th European Peacekeeper Division\" division_template = \"European Peacekeeper Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EUR
+						}	
+					}
+					random_owned_controlled_state = {	
+						create_unit = {
+							division = "name = \"23th European Peacekeeper Division\" division_template = \"European Peacekeeper Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EUR
+						}	
+					}
+					random_owned_controlled_state = {	
+						create_unit = {
+							division = "name = \"24th European Peacekeeper Division\" division_template = \"European Peacekeeper Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EUR
+						}	
+					}
+					random_owned_controlled_state = {	
+						create_unit = {
+							division = "name = \"25th European Peacekeeper Division\" division_template = \"European Peacekeeper Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EUR
+						}	
+					}
+					random_owned_controlled_state = {	
+						create_unit = {
+							division = "name = \"26th European Peacekeeper Division\" division_template = \"European Peacekeeper Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EUR
+						}	
+					}
+					random_owned_controlled_state = {	
+						create_unit = {
+							division = "name = \"1st European Tank\" division_template = \"European Tank\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EUR
+						}	
+					}
+					random_owned_controlled_state = {	
+						create_unit = {
+							division = "name = \"2nd European Tank\" division_template = \"European Tank\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EUR
+						}	
+					}
+					random_owned_controlled_state = {	
+						create_unit = {
+							division = "name = \"3rd European Tank\" division_template = \"European Tank\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EUR
+						}	
+					}
+					random_owned_controlled_state = {	
+						create_unit = {
+							division = "name = \"4th European Tank\" division_template = \"European Tank\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EUR
+						}	
+					}
+					random_owned_controlled_state = {	
+						create_unit = {
+							division = "name = \"5th European Tank\" division_template = \"European Tank\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EUR
+						}	
+					}
+					random_owned_controlled_state = {	
+						create_unit = {
+							division = "name = \"6th European Tank\" division_template = \"European Tank\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = EUR
+						}	
+					}
+					set_cosmetic_tag = EURC
+				}
+			}
+		}
+	}
+
+	SOV_integrate_american_puppet_north_america = {
+
+		icon = GFX_decision_generic_nationalism
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+		available = {
+			NAF = {
+				is_subject_of = SOV
+			}
+		}
+
+		visible = {
+			NAF = {
+				is_subject_of = SOV
+			}
+		}
+
+		target_root_trigger = {
+			has_completed_focus = SOV_the_thoughts_of_many
+		}
+
+		target_trigger = {
+			FROM = {
+				is_subject_of = SOV
+				NOT = {
+					TAG = NAF
+				}
+				any_state = {
+					has_state_flag = north_america_fascist_nation_puppet
+					is_controlled_by = FROM
+				}
+			}
+        }
+
+		ai_will_do =  {
+			factor = 25
+		}
+
+		complete_effect = {
+			FROM = {
+				country_event = { id = continents.1 days = 1}
+			}
+		}
+	}
+
+	SOV_integrate_central_american_puppet_central_america = {
+
+		icon = GFX_decision_generic_nationalism
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+		available = {
+			CAF = {
+				is_subject_of = SOV
+			}
+		}
+
+		visible = {
+			CAF = {
+				is_subject_of = SOV
+			}
+		}
+
+		target_root_trigger = {
+			has_completed_focus = SOV_the_thoughts_of_many
+		}
+
+		target_trigger = {
+			FROM = {
+				is_subject_of = SOV
+				NOT = {
+					TAG = CAF
+				}
+				any_state = {
+					has_state_flag = central_america_fascist_nation_puppet
+					is_controlled_by = FROM
+				}
+			}
+        }
+
+		ai_will_do =  {
+			factor = 25
+		}
+
+		complete_effect = {
+			FROM = {
+				country_event = { id = continents.3 days = 1}
+			}
+		}
+	}
+
+	SOV_integrate_south_american_puppet_south_america = {
+
+		icon = GFX_decision_generic_nationalism
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+		available = {
+			SAR = {
+				is_subject_of = SOV
+			}
+		}
+
+		visible = {
+			SAR = {
+				is_subject_of = SOV
+			}
+		}
+
+		target_root_trigger = {
+			has_completed_focus = SOV_the_thoughts_of_many
+		}
+
+		target_trigger = {
+			FROM = {
+				is_subject_of = SOV
+				NOT = {
+					TAG = SAR
+				}
+				any_state = {
+					has_state_flag = south_america_fascist_nation_puppet
+					is_controlled_by = FROM
+				}
+			}
+        }
+
+		ai_will_do =  {
+			factor = 25
+		}
+
+		complete_effect = {
+			FROM = {
+				country_event = { id = continents.4 days = 1}
+			}
+		}
+	}
+
+	SOV_integrate_south_carraibe_puppet = {
+
+		icon = GFX_decision_generic_nationalism
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+		available = {
+			CAI = {
+				is_subject_of = SOV
+			}
+		}
+
+		visible = {
+			CAI = {
+				is_subject_of = SOV
+			}
+		}
+
+		target_root_trigger = {
+			has_completed_focus = SOV_the_thoughts_of_many
+		}
+
+		target_trigger = {
+			FROM = {
+				is_subject_of = SOV
+				NOT = {
+					TAG = CAI
+				}
+				any_state = {
+					has_state_flag = caraibe_america_fascist_nation_puppet
+					is_controlled_by = FROM
+				}
+			}
+        }
+
+		ai_will_do =  {
+			factor = 25
+		}
+
+		complete_effect = {
+			FROM = {
+				country_event = { id = continents.5 days = 1}
+			}
+		}
+	}
+
+	SOV_integrate_middle_east_puppet = {
+
+		icon = GFX_decision_generic_nationalism
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+		available = {
+			MEF = {
+				is_subject_of = SOV
+			}
+		}
+
+		visible = {
+			MEF = {
+				is_subject_of = SOV
+			}
+		}
+
+		target_root_trigger = {
+			has_completed_focus = SOV_the_thoughts_of_many
+		}
+
+		target_trigger = {
+			FROM = {
+				is_subject_of = SOV
+				NOT = {
+					TAG = MEF
+				}
+				any_state = {
+					has_state_flag = middle_east_fascist_nation_puppet
+					is_controlled_by = FROM
+				}
+			}
+        }
+
+		ai_will_do =  {
+			factor = 25
+		}
+
+		complete_effect = {
+			FROM = {
+				country_event = { id = continents.6 days = 1}
+			}
+		}
+	}
+
+	SOV_integrate_africa_puppet = {
+
+		icon = GFX_decision_generic_nationalism
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+		available = {
+			AFF = {
+				is_subject_of = SOV
+			}
+		}
+
+		visible = {
+			AFF = {
+				is_subject_of = SOV
+			}
+		}
+
+		target_root_trigger = {
+			has_completed_focus = SOV_the_thoughts_of_many
+		}
+
+		target_trigger = {
+			FROM = {
+				is_subject_of = SOV
+				NOT = {
+					TAG = AFF
+				}
+				any_state = {
+					has_state_flag = africa_fascist_nation_puppet
+					is_controlled_by = FROM
+				}
+			}
+        }
+
+		ai_will_do =  {
+			factor = 25
+		}
+
+		complete_effect = {
+			FROM = {
+				country_event = { id = continents.7 days = 1}
+			}
+		}
+	}
+
+	SOV_integrate_south_asia_puppet = {
+
+		icon = GFX_decision_generic_nationalism
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+		available = {
+			SFR = {
+				is_subject_of = SOV
+			}
+		}
+
+		visible = {
+			SFR = {
+				is_subject_of = SOV
+			}
+		}
+
+		target_root_trigger = {
+			has_completed_focus = SOV_the_thoughts_of_many
+		}
+
+		target_trigger = {
+			FROM = {
+				is_subject_of = SOV
+				NOT = {
+					TAG = SFR
+				}
+				any_state = {
+					has_state_flag = south_asia_fascist_nation_puppet
+					is_controlled_by = FROM
+				}
+			}
+        }
+
+		ai_will_do =  {
+			factor = 25
+		}
+
+		complete_effect = {
+			FROM = {
+				country_event = { id = continents.8 days = 1}
+			}
+		}
+	}
+
+	SOV_integrate_south_east_asia_puppet = {
+
+		icon = GFX_decision_generic_nationalism
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+		available = {
+			SEA = {
+				is_subject_of = SOV
+			}
+		}
+
+		visible = {
+			SEA = {
+				is_subject_of = SOV
+			}
+		}
+
+		target_root_trigger = {
+			has_completed_focus = SOV_the_thoughts_of_many
+		}
+
+		target_trigger = {
+			FROM = {
+				is_subject_of = SOV
+				NOT = {
+					TAG = SEA
+				}
+				any_state = {
+					has_state_flag = south_east_asia_fascist_nation_puppet
+					is_controlled_by = FROM
+				}
+			}
+        }
+
+		ai_will_do =  {
+			factor = 25
+		}
+
+		complete_effect = {
+			FROM = {
+				country_event = { id = continents.9 days = 1}
+			}
+		}
+	}
+
+	SOV_integrate_east_asia_puppet = {
+
+		icon = GFX_decision_generic_nationalism
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+		available = {
+			EAR = {
+				is_subject_of = SOV
+			}
+		}
+
+		visible = {
+			EAR = {
+				is_subject_of = SOV
+			}
+		}
+
+		target_root_trigger = {
+			has_completed_focus = SOV_the_thoughts_of_many
+		}
+
+		target_trigger = {
+			FROM = {
+				is_subject_of = SOV
+				NOT = {
+					TAG = EAR
+				}
+				any_state = {
+					has_state_flag = east_asia_fascist_nation_puppet
+					is_controlled_by = FROM
+				}
+			}
+        }
+
+		ai_will_do =  {
+			factor = 25
+		}
+
+		complete_effect = {
+			FROM = {
+				country_event = { id = continents.10 days = 1}
+			}
+		}
+	}
+
+	SOV_integrate_oceania_puppet = {
+
+		icon = GFX_decision_generic_nationalism
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+		available = {
+			OCE = {
+				is_subject_of = SOV
+			}
+		}
+
+		visible = {
+			OCE = {
+				is_subject_of = SOV
+			}
+		}
+
+		target_root_trigger = {
+			has_completed_focus = SOV_the_thoughts_of_many
+		}
+
+		target_trigger = {
+			FROM = {
+				is_subject_of = SOV
+				NOT = {
+					TAG = OCE
+				}
+				any_state = {
+					has_state_flag = oceania_fascist_nation_puppet
+					is_controlled_by = FROM
+				}
+			}
+        }
+
+		ai_will_do =  {
+			factor = 25
+		}
+
+		complete_effect = {
+			FROM = {
+				country_event = { id = continents.11 days = 1}
+			}
+		}
+	}
+
+	SOV_integrate_europe_puppet = {
+
+		icon = GFX_decision_generic_nationalism
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+		available = {
+			EUR = {
+				is_subject_of = SOV
+			}
+		}
+
+		visible = {
+			EUR = {
+				is_subject_of = SOV
+			}
+		}
+
+		target_root_trigger = {
+			has_completed_focus = SOV_the_thoughts_of_many
+		}
+
+		target_trigger = {
+			FROM = {
+				is_subject_of = SOV
+				NOT = {
+					TAG = EUR
+				}
+				any_state = {
+					has_state_flag = europe_fascist_nation_puppet
+					is_controlled_by = FROM
+				}
+			}
+        }
+
+		ai_will_do =  {
+			factor = 25
+		}
+
+		complete_effect = {
+			FROM = {
+				country_event = { id = continents.12 days = 1}
+			}
+		}
+	}
+
+	SOV_give_back_north_america_land = {
+		
+		icon = GFX_decision_hol_draw_up_staff_plans
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			NAF = {
+				is_subject_of = SOV
+			}
+			any_state = {
+				has_state_flag = north_america_fascist_nation_puppet
+				is_controlled_by = ROOT
+			}
+		}
+
+		visible = {
+			NAF = {
+				is_subject_of = SOV
+			}
+			any_state = {
+				has_state_flag = north_america_fascist_nation_puppet
+				is_controlled_by = ROOT
+			}
+		}
+
+		ai_will_do =  {
+			factor = 25
+		}
+
+		complete_effect = {
+			every_state = {
+				limit = {
+					has_state_flag = north_america_fascist_nation_puppet
+					is_controlled_by = ROOT
+				}
+				NAF = {
+					transfer_state = PREV
+				}
+			}
+		}
+	}
+
+	SOV_give_back_central_america_land = {
+		
+		icon = GFX_decision_hol_draw_up_staff_plans
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			CAF = {
+				is_subject_of = SOV
+			}
+			any_state = {
+				has_state_flag = central_america_fascist_nation_puppet
+				is_controlled_by = ROOT
+			}
+		}
+
+		visible = {
+			CAF = {
+				is_subject_of = SOV
+			}
+			any_state = {
+				has_state_flag = central_america_fascist_nation_puppet
+				is_controlled_by = ROOT
+			}
+		}
+
+		ai_will_do =  {
+			factor = 25
+		}
+
+		complete_effect = {
+			every_state = {
+				limit = {
+					has_state_flag = central_america_fascist_nation_puppet
+					is_controlled_by = ROOT
+				}
+				CAF = {
+					transfer_state = PREV
+				}
+			}
+		}
+	}
+
+	SOV_give_back_south_america_land = {
+		
+		icon = GFX_decision_hol_draw_up_staff_plans
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			SAR = {
+				is_subject_of = SOV
+			}
+			any_state = {
+				has_state_flag = south_america_fascist_nation_puppet
+				is_controlled_by = ROOT
+			}
+		}
+
+		visible = {
+			SAR = {
+				is_subject_of = SOV
+			}
+			any_state = {
+				has_state_flag = south_america_fascist_nation_puppet
+				is_controlled_by = ROOT
+			}
+		}
+
+		ai_will_do =  {
+			factor = 25
+		}
+
+		complete_effect = {
+			every_state = {
+				limit = {
+					has_state_flag = south_america_fascist_nation_puppet
+					is_controlled_by = ROOT
+				}
+				SAR = {
+					transfer_state = PREV
+				}
+			}
+		}
+	}
+
+	SOV_give_back_carraibe_land = {
+		
+		icon = GFX_decision_hol_draw_up_staff_plans
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			CAI = {
+				is_subject_of = SOV
+			}
+			any_state = {
+				has_state_flag = caraibe_america_fascist_nation_puppet
+				is_controlled_by = ROOT
+			}
+		}
+
+		visible = {
+			CAI = {
+				is_subject_of = SOV
+			}
+			any_state = {
+				has_state_flag = caraibe_america_fascist_nation_puppet
+				is_controlled_by = ROOT
+			}
+		}
+
+		ai_will_do =  {
+			factor = 25
+		}
+
+		complete_effect = {
+			every_state = {
+				limit = {
+					has_state_flag = caraibe_america_fascist_nation_puppet
+					is_controlled_by = ROOT
+				}
+				CAI = {
+					transfer_state = PREV
+				}
+			}
+		}
+	}
+
+	SOV_give_back_middle_east_land = {
+		
+		icon = GFX_decision_hol_draw_up_staff_plans
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			MEF = {
+				is_subject_of = SOV
+			}
+			any_state = {
+				has_state_flag = middle_east_fascist_nation_puppet
+				is_controlled_by = ROOT
+			}
+		}
+
+		visible = {
+			MEF = {
+				is_subject_of = SOV
+			}
+			any_state = {
+				has_state_flag = middle_east_fascist_nation_puppet
+				is_controlled_by = ROOT
+			}
+		}
+
+		ai_will_do =  {
+			factor = 25
+		}
+
+		complete_effect = {
+			every_state = {
+				limit = {
+					has_state_flag = middle_east_fascist_nation_puppet
+					is_controlled_by = ROOT
+				}
+				MEF = {
+					transfer_state = PREV
+				}
+			}
+		}
+	}
+
+	SOV_give_back_african_land = {
+		
+		icon = GFX_decision_hol_draw_up_staff_plans
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			AFF = {
+				is_subject_of = SOV
+			}
+			any_state = {
+				has_state_flag = africa_fascist_nation_puppet
+				is_controlled_by = ROOT
+			}
+		}
+
+		visible = {
+			AFF = {
+				is_subject_of = SOV
+			}
+			any_state = {
+				has_state_flag = africa_fascist_nation_puppet
+				is_controlled_by = ROOT
+			}
+		}
+
+		ai_will_do =  {
+			factor = 25
+		}
+
+		complete_effect = {
+			every_state = {
+				limit = {
+					has_state_flag = africa_fascist_nation_puppet
+					is_controlled_by = ROOT
+				}
+				AFF = {
+					transfer_state = PREV
+				}
+			}
+		}
+	}
+
+	SOV_give_back_south_asian_land = {
+		
+		icon = GFX_decision_hol_draw_up_staff_plans
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			SFR = {
+				is_subject_of = SOV
+			}
+			any_state = {
+				has_state_flag = south_asia_fascist_nation_puppet
+				is_controlled_by = ROOT
+			}
+		}
+
+		visible = {
+			SFR = {
+				is_subject_of = SOV
+			}
+			any_state = {
+				has_state_flag = south_asia_fascist_nation_puppet
+				is_controlled_by = ROOT
+			}
+		}
+
+		ai_will_do =  {
+			factor = 25
+		}
+
+		complete_effect = {
+			every_state = {
+				limit = {
+					has_state_flag = south_asia_fascist_nation_puppet
+					is_controlled_by = ROOT
+				}
+				SFR = {
+					transfer_state = PREV
+				}
+			}
+		}
+	}
+
+	SOV_give_back_south_east_asian_land = {
+		
+		icon = GFX_decision_hol_draw_up_staff_plans
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			SEA = {
+				is_subject_of = SOV
+			}
+			any_state = {
+				has_state_flag = south_east_asia_fascist_nation_puppet
+				is_controlled_by = ROOT
+			}
+		}
+
+		visible = {
+			SEA = {
+				is_subject_of = SOV
+			}
+			any_state = {
+				has_state_flag = south_east_asia_fascist_nation_puppet
+				is_controlled_by = ROOT
+			}
+		}
+
+		ai_will_do =  {
+			factor = 25
+		}
+
+		complete_effect = {
+			every_state = {
+				limit = {
+					has_state_flag = south_east_asia_fascist_nation_puppet
+					is_controlled_by = ROOT
+				}
+				SEA = {
+					transfer_state = PREV
+				}
+			}
+		}
+	}
+
+	SOV_give_back_east_asian_land = {
+		
+		icon = GFX_decision_hol_draw_up_staff_plans
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			EAR = {
+				is_subject_of = SOV
+			}
+			any_state = {
+				has_state_flag = east_asia_fascist_nation_puppet
+				is_controlled_by = ROOT
+			}
+		}
+
+		visible = {
+			EAR = {
+				is_subject_of = SOV
+			}
+			any_state = {
+				has_state_flag = east_asia_fascist_nation_puppet
+				is_controlled_by = ROOT
+			}
+		}
+
+		ai_will_do =  {
+			factor = 25
+		}
+
+		complete_effect = {
+			every_state = {
+				limit = {
+					has_state_flag = east_asia_fascist_nation_puppet
+					is_controlled_by = ROOT
+				}
+				EAR = {
+					transfer_state = PREV
+				}
+			}
+		}
+	}
+
+	SOV_give_back_oceanian_land = {
+		
+		icon = GFX_decision_hol_draw_up_staff_plans
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			OCE = {
+				is_subject_of = SOV
+			}
+			any_state = {
+				has_state_flag = oceania_fascist_nation_puppet
+				is_controlled_by = ROOT
+			}
+		}
+
+		visible = {
+			OCE = {
+				is_subject_of = SOV
+			}
+			any_state = {
+				has_state_flag = oceania_fascist_nation_puppet
+				is_controlled_by = ROOT
+			}
+		}
+
+		ai_will_do =  {
+			factor = 25
+		}
+
+		complete_effect = {
 			every_state = {
 				limit = {
 					has_state_flag = oceania_fascist_nation_puppet
+					is_controlled_by = ROOT
 				}
 				OCE = {
-					add_state_core = PREV
-				}	
+					transfer_state = PREV
+				}
 			}
-			if = {
-				limit = {
-					has_idea = SOV_Impose_order
-				}
-				SOV = {
-					release_autonomy = {
-						target = OCE
-						autonomy_state = autonomy_state_magistrate
-						freedom_level = 0.5
-					}
-				}
+		}
+	}
 
+	SOV_give_back_european_land = {
+		
+		icon = GFX_decision_hol_draw_up_staff_plans
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			EUR = {
+				is_subject_of = SOV
 			}
-			else = {
-				SOV = {
-					release_autonomy = {
-						target = OCE
-						autonomy_state = autonomy_reichsprotectorate
-						freedom_level = 0.5
-					}
+			any_state = {
+				has_state_flag = europe_fascist_nation_puppet
+				is_controlled_by = ROOT
+			}
+		}
+
+		visible = {
+			EUR = {
+				is_subject_of = SOV
+			}
+			any_state = {
+				has_state_flag = europe_fascist_nation_puppet
+				is_controlled_by = ROOT
+			}
+		}
+
+		ai_will_do =  {
+			factor = 25
+		}
+
+		complete_effect = {
+			every_state = {
+				limit = {
+					has_state_flag = europe_fascist_nation_puppet
+					is_controlled_by = ROOT
 				}
-			}
-			OCE = {
-				load_oob = "AST_1939"
-				set_cosmetic_tag = OCEC
+				EUR = {
+					transfer_state = PREV
+				}
 			}
 		}
 	}
