@@ -6789,6 +6789,7 @@ focus_tree = {
 				add_stability = 0.1
 				add_war_support = 0.1
 			}
+			custom_effect_tooltip = SOV_komintern_unite_tt
 		}
 	}
 
@@ -8680,6 +8681,7 @@ focus_tree = {
 				add_stability = 0.05
 				add_war_support = 0.05
 			}
+			custom_effect_tooltip = SOV_workers_world_unite_tt
 		}
 	}
 
@@ -9856,6 +9858,7 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_ANNEXATION FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
 			custom_effect_tooltip = SOV_perpetual_defense_liberty_tt
+			custom_effect_tooltip = SOV_perpetual_defense_liberty_tt2
 		}
 	}
 
@@ -12880,6 +12883,7 @@ focus_tree = {
 			set_global_flag = SOV_became_slavic_empire
 			custom_effect_tooltip = SOV_slavic_empire_tt
 			custom_effect_tooltip = SOV_slavic_empire_tt2
+			custom_effect_tooltip = SOV_slavic_empire_tt3
 			hidden_effect = {
 				every_state = {
 					limit = {
@@ -13070,6 +13074,7 @@ focus_tree = {
 		completion_reward = {
 			country_event = { id = soviets.212 days = 1 }
 			custom_effect_tooltip = SOV_destiny_monarchy_tt
+			custom_effect_tooltip = SOV_destiny_monarchy_tt2
 
 			# 1 = opposed ; 2 = neutral ; 3 = support
 
@@ -14036,14 +14041,11 @@ focus_tree = {
 					}
 				}
 				else = {
-					#TODO country event for Konstantin's return
-				}
-				hidden_effect = {
-					country_event = { id = soviets.282 days = 100 }
+					country_event = { id = soviets.343 hours = 10 }
 				}
 			}
 			else = {
-				#TODO Event where Anastasy directly comes back (in case Konstantin was executed for some reasons)
+				country_event = { id = soviets.344 hours = 10 }
 			}
 		}
 	}
@@ -14097,7 +14099,7 @@ focus_tree = {
 				}
 			}
 			else = {
-				#TODO country event for direct transfer of the Fascist Exiles
+				country_event = { id = generics.29 days = 1 }
 			}
 		}
 	}
@@ -14310,10 +14312,25 @@ focus_tree = {
 		}
 		available = {
 			is_subject = no
+			has_government = fascism
 		}
 		search_filters = { FOCUS_FILTER_FASCIST_KONSTANTIN_RUSSIA }
 		completion_reward = {
 			custom_effect_tooltip = SOV_a_tragedy_tt
+			hidden_effect = {
+				if = { #Anastasy can't be target
+					limit = {
+						OR = {
+							has_country_flag = anastasy_was_killed
+							has_country_flag = anastasy_deported_siberia
+						}
+					}
+					country_event = soviets.346
+				}
+				else = {
+					country_event = soviets.345
+				}
+			}
 		}
 	}
 
@@ -14510,7 +14527,7 @@ focus_tree = {
 		y = 19
 		prerequisite = { focus = SOV_the_tables_have_turned }
 		icon = GFX_focus_focus_fra_border
-		cost = 10
+		cost = 8
 		ai_will_do = {
 			factor = 5
 		}
@@ -14518,9 +14535,18 @@ focus_tree = {
 			is_subject = no
 			has_government = fascism
 		}
+		bypass = {
+			GER = {
+				OR = {
+					exists = no
+					is_subject_of = ROOT
+					has_war_with = ROOT
+				}
+			}
+		}
 		search_filters = { FOCUS_FILTER_FASCIST_ANASTASY_RUSSIA }
 		completion_reward = {
-	
+			country_event = { id = soviets.338 days = 1 }
 		}
 	}
 
@@ -14609,7 +14635,7 @@ focus_tree = {
 		y = 20
 		prerequisite = { focus = SOV_memories }
 		icon = GFX_focus_befriend_italy
-		cost = 10
+		cost = 4
 		ai_will_do = {
 			factor = 5
 		}
@@ -14617,9 +14643,21 @@ focus_tree = {
 			is_subject = no
 			has_government = fascism
 		}
+		bypass = {
+			ITA = {
+				OR = {
+					exists = no
+					is_subject = yes
+					has_government = communism
+					has_war_with = ROOT
+				}
+			}
+		}
 		search_filters = { FOCUS_FILTER_FASCIST_ANASTASY_RUSSIA }
 		completion_reward = {
-	
+			ITA = {
+				country_event = { id = italys.9 days = 1 }
+			}
 		}
 	}
 
@@ -14630,17 +14668,35 @@ focus_tree = {
 		y = 21
 		prerequisite = { focus = SOV_italian_embassy }
 		icon = GFX_goal_tripartite_pact
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			factor = 4
+			modifier = {
+				factor = 7
+				NOT = {
+					any_country = {
+						is_major = yes
+						has_war_with = ITA
+						NOT = {
+							has_war_with = ROOT
+						}
+					}
+				}
+			}
 		}
 		available = {
 			is_subject = no
 			has_government = fascism
+			has_completed_focus = SOV_the_outside_question
+			ITA = {
+				has_country_flag = ITA_accepted_embassy_fascist
+			}
 		}
 		search_filters = { FOCUS_FILTER_FASCIST_ANASTASY_RUSSIA }
 		completion_reward = {
-	
+			ITA = {
+				country_event = { id = italys.12 days = 1 }
+			}
 		}
 	}
 

@@ -713,6 +713,9 @@ country_event = {
 				days > 182
 			}
 		}
+		NOT = {
+			has_country_flag = captured_761_fascist_exiles
+		}
 	}
 
 	option = { #Good
@@ -744,6 +747,9 @@ country_event = {
 				flag = small_exchanges_manchurian_border
 				days > 365
 			}
+		}
+		NOT = {
+			has_country_flag = captured_761_fascist_exiles
 		}
 	}
 
@@ -777,6 +783,9 @@ country_event = {
 				days > 546
 			}
 		}
+		NOT = {
+			has_country_flag = captured_761_fascist_exiles
+		}
 	}
 
 	option = { #Good
@@ -809,6 +818,9 @@ country_event = {
 				days > 730
 			}
 		}
+		NOT = {
+			has_country_flag = captured_761_fascist_exiles
+		}
 	}
 
 	option = { #Good
@@ -818,5 +830,87 @@ country_event = {
 	}
 }
 
-#TODO Add an event to directly transfer all the fascists exiles if you control state 761
+#Controls 761
+country_event = {
+	id = generics.29
+	title = generics.29.t
+	desc = generics.29.d
+	picture = GFX_report_event_soviet_soldiers_tank
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = SOV
+		is_subject = no
+		has_government = fascism
+		NOT = {
+			has_country_flag = {
+				flag = opened_manchurian_border
+				days > 365
+			}
+			has_country_flag = {
+				flag = small_exchanges_manchurian_border
+				days > 730
+			}
+			has_country_flag = SOV_100_percent_fascist_exile
+		}
+		OR = {
+			controls_state = 761
+			any_country = {
+				OR = {
+					is_subject_of = SOV
+					is_in_faction_with = SOV
+				}
+				controls_state = 761
+			}
+		}
+	}
+
+	immediate = {
+		hidden_effect = {
+			set_country_flag = captured_761_fascist_exiles
+		}
+	}
+
+	option = { #Good
+		name = generics.29.a
+		if = {
+			limit = {
+				NOT = {
+					has_country_flag = SOV_25_percent_fascist_exile
+				}
+			}
+			set_country_flag = SOV_25_percent_fascist_exile
+			unlock_decision_tooltip = SOV_organize_fascist_movement
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_country_flag = SOV_50_percent_fascist_exile
+				}
+			}
+			set_country_flag = SOV_50_percent_fascist_exile
+			unlock_decision_tooltip = SOV_organize_fascist_movement2
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_country_flag = SOV_75_percent_fascist_exile
+				}
+			}
+			set_country_flag = SOV_75_percent_fascist_exile
+			unlock_decision_tooltip = SOV_organize_fascist_movement3
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_country_flag = SOV_100_percent_fascist_exile
+				}
+			}
+			set_country_flag = SOV_100_percent_fascist_exile
+			unlock_decision_tooltip = SOV_organize_fascist_movement4
+		}
+	}
+}
+
 #TODO Add an event to propose help to Manchukuo if they declare independence against Japan and accepted the open borders

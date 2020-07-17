@@ -2278,7 +2278,17 @@ country_event = {
 		set_country_flag = konstantin_rodzaevsky_executed
 		hidden_effect = {
 			retire_ideology_leader = fascism
-		}	
+			create_country_leader = {
+				name = "Anastasy Vonsyatsky"
+				desc = "POLITICS_ANASTASY_VONSYATSKY_DESC"
+				picture = "Portrait_Anastasy_Vonsyatsky.dds"
+				expire = "1965.1.1"
+				ideology = fascism_ideology
+				traits = {
+					dictator
+				}
+			}
+		}
 		add_stability = 0.1
 	}
 
@@ -2287,7 +2297,7 @@ country_event = {
 			factor = 30
 		}
 		name = soviets.61.b
-		add_political_power = 100
+		add_political_power = 200
 	}
 }
 
@@ -12606,7 +12616,7 @@ country_event = {
 
 	is_triggered_only = yes
 
-	option = { #We Have to Accept for our Survival
+	option = { #Die
 		name = soviets.272.a
 		ai_chance = {
 			factor = 100
@@ -13111,7 +13121,7 @@ country_event = {
 		}
 		add_political_power = -200
 		hidden_effect = {
-			country_event = { id = soviets.289 days = 50 }
+			country_event = { id = soviets.289 days = 200 }
 		}
 	}
 }
@@ -13592,6 +13602,7 @@ country_event = {
 		add_political_power = 50
 		custom_effect_tooltip = SOV_can_have_konstantin_tt
 		set_country_flag = law_triumphed_over_order
+		set_country_flag = anastasy_deported_siberia
 	}
 }
 
@@ -13725,6 +13736,7 @@ country_event = {
 		add_political_power = -50
 		custom_effect_tooltip = SOV_can_have_konstantin_tt
 		set_country_flag = law_triumphed_over_order
+		set_country_flag = anastasy_was_killed
 	}
 }
 
@@ -14209,6 +14221,20 @@ country_event = {
 			factor = 40
 		}
 		custom_effect_tooltip = SOV_future_foes_tt1
+		every_country = {
+			limit = {
+				NOT = {
+					original_tag = SOV
+				}
+				capital_scope = {
+					is_on_continent = europe
+				}
+			}
+			add_opinion_modifier = {
+				target = SOV
+				modifier = russian_european_focus
+			}
+		}
 		set_country_flag = SOV_fascist_focus_on_europe
 	}
 
@@ -14221,6 +14247,20 @@ country_event = {
 			factor = 30
 		}
 		custom_effect_tooltip = SOV_future_foes_tt2
+		every_country = {
+			limit = {
+				NOT = {
+					original_tag = SOV
+				}
+				capital_scope = {
+					is_on_continent = asia
+				}
+			}
+			add_opinion_modifier = {
+				target = SOV
+				modifier = russian_asian_focus
+			}
+		}
 		set_country_flag = SOV_fascist_focus_on_asia
 	}
 
@@ -14233,6 +14273,23 @@ country_event = {
 			factor = 30
 		}
 		custom_effect_tooltip = SOV_future_foes_tt3
+		every_country = {
+			limit = {
+				NOT = {
+					original_tag = SOV
+				}
+				capital_scope = {
+					OR = {
+						is_on_continent = north_america
+						is_on_continent = south_america
+					}
+				}
+			}
+			add_opinion_modifier = {
+				target = SOV
+				modifier = russian_american_focus
+			}
+		}
 		set_country_flag = SOV_fascist_focus_on_america
 	}
 
@@ -14419,7 +14476,9 @@ country_event = {
 		ai_chance = {
 			factor = 50
 		}
-		country_event = { id = soviets.322 days = 1 }
+		SOV = {
+			country_event = { id = soviets.322 days = 1 }
+		}
 	}
 }
 
@@ -14492,7 +14551,9 @@ country_event = {
 		ai_chance = {
 			factor = 40
 		}
-		country_event = { id = soviets.325 days = 1 }
+		SOV = {
+			country_event = { id = soviets.325 days = 1 }
+		}
 	}
 }
 
@@ -14551,6 +14612,7 @@ country_event = {
 			factor = 80
 		}
 		set_country_flag = SOV_enforced_military_access
+		add_ideas = SOV_Given_military_access
 		SOV = {
 			diplomatic_relation = {
 				country = ROOT
@@ -14566,7 +14628,9 @@ country_event = {
 		ai_chance = {
 			factor = 40
 		}
-		country_event = { id = soviets.328 days = 1 }
+		SOV = {
+			country_event = { id = soviets.328 days = 1 }
+		}
 	}
 }
 
@@ -14633,6 +14697,7 @@ country_event = {
 		ai_chance = {
 			factor = 100
 		}
+		remove_ideas = SOV_Given_military_access
 		custom_effect_tooltip = can_cancel_military_access_from_SOV
 		hidden_effect = {
 			SOV = {
@@ -14665,6 +14730,7 @@ country_event = {
 		ai_chance = {
 			factor = 100
 		}
+		remove_ideas = SOV_Given_military_access
 		custom_effect_tooltip = can_cancel_military_access_from_SOV
 	}
 }
@@ -14728,6 +14794,449 @@ country_event = {
 		}
 		add_political_power = 100
 		set_country_flag = tsar_marriage_happened
+	}
+}
+
+#Cancel military access with SOV if war
+country_event = {
+	id = soviets.334
+
+	hidden = yes
+
+	trigger = {
+		has_country_flag = SOV_enforced_military_access
+		has_war_with = SOV
+	}
+
+	immediate = {
+		clr_country_flag = SOV_enforced_military_access
+	}
+}
+
+#Event for Germany (Memories)
+country_event = {
+	id = soviets.338
+	title = soviets.338.t
+	desc = soviets.338.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Ask for a treaty of friendship
+		name = soviets.338.a
+		ai_chance = {
+			factor = 40
+		}
+		trigger = {
+			GER = {
+				has_government = fascism
+			}
+		}
+		add_war_support = -0.05
+		GER = {
+			country_event = { id = soviets.339 days = 1 }
+		}
+	}
+
+	option = { #Announce hostility
+		name = soviets.338.b
+		ai_chance = {
+			factor = 60
+		}
+		add_stability = 0.05
+		add_opinion_modifier = {
+			target = GER
+			modifier = hostile_russian_german_relations
+		}
+		GER = {
+			country_event = { id = soviets.342 days = 1 }
+		}
+	}
+}
+
+#Russo-German Treaty
+country_event = {
+	id = soviets.339
+	title = soviets.339.t
+	desc = soviets.339.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Yes
+		name = soviets.339.a
+		ai_chance = {
+			factor = 75
+		}
+		add_timed_idea = {
+			idea = SOV_Russo_german_treaty_fascist
+			days = 180
+		}
+		diplomatic_relation = {
+			country = SOV
+			relation = non_aggression_pact
+			active = yes
+		}
+		add_opinion_modifier = {
+			target = SOV
+			modifier = accepted_russo_german_treaty
+		}
+		SOV = {
+			country_event = { id = soviets.340 days = 1 }
+		}
+	}
+
+	option = { #No
+		name = soviets.339.b
+		ai_chance = {
+			factor = 25
+		}
+		add_opinion_modifier = {
+			target = SOV
+			modifier = refused_russo_german_treaty
+		}
+		SOV = {
+			country_event = { id = soviets.341 days = 1 }
+		}
+	}
+}
+
+#GER Accepts
+country_event = {
+	id = soviets.340
+	title = soviets.340.t
+	desc = soviets.340.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Yay
+		name = soviets.340.a
+		ai_chance = {
+			factor = 100
+		}
+		add_timed_idea = {
+			idea = SOV_Russo_german_treaty_fascist
+			days = 180
+		}
+		add_opinion_modifier = {
+			target = GER
+			modifier = accepted_russo_german_treaty
+		}
+	}
+}
+
+#GER Refuses
+country_event = {
+	id = soviets.341
+	title = soviets.341.t
+	desc = soviets.341.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Uh
+		name = soviets.341.a
+		ai_chance = {
+			factor = 100
+		}
+		add_opinion_modifier = {
+			target = GER
+			modifier = refused_russo_german_treaty
+		}
+	}
+}
+
+#SOV Announces Hostilities
+country_event = {
+	id = soviets.342
+	title = soviets.342.t
+	desc = soviets.342.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Uh
+		name = soviets.342.a
+		ai_chance = {
+			factor = 100
+		}
+		add_opinion_modifier = {
+			target = SOV
+			modifier = hostile_russian_german_relations
+		}
+	}
+}
+
+#Return of Konstantin (control state)
+country_event = {
+	id = soviets.343
+	title = soviets.343.t
+	desc = soviets.343.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = {
+		name = soviets.343.a
+		ai_chance = {
+			factor = 100
+		}
+		set_politics = {
+			ruling_party = fascism
+		}
+		add_popularity = {
+			ideology = fascism
+			popularity = 0.2
+		}
+		hidden_effect = {
+			set_cosmetic_tag = RFP
+			country_event = { id = soviets.282 days = 100 }
+		}
+	}
+}
+
+#Konstantin was executed and Anastasy takes over
+country_event = {
+	id = soviets.344
+	title = soviets.344.t
+	desc = soviets.344.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #If Konstantin is executed, Anastasy is supposed to take over anyways
+		name = soviets.344.a
+		ai_chance = {
+			factor = 100
+		}
+		custom_effect_tooltip = SOV_can_have_anastasy_tt
+		set_country_flag = order_triumphed_over_law
+		set_politics = {
+			ruling_party = fascism
+		}
+		add_popularity = {
+			ideology = fascism
+			popularity = 0.2
+		}
+		hidden_effect = {
+			set_cosmetic_tag = RFP
+		}
+	}
+}
+
+#The Tragedy of GetYear (Anastasy)
+country_event = {
+	id = soviets.345
+	title = soviets.345.t
+	desc = soviets.345.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Blame it on GER
+		trigger = {
+			country_exists = GER
+		}
+		name = soviets.345.a
+		ai_chance = {
+			factor = 25
+		}
+		add_manpower = -2
+		add_war_support = 0.05
+		add_political_power = -150
+		add_opinion_modifier = {
+			target = GER
+			modifier = anti_german_sentiment
+		}
+		add_ideas = SOV_anti_german_sentiment
+		hidden_effect = {
+			GER = {
+				country_event = { id = soviets.347 days = 1 }
+			}
+		}
+	}
+
+	option = { #Blame it on JAP
+		trigger = {
+			country_exists = JAP
+		}
+		name = soviets.345.b
+		ai_chance = {
+			factor = 25
+		}
+		add_manpower = -2
+		add_war_support = 0.05
+		add_political_power = -100
+		add_opinion_modifier = {
+			target = JAP
+			modifier = anti_japanese_sentiment
+		}
+		add_ideas = SOV_anti_japanese_sentiment
+		hidden_effect = {
+			JAP = {
+				country_event = { id = soviets.347 days = 1 }
+			}
+		}
+	}
+
+	option = { #Blame it on the real murderers
+		name = soviets.345.c
+		ai_chance = {
+			factor = 25
+		}
+		add_stability = 0.05
+		add_war_support = -0.1
+		add_political_power = -50
+	}
+
+	option = { #This is our fault
+		name = soviets.345.e
+		ai_chance = {
+			factor = 25
+		}
+		add_manpower = -2
+		add_war_support = 0.05
+		add_stability = 0.05
+		add_popularity = {
+			ideology = fascism
+			popularity = -0.1
+		}
+		add_political_power = -250
+	}
+}
+
+#The Tragedy of GetYear (SOV_pavel_bermondt)
+country_event = {
+	id = soviets.346
+	title = soviets.346.t
+	desc = soviets.346.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	immediate = {
+		hidden_effect = {
+			set_country_flag = SOV_pavel_bermondt_killed
+			#id = {
+			#	retire = yes
+			#}
+			#TODO Kill Pavel Bermondt
+		}
+	}
+
+	is_triggered_only = yes
+
+	option = { #Blame it on GER
+		trigger = {
+			country_exists = GER
+		}
+		name = soviets.346.a
+		ai_chance = {
+			factor = 25
+		}
+		add_manpower = -2
+		add_war_support = 0.05
+		add_political_power = -150
+		add_opinion_modifier = {
+			target = GER
+			modifier = anti_german_sentiment
+		}
+		add_ideas = SOV_anti_german_sentiment
+		hidden_effect = {
+			GER = {
+				country_event = { id = soviets.348 days = 1 }
+			}
+		}
+	}
+
+	option = { #Blame it on JAP
+		trigger = {
+			country_exists = JAP
+		}
+		name = soviets.346.b
+		ai_chance = {
+			factor = 25
+		}
+		add_manpower = -2
+		add_war_support = 0.05
+		add_political_power = -100
+		add_opinion_modifier = {
+			target = JAP
+			modifier = anti_japanese_sentiment
+		}
+		add_ideas = SOV_anti_japanese_sentiment
+		hidden_effect = {
+			JAP = {
+				country_event = { id = soviets.348 days = 1 }
+			}
+		}
+	}
+
+	option = { #Blame it on the real murderers
+		name = soviets.346.c
+		ai_chance = {
+			factor = 25
+		}
+		add_manpower = -2
+		add_stability = 0.05
+		add_war_support = -0.1
+		add_political_power = -50
+	}
+
+	option = { #This is our fault
+		name = soviets.346.e
+		ai_chance = {
+			factor = 25
+		}
+		add_manpower = -2
+		add_war_support = 0.05
+		add_stability = 0.05
+		add_popularity = {
+			ideology = fascism
+			popularity = -0.1
+		}
+		add_political_power = -200
+	}
+}
+
+#Anastasy Tragedy and JAP or GER was accused
+country_event = {
+	id = soviets.347
+	title = soviets.347.t
+	desc = soviets.347.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = {
+		name = soviets.347.a
+		ai_chance = {
+			factor = 100
+		}
+		add_opinion_modifier = {
+			target = SOV
+			modifier = accused_by_sov
+		}
+	}
+}
+
+#Pavel Tragedy and JAP or GER was accused
+country_event = {
+	id = soviets.348
+	title = soviets.348.t
+	desc = soviets.348.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = {
+		name = soviets.348.a
+		ai_chance = {
+			factor = 100
+		}
+		add_opinion_modifier = {
+			target = SOV
+			modifier = accused_by_sov
+		}
 	}
 }
 
