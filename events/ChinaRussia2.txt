@@ -1481,3 +1481,106 @@ country_event = {
 		custom_effect_tooltip = china_has_been_annexed_during_conference
 	}
 }
+
+#China Receive event to join Russian Faction 
+country_event = {
+	id = chinas.27
+	title = chinas.27.t
+	desc = chinas.27.d
+	picture = GFX_report_event_generic_sign_treaty3
+
+	is_triggered_only = yes
+
+	option = { #Accept at a Price
+		name = chinas.27.a
+		ai_chance = {
+			factor = 100
+		}
+		if = {
+			limit = {
+				SOV = {
+					NOT = {
+						is_in_faction = yes
+					}
+				}
+			}
+			create_faction = sino_russian_alliance
+		}
+		else_if = {
+			limit = {
+				SOV = {
+					is_in_faction = yes
+					is_faction_leader = yes
+					is_in_faction_with = JAP
+				}
+			}
+			SOV = {
+				set_faction_name = greater_asia_alliance
+			}	
+		}
+		else = {
+			SOV = {
+				set_faction_name = sino_russian_alliance
+			}	
+		}
+		SOV = {
+			country_event = { id = chinas.28 hours = 18 }
+			add_to_faction = event_target:WTT_current_china_leader
+		}
+		if = {
+			limit = {
+				JAP = {
+					is_in_faction_with = SOV
+				}
+			}
+			add_timed_idea = {
+				idea = CHI_unpopular_alliance
+				days = 730
+			}
+		}
+	}
+
+	option = { #Refuse
+		name = chinas.27.b
+		ai_chance = {
+			factor = 0
+		}
+		SOV = {
+			country_event = { id = chinas.29 hours = 18 }
+		}
+	}
+}
+
+#China Accept to join Russian Faction
+country_event = {
+	id = chinas.28
+	title = chinas.28.t
+	desc = chinas.28.d
+	picture = GFX_report_event_japanese_chinese_surrender
+
+	is_triggered_only = yes
+
+	option = { #Good
+		name = chinas.28.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#China Refuse to join Russian Faction
+country_event = {
+	id = chinas.29
+	title = chinas.29.t
+	desc = chinas.29.d
+	picture = GFX_report_event_poland_rejects
+
+	is_triggered_only = yes
+
+	option = { #Not Good
+		name = chinas.29.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}

@@ -11901,7 +11901,7 @@ country_event = {
 }
 
 #End of the Civil War - Aftermath If For Some Reasons the Event Wasn't Triggered After the Capitulation
-country_event = {
+country_event = { #TODO A decision that trigger this event in case it wasn"t trigger after the capitulation of SOU instead of a shitty event with a mean time to happen
 	id = soviets.260
 	title = soviets.260.t
 	desc = soviets.260.d
@@ -14728,6 +14728,101 @@ country_event = {
 		}
 		add_political_power = 100
 		set_country_flag = tsar_marriage_happened
+	}
+}
+
+#Lost State Receive Events to be Integreated Back to Russia
+country_event = {
+	id = soviets.335
+	title = soviets.335.t
+	desc = soviets.335.d
+	picture = GFX_report_event_generic_funeral
+
+	is_triggered_only = yes
+
+	option = { #Yay
+		name = soviets.335.a
+		ai_chance = {
+			factor = 10
+			modifier = {
+				factor = 200
+				NOT = {
+					country_exists = UKR
+				}
+			}
+		}
+		SOV = {
+			annex_country = {
+				target = ROOT
+			}
+			country_event = { id = soviets.336 hours = 12 }
+		}
+	}
+
+	option = { #No
+		name = soviets.335.b
+		ai_chance = {
+			factor = 90
+			modifier = {
+				factor = 100
+				TAG = UKR
+			}
+		}
+		SOV = {
+			country_event = { id = soviets.337 hours = 12 }
+		}
+		ROOT = {
+			add_ideas = SOV_Fighting_against_the_russians
+		}
+		if = {
+			limit = {
+				country_exists = UKR
+				UKR = {
+					is_faction_leader = yes
+				}
+			}
+			UKR = {
+				add_to_faction = ROOT
+			}
+		}
+	}
+}
+
+#Lost State has Accepted to be Reintegrated
+country_event = {
+	id = soviets.336
+	title = soviets.336.t
+	desc = soviets.336.d
+	picture = GFX_report_event_generic_sign_treaty3
+
+	is_triggered_only = yes
+
+	option = { #Yay
+		name = soviets.336.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#Lost State has Refused to be Reintegrated
+country_event = {
+	id = soviets.337
+	title = soviets.337.t
+	desc = soviets.337.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Yay
+		name = soviets.337.a
+		ai_chance = {
+			factor = 100
+		}
+		create_wargoal = {
+			type = annex_everything
+			target = FROM
+		}
 	}
 }
 

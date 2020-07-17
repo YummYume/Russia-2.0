@@ -9843,7 +9843,7 @@ focus_tree = {
 		x = 28
 		y = 26
 		prerequisite = { focus = SOV_propose_interventions focus = SOV_russia_takes_the_lead }
-		icon = GFX_focus_focus_fra_fascist_threat
+		icon = GFX_Defense_of_Liberty
 		cost = 10
 		ai_will_do = {
 			factor = 6
@@ -11481,6 +11481,7 @@ focus_tree = {
 				country_exists = AZR
 				country_exists = ARM
 			}
+			ukr_core_is_core_of_sov = yes
 		}
 		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_ANNEXATION }
 		completion_reward = {
@@ -11526,6 +11527,26 @@ focus_tree = {
 						add_core_of = SOV
 					}
 				}	
+			}
+			if = {
+				limit = {
+					ukr_core_is_core_of_sov = no
+					NOT = {
+						country_exists = UKR
+					}
+				}
+				custom_effect_tooltip = ukraine_core_lost_state
+				every_state = {
+					limit = {
+						is_core_of = UKR
+						NOT = {
+							is_core_of = POL
+						}
+					}
+					SOV = {
+						add_state_core = PREV
+					}	
+				}
 			}
 			if = {
 				limit = {
@@ -12160,7 +12181,7 @@ focus_tree = {
 		y = 22
 		prerequisite = { focus = SOV_announce_our_ambitions focus = SOV_a_tragedy }
 		mutually_exclusive = { focus = SOV_german_russian_pact }
-		icon = GFX_focus_chi_collaboration_with_the_japanese
+		icon = GFX_Russian_Japanese_alliance
 		cost = 8
 		ai_will_do = {
 			factor = 2
@@ -12485,7 +12506,9 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_FASCIST_KONSTANTIN_RUSSIA FOCUS_FILTER_ANNEXATION }
 		completion_reward = {
-
+			event_target:WTT_current_china_leader = {
+				country_event = { id = chinas.27 hours = 18 }
+			}
 		}
 	}
 
@@ -13184,7 +13207,7 @@ focus_tree = {
 		x = 40
 		y = 21
 		prerequisite = { focus = SOV_destiny_monarchy }
-		icon = GFX_focus_generic_polish_deal
+		icon = GFX_Fate_of_Poland
 		cost = 8
 		ai_will_do = {
 			factor = 5
@@ -13234,7 +13257,7 @@ focus_tree = {
 		x = 38
 		y = 21
 		prerequisite = { focus = SOV_destiny_monarchy }
-		icon = GFX_focus_renounce_the_treaty_of_trianon
+		icon = GFX_Fate_of_Finland
 		cost = 8
 		ai_will_do = {
 			factor = 4
@@ -13949,6 +13972,10 @@ focus_tree = {
 		}
 		available = {
 			always = no
+			NOT = {
+				has_country_flag = second_civil_war_in_progress
+			}
+			has_country_flag = second_civil_war_over
 			is_subject = no
 			NOT = {
 				has_completed_focus = SOV_bring_back_old_life
@@ -14374,9 +14401,109 @@ focus_tree = {
 		available = {
 			is_subject = no
 		}
+		bypass = {
+			NOT = {
+				country_exists = UKR
+				country_exists = BLR
+				country_exists = KAZ
+				country_exists = TMS
+				country_exists = GEO
+				country_exists = AZR
+				country_exists = ARM
+			}
+			ukr_core_is_core_of_sov = yes
+		}
 		search_filters = { FOCUS_FILTER_FASCIST_KONSTANTIN_RUSSIA FOCUS_FILTER_FASCIST_ANASTASY_RUSSIA }
 		completion_reward = {
-	
+			custom_effect_tooltip = gains_core_russian_lost_state_fascist
+			hidden_effect = {
+				every_state = {
+					limit = {
+						any_country = {
+							is_lost_state = yes
+							owns_state = PREV
+						}
+						NOT = {
+							is_core_of = SOV
+						}
+					}
+					SOV = {
+						add_state_core = PREV
+					}
+				}
+			}
+			every_country = {
+				limit = {
+					is_lost_state = yes
+				}
+				country_event = { id = soviets.335 hours = 12}
+			}
+			if = {
+				limit = {
+					country_exists = UKR
+					UKR = {
+						is_subject = no 
+					}
+				}
+				UKR = {
+					create_faction = anti_russian_pact
+				}
+			}
+			else_if = {
+				limit = {
+					NOT = {
+						country_exists = UKR
+					}
+					country_exists = BLR
+				}
+				BLR = {
+					create_faction = anti_russian_pact
+				}
+			}
+			else_if = {
+				limit = {
+					NOT = {
+						country_exists = UKR
+						country_exists = BLR
+					}
+					country_exists = GEO
+				}
+				GEO = {
+					create_faction = anti_russian_pact
+				}
+			}
+			else_if = {
+				limit = {
+					NOT = {
+						country_exists = UKR
+						country_exists = BLR
+						country_exists = GEO
+					}
+					country_exists = KAZ
+				}
+				KAZ = {
+					create_faction = anti_russian_pact
+				}
+			}
+			if = {
+				limit = {
+					ukr_core_is_core_of_sov = no
+					NOT = {
+						country_exists = UKR
+					}
+				}
+				every_state = {
+					limit = {
+						is_core_of = UKR
+						NOT = {
+							is_core_of = POL
+						}
+					}
+					SOV = {
+						add_state_core = PREV
+					}	
+				}
+			}
 		}
 	}
 
@@ -14398,6 +14525,15 @@ focus_tree = {
 				has_completed_focus = SOV_the_lawyer_remains
 				has_completed_focus = SOV_the_tables_have_turned
 			}
+			custom_trigger_tooltip = {
+				tooltip = lost_state_war_against
+				NOT = {
+					any_country = {
+						is_lost_state = yes
+						has_war_with = SOV
+					}
+				}
+			}
 		}
 		search_filters = { FOCUS_FILTER_FASCIST_KONSTANTIN_RUSSIA FOCUS_FILTER_FASCIST_ANASTASY_RUSSIA }
 		completion_reward = {
@@ -14412,7 +14548,7 @@ focus_tree = {
 		x = 61
 		y = 21
 		prerequisite = { focus = SOV_our_future_foes }
-		icon = GFX_goal_generic_special_forces
+		icon = GFX_Russian_Army
 		cost = 5
 		ai_will_do = {
 			factor = 5
