@@ -1490,7 +1490,7 @@ SOV_mission_op = {
 	SOV_mission_korea = {
 		icon = GFX_decision_generic_civil_support
 		allowed = {
-			tag = HAW
+			tag = NAF
 		}
 		available = {
 			has_country_flag = SOV_liberated_korea
@@ -1516,7 +1516,7 @@ SOV_mission_op = {
 	SOV_mission_indochina = {
 		icon = GFX_decision_generic_civil_support
 		allowed = {
-			tag = HAW
+			tag = NAF
 		}
 		available = {
 			has_country_flag = SOV_liberated_indochina
@@ -1544,7 +1544,7 @@ SOV_mission_op = {
 	SOV_mission_tibet = {
 		icon = GFX_decision_generic_civil_support
 		allowed = {
-			tag = HAW
+			tag = NAF
 		}
 		available = {
 			has_country_flag = SOV_liberated_tibet
@@ -1572,7 +1572,7 @@ SOV_mission_op = {
 	SOV_mission_ethiopia = {
 		icon = GFX_decision_generic_civil_support
 		allowed = {
-			tag = HAW
+			tag = NAF
 		}
 		available = {
 			has_country_flag = SOV_liberated_ethiopia
@@ -1600,7 +1600,7 @@ SOV_mission_op = {
 	SOV_mission_morocco = {
 		icon = GFX_decision_generic_civil_support
 		allowed = {
-			tag = HAW
+			tag = NAF
 		}
 		available = {
 			has_country_flag = SOV_liberated_morocco
@@ -1628,7 +1628,7 @@ SOV_mission_op = {
 	SOV_mission_egypt = {
 		icon = GFX_decision_generic_civil_support
 		allowed = {
-			tag = HAW
+			tag = NAF
 		}
 		available = {
 			has_country_flag = SOV_liberated_egypt
@@ -1656,7 +1656,7 @@ SOV_mission_op = {
 	SOV_mission_balkan = {
 		icon = GFX_decision_generic_civil_support
 		allowed = {
-			tag = HAW
+			tag = NAF
 		}
 		available = {
 			has_country_flag = SOV_liberated_balkan
@@ -1684,7 +1684,7 @@ SOV_mission_op = {
 	SOV_mission_british = {
 		icon = GFX_decision_generic_civil_support
 		allowed = {
-			tag = HAW
+			tag = NAF
 		}
 		available = {
 			has_country_flag = SOV_liberated_uk
@@ -1712,7 +1712,7 @@ SOV_mission_op = {
 	SOV_mission_iberia = {
 		icon = GFX_decision_generic_civil_support
 		allowed = {
-			tag = HAW
+			tag = NAF
 		}
 		available = {
 			has_country_flag = SOV_liberated_iberia
@@ -1740,7 +1740,7 @@ SOV_mission_op = {
 	SOV_liberation_europe = {
 		icon = GFX_decision_generic_civil_support
 		allowed = {
-			tag = HAW
+			tag = NAF
 		}
 		available = {
 			custom_trigger_tooltip = {
@@ -1770,7 +1770,7 @@ SOV_mission_op = {
 	SOV_liberation_africa = {
 		icon = GFX_decision_generic_civil_support
 		allowed = {
-			tag = HAW
+			tag = NAF
 		}
 		available = {
 			custom_trigger_tooltip = {
@@ -1800,7 +1800,7 @@ SOV_mission_op = {
 	SOV_liberation_asia = {
 		icon = GFX_decision_generic_civil_support
 		allowed = {
-			tag = HAW
+			tag = NAF
 		}
 		available = {
 			custom_trigger_tooltip = {
@@ -4383,6 +4383,11 @@ SOV_perpetual_defense_liberty_decisions = {
 
 		complete_effect = {
 			set_country_flag = is_changing_foreign_government
+			FROM = {
+				country_event = soviets.331
+				set_country_flag = is_target_of_SOV_democratic
+				activate_mission = SOV_is_building_up_against_from_democratic
+			}
 		}
 
 		cost = 50
@@ -4392,6 +4397,7 @@ SOV_perpetual_defense_liberty_decisions = {
 				country_event = {
 					id = soviets.170
 				}
+				clr_country_flag = is_target_of_SOV_democratic
 			}
 			clr_country_flag = is_changing_foreign_government
 		}
@@ -13792,7 +13798,7 @@ SOV_build_up_border_from = {
 		icon = GFX_decision_generic_civil_support
 
 		allowed = {
-			tag = HAW
+			tag = NAF
 		}
 
 		available = {
@@ -13806,6 +13812,37 @@ SOV_build_up_border_from = {
 		}
 
 		days_mission_timeout = 15
+
+		is_good = no
+
+		timeout_effect = {
+
+		}
+
+		complete_effect = {
+
+		}
+	}
+
+	SOV_is_building_up_against_from_democratic = {
+
+		icon = GFX_decision_generic_civil_support
+
+		allowed = {
+			tag = NAF
+		}
+
+		available = {
+			NOT = {
+				has_country_flag = is_target_of_SOV_democratic
+			}
+		}
+
+		visible = {
+			has_country_flag = is_target_of_SOV_democratic
+		}
+
+		days_mission_timeout = 30
 
 		is_good = no
 
