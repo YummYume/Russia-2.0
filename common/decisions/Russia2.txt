@@ -6539,6 +6539,115 @@ SOV_appease_communist = {
 	}
 }
 
+SOV_transfer_of_power = {
+
+	SOV_allow_transfer_power = {
+		icon = GFX_decision_hol_radio_oranje
+
+		cost = 50
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+		available = {
+			has_country_leader = {
+				name = "Andrey Vlasov"
+				ruling_only = yes
+			}
+		}
+
+		visible = {
+			has_completed_focus = SOV_firm_hand
+			has_government = neutrality
+			is_subject = no
+			NOT = {
+				has_country_leader = {
+					name = "Pavel Bermondt-Avalov"
+					ruling_only = yes
+				}
+			}
+			has_country_flag = {
+				flag = andrey_vlasov_in_power_count
+				days > 100
+			}
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = SOV_allow_transfer_power_tt
+			add_to_variable = { transfer_power_pavel_factor = 1 }
+			hidden_effect = {
+				if = {
+					limit = {
+						check_variable = {
+							var = transfer_power_pavel_factor
+							value = 2
+							compare = equals
+						}
+					}
+				}
+				country_event = { id = soviets.349 days = 50 }
+			}
+		}
+	}
+
+	SOV_convince_pavel_move_moscow = {
+		icon = GFX_decision_generic_political_discourse
+
+		cost = 100
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+		available = {
+			231 = {
+				is_fully_controlled_by = ROOT
+			}
+			capital_scope = {
+				is_fully_controlled_by = ROOT
+			}
+		}
+
+		visible = {
+			has_completed_focus = SOV_firm_hand
+			has_government = neutrality
+			is_subject = no
+			NOT = {
+				has_country_leader = {
+					name = "Pavel Bermondt-Avalov"
+					ruling_only = yes
+				}
+			}
+			has_country_flag = {
+				flag = andrey_vlasov_in_power_count
+				days > 100
+			}
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = SOV_convince_pavel_tt
+			add_to_variable = { transfer_power_pavel_factor = 1 }
+			hidden_effect = {
+				if = {
+					limit = {
+						check_variable = {
+							var = transfer_power_pavel_factor
+							value = 2
+							compare = equals
+						}
+					}
+				}
+				country_event = { id = soviets.349 days = 50 }
+			}
+		}
+	}
+}
+
 SOV_monarchy_congress = {
 
 	#Have to do each house one by one because Paradox doesn't allow the use of a foreach here
