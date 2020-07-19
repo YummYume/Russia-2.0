@@ -14171,7 +14171,7 @@ SOV_focus_fascist_russia_europe = {
 		target_root_trigger = {
 			has_country_flag = SOV_fascist_focus_on_europe
 		}
-		
+
 		highlight_states = {
 			is_controlled_by = FROM
 			is_capital = yes
@@ -14528,6 +14528,40 @@ SOV_build_up_border_from = {
 
 SOV_third_rome_decision_categories = {
 
+	SOV_form_third_rome = {
+
+		icon = GFX_decision_generic_operation
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = enough_points_to_form_third_rome
+				check_variable = {
+					var = reformation_third_rome
+					value = 6
+					compare = greater_than_or_equals
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			set_cosmetic_tag = THR
+			custom_effect_tooltip = byzantine_legacy_tt
+			set_country_flag = take_legacy_byzantine
+			set_country_flag = has_formed_third_rome
+		}
+	}
+
 	SOV_integrate_romania_state_core = {
 
 		icon = GFX_decision_generic_operation
@@ -14592,14 +14626,18 @@ SOV_third_rome_decision_categories = {
 		}
 
 		complete_effect = {
-			every_state = {
-				limit = {
-					has_state_flag = romanian_state_third_rome
-				}
-				SOV = {
-					add_state_core = PREV
+			custom_effect_tooltip = gains_core_romania_land
+			hidden_effect = {
+				every_state = {
+					limit = {
+						has_state_flag = romanian_state_third_rome
+					}
+					SOV = {
+						add_state_core = PREV
+					}
 				}
 			}
+			custom_effect_tooltip = reformation_rome_point_one
 			add_to_variable = {
 			    var = reformation_third_rome
 			    value = 1
@@ -14644,14 +14682,18 @@ SOV_third_rome_decision_categories = {
 		}
 
 		complete_effect = {
-			every_state = {
-				limit = {
-					has_state_flag = bulgarian_state_third_rome
-				}
-				SOV = {
-					add_state_core = PREV
+			custom_effect_tooltip = gains_core_bulgarian_land
+			hidden_effect = {
+				every_state = {
+					limit = {
+						has_state_flag = bulgarian_state_third_rome
+					}
+					SOV = {
+						add_state_core = PREV
+					}
 				}
 			}
+			custom_effect_tooltip = reformation_rome_point_one
 			add_to_variable = {
 			    var = reformation_third_rome
 			    value = 1
@@ -14678,7 +14720,7 @@ SOV_third_rome_decision_categories = {
 			custom_trigger_tooltip = {
 				tooltip = SOV_integrate_greek_core_state_tt
 				count_triggers = {
-					amount = 5
+					amount = 4
 					184 = {
 						is_controlled_by = ROOT
 					}
@@ -14711,14 +14753,18 @@ SOV_third_rome_decision_categories = {
 		}
 
 		complete_effect = {
-			every_state = {
-				limit = {
-					has_state_flag = greek_state_third_rome
-				}
-				SOV = {
-					add_state_core = PREV
+			custom_effect_tooltip = gains_core_greek_land
+			hidden_effect = {
+				every_state = {
+					limit = {
+						has_state_flag = greek_state_third_rome
+					}
+					SOV = {
+						add_state_core = PREV
+					}
 				}
 			}
+			custom_effect_tooltip = reformation_rome_point_one
 			add_to_variable = {
 			    var = reformation_third_rome
 			    value = 1
@@ -14762,21 +14808,25 @@ SOV_third_rome_decision_categories = {
 			}	
 		}
 
-		cost = 50
+		cost = 40
 
 		ai_will_do = {
 			factor = 60
 		}
 
 		complete_effect = {
-			every_state = {
-				limit = {
-					has_state_flag = serbian_state_third_rome
-				}
-				SOV = {
-					add_state_core = PREV
+			custom_effect_tooltip = gains_core_serbian_land
+			hidden_effect = {
+				every_state = {
+					limit = {
+						has_state_flag = serbian_state_third_rome
+					}
+					SOV = {
+						add_state_core = PREV
+					}
 				}
 			}
+			custom_effect_tooltip = reformation_rome_point_one
 			add_to_variable = {
 			    var = reformation_third_rome
 			    value = 1
@@ -14801,7 +14851,7 @@ SOV_third_rome_decision_categories = {
 			}	
 		}
 
-		cost = 25
+		cost = 10
 
 		ai_will_do = {
 			factor = 60
@@ -14812,6 +14862,7 @@ SOV_third_rome_decision_categories = {
 				add_state_core = 106
 			}
 			set_country_flag = has_core_macedonia_third_rome
+			custom_effect_tooltip = reformation_rome_point_half
 			if = {
 				limit = {
 					SOV = {
@@ -14843,7 +14894,7 @@ SOV_third_rome_decision_categories = {
 			}	
 		}
 
-		cost = 25
+		cost = 10
 
 		ai_will_do = {
 			factor = 60
@@ -14854,6 +14905,7 @@ SOV_third_rome_decision_categories = {
 				add_state_core = 105
 			}
 			set_country_flag = has_core_montenegro_third_rome
+			custom_effect_tooltip = reformation_rome_point_half
 			if = {
 				limit = {
 					SOV = {
@@ -14863,6 +14915,260 @@ SOV_third_rome_decision_categories = {
 				add_to_variable = {
 					var = reformation_third_rome
 					value = 1
+				}
+			}
+		}
+	}
+
+	SOV_integrate_finnish_core_state = {
+
+		icon = GFX_decision_generic_operation
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			any_state = {
+				has_state_flag = finland_state_third_rome
+				is_controlled_by = ROOT
+			}
+			custom_trigger_tooltip = {
+				tooltip = SOV_integrate_finnish_core_state_tt
+				count_triggers = {
+					amount = 6
+					146 = {
+						is_owned_and_controlled_by = ROOT
+					}
+					111 = {
+						is_owned_and_controlled_by = ROOT
+					}
+					150 = {
+						is_owned_and_controlled_by = ROOT
+					}
+					149 = {
+						is_owned_and_controlled_by = ROOT
+					}
+					148 = {
+						is_owned_and_controlled_by = ROOT
+					}
+					147 = {
+						is_owned_and_controlled_by = ROOT
+					}
+					722 = {
+						is_owned_and_controlled_by = ROOT
+					}
+				}
+			}	
+		}
+
+		cost = 50
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = gains_core_finnish_land
+			hidden_effect = {
+				every_state = {
+					limit = {
+						has_state_flag = finland_state_third_rome
+					}
+					SOV = {
+						add_state_core = PREV
+					}
+				}
+			}
+			custom_effect_tooltip = reformation_rome_point_one
+			add_to_variable = {
+			    var = reformation_third_rome
+			    value = 1
+			}
+		}
+	}
+
+	SOV_integrate_estonia_core_state = {
+
+		icon = GFX_decision_generic_operation
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			191 = {
+				is_controlled_by = SOV
+			}
+			13 = {
+				is_controlled_by = SOV
+			}
+		}
+
+		cost = 25
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = gains_core_estonia_land
+			hidden_effect = {
+				every_state = {
+					limit = {
+						has_state_flag = estonia_state_third_rome
+					}
+					SOV = {
+						add_state_core = PREV
+					}
+				}
+			}
+		}
+	}
+
+	SOV_integrate_latvian_core_state = {
+
+		icon = GFX_decision_generic_operation
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			190 = {
+				is_controlled_by = SOV
+			}
+			12 = {
+				is_controlled_by = SOV
+			}
+		}
+
+		cost = 25
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = gains_core_latvia_land
+			hidden_effect = {
+				every_state = {
+					limit = {
+						has_state_flag = latvia_state_third_rome
+					}
+					SOV = {
+						add_state_core = PREV
+					}
+				}
+			}
+		}
+	}
+
+	SOV_integrate_lithuanian_core_state = {
+
+		icon = GFX_decision_generic_operation
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			189 = {
+				is_controlled_by = SOV
+			}
+			11 = {
+				is_controlled_by = SOV
+			}
+		}
+
+		cost = 25
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = gains_core_lithuania_land
+			hidden_effect = {
+				every_state = {
+					limit = {
+						has_state_flag = lithuania_state_third_rome
+					}
+					SOV = {
+						add_state_core = PREV
+					}
+				}
+			}
+		}
+	}
+
+	SOV_integrate_eastern_poland_core_state = {
+
+		icon = GFX_decision_generic_operation
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = SOV_integrate_eastern_poland_core_state_tt
+				784 = {
+					is_controlled_by = SOV
+				}
+				96 = {
+					is_controlled_by = SOV
+				}
+				95 = {
+					is_controlled_by = SOV
+				}
+				94 = {
+					is_controlled_by = SOV
+				}
+				93 = {
+					is_controlled_by = SOV
+				}
+				91 = {
+					is_controlled_by = SOV
+				}
+				89 = {
+					is_controlled_by = SOV
+				}
+			}
+		}
+
+		cost = 60
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = gains_core_eastern_poland_land
+			hidden_effect = {
+				SOV = {
+					add_state_core = 784
+					add_state_core = 96
+					add_state_core = 95
+					add_state_core = 94
+					add_state_core = 93
+					add_state_core = 91
+					add_state_core = 89
 				}
 			}
 		}
@@ -14962,14 +15268,18 @@ SOV_third_rome_decision_categories = {
 		days_remove = 150
 
 		remove_effect = {
-			every_state = {
-				limit = {
-					has_state_flag = turkey_state_third_rome
-				}
-				SOV = {
-					add_state_core = PREV
+			custom_effect_tooltip = gains_core_turkish_land
+			hidden_effect = {
+				every_state = {
+					limit = {
+						has_state_flag = turkey_state_third_rome
+					}
+					SOV = {
+						add_state_core = PREV
+					}
 				}
 			}
+			custom_effect_tooltip = reformation_rome_point_one
 			add_to_variable = {
 			    var = reformation_third_rome
 			    value = 1
@@ -15056,14 +15366,18 @@ SOV_third_rome_decision_categories = {
 		days_remove = 70
 
 		remove_effect = {
-			every_state = {
-				limit = {
-					has_state_flag = iranian_state_third_rome
-				}
-				SOV = {
-					add_state_core = PREV
+			custom_effect_tooltip = gains_core_iranian_land
+			hidden_effect = {
+				every_state = {
+					limit = {
+						has_state_flag = iranian_state_third_rome
+					}
+					SOV = {
+						add_state_core = PREV
+					}
 				}
 			}
+			custom_effect_tooltip = reformation_rome_point_one
 			add_to_variable = {
 			    var = reformation_third_rome
 			    value = 1
@@ -15104,14 +15418,18 @@ SOV_third_rome_decision_categories = {
 		days_remove = 50
 
 		remove_effect = {
-			every_state = {
-				limit = {
-					has_state_flag = afghanistan_state_third_rome
-				}
-				SOV = {
-					add_state_core = PREV
+			custom_effect_tooltip = gains_core_afghanistan_land
+			hidden_effect = {
+				every_state = {
+					limit = {
+						has_state_flag = afghanistan_state_third_rome
+					}
+					SOV = {
+						add_state_core = PREV
+					}
 				}
 			}
+			custom_effect_tooltip = reformation_rome_point_one
 			add_to_variable = {
 			    var = reformation_third_rome
 			    value = 1
@@ -15121,7 +15439,7 @@ SOV_third_rome_decision_categories = {
 
 	SOV_demand_tannu_tuva_integration = {
 
-		icon = GFX_decision_generic_operation
+		icon = GFX_decision_generic_nationalism
 
 		allowed = {
 			original_tag = SOV
@@ -15156,7 +15474,7 @@ SOV_third_rome_decision_categories = {
 
 	SOV_demand_mongolian_integration = {
 
-		icon = GFX_decision_generic_operation
+		icon = GFX_decision_generic_nationalism
 
 		allowed = {
 			original_tag = SOV
@@ -15185,6 +15503,2065 @@ SOV_third_rome_decision_categories = {
 		complete_effect = {
 			MON = {
 				country_event = { id = mongolias.4 days = 1 }
+			}
+		}
+	}
+
+	SOV_pressure_unification_finland = {
+
+		icon = GFX_decision_generic_nationalism
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			country_exists = FIN
+			FIN = {
+				is_subject = no
+			}	
+		}
+
+		visible = {
+			country_exists = FIN
+		}
+
+		cost = 65
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			FIN = {
+				country_event = { id = finlands.16 days = 1 }
+			}
+		}
+	}
+}
+
+SOV_legacy_of_byzantine = {
+
+	SOV_integrate_italia = {
+
+		icon = GFX_decision_infiltrate_state
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			736 = {
+				is_controlled_by = ROOT
+			}
+			160 = {
+				is_controlled_by = ROOT
+			}
+			39 = {
+				is_controlled_by = ROOT
+			}
+			159 = {
+				is_controlled_by = ROOT
+			}
+			161 = {
+				is_controlled_by = ROOT
+			}
+			158 = {
+				is_controlled_by = ROOT
+			}
+			162 = {
+				is_controlled_by = ROOT
+			}
+			157 = {
+				is_controlled_by = ROOT
+			}
+			2 = {
+				is_controlled_by = ROOT
+			}
+			117 = {
+				is_controlled_by = ROOT
+			}
+			156 = {
+				is_controlled_by = ROOT
+			}
+			115 = {
+				is_controlled_by = ROOT
+			}
+			114 = {
+				is_controlled_by = ROOT
+			}
+		}
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			SOV = {
+				add_state_core = 736
+				add_state_core = 160
+				add_state_core = 39
+				add_state_core = 159
+				add_state_core = 161
+				add_state_core = 158
+				add_state_core = 162
+				add_state_core = 157
+				add_state_core = 2
+				add_state_core = 117
+				add_state_core = 156
+				add_state_core = 115
+				add_state_core = 114
+			}
+		}
+	}
+
+	SOV_integrate_south_iberian = {
+
+		icon = GFX_decision_infiltrate_state
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			118 = {
+				is_controlled_by = ROOT
+			}
+			169 = {
+				is_controlled_by = ROOT
+			}
+			179 = {
+				is_controlled_by = ROOT
+			}
+			173 = {
+				is_controlled_by = ROOT
+			}
+			789 = {
+				is_controlled_by = ROOT
+			}
+			168 = {
+				is_controlled_by = ROOT
+			}
+			167 = {
+				is_controlled_by = ROOT
+			}
+		}
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			SOV = {
+				add_state_core = 118
+				add_state_core = 169
+				add_state_core = 179
+				add_state_core = 173
+				add_state_core = 789
+				add_state_core = 168
+				add_state_core = 167
+				add_state_core = 177
+			}
+		}
+	}
+
+	SOV_integrate_albania = {
+
+		icon = GFX_decision_infiltrate_state
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			44 = {
+				is_controlled_by = ROOT
+			}
+		}
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			SOV = {
+				add_state_core = 44
+			}
+		}
+	}
+
+	SOV_integrate_corsica = {
+
+		icon = GFX_decision_infiltrate_state
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			1 = {
+				is_controlled_by = ROOT
+			}
+		}
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			SOV = {
+				add_state_core = 1
+			}
+		}
+	}
+
+	SOV_integrate_the_balkan = {
+
+		icon = GFX_decision_infiltrate_state
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			104 = {
+				is_controlled_by = ROOT
+			}
+			103 = {
+				is_controlled_by = ROOT
+			}
+			109 = {
+				is_controlled_by = ROOT
+			}
+			102 = {
+				is_controlled_by = ROOT
+			}
+		}
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			SOV = {
+				add_state_core = 104
+				add_state_core = 103
+				add_state_core = 109
+				add_state_core = 102
+				add_state_core = 163
+			}
+		}
+	}
+
+	SOV_integrate_hungary = {
+
+		icon = GFX_decision_infiltrate_state
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			154 = {
+				is_controlled_by = ROOT
+			}
+			43 = {
+				is_controlled_by = ROOT
+			}
+			155 = {
+				is_controlled_by = ROOT
+			}
+		}
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			SOV = {
+				add_state_core = 154
+				add_state_core = 43
+				add_state_core = 155
+			}
+		}
+	}
+
+	SOV_integrate_iraq = {
+
+		icon = GFX_decision_infiltrate_state
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			676 = {
+				is_controlled_by = ROOT
+			}
+			291 = {
+				is_controlled_by = ROOT
+			}
+			675 = {
+				is_controlled_by = ROOT
+			}
+		}
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			SOV = {
+				add_state_core = 676
+				add_state_core = 291
+				add_state_core = 675
+			}
+		}
+	}
+
+	SOV_integrate_syria = {
+
+		icon = GFX_decision_infiltrate_state
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			677 = {
+				is_controlled_by = ROOT
+			}
+			680 = {
+				is_controlled_by = ROOT
+			}
+			554 = {
+				is_controlled_by = ROOT
+			}
+		}
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			SOV = {
+				add_state_core = 677
+				add_state_core = 680
+				add_state_core = 554
+			}
+		}
+	}
+
+	SOV_integrate_lebanon = {
+
+		icon = GFX_decision_infiltrate_state
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			553 = {
+				is_controlled_by = ROOT
+			}
+		}
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			SOV = {
+				add_state_core = 553
+			}
+		}
+	}
+
+	SOV_integrate_cyprus = {
+
+		icon = GFX_decision_infiltrate_state
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			183 = {
+				is_controlled_by = ROOT
+			}
+		}
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			SOV = {
+				add_state_core = 183
+			}
+		}
+	}
+
+	SOV_integrate_jordan = {
+
+		icon = GFX_decision_infiltrate_state
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			455 = {
+				is_controlled_by = ROOT
+			}
+		}
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			SOV = {
+				add_state_core = 455
+			}
+		}
+	}
+
+	SOV_integrate_israel = {
+
+		icon = GFX_decision_infiltrate_state
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			454 = {
+				is_controlled_by = ROOT
+			}
+		}
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			SOV = {
+				add_state_core = 454
+			}
+		}
+	}
+
+	SOV_integrate_egypt = {
+
+		icon = GFX_decision_infiltrate_state
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			453 = {
+				is_controlled_by = ROOT
+			}
+			446 = {
+				is_controlled_by = ROOT
+			}
+			447 = {
+				is_controlled_by = ROOT
+			}
+			452 = {
+				is_controlled_by = ROOT
+			}
+			457 = {
+				is_controlled_by = ROOT
+			}
+			456 = {
+				is_controlled_by = ROOT
+			}
+			552 = {
+				is_controlled_by = ROOT
+			}
+			551 = {
+				is_controlled_by = ROOT
+			}
+			767 = {
+				is_controlled_by = ROOT
+			}
+		}
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			SOV = {
+				add_state_core = 453
+				add_state_core = 446
+				add_state_core = 447
+				add_state_core = 452
+				add_state_core = 457
+				add_state_core = 456
+				add_state_core = 552
+				add_state_core = 551
+				add_state_core = 767
+			}
+		}
+	}
+
+	SOV_integrate_libya = {
+
+		icon = GFX_decision_infiltrate_state
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			663 = {
+				is_controlled_by = ROOT
+			}
+			451 = {
+				is_controlled_by = ROOT
+			}
+			450 = {
+				is_controlled_by = ROOT
+			}
+			662 = {
+				is_controlled_by = ROOT
+			}
+			449 = {
+				is_controlled_by = ROOT
+			}
+			661 = {
+				is_controlled_by = ROOT
+			}
+			448 = {
+				is_controlled_by = ROOT
+			}
+			273 = {
+				is_controlled_by = ROOT
+			}
+		}
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			SOV = {
+				add_state_core = 663
+				add_state_core = 451
+				add_state_core = 450
+				add_state_core = 662
+				add_state_core = 449
+				add_state_core = 661
+				add_state_core = 448
+				add_state_core = 273
+			}
+		}
+	}
+
+	SOV_integrate_tunisia = {
+
+		icon = GFX_decision_infiltrate_state
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			665 = {
+				is_controlled_by = ROOT
+			}
+			458 = {
+				is_controlled_by = ROOT
+			}
+		}
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			SOV = {
+				add_state_core = 665
+				add_state_core = 458
+			}
+		}
+	}
+
+	SOV_integrate_algeria = {
+
+		icon = GFX_decision_infiltrate_state
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			513 = {
+				is_controlled_by = ROOT
+			}
+			460 = {
+				is_controlled_by = ROOT
+			}
+			459 = {
+				is_controlled_by = ROOT
+			}
+		}
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			SOV = {
+				add_state_core = 513
+				add_state_core = 460
+				add_state_core = 459
+			}
+		}
+	}
+
+	SOV_integrate_morocco = {
+
+		icon = GFX_decision_infiltrate_state
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			461 = {
+				is_controlled_by = ROOT
+			}
+			462 = {
+				is_controlled_by = ROOT
+			}
+			290 = {
+				is_controlled_by = ROOT
+			}
+		}
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			SOV = {
+				add_state_core = 461
+				add_state_core = 462
+				add_state_core = 290
+				add_state_core = 783
+			}
+		}
+	}
+}
+
+SOV_seek_greater_ambition = {
+
+	SOV_form_greater_russia = {
+
+		icon = GFX_decision_generic_form_nation
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			10 = {
+				is_core_of = ROOT
+			}
+			12 = {
+				is_core_of = ROOT
+			}
+			11 = {
+				is_core_of = ROOT
+			}
+			13 = {
+				is_core_of = ROOT
+			}
+			OR = {
+				111 = {
+					is_core_of = ROOT
+				}
+				141 = {
+					is_core_of = ROOT
+				}
+				110 = {
+					is_core_of = ROOT
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			set_cosmetic_tag = GTR
+			set_country_flag = has_formed_greater_russia
+			add_ideas = SOV_Greater_russian_national
+		}
+	}
+
+	SOV_reintegrate_poland_back = {
+
+		icon = GFX_decision_generic_nationalism
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			10 = {
+				is_owned_and_controlled_by = ROOT
+			}
+			89 = {
+				is_owned_and_controlled_by = ROOT
+			}
+			91 = {
+				is_owned_and_controlled_by = ROOT
+			}
+			93 = {
+				is_owned_and_controlled_by = ROOT
+			}
+			94 = {
+				is_owned_and_controlled_by = ROOT
+			}
+			95 = {
+				is_owned_and_controlled_by = ROOT
+			}
+			96 = {
+				is_owned_and_controlled_by = ROOT
+			}
+			784 = {
+				is_owned_and_controlled_by = ROOT
+			}
+		}
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			every_state = {
+				limit = {
+					has_state_flag = polish_state_greater_russia
+				}
+				SOV = {
+					add_state_core = PREV
+					add_state_core = 5
+					add_state_core = 763
+				}
+			}
+		}
+	}
+
+	SOV_reintegrate_lithuania_back = {
+		icon = GFX_decision_generic_nationalism
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			11 = {
+				is_owned_and_controlled_by = ROOT
+			}
+			189 = {
+				is_owned_and_controlled_by = ROOT
+			}
+		}
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			every_state = {
+				limit = {
+					has_state_flag = lithuania_state_greater_russia
+				}
+				SOV = {
+					add_state_core = PREV
+				}
+			}
+		}
+	}
+
+	SOV_reintegrate_latvia_back = {
+		icon = GFX_decision_generic_nationalism
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			12 = {
+				is_owned_and_controlled_by = ROOT
+			}
+			190 = {
+				is_owned_and_controlled_by = ROOT
+			}
+		}
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			every_state = {
+				limit = {
+					has_state_flag = latvia_state_greater_russia
+				}
+				SOV = {
+					add_state_core = PREV
+				}
+			}
+		}
+	}
+
+	SOV_reintegrate_estonia_back = {
+		icon = GFX_decision_generic_nationalism
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			13 = {
+				is_owned_and_controlled_by = ROOT
+			}
+			191 = {
+				is_owned_and_controlled_by = ROOT
+			}
+		}
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			every_state = {
+				limit = {
+					has_state_flag = estonia_state_greater_russia
+				}
+				SOV = {
+					add_state_core = PREV
+				}
+			}
+		}
+	}
+
+	SOV_reintegrate_finland_back = {
+		icon = GFX_decision_generic_nationalism
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			111 = {
+				is_owned_and_controlled_by = ROOT
+			}
+			146 = {
+				is_owned_and_controlled_by = ROOT
+			}
+			150 = {
+				is_owned_and_controlled_by = ROOT
+			}
+			149 = {
+				is_owned_and_controlled_by = ROOT
+			}
+			148 = {
+				is_owned_and_controlled_by = ROOT
+			}
+			147 = {
+				is_owned_and_controlled_by = ROOT
+			}
+			722 = {
+				is_owned_and_controlled_by = ROOT
+			}
+		}
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			every_state = {
+				limit = {
+					has_state_flag = finland_state_greater_russia
+				}
+				SOV = {
+					add_state_core = PREV
+				}
+			}
+		}
+	}
+
+	SOV_integrate_sweden = {
+		icon = GFX_decision_generic_nationalism
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			666 = {
+				is_owned_and_controlled_by = ROOT
+			}
+			38 = {
+				is_owned_and_controlled_by = ROOT
+			}
+			141 = {
+				is_owned_and_controlled_by = ROOT
+			}
+			140 = {
+				is_owned_and_controlled_by = ROOT
+			}
+			139 = {
+				is_owned_and_controlled_by = ROOT
+			}
+			138 = {
+				is_owned_and_controlled_by = ROOT
+			}
+			124 = {
+				is_owned_and_controlled_by = ROOT
+			}
+		}
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			every_state = {
+				limit = {
+					has_state_flag = sweden_state_greater_russia
+				}
+				SOV = {
+					add_state_core = PREV
+				}
+			}
+		}
+	}
+
+	SOV_integrate_norway = {
+		icon = GFX_decision_generic_nationalism
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			144 = {
+				is_owned_and_controlled_by = ROOT
+			}
+			143 = {
+				is_owned_and_controlled_by = ROOT
+			}
+			142 = {
+				is_owned_and_controlled_by = ROOT
+			}
+			110 = {
+				is_owned_and_controlled_by = ROOT
+			}
+		}
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			every_state = {
+				limit = {
+					has_state_flag = norway_state_greater_russia
+				}
+				SOV = {
+					add_state_core = PREV
+				}
+			}
+		}
+	}
+
+	SOV_integrate_bessarabia = {
+
+		icon = GFX_decision_generic_nationalism
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			80 = {
+				is_owned_and_controlled_by = ROOT
+			}
+			78 = {
+				is_owned_and_controlled_by = ROOT
+			}
+			766 = {
+				is_owned_and_controlled_by = ROOT
+			}
+		}
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			SOV = {
+				add_state_core = 80
+				add_state_core = 78
+				add_state_core = 766
+			}
+		}
+	}
+}
+
+SOV_balkanize_germany = {
+
+	SOV_release_bavaria = {
+
+		icon = GFX_decision_eng_trade_unions_support
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			OR = {
+				52 = {
+					is_owned_and_controlled_by = ROOT
+				}
+				any_country = {
+					owns_state = 52
+					is_subject_of = SOV
+				}
+			}
+			OR = {
+				53 = {
+					is_owned_and_controlled_by = ROOT
+				}
+				any_country = {
+					owns_state = 53
+					is_subject_of = SOV
+				}
+			}	
+			OR = {
+				54 = {
+					is_owned_and_controlled_by = ROOT
+				}
+				any_country = {
+					owns_state = 54
+					is_subject_of = SOV
+				}
+			}	
+		}
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			BAY = {
+				add_state_core = 52
+				add_state_core = 53
+				add_state_core = 54
+			}
+			every_state = {
+				limit = {
+					is_core_of = BAY
+					any_country = {
+						OR = {
+							TAG = SOV
+							is_subject_of = SOV
+						}	
+						owns_state = PREV
+					}
+				}
+				BAY = {
+					transfer_state = PREV
+				}
+			}
+			SOV = {
+				set_autonomy = {
+					target = BAY
+					autonomy_state = autonomy_reichsprotectorate
+				}
+			}
+		}
+	}
+
+	SOV_release_wurtemberg = {
+
+		icon = GFX_decision_eng_trade_unions_support
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			OR = {
+				50 = {
+					is_owned_and_controlled_by = ROOT
+				}
+				any_country = {
+					owns_state = 50
+					is_subject_of = SOV
+				}
+			}	
+		}
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			WUR = {
+				add_state_core = 50
+			}
+			every_state = {
+				limit = {
+					is_core_of = WUR
+					any_country = {
+						OR = {
+							TAG = SOV
+							is_subject_of = SOV
+						}	
+						owns_state = PREV
+					}
+				}
+				WUR = {
+					transfer_state = PREV
+				}
+			}
+			SOV = {
+				set_autonomy = {
+					target = WUR
+					autonomy_state = autonomy_reichsprotectorate
+				}
+			}
+		}
+	}
+
+	SOV_release_hanover = {
+
+		icon = GFX_decision_eng_trade_unions_support
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			OR = {
+				57 = {
+					is_owned_and_controlled_by = ROOT
+				}
+				any_country = {
+					owns_state = 57
+					is_subject_of = SOV
+				}
+			}
+			OR = {
+				59 = {
+					is_owned_and_controlled_by = ROOT
+				}
+				any_country = {
+					owns_state = 59
+					is_subject_of = SOV
+				}
+			}	
+			OR = {
+				56 = {
+					is_owned_and_controlled_by = ROOT
+				}
+				any_country = {
+					owns_state = 56
+					is_subject_of = SOV
+				}
+			}	
+		}
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			HAN = {
+				add_state_core = 57
+				add_state_core = 59
+				add_state_core = 56
+			}
+			every_state = {
+				limit = {
+					is_core_of = HAN
+					any_country = {
+						OR = {
+							TAG = SOV
+							is_subject_of = SOV
+						}	
+						owns_state = PREV
+					}
+				}
+				HAN = {
+					transfer_state = PREV
+				}
+			}
+			SOV = {
+				set_autonomy = {
+					target = HAN
+					autonomy_state = autonomy_reichsprotectorate
+				}
+			}
+		}
+	}
+
+	SOV_release_schleswig = {
+
+		icon = GFX_decision_eng_trade_unions_support
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			OR = {
+				58 = {
+					is_owned_and_controlled_by = ROOT
+				}
+				any_country = {
+					owns_state = 58
+					is_subject_of = SOV
+				}
+			}	
+		}
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			SHL = {
+				add_state_core = 58
+			}
+			every_state = {
+				limit = {
+					is_core_of = SHL
+					any_country = {
+						OR = {
+							TAG = SOV
+							is_subject_of = SOV
+						}	
+						owns_state = PREV
+					}
+				}
+				SHL = {
+					transfer_state = PREV
+				}
+			}
+			SOV = {
+				set_autonomy = {
+					target = SHL
+					autonomy_state = autonomy_reichsprotectorate
+				}
+			}
+		}
+	}
+
+	SOV_release_mecklenburg = {
+
+		icon = GFX_decision_eng_trade_unions_support
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			OR = {
+				61 = {
+					is_owned_and_controlled_by = ROOT
+				}
+				any_country = {
+					owns_state = 61
+					is_subject_of = SOV
+				}
+			}	
+		}
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			MEK = {
+				add_state_core = 61
+			}
+			every_state = {
+				limit = {
+					is_core_of = MEK
+					any_country = {
+						OR = {
+							TAG = SOV
+							is_subject_of = SOV
+						}	
+						owns_state = PREV
+					}
+				}
+				MEK = {
+					transfer_state = PREV
+				}
+			}
+			SOV = {
+				set_autonomy = {
+					target = MEK
+					autonomy_state = autonomy_reichsprotectorate
+				}
+			}
+		}
+	}
+
+	SOV_release_saxony = {
+
+		icon = GFX_decision_eng_trade_unions_support
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			OR = {
+				65 = {
+					is_owned_and_controlled_by = ROOT
+				}
+				any_country = {
+					owns_state = 65
+					is_subject_of = SOV
+				}
+			}	
+		}
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			SAX = {
+				add_state_core = 65
+			}
+			every_state = {
+				limit = {
+					is_core_of = SAX
+					any_country = {
+						OR = {
+							TAG = SOV
+							is_subject_of = SOV
+						}	
+						owns_state = PREV
+					}
+				}
+				SAX = {
+					transfer_state = PREV
+				}
+			}
+			SOV = {
+				set_autonomy = {
+					target = SAX
+					autonomy_state = autonomy_reichsprotectorate
+				}
+			}
+		}
+	}
+
+	SOV_release_brandenburg = {
+
+		icon = GFX_decision_eng_trade_unions_support
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			OR = {
+				64 = {
+					is_owned_and_controlled_by = ROOT
+				}
+				any_country = {
+					owns_state = 64
+					is_subject_of = SOV
+				}
+			}
+			OR = {
+				68 = {
+					is_owned_and_controlled_by = ROOT
+				}
+				any_country = {
+					owns_state = 68
+					is_subject_of = SOV
+				}
+			}		
+		}
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			BRN = {
+				add_state_core = 64
+				add_state_core = 68
+			}
+			every_state = {
+				limit = {
+					is_core_of = BRN
+					any_country = {
+						OR = {
+							TAG = SOV
+							is_subject_of = SOV
+						}	
+						owns_state = PREV
+					}
+				}
+				BRN = {
+					transfer_state = PREV
+				}
+			}
+			SOV = {
+				set_autonomy = {
+					target = BRN
+					autonomy_state = autonomy_reichsprotectorate
+				}
+			}
+			hidden_effect = {
+				BRN = {
+					set_cosmetic_tag = BRNC
+				}
+			}
+		}
+	}
+
+	SOV_release_pomerania = {
+
+		icon = GFX_decision_eng_trade_unions_support
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			OR = {
+				62 = {
+					is_owned_and_controlled_by = ROOT
+				}
+				any_country = {
+					owns_state = 62
+					is_subject_of = SOV
+				}
+			}
+			OR = {
+				63 = {
+					is_owned_and_controlled_by = ROOT
+				}
+				any_country = {
+					owns_state = 63
+					is_subject_of = SOV
+				}
+			}		
+		}
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			POM = {
+				add_state_core = 62
+				add_state_core = 63
+			}
+			every_state = {
+				limit = {
+					is_core_of = POM
+					any_country = {
+						OR = {
+							TAG = SOV
+							is_subject_of = SOV
+						}	
+						owns_state = PREV
+					}
+				}
+				POM = {
+					transfer_state = PREV
+				}
+			}
+			SOV = {
+				set_autonomy = {
+					target = POM
+					autonomy_state = autonomy_reichsprotectorate
+				}
+			}
+			hidden_effect = {
+				POM = {
+					set_cosmetic_tag = POMC
+				}
+			}
+		}
+	}
+
+	SOV_release_teutonic = {
+
+		icon = GFX_decision_eng_trade_unions_support
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			OR = {
+				5 = {
+					is_owned_and_controlled_by = ROOT
+				}
+				any_country = {
+					owns_state = 5
+					is_subject_of = SOV
+				}
+			}
+			OR = {
+				763 = {
+					is_owned_and_controlled_by = ROOT
+				}
+				any_country = {
+					owns_state = 763
+					is_subject_of = SOV
+				}
+			}		
+		}
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			TEU = {
+				add_state_core = 5
+				add_state_core = 763
+			}
+			every_state = {
+				limit = {
+					is_core_of = TEU
+					any_country = {
+						OR = {
+							TAG = SOV
+							is_subject_of = SOV
+						}	
+						owns_state = PREV
+					}
+				}
+				TEU = {
+					transfer_state = PREV
+				}
+			}
+			SOV = {
+				set_autonomy = {
+					target = TEU
+					autonomy_state = autonomy_reichsprotectorate
+				}
+			}
+			hidden_effect = {
+				TEU = {
+					set_cosmetic_tag = TEUC
+				}
+			}
+		}
+	}
+
+	SOV_release_silesian = {
+
+		icon = GFX_decision_eng_trade_unions_support
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			OR = {
+				66 = {
+					is_owned_and_controlled_by = ROOT
+				}
+				any_country = {
+					owns_state = 66
+					is_subject_of = SOV
+				}
+			}
+			OR = {
+				67 = {
+					is_owned_and_controlled_by = ROOT
+				}
+				any_country = {
+					owns_state = 67
+					is_subject_of = SOV
+				}
+			}		
+		}
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			SIL = {
+				add_state_core = 66
+				add_state_core = 67
+			}
+			every_state = {
+				limit = {
+					is_core_of = SIL
+					any_country = {
+						OR = {
+							TAG = SOV
+							is_subject_of = SOV
+						}	
+						owns_state = PREV
+					}
+				}
+				SIL = {
+					transfer_state = PREV
+				}
+			}
+			SOV = {
+				set_autonomy = {
+					target = SIL
+					autonomy_state = autonomy_reichsprotectorate
+				}
+			}
+			hidden_effect = {
+				SIL = {
+					set_cosmetic_tag = SILC
+				}
+			}
+		}
+	}
+
+	SOV_release_thunringa = {
+
+		icon = GFX_decision_eng_trade_unions_support
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			OR = {
+				60 = {
+					is_owned_and_controlled_by = ROOT
+				}
+				any_country = {
+					owns_state = 60
+					is_subject_of = SOV
+				}
+			}		
+		}
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			THU = {
+				add_state_core = 60
+			}
+			every_state = {
+				limit = {
+					is_core_of = THU
+					any_country = {
+						OR = {
+							TAG = SOV
+							is_subject_of = SOV
+						}	
+						owns_state = PREV
+					}
+				}
+				THU = {
+					transfer_state = PREV
+				}
+			}
+			SOV = {
+				set_autonomy = {
+					target = THU
+					autonomy_state = autonomy_reichsprotectorate
+				}
+			}
+			hidden_effect = {
+				THU = {
+					set_cosmetic_tag = THUC
+				}
+			}
+		}
+	}
+
+	SOV_release_hessen = {
+
+		icon = GFX_decision_eng_trade_unions_support
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			OR = {
+				55 = {
+					is_owned_and_controlled_by = ROOT
+				}
+				any_country = {
+					owns_state = 55
+					is_subject_of = SOV
+				}
+			}		
+		}
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			HES = {
+				add_state_core = 55
+			}
+			every_state = {
+				limit = {
+					is_core_of = HES
+					any_country = {
+						OR = {
+							TAG = SOV
+							is_subject_of = SOV
+						}	
+						owns_state = PREV
+					}
+				}
+				HES = {
+					transfer_state = PREV
+				}
+			}
+			SOV = {
+				set_autonomy = {
+					target = HES
+					autonomy_state = autonomy_reichsprotectorate
+				}
+			}
+			hidden_effect = {
+				HES = {
+					set_cosmetic_tag = HESC
+				}
+			}
+		}
+	}
+
+	SOV_release_trier = {
+
+		icon = GFX_decision_eng_trade_unions_support
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			OR = {
+				42 = {
+					is_owned_and_controlled_by = ROOT
+				}
+				any_country = {
+					owns_state = 42
+					is_subject_of = SOV
+				}
+			}		
+		}
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			TRE = {
+				add_state_core = 42
+			}
+			every_state = {
+				limit = {
+					is_core_of = TRE
+					any_country = {
+						OR = {
+							TAG = SOV
+							is_subject_of = SOV
+						}	
+						owns_state = PREV
+					}
+				}
+				TRE = {
+					transfer_state = PREV
+				}
+			}
+			SOV = {
+				set_autonomy = {
+					target = TRE
+					autonomy_state = autonomy_reichsprotectorate
+				}
+			}
+			hidden_effect = {
+				TRE = {
+					set_cosmetic_tag = TREC
+				}
+			}
+		}
+	}
+
+	SOV_release_cologne = {
+
+		icon = GFX_decision_eng_trade_unions_support
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			OR = {
+				51 = {
+					is_owned_and_controlled_by = ROOT
+				}
+				any_country = {
+					owns_state = 51
+					is_subject_of = SOV
+				}
+			}		
+		}
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			CLG = {
+				add_state_core = 51
+			}
+			every_state = {
+				limit = {
+					is_core_of = CLG
+					any_country = {
+						OR = {
+							TAG = SOV
+							is_subject_of = SOV
+						}	
+						owns_state = PREV
+					}
+				}
+				CLG = {
+					transfer_state = PREV
+				}
+			}
+			SOV = {
+				set_autonomy = {
+					target = CLG
+					autonomy_state = autonomy_reichsprotectorate
+				}
+			}
+			hidden_effect = {
+				CLG = {
+					set_cosmetic_tag = CLGC
+				}
+			}
+		}
+	}
+}
+
+SOV_invite_neighbours = {
+
+	SOV_demande_alliance = {
+
+		icon = GFX_decision_generic_tank
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+		target_array = neighbors
+
+		target_root_trigger = {
+			has_completed_focus = SOV_new_russian_era
+		}
+
+		visible = {
+			is_subject = no
+			has_government = fascism
+			has_idea = SOV_Closed_alliance
+			FROM = {
+				NOT = {
+					is_major = yes
+					is_subject = yes
+				}
+			}
+		}
+
+		target_trigger = {
+			FROM = {
+				NOT = {
+					is_major = yes
+					is_in_faction_with = ROOT
+					has_capitulated = yes
+				}
+				any_owned_state = {
+					is_controlled_by = FROM
+					is_capital = yes
+				}
+			}
+		}
+
+		highlight_states = {
+			is_owned_and_controlled_by = FROM
+			is_capital = yes
+		}
+
+		available = {
+			is_major = yes
+			FROM = {
+				NOT = {
+					has_war_with = ROOT
+				}
+			}
+		}
+
+		cost = 50
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			FROM = {
+				country_event = soviets.353
 			}
 		}
 	}
