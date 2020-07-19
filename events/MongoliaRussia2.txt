@@ -88,7 +88,7 @@ country_event = {
 			OR = {
 				has_completed_focus = SOV_launch_insurrection
 				has_completed_focus = SOV_bring_back_old_life
-				# has_completed_focus = SOV_fascist
+				has_completed_focus = SOV_new_way_life
 			}
 		}
 	}
@@ -262,6 +262,82 @@ country_event = {
 				type = alliance
 				id = MON
 				value = -100
+			}
+		}
+	}
+}
+
+#SOV Ask Unification With MON
+country_event = {
+	id = mongolias.4
+	title = mongolias.4.t
+	desc = mongolias.4.d
+	picture = GFX_report_event_chinese_officers
+
+	is_triggered_only = yes
+
+	option = { #Accept
+		name = mongolias.4.a
+		ai_chance = {
+			factor = 100
+		}
+		SOV = {
+			country_event = { id = mongolias.5 days = 1 }
+		}
+	}
+
+	option = { #Refuse
+		name = mongolias.4.b
+		ai_chance = {
+			factor = 0
+		}
+		SOV = {
+			country_event = { id = mongolias.6 days = 1 }
+		}
+	}
+}
+
+#MON Accept
+country_event = {
+	id = mongolias.5
+	title = mongolias.5.t
+	desc = mongolias.5.d
+	picture = GFX_report_event_chinese_japanese_handshake
+
+	is_triggered_only = yes
+
+	option = { #Good
+		name = mongolias.5.a
+		ai_chance = {
+			factor = 100
+		}
+		SOV = {
+			annex_country = {
+				target = FROM
+			}
+			add_state_core = 330
+		}
+	}
+}
+
+#MON Refuse
+country_event = {
+	id = mongolias.6
+	title = mongolias.6.t
+	desc = mongolias.6.d
+	picture = GFX_report_event_chinese_soldiers_01
+
+	is_triggered_only = yes
+
+	option = { #Damn
+		name = mongolias.6.a
+		ai_chance = {
+			factor = 100
+		}
+		SOV = {
+			create_wargoal = {
+				type = annex_everything
+				target = FROM
 			}
 		}
 	}
