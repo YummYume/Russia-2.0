@@ -12848,6 +12848,19 @@ country_event = {
 			ideology = fascism
 			popularity = 0.2
 		}
+		add_ideas = SOV_Uncertain_fate
+		if = {
+			limit = {
+				is_faction_leader = yes
+			}
+			dismantle_faction = yes
+		}
+		else_if = {
+			limit = {
+				is_in_faction = yes
+			}
+			leave_faction = yes
+		}
 		hidden_effect = {
 			set_cosmetic_tag = RFP
 			country_event = { id = soviets.282 days = 100 }
@@ -14221,6 +14234,7 @@ country_event = {
 			factor = 40
 		}
 		custom_effect_tooltip = SOV_future_foes_tt1
+		custom_effect_tooltip = SOV_future_foes_europe_tt
 		every_country = {
 			limit = {
 				NOT = {
@@ -14239,14 +14253,12 @@ country_event = {
 	}
 
 	option = { #Asia
-		trigger = {
-			has_completed_focus = SOV_the_tables_have_turned
-		}
 		name = soviets.316.b
 		ai_chance = {
 			factor = 30
 		}
 		custom_effect_tooltip = SOV_future_foes_tt2
+		custom_effect_tooltip = SOV_future_foes_asia_tt
 		every_country = {
 			limit = {
 				NOT = {
@@ -14265,14 +14277,12 @@ country_event = {
 	}
 
 	option = { #America
-		trigger = {
-			has_completed_focus = SOV_the_lawyer_remains
-		}
 		name = soviets.316.c
 		ai_chance = {
 			factor = 30
 		}
 		custom_effect_tooltip = SOV_future_foes_tt3
+		custom_effect_tooltip = SOV_future_foes_america_tt
 		every_country = {
 			limit = {
 				NOT = {
@@ -14298,8 +14308,9 @@ country_event = {
 		ai_chance = {
 			factor = 30
 		}
-		add_stability = 0.05
+		add_political_power = 100
 		custom_effect_tooltip = SOV_future_foes_tt4
+		custom_effect_tooltip = SOV_future_foes_closed_tt
 		set_country_flag = SOV_fascist_focus_on_defense
 	}
 }
@@ -15382,10 +15393,13 @@ country_event = {
 	picture = GFX_report_event_generic_parliament
 
 	trigger = {
-		TAG = SOV
+		original_tag = SOV
 		has_government = fascism
 		has_completed_focus = SOV_new_way_life
 		is_subject = no
+		any_unit_leader = {
+			has_id = 514
+		}
 	}
 
 	mean_time_to_happen = {
@@ -15399,14 +15413,146 @@ country_event = {
 		ai_chance = {
 			factor = 100
 		}
-		SOV = {
-			every_unit_leader = {
-				limit = {
-					has_id = 514
-				}
-				retire = yes
+		every_unit_leader = {
+			limit = {
+				has_id = 514
 			}
+			retire = yes
 		}
+	}
+}
+
+#Review our position
+country_event = {
+	id = soviets.351
+	title = soviets.351.t
+	desc = soviets.351.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Europe
+		name = soviets.351.a
+		ai_chance = {
+			factor = 20
+		}
+		if = {
+			limit = {
+				has_country_flag = SOV_fascist_focus_on_europe
+			}
+			add_stability = -0.15
+			add_war_support = -0.15
+		}
+		else = {
+			add_stability = -0.05
+			add_war_support = -0.05
+		}
+		remove_ideas = SOV_Uncertain_fate
+		add_ideas = SOV_alliance_with_europe
+	}
+
+	option = { #Asia
+		name = soviets.351.b
+		ai_chance = {
+			factor = 40
+		}
+		if = {
+			limit = {
+				has_country_flag = SOV_fascist_focus_on_asia
+			}
+			add_stability = -0.1
+			add_war_support = -0.1
+		}
+		remove_ideas = SOV_Uncertain_fate
+		add_ideas = SOV_alliance_with_asia
+	}
+
+	option = { #Closed
+		name = soviets.351.c
+		ai_chance = {
+			factor = 40
+		}
+		if = {
+			limit = {
+				has_country_flag = SOV_fascist_focus_on_defense
+			}
+			add_stability = 0.1
+			add_war_support = 0.1
+		}
+		else = {
+			add_stability = 0.05
+			add_war_support = 0.05
+		}
+		remove_ideas = SOV_Uncertain_fate
+		add_ideas = SOV_closed_alliance
+		create_faction = russian_accords
+	}
+}
+
+#The "Outside" Question
+country_event = {
+	id = soviets.352
+	title = soviets.352.t
+	desc = soviets.352.d
+	picture = GFX_report_event_hungarian_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Europe
+		name = soviets.352.a
+		ai_chance = {
+			factor = 20
+		}
+		if = {
+			limit = {
+				has_country_flag = SOV_fascist_focus_on_europe
+			}
+			add_stability = -0.15
+			add_war_support = -0.15
+		}
+		else = {
+			add_stability = -0.05
+			add_war_support = -0.05
+		}
+		remove_ideas = SOV_Uncertain_fate
+		add_ideas = SOV_alliance_with_europe
+	}
+
+	option = { #America
+		name = soviets.352.b
+		ai_chance = {
+			factor = 40
+		}
+		if = {
+			limit = {
+				has_country_flag = SOV_fascist_focus_on_america
+			}
+			add_stability = -0.1
+			add_war_support = -0.1
+		}
+		remove_ideas = SOV_Uncertain_fate
+		add_ideas = SOV_alliance_with_america
+	}
+
+	option = { #Closed
+		name = soviets.352.c
+		ai_chance = {
+			factor = 40
+		}
+		if = {
+			limit = {
+				has_country_flag = SOV_fascist_focus_on_defense
+			}
+			add_stability = 0.1
+			add_war_support = 0.1
+		}
+		else = {
+			add_stability = 0.05
+			add_war_support = 0.05
+		}
+		remove_ideas = SOV_Uncertain_fate
+		add_ideas = SOV_closed_alliance
+		create_faction = russian_accords
 	}
 }
 
