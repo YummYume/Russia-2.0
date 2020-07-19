@@ -122,7 +122,7 @@ country_event = {
 			OR = {
 				has_completed_focus = SOV_launch_insurrection
 				has_completed_focus = SOV_bring_back_old_life
-				# has_completed_focus = SOV_fascist
+				has_completed_focus = SOV_new_way_life
 			}
 		}
 	}
@@ -296,6 +296,82 @@ country_event = {
 				type = alliance
 				id = TAN
 				value = -100
+			}
+		}
+	}
+}
+
+#SOV Ask Unification With TAN
+country_event = {
+	id = tannu.6
+	title = tannu.6.t
+	desc = tannu.6.d
+	picture = GFX_report_event_chinese_officers
+
+	is_triggered_only = yes
+
+	option = { #Accept
+		name = tannu.6.a
+		ai_chance = {
+			factor = 100
+		}
+		SOV = {
+			country_event = { id = tannu.7 days = 1 }
+		}
+	}
+
+	option = { #Refuse
+		name = tannu.6.b
+		ai_chance = {
+			factor = 0
+		}
+		SOV = {
+			country_event = { id = tannu.8 days = 1 }
+		}
+	}
+}
+
+#TAN Accept
+country_event = {
+	id = tannu.7
+	title = tannu.7.t
+	desc = tannu.7.d
+	picture = GFX_report_event_chinese_japanese_handshake
+
+	is_triggered_only = yes
+
+	option = { #Good
+		name = tannu.7.a
+		ai_chance = {
+			factor = 100
+		}
+		SOV = {
+			annex_country = {
+				target = FROM
+			}
+			add_state_core = 329
+		}
+	}
+}
+
+#TAN Refuse
+country_event = {
+	id = tannu.8
+	title = tannu.8.t
+	desc = tannu.8.d
+	picture = GFX_report_event_chinese_soldiers_01
+
+	is_triggered_only = yes
+
+	option = { #Good
+		name = tannu.8.a
+		ai_chance = {
+			factor = 100
+		}
+		SOV = {
+			create_wargoal = {
+				type = annex_everything
+				target = FROM
 			}
 		}
 	}
