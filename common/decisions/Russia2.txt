@@ -17566,3 +17566,55 @@ SOV_invite_neighbours = {
 		}
 	}
 }
+
+SOV_impose_order_subjects = {
+
+	SOV_impose_order_subjects_decisions = {
+
+		icon = GFX_generic_political_discourse
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			FROM = {
+				is_subject_of = SOV
+				NOT = {
+					has_autonomy_state = autonomy_state_magistrate
+				}
+			}
+		}
+
+		target_root_trigger = {
+			has_idea = SOV_Tsar_we_trust
+		}
+
+		target_trigger = {
+			FROM = {
+				is_subject_of = SOV
+				NOT = {
+					has_autonomy_state = autonomy_state_magistrate
+				}
+			}
+        }
+
+		available = {
+
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = SOV_impose_imperial_governorate_tt
+			hidden_effect = {
+				set_autonomy = {
+					target = FROM
+					autonomy_state = autonomy_state_magistrate
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+}
