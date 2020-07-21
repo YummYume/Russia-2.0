@@ -504,3 +504,99 @@ country_event = {
 		}
 	}
 }
+
+#The Future of Continent
+country_event = {
+	id = continents.13
+	title = continents.13.t
+	desc = continents.13.d
+	picture = GFX_report_event_ast_parliament_house
+
+	is_triggered_only = yes
+
+	option = { #Accept
+		name = continents.13.a
+		ai_chance = {
+			factor = 100
+		}
+		add_political_power = 100
+		add_stability = 0.05
+		FROM = {
+			country_event = continents.14
+			effect_tooltip = {
+				add_autonomy_score = {
+					value = 200
+					localization = CON_future_of_root_continent
+				}
+				if = {
+					limit = {
+						is_subject_of = SOV
+					}
+					add_ideas = CON_Recognized_continent
+				}
+				else = {
+					add_ideas = CON_Recognized_continent1
+				}
+			}
+		}
+	}
+
+	option = { #Refuse
+		name = continents.13.b
+		ai_chance = {
+			factor = 0
+		}
+		add_political_power = 50
+		FROM = {
+			country_event = continents.15
+		}
+	}
+}
+
+#OVERLORD Accepts
+country_event = {
+	id = continents.14
+	title = continents.14.t
+	desc = continents.14.d
+	picture = GFX_report_event_generic_sign_treaty1
+
+	is_triggered_only = yes
+
+	option = { #Yay
+		name = continents.14.a
+		ai_chance = {
+			factor = 100
+		}
+		add_autonomy_score = {
+			value = 200
+			localization = CON_future_of_root_continent
+		}
+		if = {
+			limit = {
+				is_subject_of = SOV
+			}
+			add_ideas = CON_Recognized_continent
+		}
+		else = {
+			add_ideas = CON_Recognized_continent1
+		}
+	}
+}
+
+#OVERLORD Refuses
+country_event = {
+	id = continents.15
+	title = continents.15.t
+	desc = continents.15.d
+	picture = GFX_report_event_generic_read_write
+
+	is_triggered_only = yes
+
+	option = { #Oh
+		name = continents.15.a
+		ai_chance = {
+			factor = 100
+		}
+		add_political_power = 100
+	}
+}

@@ -478,10 +478,7 @@ focus_tree = {
 			factor = 10
 		}
 		available = {
-			any_state = {
-                is_owned_and_controlled_by = ROOT
-                is_core_of = ROOT
-            }
+			num_of_factories > 15
 		}
 		search_filters = { FOCUS_FILTER_RESEARCH }
 		completion_reward = {
@@ -516,7 +513,7 @@ focus_tree = {
 		y = 8
 		prerequisite = { focus = CON_improve_recruitment }
 		icon = GFX_goal_generic_territory_or_war
-		cost = 8
+		cost = 10
 		ai_will_do = {
 			factor = 10
 		}
@@ -526,8 +523,10 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_POLITICAL }
 		completion_reward = {
+			set_major = yes
+			add_stability = 0.05
             OVERLORD = {
-                add_stability = 0.1
+                country_event = continents.13
             }
 		}
 	}
@@ -961,12 +960,20 @@ focus_tree = {
 			factor = 10
 		}
 		available = {
-			is_subject_of = SOV
+			is_subject = yes
 			has_capitulated = no
 		}
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 		completion_reward = {
-            add_ideas = CON_Profitable_continent
+			if = {
+				limit = {
+					is_subject_of = SOV
+				}
+				add_ideas = CON_Profitable_continent
+			}
+			else = {
+				add_ideas = CON_Profitable_continent1
+			}
 		}
 	}
 
