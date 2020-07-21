@@ -415,7 +415,7 @@ country_event = {
 }
 
 #Start of the Negotiation - Russia
-country_event = { #TODO Balance the conference as being Neutral doesn't give you any malus except consummer goods
+country_event = {
 	id = chinas.11
 	title = chinas.11.t
 	desc = chinas.11.d
@@ -570,6 +570,7 @@ country_event = {
 		SOV = {
 			country_event = { id = chinas.18 days = 4 }
 		}
+		add_political_power = -75
 		hidden_effect = {
 			event_target:WTT_current_china_leader = {
 				country_event = { id = chinas.16 days = 1 }
@@ -1298,7 +1299,7 @@ country_event = {
 				}
 			}
 		}
-		every_country = { #TODO Custom Tooltip Because the Base Game Doesn't understand sometimes 
+		every_country = {
 			limit = {
 				is_literally_china = yes
 				has_war_with = JAP
@@ -1318,23 +1319,26 @@ country_event = {
 			}
 			leave_faction = yes	
 		}
-		every_country = {
-			limit = {
-				is_literally_china = yes
-				is_in_faction = yes
-				NOT = {
-					is_in_faction_with = event_target:WTT_current_china_leader
-					has_war_with = event_target:WTT_current_china_leader
+		custom_effect_tooltip = chinese_nation_leave_faction
+		hidden_effect = {
+			every_country = {
+				limit = {
+					is_literally_china = yes
+					is_in_faction = yes
+					NOT = {
+						is_in_faction_with = event_target:WTT_current_china_leader
+						has_war_with = event_target:WTT_current_china_leader
+					}
+					NOT = {
+						TAG = MAN
+					}
 				}
-				NOT = {
-					TAG = MAN
+				leave_faction = yes
+				event_target:WTT_current_china_leader = {
+					add_to_faction = PREV
 				}
 			}
-			leave_faction = yes
-			event_target:WTT_current_china_leader = {
-				add_to_faction = PREV
-			}
-		}
+		}	
 		every_state = {
 			limit = {
 				has_state_flag = japanese_claimed_land_treaty
@@ -1357,7 +1361,6 @@ country_event = {
 				transfer_state = PREV
 			}
 		}
-
 		if = {
 			limit = {
 				has_country_flag = china_pay_concession_japan
@@ -1368,10 +1371,13 @@ country_event = {
 					days = 930
 				}
 			}
-			JAP = {
-				add_timed_idea = {
-					idea = SOV_Japan_receive_concessions_treaty
-					days = 930
+			custom_effect_tooltip = japan_idea_concession_china
+			hidden_effect = {
+				JAP = {
+					add_timed_idea = {
+						idea = SOV_Japan_receive_concessions_treaty
+						days = 930
+					}
 				}
 			}
 		}
@@ -1385,10 +1391,13 @@ country_event = {
 					days = 930
 				}
 			}
-			JAP = {
-				add_timed_idea = {
-					idea = SOV_Japan_receive_concessions_treaty
-					days = 930
+			custom_effect_tooltip = japan_idea_concession_china
+			hidden_effect = {
+				JAP = {
+					add_timed_idea = {
+						idea = SOV_Japan_receive_concessions_treaty
+						days = 930
+					}
 				}
 			}
 		}
@@ -1396,7 +1405,7 @@ country_event = {
 			limit = {
 				has_country_flag = open_borders_in_manchuria
 			}
-			every_country = {
+			every_country = { #Idea For China
 				limit = {
 					OR = {
 						AND = {
@@ -1413,6 +1422,18 @@ country_event = {
 				}
 				add_timed_idea = {
 					idea = SOV_Open_borders_with_china
+					days = 720
+				}
+			}
+			event_target:WTT_current_china_leader = {
+				add_timed_idea = {
+					idea = CHI_Immigration_from_manchu
+					days = 720
+				}
+			}
+			SOV = {
+				add_timed_idea = {
+					idea = SOV_Mass_emmigration
 					days = 720
 				}
 			}
@@ -1538,6 +1559,7 @@ country_event = {
 				days = 730
 			}
 		}
+		custom_effect_tooltip = accept_send_ultimatum_warlords
 	}
 
 	option = { #Refuse
