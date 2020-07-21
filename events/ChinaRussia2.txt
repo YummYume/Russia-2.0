@@ -1494,7 +1494,7 @@ country_event = {
 				NOT = {
 					country_exists = event_target:WTT_current_china_leader
 				}
-				event_target:WTT_current_china_leader= {
+				event_target:WTT_current_china_leader = {
 					is_subject = yes
 				}
 			}
@@ -1560,6 +1560,17 @@ country_event = {
 			}
 		}
 		custom_effect_tooltip = accept_send_ultimatum_warlords
+		hidden_effect = {
+			every_country = {
+				limit = {
+					is_literally_china = yes
+					NOT = {
+						TAG = event_target:WTT_current_china_leader
+					}
+				}
+				country_event = { id = chinas.30 days = 2 }
+			}
+		}
 	}
 
 	option = { #Refuse
@@ -1603,6 +1614,79 @@ country_event = {
 		name = chinas.29.a
 		ai_chance = {
 			factor = 100
+		}
+	}
+}
+
+#Chinese Warlords gets Ultimatum from China
+country_event = {
+	id = chinas.30
+	title = chinas.30.t
+	desc = chinas.30.d
+	picture = GFX_report_event_chinese_officers
+
+	is_triggered_only = yes
+
+	option = { #Accept
+		name = chinas.30.a
+		ai_chance = {
+			factor = 60
+		}
+		FROM = {
+			country_event = { id = chinas.31 hours = 5 }
+		}
+	}
+
+	option = { #No
+		name = chinas.30.b
+		ai_chance = {
+			factor = 40
+		}
+		FROM = {
+			country_event = { id = chinas.32 hours = 5 }
+		}
+	}
+}
+
+#China Receive Positive Response from Warloard
+country_event = {
+	id = chinas.31
+	title = chinas.31.t
+	desc = chinas.31.d
+	picture = GFX_report_event_poland_rejects
+
+	is_triggered_only = yes
+
+	option = { #Good
+		name = chinas.31.a
+		ai_chance = {
+			factor = 100
+		}
+		annex_country = {
+			target = FROM
+		}
+	}
+}
+
+#China Receive Positive Response from Warloard
+country_event = {
+	id = chinas.32
+	title = chinas.32.t
+	desc = chinas.32.d
+	picture = GFX_report_event_poland_rejects
+
+	is_triggered_only = yes
+
+	option = { #Not Good
+		name = chinas.32.a
+		ai_chance = {
+			factor = 100
+		}
+		ROOT = {
+			create_wargoal = {
+				type = annex_everything
+				target = FROM
+			}
 		}
 	}
 }
