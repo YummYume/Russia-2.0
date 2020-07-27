@@ -15520,6 +15520,7 @@ country_event = {
 		}
 		remove_ideas = SOV_Uncertain_fate
 		add_ideas = SOV_Alliance_with_europe
+		create_faction = russian_accords
 	}
 
 	option = { #Asia
@@ -15536,6 +15537,7 @@ country_event = {
 		}
 		remove_ideas = SOV_Uncertain_fate
 		add_ideas = SOV_Alliance_with_asia
+		create_faction = russian_accords
 	}
 
 	option = { #Closed
@@ -15588,6 +15590,7 @@ country_event = {
 		}
 		remove_ideas = SOV_Uncertain_fate
 		add_ideas = SOV_Alliance_with_europe
+		create_faction = russian_accords
 	}
 
 	option = { #America
@@ -15604,6 +15607,7 @@ country_event = {
 		}
 		remove_ideas = SOV_Uncertain_fate
 		add_ideas = SOV_Alliance_with_america
+		create_faction = russian_accords
 	}
 
 	option = { #Closed
@@ -15629,7 +15633,7 @@ country_event = {
 	}
 }
 
-#SOV wants an Alliance
+#SOV Wants an Alliance
 country_event = {
 	id = soviets.353
 	title = soviets.353.t
@@ -15642,9 +15646,15 @@ country_event = {
 		name = soviets.353.a
 		ai_chance = {
 			factor = 85
+			modifier = {
+				factor = 65
+				NOT = {
+					has_government = fascism
+				}
+			}
 		}
 		SOV = {
-			country_event = { id = soviets.354  days = 1}
+			country_event = { id = soviets.354 days = 1}
 		}
 	}
 
@@ -15652,14 +15662,20 @@ country_event = {
 		name = soviets.353.av
 		ai_chance = {
 			factor = 15
+			modifier = {
+				factor = 35
+				NOT = {
+					has_government = fascism
+				}
+			}
 		}
 		SOV = {
-			country_event = { id = soviets.355  days = 1}
+			country_event = { id = soviets.355 days = 1}
 		}
 	}
 }
 
-#FROM Accept
+#FROM Accepts
 country_event = {
 	id = soviets.354
 	title = soviets.354.t
@@ -15673,13 +15689,16 @@ country_event = {
 		ai_chance = {
 			factor = 100
 		}
-		SOV = {
+		ROOT = {
 			add_to_faction = FROM
+		}
+		FROM = {
+			clr_country_flag = SOV_is_demanding_alliance
 		}
 	}
 }
 
-#FROM Refuse
+#FROM Refuses
 country_event = {
 	id = soviets.355
 	title = soviets.355.t
@@ -15688,10 +15707,13 @@ country_event = {
 
 	is_triggered_only = yes
 
-	option = { #Good
+	option = { #Eh
 		name = soviets.355.a
 		ai_chance = {
 			factor = 100
+		}
+		FROM = {
+			clr_country_flag = SOV_is_demanding_alliance
 		}
 	}
 }
