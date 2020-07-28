@@ -12297,7 +12297,7 @@ country_event = {
 	}
 }
 
-#Remove Political Insecurity Idea if more than 10% Surrender Progress
+#Remove Political Insecurity Idea if more than 15% Surrender Progress
 country_event = {
 	id = soviets.266
 	title = soviets.266.t
@@ -12306,8 +12306,11 @@ country_event = {
 
 	trigger = {
 		tag = SOV
-		has_idea = SOV_Political_Unstability
-		surrender_progress > 0.1
+		OR = {
+			has_idea = SOV_Political_Unstability
+			has_idea = SOV_Political_Unstability2
+		}
+		surrender_progress > 0.15
 	}
 
 	fire_only_once = yes
@@ -12323,7 +12326,18 @@ country_event = {
 		name = soviets.266.a
 		add_political_power = -100
 		add_war_support = 0.1
-		remove_ideas = SOV_Political_Unstability
+		if = {
+			limit = {
+				has_idea = SOV_Political_Unstability
+			}
+			remove_ideas = SOV_Political_Unstability
+		}
+		else_if = {
+			limit = {
+				has_idea = SOV_Political_Unstability2
+			}
+			remove_ideas = SOV_Political_Unstability2
+		}
 	}
 }
 
