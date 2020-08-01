@@ -3553,7 +3553,52 @@ country_event = {
 	option = {
 		ai_chance = {
 			factor = 33
-			# Place modifier later - if the AI path selected is fascism
+			modifier = {
+				factor = 100
+				OR = {
+					has_game_rule = {
+						rule = SOV_ai_behavior
+						option = KONSTANTIN_FASCIST
+					}
+					has_game_rule = {
+						rule = SOV_ai_behavior
+						option = ANASTASY_FASCIST
+					}
+					has_game_rule = {
+						rule = SOV_ai_behavior
+						option = RANDOM_FASCIST
+					}
+				}
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					has_game_rule = {
+						rule = SOV_ai_behavior
+						option = TSAR_NEUTRALITY
+					}
+					has_game_rule = {
+						rule = SOV_ai_behavior
+						option = JUNTA_NEUTRALITY
+					}
+					has_game_rule = {
+						rule = SOV_ai_behavior
+						option = RANDOM_NEUTRALITY
+					}
+					has_game_rule = {
+						rule = SOV_ai_behavior
+						option = ALEXANDER_DEMOCRATIC
+					}
+					has_game_rule = {
+						rule = SOV_ai_behavior
+						option = PAVEL_DEMOCRATIC
+					}
+					has_game_rule = {
+						rule = SOV_ai_behavior
+						option = RANDOM_DEMOCRATIC
+					}
+				}
+			}
 		}
 		name = soviets.102.a
 		add_popularity = {
@@ -3565,7 +3610,52 @@ country_event = {
 	option = {
 		ai_chance = {
 			factor = 33
-			# Place modifier later - if the AI path selected is democratic
+			modifier = {
+				factor = 100
+				OR = {
+					has_game_rule = {
+						rule = SOV_ai_behavior
+						option = ALEXANDER_DEMOCRATIC
+					}
+					has_game_rule = {
+						rule = SOV_ai_behavior
+						option = PAVEL_DEMOCRATIC
+					}
+					has_game_rule = {
+						rule = SOV_ai_behavior
+						option = RANDOM_DEMOCRATIC
+					}
+				}
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					has_game_rule = {
+						rule = SOV_ai_behavior
+						option = TSAR_NEUTRALITY
+					}
+					has_game_rule = {
+						rule = SOV_ai_behavior
+						option = JUNTA_NEUTRALITY
+					}
+					has_game_rule = {
+						rule = SOV_ai_behavior
+						option = RANDOM_NEUTRALITY
+					}
+					has_game_rule = {
+						rule = SOV_ai_behavior
+						option = KONSTANTIN_FASCIST
+					}
+					has_game_rule = {
+						rule = SOV_ai_behavior
+						option = ANASTASY_FASCIST
+					}
+					has_game_rule = {
+						rule = SOV_ai_behavior
+						option = RANDOM_FASCIST
+					}
+				}
+			}
 		}
 		name = soviets.102.b
 		add_popularity = {
@@ -3577,7 +3667,52 @@ country_event = {
 	option = {
 		ai_chance = {
 			factor = 33
-			# Place modifier later - if the AI path selected is non aligned
+			modifier = {
+				factor = 100
+				OR = {
+					has_game_rule = {
+						rule = SOV_ai_behavior
+						option = TSAR_NEUTRALITY
+					}
+					has_game_rule = {
+						rule = SOV_ai_behavior
+						option = JUNTA_NEUTRALITY
+					}
+					has_game_rule = {
+						rule = SOV_ai_behavior
+						option = RANDOM_NEUTRALITY
+					}
+				}
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					has_game_rule = {
+						rule = SOV_ai_behavior
+						option = ALEXANDER_DEMOCRATIC
+					}
+					has_game_rule = {
+						rule = SOV_ai_behavior
+						option = PAVEL_DEMOCRATIC
+					}
+					has_game_rule = {
+						rule = SOV_ai_behavior
+						option = RANDOM_DEMOCRATIC
+					}
+					has_game_rule = {
+						rule = SOV_ai_behavior
+						option = KONSTANTIN_FASCIST
+					}
+					has_game_rule = {
+						rule = SOV_ai_behavior
+						option = ANASTASY_FASCIST
+					}
+					has_game_rule = {
+						rule = SOV_ai_behavior
+						option = RANDOM_FASCIST
+					}
+				}
+			}
 		}
 		name = soviets.102.c
 		add_popularity = {
@@ -5411,11 +5546,23 @@ country_event = {
 	is_triggered_only = yes
 
 	option = { #Okay
-		ai_chance = { factor = 50 }
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 25
+				OR = {
+					is_major = yes
+					any_country = {
+						is_major = yes
+						is_in_faction_with = ROOT
+					}
+				}
+			}
+		}
 		name = soviets.141.a
 		if = {
 			limit = {
-				owns_state = 216
+				controls_state = 216
 			}
 			SOV = {
 				transfer_state = 216
@@ -5423,7 +5570,7 @@ country_event = {
 		}
 		if = {
 			limit = {
-				owns_state = 215
+				controls_state = 215
 			}
 			SOV = {
 				transfer_state = 215
@@ -5431,10 +5578,19 @@ country_event = {
 		}
 		if = {
 			limit = {
-				owns_state = 213
+				controls_state = 213
 			}
 			SOV = {
 				transfer_state = 213
+			}
+		}
+		if = {
+			limit = {
+				has_war_with = SOV
+			}
+			white_peace = {
+				tag = SOV
+				message = SURRENDER_KARELIA_MESSAGE
 			}
 		}
 		SOV = {
@@ -5443,7 +5599,19 @@ country_event = {
 	}
 
 	option = { #No
-		ai_chance = { factor = 50 }
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 25
+				OR = {
+					is_major = yes
+					any_country = {
+						is_major = yes
+						is_in_faction_with = ROOT
+					}
+				}
+			}
+		}
 		name = soviets.141.b
 		SOV = {
 			country_event = { id = soviets.143 days = 1 }
@@ -5496,8 +5664,29 @@ country_event = {
 	is_triggered_only = yes
 
 	option = { #Okay
-		ai_chance = { factor = 50 }
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 25
+				OR = {
+					is_major = yes
+					any_country = {
+						is_major = yes
+						is_in_faction_with = ROOT
+					}
+				}
+			}
+		}
 		name = soviets.144.a
+		if = {
+			limit = {
+				has_war_with = SOV
+			}
+			white_peace = {
+				tag = SOV
+				message = SURRENDER_NORTH_SAKHALIN_MESSAGE
+			}
+		}
 		SOV = {
 			transfer_state = 655
 			country_event = { id = soviets.145 days = 1 }
@@ -5505,7 +5694,19 @@ country_event = {
 	}
 
 	option = { #No
-		ai_chance = { factor = 50 }
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 25
+				OR = {
+					is_major = yes
+					any_country = {
+						is_major = yes
+						is_in_faction_with = ROOT
+					}
+				}
+			}
+		}
 		name = soviets.144.b
 		SOV = {
 			country_event = { id = soviets.146 days = 1 }
@@ -5837,11 +6038,23 @@ country_event = {
 	is_triggered_only = yes
 
 	option = { #Okay - We want factories
-		ai_chance = { factor = 40 }
+		ai_chance = {
+			factor = 40
+			modifier = {
+				factor = 35
+				OR = {
+					is_major = yes
+					any_country = {
+						is_major = yes
+						is_in_faction_with = ROOT
+					}
+				}
+			}
+		}
 		name = soviets.159.a
 		if = {
 			limit = {
-				owns_state = 216
+				controls_state = 216
 			}
 			SOV = {
 				transfer_state = 216
@@ -5849,7 +6062,7 @@ country_event = {
 		}
 		if = {
 			limit = {
-				owns_state = 215
+				controls_state = 215
 			}
 			SOV = {
 				transfer_state = 215
@@ -5857,10 +6070,19 @@ country_event = {
 		}
 		if = {
 			limit = {
-				owns_state = 213
+				controls_state = 213
 			}
 			SOV = {
 				transfer_state = 213
+			}
+		}
+		if = {
+			limit = {
+				has_war_with = SOV
+			}
+			white_peace = {
+				tag = SOV
+				message = SURRENDER_KARELIA_MESSAGE
 			}
 		}
 		add_timed_idea = {
@@ -5878,11 +6100,23 @@ country_event = {
 	}
 
 	option = { #Okay - We want military aid
-		ai_chance = { factor = 40 }
+		ai_chance = {
+			factor = 40
+			modifier = {
+				factor = 35
+				OR = {
+					is_major = yes
+					any_country = {
+						is_major = yes
+						is_in_faction_with = ROOT
+					}
+				}
+			}
+		}
 		name = soviets.159.b
 		if = {
 			limit = {
-				owns_state = 216
+				controls_state = 216
 			}
 			SOV = {
 				transfer_state = 216
@@ -5890,7 +6124,7 @@ country_event = {
 		}
 		if = {
 			limit = {
-				owns_state = 215
+				controls_state = 215
 			}
 			SOV = {
 				transfer_state = 215
@@ -5898,10 +6132,19 @@ country_event = {
 		}
 		if = {
 			limit = {
-				owns_state = 213
+				controls_state = 213
 			}
 			SOV = {
 				transfer_state = 213
+			}
+		}
+		if = {
+			limit = {
+				has_war_with = SOV
+			}
+			white_peace = {
+				tag = SOV
+				message = SURRENDER_KARELIA_MESSAGE
 			}
 		}
 		add_timed_idea = {
@@ -5919,7 +6162,19 @@ country_event = {
 	}
 
 	option = { #No
-		ai_chance = { factor = 20 }
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 30
+				OR = {
+					is_major = yes
+					any_country = {
+						is_major = yes
+						is_in_faction_with = ROOT
+					}
+				}
+			}
+		}
 		name = soviets.159.c
 		SOV = {
 			country_event = { id = soviets.162 days = 1 }
@@ -6009,11 +6264,20 @@ country_event = {
 	is_triggered_only = yes
 
 	option = { #Okay
-		ai_chance = { factor = 80 }
+		ai_chance = { factor = 90 }
 		name = soviets.163.a
 		add_timed_idea = {
 			idea = SOV_Received_sakhalin_payment
 			days = 180
+		}
+		if = {
+			limit = {
+				has_war_with = SOV
+			}
+			white_peace = {
+				tag = SOV
+				message = SURRENDER_NORTH_SAKHALIN_MESSAGE
+			}
 		}
 		SOV = {
 			transfer_state = 655
@@ -6022,7 +6286,7 @@ country_event = {
 	}
 
 	option = { #No
-		ai_chance = { factor = 20 }
+		ai_chance = { factor = 10 }
 		name = soviets.163.b
 		SOV = {
 			country_event = { id = soviets.165 days = 1 }
@@ -15826,8 +16090,12 @@ country_event = {
 	trigger = {
 		TAG = SOV
 		has_government = fascism
-		463 = {
-			is_owned_and_controlled_by = SOV
+		OR = {
+			controls_state = 463
+			any_country = {
+				is_subject_of = SOV
+				controls_state = 463
+			}
 		}
 		has_completed_focus = SOV_new_russian_era
 	}
@@ -15844,5 +16112,13 @@ country_event = {
 			factor = 100
 		}
 		add_state_core = 463
+		if = {
+			limit = {
+				NOT = {
+					owns_state = 463
+				}
+			}
+			transfer_state = 463
+		}
 	}
 }
