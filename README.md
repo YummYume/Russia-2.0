@@ -42,17 +42,17 @@ Do **NOT** upload this mod as your own.
 
 ## What is currently available on this version?
 
-- More than 250 focuses,
-- Seven political paths available,
-- More than 500 events,
-- More than 100 decisions,
-- Two custom puppet types (requires Together for Victory),
-- Nine unique espionage operations (require La Resistance),
-- Easter eggs and hidden events,
-- A lot of new advisors, designers, generals and more,
-- Full English localization (with news events as well),
-- Unique game mechanics,
-- Custom nations and flags,
+- More than 250 focuses
+- Seven political paths available
+- More than 500 events
+- More than 100 decisions
+- Two custom puppet types (requires Together for Victory)
+- Nine unique espionage operations (require La Resistance)
+- Easter eggs and hidden events
+- A lot of new advisors, designers, generals and more
+- Full English localization (with news events as well)
+- Unique game mechanics
+- Custom nations and flags
 - And so much more..!
 
 ## What is to come?
