@@ -3441,7 +3441,6 @@ SOV_do_not_mess_agreement_sov = {
 }
 
 prepare_fight_russia_from = {
-
 	enable = {
 		OR = {
 			has_country_flag = is_target_of_SOV_fascist
@@ -3459,7 +3458,6 @@ prepare_fight_russia_from = {
 }
 
 prepare_fight_from_russia = {
-
 	reversed = yes
 
 	enable = {
@@ -3475,5 +3473,73 @@ prepare_fight_from_russia = {
 		type = prepare_for_war
 		id = "SOV"
 		value = 100
+	}
+}
+
+destroy_SOU_do_not_wait = {
+	enable = {
+		OR = {
+			tag = SOV
+			is_in_faction_with = SOV
+		}
+		country_exists = SOU
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = invade
+		id = "SOU"
+		value = 1000
+	}
+
+	ai_strategy = {
+		type = conquer
+		id = "SOU"
+		value = 1000
+	}
+
+	ai_strategy = {
+		type = antagonize
+		id = "SOU"
+		value = 1000
+	}
+
+	ai_strategy = {
+		type = consider_weak
+		id = "SOU"
+		value = 1000
+	}
+}
+
+help_SOV_against_SOU = {
+	enable = {
+		is_in_faction_with = SOV
+		NOT = {
+			tag = SOV
+		}
+		SOV = {
+			has_war_with = SOU
+		}
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = dont_defend_ally_borders	
+		id = "SOV"
+		value = -1000
+	}
+
+	ai_strategy = {
+		type = protect	
+		id = "SOV"
+		value = 1000
+	}
+
+	ai_strategy = {
+		type = support	
+		id = "SOV"
+		value = 1000
 	}
 }
