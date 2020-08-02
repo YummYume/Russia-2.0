@@ -10,6 +10,8 @@ Current version is : **_Stable_**.
 
 ## How to LOCALLY install the mod for beta testing :
 
+**Important** : You **_cannot_** have two mods with the same name (new paradox launcher won't understand).
+
 - Download this GitHub as a zip file (Clone or Download > Download as ZIP),
 - Start the HOI4 launcher and go to Mods > Mod Tools > Create a Mod,
 - Name : Russia 2.0,
@@ -30,29 +32,33 @@ Simply download the ZIP file again, delete everything inside the Russia 2.0 fold
 
 If you encounter any bug or something unusual happens, you can add it here as an issue, or PM any of us directly on Steam or Discord. Using the Steam Page of the mod is also recommended but do **NOT** report any bugs from unstable versions, as those are meant to contain bugs anyways.
 
-This mod has been developed for a few months now, and we are pretty happy with how far we got, however, feedback is really needed. So do not hesitate to tell your thoughts about the mod, the issues you encountered, or anything else you have in mind.
+The mod is **NOT** compatible with Road to 56, overhaul mods, or mods that modify Soviet files! It might or might not work with Expert AI (please stop asking). The mod is NOT supposed to be 100% historical in any way.
 
-The mod is **NOT** achievement compatible. The 1939 start date now works fine.
-The AI can play the Soviet Union, some factors have been added, as well as an ai_strategy and AI behaviors (2 paths are currently available). Future updates will aim in improving the AI.
+This mod has been developed for months now, and we are happy with how far we got. We want to thank everyone who helped us, supported the mod, and everyone playing it. We could not have kept going without you guys.
+
+The mod is **NOT** achievement compatible. The 1939 start date now works fine. The AI can play the Soviet Union, factors have been added, as well as an ai_strategy and AI behaviors (the AI can play any ideology).
 
 Do **NOT** upload this mod as your own.
 
 ## What is currently available on this version?
 
-- All the features included in the Steam version
-- Democratic Path
-- 2 Non-Aligned Paths
-- Unique mechanics for each path
-- Some rebalance, more events, more generals
+- More than 250 focuses,
+- Seven political paths available,
+- More than 500 events,
+- More than 100 decisions,
+- Two custom puppet types (requires Together for Victory),
+- Nine unique espionage operations (require La Resistance),
+- Easter eggs and hidden events,
+- A lot of new advisors, designers, generals and more,
+- Full English localization (with news events as well),
+- Unique game mechanics,
+- Custom nations and flags,
+- And so much more..!
 
 ## What is to come?
 
-- Fascist path
-- AI Improvements
+- Minor improvements
 - Bug fixes
-- New focus icons, event images, etc...
-- Balance update
-- Anything that goes through our mind
 
 ## Mod developers :
 - [@YummYume](https://github.com/YummYume) : Yam#2937 (Discord), [Steam link](https://steamcommunity.com/profiles/76561198081584510)
