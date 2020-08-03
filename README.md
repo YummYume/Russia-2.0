@@ -53,6 +53,7 @@ Do **NOT** upload this mod as your own.
 - Full English localization (with news events as well)
 - Unique game mechanics
 - Custom nations and flags
+- More than 12 country leaders
 - And so much more..!
 
 ## What is to come?
