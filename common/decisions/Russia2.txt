@@ -4647,8 +4647,25 @@ SOV_perpetual_defense_liberty_decisions = {
 			factor = 100
 			modifier = {
 				factor = 10
+				has_war = yes
+				OR = {
+					any_country = {
+						is_major = yes
+						is_in_faction_with = FROM
+					}
+					any_country = {
+						is_major = yes
+						has_guaranteed = FROM
+					}
+					FROM = {
+						is_major = yes
+					}
+				}
+			}
+			modifier = {
+				factor = 0
 				FROM = {
-					is_major = yes
+					alliance_strength_ratio > 1
 				}
 			}
 		}
@@ -15061,6 +15078,7 @@ SOV_expand_russian_dominance = {
 			factor = 100
 			modifier = {
 				factor = 10
+				has_war = yes
 				OR = {
 					any_country = {
 						is_major = yes
@@ -15070,12 +15088,15 @@ SOV_expand_russian_dominance = {
 						is_major = yes
 						has_guaranteed = FROM
 					}
+					FROM = {
+						is_major = yes
+					}
 				}
 			}
 			modifier = {
 				factor = 0
 				FROM = {
-					alliance_strength_ratio > 0.75
+					alliance_strength_ratio > 1
 				}
 			}
 		}
