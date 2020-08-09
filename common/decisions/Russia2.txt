@@ -106,6 +106,59 @@ SOV_democratic_help = {
 	}
 }
 
+SOV_move_capital_neutrality = {
+
+	SOV_move_capital_195 = {
+
+		icon = GFX_decision_infiltrate_state
+
+		fire_only_once = yes
+
+		allowed = {
+			original_tag = SOV
+		}
+		
+		visible = {
+			has_government = neutrality
+			has_country_flag = second_civil_war_over
+		}
+
+		available = {
+			has_government = neutrality
+			has_full_control_of_state = 195
+			custom_trigger_tooltip = {
+				tooltip = move_capital_is_not_195
+				any_state = {
+					is_controlled_by = ROOT
+					is_capital = yes
+					NOT = {
+						state = 195
+					}
+				}
+			}
+		}
+
+		cost = 25
+
+		ai_will_do = {
+			factor = 0
+			modifier = {
+				factor = 100
+				has_war = yes
+				surrender_progress > 0.25
+				NOT = {
+					has_war_with = FIN
+				}
+			}
+		}
+
+		complete_effect = {
+			add_stability = 0.05
+			set_capital = 195
+		}
+	}
+}
+
 SOV_europe_expansion = {
 
     SOV_join_the_war_against_poland = {
