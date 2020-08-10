@@ -3236,6 +3236,15 @@ country_event = {
 						has_civil_war = yes
 						has_country_flag = second_civil_war_in_progress
 					}
+					OR = {
+						has_completed_focus = SOV_consolidate_true_communism
+						has_completed_focus = SOV_trust_alexander
+						has_completed_focus = SOV_pavel_guidance
+						has_completed_focus = SOV_restoration_tsar
+						has_completed_focus = SOV_firm_hand
+						has_completed_focus = SOV_the_lawyer_remains
+						has_completed_focus = SOV_the_tables_have_turned
+					}
 				}
 			}
 		}
@@ -3245,6 +3254,9 @@ country_event = {
 
 	option = { #Nikita Is the Leader
 		name = soviets.94.a
+		ai_chance = {
+			factor = 100
+		}
 		trigger = {
 			SOV = {
 				has_country_leader = {
@@ -3263,6 +3275,9 @@ country_event = {
 
 	option = { #Trotsky Is the Leader
 		name = soviets.94.b
+		ai_chance = {
+			factor = 100
+		}
 		trigger = {
 			SOV = {
 				has_country_leader = {
@@ -3281,6 +3296,9 @@ country_event = {
 
 	option = { #Vasily Is the Leader
 		name = soviets.94.c
+		ai_chance = {
+			factor = 100
+		}
 		trigger = {
 			SOV = {
 				has_country_leader = {
@@ -3299,6 +3317,9 @@ country_event = {
 
 	option = { #Vasily or Nikita Is the Leader
 		name = soviets.94.e
+		ai_chance = {
+			factor = 0
+		}
 		trigger = {
 			SOV = {
 				OR = {
@@ -3332,21 +3353,40 @@ country_event = {
 
 	option = { #Has Neutral Government
 		name = soviets.94.g
+		ai_chance = {
+			factor = 100
+		}
 		trigger = {
 			SOV = {
 				has_government = neutrality
 			}
 		}
-		set_province_name = { id = 3529 name = "Tsaritsyn"}
-		hidden_effect = {
-			217 = {
-				set_state_name = "Tsaritsyn"
+		if = {
+			limit = {
+				has_completed_focus = SOV_firm_hand
+			}
+			set_province_name = { id = 3529 name = "Volgograd"}
+			hidden_effect = {
+				217 = {
+					set_state_name = "Volgograd"
+				}
+			}
+		}
+		else = {
+			set_province_name = { id = 3529 name = "Tsaritsyn"}
+			hidden_effect = {
+				217 = {
+					set_state_name = "Tsaritsyn"
+				}
 			}
 		}
 	}
 
 	option = { #Has Fascist Government
 		name = soviets.94.h
+		ai_chance = {
+			factor = 100
+		}
 		trigger = {
 			SOV = {
 				has_government = fascism
@@ -3362,6 +3402,9 @@ country_event = {
 
 	option = { #Don't Change
 		name = soviets.94.i
+		ai_chance = {
+			factor = 0
+		}
 		trigger = {
 			SOV = {
 				OR = {
@@ -4308,7 +4351,15 @@ country_event = {
 				has_civil_war = yes
 				has_country_flag = second_civil_war_in_progress
 			}
-			owns_state = 195
+			OR = {
+				has_completed_focus = SOV_consolidate_true_communism
+				has_completed_focus = SOV_trust_alexander
+				has_completed_focus = SOV_pavel_guidance
+				has_completed_focus = SOV_restoration_tsar
+				has_completed_focus = SOV_firm_hand
+				has_completed_focus = SOV_the_lawyer_remains
+				has_completed_focus = SOV_the_tables_have_turned
+			}
 		}
 	}
 
@@ -4319,10 +4370,23 @@ country_event = {
 			factor = 100
 		}
 		name = soviets.107.a
-		set_province_name = { id = 3151 name = "Saint Petersburg"}
-		hidden_effect = {
-			195 = {
-				set_state_name = "Saint Petersburg"
+		if = {
+			limit = {
+				has_completed_focus = SOV_trust_alexander
+			}
+			set_province_name = { id = 3151 name = "Petrograd"}
+			hidden_effect = {
+				195 = {
+					set_state_name = "Petrograd"
+				}
+			}
+		}
+		else = {
+			set_province_name = { id = 3151 name = "Saint Petersburg"}
+			hidden_effect = {
+				195 = {
+					set_state_name = "Saint Petersburg"
+				}
 			}
 		}
 	}
