@@ -4563,11 +4563,11 @@ focus_tree = {
 		completion_reward = {
 			navy_experience = 25
 			195 = {
-			add_extra_state_shared_building_slots = 3
-			add_building_construction = {
-				type = dockyard
-				level = 3
-				instant_build = yes
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = dockyard
+					level = 3
+					instant_build = yes
 				}
 			}
 		}
@@ -4592,11 +4592,11 @@ focus_tree = {
 		completion_reward = {
 			navy_experience = 25
 			137 = {
-			add_extra_state_shared_building_slots = 3
-			add_building_construction = {
-				type = dockyard
-				level = 3
-				instant_build = yes
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = dockyard
+					level = 3
+					instant_build = yes
 				}
 			}
 		}
@@ -6890,6 +6890,9 @@ focus_tree = {
 		will_lead_to_war_with = PER
 		will_lead_to_war_with = IRQ
 		will_lead_to_war_with = TUR
+		will_lead_to_war_with = KUR
+		will_lead_to_war_with = SYR
+		will_lead_to_war_with = LEB
 		available = {
 			has_government = communism
 			is_subject = no
@@ -6901,6 +6904,9 @@ focus_tree = {
 				country_exists = PER
 				country_exists = IRQ
 				country_exists = TUR
+				country_exists = KUR
+				country_exists = SYR
+				country_exists = LEB
 			}
 			if = {
 				limit = {
@@ -6928,6 +6934,18 @@ focus_tree = {
 				NOT = { country_exists = TUR }
 				TUR = { is_subject = yes }
 			}
+			OR = {
+				NOT = { country_exists = KUR }
+				KUR = { is_subject = yes }
+			}
+			OR = {
+				NOT = { country_exists = SYR }
+				SYR = { is_subject = yes }
+			}
+			OR = {
+				NOT = { country_exists = LEB }
+				LEB = { is_subject = yes }
+			}
 		}
 		search_filters = { FOCUS_FILTER_ANNEXATION FOCUS_FILTER_COMMUNISM_STALIN_RUSSIA }
 		completion_reward = {
@@ -6939,6 +6957,9 @@ focus_tree = {
 						tag = PER
 						tag = IRQ
 						tag = TUR
+						tag = KUR
+						tag = SYR
+						tag = LEB
 					}
 					is_subject = no
 				}
@@ -7752,7 +7773,7 @@ focus_tree = {
 		x = 65
 		y = 13
 		prerequisite = { focus = SOV_end_of_war }
-		icon = GFX_focus_generic_strike_at_democracy3
+		icon = GFX_focus_spa_the_war_of_vengeance
 		cost = 5
 		ai_will_do = {
 			factor = 5
@@ -9178,7 +9199,7 @@ focus_tree = {
 		y = 8
 		prerequisite = { focus = SOV_european_revolution }
 		icon = GFX_focus_Liberate_Workers
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			factor = 7
 		}
@@ -10046,9 +10067,10 @@ focus_tree = {
 	#Reunification
 	focus = {
 		id = SOV_reunification
-		x = 22
+		x = 20
 		y = 21
 		prerequisite = { focus = SOV_improved_civilian_industry }
+		mutually_exclusive = { focus = SOV_freedom_all }
 		icon = GFX_Reunification_states
 		cost = 12
 		ai_will_do = {
@@ -10145,6 +10167,88 @@ focus_tree = {
 		}
 	}
 
+	#Freedom for all
+	focus = {
+		id = SOV_freedom_all
+		x = 24
+		y = 21
+		prerequisite = { focus = SOV_improved_civilian_industry }
+		mutually_exclusive = { focus = SOV_reunification }
+		icon = GFX_Reunification_states
+		cost = 12
+		ai_will_do = {
+			factor = 0
+			modifier = {
+				factor = 10
+				original_tag = SOV
+				set_temp_variable = { medium_investment = sov_country_investment_count }
+				divide_temp_variable = { medium_investment = 3 }
+				multiply_temp_variable = { medium_investment = 2 }
+				SOV = {
+					check_variable = {
+						var = sov_total_investment
+						value = medium_investment
+						compare = greater_than_or_equals
+					}
+				}
+			}
+		}
+		available = {
+			is_subject = no
+			has_government = democratic
+			if = {
+				limit = {
+					has_idea = SOV_Exiled_russia
+				}
+				NOT = {
+					has_idea = SOV_Exiled_russia
+				}
+			}
+		}
+		select_effect = {
+			hidden_effect = {
+				every_state = {
+					limit = {
+						has_state_flag = reunification_give_core_back
+					}
+					SOV = {
+						add_state_claim = PREV
+					}
+				}
+			}
+			set_country_flag = sov_not_started_reunification
+		}
+		cancelable = no
+		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
+		completion_reward = {
+			custom_effect_tooltip = SOV_freedom_all_tt
+			add_ideas = SOV_Russian_sphere_market_leader
+			every_country = {
+				limit = {
+					OR = {
+						has_country_flag = democratic_russia_chaos_caucasus
+						has_country_flag = democratic_russia_chaos_asia
+						has_country_flag = democratic_russia_chaos_europe
+					}
+					is_subject_of = SOV
+				}
+				add_ideas = SOV_Russian_overlord
+				add_ideas = SOV_Russian_sphere_market
+				add_ideas = SOV_Russian_military_training
+				if = {
+					limit = {
+						has_idea = SOV_Unstable_government
+					}
+					remove_ideas = SOV_Unstable_government
+				}
+				hidden_effect = {
+					country_event = { id = soviets.361 }
+				}
+			}
+			remove_ideas = SOV_Russian_sphere_investments
+		}
+	}
+
 	#Deal with the Decadents
 	focus = {
 		id = SOV_deal_with_decadents
@@ -10229,7 +10333,7 @@ focus_tree = {
 		id = SOV_promote_russian_culture
 		x = 24
 		y = 22
-		prerequisite = { focus = SOV_reunification }
+		prerequisite = { focus = SOV_reunification focus = SOV_freedom_all }
 		mutually_exclusive = { focus = SOV_deal_with_decadents }
 		icon = GFX_Russian_Culture
 		cost = 5
@@ -10311,7 +10415,7 @@ focus_tree = {
 		id = SOV_demand_return_land
 		x = 26
 		y = 22
-		prerequisite = { focus = SOV_reunification }
+		prerequisite = { focus = SOV_reunification focus = SOV_freedom_all }
 		mutually_exclusive = { focus = SOV_compromise_strategy }
 		icon = GFX_goal_generic_position_armies
 		cost = 5
@@ -10363,7 +10467,7 @@ focus_tree = {
 		id = SOV_compromise_strategy
 		x = 30
 		y = 22
-		prerequisite = { focus = SOV_reunification }
+		prerequisite = { focus = SOV_reunification focus = SOV_freedom_all }
 		mutually_exclusive = { focus = SOV_demand_return_land }
 		icon = GFX_goal_generic_major_alliance
 		cost = 5
@@ -14584,6 +14688,9 @@ focus_tree = {
 						country_exists = SLV
 						country_exists = MNT
 						country_exists = MAC
+						country_exists = TRA
+						country_exists = HRZ
+						country_exists = KOS
 					}
 				}
 				any_country = {
@@ -14594,6 +14701,9 @@ focus_tree = {
 						tag = SLV
 						tag = MNT
 						tag = MAC
+						tag = TRA
+						tag = HRZ
+						tag = KOS
 					}
 					NOT = {
 						is_faction_leader = yes
@@ -14679,6 +14789,9 @@ focus_tree = {
 						country_exists = SLV
 						country_exists = MNT
 						country_exists = MAC
+						country_exists = TRA
+						country_exists = HRZ
+						country_exists = KOS
 					}
 				}
 				every_country = {
@@ -14690,6 +14803,9 @@ focus_tree = {
 							tag = SLV
 							tag = MNT
 							tag = MAC
+							tag = TRA
+							tag = HRZ
+							tag = KOS
 						}
 						NOT = {
 							is_faction_leader = yes

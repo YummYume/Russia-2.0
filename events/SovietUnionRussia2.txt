@@ -6396,7 +6396,15 @@ country_event = {
 	}
 
 	option = { #Okay
-		ai_chance = { factor = 100 }
+		ai_chance = {
+			factor = 100
+			modifier = {
+				factor = 0
+				SOV = {
+					has_completed_focus = SOV_freedom_all
+				}
+			}
+		}
 		name = soviets.166.a
 		custom_effect_tooltip = SOV_game_totally_over_TT
 		SOV = {
@@ -6404,10 +6412,17 @@ country_event = {
 		}
 	}
 
-	option = { #No, only if a player somehow wants to play a Russian State
-		ai_chance = { factor = 0 }
+	option = { #No, only if a player somehow wants to play a Russian State OR the Reunification was not completed
+		ai_chance = {
+			factor = 0
+			modifier = {
+				factor = 100
+				SOV = {
+					has_completed_focus = SOV_freedom_all
+				}
+			}
+		}
 		name = soviets.166.b
-		add_stability = -0.1
 	}
 }
 
@@ -16501,5 +16516,112 @@ country_event = {
 		}
 		name = soviets.359.b
 		add_political_power = -100
+	}
+}
+
+#Profit from FROM (Russian States)
+country_event = {
+	id = soviets.360
+	title = soviets.360.t
+	desc = soviets.360.d
+	picture = GFX_military_parade_kremlin_russia2
+
+	is_triggered_only = yes
+
+	option = { #Great!
+		name = soviets.360.a
+		ai_chance = {
+			factor = 100
+		}
+		set_variable = { economicgainfactor = 0 }
+		randomize_variable = {
+			var = economicgainfactor
+			distribution = uniform
+			min = 0.5
+			max = 3.5
+		}
+		round_variable = economicgainfactor
+		if = {
+			limit = {
+				check_variable = {
+					var = economicgainfactor
+					value = 1
+					compare = equals
+				}
+			}
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				check_variable = {
+					var = economicgainfactor
+					value = 2
+					compare = equals
+				}
+			}
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				check_variable = {
+					var = economicgainfactor
+					value = 3
+					compare = equals
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					is_coastal = yes
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+}
+
+#Send Profit to SOV
+country_event = {
+	id = soviets.361
+
+	is_triggered_only = yes
+
+	hidden = yes
+
+	immediate = {
+		if = {
+			limit = {
+				is_subject_of = SOV
+			}
+			set_temp_variable = { nexteconomicevent = 0 }
+			randomize_temp_variable = {
+				var = nexteconomicevent
+				distribution = uniform
+				min = 100
+				max = 365
+			}
+			round_temp_variable = nexteconomicevent
+			SOV = {
+				country_event = { id = soviets.360 days = nexteconomicevent }
+			}
+		}
 	}
 }
