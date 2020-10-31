@@ -3521,6 +3521,10 @@ country_event = {
 		original_tag = SOV
 		SOV = {
 			is_ai = yes
+			OR = {
+				has_government = communism
+				has_government = fascism
+			}
 		}
 		date > 1937.1.1
 		NOT = {
@@ -5153,22 +5157,6 @@ country_event = {
 			news_event = {
 				id = newsrussia2.78 hours = 6
 			}
-			if = {
-				limit = {
-					is_ai = yes
-					has_country_flag = control_central_asia
-				}
-				SOV = {
-					transfer_state = 590
-					transfer_state = 583
-					transfer_state = 402
-					transfer_state = 587
-					add_state_core = 590
-					add_state_core = 583
-					add_state_core = 402
-					add_state_core = 587
-				}
-			}
 		}
 	}
 }
@@ -5437,25 +5425,6 @@ country_event = {
 					neutrality = 45
 					fascism = 15
 					communism = 15
-				}
-				add_ai_strategy = {
-					type = consider_weak
-					id = SOV
-					value = 500
-				}
-				add_ai_strategy = {
-					type = conquer
-					id = SOV
-					value = 500
-				}
-				add_ai_strategy = {
-					type = protect
-					id = SOU
-					value = 500
-				}
-				add_ai_strategy = {
-					type = ignore_army_incompetence
-					value = 500
 				}
 			}
 			every_state = {
@@ -5945,7 +5914,7 @@ country_event = {
 			add_ai_strategy = {
 				type = alliance
 				id = SOV
-				value = 200
+				value = 100
 			}
 		}
 		if = {
@@ -5963,7 +5932,7 @@ country_event = {
 					add_ai_strategy = {
 						type = alliance
 						id = PREV
-						value = 200
+						value = 100
 					}
 				}
 			}
@@ -6677,11 +6646,6 @@ country_event = {
 						owner = GEO
 					}
 				}
-				add_ai_strategy = {
-					type = conquer
-					id = SOU
-					value = 200
-				}
 			}
 			ARM = {
 				random_owned_state = {
@@ -6724,11 +6688,6 @@ country_event = {
 						owner = ARM
 					}
 				}
-				add_ai_strategy = {
-					type = conquer
-					id = SOU
-					value = 200
-				}
 			}
 			AZR = {
 				random_owned_state = {
@@ -6770,11 +6729,6 @@ country_event = {
 						division = "name = \"4th Azerbaijan Imperial Division\" division_template = \"Azerbaijan Imperial Division\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
 						owner = AZR
 					}
-				}
-				add_ai_strategy = {
-					type = conquer
-					id = SOU
-					value = 200
 				}
 			}
 			SOV = {
@@ -7192,11 +7146,6 @@ country_event = {
 						owner = KAZ
 					}
 				}
-				add_ai_strategy = {
-					type = conquer
-					id = SOU
-					value = 200
-				}
 			}
 			TMS = {
 				random_owned_state = {
@@ -7263,11 +7212,6 @@ country_event = {
 						division = "name = \"8th Turkmenistan Imperial Division\" division_template = \"Turkmenistan Imperial Division\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
 						owner = TMS
 					}
-				}
-				add_ai_strategy = {
-					type = conquer
-					id = SOU
-					value = 200
 				}
 			}
 		}
@@ -7462,11 +7406,6 @@ country_event = {
 						division = "name = \"20th Belarusian Imperial Division\" division_template = \"Belarusian Imperial Division\" start_experience_factor = 0.4 start_equipment_factor = 0.4"
 						owner = BLR
 					}
-				}
-				add_ai_strategy = {
-					type = conquer
-					id = SOU
-					value = 200
 				}
 			}
 		}
@@ -7954,12 +7893,12 @@ country_event = {
 			add_ai_strategy = {
 				type = alliance
 				id = SOV
-				value = 200
+				value = 100
 			}
 			add_ai_strategy = {
 				type = befriend
 				id = SOV
-				value = 200
+				value = 2
 			}
 		}
 	}
@@ -8079,12 +8018,12 @@ country_event = {
 			add_ai_strategy = {
 				type = alliance
 				id = SOV
-				value = 200
+				value = 100
 			}
 			add_ai_strategy = {
 				type = befriend
 				id = SOV
-				value = 200
+				value = 2
 			}
 		}
 	}
@@ -8375,7 +8314,6 @@ country_event = {
 			if = {
 				limit = {
 					has_country_flag = control_central_asia
-					is_ai = no
 				}
 				KAZ = {
 					transfer_state = 406
@@ -8383,26 +8321,6 @@ country_event = {
 					transfer_state = 589
 					transfer_state = 588
 				}
-			}
-			else_if = {
-				limit = {
-					has_country_flag = control_central_asia
-					is_ai = yes
-				}
-				KAZ = {
-					transfer_state = 590
-					transfer_state = 583
-					transfer_state = 402
-					transfer_state = 587
-					transfer_state = 406
-					transfer_state = 407
-					transfer_state = 589
-					transfer_state = 588
-				}
-				remove_state_core = 590
-				remove_state_core = 583
-				remove_state_core = 402
-				remove_state_core = 587
 			}
 			582 = {
 				remove_province_modifier = {
@@ -9204,6 +9122,20 @@ country_event = {
 		name = soviets.210.a
 		ai_chance = {
 			factor = 50
+			modifier = {
+				factor = 100
+				has_game_rule = {
+					rule = SOV_ai_behavior
+					option = TSAR_NEUTRALITY
+				}
+			}
+			modifier = {
+				factor = 0
+				has_game_rule = {
+					rule = SOV_ai_behavior
+					option = JUNTA_NEUTRALITY
+				}
+			}
 		}
 		custom_effect_tooltip = monarchist_restoration_possible
 		set_country_flag = monarchist_restoration_path
@@ -9213,6 +9145,20 @@ country_event = {
 		name = soviets.210.b
 		ai_chance = {
 			factor = 50
+			modifier = {
+				factor = 0
+				has_game_rule = {
+					rule = SOV_ai_behavior
+					option = TSAR_NEUTRALITY
+				}
+			}
+			modifier = {
+				factor = 100
+				has_game_rule = {
+					rule = SOV_ai_behavior
+					option = JUNTA_NEUTRALITY
+				}
+			}
 		}
 		custom_effect_tooltip = military_junta_possible
 		set_country_flag = military_junta_leader
@@ -9254,7 +9200,7 @@ country_event = {
 	}
 }
 
-#vassalization of Ukraine - Reintegrate the Lost State
+#Vassalization of Ukraine - Reintegrate the Lost State
 country_event = {
 	id = soviets.213
 	title = soviets.213.t
@@ -9353,7 +9299,7 @@ country_event = {
 	}
 }
 
-#Ukraine Refuse Vassalization
+#Ukraine Refuses Vassalization
 country_event = {
 	id = soviets.215
 	title = soviets.215.t
@@ -12325,7 +12271,6 @@ country_event = {
 			else_if = {
 				limit = {
 					has_country_flag = control_central_asia
-					is_ai = yes
 				}
 				KAZ = {
 					transfer_state = 590
@@ -16126,14 +16071,14 @@ country_event = {
 			add_ai_strategy = {
 				type = alliance
 				id = ROOT
-				value = 200
+				value = 100
 			}
 		}
 		ROOT = {
 			add_ai_strategy = {
 				type = alliance
 				id = SOV
-				value = 200
+				value = 100
 			}
 		}
 	}
