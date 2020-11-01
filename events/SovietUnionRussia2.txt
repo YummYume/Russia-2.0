@@ -6358,6 +6358,11 @@ country_event = {
 			flag = russian_culture_promote
 			days > 365
 		}
+		NOT = {
+			SOV = {
+				has_completed_focus = SOV_freedom_all
+			}
+		}
 	}
 
 	immediate = {
@@ -16557,6 +16562,21 @@ country_event = {
 		ai_chance = {
 			factor = 100
 		}
+		if = {
+			limit = {
+				communism < 0.05
+			}
+			add_popularity = {
+				ideology = communism
+				popularity = 0.10
+			}
+		}
+		else = {
+			add_popularity = {
+				ideology = communism
+				popularity = 0.05
+			}
+		}
 		add_ideas = SOV_Communist_influence_international_1
 		activate_mission = SOV_appeal_communist_supporters
 	}
@@ -16887,6 +16907,10 @@ country_event = {
 		ai_chance = {
 			factor = 100
 		}
+		add_opinion_modifier = {
+			target = SOV
+			modifier = soviet_investment
+		}
 		random_owned_state = {
 			add_extra_state_shared_building_slots = 2
 			add_building_construction  = {
@@ -16925,5 +16949,114 @@ country_event = {
 			factor = 100
 		}
 		custom_effect_tooltip = from_communists_may_fire_revolution
+	}
+}
+
+#Puppet asks OVERLORD for help against Communism
+country_event = {
+	id = soviets.377
+	title = soviets.377.t
+	desc = soviets.377.d
+	picture = GFX_military_parade_kremlin_russia2
+
+	is_triggered_only = yes
+
+	option = { #Yes
+		name = soviets.377.a
+		ai_chance = {
+			factor = 75
+		}
+		add_political_power = -100
+		FROM = {
+			country_event = soviets.378
+		}
+	}
+
+	option = { #Yes extra
+		name = soviets.377.b
+		ai_chance = {
+			factor = 75
+		}
+		add_political_power = -200
+		FROM = {
+			country_event = soviets.380
+		}
+	}
+
+	option = { #No
+		name = soviets.377.c
+		ai_chance = {
+			factor = 25
+		}
+		FROM = {
+			country_event = soviets.379
+		}
+	}
+}
+
+#OVERLORD Accepts
+country_event = {
+	id = soviets.378
+	title = soviets.378.t
+	desc = soviets.378.d
+	picture = GFX_military_parade_kremlin_russia2
+
+	is_triggered_only = yes
+
+	option = { #Great
+		name = soviets.378.a
+		ai_chance = {
+			factor = 100
+		}
+		add_popularity = {
+			ideology = communism
+			popularity = -0.05
+		}
+		add_opinion_modifier = {
+			target = FROM
+			modifier = help_against_communism
+		}
+	}
+}
+
+#OVERLORD Refuses
+country_event = {
+	id = soviets.379
+	title = soviets.379.t
+	desc = soviets.379.d
+	picture = GFX_military_parade_kremlin_russia2
+
+	is_triggered_only = yes
+
+	option = { #Uh..
+		name = soviets.379.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#OVERLORD Accepts extra aid
+country_event = {
+	id = soviets.380
+	title = soviets.380.t
+	desc = soviets.380.d
+	picture = GFX_military_parade_kremlin_russia2
+
+	is_triggered_only = yes
+
+	option = { #Great!
+		name = soviets.380.a
+		ai_chance = {
+			factor = 100
+		}
+		add_popularity = {
+			ideology = communism
+			popularity = -0.1
+		}
+		add_opinion_modifier = {
+			target = FROM
+			modifier = help_against_communism2
+		}
 	}
 }
