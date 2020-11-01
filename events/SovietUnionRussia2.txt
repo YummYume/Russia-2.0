@@ -16625,3 +16625,388 @@ country_event = {
 		}
 	}
 }
+
+#International Influence 1
+country_event = {
+	id = soviets.362
+	title = soviets.362.t
+	desc = soviets.362.d
+	picture = GFX_military_parade_kremlin_russia2
+
+	is_triggered_only = yes
+
+	option = { #Uh
+		name = soviets.362.a
+		ai_chance = {
+			factor = 100
+		}
+		add_ideas = SOV_Communist_influence_international_1
+		activate_mission = SOV_appeal_communist_supporters
+	}
+}
+
+#Can promote Communism in FROM - level 2
+country_event = {
+	id = soviets.363
+	title = soviets.363.t
+	desc = soviets.363.d
+	picture = GFX_military_parade_kremlin_russia2
+
+	is_triggered_only = yes
+
+	option = { #Great
+		name = soviets.363.a
+		ai_chance = {
+			factor = 100
+		}
+		custom_effect_tooltip = unlock_decision_international_recognition_from_tt
+	}
+}
+
+#International Influence 2
+country_event = {
+	id = soviets.364
+	title = soviets.364.t
+	desc = soviets.364.d
+	picture = GFX_military_parade_kremlin_russia2
+
+	is_triggered_only = yes
+
+	option = { #Uh
+		name = soviets.364.a
+		ai_chance = {
+			factor = 100
+		}
+		swap_ideas = {
+			remove_idea = SOV_Communist_influence_international_1
+			add_idea = SOV_Communist_influence_international_2
+		}
+		activate_mission = SOV_international_recognition
+	}
+}
+
+#Can promote Communism in FROM - level 3
+country_event = {
+	id = soviets.365
+	title = soviets.365.t
+	desc = soviets.365.d
+	picture = GFX_military_parade_kremlin_russia2
+
+	is_triggered_only = yes
+
+	option = { #Great
+		name = soviets.365.a
+		ai_chance = {
+			factor = 100
+		}
+		custom_effect_tooltip = unlock_decision_armed_communist_forces_from_tt
+	}
+}
+
+#International Influence 3
+country_event = {
+	id = soviets.366
+	title = soviets.366.t
+	desc = soviets.366.d
+	picture = GFX_military_parade_kremlin_russia2
+
+	is_triggered_only = yes
+
+	option = { #UH
+		name = soviets.366.a
+		ai_chance = {
+			factor = 100
+		}
+		swap_ideas = {
+			remove_idea = SOV_Communist_influence_international_2
+			add_idea = SOV_Communist_influence_international_3
+		}
+		activate_mission = SOV_armed_communist_forces
+	}
+}
+
+#Communist Ultimatum
+country_event = {
+	id = soviets.367
+	title = soviets.367.t
+	desc = soviets.367.d
+	picture = GFX_military_parade_kremlin_russia2
+
+	trigger = {
+		NOT = {
+			tag = SOV
+			is_in_faction_with = SOV
+			is_subject_of = SOV
+			has_government = communism
+			has_civil_war = yes
+			has_capitulated = yes
+		}
+		has_idea = SOV_Communist_influence_international_3
+		has_country_flag = can_be_target_international
+		NOT = {
+			has_country_flag = communist_ultimatum_triggered
+		}
+	}
+
+	immediate = {
+		hidden_effect = {
+			set_country_flag = communist_ultimatum_triggered
+			remove_ideas = SOV_Communist_influence_international_3
+		}
+	}
+
+	option = { #Civil war
+		name = soviets.367.a
+		trigger = {
+			num_of_controlled_states > 1
+		}
+		ai_chance = {
+			factor = 50
+		}
+		start_civil_war = {
+			ruling_party = ROOT
+			ideology = communism
+			size = party_popularity@communism
+		}
+		set_country_flag = is_civil_war_international
+		hidden_effect = {
+			SOV = {
+				country_event = { id = soviets.370 }
+			}
+			every_other_country = {
+				limit = {
+					has_civil_war = yes
+					has_government = communism
+					original_tag = ROOT
+					any_country = {
+						has_war_with = PREV
+						has_civil_war = yes
+						has_country_flag = communist_ultimatum_triggered
+					}
+				}
+				set_country_flag = is_communist_triggered_revolution
+				add_ideas = SOV_Supporters_fourth_international
+			}
+		}
+	}
+
+	option = { #Submit
+		name = soviets.367.a
+		ai_chance = {
+			factor = 50
+		}
+		add_stability = -0.1
+		set_politics = {
+			ruling_party = communism
+		}
+		add_popularity = {
+			ideology = communism
+			popularity = 0.1
+		}
+		add_ideas = SOV_Supporters_fourth_international
+		set_country_flag = submit_communism_international
+		hidden_effect = {
+			SOV = {
+				country_event = { id = soviets.371 }
+			}
+		}
+	}
+}
+
+#Communism Defeated
+country_event = {
+	id = soviets.368
+	title = soviets.368.t
+	desc = soviets.368.d
+	picture = GFX_military_parade_kremlin_russia2
+
+	is_triggered_only = yes
+
+	option = { #Good
+		name = soviets.368.a
+		ai_chance = {
+			factor = 100
+		}
+		add_stability = 0.05
+		add_timed_idea = {
+			idea = SOV_Communism_defeated
+			days = 100
+		}
+		SOV = {
+			country_event = soviets.369
+		}
+	}
+}
+
+#Communism Defeated in FROM
+country_event = {
+	id = soviets.369
+	title = soviets.369.t
+	desc = soviets.369.d
+	picture = GFX_military_parade_kremlin_russia2
+
+	is_triggered_only = yes
+
+	option = { #Uh
+		name = soviets.369.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#Civil war in FROM
+country_event = {
+	id = soviets.370
+	title = soviets.370.t
+	desc = soviets.370.d
+	picture = GFX_military_parade_kremlin_russia2
+
+	is_triggered_only = yes
+
+	option = { #Let's go
+		name = soviets.370.a
+		ai_chance = {
+			factor = 100
+		}
+		custom_effect_tooltip = unlock_decision_can_puppet_communist_uprising
+	}
+}
+
+#FROM Submits (becomes Communist)
+country_event = {
+	id = soviets.371
+	title = soviets.371.t
+	desc = soviets.371.d
+	picture = GFX_military_parade_kremlin_russia2
+
+	is_triggered_only = yes
+
+	option = { #Good
+		name = soviets.371.a
+		ai_chance = {
+			factor = 100
+		}
+		custom_effect_tooltip = unlock_decision_can_invite_communist_submit
+	}
+}
+
+#Invitation to 4th International (Submited)
+country_event = {
+	id = soviets.372
+	title = soviets.372.t
+	desc = soviets.372.d
+	picture = GFX_military_parade_kremlin_russia2
+
+	is_triggered_only = yes
+
+	option = { #Yes
+		name = soviets.372.a
+		ai_chance = {
+			factor = 100
+		}
+		SOV = {
+			add_to_faction = ROOT
+			country_event = soviets.373
+		}
+	}
+
+	option = { #No (player only)
+		name = soviets.372.b
+		ai_chance = {
+			factor = 0
+		}
+		SOV = {
+			country_event = soviets.374
+		}
+	}
+}
+
+#FROM Joins
+country_event = {
+	id = soviets.373
+	title = soviets.373.t
+	desc = soviets.373.d
+	picture = GFX_military_parade_kremlin_russia2
+
+	is_triggered_only = yes
+
+	option = { #Good
+		name = soviets.373.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#FROM Refuses
+country_event = {
+	id = soviets.374
+	title = soviets.374.t
+	desc = soviets.374.d
+	picture = GFX_military_parade_kremlin_russia2
+
+	is_triggered_only = yes
+
+	option = { #Oh
+		name = soviets.374.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#Country gets investment from SOV
+country_event = {
+	id = soviets.375
+	title = soviets.375.t
+	desc = soviets.375.d
+	picture = GFX_military_parade_kremlin_russia2
+
+	is_triggered_only = yes
+
+	option = { #Cool
+		name = soviets.375.a
+		ai_chance = {
+			factor = 100
+		}
+		random_owned_state = {
+			add_extra_state_shared_building_slots = 2
+			add_building_construction  = {
+				type = arms_factory
+				level = 2
+				instant_build = yes
+			}
+		}
+		random_owned_state = {
+			add_extra_state_shared_building_slots = 2
+			add_building_construction  = {
+				type = industrial_complex
+				level = 2
+				instant_build = yes
+			}
+		}
+		add_popularity = {
+			ideology = communism
+			popularity = 0.1
+		}
+	}
+}
+
+#FROM Communists can fire revolution
+country_event = {
+	id = soviets.376
+	title = soviets.376.t
+	desc = soviets.376.d
+	picture = GFX_military_parade_kremlin_russia2
+
+	is_triggered_only = yes
+
+	option = { #Great
+		name = soviets.376.a
+		ai_chance = {
+			factor = 100
+		}
+		custom_effect_tooltip = from_communists_may_fire_revolution
+	}
+}
