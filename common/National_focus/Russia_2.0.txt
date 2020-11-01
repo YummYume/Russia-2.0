@@ -3448,12 +3448,11 @@ focus_tree = {
 			TAN = {
 				OR = {
 					exists = no
-					NOT = { is_in_faction_with = ROOT }
 					NOT = { has_government = ROOT }
 				}
 			}
 		}
-		search_filters = {FOCUS_FILTER_ANNEXATION}
+		search_filters = { FOCUS_FILTER_ANNEXATION }
 		completion_reward = {
 			TAN = {
 				country_event = { id = tannu.1 }
@@ -6156,7 +6155,13 @@ focus_tree = {
 					NOT = {
 						is_in_faction_with = ROOT
 					}
-					is_neighbor_of = ROOT
+					OR = {
+						is_neighbor_of = ROOT
+						any_country = {
+							is_in_faction_with = ROOT
+							is_neighbor_of = PREV
+						}
+					}
 				}
 				add_timed_idea = { idea = SOV_Komintern_influence days = 365 }
 			}
@@ -7771,9 +7776,9 @@ focus_tree = {
 		}
 	}
 
-	#The Warsaw Pact
+	#The Iron Curtain
 	focus = {
-		id = SOV_the_warsaw_pact
+		id = SOV_iron_curtain_focus
 		x = 67
 		y = 11
 		prerequisite = { focus = SOV_end_of_war }
@@ -7785,18 +7790,6 @@ focus_tree = {
 		available = {
 			has_government = communism
 			is_faction_leader = yes
-			NOT = {
-				has_country_leader = {
-			    	name = "Joseph Stalin"
-				}
-			}
-			OR = {
-				10 = { is_controlled_by = ROOT }
-				any_country = {
-					is_in_faction_with = ROOT
-					controls_state = 10
-				}
-			}
 			if = {
 				limit = {
 					has_idea = SOV_Exiled_russia
@@ -7808,11 +7801,9 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_COMMUNISM_STALIN_RUSSIA FOCUS_FILTER_POLITICAL }
 		completion_reward = {
-			set_faction_name = warsaw_pact
 			add_political_power = 200
-			hidden_effect = {
-				news_event = { id = newsrussia2.37 days = 1 }
-			}
+			add_ideas = SOV_Iron_curtain_volunteers
+			custom_effect_tooltip = SOV_iron_curtain_focus_tt
 		}
 	}
 
@@ -10140,7 +10131,7 @@ focus_tree = {
 		icon = GFX_Reunification_states
 		cost = 12
 		ai_will_do = {
-			factor = 0
+			factor = 4
 			modifier = {
 				factor = 10
 				original_tag = SOV
@@ -10204,8 +10195,26 @@ focus_tree = {
 					}
 					remove_ideas = SOV_Unstable_government
 				}
+				if = {
+					limit = {
+						has_dlc = "La Resistance"
+					}
+					custom_effect_tooltip = SOV_freedom_all_tt2
+				}
 				hidden_effect = {
 					country_event = { id = soviets.361 }
+					if = {
+						limit = {
+							has_dlc = "La Resistance"
+						}
+						set_variable = { collaboration_formed_by = ROOT } #Needed for collaboration governments
+						ROOT = {
+							set_autonomy = {
+								target = PREV
+								autonomy_state = autonomy_collaboration_government
+							}
+						}
+					}
 				}
 			}
 			remove_ideas = SOV_Russian_sphere_investments

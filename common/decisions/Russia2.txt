@@ -21246,3 +21246,444 @@ SOV_communist_influence_international = {
 		}
 	}
 }
+
+SOV_iron_curtain = {
+
+	SOV_influence_country_iron_curtain = {
+
+		icon = GFX_decision_hol_exchange_intelligence_data
+
+		fire_only_once = yes
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			is_faction_leader = yes
+			has_completed_focus = SOV_iron_curtain_focus
+			has_government = communism
+			FROM = {
+				exists = yes
+				NOT {
+					is_in_faction_with = ROOT
+					has_government = communism
+				}
+				is_major = no
+				capital_scope = {
+					is_on_continent = europe
+				}
+				OR = {
+					is_neighbor_of = ROOT
+					any_country = {
+						is_neighbor_of = FROM
+						is_in_faction_with = ROOT
+					}
+				}
+				communism < 0.3
+			}
+		}
+
+		target_root_trigger = {
+			has_completed_focus = SOV_iron_curtain_focus
+		}
+
+		target_trigger = {
+			FROM = {
+				exists = yes
+				NOT {
+					is_in_faction_with = ROOT
+					has_government = communism
+				}
+				is_major = no
+				capital_scope = {
+					is_on_continent = europe
+				}
+				OR = {
+					is_neighbor_of = ROOT
+					any_country = {
+						is_neighbor_of = FROM
+						is_in_faction_with = ROOT
+					}
+				}
+				communism < 0.3
+			}
+		}
+
+		available = {
+			has_war = no
+		}
+
+		cost = 150
+
+		complete_effect = {
+			FROM = {
+				country_event = {
+					id = soviets.381
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	SOV_civil_war_country_iron_curtain = {
+
+		icon = GFX_decision_hol_exchange_intelligence_data
+
+		fire_only_once = yes
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			is_faction_leader = yes
+			has_completed_focus = SOV_iron_curtain_focus
+			has_government = communism
+			FROM = {
+				exists = yes
+				num_of_controlled_states > 1
+				NOT {
+					is_in_faction_with = ROOT
+					has_government = communism
+				}
+				is_major = no
+				capital_scope = {
+					is_on_continent = europe
+				}
+				OR = {
+					is_neighbor_of = ROOT
+					any_country = {
+						is_neighbor_of = FROM
+						is_in_faction_with = ROOT
+					}
+				}
+				communism > 0.3
+			}
+		}
+
+		target_root_trigger = {
+			has_completed_focus = SOV_iron_curtain_focus
+		}
+
+		target_trigger = {
+			FROM = {
+				exists = yes
+				num_of_controlled_states > 1
+				NOT {
+					is_in_faction_with = ROOT
+					has_government = communism
+				}
+				is_major = no
+				capital_scope = {
+					is_on_continent = europe
+				}
+				OR = {
+					is_neighbor_of = ROOT
+					any_country = {
+						is_neighbor_of = FROM
+						is_in_faction_with = ROOT
+					}
+				}
+				communism > 0.3
+			}
+		}
+
+		available = {
+			has_war = no
+			FROM = {
+				NOT = {
+					has_civil_war = yes
+				}
+			}
+		}
+
+		cost = 300
+
+		complete_effect = {
+			FROM = {
+				country_event = {
+					id = soviets.382
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	SOV_invite_country_iron_curtain = {
+
+		icon = GFX_decision_hol_exchange_intelligence_data
+
+		fire_only_once = yes
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			is_faction_leader = yes
+			has_completed_focus = SOV_iron_curtain_focus
+			has_government = communism
+			FROM = {
+				exists = yes
+				NOT {
+					is_in_faction_with = ROOT
+				}
+				has_government = communism
+				is_major = no
+				capital_scope = {
+					is_on_continent = europe
+				}
+				OR = {
+					is_neighbor_of = ROOT
+					any_country = {
+						is_neighbor_of = FROM
+						is_in_faction_with = ROOT
+					}
+				}
+			}
+		}
+
+		target_root_trigger = {
+			has_completed_focus = SOV_iron_curtain_focus
+		}
+
+		target_trigger = {
+			FROM = {
+				exists = yes
+				NOT {
+					is_in_faction_with = ROOT
+				}
+				has_government = communism
+				is_major = no
+				capital_scope = {
+					is_on_continent = europe
+				}
+				OR = {
+					is_neighbor_of = ROOT
+					any_country = {
+						is_neighbor_of = FROM
+						is_in_faction_with = ROOT
+					}
+				}
+			}
+		}
+
+		available = {
+			NOT = {
+				has_war_with = FROM
+			}
+			FROM = {
+				NOT = {
+					has_civil_war = yes
+				}
+			}
+		}
+
+		cost = 50
+
+		complete_effect = {
+			FROM = {
+				country_event = {
+					id = soviets.385
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	SOV_puppet_country_iron_curtain = {
+
+		icon = GFX_decision_hol_exchange_intelligence_data
+
+		fire_only_once = yes
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			is_faction_leader = yes
+			has_completed_focus = SOV_iron_curtain_focus
+			has_government = communism
+			FROM = {
+				exists = yes
+				NOT {
+					is_in_faction_with = ROOT
+				}
+				has_government = communism
+				has_country_flag = is_communist_civil_war_iron_curtain
+			}
+		}
+
+		target_root_trigger = {
+			has_completed_focus = SOV_iron_curtain_focus
+		}
+
+		target_trigger = {
+			FROM = {
+				exists = yes
+				NOT {
+					is_in_faction_with = ROOT
+				}
+				has_government = communism
+				has_country_flag = is_communist_civil_war_iron_curtain
+			}
+		}
+
+		available = {
+			NOT = {
+				has_war_with = FROM
+			}
+			FROM = {
+				NOT = {
+					has_idea = SOV_Cold_civil_war
+				}
+			}
+		}
+
+		cost = 50
+
+		complete_effect = {
+			hidden_effect = {
+				every_country = {
+					limit = {
+						has_civil_war = yes
+						has_war_with = FROM
+						original_tag = FROM
+						has_country_flag = civil_war_iron_curtain
+					}
+					SOV = {
+						add_to_war = {
+							targeted_alliance = FROM 
+							enemy = PREV 
+							hostility_reason = asked_to_join
+						}
+					}
+				}
+			}
+			puppet = FROM
+			if = {
+				limit = {
+					FROM = {
+						has_civil_war = yes
+					}
+				}
+				custom_effect_tooltip = join_civil_war_from
+			}
+			hidden_effect = {
+				set_autonomy = {
+					target = FROM
+					autonomy_state = autonomy_puppet
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	SOV_create_warsaw_pact = {
+
+		icon = GFX_decision_hol_exchange_intelligence_data
+
+		fire_only_once = yes
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			is_faction_leader = yes
+			has_completed_focus = SOV_iron_curtain_focus
+			has_government = communism
+		}
+
+		available = {
+			NOT = {
+				has_country_leader = {
+					name = "Joseph Stalin"
+					ruling_only = yes
+				}
+			}
+			OR = {
+				10 = {
+					is_controlled_by = SOV
+				}
+				any_allied_country = {
+					has_government = communism
+					controls_state = 10
+				}
+			}
+		}
+
+		cost = 50
+
+		complete_effect = {
+			add_stability = 0.05
+			set_faction_name = warsaw_pact
+			hidden_effect = {
+				news_event = { id = newsrussia2.37 days = 1 }
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+}
+
+SOV_target_iron_curtain = {
+
+	SOV_civil_war_iron_curtain_timeout = {
+
+		icon = GFX_decision_generic_prepare_civil_war
+
+		fire_only_once = yes
+
+		activation = {
+			has_country_flag = target_civil_war_iron_curtain
+		}
+
+		available = {
+			OR = {
+				has_government = communism
+				communism < 0.3
+			}
+		}
+
+		visible = {
+			has_country_flag = target_civil_war_iron_curtain
+		}
+
+		days_mission_timeout = 60
+
+		is_good = no
+
+		complete_effect = {
+			country_event = soviets.389
+		}
+
+		timeout_effect = {
+			custom_effect_tooltip = SOV_civil_war_iron_curtain_timeout_tt
+			country_event = soviets.383
+			set_country_flag = civil_war_iron_curtain
+			hidden_effect = {
+				add_popularity = {
+					ideology = communism
+					popularity = 0.05
+				}
+			}
+		}
+	}
+}
