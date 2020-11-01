@@ -6151,6 +6151,15 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_COMMUNISM_STALIN_RUSSIA FOCUS_FILTER_POLITICAL }
 		completion_reward = {
 			add_political_power = 200
+			every_country = {
+				limit = {
+					NOT = {
+						is_in_faction_with = ROOT
+					}
+					is_neighbor_of = ROOT
+				}
+				add_timed_idea = { idea = SOV_Komintern_influence days = 365 }
+			}
 		}
 	}
 
@@ -6786,53 +6795,6 @@ focus_tree = {
 		}
 	}
 
-	#Influence the Weak Nations
-	focus = {
-		id = SOV_influence_weak_nations
-		x = 66
-		y = 8
-		prerequisite = { focus = SOV_proclaim_neutrality }
-		icon = GFX_goal_support_communism
-		cost = 8
-		ai_will_do = {
-			factor = 5
-		}
-		available = {
-			is_major = yes
-			has_government = communism
-			is_subject = no
-			if = {
-				limit = {
-					has_idea = SOV_Exiled_russia
-				}
-				NOT = {
-					has_idea = SOV_Exiled_russia
-				}
-			}
-		}
-		search_filters = { FOCUS_FILTER_COMMUNISM_STALIN_RUSSIA }
-		completion_reward = {
-			every_other_country = {
-				limit = {
-					is_major = no
-					num_divisions < 10
-					num_of_factories < 10
-					any_owned_state = {
-						OR = {
-							is_on_continent = europe
-							is_on_continent = asia
-							is_on_continent = middle_east
-							is_on_continent = africa
-							is_on_continent = australia
-						}
-					}
-				}
-				add_timed_idea = { idea = SOV_Komintern_influence days = 365 }
-			}
-			custom_effect_tooltip = SOV_influence_weak_nations_tt
-		}
-	}
-
 	#Invite France
 	focus = {
 		id = SOV_invite_france
@@ -6879,8 +6841,8 @@ focus_tree = {
 	focus = {
 		id = SOV_ultimatum_middle_east
 		x = 66
-		y = 9
-		prerequisite = { focus = SOV_influence_weak_nations }
+		y = 8
+		prerequisite = { focus = SOV_proclaim_neutrality }
 		icon = GFX_focus_generic_treaty
 		cost = 8
 		ai_will_do = {
@@ -6975,7 +6937,7 @@ focus_tree = {
 	focus = {
 		id = SOV_komintern_unite
 		x = 66
-		y = 10
+		y = 9
 		prerequisite = { focus = SOV_ultimatum_middle_east }
 		icon = GFX_focus_generic_join_comintern
 		cost = 10
@@ -7017,8 +6979,8 @@ focus_tree = {
 	focus = {
 		id = SOV_officially_join_war
 		x = 63
-		y = 9
-		prerequisite = { focus = SOV_influence_weak_nations }
+		y = 8
+		prerequisite = { focus = SOV_proclaim_neutrality }
 		icon = GFX_focus_attack_germany
 		cost = 5
 		ai_will_do = {
@@ -7079,7 +7041,7 @@ focus_tree = {
 	focus = {
 		id = SOV_588_night_bombers_regiment
 		x = 60
-		y = 10
+		y = 9
 		prerequisite = { focus = SOV_officially_join_war }
 		icon = GFX_focus_Aviation_Cult
 		cost = 8
@@ -7121,7 +7083,7 @@ focus_tree = {
 	focus = {
 		id = SOV_for_the_motherland
 		x = 63
-		y = 10
+		y = 9
 		prerequisite = { focus = SOV_officially_join_war }
 		icon = GFX_focus_Patriotic_War
 		cost = 5
@@ -7151,7 +7113,7 @@ focus_tree = {
 	focus = {
 		id = SOV_yalta_conference
 		x = 60
-		y = 11
+		y = 10
 		prerequisite = { focus = SOV_for_the_motherland }
 		icon = GFX_Yalta_Conference
 		cost = 2
@@ -7398,7 +7360,7 @@ focus_tree = {
 	focus = {
 		id = SOV_preemptive_strike_iran
 		x = 66
-		y = 11
+		y = 10
 		prerequisite = { focus = SOV_for_the_motherland }
 		icon = GFX_Attack_Iran
 		cost = 5
@@ -7444,7 +7406,7 @@ focus_tree = {
 	focus = {
 		id = SOV_end_of_war
 		x = 63
-		y = 11
+		y = 10
 		prerequisite = { focus = SOV_for_the_motherland }
 		icon = GFX_focus_generic_anti_fascist_diplomacy
 		cost = 10
@@ -7489,7 +7451,7 @@ focus_tree = {
 	focus = {
 		id = SOV_proclaim_east_germany
 		x = 59
-		y = 12
+		y = 11
 		prerequisite = { focus = SOV_end_of_war }
 		icon = GFX_focus_East_Germany
 		cost = 10
@@ -7693,7 +7655,7 @@ focus_tree = {
 	focus = {
 		id = SOV_post_war_influence
 		x = 63
-		y = 12
+		y = 11
 		prerequisite = { focus = SOV_end_of_war }
 		icon = GFX_goal_generic_war_with_comintern
 		cost = 10
@@ -7729,7 +7691,7 @@ focus_tree = {
 	focus = {
 		id = SOV_strike_empire
 		x = 61
-		y = 13
+		y = 12
 		prerequisite = { focus = SOV_end_of_war }
 		icon = GFX_focus_attack_britain
 		cost = 5
@@ -7771,7 +7733,7 @@ focus_tree = {
 	focus = {
 		id = SOV_strike_giant
 		x = 65
-		y = 13
+		y = 12
 		prerequisite = { focus = SOV_end_of_war }
 		icon = GFX_focus_spa_the_war_of_vengeance
 		cost = 5
@@ -7813,7 +7775,7 @@ focus_tree = {
 	focus = {
 		id = SOV_the_warsaw_pact
 		x = 67
-		y = 12
+		y = 11
 		prerequisite = { focus = SOV_end_of_war }
 		icon = GFX_focus_generic_diplomatic_treaty
 		cost = 10
@@ -8352,6 +8314,7 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_COMMUNISM_TROTSKY_RUSSIA }
 		completion_reward = {
 			add_ideas = SOV_Home_counter_revolution
+			add_ideas = SOV_Fourth_international_leader
 			create_faction = 4th_International
 			clr_country_flag = ENG_communist_civil_war
 			MON = {
@@ -8373,7 +8336,7 @@ focus_tree = {
 		y = 6
 		prerequisite = { focus = SOV_fourth_international }
 		icon = GFX_focus_Expand_Fourth
-		cost = 8
+		cost = 5
 		ai_will_do = {
 			factor = 6
 		}
@@ -8404,7 +8367,7 @@ focus_tree = {
 		y = 7
 		prerequisite = { focus = SOV_expand_international }
 		icon = GFX_goal_support_fourth_int
-		cost = 8
+		cost = 10
 		ai_will_do = {
 			factor = 6
 		}
@@ -8423,7 +8386,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_COMMUNISM_TROTSKY_RUSSIA FOCUS_FILTER_POLITICAL }
 		completion_reward = {
-			add_political_power = 100
+			add_political_power = 50
 			custom_effect_tooltip = SOV_fourth_int_council_tt
 		}
 	}
@@ -9073,7 +9036,7 @@ focus_tree = {
 		y = 7
 		prerequisite = { focus = SOV_follow_lenin_legacy }
 		icon = GFX_focus_Europe_Revolution
-		cost = 8
+		cost = 5
 		ai_will_do = {
 			factor = 6
 		}
@@ -9115,7 +9078,7 @@ focus_tree = {
 		y = 8
 		prerequisite = { focus = SOV_follow_lenin_legacy }
 		icon = GFX_focus_communist_africa
-		cost = 8
+		cost = 5
 		ai_will_do = {
 			factor = 6
 		}
@@ -9157,7 +9120,7 @@ focus_tree = {
 		y = 8
 		prerequisite = { focus = SOV_follow_lenin_legacy }
 		icon = GFX_focus_Asia_Revolution
-		cost = 8
+		cost = 5
 		ai_will_do = {
 			factor = 6
 		}
@@ -9199,7 +9162,7 @@ focus_tree = {
 		y = 8
 		prerequisite = { focus = SOV_european_revolution }
 		icon = GFX_focus_Liberate_Workers
-		cost = 5
+		cost = 8
 		ai_will_do = {
 			factor = 7
 		}
@@ -9260,8 +9223,8 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_COMMUNISM_TROTSKY_RUSSIA }
 		completion_reward = {
 			ROOT = {
-				add_stability = 0.05
-				add_war_support = 0.05
+				add_stability = 0.1
+				add_war_support = 0.1
 			}
 			every_other_country = {
 				limit = {
