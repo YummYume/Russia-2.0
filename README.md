@@ -8,6 +8,8 @@ Updates are very frequent on our GitHub, however, you should **NOT** try to play
 
 Current version is : **_Stable_**.
 
+Mod Version : 2.5.6
+
 ## How to LOCALLY install the mod for beta testing :
 
 **Important** : You **_cannot_** have two mods with the same name (new paradox launcher won't understand).
