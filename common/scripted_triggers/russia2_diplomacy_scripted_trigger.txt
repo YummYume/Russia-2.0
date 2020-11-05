@@ -1000,3 +1000,64 @@ DIPLOMACY_ASSUME_FACTION_LEADERSHIP_ENABLE_TRIGGER = {
 		}
 	}
 }
+
+DIPLOMACY_GUARANTEE_ENABLE_TRIGGER = {
+	if = {
+		limit = {
+			has_game_rule = {
+				rule = allow_guarantees
+				option = ALWAYS_FREE
+			}
+		}
+		always = yes
+	}
+	if = {
+		limit = {
+			has_game_rule = {
+				rule = allow_guarantees
+				option = LIMITED
+			}
+		}
+		always = yes # Handled by game logic.
+	}
+	if = {
+		limit = {
+			has_game_rule = {
+				rule = allow_guarantees
+				option = SAME_IDEOLOGY
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_ALLOW_GUARANTEES_SAME_IDEOLOGY_TOOLTIP
+			has_government = FROM
+		}
+	}
+	if = {
+		limit = {
+			has_game_rule = {
+				rule = allow_guarantees
+				option = BLOCKED
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_ALLOW_GUARANTEES_BLOCKED_TOOLTIP
+			always = no
+		}
+	}
+	if = {
+		limit = {
+			has_country_flag = signed_slavic_pact
+			SOV = {
+				exists = yes
+			}
+			any_state = {
+				has_state_flag = slavic_states
+				is_controlled_by = FROM
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_GUARANTEE_SLAVIC_STATE_NATION_NOT
+			always = no
+		}
+	}
+}
