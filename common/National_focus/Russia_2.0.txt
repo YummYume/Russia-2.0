@@ -74,6 +74,10 @@ focus_tree = {
 		cost = 5
 		ai_will_do = {
 			factor = 2
+			modifier = {
+				factor = 100
+				has_idea = SOV_Russian_sphere_investments
+			}
 		}
 		available = {
 			is_subject = no
@@ -10361,6 +10365,12 @@ focus_tree = {
 						}
 					}
 				}
+				if = {
+					limit = {
+						is_ai = yes
+					}
+					add_political_power = 140
+				}
 			}
 		}
 	}
@@ -10945,15 +10955,40 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA FOCUS_FILTER_ANNEXATION }
 		completion_reward = {
 			custom_effect_tooltip = SOV_demand_return_land_tt
-			every_other_country = {
+			if = {
 				limit = {
-					OR = {
-						controls_state = 213
-						controls_state = 215
-						controls_state = 216
+					any_country = {
+						is_subject = yes
+						NOT ={
+							TAG = SOV
+						}
+						OR = {
+							controls_state = 213
+							controls_state = 215
+							controls_state = 216
+						}
 					}
 				}
-				country_event = { id = soviets.141 days = 1 }
+				213 = {
+					OWNER = {
+						OVERLORD = {
+							country_event = { id = soviets.141 days = 1 }
+							custom_effect_tooltip = SOV_demand_karelia_tt
+						}
+					}
+				}	
+			}
+			else = {
+				every_other_country = {
+					limit = {
+						OR = {
+							controls_state = 213
+							controls_state = 215
+							controls_state = 216
+						}
+					}
+					country_event = { id = soviets.141 days = 1 }
+				}
 			}
 			every_other_country = {
 				limit = {
@@ -10997,15 +11032,28 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA FOCUS_FILTER_ANNEXATION }
 		completion_reward = {
 			custom_effect_tooltip = SOV_compromise_strategy_tt
-			every_other_country = {
+			if = {
 				limit = {
-					OR = {
-						controls_state = 213
-						controls_state = 215
-						controls_state = 216
+					any_country = {
+						is_subject = yes
+						NOT ={
+							TAG = SOV
+						}
+						OR = {
+							controls_state = 213
+							controls_state = 215
+							controls_state = 216
+						}
 					}
 				}
-				country_event = { id = soviets.159 days = 1 }
+				213 = {
+					OWNER = {
+						OVERLORD = {
+							country_event = { id = soviets.159 days = 1 }
+							custom_effect_tooltip = SOV_demand_karelia_tt
+						}
+					}
+				}	
 			}
 			every_other_country = {
 				limit = {

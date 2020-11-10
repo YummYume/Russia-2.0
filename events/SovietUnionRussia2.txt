@@ -5579,30 +5579,6 @@ country_event = {
 		name = soviets.141.a
 		if = {
 			limit = {
-				controls_state = 216
-			}
-			SOV = {
-				transfer_state = 216
-			}
-		}
-		if = {
-			limit = {
-				controls_state = 215
-			}
-			SOV = {
-				transfer_state = 215
-			}
-		}
-		if = {
-			limit = {
-				controls_state = 213
-			}
-			SOV = {
-				transfer_state = 213
-			}
-		}
-		if = {
-			limit = {
 				has_war_with = SOV
 			}
 			white_peace = {
@@ -5612,6 +5588,17 @@ country_event = {
 		}
 		SOV = {
 			country_event = { id = soviets.142 days = 1 }
+		}
+		if = {
+			limit = {
+				any_country = {
+					owns_state = 213
+					NOT = {
+						tag = ROOT
+					}
+				}
+ 			}
+			custom_effect_tooltip = SOV_karelia_subject_tt
 		}
 	}
 
@@ -5633,6 +5620,17 @@ country_event = {
 		SOV = {
 			country_event = { id = soviets.143 days = 1 }
 		}
+		if = {
+			limit = {
+				any_country = {
+					owns_state = 213
+					NOT = {
+						tag = ROOT
+					}
+				}
+ 			}
+			custom_effect_tooltip = SOV_karelia_subject_tt
+		}
 	}
 }
 
@@ -5645,9 +5643,88 @@ country_event = {
 
 	is_triggered_only = yes
 
-	option = {
+	option = { #Take back the Land
 		ai_chance = { factor = 100 }
 		name = soviets.142.a
+		if = {
+			limit = {
+				country_exists = KAR
+			}
+			SOV = {
+				annex_country = {
+					target = KAR
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				NOT = {
+					country_exists = KAR
+				}
+				OR = {
+					216 = {
+						is_owned_by = FROM
+					}
+					215 = {
+						is_owned_by = FROM
+					}
+					213 = {
+						is_owned_by = FROM
+					}
+				}
+			}
+			if = {
+				limit = {
+					FROM = {
+						controls_state = 216
+					}	
+				}
+				SOV = {
+					transfer_state = 216
+				}
+			}
+			if = {
+				limit = {
+					FROM = {
+						controls_state = 215
+					}	
+				}
+				SOV = {
+					transfer_state = 215
+				}
+			}
+			if = {
+				limit = {
+					FROM = {
+						controls_state = 213
+					}	
+				}
+				SOV = {
+					transfer_state = 213
+				}
+			}
+		}
+		else = {
+			SOV = {
+				transfer_state = 216
+				transfer_state = 215
+				transfer_state = 213
+			}
+		}
+	}
+
+	option = { #Keep them as a puppet
+		ai_chance = { factor = 0 }
+		name = soviets.142.b
+		trigger = {
+			country_exists = KAR
+		}
+		SOV = {
+			set_autonomy = { #TODO Change id of autonomy
+				target = KAR
+				autonomy_state = autonomy_supervised_state
+			}
+		}
 	}
 }
 
@@ -6071,30 +6148,6 @@ country_event = {
 		name = soviets.159.a
 		if = {
 			limit = {
-				controls_state = 216
-			}
-			SOV = {
-				transfer_state = 216
-			}
-		}
-		if = {
-			limit = {
-				controls_state = 215
-			}
-			SOV = {
-				transfer_state = 215
-			}
-		}
-		if = {
-			limit = {
-				controls_state = 213
-			}
-			SOV = {
-				transfer_state = 213
-			}
-		}
-		if = {
-			limit = {
 				has_war_with = SOV
 			}
 			white_peace = {
@@ -6114,6 +6167,17 @@ country_event = {
 			}
 			country_event = { id = soviets.160 days = 1 }
 		}
+		if = {
+			limit = {
+				any_country = {
+					owns_state = 213
+					NOT = {
+						tag = ROOT
+					}
+				}
+ 			}
+			custom_effect_tooltip = SOV_karelia_subject_tt
+		}
 	}
 
 	option = { #Okay - We want military aid
@@ -6131,30 +6195,6 @@ country_event = {
 			}
 		}
 		name = soviets.159.b
-		if = {
-			limit = {
-				controls_state = 216
-			}
-			SOV = {
-				transfer_state = 216
-			}
-		}
-		if = {
-			limit = {
-				controls_state = 215
-			}
-			SOV = {
-				transfer_state = 215
-			}
-		}
-		if = {
-			limit = {
-				controls_state = 213
-			}
-			SOV = {
-				transfer_state = 213
-			}
-		}
 		if = {
 			limit = {
 				has_war_with = SOV
@@ -6176,6 +6216,17 @@ country_event = {
 			}
 			country_event = { id = soviets.161 days = 1 }
 		}
+		if = {
+			limit = {
+				any_country = {
+					owns_state = 213
+					NOT = {
+						tag = ROOT
+					}
+				}
+ 			}
+			custom_effect_tooltip = SOV_karelia_subject_tt
+		}
 	}
 
 	option = { #No
@@ -6195,6 +6246,17 @@ country_event = {
 		name = soviets.159.c
 		SOV = {
 			country_event = { id = soviets.162 days = 1 }
+		}
+		if = {
+			limit = {
+				any_country = {
+					owns_state = 213
+					NOT = {
+						tag = ROOT
+					}
+				}
+ 			}
+			custom_effect_tooltip = SOV_karelia_subject_tt
 		}
 	}
 }
@@ -6222,6 +6284,75 @@ country_event = {
 				days = 180
 			}
 		}
+		if = {
+			limit = {
+				NOT = {
+					country_exists = KAR
+				}
+				OR = {
+					216 = {
+						is_owned_by = FROM
+					}
+					215 = {
+						is_owned_by = FROM
+					}
+					213 = {
+						is_owned_by = FROM
+					}
+				}
+			}
+			if = {
+				limit = {
+					FROM = {
+						controls_state = 216
+					}	
+				}
+				SOV = {
+					transfer_state = 216
+				}
+			}
+			if = {
+				limit = {
+					FROM = {
+						controls_state = 215
+					}	
+				}
+				SOV = {
+					transfer_state = 215
+				}
+			}
+			if = {
+				limit = {
+					FROM = {
+						controls_state = 213
+					}	
+				}
+				SOV = {
+					transfer_state = 213
+				}
+			}
+		}
+		else = {
+			SOV = {
+				transfer_state = 216
+				transfer_state = 215
+				transfer_state = 213
+			}
+		}
+	}
+
+	option = { #Keep them as a puppet
+		ai_chance = { factor = 0 }
+		name = soviets.160.b
+		trigger = {
+			country_exists = KAR
+		}
+		SOV = {
+			set_autonomy = { #TODO Change id of autonomy
+				target = KAR
+				autonomy_state = autonomy_supervised_state
+			}
+		}
 	}
 }
 
@@ -6246,6 +6377,75 @@ country_event = {
 			add_timed_idea = {
 				idea = SOV_Karelia_aid
 				days = 180
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					country_exists = KAR
+				}
+				OR = {
+					216 = {
+						is_owned_by = FROM
+					}
+					215 = {
+						is_owned_by = FROM
+					}
+					213 = {
+						is_owned_by = FROM
+					}
+				}
+			}
+			if = {
+				limit = {
+					FROM = {
+						controls_state = 216
+					}	
+				}
+				SOV = {
+					transfer_state = 216
+				}
+			}
+			if = {
+				limit = {
+					FROM = {
+						controls_state = 215
+					}	
+				}
+				SOV = {
+					transfer_state = 215
+				}
+			}
+			if = {
+				limit = {
+					FROM = {
+						controls_state = 213
+					}	
+				}
+				SOV = {
+					transfer_state = 213
+				}
+			}
+		}
+		else = {
+			SOV = {
+				transfer_state = 216
+				transfer_state = 215
+				transfer_state = 213
+			}
+		}
+	}
+
+	option = { #Keep them as a puppet
+		ai_chance = { factor = 0 }
+		name = soviets.161.b
+		trigger = {
+			country_exists = KAR
+		}
+		SOV = {
+			set_autonomy = { #TODO Change id of autonomy
+				target = KAR
+				autonomy_state = autonomy_supervised_state
 			}
 		}
 	}
@@ -17444,6 +17644,41 @@ country_event = {
 		set_autonomy = {
 			target = SIB
 			autonomy_state = autonomy_collaboration_government
+		}
+	}
+}
+
+#Creation of Karelia
+country_event = {
+	id = soviets.393
+
+	trigger = {
+		original_tag = SOV
+		OR = {
+			has_completed_focus = SOV_great_purge2
+			has_completed_focus = SOV_consolidate_true_communism
+			has_completed_focus = SOV_reunification
+			has_completed_focus = SOV_freedom_all
+			has_completed_focus = SOV_restoration_tsar
+			has_completed_focus = SOV_firm_hand
+			has_completed_focus = SOV_the_lawyer_remains
+			has_completed_focus = SOV_the_tables_have_turned
+		}
+		is_subject = no
+		NOT = {
+			has_idea = SOV_Exiled_russia
+		}
+	}
+
+	hidden = yes
+
+	fire_only_once = yes
+
+	immediate = {
+		KAR = {
+			add_state_core = 216
+			add_state_core = 215
+			add_state_core = 213
 		}
 	}
 }
