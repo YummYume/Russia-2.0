@@ -5709,13 +5709,50 @@ country_event = {
 		if = {
 			limit = {
 				any_country = {
+					is_subject_of = ROOT
 					owns_state = 213
 					NOT = {
 						tag = ROOT
 					}
 				}
  			}
-			custom_effect_tooltip = SOV_karelia_subject_tt
+			custom_effect_tooltip = SOV_karelia_213_subject_tt
+		}
+		else_if = {
+			limit = {
+				any_country = {
+					is_subject_of = ROOT
+					owns_state = 215
+					NOT = {
+						tag = ROOT
+					}
+				}
+ 			}
+			custom_effect_tooltip = SOV_karelia_215_subject_tt
+		}
+		else_if = {
+			limit = {
+				any_country = {
+					is_subject_of = ROOT
+					owns_state = 216
+					NOT = {
+						tag = ROOT
+					}
+				}
+ 			}
+			custom_effect_tooltip = SOV_karelia_216_subject_tt
+		}
+		if = {
+			limit = {
+				all_owned_state = {
+					OR = {
+						state = 213
+						state = 215
+						state = 216
+					}
+				}
+			}
+			custom_effect_tooltip = SOV_game_totally_over_TT
 		}
 	}
 
@@ -5740,13 +5777,38 @@ country_event = {
 		if = {
 			limit = {
 				any_country = {
+					is_subject_of = ROOT
 					owns_state = 213
 					NOT = {
 						tag = ROOT
 					}
 				}
  			}
-			custom_effect_tooltip = SOV_karelia_subject_tt
+			custom_effect_tooltip = SOV_karelia_213_subject_tt
+		}
+		else_if = {
+			limit = {
+				any_country = {
+					is_subject_of = ROOT
+					owns_state = 215
+					NOT = {
+						tag = ROOT
+					}
+				}
+ 			}
+			custom_effect_tooltip = SOV_karelia_215_subject_tt
+		}
+		else_if = {
+			limit = {
+				any_country = {
+					is_subject_of = ROOT
+					owns_state = 216
+					NOT = {
+						tag = ROOT
+					}
+				}
+ 			}
+			custom_effect_tooltip = SOV_karelia_216_subject_tt
 		}
 	}
 }
@@ -5761,86 +5823,96 @@ country_event = {
 	is_triggered_only = yes
 
 	option = { #Take back the Land
-		ai_chance = { factor = 100 }
+		ai_chance = { factor = 0 }
 		name = soviets.142.a
 		if = {
 			limit = {
-				country_exists = KAR
-			}
-			SOV = {
-				annex_country = {
-					target = KAR
-				}
-			}
-		}
-		else_if = {
-			limit = {
-				NOT = {
-					country_exists = KAR
-				}
 				OR = {
-					216 = {
-						is_owned_by = FROM
+					FROM = {
+						owns_state = 213
 					}
-					215 = {
-						is_owned_by = FROM
-					}
-					213 = {
-						is_owned_by = FROM
+					any_country = {
+						is_subject_of = FROM
+						owns_state = 213
 					}
 				}
 			}
-			if = {
-				limit = {
-					FROM = {
-						controls_state = 216
-					}	
-				}
-				SOV = {
-					transfer_state = 216
-				}
-			}
-			if = {
-				limit = {
-					FROM = {
-						controls_state = 215
-					}	
-				}
-				SOV = {
-					transfer_state = 215
-				}
-			}
-			if = {
-				limit = {
-					FROM = {
-						controls_state = 213
-					}	
-				}
-				SOV = {
-					transfer_state = 213
-				}
-			}
+			transfer_state = 213
 		}
-		else = {
-			SOV = {
-				transfer_state = 216
-				transfer_state = 215
-				transfer_state = 213
+		if = {
+			limit = {
+				OR = {
+					FROM = {
+						owns_state = 215
+					}
+					any_country = {
+						is_subject_of = FROM
+						owns_state = 215
+					}
+				}
 			}
+			transfer_state = 215
+		}
+		if = {
+			limit = {
+				OR = {
+					FROM = {
+						owns_state = 216
+					}
+					any_country = {
+						is_subject_of = FROM
+						owns_state = 216
+					}
+				}
+			}
+			transfer_state = 216
 		}
 	}
 
 	option = { #Keep them as a puppet
-		ai_chance = { factor = 0 }
+		ai_chance = { factor = 100 }
 		name = soviets.142.b
 		trigger = {
-			country_exists = KAR
-		}
-		SOV = {
-			set_autonomy = { #TODO Change id of autonomy
-				target = KAR
-				autonomy_state = autonomy_supervised_state
+			KAR = {
+				exists = yes
+				is_subject_of = FROM
+				OR = {
+					owns_state = 216
+					owns_state = 215
+					owns_state = 213
+				}
 			}
+		}
+		puppet = KAR
+		hidden_effect = {
+			set_autonomy = {
+				target = KAR
+				autonomy_state = autonomy_russian_protectorate
+			}
+		}
+		if = {
+			limit = {
+				FROM = {
+					owns_state = 213
+				}
+			}
+			transfer_state = 213
+		}
+		if = {
+			limit = {
+				FROM = {
+					owns_state = 215
+				}
+			}
+			transfer_state = 215
+		}
+		if = {
+			limit = {
+				FROM = {
+					owns_state = 216
+				}
+			}
+			transfer_state = 216
 		}
 	}
 }
@@ -5857,6 +5929,35 @@ country_event = {
 	option = {
 		ai_chance = { factor = 100 }
 		name = soviets.143.a
+		if = {
+			limit = {
+				any_country = {
+					is_subject_of = FROM
+					OR = {
+						owns_state = 213
+						owns_state = 215
+						owns_state = 216
+					}
+				}
+			}
+			every_country = {
+				limit = {
+					is_subject_of = FROM
+					OR = {
+						owns_state = 213
+						owns_state = 215
+						owns_state = 216
+					}
+				}
+			}
+			SOV = {
+				create_wargoal = {
+					type = take_state_focus
+					target = PREV
+					generator = { 213 215 216 }
+				}
+			}
+		}
 		create_wargoal = {
 			type = take_state_focus
 			target = FROM
@@ -5901,6 +6002,26 @@ country_event = {
 		SOV = {
 			transfer_state = 655
 			country_event = { id = soviets.145 days = 1 }
+		}
+		if = {
+			limit = {
+				any_country = {
+					is_subject_of = ROOT
+					owns_state = 655
+					NOT = {
+						tag = ROOT
+					}
+				}
+ 			}
+			custom_effect_tooltip = SOV_sakhalin_subject_tt
+		}
+		if = {
+			limit = {
+				all_owned_state = {
+					state = 655
+				}
+			}
+			custom_effect_tooltip = SOV_game_totally_over_TT
 		}
 	}
 
@@ -6287,13 +6408,50 @@ country_event = {
 		if = {
 			limit = {
 				any_country = {
+					is_subject_of = ROOT
 					owns_state = 213
 					NOT = {
 						tag = ROOT
 					}
 				}
  			}
-			custom_effect_tooltip = SOV_karelia_subject_tt
+			custom_effect_tooltip = SOV_karelia_213_subject_tt
+		}
+		else_if = {
+			limit = {
+				any_country = {
+					is_subject_of = ROOT
+					owns_state = 215
+					NOT = {
+						tag = ROOT
+					}
+				}
+ 			}
+			custom_effect_tooltip = SOV_karelia_215_subject_tt
+		}
+		else_if = {
+			limit = {
+				any_country = {
+					is_subject_of = ROOT
+					owns_state = 216
+					NOT = {
+						tag = ROOT
+					}
+				}
+ 			}
+			custom_effect_tooltip = SOV_karelia_216_subject_tt
+		}
+		if = {
+			limit = {
+				all_owned_state = {
+					OR = {
+						state = 213
+						state = 215
+						state = 216
+					}
+				}
+			}
+			custom_effect_tooltip = SOV_game_totally_over_TT
 		}
 	}
 
@@ -6336,13 +6494,50 @@ country_event = {
 		if = {
 			limit = {
 				any_country = {
+					is_subject_of = ROOT
 					owns_state = 213
 					NOT = {
 						tag = ROOT
 					}
 				}
  			}
-			custom_effect_tooltip = SOV_karelia_subject_tt
+			custom_effect_tooltip = SOV_karelia_213_subject_tt
+		}
+		else_if = {
+			limit = {
+				any_country = {
+					is_subject_of = ROOT
+					owns_state = 215
+					NOT = {
+						tag = ROOT
+					}
+				}
+ 			}
+			custom_effect_tooltip = SOV_karelia_215_subject_tt
+		}
+		else_if = {
+			limit = {
+				any_country = {
+					is_subject_of = ROOT
+					owns_state = 216
+					NOT = {
+						tag = ROOT
+					}
+				}
+ 			}
+			custom_effect_tooltip = SOV_karelia_216_subject_tt
+		}
+		if = {
+			limit = {
+				all_owned_state = {
+					OR = {
+						state = 213
+						state = 215
+						state = 216
+					}
+				}
+			}
+			custom_effect_tooltip = SOV_game_totally_over_TT
 		}
 	}
 
@@ -6367,13 +6562,38 @@ country_event = {
 		if = {
 			limit = {
 				any_country = {
+					is_subject_of = ROOT
 					owns_state = 213
 					NOT = {
 						tag = ROOT
 					}
 				}
  			}
-			custom_effect_tooltip = SOV_karelia_subject_tt
+			custom_effect_tooltip = SOV_karelia_213_subject_tt
+		}
+		else_if = {
+			limit = {
+				any_country = {
+					is_subject_of = ROOT
+					owns_state = 215
+					NOT = {
+						tag = ROOT
+					}
+				}
+ 			}
+			custom_effect_tooltip = SOV_karelia_215_subject_tt
+		}
+		else_if = {
+			limit = {
+				any_country = {
+					is_subject_of = ROOT
+					owns_state = 216
+					NOT = {
+						tag = ROOT
+					}
+				}
+ 			}
+			custom_effect_tooltip = SOV_karelia_216_subject_tt
 		}
 	}
 }
@@ -6403,58 +6623,45 @@ country_event = {
 		}
 		if = {
 			limit = {
-				NOT = {
-					country_exists = KAR
-				}
 				OR = {
-					216 = {
-						is_owned_by = FROM
+					FROM = {
+						owns_state = 213
 					}
-					215 = {
-						is_owned_by = FROM
-					}
-					213 = {
-						is_owned_by = FROM
+					any_country = {
+						is_subject_of = FROM
+						owns_state = 213
 					}
 				}
 			}
-			if = {
-				limit = {
-					FROM = {
-						controls_state = 216
-					}	
-				}
-				SOV = {
-					transfer_state = 216
-				}
-			}
-			if = {
-				limit = {
-					FROM = {
-						controls_state = 215
-					}	
-				}
-				SOV = {
-					transfer_state = 215
-				}
-			}
-			if = {
-				limit = {
-					FROM = {
-						controls_state = 213
-					}	
-				}
-				SOV = {
-					transfer_state = 213
-				}
-			}
+			transfer_state = 213
 		}
-		else = {
-			SOV = {
-				transfer_state = 216
-				transfer_state = 215
-				transfer_state = 213
+		if = {
+			limit = {
+				OR = {
+					FROM = {
+						owns_state = 215
+					}
+					any_country = {
+						is_subject_of = FROM
+						owns_state = 215
+					}
+				}
 			}
+			transfer_state = 215
+		}
+		if = {
+			limit = {
+				OR = {
+					FROM = {
+						owns_state = 216
+					}
+					any_country = {
+						is_subject_of = FROM
+						owns_state = 216
+					}
+				}
+			}
+			transfer_state = 216
 		}
 	}
 
@@ -6462,13 +6669,57 @@ country_event = {
 		ai_chance = { factor = 0 }
 		name = soviets.160.b
 		trigger = {
-			country_exists = KAR
-		}
-		SOV = {
-			set_autonomy = { #TODO Change id of autonomy
-				target = KAR
-				autonomy_state = autonomy_supervised_state
+			KAR = {
+				exists = yes
+				is_subject_of = FROM
+				OR = {
+					owns_state = 216
+					owns_state = 215
+					owns_state = 213
+				}
 			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_idea = SOV_Karelia_payment
+				}
+			}
+			add_timed_idea = {
+				idea = SOV_Karelia_payment
+				days = 180
+			}
+		}
+		puppet = KAR
+		hidden_effect = {
+			set_autonomy = {
+				target = KAR
+				autonomy_state = autonomy_russian_protectorate
+			}
+		}
+		if = {
+			limit = {
+				FROM = {
+					owns_state = 213
+				}
+			}
+			transfer_state = 213
+		}
+		if = {
+			limit = {
+				FROM = {
+					owns_state = 215
+				}
+			}
+			transfer_state = 215
+		}
+		if = {
+			limit = {
+				FROM = {
+					owns_state = 216
+				}
+			}
+			transfer_state = 216
 		}
 	}
 }
@@ -6498,58 +6749,45 @@ country_event = {
 		}
 		if = {
 			limit = {
-				NOT = {
-					country_exists = KAR
-				}
 				OR = {
-					216 = {
-						is_owned_by = FROM
+					FROM = {
+						owns_state = 213
 					}
-					215 = {
-						is_owned_by = FROM
-					}
-					213 = {
-						is_owned_by = FROM
+					any_country = {
+						is_subject_of = FROM
+						owns_state = 213
 					}
 				}
 			}
-			if = {
-				limit = {
-					FROM = {
-						controls_state = 216
-					}	
-				}
-				SOV = {
-					transfer_state = 216
-				}
-			}
-			if = {
-				limit = {
-					FROM = {
-						controls_state = 215
-					}	
-				}
-				SOV = {
-					transfer_state = 215
-				}
-			}
-			if = {
-				limit = {
-					FROM = {
-						controls_state = 213
-					}	
-				}
-				SOV = {
-					transfer_state = 213
-				}
-			}
+			transfer_state = 213
 		}
-		else = {
-			SOV = {
-				transfer_state = 216
-				transfer_state = 215
-				transfer_state = 213
+		if = {
+			limit = {
+				OR = {
+					FROM = {
+						owns_state = 215
+					}
+					any_country = {
+						is_subject_of = FROM
+						owns_state = 215
+					}
+				}
 			}
+			transfer_state = 215
+		}
+		if = {
+			limit = {
+				OR = {
+					FROM = {
+						owns_state = 216
+					}
+					any_country = {
+						is_subject_of = FROM
+						owns_state = 216
+					}
+				}
+			}
+			transfer_state = 216
 		}
 	}
 
@@ -6557,13 +6795,57 @@ country_event = {
 		ai_chance = { factor = 0 }
 		name = soviets.161.b
 		trigger = {
-			country_exists = KAR
-		}
-		SOV = {
-			set_autonomy = { #TODO Change id of autonomy
-				target = KAR
-				autonomy_state = autonomy_supervised_state
+			KAR = {
+				exists = yes
+				is_subject_of = FROM
+				OR = {
+					owns_state = 216
+					owns_state = 215
+					owns_state = 213
+				}
 			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_idea = SOV_Karelia_payment
+				}
+			}
+			add_timed_idea = {
+				idea = SOV_Karelia_payment
+				days = 180
+			}
+		}
+		puppet = KAR
+		hidden_effect = {
+			set_autonomy = {
+				target = KAR
+				autonomy_state = autonomy_russian_protectorate
+			}
+		}
+		if = {
+			limit = {
+				FROM = {
+					owns_state = 213
+				}
+			}
+			transfer_state = 213
+		}
+		if = {
+			limit = {
+				FROM = {
+					owns_state = 215
+				}
+			}
+			transfer_state = 215
+		}
+		if = {
+			limit = {
+				FROM = {
+					owns_state = 216
+				}
+			}
+			transfer_state = 216
 		}
 	}
 }
@@ -6580,6 +6862,35 @@ country_event = {
 	option = {
 		ai_chance = { factor = 100 }
 		name = soviets.162.a
+		if = {
+			limit = {
+				any_country = {
+					is_subject_of = FROM
+					OR = {
+						owns_state = 213
+						owns_state = 215
+						owns_state = 216
+					}
+				}
+			}
+			every_country = {
+				limit = {
+					is_subject_of = FROM
+					OR = {
+						owns_state = 213
+						owns_state = 215
+						owns_state = 216
+					}
+				}
+			}
+			SOV = {
+				create_wargoal = {
+					type = take_state_focus
+					target = PREV
+					generator = { 213 215 216 }
+				}
+			}
+		}
 		create_wargoal = {
 			type = take_state_focus
 			target = FROM
@@ -6616,6 +6927,26 @@ country_event = {
 		SOV = {
 			transfer_state = 655
 			country_event = { id = soviets.164 days = 1 }
+		}
+		if = {
+			limit = {
+				any_country = {
+					is_subject_of = ROOT
+					owns_state = 655
+					NOT = {
+						tag = ROOT
+					}
+				}
+ 			}
+			custom_effect_tooltip = SOV_sakhalin_subject_tt
+		}
+		if = {
+			limit = {
+				all_owned_state = {
+					state = 655
+				}
+			}
+			custom_effect_tooltip = SOV_game_totally_over_TT
 		}
 	}
 
@@ -17675,11 +18006,13 @@ country_event = {
 	id = soviets.391
 
 	trigger = {
-		NOT = {
-			any_country = {
-				original_tag = SOV
-				exists = yes
+		SOV = {
+			OR = {
+				exists = no
+				is_subject = yes
 			}
+		}
+		NOT = {
 			any_state = {
 				is_core_of = GPM
 			}
@@ -17718,34 +18051,119 @@ country_event = {
 	}
 }
 
-#Make Siberia Russian Protectorate if Freedom for All was completed
+#Make Russian Protectorate if Freedom for All was completed
 country_event = {
 	id = soviets.392
 
 	trigger = {
-		original_tag = SOV
-		has_completed_focus = SOV_freedom_all
-		has_government = democratic
-		is_subject = no
-		SIB = {
-			is_subject_of = ROOT
-			NOT = {
-				has_autonomy_state = autonomy_collaboration_government
-			}
+		OR = {
+			tag = UKR
+			tag = BLR
+			tag = ARM
+			tag = GEO
+			tag = AZR
+			tag = KAZ
+			tag = TMS
+			tag = UZB
+			tag = TAG
+			tag = KYR
+			tag = CIR
+			tag = CRI
+			tag = DAG
+			tag = KAL
+			tag = KAR
+			tag = KUB
+			tag = NOV
+			tag = PRM
+			tag = ROS
+			tag = SIB
+			tag = STP
+			tag = TAT
+			tag = URA
+			tag = VLG
+			tag = MON
+			tag = TAN
 		}
+		is_subject_of = SOV
 		NOT = {
-			has_idea = SOV_Exiled_russia
+			has_autonomy_state = autonomy_collaboration_government
+		}
+		SOV = {
+			has_completed_focus = SOV_freedom_all
+			has_government = democratic
+			is_subject = no
+			NOT = {
+				has_idea = SOV_Exiled_russia
+			}
 		}
 	}
 
 	hidden = yes
 
-	fire_only_once = yes
+	immediate = {
+		SOV = {
+			set_autonomy = {
+				target = ROOT
+				autonomy_state = autonomy_russian_protectorate
+			}
+		}
+	}
+}
+
+#Give Ideas to other Russian puppets
+country_event = {
+	id = soviets.393
+
+	trigger = {
+		is_subject_of = SOV
+		has_autonomy_state = autonomy_collaboration_government
+		OR = {
+			NOT = {
+				has_idea = SOV_Russian_overlord
+			}
+			NOT = {
+				has_idea = SOV_Russian_sphere_market
+			}
+			NOT = {
+				has_idea = SOV_Russian_military_training
+			}
+		}
+		SOV = {
+			has_completed_focus = SOV_freedom_all
+			has_government = democratic
+			is_subject = no
+			NOT = {
+				has_idea = SOV_Exiled_russia
+			}
+		}
+	}
+
+	hidden = yes
 
 	immediate = {
-		set_autonomy = {
-			target = SIB
-			autonomy_state = autonomy_russian_protectorate
+		if = {
+			limit = {
+				NOT = {
+					has_idea = SOV_Russian_overlord
+				}
+			}
+			add_ideas = SOV_Russian_overlord
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_idea = SOV_Russian_sphere_market
+				}
+			}
+			add_ideas = SOV_Russian_sphere_market
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_idea = SOV_Russian_military_training
+				}
+			}
+			add_ideas = SOV_Russian_military_training
 		}
 	}
 }
@@ -17831,41 +18249,51 @@ country_event = {
 		NOT = {
 			original_tag = SOV
 			has_government = communism
+			has_global_flag = renamed_stalingrad_sov
 		}
 	}
-
-	fire_only_once = yes
 
 	hidden = yes
 
 	immediate = {
+		set_global_flag = renamed_stalingrad_sov
 		set_province_name = { id = 3529 name = "Volgograd"}
-		hidden_effect = {
-			217 = {
-				set_state_name = "Volgograd"
-			}
+		217 = {
+			set_state_name = "Volgograd"
 		}
 	}
 }
 
-#Hidden Event to rename Volgograd to Stalingrad if SOV is the owner
+#Hidden Event to rename Volgograd to Stalingrad if Communist Country is the owner
 country_event = {
 	id = soviets.397
 
 	trigger = {
 		217 = {
-			is_owned_and_controlled_by = SOV
+			is_owned_and_controlled_by = ROOT
 		}
-		SOV = {
-			has_government = communism
-		}
+		has_government = communism
+		has_global_flag = renamed_stalingrad_sov
 	}
 
 	hidden = yes
 
 	immediate = {
-		set_province_name = { id = 3529 name = "Stalingrad"}
-		hidden_effect = {
+		clr_global_flag = renamed_stalingrad_sov
+		if = {
+			limit = {
+				has_country_leader = {
+					name = "Leon Trotsky"
+					ruling_only = yes
+				}
+			}
+			set_province_name = { id = 3529 name = "Trotskygrad"}
+			217 = {
+				set_state_name = "Trotskygrad"
+			}
+		}
+		else = {
+			set_province_name = { id = 3529 name = "Stalingrad"}
 			217 = {
 				set_state_name = "Stalingrad"
 			}
@@ -17887,12 +18315,14 @@ country_event = {
 		NOT = {
 			original_tag = SOV
 			has_government = communism
+			has_global_flag = renamed_leningrad_sov
 		}
 	}
 
 	hidden = yes
 
 	immediate = {
+		set_global_flag = renamed_leningrad_sov
 		set_province_name = { id = 3151 name = "Saint Petersburg"}
 		hidden_effect = {
 			195 = {
@@ -17902,24 +18332,22 @@ country_event = {
 	}
 }
 
-#Hidden Event to rename St Petersburg to leningrad if SOV is the owner
+#Hidden Event to rename St Petersburg to leningrad if Communist Country is the owner
 country_event = {
 	id = soviets.399
 
 	trigger = {
 		195 = {
-			is_owned_and_controlled_by = SOV
+			is_owned_and_controlled_by = ROOT
 		}
-		SOV = {
-			has_government = communism
-		}
+		has_government = communism
+		has_global_flag = renamed_leningrad_sov
 	}
-
-	fire_only_once = yes
 
 	hidden = yes
 
 	immediate = {
+		clr_global_flag = renamed_leningrad_sov
 		set_province_name = { id = 3151 name = "Leningrad"}
 		hidden_effect = {
 			195 = {

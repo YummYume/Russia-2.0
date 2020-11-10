@@ -3884,7 +3884,7 @@ focus_tree = {
 				is_subject = no
 			}
 			MON = {
-				AND = {
+				OR = {
 					has_government = ROOT
 					is_in_faction_with = ROOT
 				}
@@ -10833,46 +10833,52 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA FOCUS_FILTER_ANNEXATION }
 		completion_reward = {
 			custom_effect_tooltip = SOV_demand_return_land_tt
-			if = {
+			every_country = {
 				limit = {
-					any_country = {
-						is_subject = yes
-						NOT ={
-							TAG = SOV
-						}
-						OR = {
-							controls_state = 213
-							controls_state = 215
-							controls_state = 216
-						}
+					OR = {
+						owns_state = 213
+						owns_state = 215
+						owns_state = 216
+					}
+					NOT = {
+						original_tag = ROOT
 					}
 				}
-				213 = {
-					OWNER = {
-						OVERLORD = {
-							country_event = { id = soviets.141 days = 1 }
-							custom_effect_tooltip = SOV_demand_karelia_tt
-						}
-					}
-				}	
-			}
-			else = {
-				every_other_country = {
+				if = {
 					limit = {
-						OR = {
-							controls_state = 213
-							controls_state = 215
-							controls_state = 216
-						}
+						is_subject = yes
 					}
+					OVERLORD = {
+						country_event = { id = soviets.141 days = 1 }
+						custom_effect_tooltip = SOV_demand_karelia_tt
+					}
+				}
+				else = {
 					country_event = { id = soviets.141 days = 1 }
 				}
 			}
-			every_other_country = {
+			if = {
 				limit = {
-					controls_state = 655
+					any_country = {
+						owns_state = 655
+						is_subject = yes
+					}
 				}
-				country_event = { id = soviets.144 days = 1 }
+				655 = {
+					OWNER = {
+						OVERLORD = {
+							country_event = { id = soviets.144 days = 1 }
+						}
+					}
+				}
+				custom_effect_tooltip = 655_owner_is_puppet
+			}
+			else = {
+				655 = {
+					OWNER = {
+						country_event = { id = soviets.144 days = 1 }
+					}
+				}
 			}
 		}
 	}
@@ -10910,46 +10916,52 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA FOCUS_FILTER_ANNEXATION }
 		completion_reward = {
 			custom_effect_tooltip = SOV_compromise_strategy_tt
-			if = {
+			every_country = {
 				limit = {
-					any_country = {
-						is_subject = yes
-						NOT ={
-							TAG = SOV
-						}
-						OR = {
-							controls_state = 213
-							controls_state = 215
-							controls_state = 216
-						}
+					OR = {
+						owns_state = 213
+						owns_state = 215
+						owns_state = 216
+					}
+					NOT = {
+						original_tag = ROOT
 					}
 				}
-				213 = {
-					OWNER = {
-						OVERLORD = {
-							country_event = { id = soviets.159 days = 1 }
-							custom_effect_tooltip = SOV_demand_karelia_tt
-						}
-					}
-				}	
-			}
-			else = {
-				every_other_country = {
+				if = {
 					limit = {
-						OR = {
-							controls_state = 213
-							controls_state = 215
-							controls_state = 216
-						}
+						is_subject = yes
 					}
+					OVERLORD = {
+						country_event = { id = soviets.159 days = 1 }
+						custom_effect_tooltip = SOV_demand_karelia_tt
+					}
+				}
+				else = {
 					country_event = { id = soviets.159 days = 1 }
 				}
 			}
-			every_other_country = {
+			if = {
 				limit = {
-					controls_state = 655
+					any_country = {
+						owns_state = 655
+						is_subject = yes
+					}
 				}
-				country_event = { id = soviets.163 days = 1 }
+				655 = {
+					OWNER = {
+						OVERLORD = {
+							country_event = { id = soviets.163 days = 1 }
+						}
+					}
+				}
+				custom_effect_tooltip = 655_owner_is_puppet
+			}
+			else = {
+				655 = {
+					OWNER = {
+						country_event = { id = soviets.163 days = 1 }
+					}
+				}
 			}
 		}
 	}
