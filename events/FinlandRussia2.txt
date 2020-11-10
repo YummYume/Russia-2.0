@@ -236,7 +236,7 @@ country_event = {
 
 	option = { # Yes!!
 		name = finlands.7.a
-		ai_chance = { factor = 80 }
+		ai_chance = { factor = 0 }
 		every_state = {
 			limit = {
 				OR = {
@@ -256,8 +256,38 @@ country_event = {
 		}
 	}
 
-	option = { # Don't do it...
+	option = { #Puppet them
 		name = finlands.7.b
+		ai_chance = { factor = 80 }
+		every_state = {
+			limit = {
+				OR = {
+					state = 216
+					state = 215
+					state = 213
+				}
+				is_owned_by = SOV
+			}
+			KAR = {
+				add_state_core = PREV
+				transfer_state = PREV
+				set_cosmetic_tag = KARC
+			}
+			ROOT = {
+				add_state_claim = PREV
+				set_autonomy = {
+					target = KAR
+					autonomy_state = autonomy_puppet
+				}
+			}
+		}
+		SOV = {
+			country_event = { id = finlands.8 days = 2 }
+		}
+	}
+
+	option = { # Don't do it...
+		name = finlands.7.c
 		ai_chance = { factor = 20 }
 	}
 }
