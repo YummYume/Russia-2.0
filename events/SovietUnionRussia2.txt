@@ -17718,14 +17718,14 @@ country_event = {
 	}
 }
 
-#Make Siberia Collab Government if Freedom for All was completed
+#Make Siberia Russian Protectorate if Freedom for All was completed
 country_event = {
 	id = soviets.392
 
 	trigger = {
 		original_tag = SOV
-		has_dlc = "La Resistance"
 		has_completed_focus = SOV_freedom_all
+		has_government = democratic
 		is_subject = no
 		SIB = {
 			is_subject_of = ROOT
@@ -17746,6 +17746,185 @@ country_event = {
 		set_autonomy = {
 			target = SIB
 			autonomy_state = autonomy_russian_protectorate
+		}
+	}
+}
+
+#Give Guided by Russia to all the Puppets
+country_event = {
+	id = soviets.394
+
+	trigger = {
+		SOV = {
+			has_completed_focus = SOV_create_russian_sphere
+			NOT = {
+				has_completed_focus = SOV_promote_russian_culture
+			}
+			is_subject = no
+			has_government = democratic
+		}
+		NOT = {
+			original_tag = SOV
+		}
+		is_subject_of = SOV
+		NOT = {
+			has_idea = SOV_Guided_by_russia
+		}
+	}
+
+	hidden = yes
+
+	immediate = {
+		add_ideas = SOV_Guided_by_russia
+	}
+}
+
+#Give Guided by Russia 2 to all the Puppets
+country_event = {
+	id = soviets.395
+
+	trigger = {
+		SOV = {
+			has_completed_focus = SOV_create_russian_sphere
+			has_completed_focus = SOV_promote_russian_culture
+			is_subject = no
+			has_government = democratic
+		}
+		NOT = {
+			original_tag = SOV
+		}
+		is_subject_of = SOV
+		NOT = {
+			has_idea = SOV_Guided_by_russia2
+		}
+	}
+
+	hidden = yes
+
+	immediate = {
+		if = {
+			limit = {
+				has_idea = SOV_Guided_by_russia
+			}
+			swap_ideas = {
+				remove_idea = SOV_Guided_by_russia
+				add_idea = SOV_Guided_by_russia2
+			}
+		}
+		else = {
+			add_ideas = SOV_Guided_by_russia2
+		}
+	}
+}
+
+#Hidden Event to rename Stalingrad to Volgograd if SOV is not the owner
+country_event = {
+	id = soviets.396
+
+	trigger = {
+		217 = {
+			NOT = {
+				is_owned_and_controlled_by = SOV
+			}
+			is_owned_and_controlled_by = ROOT
+		}
+		NOT = {
+			original_tag = SOV
+			has_government = communism
+		}
+	}
+
+	fire_only_once = yes
+
+	hidden = yes
+
+	immediate = {
+		set_province_name = { id = 3529 name = "Volgograd"}
+		hidden_effect = {
+			217 = {
+				set_state_name = "Volgograd"
+			}
+		}
+	}
+}
+
+#Hidden Event to rename Volgograd to Stalingrad if SOV is the owner
+country_event = {
+	id = soviets.397
+
+	trigger = {
+		217 = {
+			is_owned_and_controlled_by = SOV
+		}
+		SOV = {
+			has_government = communism
+		}
+	}
+
+	hidden = yes
+
+	immediate = {
+		set_province_name = { id = 3529 name = "Stalingrad"}
+		hidden_effect = {
+			217 = {
+				set_state_name = "Stalingrad"
+			}
+		}
+	}
+}
+
+#Hidden Event to rename Leningrad to ST Petersburg if SOV is not the owner
+country_event = {
+	id = soviets.398
+
+	trigger = {
+		195 = {
+			NOT = {
+				is_owned_and_controlled_by = SOV
+			}
+			is_owned_and_controlled_by = ROOT
+		}
+		NOT = {
+			original_tag = SOV
+			has_government = communism
+		}
+	}
+
+	hidden = yes
+
+	immediate = {
+		set_province_name = { id = 3151 name = "Saint Petersburg"}
+		hidden_effect = {
+			195 = {
+				set_state_name = "Saint Petersburg"
+			}
+		}	
+	}
+}
+
+#Hidden Event to rename St Petersburg to leningrad if SOV is the owner
+country_event = {
+	id = soviets.399
+
+	trigger = {
+		195 = {
+			is_owned_and_controlled_by = SOV
+		}
+		SOV = {
+			has_government = communism
+		}
+	}
+
+	fire_only_once = yes
+
+	hidden = yes
+
+	immediate = {
+		set_province_name = { id = 3151 name = "Leningrad"}
+		hidden_effect = {
+			195 = {
+				set_state_name = "Leningrad"
+			}
 		}
 	}
 }
