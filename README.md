@@ -8,7 +8,7 @@ Updates are very frequent on our GitHub, however, you should **NOT** try to play
 
 Current version is : **_Stable_**.
 
-Mod Version : 2.7.0
+Mod Version : 2.7.3
 
 ## How to LOCALLY install the mod for beta testing :
 
