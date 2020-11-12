@@ -250,29 +250,30 @@ country_event = {
 
 	is_triggered_only = yes
 
-	option = { #accepts
+	option = { #Accept
 		name = soviets.12.a
 		ai_chance = { factor = 75 }
 		hidden_effect = {
-			add_state_core = 146
-			add_state_core = 111
-			add_state_core = 149
-			add_state_core = 150
-			add_state_core = 148
-			add_state_core = 147
-			add_state_core = 722
+			every_state = {
+				limit = {
+					is_core_of = FIN
+				}
+				SOV = {
+					add_state_core = PREV
+				}
+			}
 		}
 		annex_country = {
 			target = FIN
 			transfer_troops = yes
 		}
-		add_threat = 5
+		add_threat = 1
 		hidden_effect = {
 			news_event = { days = 1 id = news.69 }
 		}
 	}
 
-	option = { #refuse
+	option = { #Refuse
 		name = soviets.12.b
 		ai_chance = { factor = 25 }
 	}
@@ -7034,15 +7035,17 @@ country_event = {
 	picture = GFX_report_event_crowd_in_prague
 
 	trigger = {
+		SOV = {
+			is_subject = no
+			has_government = democratic
+			NOT = {
+				has_completed_focus = SOV_freedom_all
+			}
+		}
 		is_subject_of = SOV
 		has_country_flag = {
 			flag = russian_culture_promote
 			days > 365
-		}
-		NOT = {
-			SOV = {
-				has_completed_focus = SOV_freedom_all
-			}
 		}
 	}
 
