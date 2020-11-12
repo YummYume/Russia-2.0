@@ -10518,11 +10518,13 @@ focus_tree = {
 		available = {
 			is_subject = no
 			has_government = democratic
+			has_idea = SOV_Blockaded_by_eng
 			NOT = {
 				has_idea = SOV_A_new_beginning
 			}
 			ENG = {
 				has_country_flag = blockade_russian_ports
+				has_idea = SOV_Blockade_russia
 				NOT = {
 					OR = {
 						has_country_flag = cut_all_diplomatic_ties_with_sov
@@ -11085,6 +11087,7 @@ focus_tree = {
 					}
 					NOT = {
 						original_tag = ROOT
+						is_subject_of = ROOT
 					}
 				}
 				if = {
@@ -11105,6 +11108,10 @@ focus_tree = {
 					any_country = {
 						owns_state = 655
 						is_subject = yes
+						NOT = {
+							original_tag = ROOT
+							is_subject_of = ROOT
+						}
 					}
 				}
 				655 = {
@@ -11116,7 +11123,17 @@ focus_tree = {
 				}
 				custom_effect_tooltip = 655_owner_is_puppet
 			}
-			else = {
+			else_if = {
+				limit = {
+					any_country = {
+						owns_state = 655
+						is_subject = no
+						NOT = {
+							original_tag = ROOT
+							is_subject_of = ROOT
+						}
+					}
+				}
 				655 = {
 					OWNER = {
 						country_event = { id = soviets.144 days = 1 }
@@ -11168,6 +11185,7 @@ focus_tree = {
 					}
 					NOT = {
 						original_tag = ROOT
+						is_subject_of = ROOT
 					}
 				}
 				if = {
@@ -11188,6 +11206,10 @@ focus_tree = {
 					any_country = {
 						owns_state = 655
 						is_subject = yes
+						NOT = {
+							original_tag = ROOT
+							is_subject_of = ROOT
+						}
 					}
 				}
 				655 = {
@@ -11199,7 +11221,17 @@ focus_tree = {
 				}
 				custom_effect_tooltip = 655_owner_is_puppet
 			}
-			else = {
+			else_if = {
+				limit = {
+					any_country = {
+						owns_state = 655
+						is_subject = no
+						NOT = {
+							original_tag = ROOT
+							is_subject_of = ROOT
+						}
+					}
+				}
 				655 = {
 					OWNER = {
 						country_event = { id = soviets.163 days = 1 }
@@ -15238,7 +15270,13 @@ focus_tree = {
 		available = {
 			is_subject = no
 			has_government = neutrality
-			is_neighbor_of = FIN
+			OR = {
+				is_neighbor_of = POL
+				any_country = {
+					is_subject_of = SOV
+					is_neighbor_of = POL
+				}
+			}
 			FIN = {
 				exists = yes
 				is_subject = no

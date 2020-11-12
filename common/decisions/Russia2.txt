@@ -3232,6 +3232,7 @@ SOV_proclaim_revolution = {
 }
 
 SOV_invest_russian_sphere = {
+
 	SOV_invest_russian_sphere_europe = {
 
 		icon = GFX_decision_generic_construction
@@ -4600,8 +4601,6 @@ SOV_perpetual_defense_liberty_decisions = {
 			original_tag = SOV
 		}
 
-		target_array = neighbors
-
 		visible = {
 			FROM = {
 				NOT = {
@@ -4644,6 +4643,17 @@ SOV_perpetual_defense_liberty_decisions = {
 		target_trigger = {
 			FROM = {
 				exists = yes
+				OR = {
+					is_neighbor_of = ROOT
+					any_country = {
+						is_in_faction_with = ROOT
+						is_neighbor_of = FROM
+					}
+					any_country = {
+						is_subject_of = ROOT
+						is_neighbor_of = FROM
+					}
+				}
 				NOT = {
 					is_subject_of = ROOT
 					is_in_faction_with = ROOT
