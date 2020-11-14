@@ -1357,11 +1357,16 @@ focus_tree = {
 		icon = GFX_Exile_siberia
 		cost = 1
 		ai_will_do = {
-			factor = 10
+			factor = 100
 		}
 		available = {
 			is_subject = no
-			has_civil_war = no
+			NOT = {
+				has_civil_war = yes
+				has_country_flag = second_civil_war_in_progress
+			}
+			has_war_with = GER
+			surrender_progress > 0.9
 			custom_trigger_tooltip = {
 				tooltip = owns_controls_siberian_territory_tt
 				OR = {
@@ -1387,17 +1392,21 @@ focus_tree = {
 					has_full_control_of_state = 568
 					has_full_control_of_state = 569
 					has_full_control_of_state = 578
+					has_full_control_of_state = 40
+					has_full_control_of_state = 654
 					has_full_control_of_state = 570
 					has_full_control_of_state = 577
 					has_full_control_of_state = 571
 					has_full_control_of_state = 654
 					has_full_control_of_state = 40
 					has_full_control_of_state = 329
+					has_full_control_of_state = 588
 				}
 			}
-			GER = { is_subject = no }
-			64 = { is_owned_and_controlled_by = GER }
-			has_war_with = GER
+			GER = {
+				is_subject = no
+				has_full_control_of_state = 64
+			}
 			custom_trigger_tooltip = {
 				tooltip = SOV_exile_siberia_tt
 				OR = {
@@ -1422,8 +1431,6 @@ focus_tree = {
 					}
 				}
 			}
-			surrender_progress > 0.9
-			has_civil_war = no
 		}
 		search_filters = { FOCUS_FILTER_ARMY_RUSSIA }
 		completion_reward = {
