@@ -2369,12 +2369,17 @@ SOV_spend_more_political_advisors = {
 		}
 	}
 	abort = {
-		amount_taken_ideas = {
-			amount > 8
-			slots = {
-				political_advisor
+		OR = {
+			amount_taken_ideas = {
+				amount > 8
+				slots = {
+					political_advisor
+				}
 			}
-		}
+			SOV = {
+				has_idea = SOV_Russian_sphere_investments
+			}
+		}	
 	}
 
 	ai_strategy = {
@@ -3653,7 +3658,7 @@ SOV_spend_pp_for_concession = {
 	ai_strategy = {
 		type = pp_spend_priority
 		id = advisors
-		value = -100
+		value = -500
 	}
 }
 
@@ -3676,7 +3681,7 @@ SOV_keep_political_power_partisan = {
 	ai_strategy = {
 		type = pp_spend_priority
 		id = advisors
-		value = -100
+		value = -500
 	}
 }
 
@@ -3722,7 +3727,7 @@ SOV_keep_political_power_reintegration = {
 	ai_strategy = {
 		type = pp_spend_priority
 		id = advisors
-		value = -100
+		value = -500
 	}
 }
 
@@ -3752,7 +3757,45 @@ SOV_keep_political_power_investment = {
 	ai_strategy = {
 		type = pp_spend_priority
 		id = advisors
-		value = -100
+		value = -500
+	}
+}
+
+SOV_keep_political_power_perpetual_liberty = {
+	enable = {
+		TAG = SOV
+		SOV = {
+			has_government = democratic
+			has_completed_focus = SOV_perpetual_defense_liberty
+		}
+		any_country = {
+			is_major = no
+			is_neighbor_of = SOV
+		}
+	}
+
+	abort = {
+		NOT = {
+			any_country = {
+				is_major = yes
+				is_neighbor_of = SOV
+			}
+		}
+		SOV = {
+			has_country_flag = is_changing_foreign_government
+		}
+	}
+
+	ai_strategy = {
+		type = pp_spend_priority
+		id = decision
+		value = 999
+	}
+
+	ai_strategy = {
+		type = pp_spend_priority
+		id = advisors
+		value = -500
 	}
 }
 
@@ -3800,4 +3843,46 @@ SOV_send_volunteers_second_civil_war_soviet_union = {
 		id = "SOU"			
 		value = 100
 	}
+}
+
+#Do not guarantee any fucking country while being democratic Russia
+SOV_no_guarantee_democratic_russia = {
+	enable = {
+		original_tag = SOV
+		SOV = {
+			has_government = democratic
+		}
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = pp_spend_priority
+		id = guarantee
+		value = -999
+	}
+}
+
+#Do not join or invite other countries if not ready - Democratic Russia
+SOV_no_alliance_russia_democratic = {
+	enable = {
+		NOT = {
+			original_tag = SOV
+		}
+		SOV = {
+			has_government = democratic
+			NOT = {
+				has_completed_focus = SOV_keep_expanding_russian_sphere
+				has_completed_focus = SOV_reform_entente
+			}
+		}
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = alliance
+		id = SOV
+		value = -500
+	}	
 }
