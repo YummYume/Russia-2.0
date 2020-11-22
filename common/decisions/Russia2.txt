@@ -172,24 +172,40 @@ SOV_europe_expansion = {
 
     SOV_join_the_war_against_poland = {
 
-		icon = GFX_decision_generic_ignite_civil_war
+		icon = GFX_decision_generic_tank
 
      	available = {
 			date > 1939.09.17
-			country_exists = POL
+			has_idea = SOV_molotov_ribbentrop_pact
 			POL = {
+				exists = yes
+				has_war_with = GER
 				NOT = {
-					OR = {
-						has_capitulated = yes
-						is_in_faction_with = ENG
-						is_in_faction_with = FRA
-						is_in_faction_with = ROOT
-					}
+					has_capitulated = yes
+					is_in_faction_with = ROOT
+					is_subject_of = ROOT
+					has_capitulated = yes
 				}
 			}
-     		has_idea = SOV_molotov_ribbentrop_pact
-			POL = {
-				has_war_with = GER
+			NOT = {
+				any_country = {
+					NOT = {
+						tag = POL
+					}
+					is_major = yes
+					is_faction_leader = yes
+					is_in_faction_with = POL
+				}
+			}
+			OR = {
+				is_neighbor_of = POL
+				any_country = {
+					OR = {
+						is_in_faction_with = ROOT
+						is_subject_of = ROOT
+					}
+					is_neighbor_of = POL
+				}
 			}
      	}
 
@@ -197,16 +213,22 @@ SOV_europe_expansion = {
 			NOT = {
 				has_government = democratic
 			}
-			country_exists = POL
-			NOT = {
-				POL = {
-					has_capitulated = yes
-				}
-			}
-			NOT = {
-				POL = {
+			POL = {
+				exists = yes
+				NOT = {
 					is_subject_of = ROOT
 				}
+			}
+		}
+
+		target_root_trigger = {
+			tag = SOV
+			has_completed_focus = SOV_russian_expansion
+		}
+
+		target_trigger = {
+			FROM = {
+				tag = POL
 			}
 		}
 
@@ -256,29 +278,55 @@ SOV_europe_expansion = {
 
     SOV_demand_poland = {
 
+		icon = GFX_decision_eng_trade_unions_support
+
      	available = {
      	    has_army_manpower = {
-    		size > 1500000
+    			size > 1500000
     		}
-    		NOT = { has_war_with = POL }
-			NOT = { has_idea = SOV_molotov_ribbentrop_pact }
-			NOT = { 
-				POL = {
-					is_subject_of = SOV
-				}	
+			NOT = {
+				has_idea = SOV_molotov_ribbentrop_pact
 			}
-			country_exists = POL
+			POL = {
+				exists = yes
+				NOT = {
+					has_war_with = ROOT
+					is_subject_of = ROOT
+					is_in_faction_with = ROOT
+				}
+			}
+			OR = {
+				is_neighbor_of = POL
+				any_country = {
+					OR = {
+						is_in_faction_with = ROOT
+						is_subject_of = ROOT
+					}
+					is_neighbor_of = POL
+				}
+			}
      	}
 
 		visible = {
 			NOT = {
 				has_government = democratic
 			}
-			country_exists = POL
-			NOT = {
-				POL = {
-					has_capitulated = yes
+			POL = {
+				exists = yes
+				NOT = {
+					is_subject_of = ROOT
 				}
+			}
+		}
+
+		target_root_trigger = {
+			tag = SOV
+			has_completed_focus = SOV_russian_expansion
+		}
+
+		target_trigger = {
+			FROM = {
+				tag = POL
 			}
 		}
 
@@ -320,15 +368,22 @@ SOV_europe_expansion = {
 
     SOV_demand_bessarabia = {
 
+		icon = GFX_decision_eng_trade_unions_support
+
      	available = {
      	    has_army_manpower = {
-    		size > 1000000
+    			size > 1000000
     		}
-			has_war = no
-			NOT = { 
-				ROM = {
-					is_subject_of = SOV
-				}	
+			78 = {
+				OWNER = {
+					has_full_control_of_state = 78
+					NOT = {
+						has_war_with = ROOT
+						is_subject_of = ROOT
+						is_in_faction_with = ROOT
+					}
+					is_neighbor_of = ROOT
+				}
 			}
      	}
 
@@ -337,9 +392,7 @@ SOV_europe_expansion = {
 				has_government = democratic
 			}
 			NOT = {
-				SOV = {
-					owns_state = 78
-				}
+				owns_state = 78
 			}
 		}
 
@@ -349,6 +402,17 @@ SOV_europe_expansion = {
 
 		ai_will_do = {
 			factor = 1000
+		}
+
+		target_root_trigger = {
+			tag = SOV
+			has_completed_focus = SOV_russian_expansion
+		}
+
+		target_trigger = {
+			FROM = {
+				owns_state = 78
+			}
 		}
 
      	complete_effect = {
@@ -381,15 +445,28 @@ SOV_europe_expansion = {
 
     SOV_demand_estonia = {
 
+		icon = GFX_decision_eng_trade_unions_support
+
      	available = {
      	    has_army_manpower = {
-    		size > 1000000
+    			size > 1000000
     		}
-    		NOT = { has_war_with = EST }
-			country_exists = EST
-			NOT = {
-				EST = {
-					is_subject_of = SOV
+    		EST = {
+				exists = yes
+				NOT = {
+					has_war_with = ROOT
+					is_subject_of = ROOT
+					is_in_faction_with = ROOT
+				}
+			}
+			OR = {
+				is_neighbor_of = EST
+				any_country = {
+					OR = {
+						is_in_faction_with = ROOT
+						is_subject_of = ROOT
+					}
+					is_neighbor_of = EST
 				}
 			}
      	}
@@ -398,11 +475,22 @@ SOV_europe_expansion = {
 			NOT = {
 				has_government = democratic
 			}
-			country_exists = EST
-			NOT = {
-				EST = {
-					is_subject_of = SOV
+			EST = {
+				exists = yes
+				NOT = {
+					is_subject_of = ROOT
 				}
+			}
+		}
+
+		target_root_trigger = {
+			tag = SOV
+			has_completed_focus = SOV_russian_expansion
+		}
+
+		target_trigger = {
+			FROM = {
+				tag = EST
 			}
 		}
 
@@ -438,15 +526,28 @@ SOV_europe_expansion = {
 
     SOV_demand_latvia = {
 
+		icon = GFX_decision_eng_trade_unions_support
+
      	available = {
      	    has_army_manpower = {
-    		size > 1000000
+    			size > 1000000
     		}
-    		NOT = { has_war_with = LAT }
-			country_exists = LAT
-			NOT = {
-				LAT = {
-					is_subject_of = SOV
+    		LAT = {
+				exists = yes
+				NOT = {
+					has_war_with = ROOT
+					is_subject_of = ROOT
+					is_in_faction_with = ROOT
+				}
+			}
+			OR = {
+				is_neighbor_of = LAT
+				any_country = {
+					OR = {
+						is_in_faction_with = ROOT
+						is_subject_of = ROOT
+					}
+					is_neighbor_of = LAT
 				}
 			}
      	}
@@ -455,11 +556,22 @@ SOV_europe_expansion = {
 			NOT = {
 				has_government = democratic
 			}
-			country_exists = LAT
-			NOT = {
-				LAT = {
-					is_subject_of = SOV
+			LAT = {
+				exists = yes
+				NOT = {
+					is_subject_of = ROOT
 				}
+			}
+		}
+
+		target_root_trigger = {
+			tag = SOV
+			has_completed_focus = SOV_russian_expansion
+		}
+
+		target_trigger = {
+			FROM = {
+				tag = LAT
 			}
 		}
 
@@ -495,28 +607,52 @@ SOV_europe_expansion = {
 
     SOV_demand_lithuania = {
 
+		icon = GFX_decision_eng_trade_unions_support
+
      	available = {
      	    has_army_manpower = {
-    		size > 1000000
+    			size > 1000000
     		}
-    		NOT = { has_war_with = LIT }
-			country_exists = LIT
-			NOT = {
-				LIT = {
-					is_subject_of = SOV
+    		LIT = {
+				exists = yes
+				NOT = {
+					has_war_with = ROOT
+					is_subject_of = ROOT
+					is_in_faction_with = ROOT
 				}
 			}
-    	}
+			OR = {
+				is_neighbor_of = LIT
+				any_country = {
+					OR = {
+						is_in_faction_with = ROOT
+						is_subject_of = ROOT
+					}
+					is_neighbor_of = LIT
+				}
+			}
+     	}
 
 		visible = {
 			NOT = {
 				has_government = democratic
 			}
-			country_exists = LIT
-			NOT = {
-				LIT = {
-					is_subject_of = SOV
+			LIT = {
+				exists = yes
+				NOT = {
+					is_subject_of = ROOT
 				}
+			}
+		}
+
+		target_root_trigger = {
+			tag = SOV
+			has_completed_focus = SOV_russian_expansion
+		}
+
+		target_trigger = {
+			FROM = {
+				tag = LIT
 			}
 		}
 
@@ -573,6 +709,17 @@ SOV_europe_expansion_democratic = {
 			country_exists = POL
 		}
 
+		target_root_trigger = {
+			tag = SOV
+			has_completed_focus = SOV_russian_expansion
+		}
+
+		target_trigger = {
+			FROM = {
+				tag = POL
+			}
+		}
+
      	fire_only_once = yes
 
      	cost = 25
@@ -606,6 +753,17 @@ SOV_europe_expansion_democratic = {
 
 		visible = {
 			country_exists = ROM
+		}
+
+		target_root_trigger = {
+			tag = SOV
+			has_completed_focus = SOV_russian_expansion
+		}
+
+		target_trigger = {
+			FROM = {
+				tag = ROM
+			}
 		}
 
      	fire_only_once = yes
@@ -643,6 +801,17 @@ SOV_europe_expansion_democratic = {
 			country_exists = EST
 		}
 
+		target_root_trigger = {
+			tag = SOV
+			has_completed_focus = SOV_russian_expansion
+		}
+
+		target_trigger = {
+			FROM = {
+				tag = EST
+			}
+		}
+
      	fire_only_once = yes
 
      	cost = 10
@@ -676,6 +845,17 @@ SOV_europe_expansion_democratic = {
 
 		visible = {
 			country_exists = LAT
+		}
+
+		target_root_trigger = {
+			tag = SOV
+			has_completed_focus = SOV_russian_expansion
+		}
+
+		target_trigger = {
+			FROM = {
+				tag = LAT
+			}
 		}
 
      	fire_only_once = yes
@@ -713,6 +893,17 @@ SOV_europe_expansion_democratic = {
 			country_exists = LIT
 		}
 
+		target_root_trigger = {
+			tag = SOV
+			has_completed_focus = SOV_russian_expansion
+		}
+
+		target_trigger = {
+			FROM = {
+				tag = LIT
+			}
+		}
+
      	fire_only_once = yes
 
      	cost = 10
@@ -732,24 +923,42 @@ SOV_europe_expansion_democratic = {
 SOV_integrate_the_baltics = {
 
 	SOV_integrate_lithuania = {
+
+		icon = GFX_decision_generic_nationalism
+
 		available = {
-			LIT = { is_subject_of = SOV }
+			LIT = { is_subject_of = ROOT }
 			date > 1940.05.15
 		}
 
 		visible = {
-			LIT = { is_subject_of = SOV }
+			LIT = {
+				is_subject_of = ROOT
+				is_ai = yes
+			}
+		}
+
+		target_root_trigger = {
+			tag = SOV
+		}
+
+		target_trigger = {
+			FROM = {
+				tag = LIT
+				is_subject_of = ROOT
+			}
 		}
 
 		fire_only_once = yes
 
-		cost = 100
+		cost = 50
 
 		ai_will_do = {
 			factor = 80
 		}
 
 		days_remove = 70
+
 		remove_effect = {
 			annex_country = {
 				target = LIT
@@ -758,24 +967,42 @@ SOV_integrate_the_baltics = {
 	}
 
 	SOV_integrate_latvia = {
+
+		icon = GFX_decision_generic_nationalism
+
 		available = {
-			LAT = { is_subject_of = SOV }
+			LAT = { is_subject_of = ROOT }
 			date > 1940.05.15
 		}
 
 		visible = {
-			LAT = { is_subject_of = SOV }
+			LAT = {
+				is_subject_of = ROOT
+				is_ai = yes
+			}
+		}
+
+		target_root_trigger = {
+			tag = SOV
+		}
+
+		target_trigger = {
+			FROM = {
+				tag = LAT
+				is_subject_of = ROOT
+			}
 		}
 
 		fire_only_once = yes
 
-		cost = 100
+		cost = 50
 
 		ai_will_do = {
 			factor = 80
 		}
 
 		days_remove = 70
+
 		remove_effect = {
 			annex_country = {
 				target = LAT
@@ -784,28 +1011,98 @@ SOV_integrate_the_baltics = {
 	}
 
 	SOV_integrate_estonia = {
+
+		icon = GFX_decision_generic_nationalism
+
 		available = {
-			EST = { is_subject_of = SOV }
+			EST = { is_subject_of = ROOT }
 			date > 1940.05.15
 		}
 
 		visible = {
-			EST = { is_subject_of = SOV }
+			EST = {
+				is_subject_of = ROOT
+				is_ai = yes
+			}
+		}
+
+		target_root_trigger = {
+			tag = SOV
+		}
+
+		target_trigger = {
+			FROM = {
+				tag = EST
+				is_subject_of = ROOT
+			}
 		}
 
 		fire_only_once = yes
 
-		cost = 100
+		cost = 50
 
 		ai_will_do = {
 			factor = 80
 		}
 
 		days_remove = 70
+
 		remove_effect = {
 			annex_country = {
 				target = EST
 			}
+		}
+	}
+
+	SOV_core_baltic_state = {
+
+		icon = GFX_decision_generic_form_nation
+
+		state_target = yes
+
+		target_trigger = {
+			FROM = {
+				OR = {
+					state = 191
+					state = 13
+					state = 12
+					state = 190
+					state = 11
+					state = 189
+					state = 188
+					state = 784
+				}
+			}
+		}
+
+		available = {
+			FROM = {
+				NOT = {
+					is_core_of = ROOT
+				}
+				is_fully_controlled_by = ROOT
+			}
+		}
+
+		visible = {
+			owns_state = FROM
+			NOT = {
+				has_government = fascism
+			}
+		}
+
+		fire_only_once = yes
+
+		cost = 50
+
+		ai_will_do = {
+			factor = 80
+		}
+
+		days_remove = 30
+
+		remove_effect = {
+			add_state_core = FROM
 		}
 	}
 }
