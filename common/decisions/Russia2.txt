@@ -1440,7 +1440,7 @@ SOV_chinese_war = {
 
 	SOV_send_guns_nationalist = {
 		icon = GFX_decision_generic_prepare_civil_war
-		cost = 50
+		cost = 25
 		ai_will_do = {
 			factor = 70
 		}
@@ -1468,7 +1468,7 @@ SOV_chinese_war = {
 
 	SOV_send_planes_nationalist = {
 		icon = GFX_decision_generic_air
-		cost = 50
+		cost = 25
 		ai_will_do = {
 			factor = 70
 		}
@@ -1504,7 +1504,7 @@ SOV_chinese_war = {
 
 	SOV_send_guns_communist = {
 		icon = GFX_decision_generic_prepare_civil_war
-		cost = 50
+		cost = 25
 		ai_will_do = {
 			factor = 70
 		}
@@ -1532,7 +1532,7 @@ SOV_chinese_war = {
 
 	SOV_send_planes_communist = {
 		icon = GFX_decision_generic_air
-		cost = 50
+		cost = 25
 		ai_will_do = {
 			factor = 70
 		}
@@ -1568,7 +1568,7 @@ SOV_chinese_war = {
 
 	SOV_send_support_equipment_nationalist = {
 		icon = GFX_decision_generic_operation
-		cost = 50
+		cost = 25
 		ai_will_do = {
 			factor = 70
 		}
@@ -1590,13 +1590,13 @@ SOV_chinese_war = {
 				amount = 200
 				target = event_target:WTT_current_china_leader
 			}
-			army_experience = 5
+			army_experience = 10
 		}
 	}
 
 	SOV_send_support_equipment_communist = {
 		icon = GFX_decision_generic_operation
-		cost = 50
+		cost = 25
 		ai_will_do = {
 			factor = 70
 		}
@@ -1618,7 +1618,7 @@ SOV_chinese_war = {
 				amount = 200
 				target = PRC
 			}
-			army_experience = 5
+			army_experience = 10
 		}
 	}
 }
@@ -1686,7 +1686,10 @@ SOV_minor_communist_countries_europe = {
 			FROM = {
 				exists = yes
 				has_government = communism
-				NOT = { is_in_faction_with = ROOT }
+				NOT = { 
+					is_in_faction_with = ROOT
+					has_civil_war = yes 
+				}
 				is_major = no
 				NOT = {
 					TAG = SLV
@@ -1809,7 +1812,7 @@ SOV_help_spain = {
 
 	SOV_send_weapons_spain = {
 		icon = GFX_decision_generic_prepare_civil_war
-		cost = 50
+		cost = 25
 		ai_will_do = {
 			factor = 70
 		}
@@ -1844,7 +1847,7 @@ SOV_help_spain = {
 
 	SOV_send_planes_spain = {
 		icon = GFX_decision_generic_air
-		cost = 50
+		cost = 25
 		ai_will_do = {
 			factor = 70
 		}
@@ -1860,7 +1863,6 @@ SOV_help_spain = {
 			}
 		}
 		available = {
-			has_completed_focus = SOV_weapons_spain
 			has_equipment = {
 				fighter_equipment > 49
 			}
@@ -1885,7 +1887,7 @@ SOV_help_spain = {
 
 	SOV_send_support_equipment_spain = {
 		icon = GFX_decision_generic_operation
-		cost = 50
+		cost = 25
 		ai_will_do = {
 			factor = 70
 		}
@@ -1898,7 +1900,6 @@ SOV_help_spain = {
 			}
 		}
 		available = {
-			has_completed_focus = SOV_weapons_spain
 			has_equipment = {
 				support_equipment > 299
 			}
@@ -1928,7 +1929,12 @@ SOV_help_spain = {
 			}
 		}
 		available = {
-			has_completed_focus = SOV_weapons_spain
+			SPD = {
+				OR = {
+					has_government = communism
+					has_government = democratic
+				}
+			}
 		}
 		complete_effect = {
 			SPD = {
@@ -1940,7 +1946,7 @@ SOV_help_spain = {
 
 	SOV_send_weapons_communism_rebel = {
 		icon = GFX_decision_generic_prepare_civil_war
-		cost = 50
+		cost = 25
 		ai_will_do = {
 			factor = 70
 		}
@@ -1977,7 +1983,7 @@ SOV_help_spain = {
 
 	SOV_send_planes_communism_rebel = {
 		icon = GFX_decision_generic_air
-		cost = 50
+		cost = 25
 		ai_will_do = {
 			factor = 70
 		}
@@ -1994,7 +2000,6 @@ SOV_help_spain = {
 			}
 		}
 		available = {
-			has_completed_focus = SOV_weapons_spain
 			has_equipment = {
 				fighter_equipment > 49
 			}
@@ -2022,7 +2027,7 @@ SOV_help_spain = {
 
 	SOV_send_support_equipment_communism_rebel = {
 		icon = GFX_decision_generic_operation
-		cost = 50
+		cost = 25
 		ai_will_do = {
 			factor = 70
 		}
@@ -2036,7 +2041,6 @@ SOV_help_spain = {
 			}
 		}
 		available = {
-			has_completed_focus = SOV_weapons_spain
 			has_equipment = {
 				support_equipment > 299
 			}
@@ -2070,7 +2074,6 @@ SOV_help_spain = {
 			}
 		}
 		available = {
-			has_completed_focus = SOV_weapons_spain
 			SPC = {
 				has_government = communism
 			}
@@ -4861,6 +4864,7 @@ SOV_deal_with_britain = {
 }
 
 SOV_expand_entente_decision = {
+
 	SOV_invite_old_entente = {
 
 		icon = GFX_decision_eng_trade_unions_support
@@ -22212,7 +22216,7 @@ SOV_communist_influence_international = {
 
         }
 
-		cost = 50
+		cost = 100
 
 		complete_effect = {
 			add_popularity = {
@@ -22249,6 +22253,7 @@ SOV_communist_influence_international = {
         available = {
             NOT = {
 				has_government = neutrality
+				has_country_flag = bullying_other_party
 			}
         }
 
@@ -22262,9 +22267,10 @@ SOV_communist_influence_international = {
 			clamp_temp_variable = {
 				var = root_neutrality_pop
 				min = -1
-				max = -0.01
+				max = -0.05
 			}
 			add_stability = root_neutrality_pop
+			set_country_flag = bullying_other_party
 		}
 
         remove_effect = {
@@ -22272,6 +22278,7 @@ SOV_communist_influence_international = {
 				ideology = communism
 				popularity = -0.10
 			}
+			clr_country_flag = bullying_other_party
         }
 
 		ai_will_do = {
@@ -22302,6 +22309,7 @@ SOV_communist_influence_international = {
         available = {
             NOT = {
 				has_government = democratic
+				has_country_flag = bullying_other_party
 			}
         }
 
@@ -22315,9 +22323,10 @@ SOV_communist_influence_international = {
 			clamp_temp_variable = {
 				var = root_democratic_pop
 				min = -1
-				max = -0.01
+				max = -0.05
 			}
 			add_stability = root_democratic_pop
+			set_country_flag = bullying_other_party
 		}
 
         remove_effect = {
@@ -22325,6 +22334,7 @@ SOV_communist_influence_international = {
 				ideology = communism
 				popularity = -0.10
 			}
+			clr_country_flag = bullying_other_party
         }
 
 		ai_will_do = {
@@ -22355,6 +22365,7 @@ SOV_communist_influence_international = {
         available = {
             NOT = {
 				has_government = fascism
+				has_country_flag = bullying_other_party
 			}
         }
 
@@ -22368,9 +22379,10 @@ SOV_communist_influence_international = {
 			clamp_temp_variable = {
 				var = root_fascism_pop
 				min = -1
-				max = -0.01
+				max = -0.05
 			}
 			add_stability = root_fascism_pop
+			set_country_flag = bullying_other_party
 		}
 
         remove_effect = {
@@ -22378,6 +22390,7 @@ SOV_communist_influence_international = {
 				ideology = communism
 				popularity = -0.10
 			}
+			clr_country_flag = bullying_other_party
         }
 
 		ai_will_do = {
@@ -22453,7 +22466,7 @@ SOV_communist_influence_international = {
         remove_effect = {
             add_popularity = {
 				ideology = communism
-				popularity = -0.1
+				popularity = -0.05
 			}
         }
 
@@ -22475,7 +22488,7 @@ SOV_communist_influence_international = {
 			has_idea = SOV_Communist_influence_international_3
         }
 
-		days_remove = 100
+		days_remove = 50
 
         available = {
             NOT = {
@@ -22484,9 +22497,9 @@ SOV_communist_influence_international = {
         }
 
 		modifier = {
-			communism_drift = -0.5
+			communism_drift = -0.30
 			weekly_manpower = -5000
-			stability_weekly = -0.01
+			stability_weekly = -0.02
 		}
 
         remove_effect = {
