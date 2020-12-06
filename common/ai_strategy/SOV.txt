@@ -3518,7 +3518,7 @@ prepare_fight_russia_from = {
 
 	ai_strategy = {
 		type = prepare_for_war
-		id = SOV
+		id = "SOV"
 		value = 100
 	}
 }
@@ -3885,4 +3885,61 @@ SOV_no_alliance_russia_democratic = {
 		id = SOV
 		value = -500
 	}	
+}
+
+#Improve relations with minor communist countries that can be invited to the International
+SOV_invite_minor_communist_boost_opinion = {
+	reversed = yes
+
+	enable = {
+		has_government = communism
+		NOT = { 
+			is_in_faction_with = ROOT
+			has_civil_war = yes 
+		}
+		is_major = no
+		NOT = {
+			TAG = SLV
+			TAG = CRO
+			TAG = BOS
+			TAG = SER
+			TAG = MNT
+			TAG = MAC
+			TAG = CAT
+			TAG = NAV
+			TAG = GLC
+			TAG = SCO
+			TAG = WLS
+			TAG = NIR
+			tag = KOR
+			tag = VIN
+			tag = CAM
+			tag = LAO
+			tag = TIB
+			tag = ETH
+			tag = MOR
+			tag = EGY
+			has_idea = SOV_Communist_influence_international_1
+			has_idea = SOV_Communist_influence_international_2
+			has_idea = SOV_Communist_influence_international_3
+			has_idea = SOV_Supporters_fourth_international
+		}
+	}
+
+	enable_reverse = {
+		SOV = {
+			has_completed_focus = SOV_communist_minorities_europe
+			has_government = communism
+			is_subject = no
+			is_faction_leader = yes
+		}
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = befriend
+		id = "SOV"
+		value = 100
+	}
 }
