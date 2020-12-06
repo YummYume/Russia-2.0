@@ -3162,6 +3162,17 @@ country_event = {
 		name = soviets.92.a
 		SOV = {
 			set_cosmetic_tag = SUW
+			add_stability = 0.1
+			every_state = {
+				limit = {
+					is_controlled_by = ROOT
+					NOT = {
+						is_core_of = ROOT
+					}
+				}
+				add_compliance = 10
+				set_resistance = 0
+			}
 		}
 		hidden_effect = {
 			news_event = { id = newsrussia2.43 days = 1 }
@@ -17391,6 +17402,10 @@ country_event = {
 		hidden_effect = {
 			set_country_flag = communist_ultimatum_triggered
 			remove_ideas = SOV_Communist_influence_international_3
+			clr_country_flag = SOV_AI_is_target_international
+			SOV = {
+				clr_country_flag = SOV_AI_is_influencing_international
+			}
 		}
 	}
 
@@ -17471,6 +17486,12 @@ country_event = {
 
 	is_triggered_only = yes
 
+	immediate = {
+		hidden_effect = {
+			clr_country_flag = SOV_AI_is_target_international
+		}
+	}
+
 	option = { #Good
 		name = soviets.368.a
 		ai_chance = {
@@ -17495,6 +17516,12 @@ country_event = {
 	picture = GFX_report_event_soviet_purge_trial
 
 	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			clr_country_flag = SOV_AI_is_influencing_international
+		}
+	}
 
 	option = { #Uh
 		name = soviets.369.a
@@ -18570,6 +18597,30 @@ country_event = {
 			add_state_core = 580
 			add_state_core = 579
 			add_state_core = 403
+		}
+	}
+}
+
+#Hidden Event to cancel country flag in case a country doesn't exist anymore
+country_event = {
+	id = soviets.401
+
+	trigger = {
+		tag = SOV
+		has_country_flag = SOV_AI_is_influencing_international
+		NOT = {
+			any_country = {
+				exists = yes
+				has_country_flag = SOV_AI_is_target_international
+			}
+		}
+	}
+
+	hidden = yes
+
+	immediate = {
+		hidden_effect = {
+			clr_country_flag = SOV_AI_is_influencing_international
 		}
 	}
 }
