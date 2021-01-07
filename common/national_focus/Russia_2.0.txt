@@ -6171,7 +6171,7 @@ focus_tree = {
 		id = SOV_great_purge2
 		x = 66
 		y = 1
-		mutually_exclusive = { focus = SOV_avoid_purge }
+		mutually_exclusive = { focus = SOV_avoid_purge focus = SOV_another_revolution }
 		icon = GFX_focus_the_purge
 		cost = 30
 		ai_will_do = {
@@ -8475,7 +8475,7 @@ focus_tree = {
 		id = SOV_avoid_purge
 		x = 80
 		y = 1
-		mutually_exclusive = { focus = SOV_great_purge2 }
+		mutually_exclusive = { focus = SOV_great_purge2 focus = SOV_another_revolution }
 		icon = GFX_goal_anti_comintern_pact
 		cost = 10
 		ai_will_do = {
@@ -17717,6 +17717,363 @@ focus_tree = {
 					set_state_flag = europe_fascist_nation_puppet
 				}
 			}	
+		}
+	}
+
+	#Another Revolution
+	focus = {
+		id = SOV_another_revolution
+		x = 100
+		y = 1
+		mutually_exclusive = { focus = SOV_avoid_purge focus = SOV_great_purge2 }
+		icon = GFX_focus_spr_anarchism_knows_no_borders
+		cost = 10
+		ai_will_do = {
+			factor = 7
+		}
+		available = {
+			NOT = {
+				has_completed_focus = SOV_terrible_fate
+			}
+		}
+		search_filters = {  }
+		completion_reward = {
+			country_event = soviets.402
+		}
+	}
+
+	#The Black Guard
+	focus = {
+		id = SOV_black_guard
+		x = 100
+		y = 2
+		prerequisite = { focus = SOV_another_revolution }
+		icon = GFX_focus_YUG_pan_slavic_congress
+		cost = 10
+		ai_will_do = {
+			factor = 7
+		}
+		available = {
+
+		}
+		search_filters = {  }
+		completion_reward = {
+			custom_effect_tooltip = black_guard_tt
+		}
+	}
+
+	#The End of the Revolution
+	focus = {
+		id = SOV_end_revoltion_anarchy
+		x = 100
+		y = 3
+		prerequisite = { focus = SOV_black_guard }
+		icon = GFX_focus_generic_support_the_left_right
+		cost = 10
+		ai_will_do = {
+			factor = 7
+		}
+		available = {
+			has_government = anarchy
+			has_country_flag = end_of_the_revolution
+		}
+		search_filters = {  }
+		completion_reward = {
+			
+		}
+	}
+
+	#The State of the Country
+	focus = {
+		id = SOV_state_country
+		x = 100
+		y = 4
+		prerequisite = { focus = SOV_end_revoltion_anarchy }
+		icon = GFX_focus_ger_strike_at_the_source
+		cost = 10
+		ai_will_do = {
+			factor = 7
+		}
+		available = {
+			has_government = anarchy
+		}
+		search_filters = {  }
+		completion_reward = {
+			
+		}
+	}
+
+	#Crush the Anti-Revolutionary
+	focus = {
+		id = SOV_crush_antirevolutionary
+		x = 100
+		y = 5
+		prerequisite = { focus = SOV_state_country }
+		icon = GFX_goal_generic_political_pressure
+		cost = 10
+		ai_will_do = {
+			factor = 7
+		}
+		available = {
+			has_government = anarchy
+		}
+		search_filters = {  }
+		completion_reward = {
+			
+		}
+	}
+
+	#Send Recon Units
+	focus = {
+		id = SOV_recon_units
+		x = 100
+		y = 6
+		prerequisite = { focus = SOV_crush_antirevolutionary }
+		icon = GFX_goal_generic_axis_build_infantry
+		cost = 10
+		ai_will_do = {
+			factor = 7
+		}
+		available = {
+			has_government = anarchy
+		}
+		search_filters = {  }
+		completion_reward = {
+			
+		}
+	}
+
+	#Deal with Banditry
+	focus = {
+		id = SOV_deal_with_banditry
+		x = 102
+		y = 5
+		prerequisite = { focus = SOV_state_country }
+		icon = GFX_goal_generic_secret_weapon
+		cost = 10
+		ai_will_do = {
+			factor = 7
+		}
+		available = {
+			has_government = anarchy
+		}
+		search_filters = {  }
+		completion_reward = {
+			
+		}
+	}
+
+	#A Helping Hand
+	focus = {
+		id = SOV_helping_hand
+		x = 102
+		y = 6
+		prerequisite = { focus = SOV_deal_with_banditry }
+		icon = GFX_goal_generic_major_alliance
+		cost = 10
+		ai_will_do = {
+			factor = 7
+		}
+		available = {
+			has_government = anarchy
+		}
+		search_filters = {  }
+		completion_reward = {
+			
+		}
+	}
+
+	#Forced Quota
+	focus = {
+		id = SOV_forced_quota
+		x = 98
+		y = 5
+		prerequisite = { focus = SOV_state_country }
+		icon = GFX_goal_generic_production
+		cost = 10
+		ai_will_do = {
+			factor = 7
+		}
+		available = {
+			has_government = anarchy
+		}
+		search_filters = {  }
+		completion_reward = {
+			
+		}
+	}
+
+	#Forced Labor
+	focus = {
+		id = SOV_forced_labor
+		x = 98
+		y = 6
+		prerequisite = { focus = SOV_forced_quota }
+		icon = GFX_goal_generic_construct_civilian
+		cost = 10
+		ai_will_do = {
+			factor = 7
+		}
+		available = {
+			has_government = anarchy
+		}
+		search_filters = {  }
+		completion_reward = {
+			
+		}
+	}
+
+	#Proclamation of the Commune
+	focus = {
+		id = SOV_proclamation_commune
+		x = 99
+		y = 7
+		prerequisite = { focus = SOV_forced_labor }
+		prerequisite = { focus = SOV_recon_units }
+		prerequisite = { focus = SOV_helping_hand }
+		mutually_exclusive = { focus = SOV_embrace_total_anarchy }
+		icon = GFX_goal_generic_alliance
+		cost = 10
+		ai_will_do = {
+			factor = 7
+		}
+		available = {
+			has_government = anarchy
+			has_country_flag = order_has_been_restored
+		}
+		search_filters = {  }
+		completion_reward = {
+			
+		}
+	}
+
+	#A Compromise for The Anarchist Ideals
+	focus = {
+		id = SOV_compromise_anarchist_ideals
+		x = 98
+		y = 8
+		prerequisite = { focus = SOV_proclamation_commune }
+		icon = GFX_goal_molotov_ribbentrop_pact
+		cost = 10
+		ai_will_do = {
+			factor = 7
+		}
+		available = {
+			has_government = anarchy
+		}
+		search_filters = {  }
+		completion_reward = {
+			
+		}
+	}
+
+	#Anarcho-Syndicalism
+	focus = {
+		id = SOV_anarcho_syndicalism
+		x = 98
+		y = 9
+		prerequisite = { focus = SOV_compromise_anarchist_ideals }
+		mutually_exclusive = { focus = SOV_anarcho_communism }
+		mutually_exclusive = { focus = SOV_individualist_anarchism }
+		icon = GFX_goal_molotov_ribbentrop_pact
+		cost = 10
+		ai_will_do = {
+			factor = 7
+		}
+		available = {
+			has_government = anarchy
+		}
+		search_filters = {  }
+		completion_reward = {
+			
+		}
+	}
+
+	#Anarcho-Communism
+	focus = {
+		id = SOV_anarcho_communism
+		x = 96
+		y = 9
+		prerequisite = { focus = SOV_compromise_anarchist_ideals }
+		mutually_exclusive = { focus = SOV_anarcho_syndicalism }
+		mutually_exclusive = { focus = SOV_individualist_anarchism }
+		icon = GFX_goal_molotov_ribbentrop_pact
+		cost = 10
+		ai_will_do = {
+			factor = 7
+		}
+		available = {
+			has_government = anarchy
+		}
+		search_filters = {  }
+		completion_reward = {
+			
+		}
+	}
+
+	#Individualist Anarchism
+	focus = {
+		id = SOV_individualist_anarchism
+		x = 100
+		y = 9
+		prerequisite = { focus = SOV_compromise_anarchist_ideals }
+		mutually_exclusive = { focus = SOV_anarcho_syndicalism }
+		mutually_exclusive = { focus = SOV_anarcho_communism }
+		icon = GFX_goal_molotov_ribbentrop_pact
+		cost = 10
+		ai_will_do = {
+			factor = 7
+		}
+		available = {
+			has_government = anarchy
+		}
+		search_filters = {  }
+		completion_reward = {
+			
+		}
+	}
+
+	#Fate of the Black Guard
+	focus = {
+		id = SOV_fate_black_guard
+		x = 94
+		y = 9
+		prerequisite = { focus = SOV_compromise_anarchist_ideals }
+		icon = GFX_focus_secret_rearmament
+		cost = 10
+		ai_will_do = {
+			factor = 7
+		}
+		available = {
+			has_government = anarchy
+		}
+		search_filters = {  }
+		completion_reward = {
+			
+		}
+	}
+
+	#Embrace Total Anarchy
+	focus = {
+		id = SOV_embrace_total_anarchy
+		x = 101
+		y = 7
+		prerequisite = { focus = SOV_forced_labor }
+		prerequisite = { focus = SOV_recon_units }
+		prerequisite = { focus = SOV_helping_hand }
+		mutually_exclusive = { focus = SOV_proclamation_commune }
+		icon = GFX_goal_generic_war_with_comintern
+		cost = 10
+		ai_will_do = {
+			factor = 7
+		}
+		available = {
+			has_government = anarchy
+			has_country_flag = chaos_has_triumphed
+		}
+		search_filters = {  }
+		completion_reward = {
+			
 		}
 	}
 }
