@@ -1,0 +1,35 @@
+scripted_gui = {
+    sov_national_obligation_scripted_gui = {
+        window_name = "sov_national_obligation_scripted_gui_window"
+        context_type = player_context
+
+        visible = {
+            original_tag = SOV
+            has_country_flag = sov_debug_scripted_gui
+        }
+
+        effects = {
+            sov_national_obligation_scripted_gui_confirm_button_click {
+                add_stability = 0.1
+                clr_country_flag = sov_debug_scripted_gui
+            }
+        }
+
+        #Triggers will always check for a precise number rather than "greater than" to avoid any possible bug (with a decimal variable for example)
+        triggers = {
+            sov_national_obligation_scripted_gui_confirm_button_click_enabled = {
+                OR = {
+                    check_variable = {
+                        sov_national_obligations_proletarian_union_index_selected = 1
+                    }
+                    check_variable = {
+                        sov_national_obligations_proletarian_union_index_selected = 2
+                    }
+                    check_variable = {
+                        sov_national_obligations_proletarian_union_index_selected = 3
+                    }
+                }
+            }
+        }
+    }
+}
