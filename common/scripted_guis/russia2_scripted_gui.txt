@@ -8,16 +8,107 @@ scripted_gui = {
             has_country_flag = sov_debug_scripted_gui
         }
 
+        properties = {
+
+            sov_national_obligation_scripted_gui_window_bg = {
+                image = [THIS.GetCurrentSelectedIndexNationalObligations]
+            }
+
+            sov_national_obligation_scripted_gui_proletarian_union_first_option_bg = {
+                image = [THIS.GetCurrentStatusFirstOptionProletarianUnion]
+            }
+
+            sov_national_obligation_scripted_gui_proletarian_union_second_option_bg = {
+                image = [THIS.GetCurrentStatusSecondOptionProletarianUnion]
+            }
+
+            sov_national_obligation_scripted_gui_proletarian_union_third_option_bg = {
+                image = [THIS.GetCurrentStatusThirdOptionProletarianUnion]
+            }
+        }
+
         effects = {
+
             sov_national_obligation_scripted_gui_confirm_button_click {
-                add_stability = 0.1
                 clr_country_flag = sov_debug_scripted_gui
+            }
+
+            sov_national_obligation_scripted_gui_proletarian_union_first_option_button_click {
+                if = {
+                    limit = {
+                        check_variable = {
+                            sov_national_obligations_proletarian_union_index_selected = 1
+                        }
+                    }
+                    set_variable = {
+                        sov_national_obligations_proletarian_union_index_selected = 0
+                    }
+                }
+                else = {
+                    set_variable = {
+                        sov_national_obligations_proletarian_union_index_selected = 1
+                    }
+                }
+            }
+
+            sov_national_obligation_scripted_gui_proletarian_union_second_option_button_click {
+                if = {
+                    limit = {
+                        check_variable = {
+                            sov_national_obligations_proletarian_union_index_selected = 2
+                        }
+                    }
+                    set_variable = {
+                        sov_national_obligations_proletarian_union_index_selected = 0
+                    }
+                }
+                else = {
+                    set_variable = {
+                        sov_national_obligations_proletarian_union_index_selected = 2
+                    }
+                }
+            }
+
+            sov_national_obligation_scripted_gui_proletarian_union_third_option_button_click {
+                if = {
+                    limit = {
+                        check_variable = {
+                            sov_national_obligations_proletarian_union_index_selected = 3
+                        }
+                    }
+                    set_variable = {
+                        sov_national_obligations_proletarian_union_index_selected = 0
+                    }
+                }
+                else = {
+                    set_variable = {
+                        sov_national_obligations_proletarian_union_index_selected = 3
+                    }
+                }
             }
         }
 
         #Triggers will always check for a precise number rather than "greater than" to avoid any possible bug (with a decimal variable for example)
         triggers = {
-            sov_national_obligation_scripted_gui_confirm_button_click_enabled = {
+            #NAV
+            sov_national_obligation_scripted_gui_nav_proletarian_union_click_enabled = {
+
+            }
+
+            sov_national_obligation_scripted_gui_nav_communist_safety_click_enabled = {
+                always = no
+            }
+
+            sov_national_obligation_scripted_gui_nav_third_option_click_enabled = {
+                always = no
+            }
+
+            sov_national_obligation_scripted_gui_nav_fourth_option_click_enabled = {
+                always = no
+            }
+            
+            #Proletarian Union
+            sov_national_obligation_scripted_gui_proletarian_union_confirm_button_click_enabled = {
                 OR = {
                     check_variable = {
                         sov_national_obligations_proletarian_union_index_selected = 1
@@ -27,6 +118,27 @@ scripted_gui = {
                     }
                     check_variable = {
                         sov_national_obligations_proletarian_union_index_selected = 3
+                    }
+                }
+            }
+
+            sov_national_obligation_scripted_gui_proletarian_union_first_option_button_click_enabled = {
+                THIS = {
+                    num_subjects > 19
+                }
+            }
+
+            sov_national_obligation_scripted_gui_proletarian_union_second_option_button_click_enabled = {
+                THIS = {
+                    num_faction_members > 9
+                }
+            }
+
+            sov_national_obligation_scripted_gui_proletarian_union_third_option_button_click_enabled = {
+                THIS = {
+                    has_country_leader = {
+                        name = "Joseph Stalin"
+                        ruling_only = yes
                     }
                 }
             }
