@@ -5075,7 +5075,7 @@ focus_tree = {
 		y = 10
 		prerequisite = { focus = SOV_air_land_battles focus = SOV_rocketry focus = SOV_propaganda_for_the_military }
 		icon = GFX_focus_generic_combined_arms
-		cost = 12
+		cost = 10
 		ai_will_do = {
 			factor = 5
 		}
@@ -10529,13 +10529,14 @@ focus_tree = {
 		y = 19
 		prerequisite = { focus = SOV_the_trials }
 		icon = GFX_The_track
-		cost = 8
+		cost = 5
 		ai_will_do = {
 			factor = 5
 		}
 		available = {
 			is_subject = no
 			has_government = democratic
+			has_country_flag = sov_trials_begin
 			if = {
 				limit = {
 					has_idea = SOV_Exiled_russia
@@ -10558,13 +10559,14 @@ focus_tree = {
 		y = 19
 		prerequisite = { focus = SOV_the_trials }
 		icon = GFX_Remaining_deserters
-		cost = 8
+		cost = 5
 		ai_will_do = {
 			factor = 5
 		}
 		available = {
 			is_subject = no
 			has_government = democratic
+			has_country_flag = sov_trials_begin
 			if = {
 				limit = {
 					has_idea = SOV_Exiled_russia
@@ -10573,6 +10575,15 @@ focus_tree = {
 					has_idea = SOV_Exiled_russia
 				}
 			}
+		}
+		bypass = {
+			has_country_flag = sov_trials_end
+		}
+		cancelable = no
+		cancel_if_invalid = yes
+		available_if_capitulated = yes
+		select_effect = {
+			add_to_variable = { time_remaining_before_end_trials = 35 }
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
@@ -10587,13 +10598,14 @@ focus_tree = {
 		y = 19
 		prerequisite = { focus = SOV_the_trials }
 		icon = GFX_Communism_fate
-		cost = 8
+		cost = 5
 		ai_will_do = {
 			factor = 5
 		}
 		available = {
 			is_subject = no
 			has_government = democratic
+			has_country_flag = sov_trials_begin
 			if = {
 				limit = {
 					has_idea = SOV_Exiled_russia
@@ -10602,6 +10614,15 @@ focus_tree = {
 					has_idea = SOV_Exiled_russia
 				}
 			}
+		}
+		bypass = {
+			has_country_flag = sov_trials_end
+		}
+		cancelable = no
+		cancel_if_invalid = yes
+		available_if_capitulated = yes
+		select_effect = {
+			add_to_variable = { time_remaining_before_end_trials = 35 }
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
@@ -10624,6 +10645,7 @@ focus_tree = {
 		available = {
 			is_subject = no
 			has_government = democratic
+			has_country_flag = sov_trials_end
 			if = {
 				limit = {
 					has_idea = SOV_Exiled_russia
@@ -10646,7 +10668,7 @@ focus_tree = {
 		y = 21
 		prerequisite = { focus = SOV_the_supreme_court }
 		icon = GFX_
-		cost = 8
+		cost = 5
 		ai_will_do = {
 			factor = 5
 		}
@@ -10675,7 +10697,7 @@ focus_tree = {
 		y = 21
 		prerequisite = { focus = SOV_the_supreme_court }
 		icon = GFX_
-		cost = 8
+		cost = 5
 		ai_will_do = {
 			factor = 5
 		}
@@ -11593,7 +11615,7 @@ focus_tree = {
 		x = 3
 		y = 23
 		prerequisite = { focus = SOV_united_russia }
-		icon = GFX_
+		icon = GFX_Increased_minimum_wage
 		cost = 5
 		ai_will_do = {
 			factor = 5
@@ -11612,17 +11634,17 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			
+			add_ideas = SOV_Increased_minimum_wage
 		}
 	}
 
-	#Russian Principes
+	#Russian Principles
 	focus = {
-		id = SOV_russian_principes
+		id = SOV_russian_principles
 		x = 3
 		y = 24
 		prerequisite = { focus = SOV_increased_minimum_wage }
-		icon = GFX_
+		icon = GFX_Russian_principles
 		cost = 5
 		ai_will_do = {
 			factor = 5
@@ -11641,17 +11663,18 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			
+			add_ideas = SOV_Russian_principles
 		}
 	}
 
 	#Work
 	focus = {
-		id = SOV_work_principe
+		id = SOV_work_principle
 		x = 2
 		y = 25
-		prerequisite = { focus = SOV_russian_principes }
-		icon = GFX_
+		prerequisite = { focus = SOV_russian_principles }
+		mutually_exclusive = { focus = SOV_army_principle }
+		icon = GFX_Work_principle
 		cost = 5
 		ai_will_do = {
 			factor = 5
@@ -11670,17 +11693,21 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			
+			swap_ideas = {
+				remove_idea = SOV_Russian_principles
+				add_idea = SOV_Russian_principles_work
+			}
 		}
 	}
 
 	#Army
 	focus = {
-		id = SOV_army_principe
+		id = SOV_army_principle
 		x = 4
 		y = 25
-		prerequisite = { focus = SOV_russian_principes }
-		icon = GFX_
+		prerequisite = { focus = SOV_russian_principles }
+		mutually_exclusive = { focus = SOV_work_principle }
+		icon = GFX_Army_principle
 		cost = 5
 		ai_will_do = {
 			factor = 5
@@ -11699,7 +11726,10 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			
+			swap_ideas = {
+				remove_idea = SOV_Russian_principles
+				add_idea = SOV_Russian_principles_army
+			}
 		}
 	}
 
