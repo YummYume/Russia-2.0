@@ -4691,6 +4691,7 @@ focus_tree = {
 				has_completed_focus = SOV_consolidate_true_communism
 				has_completed_focus = SOV_country_in_chaos
 				has_completed_focus = SOV_second_civil_war
+				has_completed_focus = SOV_end_revoltion_anarchy
 			}
 		}
 		search_filters = { FOCUS_FILTER_ARMY_RUSSIA }
@@ -19202,7 +19203,7 @@ focus_tree = {
 				has_completed_focus = SOV_terrible_fate
 			}
 		}
-		search_filters = {  }
+		search_filters = { FOCUS_FILTER_ANARCHY }
 		completion_reward = {
 			country_event = soviets.402
 		}
@@ -19222,11 +19223,13 @@ focus_tree = {
 		available = {
 
 		}
-		search_filters = {  }
+		search_filters = { FOCUS_FILTER_ANARCHY }
 		completion_reward = {
 			custom_effect_tooltip = black_guard_tt
 			custom_effect_tooltip = black_guard_idea_tt
 			hidden_effect = {
+				set_variable = { army_vigiliance_black_revolution = 0 }
+				set_variable = { population_support_black_revolution = 0 }
 				add_dynamic_modifier = { modifier = anarchist_black_guard_modifiers }
 				add_ideas = SOV_Black_guard_army
 				213 = {
@@ -19300,7 +19303,7 @@ focus_tree = {
 		y = 3
 		prerequisite = { focus = SOV_black_guard }
 		icon = GFX_focus_generic_support_the_left_right
-		cost = 7
+		cost = 3
 		ai_will_do = {
 			factor = 7
 		}
@@ -19308,9 +19311,15 @@ focus_tree = {
 			has_government = anarchy
 			has_country_flag = end_of_the_revolution
 		}
-		search_filters = {  }
+		search_filters = { FOCUS_FILTER_ANARCHY }
 		completion_reward = {
-			
+			hidden_effect = {
+				remove_dynamic_modifier = { modifier = anarchist_black_guard_modifiers }
+			}
+			swap_ideas = {
+				remove_idea = SOV_Black_guard_army
+				add_idea = SOV_Black_guard_army_2
+			}
 		}
 	}
 
@@ -19328,7 +19337,7 @@ focus_tree = {
 		available = {
 			has_government = anarchy
 		}
-		search_filters = {  }
+		search_filters = { FOCUS_FILTER_ANARCHY }
 		completion_reward = {
 			country_event = soviets.403
 		}
@@ -19348,7 +19357,7 @@ focus_tree = {
 		available = {
 			has_government = anarchy
 		}
-		search_filters = {  }
+		search_filters = { FOCUS_FILTER_ANARCHY }
 		completion_reward = {
 			
 		}
@@ -19368,7 +19377,7 @@ focus_tree = {
 		available = {
 			has_government = anarchy
 		}
-		search_filters = {  }
+		search_filters = { FOCUS_FILTER_ANARCHY }
 		completion_reward = {
 			
 		}
@@ -19388,7 +19397,7 @@ focus_tree = {
 		available = {
 			has_government = anarchy
 		}
-		search_filters = {  }
+		search_filters = { FOCUS_FILTER_ANARCHY }
 		completion_reward = {
 			
 		}
@@ -19408,7 +19417,7 @@ focus_tree = {
 		available = {
 			has_government = anarchy
 		}
-		search_filters = {  }
+		search_filters = { FOCUS_FILTER_ANARCHY }
 		completion_reward = {
 			
 		}
@@ -19428,7 +19437,7 @@ focus_tree = {
 		available = {
 			has_government = anarchy
 		}
-		search_filters = {  }
+		search_filters = { FOCUS_FILTER_ANARCHY }
 		completion_reward = {
 			
 		}
@@ -19448,7 +19457,7 @@ focus_tree = {
 		available = {
 			has_government = anarchy
 		}
-		search_filters = {  }
+		search_filters = { FOCUS_FILTER_ANARCHY }
 		completion_reward = {
 			
 		}
@@ -19472,7 +19481,7 @@ focus_tree = {
 			has_government = anarchy
 			has_country_flag = order_has_been_restored
 		}
-		search_filters = {  }
+		search_filters = { FOCUS_FILTER_ANARCHY }
 		completion_reward = {
 			
 		}
@@ -19492,7 +19501,7 @@ focus_tree = {
 		available = {
 			has_government = anarchy
 		}
-		search_filters = {  }
+		search_filters = { FOCUS_FILTER_ANARCHY }
 		completion_reward = {
 			
 		}
@@ -19514,7 +19523,7 @@ focus_tree = {
 		available = {
 			has_government = anarchy
 		}
-		search_filters = {  }
+		search_filters = { FOCUS_FILTER_ANARCHY }
 		completion_reward = {
 			
 		}
@@ -19536,7 +19545,7 @@ focus_tree = {
 		available = {
 			has_government = anarchy
 		}
-		search_filters = {  }
+		search_filters = { FOCUS_FILTER_ANARCHY }
 		completion_reward = {
 			
 		}
@@ -19558,7 +19567,7 @@ focus_tree = {
 		available = {
 			has_government = anarchy
 		}
-		search_filters = {  }
+		search_filters = { FOCUS_FILTER_ANARCHY }
 		completion_reward = {
 			
 		}
@@ -19578,7 +19587,27 @@ focus_tree = {
 		available = {
 			has_government = anarchy
 		}
-		search_filters = {  }
+		search_filters = { FOCUS_FILTER_ANARCHY }
+		completion_reward = {
+			
+		}
+	}
+
+	#Trials of the Red Generals
+	focus = {
+		id = SOV_trials_red_generals
+		x = 94
+		y = 10
+		prerequisite = { focus = SOV_fate_black_guard }
+		icon = GFX_focus_secret_rearmament
+		cost = 10
+		ai_will_do = {
+			factor = 7
+		}
+		available = {
+			has_government = anarchy
+		}
+		search_filters = { FOCUS_FILTER_ANARCHY }
 		completion_reward = {
 			
 		}
@@ -19601,8 +19630,9 @@ focus_tree = {
 		available = {
 			has_government = anarchy
 			has_country_flag = chaos_has_triumphed
+			has_country_flag = black_revolution_turned_civil_war
 		}
-		search_filters = {  }
+		search_filters = { FOCUS_FILTER_ANARCHY }
 		completion_reward = {
 			
 		}

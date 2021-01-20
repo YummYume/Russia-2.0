@@ -3252,6 +3252,7 @@ country_event = {
 				has_government = communism
 				has_civil_war = yes
 				has_country_flag = second_civil_war_in_progress
+				has_country_flag = black_revolution_civil_war_in_progress
 			}
 		}
 		if = {
@@ -3261,6 +3262,15 @@ country_event = {
 			OR = {
 				has_completed_focus = SOV_restoration_tsar
 				has_completed_focus = SOV_firm_hand
+			}
+		}
+		if = {
+			limit = {
+				has_government = anarchy
+			}
+			OR = {
+				has_completed_focus = SOV_proclamation_commune
+				has_completed_focus = SOV_embrace_total_anarchy
 			}
 		}
 	}
@@ -3373,6 +3383,19 @@ country_event = {
 		}
 		trigger = {
 			has_government = fascism
+		}
+		set_province_name = { id = 3529 name = "Volgograd"}
+		hidden_effect = {
+			217 = {
+				set_state_name = "Volgograd"
+			}
+		}
+	}
+
+	option = { #Has Anarchist Government
+		name = soviets.94.f
+		trigger = {
+			has_government = anarchy
 		}
 		set_province_name = { id = 3529 name = "Volgograd"}
 		hidden_effect = {
@@ -4443,7 +4466,6 @@ country_event = {
 	picture = GFX_report_event_german_reichstag_gathering
 
 	fire_only_once = yes
-
 	trigger = {
 		TAG = SOV
 		has_full_control_of_state = 195
@@ -4451,6 +4473,7 @@ country_event = {
 			has_government = communism
 			has_civil_war = yes
 			has_country_flag = second_civil_war_in_progress
+			has_country_flag = black_revolution_civil_war_in_progress
 		}
 		if = {
 			limit = {
@@ -4459,6 +4482,15 @@ country_event = {
 			OR = {
 				has_completed_focus = SOV_pavel_guidance
 				has_completed_focus = SOV_trust_alexander
+			}
+		}
+		if = {
+			limit = {
+				has_government = anarchy
+			}
+			OR = {
+				has_completed_focus = SOV_proclamation_commune
+				has_completed_focus = SOV_embrace_total_anarchy
 			}
 		}
 	}
@@ -4472,7 +4504,11 @@ country_event = {
 		name = soviets.107.a
 		if = {
 			limit = {
-				has_completed_focus = SOV_trust_alexander
+				OR = {
+					has_completed_focus = SOV_trust_alexander
+					has_completed_focus = SOV_proclamation_commune
+					has_completed_focus = SOV_embrace_total_anarchy
+				}
 			}
 			set_province_name = { id = 3151 name = "Petrograd"}
 			hidden_effect = {
@@ -16945,11 +16981,14 @@ country_event = {
 			has_government = communism
 			has_civil_war = yes
 			has_country_flag = second_civil_war_in_progress
+			has_country_flag = black_revolution_civil_war_in_progress
 		}
 		OR = {
 			has_completed_focus = SOV_launch_insurrection
 			has_completed_focus = SOV_bring_back_old_life
 			has_completed_focus = SOV_new_way_life
+			has_completed_focus = SOV_proclamation_commune
+			has_completed_focus = SOV_embrace_total_anarchy
 		}
 	}
 
@@ -17078,11 +17117,14 @@ country_event = {
 			has_government = communism
 			has_civil_war = yes
 			has_country_flag = second_civil_war_in_progress
+			has_country_flag = black_revolution_civil_war_in_progress
 		}
 		OR = {
 			has_completed_focus = SOV_pavel_guidance
 			has_completed_focus = SOV_bring_back_old_life
 			has_completed_focus = SOV_new_way_life
+			has_completed_focus = SOV_proclamation_commune
+			has_completed_focus = SOV_embrace_total_anarchy
 		}
 	}
 
@@ -17123,11 +17165,14 @@ country_event = {
 			has_government = communism
 			has_civil_war = yes
 			has_country_flag = second_civil_war_in_progress
+			has_country_flag = black_revolution_civil_war_in_progress
 		}
 		OR = {
 			has_completed_focus = SOV_pavel_guidance
 			has_completed_focus = SOV_bring_back_old_life
 			has_completed_focus = SOV_new_way_life
+			has_completed_focus = SOV_proclamation_commune
+			has_completed_focus = SOV_embrace_total_anarchy
 		}
 	}
 
@@ -18667,7 +18712,9 @@ country_event = {
 		ai_chance = {
 			factor = 100
 		}
-		
+		add_ideas = SOV_No_work
+		add_ideas = SOV_Bandits_problem
+		add_ideas = SOV_Anti_revolutionary
 	}
 }
 
@@ -18718,7 +18765,24 @@ country_event = {
 			}
 		}
 		SOU = {
-			load_oob = "SOU_black_revolution"
+			if = {
+				limit = {
+					SOV = {
+						NOT = {
+							has_country_flag = anarchist_soldiers_desert
+						}
+					}
+				}
+				load_oob = "SOU_black_revolution"
+			}
+			else_if = {
+				limit = {
+					SOV = {
+						has_country_flag = anarchist_soldiers_desert
+					}
+				}
+				load_oob = "SOU_black_revolution_deserted_version"
+			}
 			if = {
 				limit = {
 					SOV = {
@@ -19803,6 +19867,146 @@ country_event = {
 			}
 			SOU = {
 				load_oob = "SOU_cb_575"
+			}
+		}
+	}
+}
+
+#End of the Black Revolution - Civil War
+country_event = {
+	id = soviets.412
+	title = soviets.412.t
+	desc = soviets.412.d
+	picture = GFX_soldiers_with_guns_russia2
+
+	fire_only_once = yes
+
+	is_triggered_only = yes
+
+	option = {
+		name = soviets.412.a
+		set_country_flag = end_of_the_revolution
+		clr_country_flag = black_revolution_civil_war_in_progress
+		custom_effect_tooltip = end_revolution_focus_available
+		hidden_effect = {
+			every_state = {
+				limit = {
+					is_core_of = SOU
+				}
+				remove_core_of = SOU
+			}
+		}
+		add_threat = -5
+		remove_ideas = SOV_Determination
+		hidden_effect = {
+			delete_unit_template_and_units = {
+				division_template = "Militsiya Gornostrelkovaya Diviziya"
+			}
+			delete_unit_template_and_units = {
+				division_template = "Povstancheskaya Militsiya Diviziya"
+			}
+			delete_unit_template_and_units = {
+				division_template = "Militsiya Motorizirovannaya Diviziya"
+			}
+			delete_unit_template_and_units = {
+				division_template = "Militsiya Kavaleriyskaya Diviziya"
+			}
+		}
+		if = {
+			limit = {
+				has_idea = SOV_Surprise_attack_black_revolution
+			}
+			remove_ideas = SOV_Surprise_attack_black_revolution
+		}
+	}
+}
+
+#Aftermath of the Coup - Black Revolution
+country_event = {
+	id = soviets.413
+	title = soviets.413.t
+	desc = soviets.413.d
+	picture = GFX_artillery_with_building_russia2
+
+	fire_only_once = yes
+
+	is_triggered_only = yes
+
+	option = {
+		name = soviets.413.a
+		set_country_flag = end_of_the_revolution
+		clr_country_flag = black_revolution_civil_war_in_progress
+		custom_effect_tooltip = end_revolution_focus_available
+		hidden_effect = {
+			create_field_marshal = {
+				name = "Supreme Military Council"
+				picture = "Portrait_military_council.dds"
+				traits = { winter_specialist logistics_wizard aggressive_assaulter }
+				skill = 3
+				attack_skill = 3
+				defense_skill = 3
+				planning_skill = 2
+				logistics_skill = 2
+			}
+			create_corps_commander = {
+				name = "Military Council of Ukraine"
+				picture = "Portrait_military_council.dds"
+				traits = { infantry_officer armor_officer }
+				skill = 4
+				attack_skill = 4
+				defense_skill = 4
+				planning_skill = 5
+				logistics_skill = 4
+			}
+			create_corps_commander = {
+				name = "Military Council of Belarus"
+				picture = "Portrait_military_council.dds"
+				traits = { ranger brilliant_strategist }
+				skill = 3
+				attack_skill = 4
+				defense_skill = 3
+				planning_skill = 2
+				logistics_skill = 3
+			}
+			create_corps_commander = {
+				name = "Military Council of the Urals"
+				picture = "Portrait_military_council.dds"
+				traits = { trait_mountaineer  inflexible_strategist }
+				skill = 3
+				attack_skill = 2
+				defense_skill = 5
+				planning_skill = 4
+				logistics_skill = 4
+			}
+			create_corps_commander = {
+				name = "Military Council of Siberia"
+				picture = "Portrait_military_council.dds"
+				traits = { winter_specialist winter_expert }
+				skill = 4
+				attack_skill = 4
+				defense_skill = 2
+				planning_skill = 2
+				logistics_skill = 5
+			}
+			create_corps_commander = {
+				name = "Military Council of Artic"
+				picture = "Portrait_military_council.dds"
+				traits = { winter_specialist ranger }
+				skill = 3
+				attack_skill = 3
+				defense_skill = 2
+				planning_skill = 2
+				logistics_skill = 5
+			}
+			create_corps_commander = {
+				name = "Military Council of the Steppe and Kuban"
+				picture = "Portrait_military_council.dds"
+				traits = { cavalry_leader desert_fox }
+				skill = 3
+				attack_skill = 3
+				defense_skill = 2
+				planning_skill = 2
+				logistics_skill = 5
 			}
 		}
 	}
