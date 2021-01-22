@@ -23208,48 +23208,105 @@ SOV_target_iron_curtain = {
 
 SOV_the_black_revolution = {
 
-	SOV_the_black_revolution_timeout = {
+	SOV_careful_next_infiltration = {
 
-		icon = GFX_decision_generic_ignite_civil_war
+		icon = GFX_decision_generic_speech
 
 		allowed = {
-			TAG = SOV
+			original_tag = SOV
 		}
 
-		activation = {
-			has_country_flag = peaceful_black_revolution
+		visible = {
+			NOT = {
+				has_country_flag = be_careful_black_revolution
+			}
 		}
-
-		fire_only_once = yes
 
 		available = {
-			OR = {
-				has_stability < 0.15
-				anarchy > 0.5
-			}
+			
 		}
 
-		days_mission_timeout = 240
-
-		is_good = no
-
-		cancel_trigger = {
-			has_government = anarchy
-		}
-		
-		timeout_effect = {
-			custom_effect_tooltip = SOV_the_black_revolution_timeout_tt
-		}
+		cost = 20
 
 		complete_effect = {
-			custom_effect_tooltip = SOV_the_black_revolution_timeout_tt
-			hidden_effect = {
+			custom_effect_tooltip = SOV_careful_next_infiltration_tt
+			set_country_flag = be_careful_black_revolution
+		}
 
-			}
+		ai_will_do = {
+			factor = 10
 		}
 	}
 
-	#Control state on map mode
+	SOV_initiate_raid_capital = {
+		
+		icon = GFX_decision_hol_draw_up_staff_plans
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = SOV_initiate_raid_capital_available_tt
+				check_variable = {
+					var = population_support_black_revolution
+					value = 100
+					compare = greater_than_or_equals
+				}
+			}
+		}
+
+		complete_effect = {
+
+			SOV = {
+				country_event = { id = soviets.413 }
+				set_politics = {
+					ruling_party = anarchy
+				}
+				hidden_effect = {
+					set_cosmetic_tag = ANAC
+					clr_country_flag = civil_war_black_revolution
+					remove_ideas = SOV_Anarchist_terrorist
+					remove_ideas = SOV_army_disorganisation
+					remove_ideas = home_of_revolution
+					dismantle_faction = yes
+					delete_unit_template_and_units = {
+						division_template = "Strelkovaya Diviziya"
+					}
+					delete_unit_template_and_units = {
+						division_template = "Gornostrelkovaya Diviziya"
+					}
+					delete_unit_template_and_units = {
+						division_template = "Motostrelkovaya Diviziya"
+					}
+					delete_unit_template_and_units = {
+						division_template = "Kavaleriyskaya Diviziya"
+					}
+					delete_unit_template_and_units = {
+						division_template = "NKVD Pogranichnaya Diviziya"
+					}
+					delete_unit_template_and_units = {
+						division_template = "Mekhanizirovaniy Korpus"
+					}
+					every_army_leader = {
+						retire = yes
+					}
+					load_oob = "SOV_black_revolution_peaceful_oob"
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	#Control state on map mode (Check Decision Category if you are looking for "Select which state you want to infiltrate")
 		SOV_control_state_vinnystia = {
 			icon = GFX_decision_eng_trade_unions_support
 
@@ -23260,11 +23317,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 198
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 198 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -23281,6 +23345,76 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					add_to_variable = {
+						var = population_support_black_revolution
+						value = 5
+					}
+					custom_effect_tooltip = population_support_5_tt
+					random_list = {
+						15 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						55 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 5
+							}
+							custom_effect_tooltip = SOV_army_vigilance_5
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 8
+							}
+							custom_effect_tooltip = SOV_army_vigilance_8
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					add_to_variable = {
+						var = population_support_black_revolution
+						value = 4
+					}
+					custom_effect_tooltip = population_support_4_tt
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						15 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 5
+							}
+							custom_effect_tooltip = SOV_army_vigilance_5
+						}
+						30 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 8
+							}
+							custom_effect_tooltip = SOV_army_vigilance_8
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -23298,11 +23432,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 199
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 199 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -23319,6 +23460,76 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					add_to_variable = {
+						var = population_support_black_revolution
+						value = 5
+					}
+					custom_effect_tooltip = population_support_5_tt
+					random_list = {
+						15 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						55 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 5
+							}
+							custom_effect_tooltip = SOV_army_vigilance_5
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 8
+							}
+							custom_effect_tooltip = SOV_army_vigilance_8
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					add_to_variable = {
+						var = population_support_black_revolution
+						value = 4
+					}
+					custom_effect_tooltip = population_support_4_tt
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						15 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 5
+							}
+							custom_effect_tooltip = SOV_army_vigilance_5
+						}
+						30 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 8
+							}
+							custom_effect_tooltip = SOV_army_vigilance_8
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -23336,11 +23547,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 203
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 203 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -23357,6 +23575,76 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					add_to_variable = {
+						var = population_support_black_revolution
+						value = 5
+					}
+					custom_effect_tooltip = population_support_5_tt
+					random_list = {
+						15 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						55 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 5
+							}
+							custom_effect_tooltip = SOV_army_vigilance_5
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 8
+							}
+							custom_effect_tooltip = SOV_army_vigilance_8
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					add_to_variable = {
+						var = population_support_black_revolution
+						value = 4
+					}
+					custom_effect_tooltip = population_support_4_tt
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						15 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 5
+							}
+							custom_effect_tooltip = SOV_army_vigilance_5
+						}
+						30 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 8
+							}
+							custom_effect_tooltip = SOV_army_vigilance_8
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -23374,11 +23662,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 226
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 226 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -23395,6 +23690,76 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					add_to_variable = {
+						var = population_support_black_revolution
+						value = 5
+					}
+					custom_effect_tooltip = population_support_5_tt
+					random_list = {
+						15 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						55 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 5
+							}
+							custom_effect_tooltip = SOV_army_vigilance_5
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 8
+							}
+							custom_effect_tooltip = SOV_army_vigilance_8
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					add_to_variable = {
+						var = population_support_black_revolution
+						value = 4
+					}
+					custom_effect_tooltip = population_support_4_tt
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						15 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 5
+							}
+							custom_effect_tooltip = SOV_army_vigilance_5
+						}
+						30 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 8
+							}
+							custom_effect_tooltip = SOV_army_vigilance_8
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -23412,11 +23777,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 227
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 227 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -23433,6 +23805,76 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					add_to_variable = {
+						var = population_support_black_revolution
+						value = 5
+					}
+					custom_effect_tooltip = population_support_5_tt
+					random_list = {
+						15 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						55 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 5
+							}
+							custom_effect_tooltip = SOV_army_vigilance_5
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 8
+							}
+							custom_effect_tooltip = SOV_army_vigilance_8
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					add_to_variable = {
+						var = population_support_black_revolution
+						value = 4
+					}
+					custom_effect_tooltip = population_support_4_tt
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						15 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 5
+							}
+							custom_effect_tooltip = SOV_army_vigilance_5
+						}
+						30 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 8
+							}
+							custom_effect_tooltip = SOV_army_vigilance_8
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -23450,11 +23892,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 218
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 218 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -23471,6 +23920,76 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					add_to_variable = {
+						var = population_support_black_revolution
+						value = 5
+					}
+					custom_effect_tooltip = population_support_5_tt
+					random_list = {
+						15 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						55 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 5
+							}
+							custom_effect_tooltip = SOV_army_vigilance_5
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 8
+							}
+							custom_effect_tooltip = SOV_army_vigilance_8
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					add_to_variable = {
+						var = population_support_black_revolution
+						value = 4
+					}
+					custom_effect_tooltip = population_support_4_tt
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						15 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 5
+							}
+							custom_effect_tooltip = SOV_army_vigilance_5
+						}
+						30 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 8
+							}
+							custom_effect_tooltip = SOV_army_vigilance_8
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -23488,11 +24007,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 228
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 228 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -23509,6 +24035,76 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					add_to_variable = {
+						var = population_support_black_revolution
+						value = 5
+					}
+					custom_effect_tooltip = population_support_5_tt
+					random_list = {
+						15 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						55 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 5
+							}
+							custom_effect_tooltip = SOV_army_vigilance_5
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 8
+							}
+							custom_effect_tooltip = SOV_army_vigilance_8
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					add_to_variable = {
+						var = population_support_black_revolution
+						value = 4
+					}
+					custom_effect_tooltip = population_support_4_tt
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						15 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 5
+							}
+							custom_effect_tooltip = SOV_army_vigilance_5
+						}
+						30 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 8
+							}
+							custom_effect_tooltip = SOV_army_vigilance_8
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -23526,11 +24122,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 221
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 221 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -23547,6 +24150,76 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					add_to_variable = {
+						var = population_support_black_revolution
+						value = 5
+					}
+					custom_effect_tooltip = population_support_5_tt
+					random_list = {
+						15 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						55 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 5
+							}
+							custom_effect_tooltip = SOV_army_vigilance_5
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 8
+							}
+							custom_effect_tooltip = SOV_army_vigilance_8
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					add_to_variable = {
+						var = population_support_black_revolution
+						value = 4
+					}
+					custom_effect_tooltip = population_support_4_tt
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						15 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 5
+							}
+							custom_effect_tooltip = SOV_army_vigilance_5
+						}
+						30 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 8
+							}
+							custom_effect_tooltip = SOV_army_vigilance_8
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -23564,11 +24237,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 259
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 259 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -23585,6 +24265,76 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					add_to_variable = {
+						var = population_support_black_revolution
+						value = 5
+					}
+					custom_effect_tooltip = population_support_5_tt
+					random_list = {
+						15 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						55 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 5
+							}
+							custom_effect_tooltip = SOV_army_vigilance_5
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 8
+							}
+							custom_effect_tooltip = SOV_army_vigilance_8
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					add_to_variable = {
+						var = population_support_black_revolution
+						value = 4
+					}
+					custom_effect_tooltip = population_support_4_tt
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						15 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 5
+							}
+							custom_effect_tooltip = SOV_army_vigilance_5
+						}
+						30 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 8
+							}
+							custom_effect_tooltip = SOV_army_vigilance_8
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -23602,11 +24352,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 225
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 225 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -23623,6 +24380,76 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					add_to_variable = {
+						var = population_support_black_revolution
+						value = 5
+					}
+					custom_effect_tooltip = population_support_5_tt
+					random_list = {
+						15 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						55 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 5
+							}
+							custom_effect_tooltip = SOV_army_vigilance_5
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 8
+							}
+							custom_effect_tooltip = SOV_army_vigilance_8
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					add_to_variable = {
+						var = population_support_black_revolution
+						value = 4
+					}
+					custom_effect_tooltip = population_support_4_tt
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						15 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 5
+							}
+							custom_effect_tooltip = SOV_army_vigilance_5
+						}
+						30 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 8
+							}
+							custom_effect_tooltip = SOV_army_vigilance_8
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -23640,11 +24467,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 193
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 193 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -23661,6 +24495,76 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					add_to_variable = {
+						var = population_support_black_revolution
+						value = 5
+					}
+					custom_effect_tooltip = population_support_5_tt
+					random_list = {
+						15 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						55 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 5
+							}
+							custom_effect_tooltip = SOV_army_vigilance_5
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 8
+							}
+							custom_effect_tooltip = SOV_army_vigilance_8
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					add_to_variable = {
+						var = population_support_black_revolution
+						value = 4
+					}
+					custom_effect_tooltip = population_support_4_tt
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						15 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 5
+							}
+							custom_effect_tooltip = SOV_army_vigilance_5
+						}
+						30 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 8
+							}
+							custom_effect_tooltip = SOV_army_vigilance_8
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -23678,11 +24582,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 201
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 201 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -23699,6 +24610,76 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					add_to_variable = {
+						var = population_support_black_revolution
+						value = 5
+					}
+					custom_effect_tooltip = population_support_5_tt
+					random_list = {
+						15 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						55 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 5
+							}
+							custom_effect_tooltip = SOV_army_vigilance_5
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 8
+							}
+							custom_effect_tooltip = SOV_army_vigilance_8
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					add_to_variable = {
+						var = population_support_black_revolution
+						value = 4
+					}
+					custom_effect_tooltip = population_support_4_tt
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						15 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 5
+							}
+							custom_effect_tooltip = SOV_army_vigilance_5
+						}
+						30 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 8
+							}
+							custom_effect_tooltip = SOV_army_vigilance_8
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -23716,11 +24697,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 194
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 194 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -23737,6 +24725,76 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					add_to_variable = {
+						var = population_support_black_revolution
+						value = 5
+					}
+					custom_effect_tooltip = population_support_5_tt
+					random_list = {
+						15 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						55 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 5
+							}
+							custom_effect_tooltip = SOV_army_vigilance_5
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 8
+							}
+							custom_effect_tooltip = SOV_army_vigilance_8
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					add_to_variable = {
+						var = population_support_black_revolution
+						value = 4
+					}
+					custom_effect_tooltip = population_support_4_tt
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						15 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 5
+							}
+							custom_effect_tooltip = SOV_army_vigilance_5
+						}
+						30 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 8
+							}
+							custom_effect_tooltip = SOV_army_vigilance_8
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -23754,11 +24812,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 204
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 204 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -23775,6 +24840,76 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					add_to_variable = {
+						var = population_support_black_revolution
+						value = 5
+					}
+					custom_effect_tooltip = population_support_5_tt
+					random_list = {
+						15 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						55 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 5
+							}
+							custom_effect_tooltip = SOV_army_vigilance_5
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 8
+							}
+							custom_effect_tooltip = SOV_army_vigilance_8
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					add_to_variable = {
+						var = population_support_black_revolution
+						value = 4
+					}
+					custom_effect_tooltip = population_support_4_tt
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						15 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 5
+							}
+							custom_effect_tooltip = SOV_army_vigilance_5
+						}
+						30 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 8
+							}
+							custom_effect_tooltip = SOV_army_vigilance_8
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -23792,11 +24927,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 241
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 241 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -23813,6 +24955,76 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					add_to_variable = {
+						var = population_support_black_revolution
+						value = 5
+					}
+					custom_effect_tooltip = population_support_5_tt
+					random_list = {
+						15 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						55 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 5
+							}
+							custom_effect_tooltip = SOV_army_vigilance_5
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 8
+							}
+							custom_effect_tooltip = SOV_army_vigilance_8
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					add_to_variable = {
+						var = population_support_black_revolution
+						value = 4
+					}
+					custom_effect_tooltip = population_support_4_tt
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						15 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 5
+							}
+							custom_effect_tooltip = SOV_army_vigilance_5
+						}
+						30 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 8
+							}
+							custom_effect_tooltip = SOV_army_vigilance_8
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -23830,11 +25042,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 224
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 224 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -23851,6 +25070,76 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					add_to_variable = {
+						var = population_support_black_revolution
+						value = 5
+					}
+					custom_effect_tooltip = population_support_5_tt
+					random_list = {
+						15 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						55 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 5
+							}
+							custom_effect_tooltip = SOV_army_vigilance_5
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 8
+							}
+							custom_effect_tooltip = SOV_army_vigilance_8
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					add_to_variable = {
+						var = population_support_black_revolution
+						value = 4
+					}
+					custom_effect_tooltip = population_support_4_tt
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						15 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 5
+							}
+							custom_effect_tooltip = SOV_army_vigilance_5
+						}
+						30 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 8
+							}
+							custom_effect_tooltip = SOV_army_vigilance_8
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -23868,11 +25157,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 243
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 243 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -23889,6 +25185,76 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					add_to_variable = {
+						var = population_support_black_revolution
+						value = 5
+					}
+					custom_effect_tooltip = population_support_5_tt
+					random_list = {
+						15 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						55 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 5
+							}
+							custom_effect_tooltip = SOV_army_vigilance_5
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 8
+							}
+							custom_effect_tooltip = SOV_army_vigilance_8
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					add_to_variable = {
+						var = population_support_black_revolution
+						value = 4
+					}
+					custom_effect_tooltip = population_support_4_tt
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						15 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 5
+							}
+							custom_effect_tooltip = SOV_army_vigilance_5
+						}
+						30 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 8
+							}
+							custom_effect_tooltip = SOV_army_vigilance_8
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -23906,11 +25272,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 234
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 234 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -23927,6 +25300,76 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					add_to_variable = {
+						var = population_support_black_revolution
+						value = 5
+					}
+					custom_effect_tooltip = population_support_5_tt
+					random_list = {
+						15 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						55 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 5
+							}
+							custom_effect_tooltip = SOV_army_vigilance_5
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 8
+							}
+							custom_effect_tooltip = SOV_army_vigilance_8
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					add_to_variable = {
+						var = population_support_black_revolution
+						value = 4
+					}
+					custom_effect_tooltip = population_support_4_tt
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						15 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 5
+							}
+							custom_effect_tooltip = SOV_army_vigilance_5
+						}
+						30 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 8
+							}
+							custom_effect_tooltip = SOV_army_vigilance_8
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -23944,11 +25387,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 235
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 235 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -23965,6 +25415,76 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					add_to_variable = {
+						var = population_support_black_revolution
+						value = 5
+					}
+					custom_effect_tooltip = population_support_5_tt
+					random_list = {
+						15 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						55 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 5
+							}
+							custom_effect_tooltip = SOV_army_vigilance_5
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 8
+							}
+							custom_effect_tooltip = SOV_army_vigilance_8
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					add_to_variable = {
+						var = population_support_black_revolution
+						value = 4
+					}
+					custom_effect_tooltip = population_support_4_tt
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						15 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 5
+							}
+							custom_effect_tooltip = SOV_army_vigilance_5
+						}
+						30 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 8
+							}
+							custom_effect_tooltip = SOV_army_vigilance_8
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -23982,11 +25502,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 233
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 233 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -24003,6 +25530,76 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					add_to_variable = {
+						var = population_support_black_revolution
+						value = 5
+					}
+					custom_effect_tooltip = population_support_5_tt
+					random_list = {
+						15 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						55 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 5
+							}
+							custom_effect_tooltip = SOV_army_vigilance_5
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 8
+							}
+							custom_effect_tooltip = SOV_army_vigilance_8
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					add_to_variable = {
+						var = population_support_black_revolution
+						value = 4
+					}
+					custom_effect_tooltip = population_support_4_tt
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						15 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 5
+							}
+							custom_effect_tooltip = SOV_army_vigilance_5
+						}
+						30 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 8
+							}
+							custom_effect_tooltip = SOV_army_vigilance_8
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -24020,11 +25617,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 263
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 263 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -24040,7 +25644,72 @@ SOV_the_black_revolution = {
 				263 = {
 					set_state_flag = anarchist_state
 				}
+				add_to_variable = {
+					var = population_support_black_revolution
+					value = 3
+				}
+				custom_effect_tooltip = population_support_3_tt
 				custom_effect_tooltip = control_state_futur_revolution
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					random_list = {
+						15 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						55 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 6
+							}
+							custom_effect_tooltip = SOV_army_vigilance_6
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						15 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+						30 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 6
+							}
+							custom_effect_tooltip = SOV_army_vigilance_6
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -24058,11 +25727,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 209
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 209 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -24079,6 +25755,71 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				add_to_variable = {
+					var = population_support_black_revolution
+					value = 3
+				}
+				custom_effect_tooltip = population_support_3_tt
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					random_list = {
+						15 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						55 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 6
+							}
+							custom_effect_tooltip = SOV_army_vigilance_6
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						15 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+						30 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 6
+							}
+							custom_effect_tooltip = SOV_army_vigilance_6
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -24096,11 +25837,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 208
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 208 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -24117,6 +25865,71 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				add_to_variable = {
+					var = population_support_black_revolution
+					value = 3
+				}
+				custom_effect_tooltip = population_support_3_tt
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					random_list = {
+						15 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						55 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 6
+							}
+							custom_effect_tooltip = SOV_army_vigilance_6
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						15 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+						30 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 6
+							}
+							custom_effect_tooltip = SOV_army_vigilance_6
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -24134,11 +25947,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 244
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 244 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -24155,6 +25975,71 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				add_to_variable = {
+					var = population_support_black_revolution
+					value = 3
+				}
+				custom_effect_tooltip = population_support_3_tt
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					random_list = {
+						15 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						55 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 6
+							}
+							custom_effect_tooltip = SOV_army_vigilance_6
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						15 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+						30 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 6
+							}
+							custom_effect_tooltip = SOV_army_vigilance_6
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -24172,11 +26057,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 216
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 216 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -24193,6 +26085,71 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				add_to_variable = {
+					var = population_support_black_revolution
+					value = 3
+				}
+				custom_effect_tooltip = population_support_3_tt
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					random_list = {
+						15 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						55 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 6
+							}
+							custom_effect_tooltip = SOV_army_vigilance_6
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						15 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+						30 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 6
+							}
+							custom_effect_tooltip = SOV_army_vigilance_6
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -24210,11 +26167,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 215
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 215 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -24231,6 +26195,71 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				add_to_variable = {
+					var = population_support_black_revolution
+					value = 3
+				}
+				custom_effect_tooltip = population_support_3_tt
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					random_list = {
+						15 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						55 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 6
+							}
+							custom_effect_tooltip = SOV_army_vigilance_6
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						15 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+						30 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 6
+							}
+							custom_effect_tooltip = SOV_army_vigilance_6
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -24248,11 +26277,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 584
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 584 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -24269,6 +26305,71 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				add_to_variable = {
+					var = population_support_black_revolution
+					value = 2
+				}
+				custom_effect_tooltip = population_support_2_tt
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					random_list = {
+						20 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						45 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -24286,11 +26387,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 585
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 585 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -24307,6 +26415,71 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				add_to_variable = {
+					var = population_support_black_revolution
+					value = 2
+				}
+				custom_effect_tooltip = population_support_2_tt
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					random_list = {
+						20 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						45 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -24324,11 +26497,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 405
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 405 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -24345,6 +26525,71 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				add_to_variable = {
+					var = population_support_black_revolution
+					value = 2
+				}
+				custom_effect_tooltip = population_support_2_tt
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					random_list = {
+						20 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						45 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -24362,11 +26607,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 742
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 742 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -24383,6 +26635,71 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				add_to_variable = {
+					var = population_support_black_revolution
+					value = 2
+				}
+				custom_effect_tooltip = population_support_2_tt
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					random_list = {
+						20 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						45 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -24400,11 +26717,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 404
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 404 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -24421,6 +26745,71 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				add_to_variable = {
+					var = population_support_black_revolution
+					value = 2
+				}
+				custom_effect_tooltip = population_support_2_tt
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					random_list = {
+						20 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						45 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -24438,11 +26827,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 732
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 732 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -24459,6 +26855,71 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				add_to_variable = {
+					var = population_support_black_revolution
+					value = 2
+				}
+				custom_effect_tooltip = population_support_2_tt
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					random_list = {
+						20 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						45 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -24476,11 +26937,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 586
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 586 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -24497,6 +26965,71 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				add_to_variable = {
+					var = population_support_black_revolution
+					value = 2
+				}
+				custom_effect_tooltip = population_support_2_tt
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					random_list = {
+						20 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						45 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -24514,11 +27047,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 589
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 589 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -24535,6 +27075,71 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				add_to_variable = {
+					var = population_support_black_revolution
+					value = 2
+				}
+				custom_effect_tooltip = population_support_2_tt
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					random_list = {
+						20 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						45 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -24552,11 +27157,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 583
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 583 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -24573,6 +27185,71 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				add_to_variable = {
+					var = population_support_black_revolution
+					value = 2
+				}
+				custom_effect_tooltip = population_support_2_tt
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					random_list = {
+						20 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						45 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -24590,11 +27267,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 572
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 572 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -24611,6 +27295,71 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				add_to_variable = {
+					var = population_support_black_revolution
+					value = 2
+				}
+				custom_effect_tooltip = population_support_2_tt
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					random_list = {
+						20 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						45 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -24628,11 +27377,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 653
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 653 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -24649,6 +27405,71 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				add_to_variable = {
+					var = population_support_black_revolution
+					value = 2
+				}
+				custom_effect_tooltip = population_support_2_tt
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					random_list = {
+						20 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						45 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -24666,11 +27487,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 580
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 580 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -24687,6 +27515,71 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				add_to_variable = {
+					var = population_support_black_revolution
+					value = 2
+				}
+				custom_effect_tooltip = population_support_2_tt
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					random_list = {
+						20 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						45 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -24704,11 +27597,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 579
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 579 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -24725,6 +27625,11 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				add_to_variable = {
+					var = population_support_black_revolution
+					value = 1
+				}
+				custom_effect_tooltip = population_support_1_tt
 			}
 
 			ai_will_do = {
@@ -24742,11 +27647,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 590
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 590 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -24763,6 +27675,71 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				add_to_variable = {
+					var = population_support_black_revolution
+					value = 2
+				}
+				custom_effect_tooltip = population_support_2_tt
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					random_list = {
+						20 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						45 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -24780,11 +27757,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 588
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 588 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -24801,6 +27785,71 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				add_to_variable = {
+					var = population_support_black_revolution
+					value = 2
+				}
+				custom_effect_tooltip = population_support_2_tt
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					random_list = {
+						20 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						45 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -24818,11 +27867,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 571
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 571 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -24839,6 +27895,71 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				add_to_variable = {
+					var = population_support_black_revolution
+					value = 2
+				}
+				custom_effect_tooltip = population_support_2_tt
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					random_list = {
+						20 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						45 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -24856,11 +27977,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 403
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 403 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -24877,6 +28005,71 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				add_to_variable = {
+					var = population_support_black_revolution
+					value = 2
+				}
+				custom_effect_tooltip = population_support_2_tt
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					random_list = {
+						20 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						45 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -24894,11 +28087,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 657
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 657 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -24915,6 +28115,68 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				add_to_variable = {
+					var = population_support_black_revolution
+					value = 3
+				}
+				custom_effect_tooltip = population_support_3_tt
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					random_list = {
+						15 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+						10 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 6
+							}
+							custom_effect_tooltip = SOV_army_vigilance_6
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					random_list = {
+						20 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+						30 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 6
+							}
+							custom_effect_tooltip = SOV_army_vigilance_6
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -24932,11 +28194,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 561
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 561 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -24953,6 +28222,68 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				add_to_variable = {
+					var = population_support_black_revolution
+					value = 3
+				}
+				custom_effect_tooltip = population_support_3_tt
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					random_list = {
+						15 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+						10 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 6
+							}
+							custom_effect_tooltip = SOV_army_vigilance_6
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					random_list = {
+						20 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+						30 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 6
+							}
+							custom_effect_tooltip = SOV_army_vigilance_6
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -24970,11 +28301,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 563
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 563 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -24991,6 +28329,68 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				add_to_variable = {
+					var = population_support_black_revolution
+					value = 3
+				}
+				custom_effect_tooltip = population_support_3_tt
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					random_list = {
+						15 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+						10 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 6
+							}
+							custom_effect_tooltip = SOV_army_vigilance_6
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					random_list = {
+						20 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+						30 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 6
+							}
+							custom_effect_tooltip = SOV_army_vigilance_6
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -25008,11 +28408,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 654
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 654 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -25029,6 +28436,71 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				add_to_variable = {
+					var = population_support_black_revolution
+					value = 2
+				}
+				custom_effect_tooltip = population_support_2_tt
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					random_list = {
+						20 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						45 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -25046,11 +28518,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 40
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 40 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -25067,6 +28546,71 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				add_to_variable = {
+					var = population_support_black_revolution
+					value = 2
+				}
+				custom_effect_tooltip = population_support_2_tt
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					random_list = {
+						20 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						45 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -25084,11 +28628,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 570
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 570 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -25105,6 +28656,71 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				add_to_variable = {
+					var = population_support_black_revolution
+					value = 2
+				}
+				custom_effect_tooltip = population_support_2_tt
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					random_list = {
+						20 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						45 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -25122,11 +28738,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 578
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 578 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -25143,6 +28766,71 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				add_to_variable = {
+					var = population_support_black_revolution
+					value = 2
+				}
+				custom_effect_tooltip = population_support_2_tt
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					random_list = {
+						20 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						45 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -25160,11 +28848,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 577
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 577 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -25181,6 +28876,11 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				add_to_variable = {
+					var = population_support_black_revolution
+					value = 1
+				}
+				custom_effect_tooltip = population_support_1_tt
 			}
 
 			ai_will_do = {
@@ -25198,11 +28898,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 569
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 569 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -25219,6 +28926,71 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				add_to_variable = {
+					var = population_support_black_revolution
+					value = 2
+				}
+				custom_effect_tooltip = population_support_2_tt
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					random_list = {
+						20 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						45 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -25236,11 +29008,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 568
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 568 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -25257,6 +29036,71 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				add_to_variable = {
+					var = population_support_black_revolution
+					value = 2
+				}
+				custom_effect_tooltip = population_support_2_tt
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					random_list = {
+						20 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						45 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -25274,11 +29118,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 567
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 567 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -25295,6 +29146,71 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				add_to_variable = {
+					var = population_support_black_revolution
+					value = 2
+				}
+				custom_effect_tooltip = population_support_2_tt
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					random_list = {
+						20 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						5 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					random_list = {
+						5 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						45 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 2
+							}
+							custom_effect_tooltip = SOV_army_vigilance_2
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -25312,11 +29228,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 575
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 575 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -25333,6 +29256,68 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				add_to_variable = {
+					var = population_support_black_revolution
+					value = 3
+				}
+				custom_effect_tooltip = population_support_3_tt
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					random_list = {
+						15 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+						10 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 6
+							}
+							custom_effect_tooltip = SOV_army_vigilance_6
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					random_list = {
+						20 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+						30 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 6
+							}
+							custom_effect_tooltip = SOV_army_vigilance_6
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -25350,11 +29335,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 565
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 565 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -25371,6 +29363,68 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				add_to_variable = {
+					var = population_support_black_revolution
+					value = 3
+				}
+				custom_effect_tooltip = population_support_3_tt
+				if = {
+					limit = {
+						has_country_flag = be_careful_black_revolution
+					}
+					random_list = {
+						15 = {
+							custom_effect_tooltip = SOV_army_vigilance_0
+						}
+						25 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+						10 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 6
+							}
+							custom_effect_tooltip = SOV_army_vigilance_6
+						}
+					}
+					clr_country_flag = be_careful_black_revolution
+				}
+				else = {
+					random_list = {
+						20 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 1
+							}
+							custom_effect_tooltip = SOV_army_vigilance_1
+						}
+						50 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 4
+							}
+							custom_effect_tooltip = SOV_army_vigilance_4
+						}
+						30 = {
+							add_to_variable = {
+								var = army_vigiliance_black_revolution
+								value = 6
+							}
+							custom_effect_tooltip = SOV_army_vigilance_6
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -25388,11 +29442,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 576
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 576 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -25409,6 +29470,11 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				add_to_variable = {
+					var = population_support_black_revolution
+					value = 1
+				}
+				custom_effect_tooltip = population_support_1_tt
 			}
 
 			ai_will_do = {
@@ -25426,11 +29492,18 @@ SOV_the_black_revolution = {
 					}
 				}
 				has_full_control_of_state = 516
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = less_than
+				}
 			}
 
 			highlight_state_targets = { state = 516 }
 
 			on_map_mode = map_only
+
+			days_remove = 5
 
 			cost = 10
 
@@ -25447,6 +29520,11 @@ SOV_the_black_revolution = {
 					set_state_flag = anarchist_state
 				}
 				custom_effect_tooltip = control_state_futur_revolution
+				add_to_variable = {
+					var = population_support_black_revolution
+					value = 1
+				}
+				custom_effect_tooltip = population_support_1_tt
 			}
 
 			ai_will_do = {
@@ -25468,9 +29546,14 @@ SOV_the_black_revolution = {
 
 		available = {
 			has_active_mission = SOV_the_black_civil_war_timeout
+			check_variable = {
+				var = army_vigiliance_black_revolution
+				value = 100
+				compare = less_than
+			}
 		}
 
-		fire_only_once = yes
+		days_re_enable = 70
 
 		cost = 10
 
@@ -25480,6 +29563,11 @@ SOV_the_black_revolution = {
 			add_days_mission_timeout = {
 				mission = SOV_the_black_civil_war_timeout
 				days = 70
+			}
+			custom_effect_tooltip = SOV_army_vigilance_4
+			add_to_variable = {
+				var = army_vigiliance_black_revolution
+				value = 4
 			}
 		}
 
@@ -25503,12 +29591,16 @@ SOV_the_black_revolution = {
 		highlight_state_targets = { state = 195 }
 
 		available = {
-			
+			check_variable = {
+				var = army_vigiliance_black_revolution
+				value = 100
+				compare = less_than
+			}
 		}
 
 		fire_only_once = yes
 
-		cost = 50
+		cost = 40
 
 		complete_effect = {
 			custom_effect_tooltip = SOV_hold_leningrad_black_guard_tt
@@ -25516,6 +29608,11 @@ SOV_the_black_revolution = {
 				set_state_flag = anarchist_state
 			}
 			set_country_flag = anarchist_hold_leningrad
+			custom_effect_tooltip = SOV_army_vigilance_10
+			add_to_variable = {
+				var = army_vigiliance_black_revolution
+				value = 10
+			}
 		}
 
 		ai_will_do = {
@@ -25536,12 +29633,16 @@ SOV_the_black_revolution = {
 		}
 
 		available = {
-			
+			check_variable = {
+				var = army_vigiliance_black_revolution
+				value = 100
+				compare = less_than
+			}
 		}
 
 		fire_only_once = yes
 
-		cost = 50
+		cost = 40
 
 		complete_effect = {
 			custom_effect_tooltip = SOV_hold_more_central_asia_tt
@@ -25561,6 +29662,11 @@ SOV_the_black_revolution = {
 				set_state_flag = anarchist_state
 			}
 			set_country_flag = anarchist_ready_enlist_more_central_asia
+			custom_effect_tooltip = SOV_army_vigilance_5
+			add_to_variable = {
+				var = army_vigiliance_black_revolution
+				value = 5
+			}
 		}
 
 		ai_will_do = {
@@ -25586,7 +29692,7 @@ SOV_the_black_revolution = {
 
 		fire_only_once = yes
 
-		cost = 50
+		cost = 25
 
 		complete_effect = {
 			custom_effect_tooltip = SOV_enlist_more_division_central_asia_tt
@@ -25611,12 +29717,16 @@ SOV_the_black_revolution = {
 		}
 
 		available = {
-			
+			check_variable = {
+				var = army_vigiliance_black_revolution
+				value = 100
+				compare = less_than
+			}
 		}
 
 		fire_only_once = yes
 
-		cost = 50
+		cost = 40
 
 		complete_effect = {
 			custom_effect_tooltip = SOV_hold_more_Siberia_tt
@@ -25636,6 +29746,11 @@ SOV_the_black_revolution = {
 				set_state_flag = anarchist_state
 			}
 			set_country_flag = anarchist_ready_enlist_more_siberia
+			custom_effect_tooltip = SOV_army_vigilance_5
+			add_to_variable = {
+				var = army_vigiliance_black_revolution
+				value = 5
+			}
 		}
 
 		ai_will_do = {
@@ -25661,11 +29776,50 @@ SOV_the_black_revolution = {
 
 		fire_only_once = yes
 
-		cost = 50
+		cost = 20
 
 		complete_effect = {
 			custom_effect_tooltip = SOV_enlist_more_division_siberia_tt
 			set_country_flag = anarchist_hold_more_siberia
+		}
+
+		ai_will_do = {
+			factor = 10
+		}
+	}
+
+	SOV_incite_soldiers_desert = {
+		
+		icon = GFX_decision_eng_blackshirt_march
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+		
+		}
+
+		available = {
+			check_variable = {
+				var = army_vigiliance_black_revolution
+				value = 100
+				compare = less_than
+			}
+		}
+
+		fire_only_once = yes
+
+		cost = 30
+
+		complete_effect = {
+			custom_effect_tooltip = SOV_incite_soldiers_desert_tt
+			set_country_flag = anarchist_soldiers_desert
+			custom_effect_tooltip = SOV_army_vigilance_20
+			add_to_variable = {
+				var = army_vigiliance_black_revolution
+				value = 20
+			}
 		}
 
 		ai_will_do = {
@@ -25696,7 +29850,7 @@ SOV_the_black_revolution = {
 			}
 		}
 
-		cost = 50
+		cost = 25
 
 		complete_effect = {
 			custom_effect_tooltip = SOV_stock_supply_black_guard_variable_tt
@@ -25725,20 +29879,20 @@ SOV_the_black_revolution = {
 			custom_trigger_tooltip = {
 				tooltip = SOV_manage_supply_efficiency_black_guard_tt
 				check_variable = {
-					var = supply_consumption_black_guard
+					var = out_of_supply_factor_black_guard
 					value = -0.6
 					compare = greater_than
 				}
 			}
 		}
 
-		cost = 50
+		cost = 25
 
 		complete_effect = {
 			custom_effect_tooltip = SOV_manage_supply_efficiency_black_guard_variable_tt
-			add_to_variable = { supply_consumption_black_guard = -0.1 }
-			set_variable = { loca_supply_consumption_black_guard = supply_consumption_black_guard }
-			multiply_variable = { loca_supply_consumption_black_guard = 100.00 }
+			add_to_variable = { out_of_supply_factor_black_guard = -0.1 }
+			set_variable = { loca_out_of_supply_factor_black_guard = out_of_supply_factor_black_guard }
+			multiply_variable = { loca_out_of_supply_factor_black_guard = 100.00 }
 		}
 
 		ai_will_do = {
@@ -25769,7 +29923,7 @@ SOV_the_black_revolution = {
 			}
 		}
 
-		cost = 50
+		cost = 25
 
 		complete_effect = {
 			custom_effect_tooltip = SOV_train_black_guard_variable_tt
@@ -25806,7 +29960,7 @@ SOV_the_black_revolution = {
 			}
 		}
 
-		cost = 75
+		cost = 25
 
 		complete_effect = {
 			custom_effect_tooltip = SOV_survivalist_black_guard_variable_tt
@@ -25843,7 +29997,7 @@ SOV_the_black_revolution = {
 			}
 		}
 
-		cost = 50
+		cost = 25
 
 		complete_effect = {
 			custom_effect_tooltip = SOV_enchance_discipline_black_guard_variable_tt
@@ -25880,7 +30034,7 @@ SOV_the_black_revolution = {
 			}
 		}
 
-		cost = 50
+		cost = 25
 
 		complete_effect = {
 			custom_effect_tooltip = SOV_boost_morale_black_guard_variable_tt
@@ -25917,7 +30071,7 @@ SOV_the_black_revolution = {
 			}
 		}
 
-		cost = 50
+		cost = 25
 
 		complete_effect = {
 			custom_effect_tooltip = SOV_breakthrough_bonus_black_guard_variable_tt
@@ -25937,6 +30091,22 @@ SOV_the_black_revolution = {
 
 		allowed = {
 			original_tag = SOV
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = army_vigiliance_black_revolution_start_sooner_tt
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 70
+					compare = greater_than_or_equals
+				}
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 80
+					compare = less_than_or_equals
+				}
+			}
 		}
 
 		visible = {
@@ -25965,8 +30135,196 @@ SOV_the_black_revolution = {
 					set_politics = {
 						ruling_party = anarchy
 					}
+					create_country_leader = {
+						name = "People's Council"
+						desc = "POLITICS_PEOPLES_COMMUNE_DESC"
+						picture = "portrait_spr_anarchist_commune.dds"
+						expire = "1965.1.1"
+						ideology = anarchisme
+						traits = {
+							
+						}
+					}
+					release = SOU
+					set_country_flag = black_revolution_turned_civil_war
+					set_country_flag = black_revolution_civil_war_in_progress
+					set_cosmetic_tag = ANAC
+					clr_country_flag = civil_war_black_revolution
+					remove_ideas = SOV_Anarchist_terrorist
+					remove_ideas = SOV_army_disorganisation
+					remove_ideas = home_of_revolution
+					add_ideas = extensive_conscription
+					add_ideas = SOV_Determination
+					add_ideas = SOV_Surprise_attack_black_revolution
+					country_event = { id = soviets.404 hours = 1 }
+					country_event = { id = soviets.405 hours = 1 }
+					country_event = { id = soviets.406 hours = 2 }
+					country_event = { id = soviets.407 hours = 2 }
+					country_event = { id = soviets.408 hours = 1 }
+					country_event = { id = soviets.410 hours = 2 }
+					delete_unit_template_and_units = {
+						division_template = "Strelkovaya Diviziya"
+					}
+					delete_unit_template_and_units = {
+						division_template = "Gornostrelkovaya Diviziya"
+					}
+					delete_unit_template_and_units = {
+						division_template = "Motostrelkovaya Diviziya"
+					}
+					delete_unit_template_and_units = {
+						division_template = "Kavaleriyskaya Diviziya"
+					}
+					delete_unit_template_and_units = {
+						division_template = "NKVD Pogranichnaya Diviziya"
+					}
+					delete_unit_template_and_units = {
+						division_template = "Mekhanizirovaniy Korpus"
+					}
+					dismantle_faction = yes
+					retire_ideology_leader = communism
+					destroy_ships = {
+						type = destroyer
+						count = all
+					}
+					destroy_ships = {
+						type = ship_hull_submarine_1
+						count = all
+					}
+					destroy_ships = {
+						type = ship_hull_submarine_2
+						count = all
+					}
+					destroy_ships = {
+						type = ship_hull_heavy_1
+						count = all
+					}
+					destroy_ships = {
+						type = light_cruiser
+						count = all
+					}
+					destroy_ships = {
+						type = destroyer_1
+						count = all
+					}
+					destroy_ships = {
+						type = submarine_1
+						count = all
+					}
+					destroy_ships = {
+						type = battleship_1
+						count = all
+					}
+					destroy_ships = {
+						type = light_cruiser_1
+						count = all
+					}
+					every_army_leader = {
+						retire = yes
+					}
+				}
+				SOU = {
+					declare_war_on = {
+						target = SOV
+						type = annex_everything
+					}
+					add_ideas = SOV_Slow_industry
+					add_ideas = SOV_Damaged_railway
+					add_ideas = SOV_Low_support_black_revolution
+					inherit_technology = SOV
+					unlock_national_focus = SOV_great_purge2
+				}
+				every_state = {
+					limit = {
+						is_core_of = SOV
+					}
+					SOU = {
+						add_state_core = PREV
+					}
+				}
+				every_state = {
+					limit = {
+						is_core_of = SOU
+						NOT = {
+							has_state_flag = anarchist_state
+						}
+					}
+					SOV = {
+						add_state_core = PREV
+					}
+				}
+			}
+		}
+	}
+
+	SOV_the_black_civil_war_timeout = {
+
+		icon = GFX_decision_generic_ignite_civil_war
+
+		allowed = {
+			TAG = SOV
+		}
+
+		activation = {
+			has_completed_focus = SOV_black_guard
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = army_vigiliance_black_revolution_timeout_tt
+				check_variable = {
+					var = army_vigiliance_black_revolution
+					value = 100
+					compare = greater_than_or_equals
+				}
+			}
+		}
+
+		cancel_trigger = {
+			OR = {
+				has_country_flag = has_choose_to_start_earlier
+				has_government = anarchy
+			}	
+		}
+
+		fire_only_once = yes
+
+		days_mission_timeout = 70
+
+		is_good = no
+
+		complete_effect = {
+			custom_effect_tooltip = SOV_the_black_revolution_timeout_tt
+			hidden_effect = {
+				every_state = {
+					limit = {
+						is_core_of = SOV
+						NOT = {
+							has_state_flag = anarchist_state
+						}
+					}
+					SOU = {
+						add_state_core = PREV
+						set_cosmetic_tag = SOUC
+					}
+				}
+				SOV = {
+					set_politics = {
+						ruling_party = anarchy
+					}
+					create_country_leader = {
+						name = "Supreme Military Council"
+						desc = "SUPREME_MILITARY_COUNCIL_DESC"
+						picture = "Portrait_military_council.dds"
+						expire = "1965.1.1"
+						ideology = anarchisme
+						traits = {
+							
+						}
+					}
 					release = SOU
 					set_cosmetic_tag = ANAC
+					set_country_flag = black_revolution_turned_civil_war
+					set_country_flag = black_revolution_civil_war_in_progress
 					clr_country_flag = civil_war_black_revolution
 					remove_ideas = SOV_Anarchist_terrorist
 					remove_ideas = SOV_army_disorganisation
@@ -26045,8 +30403,150 @@ SOV_the_black_revolution = {
 						type = annex_everything
 					}
 					add_ideas = SOV_Slow_industry
-					#TODO National Spirit for forbiding SOU to join or create a faction
 					add_ideas = SOV_Damaged_railway
+					add_ideas = SOV_Low_support_black_revolution
+					inherit_technology = SOV
+					unlock_national_focus = SOV_great_purge2
+				}
+				every_state = {
+					limit = {
+						is_core_of = SOV
+					}
+					SOU = {
+						add_state_core = PREV
+					}
+				}
+				every_state = {
+					limit = {
+						is_core_of = SOU
+						NOT = {
+							has_state_flag = anarchist_state
+						}
+					}
+					SOV = {
+						add_state_core = PREV
+					}
+				}
+			}
+		}
+		
+		timeout_effect = {
+			custom_effect_tooltip = SOV_army_vigilance_100
+			add_to_variable = {
+				var = army_vigiliance_black_revolution
+				value = 100
+			}
+			hidden_effect = {
+				every_state = {
+					limit = {
+						is_core_of = SOV
+						NOT = {
+							has_state_flag = anarchist_state
+						}
+					}
+					SOU = {
+						add_state_core = PREV
+						set_cosmetic_tag = SOUC
+					}
+				}
+				SOV = {
+					set_politics = {
+						ruling_party = anarchy
+					}
+					create_country_leader = {
+						name = "Supreme Military Council"
+						desc = "SUPREME_MILITARY_COUNCIL_DESC"
+						picture = "Portrait_military_council.dds"
+						expire = "1965.1.1"
+						ideology = anarchisme
+						traits = {
+							
+						}
+					}
+					release = SOU
+					set_cosmetic_tag = ANAC
+					set_country_flag = black_revolution_turned_civil_war
+					set_country_flag = black_revolution_civil_war_in_progress
+					clr_country_flag = civil_war_black_revolution
+					remove_ideas = SOV_Anarchist_terrorist
+					remove_ideas = SOV_army_disorganisation
+					remove_ideas = home_of_revolution
+					add_ideas = extensive_conscription
+					add_ideas = SOV_Determination
+					country_event = { id = soviets.404 hours = 1 }
+					country_event = { id = soviets.405 hours = 1 }
+					country_event = { id = soviets.406 hours = 2 }
+					country_event = { id = soviets.407 hours = 2 }
+					country_event = { id = soviets.408 hours = 1 }
+					country_event = { id = soviets.410 hours = 2 }
+					delete_unit_template_and_units = {
+						division_template = "Strelkovaya Diviziya"
+					}
+					delete_unit_template_and_units = {
+						division_template = "Gornostrelkovaya Diviziya"
+					}
+					delete_unit_template_and_units = {
+						division_template = "Motostrelkovaya Diviziya"
+					}
+					delete_unit_template_and_units = {
+						division_template = "Kavaleriyskaya Diviziya"
+					}
+					delete_unit_template_and_units = {
+						division_template = "NKVD Pogranichnaya Diviziya"
+					}
+					delete_unit_template_and_units = {
+						division_template = "Mekhanizirovaniy Korpus"
+					}
+					dismantle_faction = yes
+					retire_ideology_leader = communism
+					destroy_ships = {
+						type = destroyer
+						count = all
+					}
+					destroy_ships = {
+						type = ship_hull_submarine_1
+						count = all
+					}
+					destroy_ships = {
+						type = ship_hull_submarine_2
+						count = all
+					}
+					destroy_ships = {
+						type = ship_hull_heavy_1
+						count = all
+					}
+					destroy_ships = {
+						type = light_cruiser
+						count = all
+					}
+					destroy_ships = {
+						type = destroyer_1
+						count = all
+					}
+					destroy_ships = {
+						type = submarine_1
+						count = all
+					}
+					destroy_ships = {
+						type = battleship_1
+						count = all
+					}
+					destroy_ships = {
+						type = light_cruiser_1
+						count = all
+					}
+					every_army_leader = {
+						retire = yes
+					}
+				}
+				SOU = {
+					declare_war_on = {
+						target = SOV
+						type = annex_everything
+					}
+					add_ideas = SOV_Slow_industry
+					add_ideas = SOV_Damaged_railway
+					add_ideas = SOV_Low_support_black_revolution
 					inherit_technology = SOV
 					unlock_national_focus = SOV_great_purge2
 				}
@@ -26072,122 +30572,597 @@ SOV_the_black_revolution = {
 			}
 		}
 	}
+}
 
-	SOV_the_black_civil_war_timeout = {
-
-		icon = GFX_decision_generic_ignite_civil_war
+SOV_crush_the_anti_revolutionary = { #TODO Lock Division template
+	
+	SOV_recon_the_area = {
+	
+		icon = GFX_decision_generic_political_discourse
 
 		allowed = {
-			TAG = SOV
+			original_tag = SOV
 		}
 
-		activation = {
-			has_completed_focus = SOV_black_guard
-		}
+		on_map_mode = map_only
 
-		available = {
-			has_government = anarchy
-		}
+		state_target = yes
 
-		cancel_trigger = {
-			has_country_flag = has_choose_to_start_earlier
-		}
-
-		fire_only_once = yes
-
-		days_mission_timeout = 70
-
-		is_good = no
-		
-		timeout_effect = {
-			custom_effect_tooltip = SOV_the_black_revolution_timeout_tt
-			hidden_effect = {
-				every_state = {
-					limit = {
-						is_core_of = SOV
-						NOT = {
-							has_state_flag = anarchist_state
-						}
-					}
-					SOU = {
-						add_state_core = PREV
-						set_cosmetic_tag = SOUC
-					}
-				}
-				SOV = {
-					set_politics = {
-						ruling_party = anarchy
-					}
-					release = SOU
-					set_cosmetic_tag = ANAC
-					clr_country_flag = civil_war_black_revolution
-					remove_ideas = SOV_Anarchist_terrorist
-					remove_ideas = SOV_army_disorganisation
-					delete_unit_template_and_units = {
-						division_template = "Strelkovaya Diviziya"
-					}
-					delete_unit_template_and_units = {
-						division_template = "Gornostrelkovaya Diviziya"
-					}
-					delete_unit_template_and_units = {
-						division_template = "Motostrelkovaya Diviziya"
-					}
-					delete_unit_template_and_units = {
-						division_template = "Kavaleriyskaya Diviziya"
-					}
-					delete_unit_template_and_units = {
-						division_template = "NKVD Pogranichnaya Diviziya"
-					}
-					delete_unit_template_and_units = {
-						division_template = "Mekhanizirovaniy Korpus"
-					}
-					dismantle_faction = yes
-					retire_ideology_leader = communism
-					every_army_leader = {
-						retire = yes
-					}
-				}
-				SOU = {
-					declare_war_on = {
-						target = SOV
-						type = annex_everything
-					}
-					add_ideas = home_of_revolution
-					add_ideas = SOV_Slow_industry
-					inherit_technology = SOV
-					unlock_national_focus = SOV_great_purge2
-					create_corps_commander = {
-						name = "Aleksandr Vasilevsky"
-						picture = "Portrait_Soviet_Aleksandr_Vasilevsky.dds"
-						traits = { armor_officer politically_connected }
-						skill = 4
-						attack_skill = 4
-						defense_skill = 4
-						planning_skill = 3
-						logistics_skill = 2
-					}
-				}
-				every_state = {
-					limit = {
-						is_core_of = SOV
-					}
-					SOU = {
-						add_state_core = PREV
-					}
-				}
-				every_state = {
-					limit = {
-						is_core_of = SOU
-						NOT = {
-							has_state_flag = anarchist_state
-						}
-					}
-					SOV = {
-						add_state_core = PREV
-					}
+		target_trigger = {
+			FROM = {
+				is_core_of = SOV
+				is_owned_and_controlled_by = SOV
+				NOT = {
+					state = 219
+					state = 137
+					state = 195
+					state = 217
+					state = 408
+					state = 202
+					has_state_flag = recon_units_scout_place
 				}
 			}
 		}
+
+		visible = {
+			FROM = {
+				NOT = {
+					has_state_flag = recon_units_scout_place
+				}
+			}
+		}
+
+		days_remove = 15
+
+		fire_only_once = yes
+
+		cost = 10
+
+		available = {
+
+		}
+
+		complete_effect = {
+			FROM = {
+				set_state_flag = recon_units_scout_place
+			}
+		}
+
+		remove_effect = {
+			custom_effect_tooltip = SOV_recon_the_area_tt
+			if = {
+				limit = {
+					FROM = {
+						has_state_flag = small_counter_revolution_resistance_1
+					}
+				}
+				FROM = {
+					save_event_target_as = SOV_successful_recon_small
+					set_state_flag = found_small_counter_revolution_base_1
+				}
+				PREV = {
+					country_event = { id = soviets.416 }
+				}
+			}
+			if = {
+				limit = {
+					FROM = {
+						has_state_flag = small_counter_revolution_resistance_2
+					}
+				}
+				FROM = {
+					save_event_target_as = SOV_successful_recon_small
+					set_state_flag = found_small_counter_revolution_base_2
+				}
+				PREV = {
+					country_event = { id = soviets.416 }
+				}
+			}
+			if = {
+				limit = {
+					FROM = {
+						has_state_flag = small_counter_revolution_resistance_3
+					}
+				}
+				FROM = {
+					save_event_target_as = SOV_successful_recon_small
+					set_state_flag = found_small_counter_revolution_base_3
+				}
+				PREV = {
+					country_event = { id = soviets.416 }
+				}
+			}
+			if = {
+				limit = {
+					FROM = {
+						has_state_flag = medium_counter_revolution_resistance_1
+					}
+				}
+				FROM = {
+					save_event_target_as = SOV_successful_recon_medium
+					set_state_flag = found_medium_counter_revolution_base_1
+				}
+				PREV = {
+					country_event = { id = soviets.417 days = 15 }
+				}
+			}
+			if = {
+				limit = {
+					FROM = {
+						has_state_flag = medium_counter_revolution_resistance_2
+					}
+				}
+				FROM = {
+					save_event_target_as = SOV_successful_recon_medium
+					set_state_flag = found_medium_counter_revolution_base_2
+				}
+				PREV = {
+					country_event = { id = soviets.417 }
+				}
+			}
+			if = {
+				limit = {
+					FROM = {
+						has_state_flag = large_counter_revolution_resistance_1
+					}
+				}
+				FROM = {
+					save_event_target_as = SOV_successful_recon_large
+					set_state_flag = found_large_counter_revolution_base
+				}
+				PREV = {
+					country_event = { id = soviets.418 }
+				}
+			}
+			else_if = {
+				limit = {
+					FROM = {
+						NOT = {
+							has_state_flag = small_counter_revolution_resistance_1
+							has_state_flag = small_counter_revolution_resistance_2
+							has_state_flag = small_counter_revolution_resistance_3
+							has_state_flag = medium_counter_revolution_resistance_1
+							has_state_flag = medium_counter_revolution_resistance_2
+							has_state_flag = large_counter_revolution_resistance_1
+						}
+					}
+				}
+				FROM = {
+					save_event_target_as = SOV_unsuccessful_recon_anti_rev
+				}
+				PREV = {
+					country_event = { id = soviets.415 }
+				}
+			}
+        }
+
+		ai_will_do = {
+			factor = 10
+		}	
+	}
+
+	SOV_raid_small_base_1 = {
+	
+		icon = GFX_decision_generic_intelligence_operation
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		on_map_mode = map_only
+
+		state_target = yes
+
+		target_trigger = {
+			FROM = {
+				is_core_of = SOV
+				is_owned_and_controlled_by = SOV
+				has_state_flag = found_small_counter_revolution_base_1
+			}
+		}
+
+		visible = {
+			FROM = {
+				has_state_flag = found_small_counter_revolution_base_1
+			}
+		}
+
+		days_remove = 30
+
+		fire_only_once = yes
+
+		cost = 20
+
+		available = {
+			divisions_in_state = {
+				size > 24
+				state = FROM
+			}
+		}
+
+		complete_effect = {
+			
+		}
+
+		remove_effect = {
+			SOV = {
+				set_country_flag = cleared_small_base_1
+				add_popularity = {
+					ideology = anarchy
+					popularity = 0.05
+				}
+			}
+			FROM = {
+				clr_state_flag = small_counter_revolution_resistance_1
+				clr_state_flag = found_small_counter_revolution_base_1
+			}
+        }
+
+		ai_will_do = {
+			factor = 10
+		}	
+	}
+
+	SOV_raid_small_base_2 = {
+	
+		icon = GFX_decision_generic_intelligence_operation
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		on_map_mode = map_only
+
+		state_target = yes
+
+		target_trigger = {
+			FROM = {
+				is_core_of = SOV
+				is_owned_and_controlled_by = SOV
+				has_state_flag = found_small_counter_revolution_base_2
+			}
+		}
+
+		visible = {
+			FROM = {
+				has_state_flag = found_small_counter_revolution_base_2
+			}
+		}
+
+		days_remove = 30
+
+		fire_only_once = yes
+
+		cost = 20
+
+		available = {
+			divisions_in_state = {
+				size > 24
+				state = FROM
+			}
+		}
+
+		complete_effect = {
+			
+		}
+
+		remove_effect = {
+			SOV = {
+				set_country_flag = cleared_small_base_2
+				add_popularity = {
+					ideology = anarchy
+					popularity = 0.05
+				}
+			}
+			FROM = {
+				clr_state_flag = small_counter_revolution_resistance_2
+				clr_state_flag = found_small_counter_revolution_base_2
+			}
+        }
+
+		ai_will_do = {
+			factor = 10
+		}	
+	}
+
+	SOV_raid_small_base_3 = {
+	
+		icon = GFX_decision_generic_intelligence_operation
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		on_map_mode = map_only
+
+		state_target = yes
+
+		target_trigger = {
+			FROM = {
+				is_core_of = SOV
+				is_owned_and_controlled_by = SOV
+				has_state_flag = found_small_counter_revolution_base_3
+			}
+		}
+
+		visible = {
+			FROM = {
+				has_state_flag = found_small_counter_revolution_base_3
+			}
+		}
+
+		days_remove = 30
+
+		fire_only_once = yes
+
+		cost = 20
+
+		available = {
+			divisions_in_state = {
+				size > 24
+				state = FROM
+			}
+		}
+
+		complete_effect = {
+			
+		}
+
+		remove_effect = {
+			SOV = {
+				set_country_flag = cleared_small_base_3
+				add_popularity = {
+					ideology = anarchy
+					popularity = 0.05
+				}
+			}
+			FROM = {
+				clr_state_flag = small_counter_revolution_resistance_3
+				clr_state_flag = found_small_counter_revolution_base_3
+			}
+        }
+
+		ai_will_do = {
+			factor = 10
+		}	
+	}
+
+	SOV_raid_medium_base_1 = {
+	
+		icon = GFX_decision_generic_intelligence_operation
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		on_map_mode = map_only
+
+		state_target = yes
+
+		target_trigger = {
+			FROM = {
+				is_core_of = SOV
+				is_owned_and_controlled_by = SOV
+				has_state_flag = found_medium_counter_revolution_base_1
+			}
+		}
+
+		visible = {
+			FROM = {
+				has_state_flag = found_medium_counter_revolution_base_1
+			}
+		}
+
+		days_remove = 30
+
+		fire_only_once = yes
+
+		cost = 20
+
+		available = {
+			divisions_in_state = {
+				size > 39
+				state = FROM
+			}
+		}
+
+		complete_effect = {
+			
+		}
+
+		remove_effect = {
+			SOV = {
+				set_country_flag = cleared_medium_base_1
+				add_popularity = {
+					ideology = anarchy
+					popularity = 0.05
+				}
+			}
+			FROM = {
+				clr_state_flag = medium_counter_revolution_resistance_1
+				clr_state_flag = found_medium_counter_revolution_base_1
+			}
+        }
+
+		ai_will_do = {
+			factor = 10
+		}	
+	}
+
+	SOV_raid_medium_base_2 = {
+	
+		icon = GFX_decision_generic_intelligence_operation
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		on_map_mode = map_only
+
+		state_target = yes
+
+		target_trigger = {
+			FROM = {
+				is_core_of = SOV
+				is_owned_and_controlled_by = SOV
+				has_state_flag = found_medium_counter_revolution_base_2
+			}
+		}
+
+		visible = {
+			FROM = {
+				has_state_flag = found_medium_counter_revolution_base_2
+			}
+		}
+
+		days_remove = 30
+
+		fire_only_once = yes
+
+		cost = 20
+
+		available = {
+			divisions_in_state = {
+				size > 39
+				state = FROM
+			}
+		}
+
+		complete_effect = {
+			
+		}
+
+		remove_effect = {
+			SOV = {
+				set_country_flag = cleared_medium_base_2
+				add_popularity = {
+					ideology = anarchy
+					popularity = 0.05
+				}
+			}
+			FROM = {
+				clr_state_flag = medium_counter_revolution_resistance_2
+				clr_state_flag = found_medium_counter_revolution_base_2
+			}
+        }
+
+		ai_will_do = {
+			factor = 10
+		}	
+	}
+
+	SOV_raid_large_base = {
+	
+		icon = GFX_decision_generic_intelligence_operation
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		on_map_mode = map_only
+
+		state_target = yes
+
+		target_trigger = {
+			FROM = {
+				is_core_of = SOV
+				is_owned_and_controlled_by = SOV
+				has_state_flag = found_large_counter_revolution_base
+			}
+		}
+
+		visible = {
+			FROM = {
+				has_state_flag = found_large_counter_revolution_base
+			}
+		}
+
+		days_remove = 30
+
+		fire_only_once = yes
+
+		cost = 20
+
+		available = {
+			divisions_in_state = {
+				size > 64
+				state = FROM
+			}
+		}
+
+		complete_effect = {
+			
+		}
+
+		remove_effect = {
+			SOV = {
+				set_country_flag = cleared_large_base
+				add_popularity = {
+					ideology = anarchy
+					popularity = 0.05
+				}
+			}
+			FROM = {
+				clr_state_flag = large_counter_revolution_resistance_1
+				clr_state_flag = found_large_counter_revolution_base
+			}
+        }
+
+		ai_will_do = {
+			factor = 10
+		}	
+	}
+
+	SOV_raid_headquarters = {
+		
+		icon = GFX_decision_generic_prepare_civil_war
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+
+		}
+
+		days_remove = 15
+
+		fire_only_once = yes
+
+		cost = 10
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = cleared_all_small_base
+				has_country_flag = found_small_counter_revolution_base_1
+				has_country_flag = found_small_counter_revolution_base_2
+				has_country_flag = found_small_counter_revolution_base_3
+			}
+			custom_trigger_tooltip = {
+				tooltip = cleared_all_medium_base
+				has_country_flag = cleared_medium_base_1
+				has_country_flag = cleared_medium_base_2
+			}
+			custom_trigger_tooltip = {
+				tooltip = cleared_all_large_base
+				has_country_flag = cleared_large_base
+			}
+		}
+
+		complete_effect = {
+
+			
+		}
+
+		remove_effect = {
+			SOV = {
+				country_event = { id = soviets.419 }
+			}
+        }
+
+		ai_will_do = {
+			factor = 10
+		}	
 	}
 }
 
