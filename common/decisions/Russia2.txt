@@ -30312,9 +30312,9 @@ SOV_the_black_revolution = {
 						ruling_party = anarchy
 					}
 					create_country_leader = {
-						name = "People's Council"
-						desc = "POLITICS_PEOPLES_COMMUNE_DESC"
-						picture = "portrait_spr_anarchist_commune.dds"
+						name = "Supreme Military Council"
+						desc = "SUPREME_MILITARY_COUNCIL_DESC"
+						picture = "Portrait_military_council.dds"
 						expire = "1965.1.1"
 						ideology = anarchisme
 						traits = {
@@ -30454,9 +30454,9 @@ SOV_the_black_revolution = {
 						ruling_party = anarchy
 					}
 					create_country_leader = {
-						name = "People's Council"
-						desc = "POLITICS_PEOPLES_COMMUNE_DESC"
-						picture = "portrait_spr_anarchist_commune.dds"
+						name = "Supreme Military Council"
+						desc = "SUPREME_MILITARY_COUNCIL_DESC"
+						picture = "Portrait_military_council.dds"
 						expire = "1965.1.1"
 						ideology = anarchisme
 						traits = {
@@ -30571,5 +30571,597 @@ SOV_the_black_revolution = {
 				}
 			}
 		}
+	}
+}
+
+SOV_crush_the_anti_revolutionary = { #TODO Lock Division template
+	
+	SOV_recon_the_area = {
+	
+		icon = GFX_decision_generic_political_discourse
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		on_map_mode = map_only
+
+		state_target = yes
+
+		target_trigger = {
+			FROM = {
+				is_core_of = SOV
+				is_owned_and_controlled_by = SOV
+				NOT = {
+					state = 219
+					state = 137
+					state = 195
+					state = 217
+					state = 408
+					state = 202
+					has_state_flag = recon_units_scout_place
+				}
+			}
+		}
+
+		visible = {
+			FROM = {
+				NOT = {
+					has_state_flag = recon_units_scout_place
+				}
+			}
+		}
+
+		days_remove = 15
+
+		fire_only_once = yes
+
+		cost = 10
+
+		available = {
+
+		}
+
+		complete_effect = {
+			FROM = {
+				set_state_flag = recon_units_scout_place
+			}
+		}
+
+		remove_effect = {
+			custom_effect_tooltip = SOV_recon_the_area_tt
+			if = {
+				limit = {
+					FROM = {
+						has_state_flag = small_counter_revolution_resistance_1
+					}
+				}
+				FROM = {
+					save_event_target_as = SOV_successful_recon_small
+					set_state_flag = found_small_counter_revolution_base_1
+				}
+				PREV = {
+					country_event = { id = soviets.416 }
+				}
+			}
+			if = {
+				limit = {
+					FROM = {
+						has_state_flag = small_counter_revolution_resistance_2
+					}
+				}
+				FROM = {
+					save_event_target_as = SOV_successful_recon_small
+					set_state_flag = found_small_counter_revolution_base_2
+				}
+				PREV = {
+					country_event = { id = soviets.416 }
+				}
+			}
+			if = {
+				limit = {
+					FROM = {
+						has_state_flag = small_counter_revolution_resistance_3
+					}
+				}
+				FROM = {
+					save_event_target_as = SOV_successful_recon_small
+					set_state_flag = found_small_counter_revolution_base_3
+				}
+				PREV = {
+					country_event = { id = soviets.416 }
+				}
+			}
+			if = {
+				limit = {
+					FROM = {
+						has_state_flag = medium_counter_revolution_resistance_1
+					}
+				}
+				FROM = {
+					save_event_target_as = SOV_successful_recon_medium
+					set_state_flag = found_medium_counter_revolution_base_1
+				}
+				PREV = {
+					country_event = { id = soviets.417 days = 15 }
+				}
+			}
+			if = {
+				limit = {
+					FROM = {
+						has_state_flag = medium_counter_revolution_resistance_2
+					}
+				}
+				FROM = {
+					save_event_target_as = SOV_successful_recon_medium
+					set_state_flag = found_medium_counter_revolution_base_2
+				}
+				PREV = {
+					country_event = { id = soviets.417 }
+				}
+			}
+			if = {
+				limit = {
+					FROM = {
+						has_state_flag = large_counter_revolution_resistance_1
+					}
+				}
+				FROM = {
+					save_event_target_as = SOV_successful_recon_large
+					set_state_flag = found_large_counter_revolution_base
+				}
+				PREV = {
+					country_event = { id = soviets.418 }
+				}
+			}
+			else_if = {
+				limit = {
+					FROM = {
+						NOT = {
+							has_state_flag = small_counter_revolution_resistance_1
+							has_state_flag = small_counter_revolution_resistance_2
+							has_state_flag = small_counter_revolution_resistance_3
+							has_state_flag = medium_counter_revolution_resistance_1
+							has_state_flag = medium_counter_revolution_resistance_2
+							has_state_flag = large_counter_revolution_resistance_1
+						}
+					}
+				}
+				FROM = {
+					save_event_target_as = SOV_unsuccessful_recon_anti_rev
+				}
+				PREV = {
+					country_event = { id = soviets.415 }
+				}
+			}
+        }
+
+		ai_will_do = {
+			factor = 10
+		}	
+	}
+
+	SOV_raid_small_base_1 = {
+	
+		icon = GFX_decision_generic_intelligence_operation
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		on_map_mode = map_only
+
+		state_target = yes
+
+		target_trigger = {
+			FROM = {
+				is_core_of = SOV
+				is_owned_and_controlled_by = SOV
+				has_state_flag = found_small_counter_revolution_base_1
+			}
+		}
+
+		visible = {
+			FROM = {
+				has_state_flag = found_small_counter_revolution_base_1
+			}
+		}
+
+		days_remove = 30
+
+		fire_only_once = yes
+
+		cost = 20
+
+		available = {
+			divisions_in_state = {
+				size > 24
+				state = FROM
+			}
+		}
+
+		complete_effect = {
+			
+		}
+
+		remove_effect = {
+			SOV = {
+				set_country_flag = cleared_small_base_1
+				add_popularity = {
+					ideology = anarchy
+					popularity = 0.05
+				}
+			}
+			FROM = {
+				clr_state_flag = small_counter_revolution_resistance_1
+				clr_state_flag = found_small_counter_revolution_base_1
+			}
+        }
+
+		ai_will_do = {
+			factor = 10
+		}	
+	}
+
+	SOV_raid_small_base_2 = {
+	
+		icon = GFX_decision_generic_intelligence_operation
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		on_map_mode = map_only
+
+		state_target = yes
+
+		target_trigger = {
+			FROM = {
+				is_core_of = SOV
+				is_owned_and_controlled_by = SOV
+				has_state_flag = found_small_counter_revolution_base_2
+			}
+		}
+
+		visible = {
+			FROM = {
+				has_state_flag = found_small_counter_revolution_base_2
+			}
+		}
+
+		days_remove = 30
+
+		fire_only_once = yes
+
+		cost = 20
+
+		available = {
+			divisions_in_state = {
+				size > 24
+				state = FROM
+			}
+		}
+
+		complete_effect = {
+			
+		}
+
+		remove_effect = {
+			SOV = {
+				set_country_flag = cleared_small_base_2
+				add_popularity = {
+					ideology = anarchy
+					popularity = 0.05
+				}
+			}
+			FROM = {
+				clr_state_flag = small_counter_revolution_resistance_2
+				clr_state_flag = found_small_counter_revolution_base_2
+			}
+        }
+
+		ai_will_do = {
+			factor = 10
+		}	
+	}
+
+	SOV_raid_small_base_3 = {
+	
+		icon = GFX_decision_generic_intelligence_operation
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		on_map_mode = map_only
+
+		state_target = yes
+
+		target_trigger = {
+			FROM = {
+				is_core_of = SOV
+				is_owned_and_controlled_by = SOV
+				has_state_flag = found_small_counter_revolution_base_3
+			}
+		}
+
+		visible = {
+			FROM = {
+				has_state_flag = found_small_counter_revolution_base_3
+			}
+		}
+
+		days_remove = 30
+
+		fire_only_once = yes
+
+		cost = 20
+
+		available = {
+			divisions_in_state = {
+				size > 24
+				state = FROM
+			}
+		}
+
+		complete_effect = {
+			
+		}
+
+		remove_effect = {
+			SOV = {
+				set_country_flag = cleared_small_base_3
+				add_popularity = {
+					ideology = anarchy
+					popularity = 0.05
+				}
+			}
+			FROM = {
+				clr_state_flag = small_counter_revolution_resistance_3
+				clr_state_flag = found_small_counter_revolution_base_3
+			}
+        }
+
+		ai_will_do = {
+			factor = 10
+		}	
+	}
+
+	SOV_raid_medium_base_1 = {
+	
+		icon = GFX_decision_generic_intelligence_operation
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		on_map_mode = map_only
+
+		state_target = yes
+
+		target_trigger = {
+			FROM = {
+				is_core_of = SOV
+				is_owned_and_controlled_by = SOV
+				has_state_flag = found_medium_counter_revolution_base_1
+			}
+		}
+
+		visible = {
+			FROM = {
+				has_state_flag = found_medium_counter_revolution_base_1
+			}
+		}
+
+		days_remove = 30
+
+		fire_only_once = yes
+
+		cost = 20
+
+		available = {
+			divisions_in_state = {
+				size > 39
+				state = FROM
+			}
+		}
+
+		complete_effect = {
+			
+		}
+
+		remove_effect = {
+			SOV = {
+				set_country_flag = cleared_medium_base_1
+				add_popularity = {
+					ideology = anarchy
+					popularity = 0.05
+				}
+			}
+			FROM = {
+				clr_state_flag = medium_counter_revolution_resistance_1
+				clr_state_flag = found_medium_counter_revolution_base_1
+			}
+        }
+
+		ai_will_do = {
+			factor = 10
+		}	
+	}
+
+	SOV_raid_medium_base_2 = {
+	
+		icon = GFX_decision_generic_intelligence_operation
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		on_map_mode = map_only
+
+		state_target = yes
+
+		target_trigger = {
+			FROM = {
+				is_core_of = SOV
+				is_owned_and_controlled_by = SOV
+				has_state_flag = found_medium_counter_revolution_base_2
+			}
+		}
+
+		visible = {
+			FROM = {
+				has_state_flag = found_medium_counter_revolution_base_2
+			}
+		}
+
+		days_remove = 30
+
+		fire_only_once = yes
+
+		cost = 20
+
+		available = {
+			divisions_in_state = {
+				size > 39
+				state = FROM
+			}
+		}
+
+		complete_effect = {
+			
+		}
+
+		remove_effect = {
+			SOV = {
+				set_country_flag = cleared_medium_base_2
+				add_popularity = {
+					ideology = anarchy
+					popularity = 0.05
+				}
+			}
+			FROM = {
+				clr_state_flag = medium_counter_revolution_resistance_2
+				clr_state_flag = found_medium_counter_revolution_base_2
+			}
+        }
+
+		ai_will_do = {
+			factor = 10
+		}	
+	}
+
+	SOV_raid_large_base = {
+	
+		icon = GFX_decision_generic_intelligence_operation
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		on_map_mode = map_only
+
+		state_target = yes
+
+		target_trigger = {
+			FROM = {
+				is_core_of = SOV
+				is_owned_and_controlled_by = SOV
+				has_state_flag = found_large_counter_revolution_base
+			}
+		}
+
+		visible = {
+			FROM = {
+				has_state_flag = found_large_counter_revolution_base
+			}
+		}
+
+		days_remove = 30
+
+		fire_only_once = yes
+
+		cost = 20
+
+		available = {
+			divisions_in_state = {
+				size > 64
+				state = FROM
+			}
+		}
+
+		complete_effect = {
+			
+		}
+
+		remove_effect = {
+			SOV = {
+				set_country_flag = cleared_large_base
+				add_popularity = {
+					ideology = anarchy
+					popularity = 0.05
+				}
+			}
+			FROM = {
+				clr_state_flag = large_counter_revolution_resistance_1
+				clr_state_flag = found_large_counter_revolution_base
+			}
+        }
+
+		ai_will_do = {
+			factor = 10
+		}	
+	}
+
+	SOV_raid_headquarters = {
+		
+		icon = GFX_decision_generic_prepare_civil_war
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+
+		}
+
+		days_remove = 15
+
+		fire_only_once = yes
+
+		cost = 10
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = cleared_all_small_base
+				has_country_flag = found_small_counter_revolution_base_1
+				has_country_flag = found_small_counter_revolution_base_2
+				has_country_flag = found_small_counter_revolution_base_3
+			}
+			custom_trigger_tooltip = {
+				tooltip = cleared_all_medium_base
+				has_country_flag = cleared_medium_base_1
+				has_country_flag = cleared_medium_base_2
+			}
+			custom_trigger_tooltip = {
+				tooltip = cleared_all_large_base
+				has_country_flag = cleared_large_base
+			}
+		}
+
+		complete_effect = {
+
+			
+		}
+
+		remove_effect = {
+			SOV = {
+				country_event = { id = soviets.419 }
+			}
+        }
+
+		ai_will_do = {
+			factor = 10
+		}	
 	}
 }
