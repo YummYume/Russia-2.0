@@ -6,7 +6,7 @@
 
 Updates are very frequent on our GitHub, however, you should **NOT** try to play with this current version unless it is marked as **_Stable_**.
 
-Current version is : **_Stable_**.
+Current version is : **_Unstable_**.
 
 Mod Version : 2.7.3
 
