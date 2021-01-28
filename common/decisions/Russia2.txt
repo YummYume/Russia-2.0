@@ -23306,45 +23306,63 @@ SOV_the_black_revolution = {
 		}
 	}
 
-	#Control state on map mode (Check Decision Category if you are looking for "Select which state you want to infiltrate")
-		SOV_control_state_vinnystia = {
-			icon = GFX_decision_eng_trade_unions_support
+	SOV_control_state_decision_black_revolution = {
+		icon = GFX_decision_eng_trade_unions_support
 
-			available = {
-				198 = {
-					NOT = {
-						has_state_flag = anarchist_state
+		on_map_mode = map_only
+
+		state_target = yes
+
+		target_array = SOV.sov_get_black_revolution_states
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			NOT = {
+				has_government = anarchy
+			}
+			NOT = {
+				has_completed_focus = SOV_end_revoltion_anarchy
+				has_government = anarchy
+			}
+			has_completed_focus = SOV_black_guard
+		}
+
+		available = {
+			FROM = {
+				NOT = {
+					has_state_flag = anarchist_state_black_revolution
+				}
+			}
+			has_full_control_of_state = FROM
+			check_variable = {
+				var = army_vigiliance_black_revolution
+				value = 100
+				compare = less_than
+			}
+		}
+
+		days_remove = 5
+
+		cost = 10
+
+		fire_only_once = yes
+
+		cancel_if_not_visible = yes
+
+		complete_effect = {
+			FROM = {
+				set_state_flag = anarchist_state_black_revolution
+			}
+			custom_effect_tooltip = control_state_futur_revolution
+			if = {
+				limit = {
+					FROM = {
+						has_state_flag = high_risk_state_black_revolution
 					}
 				}
-				has_full_control_of_state = 198
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 198 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				198 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
 				if = {
 					limit = {
 						has_country_flag = be_careful_black_revolution
@@ -23416,2345 +23434,12 @@ SOV_the_black_revolution = {
 					}
 				}
 			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_khmelnytskyi = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				199 = {
-					NOT = {
-						has_state_flag = anarchist_state
+			else_if = {
+				limit = {
+					FROM = {
+						has_state_flag = medium_risk_state_black_revolution_west
 					}
 				}
-				has_full_control_of_state = 199
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 199 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				199 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					add_to_variable = {
-						var = population_support_black_revolution
-						value = 5
-					}
-					custom_effect_tooltip = population_support_5_tt
-					random_list = {
-						15 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						55 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 5
-							}
-							custom_effect_tooltip = SOV_army_vigilance_5
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 8
-							}
-							custom_effect_tooltip = SOV_army_vigilance_8
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					add_to_variable = {
-						var = population_support_black_revolution
-						value = 4
-					}
-					custom_effect_tooltip = population_support_4_tt
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						15 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 5
-							}
-							custom_effect_tooltip = SOV_army_vigilance_5
-						}
-						30 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 8
-							}
-							custom_effect_tooltip = SOV_army_vigilance_8
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_cherkasy = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				203 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 203
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 203 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				203 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					add_to_variable = {
-						var = population_support_black_revolution
-						value = 5
-					}
-					custom_effect_tooltip = population_support_5_tt
-					random_list = {
-						15 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						55 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 5
-							}
-							custom_effect_tooltip = SOV_army_vigilance_5
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 8
-							}
-							custom_effect_tooltip = SOV_army_vigilance_8
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					add_to_variable = {
-						var = population_support_black_revolution
-						value = 4
-					}
-					custom_effect_tooltip = population_support_4_tt
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						15 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 5
-							}
-							custom_effect_tooltip = SOV_army_vigilance_5
-						}
-						30 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 8
-							}
-							custom_effect_tooltip = SOV_army_vigilance_8
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_dnipropetrovsk = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				226 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 226
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 226 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				226 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					add_to_variable = {
-						var = population_support_black_revolution
-						value = 5
-					}
-					custom_effect_tooltip = population_support_5_tt
-					random_list = {
-						15 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						55 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 5
-							}
-							custom_effect_tooltip = SOV_army_vigilance_5
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 8
-							}
-							custom_effect_tooltip = SOV_army_vigilance_8
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					add_to_variable = {
-						var = population_support_black_revolution
-						value = 4
-					}
-					custom_effect_tooltip = population_support_4_tt
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						15 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 5
-							}
-							custom_effect_tooltip = SOV_army_vigilance_5
-						}
-						30 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 8
-							}
-							custom_effect_tooltip = SOV_army_vigilance_8
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_stalino = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				227 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 227
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 227 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				227 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					add_to_variable = {
-						var = population_support_black_revolution
-						value = 5
-					}
-					custom_effect_tooltip = population_support_5_tt
-					random_list = {
-						15 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						55 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 5
-							}
-							custom_effect_tooltip = SOV_army_vigilance_5
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 8
-							}
-							custom_effect_tooltip = SOV_army_vigilance_8
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					add_to_variable = {
-						var = population_support_black_revolution
-						value = 4
-					}
-					custom_effect_tooltip = population_support_4_tt
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						15 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 5
-							}
-							custom_effect_tooltip = SOV_army_vigilance_5
-						}
-						30 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 8
-							}
-							custom_effect_tooltip = SOV_army_vigilance_8
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_rostov = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				218 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 218
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 218 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				218 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					add_to_variable = {
-						var = population_support_black_revolution
-						value = 5
-					}
-					custom_effect_tooltip = population_support_5_tt
-					random_list = {
-						15 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						55 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 5
-							}
-							custom_effect_tooltip = SOV_army_vigilance_5
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 8
-							}
-							custom_effect_tooltip = SOV_army_vigilance_8
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					add_to_variable = {
-						var = population_support_black_revolution
-						value = 4
-					}
-					custom_effect_tooltip = population_support_4_tt
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						15 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 5
-							}
-							custom_effect_tooltip = SOV_army_vigilance_5
-						}
-						30 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 8
-							}
-							custom_effect_tooltip = SOV_army_vigilance_8
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_voroshilovgrad = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				228 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 228
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 228 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				228 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					add_to_variable = {
-						var = population_support_black_revolution
-						value = 5
-					}
-					custom_effect_tooltip = population_support_5_tt
-					random_list = {
-						15 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						55 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 5
-							}
-							custom_effect_tooltip = SOV_army_vigilance_5
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 8
-							}
-							custom_effect_tooltip = SOV_army_vigilance_8
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					add_to_variable = {
-						var = population_support_black_revolution
-						value = 4
-					}
-					custom_effect_tooltip = population_support_4_tt
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						15 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 5
-							}
-							custom_effect_tooltip = SOV_army_vigilance_5
-						}
-						30 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 8
-							}
-							custom_effect_tooltip = SOV_army_vigilance_8
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_kharkov = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				221 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 221
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 221 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				221 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					add_to_variable = {
-						var = population_support_black_revolution
-						value = 5
-					}
-					custom_effect_tooltip = population_support_5_tt
-					random_list = {
-						15 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						55 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 5
-							}
-							custom_effect_tooltip = SOV_army_vigilance_5
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 8
-							}
-							custom_effect_tooltip = SOV_army_vigilance_8
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					add_to_variable = {
-						var = population_support_black_revolution
-						value = 4
-					}
-					custom_effect_tooltip = population_support_4_tt
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						15 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 5
-							}
-							custom_effect_tooltip = SOV_army_vigilance_5
-						}
-						30 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 8
-							}
-							custom_effect_tooltip = SOV_army_vigilance_8
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_poltava = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				259 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 259
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 259 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				259 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					add_to_variable = {
-						var = population_support_black_revolution
-						value = 5
-					}
-					custom_effect_tooltip = population_support_5_tt
-					random_list = {
-						15 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						55 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 5
-							}
-							custom_effect_tooltip = SOV_army_vigilance_5
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 8
-							}
-							custom_effect_tooltip = SOV_army_vigilance_8
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					add_to_variable = {
-						var = population_support_black_revolution
-						value = 4
-					}
-					custom_effect_tooltip = population_support_4_tt
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						15 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 5
-							}
-							custom_effect_tooltip = SOV_army_vigilance_5
-						}
-						30 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 8
-							}
-							custom_effect_tooltip = SOV_army_vigilance_8
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_sumy = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				225 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 225
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 225 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				225 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					add_to_variable = {
-						var = population_support_black_revolution
-						value = 5
-					}
-					custom_effect_tooltip = population_support_5_tt
-					random_list = {
-						15 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						55 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 5
-							}
-							custom_effect_tooltip = SOV_army_vigilance_5
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 8
-							}
-							custom_effect_tooltip = SOV_army_vigilance_8
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					add_to_variable = {
-						var = population_support_black_revolution
-						value = 4
-					}
-					custom_effect_tooltip = population_support_4_tt
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						15 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 5
-							}
-							custom_effect_tooltip = SOV_army_vigilance_5
-						}
-						30 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 8
-							}
-							custom_effect_tooltip = SOV_army_vigilance_8
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_chernigov = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				193 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 193
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 193 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				193 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					add_to_variable = {
-						var = population_support_black_revolution
-						value = 5
-					}
-					custom_effect_tooltip = population_support_5_tt
-					random_list = {
-						15 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						55 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 5
-							}
-							custom_effect_tooltip = SOV_army_vigilance_5
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 8
-							}
-							custom_effect_tooltip = SOV_army_vigilance_8
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					add_to_variable = {
-						var = population_support_black_revolution
-						value = 4
-					}
-					custom_effect_tooltip = population_support_4_tt
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						15 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 5
-							}
-							custom_effect_tooltip = SOV_army_vigilance_5
-						}
-						30 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 8
-							}
-							custom_effect_tooltip = SOV_army_vigilance_8
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_zhytomyr = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				201 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 201
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 201 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				201 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					add_to_variable = {
-						var = population_support_black_revolution
-						value = 5
-					}
-					custom_effect_tooltip = population_support_5_tt
-					random_list = {
-						15 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						55 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 5
-							}
-							custom_effect_tooltip = SOV_army_vigilance_5
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 8
-							}
-							custom_effect_tooltip = SOV_army_vigilance_8
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					add_to_variable = {
-						var = population_support_black_revolution
-						value = 4
-					}
-					custom_effect_tooltip = population_support_4_tt
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						15 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 5
-							}
-							custom_effect_tooltip = SOV_army_vigilance_5
-						}
-						30 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 8
-							}
-							custom_effect_tooltip = SOV_army_vigilance_8
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_mozyr = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				194 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 194
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 194 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				194 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					add_to_variable = {
-						var = population_support_black_revolution
-						value = 5
-					}
-					custom_effect_tooltip = population_support_5_tt
-					random_list = {
-						15 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						55 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 5
-							}
-							custom_effect_tooltip = SOV_army_vigilance_5
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 8
-							}
-							custom_effect_tooltip = SOV_army_vigilance_8
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					add_to_variable = {
-						var = population_support_black_revolution
-						value = 4
-					}
-					custom_effect_tooltip = population_support_4_tt
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						15 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 5
-							}
-							custom_effect_tooltip = SOV_army_vigilance_5
-						}
-						30 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 8
-							}
-							custom_effect_tooltip = SOV_army_vigilance_8
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_bobruysk = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				204 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 204
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 204 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				204 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					add_to_variable = {
-						var = population_support_black_revolution
-						value = 5
-					}
-					custom_effect_tooltip = population_support_5_tt
-					random_list = {
-						15 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						55 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 5
-							}
-							custom_effect_tooltip = SOV_army_vigilance_5
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 8
-							}
-							custom_effect_tooltip = SOV_army_vigilance_8
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					add_to_variable = {
-						var = population_support_black_revolution
-						value = 4
-					}
-					custom_effect_tooltip = population_support_4_tt
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						15 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 5
-							}
-							custom_effect_tooltip = SOV_army_vigilance_5
-						}
-						30 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 8
-							}
-							custom_effect_tooltip = SOV_army_vigilance_8
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_gomel = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				241 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 241
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 241 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				241 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					add_to_variable = {
-						var = population_support_black_revolution
-						value = 5
-					}
-					custom_effect_tooltip = population_support_5_tt
-					random_list = {
-						15 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						55 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 5
-							}
-							custom_effect_tooltip = SOV_army_vigilance_5
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 8
-							}
-							custom_effect_tooltip = SOV_army_vigilance_8
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					add_to_variable = {
-						var = population_support_black_revolution
-						value = 4
-					}
-					custom_effect_tooltip = population_support_4_tt
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						15 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 5
-							}
-							custom_effect_tooltip = SOV_army_vigilance_5
-						}
-						30 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 8
-							}
-							custom_effect_tooltip = SOV_army_vigilance_8
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_bryansk = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				224 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 224
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 224 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				224 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					add_to_variable = {
-						var = population_support_black_revolution
-						value = 5
-					}
-					custom_effect_tooltip = population_support_5_tt
-					random_list = {
-						15 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						55 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 5
-							}
-							custom_effect_tooltip = SOV_army_vigilance_5
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 8
-							}
-							custom_effect_tooltip = SOV_army_vigilance_8
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					add_to_variable = {
-						var = population_support_black_revolution
-						value = 4
-					}
-					custom_effect_tooltip = population_support_4_tt
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						15 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 5
-							}
-							custom_effect_tooltip = SOV_army_vigilance_5
-						}
-						30 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 8
-							}
-							custom_effect_tooltip = SOV_army_vigilance_8
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_roslavl = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				243 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 243
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 243 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				243 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					add_to_variable = {
-						var = population_support_black_revolution
-						value = 5
-					}
-					custom_effect_tooltip = population_support_5_tt
-					random_list = {
-						15 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						55 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 5
-							}
-							custom_effect_tooltip = SOV_army_vigilance_5
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 8
-							}
-							custom_effect_tooltip = SOV_army_vigilance_8
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					add_to_variable = {
-						var = population_support_black_revolution
-						value = 4
-					}
-					custom_effect_tooltip = population_support_4_tt
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						15 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 5
-							}
-							custom_effect_tooltip = SOV_army_vigilance_5
-						}
-						30 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 8
-							}
-							custom_effect_tooltip = SOV_army_vigilance_8
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_krasnodar = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				234 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 234
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 234 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				234 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					add_to_variable = {
-						var = population_support_black_revolution
-						value = 5
-					}
-					custom_effect_tooltip = population_support_5_tt
-					random_list = {
-						15 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						55 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 5
-							}
-							custom_effect_tooltip = SOV_army_vigilance_5
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 8
-							}
-							custom_effect_tooltip = SOV_army_vigilance_8
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					add_to_variable = {
-						var = population_support_black_revolution
-						value = 4
-					}
-					custom_effect_tooltip = population_support_4_tt
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						15 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 5
-							}
-							custom_effect_tooltip = SOV_army_vigilance_5
-						}
-						30 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 8
-							}
-							custom_effect_tooltip = SOV_army_vigilance_8
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_stavropol = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				235 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 235
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 235 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				235 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					add_to_variable = {
-						var = population_support_black_revolution
-						value = 5
-					}
-					custom_effect_tooltip = population_support_5_tt
-					random_list = {
-						15 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						55 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 5
-							}
-							custom_effect_tooltip = SOV_army_vigilance_5
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 8
-							}
-							custom_effect_tooltip = SOV_army_vigilance_8
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					add_to_variable = {
-						var = population_support_black_revolution
-						value = 4
-					}
-					custom_effect_tooltip = population_support_4_tt
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						15 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 5
-							}
-							custom_effect_tooltip = SOV_army_vigilance_5
-						}
-						30 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 8
-							}
-							custom_effect_tooltip = SOV_army_vigilance_8
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_caucasus_mount = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				233 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 233
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 233 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				233 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					add_to_variable = {
-						var = population_support_black_revolution
-						value = 5
-					}
-					custom_effect_tooltip = population_support_5_tt
-					random_list = {
-						15 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						55 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 5
-							}
-							custom_effect_tooltip = SOV_army_vigilance_5
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 8
-							}
-							custom_effect_tooltip = SOV_army_vigilance_8
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					add_to_variable = {
-						var = population_support_black_revolution
-						value = 4
-					}
-					custom_effect_tooltip = population_support_4_tt
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						15 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 5
-							}
-							custom_effect_tooltip = SOV_army_vigilance_5
-						}
-						30 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 8
-							}
-							custom_effect_tooltip = SOV_army_vigilance_8
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_novgorod = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				263 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 263
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 263 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				263 = {
-					set_state_flag = anarchist_state
-				}
-				add_to_variable = {
-					var = population_support_black_revolution
-					value = 3
-				}
-				custom_effect_tooltip = population_support_3_tt
-				custom_effect_tooltip = control_state_futur_revolution
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					random_list = {
-						15 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						55 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 6
-							}
-							custom_effect_tooltip = SOV_army_vigilance_6
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						15 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-						30 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 6
-							}
-							custom_effect_tooltip = SOV_army_vigilance_6
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_pskov = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				209 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 209
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 209 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				209 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
 				add_to_variable = {
 					var = population_support_black_revolution
 					value = 3
@@ -25821,50 +23506,12 @@ SOV_the_black_revolution = {
 					}
 				}
 			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_luga = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				208 = {
-					NOT = {
-						has_state_flag = anarchist_state
+			else_if = {
+				limit = {
+					FROM = {
+						has_state_flag = medium_risk_state_black_revolution_east
 					}
 				}
-				has_full_control_of_state = 208
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 208 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				208 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
 				add_to_variable = {
 					var = population_support_black_revolution
 					value = 3
@@ -25881,18 +23528,18 @@ SOV_the_black_revolution = {
 						25 = {
 							add_to_variable = {
 								var = army_vigiliance_black_revolution
-								value = 2
+								value = 1
 							}
-							custom_effect_tooltip = SOV_army_vigilance_2
+							custom_effect_tooltip = SOV_army_vigilance_1
 						}
-						55 = {
+						50 = {
 							add_to_variable = {
 								var = army_vigiliance_black_revolution
 								value = 4
 							}
 							custom_effect_tooltip = SOV_army_vigilance_4
 						}
-						5 = {
+						10 = {
 							add_to_variable = {
 								var = army_vigiliance_black_revolution
 								value = 6
@@ -25904,15 +23551,12 @@ SOV_the_black_revolution = {
 				}
 				else = {
 					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						15 = {
+						20 = {
 							add_to_variable = {
 								var = army_vigiliance_black_revolution
-								value = 2
+								value = 1
 							}
-							custom_effect_tooltip = SOV_army_vigilance_2
+							custom_effect_tooltip = SOV_army_vigilance_1
 						}
 						50 = {
 							add_to_variable = {
@@ -25931,380 +23575,12 @@ SOV_the_black_revolution = {
 					}
 				}
 			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_volkhov = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				244 = {
-					NOT = {
-						has_state_flag = anarchist_state
+			else_if = {
+				limit = {
+					FROM = {
+						has_state_flag = low_risk_state_black_revolution
 					}
 				}
-				has_full_control_of_state = 244
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 244 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				244 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				add_to_variable = {
-					var = population_support_black_revolution
-					value = 3
-				}
-				custom_effect_tooltip = population_support_3_tt
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					random_list = {
-						15 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						55 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 6
-							}
-							custom_effect_tooltip = SOV_army_vigilance_6
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						15 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-						30 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 6
-							}
-							custom_effect_tooltip = SOV_army_vigilance_6
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_olonets = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				216 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 216
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 216 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				216 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				add_to_variable = {
-					var = population_support_black_revolution
-					value = 3
-				}
-				custom_effect_tooltip = population_support_3_tt
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					random_list = {
-						15 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						55 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 6
-							}
-							custom_effect_tooltip = SOV_army_vigilance_6
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						15 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-						30 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 6
-							}
-							custom_effect_tooltip = SOV_army_vigilance_6
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_onega = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				215 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 215
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 215 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				215 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				add_to_variable = {
-					var = population_support_black_revolution
-					value = 3
-				}
-				custom_effect_tooltip = population_support_3_tt
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					random_list = {
-						15 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						55 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 6
-							}
-							custom_effect_tooltip = SOV_army_vigilance_6
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						15 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-						30 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 6
-							}
-							custom_effect_tooltip = SOV_army_vigilance_6
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_ashkhabad = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				584 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 584
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 584 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				584 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
 				add_to_variable = {
 					var = population_support_black_revolution
 					value = 2
@@ -26371,3166 +23647,25 @@ SOV_the_black_revolution = {
 					}
 				}
 			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_urgench = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				585 = {
-					NOT = {
-						has_state_flag = anarchist_state
+			else_if = {
+				limit = {
+					FROM = {
+						has_state_flag = no_risk_state_black_revolution
 					}
 				}
-				has_full_control_of_state = 585
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 585 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				585 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				add_to_variable = {
-					var = population_support_black_revolution
-					value = 2
-				}
-				custom_effect_tooltip = population_support_2_tt
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					random_list = {
-						20 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						45 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_tashkent = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				405 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 405
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 405 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				405 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				add_to_variable = {
-					var = population_support_black_revolution
-					value = 2
-				}
-				custom_effect_tooltip = population_support_2_tt
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					random_list = {
-						20 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						45 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_stalinabad = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				742 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 742
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 742 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				742 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				add_to_variable = {
-					var = population_support_black_revolution
-					value = 2
-				}
-				custom_effect_tooltip = population_support_2_tt
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					random_list = {
-						20 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						45 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_kyzyl = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				404 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 404
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 404 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				404 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				add_to_variable = {
-					var = population_support_black_revolution
-					value = 2
-				}
-				custom_effect_tooltip = population_support_2_tt
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					random_list = {
-						20 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						45 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_pamir = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				732 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 732
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 732 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				732 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				add_to_variable = {
-					var = population_support_black_revolution
-					value = 2
-				}
-				custom_effect_tooltip = population_support_2_tt
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					random_list = {
-						20 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						45 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_almaata = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				586 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 586
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 586 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				586 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				add_to_variable = {
-					var = population_support_black_revolution
-					value = 2
-				}
-				custom_effect_tooltip = population_support_2_tt
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					random_list = {
-						20 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						45 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_ayaguz = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				589 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 589
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 589 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				589 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				add_to_variable = {
-					var = population_support_black_revolution
-					value = 2
-				}
-				custom_effect_tooltip = population_support_2_tt
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					random_list = {
-						20 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						45 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_kustanay = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				583 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 583
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 583 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				583 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				add_to_variable = {
-					var = population_support_black_revolution
-					value = 2
-				}
-				custom_effect_tooltip = population_support_2_tt
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					random_list = {
-						20 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						45 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_chelyabinsk = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				572 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 572
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 572 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				572 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				add_to_variable = {
-					var = population_support_black_revolution
-					value = 2
-				}
-				custom_effect_tooltip = population_support_2_tt
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					random_list = {
-						20 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						45 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_sverdlovsk = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				653 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 653
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 653 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				653 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				add_to_variable = {
-					var = population_support_black_revolution
-					value = 2
-				}
-				custom_effect_tooltip = population_support_2_tt
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					random_list = {
-						20 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						45 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_tobolsk = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				580 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 580
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 580 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				580 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				add_to_variable = {
-					var = population_support_black_revolution
-					value = 2
-				}
-				custom_effect_tooltip = population_support_2_tt
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					random_list = {
-						20 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						45 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_salekhard = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				579 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 579
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 579 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				579 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
 				add_to_variable = {
 					var = population_support_black_revolution
 					value = 1
 				}
 				custom_effect_tooltip = population_support_1_tt
 			}
-
-			ai_will_do = {
-				factor = 10
-			}
+			remove_from_array = { SOV.sov_get_black_revolution_states = FROM }
 		}
 
-		SOV_control_state_akmolinsk = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				590 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 590
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 590 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				590 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				add_to_variable = {
-					var = population_support_black_revolution
-					value = 2
-				}
-				custom_effect_tooltip = population_support_2_tt
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					random_list = {
-						20 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						45 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
+		ai_will_do = {
+			factor = 10
 		}
-
-		SOV_control_state_semipalatinsk = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				588 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 588
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 588 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				588 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				add_to_variable = {
-					var = population_support_black_revolution
-					value = 2
-				}
-				custom_effect_tooltip = population_support_2_tt
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					random_list = {
-						20 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						45 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_omsk = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				571 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 571
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 571 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				571 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				add_to_variable = {
-					var = population_support_black_revolution
-					value = 2
-				}
-				custom_effect_tooltip = population_support_2_tt
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					random_list = {
-						20 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						45 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_tyumen = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				403 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 403
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 403 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				403 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				add_to_variable = {
-					var = population_support_black_revolution
-					value = 2
-				}
-				custom_effect_tooltip = population_support_2_tt
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					random_list = {
-						20 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						45 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_birobidzhan = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				657 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 657
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 657 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				657 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				add_to_variable = {
-					var = population_support_black_revolution
-					value = 3
-				}
-				custom_effect_tooltip = population_support_3_tt
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					random_list = {
-						15 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-						10 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 6
-							}
-							custom_effect_tooltip = SOV_army_vigilance_6
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					random_list = {
-						20 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-						30 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 6
-							}
-							custom_effect_tooltip = SOV_army_vigilance_6
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_amur = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				561 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 561
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 561 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				561 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				add_to_variable = {
-					var = population_support_black_revolution
-					value = 3
-				}
-				custom_effect_tooltip = population_support_3_tt
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					random_list = {
-						15 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-						10 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 6
-							}
-							custom_effect_tooltip = SOV_army_vigilance_6
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					random_list = {
-						20 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-						30 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 6
-							}
-							custom_effect_tooltip = SOV_army_vigilance_6
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_chita = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				563 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 563
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 563 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				563 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				add_to_variable = {
-					var = population_support_black_revolution
-					value = 3
-				}
-				custom_effect_tooltip = population_support_3_tt
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					random_list = {
-						15 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-						10 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 6
-							}
-							custom_effect_tooltip = SOV_army_vigilance_6
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					random_list = {
-						20 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-						30 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 6
-							}
-							custom_effect_tooltip = SOV_army_vigilance_6
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_gorno = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				654 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 654
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 654 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				654 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				add_to_variable = {
-					var = population_support_black_revolution
-					value = 2
-				}
-				custom_effect_tooltip = population_support_2_tt
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					random_list = {
-						20 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						45 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_barnaul = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				40 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 40
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 40 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				40 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				add_to_variable = {
-					var = population_support_black_revolution
-					value = 2
-				}
-				custom_effect_tooltip = population_support_2_tt
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					random_list = {
-						20 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						45 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_novosibirsk = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				570 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 570
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 570 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				570 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				add_to_variable = {
-					var = population_support_black_revolution
-					value = 2
-				}
-				custom_effect_tooltip = population_support_2_tt
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					random_list = {
-						20 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						45 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_tomsk = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				578 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 578
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 578 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				578 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				add_to_variable = {
-					var = population_support_black_revolution
-					value = 2
-				}
-				custom_effect_tooltip = population_support_2_tt
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					random_list = {
-						20 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						45 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_surgut = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				577 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 577
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 577 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				577 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				add_to_variable = {
-					var = population_support_black_revolution
-					value = 1
-				}
-				custom_effect_tooltip = population_support_1_tt
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_kemerovo = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				569 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 569
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 569 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				569 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				add_to_variable = {
-					var = population_support_black_revolution
-					value = 2
-				}
-				custom_effect_tooltip = population_support_2_tt
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					random_list = {
-						20 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						45 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_krasnoyarsk = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				568 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 568
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 568 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				568 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				add_to_variable = {
-					var = population_support_black_revolution
-					value = 2
-				}
-				custom_effect_tooltip = population_support_2_tt
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					random_list = {
-						20 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						45 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_bratsk = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				567 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 567
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 567 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				567 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				add_to_variable = {
-					var = population_support_black_revolution
-					value = 2
-				}
-				custom_effect_tooltip = population_support_2_tt
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					random_list = {
-						20 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						5 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					random_list = {
-						5 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						45 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 2
-							}
-							custom_effect_tooltip = SOV_army_vigilance_2
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_kirensk = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				575 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 575
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 575 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				575 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				add_to_variable = {
-					var = population_support_black_revolution
-					value = 3
-				}
-				custom_effect_tooltip = population_support_3_tt
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					random_list = {
-						15 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-						10 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 6
-							}
-							custom_effect_tooltip = SOV_army_vigilance_6
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					random_list = {
-						20 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-						30 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 6
-							}
-							custom_effect_tooltip = SOV_army_vigilance_6
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_bodaybo = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				565 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 565
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 565 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				565 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				add_to_variable = {
-					var = population_support_black_revolution
-					value = 3
-				}
-				custom_effect_tooltip = population_support_3_tt
-				if = {
-					limit = {
-						has_country_flag = be_careful_black_revolution
-					}
-					random_list = {
-						15 = {
-							custom_effect_tooltip = SOV_army_vigilance_0
-						}
-						25 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-						10 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 6
-							}
-							custom_effect_tooltip = SOV_army_vigilance_6
-						}
-					}
-					clr_country_flag = be_careful_black_revolution
-				}
-				else = {
-					random_list = {
-						20 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 1
-							}
-							custom_effect_tooltip = SOV_army_vigilance_1
-						}
-						50 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 4
-							}
-							custom_effect_tooltip = SOV_army_vigilance_4
-						}
-						30 = {
-							add_to_variable = {
-								var = army_vigiliance_black_revolution
-								value = 6
-							}
-							custom_effect_tooltip = SOV_army_vigilance_6
-						}
-					}
-				}
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_yeniseisk = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				576 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 576
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 576 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				576 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				add_to_variable = {
-					var = population_support_black_revolution
-					value = 1
-				}
-				custom_effect_tooltip = population_support_1_tt
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
-		SOV_control_state_siberia = {
-			icon = GFX_decision_eng_trade_unions_support
-
-			available = {
-				516 = {
-					NOT = {
-						has_state_flag = anarchist_state
-					}
-				}
-				has_full_control_of_state = 516
-				check_variable = {
-					var = army_vigiliance_black_revolution
-					value = 100
-					compare = less_than
-				}
-			}
-
-			highlight_state_targets = { state = 516 }
-
-			on_map_mode = map_only
-
-			days_remove = 5
-
-			cost = 10
-
-			fire_only_once = yes
-
-			visible = {
-				NOT = { has_government = anarchy }
-			}
-
-			cancel_if_not_visible = yes
-
-			complete_effect = {
-				516 = {
-					set_state_flag = anarchist_state
-				}
-				custom_effect_tooltip = control_state_futur_revolution
-				add_to_variable = {
-					var = population_support_black_revolution
-					value = 1
-				}
-				custom_effect_tooltip = population_support_1_tt
-			}
-
-			ai_will_do = {
-				factor = 10
-			}
-		}
+	}
 
 	SOV_delay_the_revolution = {
 
@@ -29605,7 +23740,7 @@ SOV_the_black_revolution = {
 		complete_effect = {
 			custom_effect_tooltip = SOV_hold_leningrad_black_guard_tt
 			195 = {
-				set_state_flag = anarchist_state
+				set_state_flag = anarchist_state_black_revolution
 			}
 			set_country_flag = anarchist_hold_leningrad
 			custom_effect_tooltip = SOV_army_vigilance_10
@@ -29647,19 +23782,19 @@ SOV_the_black_revolution = {
 		complete_effect = {
 			custom_effect_tooltip = SOV_hold_more_central_asia_tt
 			407 = {
-				set_state_flag = anarchist_state
+				set_state_flag = anarchist_state_black_revolution
 			}
 			406 = {
-				set_state_flag = anarchist_state
+				set_state_flag = anarchist_state_black_revolution
 			}
 			402 = {
-				set_state_flag = anarchist_state
+				set_state_flag = anarchist_state_black_revolution
 			}
 			587 = {
-				set_state_flag = anarchist_state
+				set_state_flag = anarchist_state_black_revolution
 			}
 			232 = {
-				set_state_flag = anarchist_state
+				set_state_flag = anarchist_state_black_revolution
 			}
 			set_country_flag = anarchist_ready_enlist_more_central_asia
 			custom_effect_tooltip = SOV_army_vigilance_5
@@ -29731,19 +23866,19 @@ SOV_the_black_revolution = {
 		complete_effect = {
 			custom_effect_tooltip = SOV_hold_more_Siberia_tt
 			560 = {
-				set_state_flag = anarchist_state
+				set_state_flag = anarchist_state_black_revolution
 			}
 			566 = {
-				set_state_flag = anarchist_state
+				set_state_flag = anarchist_state_black_revolution
 			}
 			574 = {
-				set_state_flag = anarchist_state
+				set_state_flag = anarchist_state_black_revolution
 			}
 			562 = {
-				set_state_flag = anarchist_state
+				set_state_flag = anarchist_state_black_revolution
 			}
 			644 = {
-				set_state_flag = anarchist_state
+				set_state_flag = anarchist_state_black_revolution
 			}
 			set_country_flag = anarchist_ready_enlist_more_siberia
 			custom_effect_tooltip = SOV_army_vigilance_5
@@ -30123,7 +24258,7 @@ SOV_the_black_revolution = {
 					limit = {
 						is_core_of = SOV
 						NOT = {
-							has_state_flag = anarchist_state
+							has_state_flag = anarchist_state_black_revolution
 						}
 					}
 					SOU = {
@@ -30245,7 +24380,7 @@ SOV_the_black_revolution = {
 					limit = {
 						is_core_of = SOU
 						NOT = {
-							has_state_flag = anarchist_state
+							has_state_flag = anarchist_state_black_revolution
 						}
 					}
 					SOV = {
@@ -30299,7 +24434,7 @@ SOV_the_black_revolution = {
 					limit = {
 						is_core_of = SOV
 						NOT = {
-							has_state_flag = anarchist_state
+							has_state_flag = anarchist_state_black_revolution
 						}
 					}
 					SOU = {
@@ -30420,7 +24555,7 @@ SOV_the_black_revolution = {
 					limit = {
 						is_core_of = SOU
 						NOT = {
-							has_state_flag = anarchist_state
+							has_state_flag = anarchist_state_black_revolution
 						}
 					}
 					SOV = {
@@ -30441,7 +24576,7 @@ SOV_the_black_revolution = {
 					limit = {
 						is_core_of = SOV
 						NOT = {
-							has_state_flag = anarchist_state
+							has_state_flag = anarchist_state_black_revolution
 						}
 					}
 					SOU = {
@@ -30562,7 +24697,7 @@ SOV_the_black_revolution = {
 					limit = {
 						is_core_of = SOU
 						NOT = {
-							has_state_flag = anarchist_state
+							has_state_flag = anarchist_state_black_revolution
 						}
 					}
 					SOV = {
@@ -30574,7 +24709,7 @@ SOV_the_black_revolution = {
 	}
 }
 
-SOV_crush_the_anti_revolutionary = { #TODO Lock Division template
+SOV_crush_the_anti_revolutionary = {
 	
 	SOV_recon_the_area = {
 	
@@ -30588,21 +24723,7 @@ SOV_crush_the_anti_revolutionary = { #TODO Lock Division template
 
 		state_target = yes
 
-		target_trigger = {
-			FROM = {
-				is_core_of = SOV
-				is_owned_and_controlled_by = SOV
-				NOT = {
-					state = 219
-					state = 137
-					state = 195
-					state = 217
-					state = 408
-					state = 202
-					has_state_flag = recon_units_scout_place
-				}
-			}
-		}
+		target_array = SOV.sov_recon_rebel_anarchy_states
 
 		visible = {
 			FROM = {
@@ -30610,6 +24731,20 @@ SOV_crush_the_anti_revolutionary = { #TODO Lock Division template
 					has_state_flag = recon_units_scout_place
 				}
 			}
+			PREV = {
+				NOT = {
+					AND = {
+						has_country_flag = found_small_base_1
+						has_country_flag = found_small_base_2
+						has_country_flag = found_small_base_3
+						has_country_flag = found_medium_base_1
+						has_country_flag = found_medium_base_2
+						has_country_flag = found_large_base
+					}	
+				}
+				has_completed_focus = SOV_crush_antirevolutionary
+			}
+				
 		}
 
 		days_remove = 15
@@ -30619,12 +24754,19 @@ SOV_crush_the_anti_revolutionary = { #TODO Lock Division template
 		cost = 10
 
 		available = {
-
+			NOT = {
+				PREV = {
+					has_country_flag = doing_recon_area
+				}
+			}
 		}
 
 		complete_effect = {
 			FROM = {
 				set_state_flag = recon_units_scout_place
+			}
+			PREV = {
+				set_country_flag = doing_recon_area
 			}
 		}
 
@@ -30640,11 +24782,14 @@ SOV_crush_the_anti_revolutionary = { #TODO Lock Division template
 					save_event_target_as = SOV_successful_recon_small
 					set_state_flag = found_small_counter_revolution_base_1
 				}
-				PREV = {
-					country_event = { id = soviets.416 }
+				hidden_effect = {
+					PREV = {
+						country_event = { id = soviets.416 }
+						set_country_flag = found_small_base_1
+					}
 				}
 			}
-			if = {
+			else_if = {
 				limit = {
 					FROM = {
 						has_state_flag = small_counter_revolution_resistance_2
@@ -30654,11 +24799,14 @@ SOV_crush_the_anti_revolutionary = { #TODO Lock Division template
 					save_event_target_as = SOV_successful_recon_small
 					set_state_flag = found_small_counter_revolution_base_2
 				}
-				PREV = {
-					country_event = { id = soviets.416 }
+				hidden_effect = {
+					PREV = {
+						country_event = { id = soviets.416 }
+						set_country_flag = found_small_base_2
+					}
 				}
 			}
-			if = {
+			else_if = {
 				limit = {
 					FROM = {
 						has_state_flag = small_counter_revolution_resistance_3
@@ -30668,11 +24816,14 @@ SOV_crush_the_anti_revolutionary = { #TODO Lock Division template
 					save_event_target_as = SOV_successful_recon_small
 					set_state_flag = found_small_counter_revolution_base_3
 				}
-				PREV = {
-					country_event = { id = soviets.416 }
+				hidden_effect = {
+					PREV = {
+						country_event = { id = soviets.416 }
+						set_country_flag = found_small_base_3
+					}
 				}
 			}
-			if = {
+			else_if = {
 				limit = {
 					FROM = {
 						has_state_flag = medium_counter_revolution_resistance_1
@@ -30682,11 +24833,14 @@ SOV_crush_the_anti_revolutionary = { #TODO Lock Division template
 					save_event_target_as = SOV_successful_recon_medium
 					set_state_flag = found_medium_counter_revolution_base_1
 				}
-				PREV = {
-					country_event = { id = soviets.417 days = 15 }
+				hidden_effect = {
+					PREV = {
+						country_event = { id = soviets.417 }
+						set_country_flag = found_medium_base_1
+					}
 				}
 			}
-			if = {
+			else_if = {
 				limit = {
 					FROM = {
 						has_state_flag = medium_counter_revolution_resistance_2
@@ -30696,11 +24850,14 @@ SOV_crush_the_anti_revolutionary = { #TODO Lock Division template
 					save_event_target_as = SOV_successful_recon_medium
 					set_state_flag = found_medium_counter_revolution_base_2
 				}
-				PREV = {
-					country_event = { id = soviets.417 }
+				hidden_effect = {
+					PREV = {
+						country_event = { id = soviets.417 }
+						set_country_flag = found_medium_base_2
+					}
 				}
 			}
-			if = {
+			else_if = {
 				limit = {
 					FROM = {
 						has_state_flag = large_counter_revolution_resistance_1
@@ -30710,8 +24867,11 @@ SOV_crush_the_anti_revolutionary = { #TODO Lock Division template
 					save_event_target_as = SOV_successful_recon_large
 					set_state_flag = found_large_counter_revolution_base
 				}
-				PREV = {
-					country_event = { id = soviets.418 }
+				hidden_effect = {
+					PREV = {
+						country_event = { id = soviets.418 }
+						set_country_flag = found_large_base
+					}
 				}
 			}
 			else_if = {
@@ -30730,10 +24890,16 @@ SOV_crush_the_anti_revolutionary = { #TODO Lock Division template
 				FROM = {
 					save_event_target_as = SOV_unsuccessful_recon_anti_rev
 				}
-				PREV = {
-					country_event = { id = soviets.415 }
+				hidden_effect = {
+					PREV = {
+						country_event = { id = soviets.415 }
+					}
 				}
 			}
+			PREV = {
+				clr_country_flag = doing_recon_area
+			}
+			remove_from_array = { SOV.sov_recon_rebel_anarchy_states = FROM }
         }
 
 		ai_will_do = {
@@ -30749,17 +24915,11 @@ SOV_crush_the_anti_revolutionary = { #TODO Lock Division template
 			original_tag = SOV
 		}
 
-		on_map_mode = map_only
+		on_map_mode = map_and_decisions_view
 
 		state_target = yes
 
-		target_trigger = {
-			FROM = {
-				is_core_of = SOV
-				is_owned_and_controlled_by = SOV
-				has_state_flag = found_small_counter_revolution_base_1
-			}
-		}
+		target_array = SOV.sov_small_base_resistance_states_1
 
 		visible = {
 			FROM = {
@@ -30767,9 +24927,17 @@ SOV_crush_the_anti_revolutionary = { #TODO Lock Division template
 			}
 		}
 
-		days_remove = 30
+		cancel_trigger = {
+			custom_trigger_tooltip = {
+				tooltip = less_division_small
+				divisions_in_state = {
+					size < 25
+					state = FROM
+				}
+			}
+		}
 
-		fire_only_once = yes
+		days_remove = 30
 
 		cost = 20
 
@@ -30781,21 +24949,27 @@ SOV_crush_the_anti_revolutionary = { #TODO Lock Division template
 		}
 
 		complete_effect = {
-			
+
 		}
 
 		remove_effect = {
+			custom_effect_tooltip = destroyed_base_tt 
+			FROM = {
+				save_event_target_as = SOV_raid_is_done
+				clr_state_flag = small_counter_revolution_resistance_1
+				clr_state_flag = found_small_counter_revolution_base_1
+			}
 			SOV = {
 				set_country_flag = cleared_small_base_1
 				add_popularity = {
 					ideology = anarchy
 					popularity = 0.05
 				}
+				hidden_effect = {
+					country_event = { id = soviets.431 }
+				}
 			}
-			FROM = {
-				clr_state_flag = small_counter_revolution_resistance_1
-				clr_state_flag = found_small_counter_revolution_base_1
-			}
+			remove_from_array = { SOV.sov_small_base_resistance_states_1 = FROM }
         }
 
 		ai_will_do = {
@@ -30811,17 +24985,11 @@ SOV_crush_the_anti_revolutionary = { #TODO Lock Division template
 			original_tag = SOV
 		}
 
-		on_map_mode = map_only
+		on_map_mode = map_and_decisions_view
 
 		state_target = yes
 
-		target_trigger = {
-			FROM = {
-				is_core_of = SOV
-				is_owned_and_controlled_by = SOV
-				has_state_flag = found_small_counter_revolution_base_2
-			}
-		}
+		target_array = SOV.sov_small_base_resistance_states_2
 
 		visible = {
 			FROM = {
@@ -30829,9 +24997,17 @@ SOV_crush_the_anti_revolutionary = { #TODO Lock Division template
 			}
 		}
 
-		days_remove = 30
+		cancel_trigger = {
+			custom_trigger_tooltip = {
+				tooltip = less_division_small
+				divisions_in_state = {
+					size < 25
+					state = FROM
+				}
+			}
+		}
 
-		fire_only_once = yes
+		days_remove = 30
 
 		cost = 20
 
@@ -30843,21 +25019,27 @@ SOV_crush_the_anti_revolutionary = { #TODO Lock Division template
 		}
 
 		complete_effect = {
-			
+
 		}
 
 		remove_effect = {
+			custom_effect_tooltip = destroyed_base_tt 
+			FROM = {
+				save_event_target_as = SOV_raid_is_done
+				clr_state_flag = small_counter_revolution_resistance_2
+				clr_state_flag = found_small_counter_revolution_base_2
+			}
 			SOV = {
 				set_country_flag = cleared_small_base_2
 				add_popularity = {
 					ideology = anarchy
 					popularity = 0.05
 				}
+				hidden_effect = {
+					country_event = { id = soviets.431 }
+				}
 			}
-			FROM = {
-				clr_state_flag = small_counter_revolution_resistance_2
-				clr_state_flag = found_small_counter_revolution_base_2
-			}
+			remove_from_array = { SOV.sov_small_base_resistance_states_2 = FROM }
         }
 
 		ai_will_do = {
@@ -30873,17 +25055,11 @@ SOV_crush_the_anti_revolutionary = { #TODO Lock Division template
 			original_tag = SOV
 		}
 
-		on_map_mode = map_only
+		on_map_mode = map_and_decisions_view
 
 		state_target = yes
 
-		target_trigger = {
-			FROM = {
-				is_core_of = SOV
-				is_owned_and_controlled_by = SOV
-				has_state_flag = found_small_counter_revolution_base_3
-			}
-		}
+		target_array = SOV.sov_small_base_resistance_states_3
 
 		visible = {
 			FROM = {
@@ -30891,9 +25067,17 @@ SOV_crush_the_anti_revolutionary = { #TODO Lock Division template
 			}
 		}
 
-		days_remove = 30
+		cancel_trigger = {
+			custom_trigger_tooltip = {
+				tooltip = less_division_small
+				divisions_in_state = {
+					size < 25
+					state = FROM
+				}
+			}
+		}
 
-		fire_only_once = yes
+		days_remove = 30
 
 		cost = 20
 
@@ -30905,21 +25089,27 @@ SOV_crush_the_anti_revolutionary = { #TODO Lock Division template
 		}
 
 		complete_effect = {
-			
+
 		}
 
 		remove_effect = {
+			custom_effect_tooltip = destroyed_base_tt 
+			FROM = {
+				save_event_target_as = SOV_raid_is_done
+				clr_state_flag = small_counter_revolution_resistance_3
+				clr_state_flag = found_small_counter_revolution_base_3
+			}
 			SOV = {
 				set_country_flag = cleared_small_base_3
 				add_popularity = {
 					ideology = anarchy
 					popularity = 0.05
 				}
+				hidden_effect = {
+					country_event = { id = soviets.431 }
+				}
 			}
-			FROM = {
-				clr_state_flag = small_counter_revolution_resistance_3
-				clr_state_flag = found_small_counter_revolution_base_3
-			}
+			remove_from_array = { SOV.sov_small_base_resistance_states_2 = FROM }
         }
 
 		ai_will_do = {
@@ -30935,17 +25125,11 @@ SOV_crush_the_anti_revolutionary = { #TODO Lock Division template
 			original_tag = SOV
 		}
 
-		on_map_mode = map_only
+		on_map_mode = map_and_decisions_view
 
 		state_target = yes
 
-		target_trigger = {
-			FROM = {
-				is_core_of = SOV
-				is_owned_and_controlled_by = SOV
-				has_state_flag = found_medium_counter_revolution_base_1
-			}
-		}
+		target_array = SOV.sov_medium_base_resistance_states_1
 
 		visible = {
 			FROM = {
@@ -30953,9 +25137,17 @@ SOV_crush_the_anti_revolutionary = { #TODO Lock Division template
 			}
 		}
 
-		days_remove = 30
+		cancel_trigger = {
+			custom_trigger_tooltip = {
+				tooltip = less_division_medium
+				divisions_in_state = {
+					size < 40
+					state = FROM
+				}
+			}
+		}
 
-		fire_only_once = yes
+		days_remove = 30
 
 		cost = 20
 
@@ -30967,21 +25159,27 @@ SOV_crush_the_anti_revolutionary = { #TODO Lock Division template
 		}
 
 		complete_effect = {
-			
+
 		}
 
 		remove_effect = {
+			custom_effect_tooltip = destroyed_base_tt 
+			FROM = {
+				save_event_target_as = SOV_raid_is_done
+				clr_state_flag = medium_counter_revolution_resistance_1
+				clr_state_flag = found_medium_counter_revolution_base_1
+			}
 			SOV = {
 				set_country_flag = cleared_medium_base_1
 				add_popularity = {
 					ideology = anarchy
 					popularity = 0.05
 				}
+				hidden_effect = {
+					country_event = { id = soviets.431 }
+				}
 			}
-			FROM = {
-				clr_state_flag = medium_counter_revolution_resistance_1
-				clr_state_flag = found_medium_counter_revolution_base_1
-			}
+			remove_from_array = { SOV.sov_medium_base_resistance_states_1 = FROM }
         }
 
 		ai_will_do = {
@@ -30997,17 +25195,11 @@ SOV_crush_the_anti_revolutionary = { #TODO Lock Division template
 			original_tag = SOV
 		}
 
-		on_map_mode = map_only
+		on_map_mode = map_and_decisions_view
 
 		state_target = yes
 
-		target_trigger = {
-			FROM = {
-				is_core_of = SOV
-				is_owned_and_controlled_by = SOV
-				has_state_flag = found_medium_counter_revolution_base_2
-			}
-		}
+		target_array = SOV.sov_medium_base_resistance_states_2
 
 		visible = {
 			FROM = {
@@ -31015,9 +25207,17 @@ SOV_crush_the_anti_revolutionary = { #TODO Lock Division template
 			}
 		}
 
-		days_remove = 30
+		cancel_trigger = {
+			custom_trigger_tooltip = {
+				tooltip = less_division_medium
+				divisions_in_state = {
+					size < 40
+					state = FROM
+				}
+			}
+		}
 
-		fire_only_once = yes
+		days_remove = 30
 
 		cost = 20
 
@@ -31029,21 +25229,27 @@ SOV_crush_the_anti_revolutionary = { #TODO Lock Division template
 		}
 
 		complete_effect = {
-			
+
 		}
 
 		remove_effect = {
+			custom_effect_tooltip = destroyed_base_tt 
+			FROM = {
+				save_event_target_as = SOV_raid_is_done
+				clr_state_flag = medium_counter_revolution_resistance_2
+				clr_state_flag = found_medium_counter_revolution_base_2
+			}
 			SOV = {
 				set_country_flag = cleared_medium_base_2
 				add_popularity = {
 					ideology = anarchy
 					popularity = 0.05
 				}
+				hidden_effect = {
+					country_event = { id = soviets.431 }
+				}
 			}
-			FROM = {
-				clr_state_flag = medium_counter_revolution_resistance_2
-				clr_state_flag = found_medium_counter_revolution_base_2
-			}
+			remove_from_array = { SOV.sov_medium_base_resistance_states_2 = FROM }
         }
 
 		ai_will_do = {
@@ -31059,17 +25265,11 @@ SOV_crush_the_anti_revolutionary = { #TODO Lock Division template
 			original_tag = SOV
 		}
 
-		on_map_mode = map_only
+		on_map_mode = map_and_decisions_view
 
 		state_target = yes
 
-		target_trigger = {
-			FROM = {
-				is_core_of = SOV
-				is_owned_and_controlled_by = SOV
-				has_state_flag = found_large_counter_revolution_base
-			}
-		}
+		target_array = SOV.sov_large_base_resistance_states_1
 
 		visible = {
 			FROM = {
@@ -31077,9 +25277,17 @@ SOV_crush_the_anti_revolutionary = { #TODO Lock Division template
 			}
 		}
 
-		days_remove = 30
+		cancel_trigger = {
+			custom_trigger_tooltip = {
+				tooltip = less_division_large
+				divisions_in_state = {
+					size < 65
+					state = FROM
+				}
+			}
+		}
 
-		fire_only_once = yes
+		days_remove = 30
 
 		cost = 20
 
@@ -31091,21 +25299,27 @@ SOV_crush_the_anti_revolutionary = { #TODO Lock Division template
 		}
 
 		complete_effect = {
-			
+
 		}
 
 		remove_effect = {
+			custom_effect_tooltip = destroyed_base_tt 
+			FROM = {
+				save_event_target_as = SOV_raid_is_done
+				clr_state_flag = large_counter_revolution_resistance_1
+				clr_state_flag = found_large_counter_revolution_base
+			}
 			SOV = {
 				set_country_flag = cleared_large_base
 				add_popularity = {
 					ideology = anarchy
 					popularity = 0.05
 				}
+				hidden_effect = {
+					country_event = { id = soviets.431 }
+				}
 			}
-			FROM = {
-				clr_state_flag = large_counter_revolution_resistance_1
-				clr_state_flag = found_large_counter_revolution_base
-			}
+			remove_from_array = { SOV.sov_large_base_resistance_states_1 = FROM }
         }
 
 		ai_will_do = {
@@ -31134,9 +25348,9 @@ SOV_crush_the_anti_revolutionary = { #TODO Lock Division template
 		available = {
 			custom_trigger_tooltip = {
 				tooltip = cleared_all_small_base
-				has_country_flag = found_small_counter_revolution_base_1
-				has_country_flag = found_small_counter_revolution_base_2
-				has_country_flag = found_small_counter_revolution_base_3
+				has_country_flag = cleared_small_base_1
+				has_country_flag = cleared_small_base_2
+				has_country_flag = cleared_small_base_3
 			}
 			custom_trigger_tooltip = {
 				tooltip = cleared_all_medium_base
@@ -31154,10 +25368,18 @@ SOV_crush_the_anti_revolutionary = { #TODO Lock Division template
 		}
 
 		remove_effect = {
-			custom_effect_tooltip = SOV_raid_headquarters_tt
-			SOV = {
-				country_event = { id = soviets.419 }
+			remove_ideas = SOV_Anti_revolutionary
+			add_popularity = {
+				ideology = anarchy
+				popularity = 0.05
 			}
+			custom_effect_tooltip = SOV_raid_headquarters_tt
+			hidden_effect = {
+				SOV = {
+					country_event = { id = soviets.419 }
+				}
+			}
+			clear_array = SOV.sov_recon_rebel_anarchy_states
         }
 
 		ai_will_do = {
@@ -31202,6 +25424,221 @@ SOV_crush_the_anti_revolutionary = { #TODO Lock Division template
 
 		complete_effect = {
 
+		}
+	}
+}
+
+SOV_banditry_decision = {
+
+	SOV_deal_bandits_steppe = {
+
+		icon = GFX_decision_oppression
+
+		on_map_mode = map_and_decisions_view
+
+		highlight_states = {
+			state = 404
+		}
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			NOT = {
+				has_country_flag = dealt_with_steppe_bandits
+			}
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = division_steppe_bandit
+				has_enough_divisions_in_region_bandits_sov = yes
+			}
+			NOT = {
+				has_country_flag = put_bounty_bandits_steppe
+				has_country_flag = dealt_with_steppe_bandits
+			}
+		}
+		
+		cancel_trigger = {
+			OR = {
+				custom_trigger_tooltip = {
+					tooltip = division_steppe_bandit_cancel
+					NOT = {
+						all_of = {
+							array = SOV.sov_get_steppe_bandit_states
+							value = current_value
+							index = i
+							
+							divisions_in_state = {
+								size > 1
+								state = var:current_value
+							}
+						}
+					}
+				}
+				has_country_flag = put_bounty_bandits_steppe
+				has_country_flag = dealt_with_steppe_bandits
+			}
+		}
+
+		cost = 25
+
+		days_remove = 40
+
+		complete_effect = {
+
+		}
+
+		remove_effect = {
+			set_country_flag = dealt_with_steppe_bandits
+			custom_effect_tooltip = deal_bandits_steppe_tt
+			hidden_effect = {
+				270 = {
+					set_state_name = "the Great Steppe"
+					save_event_target_as = bandit_region_state_name
+				}
+				country_event = { id = soviets.441 }
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	SOV_put_bounty_steppe = {
+
+		icon = GFX_decision_generic_operation
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			NOT = {
+				has_country_flag = dealt_with_steppe_bandits
+			}
+			has_completed_focus = SOV_helping_hand
+		}
+
+		available = {
+			has_completed_focus = SOV_helping_hand
+			NOT = {
+				has_country_flag = dealt_with_steppe_bandits
+			}
+		}
+
+		on_map_mode = map_and_decisions_view
+
+		cancel_trigger = {
+			has_country_flag = dealt_with_steppe_bandits
+		}
+
+		cost = 50
+
+		days_remove = 60
+
+		complete_effect = {
+			set_country_flag = put_bounty_bandits_steppe
+		}
+
+		remove_effect = {
+			add_to_variable = {
+				var = bounty_lead_to_chaos
+				value = 1
+			}
+			set_country_flag = dealt_with_steppe_bandits
+			custom_effect_tooltip = deal_bandits_steppe_tt
+			hidden_effect = {
+				270 = {
+					set_state_name = "the Great Steppe"
+					save_event_target_as = bandit_region_state_name
+				}
+				country_event = { id = soviets.441 }
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	SOV_end_bandits_situation = {
+
+		icon = GFX_decision_generic_arrest
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			has_idea = SOV_Bandits_problem
+			has_completed_focus = SOV_deal_with_banditry
+		}
+
+		available = {
+			has_country_flag = dealt_with_steppe_bandits
+		}
+
+		complete_effect = {
+			remove_ideas = SOV_Bandits_problem
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+}
+
+SOV_chaos_all_over_russia = {
+
+	SOV_restore_order = {
+
+		icon = GFX_decision_generic_form_nation
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+
+		}
+
+		available = {
+			NOT = {
+				has_idea = SOV_Bandits_problem
+				has_idea = SOV_Anti_revolutionary
+			}
+			custom_trigger_tooltip = {
+				tooltip = not_has_sov_no_work
+				NOT = {
+					has_idea = SOV_No_work
+					has_idea = SOV_No_work_2
+				}
+			}
+		}
+
+		complete_effect = {
+			if = {
+				limit = {
+					check_variable = {
+						var = chaos_triumphed_over_order
+						value = 2
+						compare = greater_than_or_equals
+					}
+					has_country_flag = black_revolution_turned_civil_war
+				}
+				country_event = { id = soviets.443 }
+			}
+			else ={
+				country_event = { id = soviets.442 }
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
 		}
 	}
 }

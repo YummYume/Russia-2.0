@@ -1025,13 +1025,20 @@ SOV_the_black_revolution = {
 	scripted_gui = sov_the_black_revolution_decision_gui
 
 	allowed = {
-		
+		original_tag = SOV
 	}
 
+	visible_when_empty = no
+
+	visibility_type = map_and_decisions_view
+
+	priority = 20
+
 	on_map_area = {
-		state = 219
 		name = SOV_infiltrate_state
-		zoom = 750
+		zoom = 400
+
+		target_array = SOV.sov_get_black_revolution_states
 	}
 
 	visible = {
@@ -1069,14 +1076,64 @@ SOV_crush_the_anti_revolutionary = {
 	}
 
 	on_map_area = {
-		state = 219
 		name = SOV_recon_squad
-		zoom = 750
+		zoom = 400
+
+		target_array = SOV.sov_recon_rebel_anarchy_states
 	}
 
+	priority = 10
+
 	visible = {
-		has_completed_focus = SOV_crush_antirevolutionary
 		has_idea = SOV_Anti_revolutionary
+		has_government = anarchy
+	}
+}
+
+SOV_banditry_decision = {
+
+	icon = GFX_decision_category_eng_move_to_secure_the_dominions
+
+	picture = GFX_decision_cat_picture_generic_border_conflicts
+
+	allowed = {
+		
+	}
+
+	on_map_area = {
+		name = SOV_bandits_great_steppe
+		zoom = 400
+
+		target_array = SOV.sov_get_steppe_bandit_states
+	}
+
+	visibility_type = map_and_decisions_view
+
+	priority = 10
+
+	visible = {
+		has_idea = SOV_Bandits_problem
+		has_government = anarchy
+		has_completed_focus = SOV_deal_with_banditry
+	}
+}
+
+SOV_chaos_all_over_russia = {
+
+	icon = GFX_decision_category_generic_crisis
+
+	allowed = {
+		
+	}
+
+	priority = 20
+
+	visible = {
+		has_completed_focus = SOV_state_country
+		NOT = {
+			has_country_flag = order_has_been_restored
+			has_country_flag = chaos_has_triumphed
+		}
 		has_government = anarchy
 	}
 }
