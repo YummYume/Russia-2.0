@@ -21108,9 +21108,421 @@ country_event = {
 	}
 
 	option = { #Ignore
-		name = soviets.423.a
+		name = soviets.423.b
 		add_political_power = 50
 		add_ideas = SOV_Students_protest
 		add_to_variable = { united_russia_strength = 1 }
+	}
+}
+
+#Fate of the Communists
+country_event = {
+	id = soviets.424
+	title = soviets.424.t
+	desc = soviets.424.d
+	picture = GFX_report_event_soviet_soldiers_tank
+
+	is_triggered_only = yes
+
+	option = { #Give them a chance
+		name = soviets.424.a
+		add_stability = -0.05
+	}
+
+	option = { #Do not forgive them
+		name = soviets.424.b
+		add_political_power = 100
+		add_to_variable = { united_russia_strength = 1 }
+	}
+}
+
+#Fate of the Deserters
+country_event = {
+	id = soviets.425
+	title = soviets.425.t
+	desc = soviets.425.d
+	picture = GFX_report_event_soviet_soldiers_tank
+
+	is_triggered_only = yes
+
+	option = { #Give them a chance
+		name = soviets.425.a
+		add_stability = -0.05
+	}
+
+	option = { #Do not forgive them
+		name = soviets.425.b
+		add_political_power = 100
+		add_to_variable = { united_russia_strength = 1 }
+	}
+}
+
+#Beria's Trial
+country_event = {
+	id = soviets.426
+	title = soviets.426.t
+	desc = soviets.426.d
+	picture = GFX_report_event_soviet_soldiers_tank
+
+	is_triggered_only = yes
+
+	option = { #Execute him
+		name = soviets.426.a
+		add_stability = -0.05
+		add_political_power = 200
+	}
+
+	option = { #Put him in prison
+		name = soviets.426.b
+		add_political_power = 50
+	}
+
+	option = { #Let him be
+		name = soviets.426.c
+		add_political_power = -200
+	}
+}
+
+#Problems in the Army
+country_event = {
+	id = soviets.427
+	title = soviets.427.t
+	desc = soviets.427.d
+	picture = GFX_report_event_soviet_soldiers_tank
+
+	fire_only_once = yes
+
+	trigger = {
+		original_tag = SOV
+		has_government = democratic
+		has_country_flag = sov_democratic_opposition_formed
+		check_variable = {
+			var = united_russia_strength
+			value = 1
+			compare = greater_than
+		}
+		NOT = {
+			has_country_flag = sov_democratic_opposition_destroyed
+		}
+	}
+
+	mean_time_to_happen = { days = 50 }
+
+	option = { #Let it calm down
+		name = soviets.427.a
+		add_stability = -0.05
+		add_ideas = SOV_Army_disobedience
+		add_to_variable = { united_russia_strength = 1 }
+	}
+
+	option = { #Take action
+		name = soviets.427.b
+		add_political_power = -150
+		add_stability = 0.05
+	}
+}
+
+#Moscow Trials
+country_event = {
+	id = soviets.428
+	title = soviets.428.t
+	desc = soviets.428.d
+	picture = GFX_report_event_soviet_soldiers_tank
+
+	is_triggered_only = yes
+
+	option = { #Force them into the army
+		name = soviets.428.a
+		add_political_power = -50
+		add_war_support = 0.05
+		add_manpower = 5000
+	}
+
+	option = { #Let them rejoin the country
+		name = soviets.428.b
+		add_political_power = -100
+		add_stability = 0.05
+	}
+
+	option = { #Execute the most dangerous
+		name = soviets.428.c
+		add_political_power = 50
+	}
+
+	option = { #Use it as an excuse to emprison opposition
+		name = soviets.428.d
+		add_stability = -0.05
+		subtract_from_variable = { united_russia_strength = 1 }
+	}
+}
+
+#Opposition Calls for Fair Elections
+country_event = {
+	id = soviets.429
+	title = soviets.429.t
+	desc = soviets.429.d
+	picture = GFX_report_event_soviet_soldiers_tank
+
+	fire_only_once = yes
+
+	trigger = {
+		original_tag = SOV
+		has_government = democratic
+		has_country_flag = sov_democratic_opposition_formed
+		has_completed_focus = SOV_temporarily_abolish_elections
+		NOT = {
+			OR = {
+				has_completed_focus = SOV_united_russia
+				has_completed_focus = SOV_preemptive_coup
+				has_country_flag = sov_democratic_opposition_destroyed
+			}
+		}
+	}
+
+	mean_time_to_happen = { days = 30 }
+
+	option = { #Accept
+		name = soviets.429.a
+		add_political_power = -50
+		add_to_variable = { united_russia_strength = 1 }
+		set_politics = {
+			ruling_party = democratic
+			elections_allowed = yes
+			election_frequency = 4
+		}
+	}
+
+	option = { #Refuse
+		name = soviets.429.b
+		add_political_power = 100
+		add_to_variable = { united_russia_strength = 2 }
+	}
+}
+
+#Track Begins
+country_event = {
+	id = soviets.430
+	title = soviets.430.t
+	desc = soviets.430.d
+	picture = GFX_report_event_soviet_soldiers_tank
+
+	is_triggered_only = yes
+
+	option = { #Accept
+		name = soviets.430.a
+		custom_effect_tooltip = SOV_track_begin_tt
+		set_country_flag = sov_track_begin
+	}
+}
+
+#Stalin Found!
+state_event = {
+	id = soviets.432
+	title = soviets.432.t
+	desc = soviets.432.d
+	picture = GFX_report_event_soviet_soldiers_tank
+
+	is_triggered_only = yes
+
+	option = { #Yay
+		name = soviets.432.a
+		CONTROLLER = {
+			country_event = { id = soviets.433 days = 1 }
+		}
+	}
+}
+
+#Stalin Found in our Country
+country_event = {
+	id = soviets.433
+	title = soviets.433.t
+	desc = soviets.433.d
+	picture = GFX_report_event_soviet_soldiers_tank
+
+	is_triggered_only = yes
+
+	option = { #Transfer
+		name = soviets.433.a
+		SOV = {
+			country_event = { id = soviets.434 days = 1 }
+		}
+	}
+
+	option = { #Refuse
+		name = soviets.433.a
+		trigger = {
+			has_government = communism
+		}
+		SOV = {
+			country_event = { id = soviets.436 days = 1 }
+		}
+	}
+}
+
+#Stalin Transfered - Fate of Stalin
+country_event = {
+	id = soviets.434
+	title = soviets.434.t
+	desc = {
+		text = soviets.434.d
+		trigger = {
+			FROM = {
+				NOT = {
+					tag = ROOT
+				}
+			}
+		}
+	}
+	desc = {
+		text = soviets.434.d_root
+		trigger = {
+			FROM = {
+				tag = ROOT
+			}
+		}
+	}
+	picture = GFX_report_event_soviet_soldiers_tank
+
+	is_triggered_only = yes
+
+	option = { #Execute him
+		name = soviets.434.a
+		set_country_flag = sov_stalin_executed
+	}
+
+	option = { #Put him in prison
+		name = soviets.434.b
+		set_country_flag = sov_stalin_prison
+	}
+
+	option = { #Exile him in Siberia
+		name = soviets.434.c
+		set_country_flag = sov_stalin_exiled_siberia
+	}
+}
+
+#Stalin's Proposal
+country_event = {
+	id = soviets.435
+	title = soviets.435.t
+	desc = soviets.435.d
+	picture = GFX_report_event_soviet_soldiers_tank
+
+	is_triggered_only = yes
+
+	option = { #Sure
+		name = soviets.435.a
+		
+	}
+
+	option = { #Refuse
+		name = soviets.435.b
+		
+	}
+}
+
+#Country refuses to give Stalin back
+country_event = {
+	id = soviets.436
+	title = soviets.436.t
+	desc = soviets.436.d
+	picture = GFX_report_event_soviet_soldiers_tank
+
+	is_triggered_only = yes
+
+	option = { #Send a warning
+		name = soviets.436.a
+		country_event = { id = soviets.437 days = 1 }
+	}
+
+	option = { #Give up
+		name = soviets.436.b
+		country_event = { id = soviets.438 days = 1 }
+	}
+}
+
+#SOV Pressure for Stalin
+country_event = {
+	id = soviets.437
+	title = soviets.437.t
+	desc = soviets.437.d
+	picture = GFX_report_event_soviet_soldiers_tank
+
+	is_triggered_only = yes
+
+	option = { #Ok Sorry
+		name = soviets.437.a
+		country_event = { id = soviets.434 days = 1 }
+	}
+}
+
+#SOV Gives Up
+country_event = {
+	id = soviets.438
+	title = soviets.438.t
+	desc = soviets.438.d
+	picture = GFX_report_event_soviet_soldiers_tank
+
+	is_triggered_only = yes
+
+	immediate = {
+		SOV = {
+			set_country_flag = sov_gave_up_track
+		}
+	}
+
+	option = { #Yay
+		name = soviets.438.a
+		
+	}
+}
+
+#Stalin found dead
+state_event = {
+	id = soviets.439
+	title = soviets.439.t
+	desc = soviets.439.d
+	picture = GFX_report_event_soviet_soldiers_tank
+
+	trigger = {
+		is_controlled_by = SOV
+		has_state_flag = sov_stalin_hidding_state
+		CONTROLLER = {
+			tag = SOV
+			has_government = democratic
+			has_country_flag = sov_gave_up_track
+		}
+	}
+
+	fire_only_once = yes
+
+	mean_time_to_happen = { days = 1 }
+
+	immediate = {
+		clr_state_flag = sov_stalin_hidding_state
+		set_state_flag = sov_stalin_hidding_state_found_dead
+	}
+
+	option = { #Oh
+		name = soviets.439.a
+		SOV = {
+			add_stability = 0.05
+			set_country_flag = sov_stalin_found_dead
+		}
+	}
+}
+
+#Stalin Not Found
+state_event = {
+	id = soviets.444
+	title = soviets.444.t
+	desc = soviets.444.d
+	picture = GFX_report_event_soviet_soldiers_tank
+
+	is_triggered_only = yes
+
+	option = { #Uh
+		name = soviets.444.a
+		custom_effect_tooltip = SOV_can_track_again
 	}
 }

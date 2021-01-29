@@ -31221,3 +31221,90 @@ SOV_supreme_court_decisions = {
 		}
 	}
 }
+
+SOV_track_stalin_decision = {
+
+	SOV_search_for_stalin = {
+	
+		icon = GFX_decision_infiltrate_state
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		on_map_mode = map_only
+
+		state_target = yes
+
+		target_array = global.sov_track_available_states
+
+		visible = {
+			has_completed_focus = SOV_the_track
+			has_government = democratic
+			has_country_flag = sov_track_begin
+			NOT = {
+				has_country_flag = sov_stalin_track_found
+			}
+		}
+
+		days_remove = 10
+
+		fire_only_once = yes
+
+		cost = 10
+
+		available = {
+			NOT = {
+				has_country_flag = is_searching_for_stalin
+			}
+		}
+
+		complete_effect = {
+			set_country_flag = is_searching_for_stalin
+		}
+
+		remove_effect = {
+			hidden_effect = {
+				clr_country_flag = is_searching_for_stalin
+				if = {
+					limit = {
+						FROM = {
+							has_state_flag = sov_stalin_hidding_state
+						}
+					}
+					set_country_flag = sov_stalin_track_found
+					if = {
+						limit = {
+							FROM = {
+								CONTROLLER = {
+									tag = ROOT
+								}
+							}
+						}
+						ROOT = {
+							country_event = { id = soviets.434 }
+						}
+					}
+					else = {
+						FROM = {
+							clr_state_flag = sov_stalin_hidding_state
+							set_state_flag = sov_stalin_found_state
+							state_event = { id = soviets.432 trigger_for = ROOT }
+						}
+					}
+					remove_from_array = { global.sov_track_available_states = FROM }
+				}
+				else = {
+					FROM = {
+						state_event = { id = soviets.444 trigger_for = ROOT }
+					}
+					remove_from_array = { global.sov_track_available_states = FROM }
+				}
+			}
+        }
+
+		ai_will_do = {
+			factor = 100
+		}	
+	}
+}

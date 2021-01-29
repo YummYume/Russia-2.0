@@ -3816,7 +3816,7 @@ focus_tree = {
 				}
 			}
 		}
-		search_filters = {FOCUS_FILTER_ANNEXATION}
+		search_filters = { FOCUS_FILTER_ANNEXATION }
 		completion_reward = {
 			custom_effect_tooltip = SOV_russian_expansion_tt3
 			hidden_effect = {
@@ -10552,6 +10552,56 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
 			custom_effect_tooltip = SOV_the_track_tt
+			hidden_effect = {
+				country_event = { id = soviets.430 days = 5 }
+				set_variable = { SOV.sov_track_array_count = 0 }
+
+				while_loop_effect = {
+					limit = {
+						check_variable = {
+							var = SOV.sov_track_array_count
+							value = 10
+							compare = less_than
+						}
+					}
+					
+					random_scope_in_array = {
+						array = global.countries
+						limit = {
+							exists = yes
+							any_state = {
+								OR = {
+									is_owned_by = THIS
+									is_controlled_by = THIS
+								}
+								is_capital = yes
+							}
+							NOT = {
+								tag = SOV
+								has_civil_war = yes
+								is_in_faction_with = ROOT
+								has_capitulated = yes
+								has_war_with = SOV
+								is_subject_of = SOV
+								has_government = fascism
+							}
+						}
+
+						add_to_array = { global.sov_track_available_states = THIS.capital }
+						
+						add_to_variable = { SOV.sov_track_array_count = 1 }
+					}
+				}
+
+				random_scope_in_array = {
+					array = global.sov_track_available_states
+					limit = {}
+					
+					THIS = {
+						set_state_flag = sov_stalin_hidding_state
+					}
+				}
+			}	
 		}
 	}
 
@@ -10590,7 +10640,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			
+			country_event = { id = soviets.425 }
 		}
 	}
 
@@ -10629,7 +10679,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			
+			country_event = { id = soviets.424 }
 		}
 	}
 
@@ -10692,6 +10742,8 @@ focus_tree = {
 		completion_reward = {
 			add_stability = -0.05
 			custom_effect_tooltip = SOV_temporarily_abolish_elections_tt
+			custom_effect_tooltip = SOV_united_russia_lose_1
+			custom_effect_tooltip = SOV_temporarily_abolish_elections_tt2
 			hidden_effect = {
 				set_politics = {
 					ruling_party = democratic
@@ -11290,7 +11342,20 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			
+			set_party_name = {
+				ideology = democratic
+				long_name = SOV_united_russia_name
+				name = SOV_united_russia_name_long
+			}
+			create_country_leader = {
+				name = "Alexander Konovalov"
+				desc = "POLITICS_ALEXANDER_KONOVALOV_DESC"
+				picture = "Portrait_Alexander_Konovalov.dds"
+				ideology = conservatism
+				traits = {
+					grand_orient_russia_peoples
+				}
+			}
 		}
 	}
 
