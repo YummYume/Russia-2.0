@@ -19341,7 +19341,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY }
 		completion_reward = {
-			country_event = soviets.402
+			country_event = { id = soviets.402 }
 		}
 	}
 
@@ -19369,64 +19369,186 @@ focus_tree = {
 				add_dynamic_modifier = { modifier = anarchist_black_guard_modifiers }
 				add_ideas = SOV_Black_guard_army
 				213 = {
-					set_state_flag = anarchist_state
+					set_state_flag = anarchist_state_black_revolution
 				}
 				262 = {
-					set_state_flag = anarchist_state
+					set_state_flag = anarchist_state_black_revolution
 				}
 				210 = {
-					set_state_flag = anarchist_state
+					set_state_flag = anarchist_state_black_revolution
 				}
 				207 = {
-					set_state_flag = anarchist_state
+					set_state_flag = anarchist_state_black_revolution
 				}
 				242 = {
-					set_state_flag = anarchist_state
+					set_state_flag = anarchist_state_black_revolution
 				}
 				246 = {
-					set_state_flag = anarchist_state
+					set_state_flag = anarchist_state_black_revolution
 				}
 				192 = {
-					set_state_flag = anarchist_state
+					set_state_flag = anarchist_state_black_revolution
 				}
 				197 = {
-					set_state_flag = anarchist_state
+					set_state_flag = anarchist_state_black_revolution
 				}
 				196 = {
-					set_state_flag = anarchist_state
+					set_state_flag = anarchist_state_black_revolution
 				}
 				200 = {
-					set_state_flag = anarchist_state
+					set_state_flag = anarchist_state_black_revolution
 				}
 				213 = {
-					set_state_flag = anarchist_state
+					set_state_flag = anarchist_state_black_revolution
 				}
 				238 = {
-					set_state_flag = anarchist_state
+					set_state_flag = anarchist_state_black_revolution
 				}
 				237 = {
-					set_state_flag = anarchist_state
+					set_state_flag = anarchist_state_black_revolution
 				}
 				236 = {
-					set_state_flag = anarchist_state
+					set_state_flag = anarchist_state_black_revolution
 				}
 				582 = {
-					set_state_flag = anarchist_state
+					set_state_flag = anarchist_state_black_revolution
 				}
 				573 = {
-					set_state_flag = anarchist_state
+					set_state_flag = anarchist_state_black_revolution
 				}
 				637 = {
-					set_state_flag = anarchist_state
+					set_state_flag = anarchist_state_black_revolution
 				}
 				655 = {
-					set_state_flag = anarchist_state
+					set_state_flag = anarchist_state_black_revolution
 				}
 				409 = {
-					set_state_flag = anarchist_state
+					set_state_flag = anarchist_state_black_revolution
 				}
 				564 = {
-					set_state_flag = anarchist_state
+					set_state_flag = anarchist_state_black_revolution
+				}
+				for_each_scope_loop = {
+					array = SOV.owned_controlled_states
+					
+					if = {
+						limit = {
+							THIS = {
+								OR = {
+									state = 233
+									state = 234
+									state = 235
+									state = 218
+									state = 227
+									state = 226
+									state = 203
+									state = 198
+									state = 199
+									state = 201
+									state = 193
+									state = 259
+									state = 221
+									state = 228
+									state = 225
+									state = 224
+									state = 241
+									state = 194
+									state = 204
+									state = 243
+								}
+							}
+						}
+						add_to_array = { SOV.sov_get_black_revolution_states = THIS }
+						THIS = {
+							set_state_flag = high_risk_state_black_revolution
+						}
+					}
+					else_if {
+						limit = {
+							THIS = {
+								OR = {
+									state = 263
+									state = 209
+									state = 244
+									state = 208
+									state = 216
+									state = 215
+								}
+							}
+						}
+						add_to_array = { SOV.sov_get_black_revolution_states = THIS }
+						THIS = {
+							set_state_flag = medium_risk_state_black_revolution_west
+						}
+					}
+					else_if {
+						limit = {
+							THIS = {
+								OR = {
+									state = 575
+									state = 565
+									state = 563
+									state = 561
+									state = 657
+								}
+							}
+						}
+						add_to_array = { SOV.sov_get_black_revolution_states = THIS }
+						THIS = {
+							set_state_flag = medium_risk_state_black_revolution_east
+						}
+					}
+					else_if = {
+						limit = {
+							THIS = {
+								OR = {
+									state = 584
+									state = 585
+									state = 405
+									state = 742
+									state = 732
+									state = 586
+									state = 404
+									state = 589
+									state = 588
+									state = 590
+									state = 583
+									state = 572
+									state = 653
+									state = 580
+									state = 403
+									state = 571
+									state = 570
+									state = 40
+									state = 654
+									state = 569
+									state = 578
+									state = 568
+									state = 567
+								}
+							}
+						}
+						add_to_array = { SOV.sov_get_black_revolution_states = THIS }
+						THIS = {
+							set_state_flag = low_risk_state_black_revolution
+						}
+					}
+					else_if = {
+						limit = {
+							THIS = {
+								OR = {
+									state = 579
+									state = 577
+									state = 576
+									state = 516
+								}
+							}
+						}
+						add_to_array = { SOV.sov_get_black_revolution_states = THIS }
+						THIS = {
+							set_state_flag = no_risk_state_black_revolution
+						}
+					}
 				}
 			}
 		}
@@ -19475,7 +19597,8 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY }
 		completion_reward = {
-			country_event = soviets.403
+			country_event = { id = soviets.403 }
+			set_variable = { chaos_triumphed_over_order = 0 }
 		}
 	}
 
@@ -19617,6 +19740,97 @@ focus_tree = {
 					}
 					set_state_flag = large_counter_revolution_resistance_1
 				}
+				for_each_scope_loop = {
+					array = SOV.owned_controlled_states
+					
+					if = {
+						limit = {
+							THIS = {
+								NOT = {
+									state = 219
+									state = 137
+									state = 195
+									state = 217
+									state = 408
+									state = 202
+								}
+							}
+						}
+						add_to_array = { SOV.sov_recon_rebel_anarchy_states = THIS }
+					}
+				}
+				for_each_scope_loop = {
+					array = SOV.owned_controlled_states
+					
+					if = {
+						limit = {
+							THIS = {
+								has_state_flag = small_counter_revolution_resistance_1
+							}
+						}
+						add_to_array = { SOV.sov_small_base_resistance_states_1 = THIS }
+					}
+				}
+				for_each_scope_loop = {
+					array = SOV.owned_controlled_states
+					
+					if = {
+						limit = {
+							THIS = {
+								has_state_flag = small_counter_revolution_resistance_2
+							}
+						}
+						add_to_array = { SOV.sov_small_base_resistance_states_2 = THIS }
+					}
+				}
+				for_each_scope_loop = {
+					array = SOV.owned_controlled_states
+					
+					if = {
+						limit = {
+							THIS = {
+								has_state_flag = small_counter_revolution_resistance_3
+							}
+						}
+						add_to_array = { SOV.sov_small_base_resistance_states_3 = THIS }
+					}
+				}
+				for_each_scope_loop = {
+					array = SOV.owned_controlled_states
+					
+					if = {
+						limit = {
+							THIS = {
+								has_state_flag = medium_counter_revolution_resistance_1
+							}
+						}
+						add_to_array = { SOV.sov_medium_base_resistance_states_1 = THIS }
+					}
+				}
+				for_each_scope_loop = {
+					array = SOV.owned_controlled_states
+					
+					if = {
+						limit = {
+							THIS = {
+								has_state_flag = medium_counter_revolution_resistance_2
+							}
+						}
+						add_to_array = { SOV.sov_medium_base_resistance_states_2 = THIS }
+					}
+				}
+				for_each_scope_loop = {
+					array = SOV.owned_controlled_states
+					
+					if = {
+						limit = {
+							THIS = {
+								has_state_flag = large_counter_revolution_resistance_1
+							}
+						}
+						add_to_array = { SOV.sov_large_base_resistance_states_1 = THIS }
+					}
+				}
 			}	
 		}
 	}
@@ -19660,7 +19874,38 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY }
 		completion_reward = {
-			
+			custom_effect_tooltip = unlock_deal_with_banditry_tt
+			set_variable = { bounty_lead_to_chaos = 0 }
+			hidden_effect = {
+				for_each_scope_loop = {
+					array = SOV.owned_controlled_states
+					
+					if = {
+						limit = {
+							THIS = {
+								OR = {
+									state = 407
+									state = 406
+									state = 587
+									state = 584
+									state = 585
+									state = 405
+									state = 742
+									state = 732
+									state = 586
+									state = 404
+									state = 402
+									state = 583
+									state = 590
+									state = 588
+									state = 589
+								}
+							}
+						}
+						add_to_array = { SOV.sov_get_steppe_bandit_states = THIS }
+					}
+				}	
+			}
 		}
 	}
 
@@ -19680,7 +19925,177 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY }
 		completion_reward = {
-			
+			custom_effect_tooltip = SOV_helping_hand_tt
+			hidden_effect = {
+				division_template = {
+					name = "Militsii Diviziya"
+					is_locked = yes
+					division_names_group = SOV_INF_MIL_BLACK_REVOLUTION_01
+					priority = 0
+					regiments = {
+						infantry = { x = 0 y = 0 }
+						infantry = { x = 0 y = 1 }
+						infantry = { x = 0 y = 2 }
+						infantry = { x = 1 y = 0 }
+						infantry = { x = 1 y = 1 }
+						infantry = { x = 1 y = 2 }
+					}
+					support = { 
+						military_police = { x = 0 y = 0 }
+						recon = { x = 0 y = 1 } 
+					} 
+				}
+				random_owned_controlled_state = {
+					limit = {
+						has_state_category = city
+					}
+					create_unit = {
+						division = "name = \"1ya Militsii Diviziya \" division_template = \"Militsii Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"5ya Militsii Diviziya \" division_template = \"Militsii Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"9ya Militsii Diviziya \" division_template = \"Militsii Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						has_state_category = city
+					}
+					create_unit = {
+						division = "name = \"4ya Militsii Diviziya \" division_template = \"Militsii Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"8ya Militsii Diviziya \" division_template = \"Militsii Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"15ya Militsii Diviziya \" division_template = \"Militsii Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						has_state_category = megalopolis
+					}
+					create_unit = {
+						division = "name = \"11ya Militsii Diviziya \" division_template = \"Militsii Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"14ya Militsii Diviziya \" division_template = \"Militsii Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"10ya Militsii Diviziya \" division_template = \"Militsii Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						has_state_category = city
+					}
+					create_unit = {
+						division = "name = \"2ya Militsii Diviziya \" division_template = \"Militsii Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"7ya Militsii Diviziya \" division_template = \"Militsii Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"6ya Militsii Diviziya \" division_template = \"Militsii Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						has_state_category = city
+					}
+					create_unit = {
+						division = "name = \"3ya Militsii Diviziya \" division_template = \"Militsii Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"12ya Militsii Diviziya \" division_template = \"Militsii Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"13ya Militsii Diviziya \" division_template = \"Militsii Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						has_state_category = large_town
+					}
+					create_unit = {
+						division = "name = \"16ya Militsii Diviziya \" division_template = \"Militsii Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"20ya Militsii Diviziya \" division_template = \"Militsii Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						has_state_category = town
+					}
+					create_unit = {
+						division = "name = \"25ya Militsii Diviziya \" division_template = \"Militsii Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"19ya Militsii Diviziya \" division_template = \"Militsii Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						has_state_category = town
+					}
+					create_unit = {
+						division = "name = \"24ya Militsii Diviziya \" division_template = \"Militsii Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"17ya Militsii Diviziya \" division_template = \"Militsii Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						has_state_category = rural
+					}
+					create_unit = {
+						division = "name = \"21ya Militsii Diviziya \" division_template = \"Militsii Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"18ya Militsii Diviziya \" division_template = \"Militsii Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						has_state_category = rural
+					}
+					create_unit = {
+						division = "name = \"22ya Militsii Diviziya \" division_template = \"Militsii Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"13ya Militsii Diviziya \" division_template = \"Militsii Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+				}
+			}
 		}
 	}
 
@@ -19691,7 +20106,7 @@ focus_tree = {
 		y = 5
 		prerequisite = { focus = SOV_state_country }
 		icon = GFX_goal_generic_production
-		cost = 6
+		cost = 8
 		ai_will_do = {
 			factor = 7
 		}
@@ -19700,7 +20115,50 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY }
 		completion_reward = {
-			
+			swap_ideas = {
+				remove_idea = SOV_No_work
+				add_idea = SOV_No_work_2
+			}
+			country_event = { id = soviets.420 hours = 12 }
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
 		}
 	}
 
@@ -19711,7 +20169,7 @@ focus_tree = {
 		y = 6
 		prerequisite = { focus = SOV_forced_quota }
 		icon = GFX_goal_generic_construct_civilian
-		cost = 10
+		cost = 12
 		ai_will_do = {
 			factor = 7
 		}
@@ -19720,7 +20178,47 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY }
 		completion_reward = {
-			
+			remove_ideas = SOV_No_work_2
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 4
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 4
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 4
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+			country_event = { id = soviets.421 }
 		}
 	}
 
@@ -19867,6 +20365,7 @@ focus_tree = {
 		}
 		available = {
 			has_government = anarchy
+			has_country_flag = not_kill_soviet_general
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY }
 		completion_reward = {
