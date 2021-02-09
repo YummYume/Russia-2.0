@@ -26579,4 +26579,110 @@ SOV_track_stalin_decision = {
 	}
 }
 
+SOV_anarchism_election = {
+
+	SOV_test = {
+	
+		icon = GFX_decision_generic_political_rally
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+
+		}
+
+		fire_only_once = yes
+
+		available = {
+		
+		}
+
+		complete_effect = {
+			add_political_power = anarchist_party_election^0
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	SOV_test_timeout_30 = {
+	
+		icon = GFX_decision_generic_political_rally
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+
+		}
+
+		fire_only_once = yes
+
+		available = {
+			has_government = anarchy
+		}
+
+		activation = {
+			
+		}
+
+		days_mission_timeout = 10
+
+		is_good = no
+
+		timeout_effect = {
+			set_temp_variable = { biggest_party = 0 }
+
+			for_each_loop = {
+				array = anarchist_party_election
+				value = v
+				index = i
+				
+				if = {
+					limit = {
+						check_variable = {
+							var = v
+							value = biggest_party
+							compare = greater_than
+						}
+					}
+					set_temp_variable = { biggest_party = var:v }
+					set_variable = { current_biggest_party = var:i }
+				}
+				#Fallback
+				else_if = {
+					limit = {
+						check_variable = {
+							var = v
+							value = biggest_party
+							compare = equals
+						}
+					}
+					add_to_array = {
+						array = anarchist_party_election
+						value = var:v - 1
+						index = i
+					}
+				}
+			}
+
+			add_to_array = {
+				array = anarchist_party_election^current_biggest_party
+				value = var:i - 5
+				index = i
+			}
+
+			# Biggest party : anarchist_party_election^current_biggest_party
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+}
+
 #Add Factories if there was a civil war
