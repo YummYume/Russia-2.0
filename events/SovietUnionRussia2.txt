@@ -21187,3 +21187,419 @@ state_event = {
 		custom_effect_tooltip = SOV_can_track_again
 	}
 }
+
+#Anarchist Leader Election
+country_event = {
+	id = soviets.445
+	title = soviets.445.t
+	desc = soviets.445.d
+	picture = GFX_report_event_soviet_soldiers_tank
+
+	is_triggered_only = yes
+
+	option = { #Elect Anarcho-Communism
+		name = soviets.445.a
+		set_country_flag = has_elected_anarcho_communism
+		custom_effect_tooltip = can_complete_anarcho_communism
+	}
+
+	option = { #Elect Anarcho-Syndicalism
+		name = soviets.445.b
+		set_country_flag = has_elected_anarcho_syndicalism
+		custom_effect_tooltip = can_complete_anarcho_syndicalism
+	}
+
+	option = { #Elect Anarcho-individualism
+		name = soviets.445.c
+		set_country_flag = has_elected_anarcho_individualism
+		custom_effect_tooltip = can_complete_anarcho_individualist
+	}
+}
+
+#Fate of the Black Guard
+country_event = {
+	id = soviets.446
+	title = soviets.446.t
+	desc = soviets.446.d
+	picture = GFX_report_event_soviet_soldiers_tank
+
+	is_triggered_only = yes
+
+	option = { #Disband the Black Guard
+		name = soviets.446.a
+		remove_ideas = SOV_Black_guard_army_2
+		add_stability = -0.15
+	}
+
+	option = { #Reform the Black 
+		name = soviets.446.b
+		add_political_power = -50
+		add_stability = 0.1
+		swap_ideas = {
+			remove_idea = SOV_Black_guard_army_2
+			add_idea = SOV_Black_guard_army_3
+		}
+	}
+
+	option = { #Reform the Black Guard into a Professional Army
+		name = soviets.446.c
+		add_political_power = -100
+		remove_ideas = SOV_Black_guard_army_2
+		add_ideas = SOV_Black_guard_reformation 
+		custom_effect_tooltip = will_take_years_to_reform_black_guard
+		hidden_effect = {
+			random_list = {
+				30 = {
+					country_event = { id = soviets.447 days = 365 }
+				}
+				30 = {
+					country_event = { id = soviets.447 days = 465 }
+				}
+				30 = {
+					country_event = { id = soviets.447 days = 565 }
+				}
+				10 = {
+					country_event = { id = soviets.447 days = 730 }
+				}
+			}
+		}
+	}
+}
+
+#The Black Guard hes been Reformed
+country_event = {
+	id = soviets.447
+	title = soviets.447.t
+	desc = soviets.447.d
+	picture = GFX_report_event_soviet_soldiers_tank
+
+	is_triggered_only = yes
+
+	option = { #Mother Anarchy Loves her Sons
+		name = soviets.447.a
+		remove_ideas = SOV_Black_guard_reformation
+		add_ideas = SOV_Black_guard_reformed
+	}
+}
+
+#Fate of the Red Generals
+country_event = {
+	id = soviets.448
+	title = soviets.448.t
+	desc = soviets.448.d
+	picture = GFX_report_event_soviet_soldiers_tank
+
+	is_triggered_only = yes
+
+	option = { #Emprison and Execute them
+		name = soviets.448.a
+		add_stability = 0.1
+		add_popularity = {
+			ideology = anarchy
+			popularity = 0.1
+		}
+		add_political_power = 75
+	}
+
+	option = { #Emprison the Leaders and Force the other to Work for us
+		name = soviets.448.b
+		add_political_power = -25
+		custom_effect_tooltip = some_red_generals_offer_service
+		hidden_effect = {
+			create_field_marshal = {
+				name = "Kliment Voroshilov"
+				picture = "Portrait_Soviet_Kliment_Voroshilov.dds"
+				traits = { old_guard politically_connected inflexible_strategist }
+				skill = 1
+				attack_skill = 1
+				defense_skill = 1
+				planning_skill = 1
+				logistics_skill = 1
+			}
+			create_field_marshal = {
+				name = "Semyon Budyonny"
+				picture = "Portrait_Soviet_Semyon_Budyonny.dds"
+				traits = { old_guard politically_connected inflexible_strategist }
+				skill = 1
+				attack_skill = 1
+				defense_skill = 1
+				planning_skill = 1
+				logistics_skill = 1
+			}
+			create_corps_commander = {
+				name = "Semyon Timoshenko"
+				picture = "Portrait_Soviet_Semyon_Timoshenko.dds"
+				traits = { cavalry_officer politically_connected career_officer }
+				skill = 3
+				attack_skill = 3
+				defense_skill = 2
+				planning_skill = 2
+				logistics_skill = 3
+			}
+			create_corps_commander = {
+				name = "Aleksandr Vasilevsky"
+				picture = "Portrait_Soviet_Aleksandr_Vasilevsky.dds"
+				traits = { armor_officer politically_connected }
+				skill = 4
+				attack_skill = 4
+				defense_skill = 4
+				planning_skill = 3
+				logistics_skill = 2
+			}
+			create_corps_commander = {
+				name = "Filipp Golikov"
+				picture = "Portrait_Soviet_Filipp_Golikov.dds"
+				traits = { career_officer }
+				skill = 3
+				attack_skill = 3
+				defense_skill = 3
+				planning_skill = 3
+				logistics_skill = 1
+			}
+			create_corps_commander = {
+				name = "Georgiy Zakharov"
+				picture = "Portrait_Soviet_Georgiy_Zakharov.dds"
+				traits = { career_officer }
+				skill = 1
+				attack_skill = 1
+				defense_skill = 1
+				planning_skill = 1
+				logistics_skill = 1
+			}
+			create_corps_commander = {
+				name = "Max Reyter"
+				picture = "Portrait_Soviet_Max_Andreyevich.dds"
+				traits = { career_officer }
+				skill = 1
+				attack_skill = 1
+				defense_skill = 1
+				planning_skill = 1
+				logistics_skill = 1
+			}
+			create_corps_commander = {
+				name = "Markian Popov"
+				picture = "Portrait_Soviet_Matkian_Popov.dds"
+				traits = { winter_specialist infantry_officer brilliant_strategist }
+				skill = 2
+				attack_skill = 2
+				defense_skill = 1
+				planning_skill = 2
+				logistics_skill = 2
+			}
+			create_corps_commander = {
+				name = "Nikolai Berzarin"
+				picture = "Portrait_Soviet_Nikolai_Berzarin.dds"
+				traits = { infantry_officer }
+				skill = 3
+				attack_skill = 3
+				defense_skill = 3
+				planning_skill = 2
+				logistics_skill = 2
+			}
+			create_corps_commander = {
+				name = "Kirill Moskalenko"
+				picture = "Portrait_Soviet_Kirill_Moskalenko.dds"
+				traits = {  }
+				skill = 3
+
+				attack_skill = 2
+				defense_skill = 2
+				planning_skill = 3
+				logistics_skill = 3
+			}
+			create_corps_commander = {
+				name = "Ivan Chernyakhovsky"
+				picture = "Portrait_Soviet_Ivan_Chernyakhovsky.dds"
+				traits = { armor_officer }
+				skill = 1
+				attack_skill = 1
+				defense_skill = 1
+				planning_skill = 1
+				logistics_skill = 1
+			}
+		}
+	}
+
+	option = { #Forgive them and Repent for the Army
+		name = soviets.448.c
+		add_political_power = -100
+		add_stability = -0.1
+		add_popularity = {
+			ideology = anarchy
+			popularity = -0.15
+		}
+		custom_effect_tooltip = red_generals_offer_service_full
+		hidden_effect = {
+			create_corps_commander = {
+				name = "Georgy Zhukov"
+				picture = "Portrait_Soviet_Gregory_Zhukov.dds"
+				traits = { winter_specialist armor_officer media_personality war_hero }
+				skill = 5
+				attack_skill = 5
+				defense_skill = 2
+				planning_skill = 4
+				logistics_skill = 5
+			}
+			create_field_marshal = {
+				name = "Mikhail Tukhachevsky"
+				picture = "Portrait_Soviet_Mikhail_Tukhachevsky.dds"
+				traits = { offensive_doctrine brilliant_strategist career_officer infantry_officer trait_reckless }
+				skill = 4
+				attack_skill = 3
+				defense_skill = 4
+				planning_skill = 4
+				logistics_skill = 2
+			}
+			create_field_marshal = {
+				name = "Kliment Voroshilov"
+				picture = "Portrait_Soviet_Kliment_Voroshilov.dds"
+				traits = { old_guard politically_connected inflexible_strategist }
+				skill = 1
+				attack_skill = 1
+				defense_skill = 1
+				planning_skill = 1
+				logistics_skill = 1
+			}
+			create_field_marshal = {
+				name = "Semyon Budyonny"
+				picture = "Portrait_Soviet_Semyon_Budyonny.dds"
+				traits = { old_guard politically_connected inflexible_strategist }
+				skill = 1
+				attack_skill = 1
+				defense_skill = 1
+				planning_skill = 1
+				logistics_skill = 1
+			}
+			create_corps_commander = {
+				name = "Semyon Timoshenko"
+				picture = "Portrait_Soviet_Semyon_Timoshenko.dds"
+				traits = { cavalry_officer politically_connected career_officer }
+				skill = 3
+				attack_skill = 3
+				defense_skill = 2
+				planning_skill = 2
+				logistics_skill = 3
+			}
+			create_corps_commander = {
+				name = "Ivan Konev"
+				picture = "Portrait_Soviet_Ivan_Konev.dds"
+				traits = { armor_officer harsh_leader politically_connected }
+				skill = 5
+				attack_skill = 4
+				defense_skill = 5
+				planning_skill = 2
+				logistics_skill = 5
+			}
+			create_corps_commander = {
+				name = "Aleksandr Vasilevsky"
+				picture = "Portrait_Soviet_Aleksandr_Vasilevsky.dds"
+				traits = { armor_officer politically_connected }
+				skill = 4
+				attack_skill = 4
+				defense_skill = 4
+				planning_skill = 3
+				logistics_skill = 2
+			}
+			create_corps_commander = {
+				name = "Filipp Golikov"
+				picture = "Portrait_Soviet_Filipp_Golikov.dds"
+				traits = { career_officer }
+				skill = 3
+				attack_skill = 3
+				defense_skill = 3
+				planning_skill = 3
+				logistics_skill = 1
+			}
+			create_corps_commander = {
+				name = "Georgiy Zakharov"
+				picture = "Portrait_Soviet_Georgiy_Zakharov.dds"
+				traits = { career_officer }
+				skill = 1
+				attack_skill = 1
+				defense_skill = 1
+				planning_skill = 1
+				logistics_skill = 1
+			}
+			create_corps_commander = {
+				name = "Yakov Cherevichenko"
+				picture = "Portrait_Soviet_Yakov_Cherevichenko.dds"
+				traits = { cavalry_officer }
+				skill = 3
+				attack_skill = 3
+				defense_skill = 3
+				planning_skill = 2
+				logistics_skill = 2
+			}
+			create_corps_commander = {
+				name = "Max Reyter"
+				picture = "Portrait_Soviet_Max_Andreyevich.dds"
+				traits = { career_officer }
+				skill = 1
+				attack_skill = 1
+				defense_skill = 1
+				planning_skill = 1
+				logistics_skill = 1
+			}
+			create_corps_commander = {
+				name = "Markian Popov"
+				picture = "Portrait_Soviet_Matkian_Popov.dds"
+				traits = { winter_specialist infantry_officer brilliant_strategist }
+				skill = 2
+				attack_skill = 2
+				defense_skill = 1
+				planning_skill = 2
+				logistics_skill = 2
+			}
+			create_corps_commander = {
+				name = "Nikolai Berzarin"
+				picture = "Portrait_Soviet_Nikolai_Berzarin.dds"
+				traits = { infantry_officer }
+				skill = 3
+				attack_skill = 3
+				defense_skill = 3
+				planning_skill = 2
+				logistics_skill = 2
+			}
+			create_corps_commander = {
+				name = "Ivan Chernyakhovsky"
+				picture = "Portrait_Soviet_Ivan_Chernyakhovsky.dds"
+				traits = { armor_officer }
+				skill = 1
+				attack_skill = 1
+				defense_skill = 1
+				planning_skill = 1
+				logistics_skill = 1
+			}
+			create_corps_commander = {
+				name = "Issa Pliyev"
+				picture = "Portrait_Soviet_Issa_Pliyev.dds"
+				traits = { cavalry_officer }
+				skill = 1
+				attack_skill = 1
+				defense_skill = 1
+				planning_skill = 1
+				logistics_skill = 1
+			}
+			create_corps_commander = {
+				name = "Kirill Meretskov"
+				picture = "Portrait_Soviet_Kirill_Meretskov.dds"
+				traits = { trait_reckless infantry_officer }
+				skill = 3
+				attack_skill = 2
+				defense_skill = 2
+				planning_skill = 3
+				logistics_skill = 3
+			}
+			create_corps_commander = {
+				name = "Nikandr Chibisov"
+				picture = "Portrait_Soviet_Nikandr_Yevlampyevich_Chibisov.dds"
+				traits = { trickster }
+				skill = 3
+				attack_skill = 1
+				defense_skill = 3
+				planning_skill = 3
+				logistics_skill = 3
+			}
+		}
+	}
+}
