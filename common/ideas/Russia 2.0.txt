@@ -5153,6 +5153,74 @@ ideas = {
 				special_forces_cap = -0.5
 				recon_factor = -0.1
 				training_time_factor = -0.1
+				breakthrough_factor = -0.15
+			}
+		}
+
+		SOV_Black_guard_army_3 = {
+			allowed = {
+				always = no
+			}
+
+			removal_cost = -1
+
+			picture = generic_manpower_bonus
+
+			modifier = {
+				conscription_factor = 0.2
+				resistance_growth_on_our_occupied_states = 0.4
+				terrain_penalty_reduction = 0.15
+				out_of_supply_factor = -0.15
+				army_org_factor = -0.1
+				army_attack_factor = -0.05
+				army_defence_factor = 0.1
+				special_forces_cap = -0.15
+				recon_factor = -0.15
+				training_time_factor = -0.2
+				dig_in_speed_factor = 0.2
+			}
+		}
+
+		SOV_Black_guard_reformation = {
+			allowed = {
+				always = no
+			}
+
+			removal_cost = -1
+
+			picture = generic_manpower_bonus
+
+			modifier = {
+				army_org_factor = -0.35
+				army_attack_factor = -0.2
+				army_defence_factor = -0.2
+				army_speed_factor = -0.15
+				special_forces_cap = -0.5
+				recon_factor = -0.30
+				training_time_factor = 0.25
+				attrition = 0.1
+				breakthrough_factor = -0.1
+				dig_in_speed_factor = -0.25
+			}
+		}
+
+		SOV_Black_guard_reformed = {
+			allowed = {
+				always = no
+			}
+
+			removal_cost = -1
+
+			picture = generic_manpower_bonus
+
+			modifier = {
+				terrain_penalty_reduction = 0.20
+				army_attack_factor = 0.05
+				army_defence_factor = 0.05
+				special_forces_cap = 0.25
+				recon_factor = 0.1
+				training_time_factor = 0.25
+				breakthrough_factor = 0.1
 			}
 		}
 
@@ -5222,11 +5290,11 @@ ideas = {
 			picture = FRA_factory_strikes
 
 			modifier = {
-				consumer_goods_factor = 0.5
+				consumer_goods_factor = 0.3
 				industrial_capacity_factory = -0.75
 				industrial_capacity_dockyard = -0.75
 				line_change_production_efficiency_factor = -0.5
-				production_speed_buildings_factor = -0.75
+				production_speed_buildings_factor = -0.40
 				industry_repair_factor = -0.5
 				industry_free_repair_factor = -0.3
 				production_factory_max_efficiency_factor = -0.25
@@ -5243,11 +5311,9 @@ ideas = {
 			picture = FRA_factory_strikes
 
 			modifier = {
-				consumer_goods_factor = 0.4
 				industrial_capacity_factory = -0.35
 				industrial_capacity_dockyard = -0.35
 				line_change_production_efficiency_factor = -0.25
-				production_speed_buildings_factor = -0.35
 				production_factory_max_efficiency_factor = -0.25
 			}
 		}
@@ -5279,7 +5345,7 @@ ideas = {
 
 			modifier = {
 				max_command_power = -50
-				anarchy_drift = -0.05
+				anarchy_drift = -0.1
 				conscription = -0.01
 				stability_factor = -0.1
 			}
@@ -5750,9 +5816,24 @@ ideas = {
 				stability_factor = 0.05
 			}
 		}
+
+		SOV_Anarchist_compromise = {
+			allowed = {
+				always = no
+			}
+
+			removal_cost = -1
+
+			picture = anti_soviet_pact
+
+			modifier = {
+				anarchy_drift = 0.1
+				stability_factor = 0.1
+			}
+		}
 	}
 
-	political_advisor = {
+	political_advisor = { #TODO Advisor for Anarchists
 
 		pavel_milyukov = {
 
@@ -5899,6 +5980,11 @@ ideas = {
 				NOT = { has_idea = kliment_voroshilov }
 				NOT = {
 					has_country_flag = ennemy_second_civil_war
+				}
+				hidden_trigger = {
+					NOT = {
+						has_government = anarchy
+					}
 				}
 			}	
 			
@@ -6107,6 +6193,244 @@ ideas = {
 				factor = 1
 			}
 		}
+
+		SOV_supreme_military_council = {
+
+			picture = SOV_military_council
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			visible = {
+				has_government = anarchy
+			}
+
+			available = {
+				OR = {
+					has_completed_focus = SOV_proclamation_commune
+					has_completed_focus = SOV_embrace_total_anarchy
+					has_country_flag = black_revolution_turned_civil_war
+				}
+			}
+
+			traits = {
+				head_of_military
+			}
+
+			ai_will_do = {
+				factor = 1
+			}
+		}
+	}
+
+	navy_chief = {
+
+		SOV_submarine_council = {
+
+			picture = SOV_military_council
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			visible = {
+				has_government = anarchy
+			}
+
+			available = {
+				OR = {
+					has_completed_focus = SOV_proclamation_commune
+					has_completed_focus = SOV_embrace_total_anarchy
+					has_country_flag = black_revolution_turned_civil_war
+				}
+			}
+
+			traits = {
+				submarine_warfare
+			}
+
+			ai_will_do = {
+				factor = 1
+			}
+		}
+
+		SOV_carrier_council = {
+
+			picture = SOV_military_council
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			visible = {
+				has_government = anarchy
+			}
+
+			available = {
+				OR = {
+					has_completed_focus = SOV_proclamation_commune
+					has_completed_focus = SOV_embrace_total_anarchy
+					has_country_flag = black_revolution_turned_civil_war
+				}
+			}
+
+			traits = {
+				carrier_warfare
+			}
+
+			ai_will_do = {
+				factor = 1
+			}
+		}
+
+		SOV_battleship_council = {
+
+			picture = SOV_military_council
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			visible = {
+				has_government = anarchy
+			}
+
+			available = {
+				OR = {
+					has_completed_focus = SOV_proclamation_commune
+					has_completed_focus = SOV_embrace_total_anarchy
+					has_country_flag = black_revolution_turned_civil_war
+				}
+			}
+
+			traits = {
+				battleship_warfare
+			}
+
+			ai_will_do = {
+				factor = 1
+			}
+		}
+
+		SOV_naval_invasion_council = {
+
+			picture = SOV_military_council
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			visible = {
+				has_government = anarchy
+			}
+
+			available = {
+				OR = {
+					has_completed_focus = SOV_proclamation_commune
+					has_completed_focus = SOV_embrace_total_anarchy
+					has_country_flag = black_revolution_turned_civil_war
+				}
+			}
+
+			traits = {
+				amphibious_warfare
+			}
+
+			ai_will_do = {
+				factor = 1
+			}
+		}
+	}
+
+	air_chief = {
+
+		SOV_bombardment_council = {
+
+			picture = SOV_military_council
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			visible = {
+				has_government = anarchy
+			}
+
+			available = {
+				OR = {
+					has_completed_focus = SOV_proclamation_commune
+					has_completed_focus = SOV_embrace_total_anarchy
+					has_country_flag = black_revolution_turned_civil_war
+				}
+			}
+
+			traits = {
+				bombardment_focus
+			}
+
+			ai_will_do = {
+				factor = 1
+			}
+		}
+
+		SOV_fighter_council = {
+
+			picture = SOV_military_council
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			visible = {
+				has_government = anarchy
+			}
+
+			available = {
+				OR = {
+					has_completed_focus = SOV_proclamation_commune
+					has_completed_focus = SOV_embrace_total_anarchy
+					has_country_flag = black_revolution_turned_civil_war
+				}
+			}
+
+			traits = {
+				fighter_focus
+			}
+
+			ai_will_do = {
+				factor = 1
+			}
+		}
+
+		SOV_pilot_training_council = {
+
+			picture = SOV_military_council
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			visible = {
+				has_government = anarchy
+			}
+
+			available = {
+				OR = {
+					has_completed_focus = SOV_proclamation_commune
+					has_completed_focus = SOV_embrace_total_anarchy
+					has_country_flag = black_revolution_turned_civil_war
+				}
+			}
+
+			traits = {
+				air_air_combat_training_3
+			}
+
+			ai_will_do = {
+				factor = 1
+			}
+		}
 	}
 
 	high_command = {
@@ -6211,6 +6535,156 @@ ideas = {
 				factor = 1
 			}
 		}
+
+		SOV_army_infantry_warfare_council = {
+			ledger = army
+
+			picture = SOV_military_council
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			visible = {
+				has_government = anarchy
+			}
+
+			available = {
+				OR = {
+					has_completed_focus = SOV_proclamation_commune
+					has_completed_focus = SOV_embrace_total_anarchy
+					has_country_flag = black_revolution_turned_civil_war
+				}
+			}
+
+			traits = {
+				infantry_warfare
+			}
+
+			ai_will_do = {
+				factor = 1
+			}
+		}
+
+		SOV_army_armor_warfare_council = {
+			ledger = army
+
+			picture = SOV_military_council
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			visible = {
+				has_government = anarchy
+			}
+
+			available = {
+				OR = {
+					has_completed_focus = SOV_proclamation_commune
+					has_completed_focus = SOV_embrace_total_anarchy
+					has_country_flag = black_revolution_turned_civil_war
+				}
+			}
+
+			traits = {
+				army_armored_2
+			}
+
+			ai_will_do = {
+				factor = 1
+			}
+		}
+
+		SOV_army_drill_council = {
+			ledger = army
+
+			picture = SOV_military_council
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			visible = {
+				has_government = anarchy
+			}
+
+			available = {
+				OR = {
+					has_completed_focus = SOV_proclamation_commune
+					has_completed_focus = SOV_embrace_total_anarchy
+					has_country_flag = black_revolution_turned_civil_war
+				}
+			}
+
+			traits = {
+				drill_training
+			}
+
+			ai_will_do = {
+				factor = 1
+			}
+		}
+
+		SOV_logistic_council = {
+			ledger = army
+
+			picture = SOV_military_council
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			visible = {
+				has_government = anarchy
+			}
+
+			available = {
+				OR = {
+					has_completed_focus = SOV_proclamation_commune
+					has_completed_focus = SOV_embrace_total_anarchy
+					has_country_flag = black_revolution_turned_civil_war
+				}
+			}
+
+			traits = {
+				logistic_organization
+			}
+
+			ai_will_do = {
+				factor = 1
+			}
+		}
+
+		SOV_organization_council = {
+			ledger = army
+
+			picture = SOV_military_council
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			visible = {
+				has_government = anarchy
+			}
+
+			available = {
+				OR = {
+					has_completed_focus = SOV_proclamation_commune
+					has_completed_focus = SOV_embrace_total_anarchy
+					has_country_flag = black_revolution_turned_civil_war
+				}
+			}
+
+			traits = {
+				division_organization_anarchy
+			}
+
+			ai_will_do = {
+				factor = 1
+			}
+		}
 	}
 
 	theorist = {
@@ -6261,6 +6735,44 @@ ideas = {
 			}
 			
 			traits = { military_theorist }
+
+			ai_will_do = {
+				factor = 1
+			}
+		}
+
+		SOV_all_warfare_theorist_council = {
+			ledger = army
+
+			picture = SOV_military_council
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			visible = {
+				has_government = anarchy
+			}
+
+			available = {
+				OR = {
+					has_completed_focus = SOV_proclamation_commune
+					has_completed_focus = SOV_embrace_total_anarchy
+					has_country_flag = black_revolution_turned_civil_war
+				}
+			}
+
+			cost = 250
+
+			research_bonus = {
+				land_doctrine = 0.05
+				naval_doctrine = 0.05
+				air_doctrine = 0.05
+			}
+
+			traits = {
+				all_warfare
+			}
 
 			ai_will_do = {
 				factor = 1
@@ -6528,7 +7040,7 @@ ideas = {
 		}
 	}
 
-	economy = {
+	economy = { #Economy Law
 		law = yes
 		SOV_Useless_money = {
 			allowed = {
@@ -6540,18 +7052,52 @@ ideas = {
 			removal_cost = -1
 			
 			modifier = {
-				consumer_goods_factor = 0.4
-				production_speed_industrial_complex_factor = -0.1
-				production_speed_arms_factory_factor = -0.1
-				production_speed_dockyard_factor = -0.1
-				conversion_cost_civ_to_mil_factor= 0.4
-				conversion_cost_mil_to_civ_factor = 0.4
+				consumer_goods_factor = 0.35
+				production_speed_buildings_factor = 0.2
+				production_speed_industrial_complex_factor = 0.4
+				production_speed_arms_factory_factor = 0.4
+				industrial_capacity_factory = 0.2
+				production_speed_dockyard_factor = 0.2
+				conversion_cost_civ_to_mil_factor= -0.4
+				conversion_cost_mil_to_civ_factor = -0.4
 				generate_wargoal_tension = 1.00
 				max_fuel_factor = -0.35
 				fuel_gain_factor = -0.5
 				agency_upgrade_time = 0.8
-				stability_factor = -0.1
+				stability_factor = -0.2
 				custom_modifier_tooltip = can_change_after_stability
+			}
+
+			allowed_to_remove = {
+				always = no
+			}
+			
+			cancel_if_invalid = no
+		}
+	}
+
+	trade_laws = { #Trade Laws
+		law = yes
+		SOV_no_export_anarchy = {
+
+			picture = closed_economy
+
+			allowed = {
+				always = no
+			}
+
+			removal_cost = -1
+			
+			modifier = {
+				min_export = 0
+				industrial_capacity_factory = 0.05
+				industrial_capacity_dockyard = 0.05
+				production_speed_buildings_factor = 0.1
+				research_speed_factor = 0.05
+				civilian_intel_to_others = 5
+				navy_intel_to_others = 5
+				airforce_intel_to_others = 5
+				trade_opinion_factor = -1
 			}
 
 			allowed_to_remove = {

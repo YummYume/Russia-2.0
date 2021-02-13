@@ -3737,6 +3737,11 @@ focus_tree = {
 		ai_will_do = {
 			factor = 8
 		}
+		available = {
+			NOT = {
+				has_idea = SOV_Anarchist_terrorist
+			}
+		}
 		search_filters = { FOCUS_FILTER_POLITICAL }
 		completion_reward = {
 			add_political_power = 100
@@ -19583,6 +19588,157 @@ focus_tree = {
 		}
 	}
 
+	#Test for an Idea
+	focus = {
+		id = SOV_Test_idea
+		x = 103
+		y = 3
+		icon = GFX_focus_generic_support_the_left_right
+		cost = 3
+		ai_will_do = {
+			factor = 7
+		}
+		available = {
+
+		}
+		search_filters = { FOCUS_FILTER_ANARCHY }
+		completion_reward = {
+
+			set_variable = { current_biggest_party = 0 }
+			
+			randomize_variable = {
+				var = intellect_party_support
+				distribution = binomial
+				min = 0
+				max = 60
+			}
+			round_variable = intellect_party_support
+
+			randomize_variable = {
+				var = civilian_industrialist_support
+				distribution = binomial
+				min = 0
+				max = 60
+			}
+			round_variable = civilian_industrialist_support
+
+			randomize_variable = {
+				var = military_industrialist_support
+				distribution = binomial
+				min = 0
+				max = 60
+			}
+			round_variable = military_industrialist_support
+
+			randomize_variable = {
+				var = militarist_party_support
+				distribution = binomial
+				min = 0
+				max = 60
+			}
+			round_variable = militarist_party_support
+
+			randomize_variable = {
+				var = aviation_party_support
+				distribution = binomial
+				min = 0
+				max = 60
+			}
+			round_variable = aviation_party_support
+
+			randomize_variable = {
+				var = naval_party_support
+				distribution = binomial
+				min = 0
+				max = 60
+			}
+			round_variable = naval_party_support
+
+			randomize_variable = {
+				var = logistic_party_support
+				distribution = binomial
+				min = 0
+				max = 60
+			}
+			round_variable = logistic_party_support
+
+			randomize_variable = {
+				var = internal_security_party_support
+				distribution = binomial
+				min = 0
+				max = 60
+			}
+			round_variable = internal_security_party_support
+
+			randomize_variable = {
+				var = countryside_party_support
+				distribution = binomial
+				min = 0
+				max = 60
+			}
+			round_variable = countryside_party_support
+
+			randomize_variable = {
+				var = theorist_party_support
+				distribution = binomial
+				min = 0
+				max = 60
+			}
+			round_variable = theorist_party_support
+
+			add_to_array = { #Intellect Party
+				array = anarchist_party_election
+				value = intellect_party_support
+				index = 0
+			}
+			add_to_array = { #Civilian Industrialist Party
+				array = anarchist_party_election
+				value = civilian_industrialist_support
+				index = 1
+			}
+			add_to_array = { #Military Industrialist Party
+				array = anarchist_party_election
+				value = military_industrialist_support
+				index = 2
+			}
+			add_to_array = { #Militarist Party
+				array = anarchist_party_election
+				value = militarist_party_support
+				index = 3
+			}
+			add_to_array = { #Aviation Party
+				array = anarchist_party_election
+				value = aviation_party_support
+				index = 4
+			}
+			add_to_array = { #Naval Party
+				array = anarchist_party_election
+				value = naval_party_support
+				index = 5
+			}
+			add_to_array = { #Logistic Party
+				array = anarchist_party_election
+				value = logistic_party_support
+				index = 6
+			}
+			add_to_array = { #Internal Security Party
+				array = anarchist_party_election
+				value = internal_security_party_support
+				index = 7
+			}
+			add_to_array = { #Countryside Party
+				array = anarchist_party_election
+				value = countryside_party_support
+				index = 8
+			}
+			add_to_array = { #Theorist Party
+				array = anarchist_party_election
+				value = theorist_party_support
+				index = 9
+			}
+		}
+	}
+
 	#The State of the Country
 	focus = {
 		id = SOV_state_country
@@ -19601,26 +19757,6 @@ focus_tree = {
 		completion_reward = {
 			country_event = { id = soviets.403 }
 			set_variable = { chaos_triumphed_over_order = 0 }
-		}
-	}
-
-	#Crush the Anti-Revolutionary
-	focus = {
-		id = SOV_crush_antirevolutionary
-		x = 100
-		y = 5
-		prerequisite = { focus = SOV_state_country }
-		icon = GFX_goal_generic_political_pressure
-		cost = 4
-		ai_will_do = {
-			factor = 7
-		}
-		available = {
-			has_government = anarchy
-		}
-		search_filters = { FOCUS_FILTER_ANARCHY }
-		completion_reward = {
-			custom_effect_tooltip = SOV_crush_antirevolutionary_unlock_decision
 			hidden_effect = {
 				random_owned_state = {
 					limit = {
@@ -19833,7 +19969,27 @@ focus_tree = {
 						add_to_array = { SOV.sov_large_base_resistance_states_1 = THIS }
 					}
 				}
-			}	
+			}
+		}
+	}
+
+	#Crush the Anti-Revolutionary
+	focus = {
+		id = SOV_crush_antirevolutionary
+		x = 100
+		y = 5
+		prerequisite = { focus = SOV_state_country }
+		icon = GFX_goal_generic_political_pressure
+		cost = 2
+		ai_will_do = {
+			factor = 7
+		}
+		available = {
+			has_government = anarchy
+		}
+		search_filters = { FOCUS_FILTER_ANARCHY }
+		completion_reward = {
+			custom_effect_tooltip = SOV_crush_antirevolutionary_unlock_decision	
 		}
 	}
 
@@ -19844,7 +20000,7 @@ focus_tree = {
 		y = 6
 		prerequisite = { focus = SOV_crush_antirevolutionary }
 		icon = GFX_goal_generic_axis_build_infantry
-		cost = 8
+		cost = 6
 		ai_will_do = {
 			factor = 7
 		}
@@ -19867,7 +20023,7 @@ focus_tree = {
 		y = 5
 		prerequisite = { focus = SOV_state_country }
 		icon = GFX_goal_generic_secret_weapon
-		cost = 4
+		cost = 2
 		ai_will_do = {
 			factor = 7
 		}
@@ -19879,7 +20035,7 @@ focus_tree = {
 			custom_effect_tooltip = unlock_deal_with_banditry_tt
 			set_variable = { bounty_lead_to_chaos = 0 }
 			hidden_effect = {
-				for_each_scope_loop = {
+				for_each_scope_loop = { #Steppe
 					array = SOV.owned_controlled_states
 					
 					if = {
@@ -19906,7 +20062,188 @@ focus_tree = {
 						}
 						add_to_array = { SOV.sov_get_steppe_bandit_states = THIS }
 					}
-				}	
+				}
+
+				for_each_scope_loop = { #Arctic
+					array = SOV.owned_controlled_states
+					
+					if = {
+						limit = {
+							THIS = {
+								OR = {
+									state = 262
+									state = 397
+									state = 214
+									state = 216
+									state = 215
+									state = 213
+									state = 351
+									state = 581
+								}	
+							}
+						}
+						add_to_array = { SOV.sov_get_arctic_bandit_states = THIS }
+					}
+				}
+
+				for_each_scope_loop = { #Far East
+					array = SOV.owned_controlled_states
+					
+					if = {
+						limit = {
+							THIS = {
+								OR = {
+									state = 408
+									state = 409
+									state = 560
+									state = 657
+									state = 561
+									state = 562
+									state = 574
+									state = 644
+									state = 637
+									state = 563
+									state = 564
+									state = 566
+									state = 567
+									state = 565
+									state = 575
+								}	
+							}
+						}
+						add_to_array = { SOV.sov_get_far_east_bandit_states = THIS }
+					}
+				}
+
+				for_each_scope_loop = { #Western Siberia
+					array = SOV.owned_controlled_states
+					
+					if = {
+						limit = {
+							THIS = {
+								OR = {
+									state = 516
+									state = 576
+									state = 568
+									state = 569
+									state = 654
+									state = 40
+									state = 578
+									state = 577
+									state = 570
+									state = 571
+									state = 403
+									state = 572
+									state = 653
+									state = 580
+									state = 579
+								}	
+							}
+						}
+						add_to_array = { SOV.sov_get_west_siberia_bandit_states = THIS }
+					}
+				}
+
+				for_each_scope_loop = { #Kuban and Caucasus
+					array = SOV.owned_controlled_states
+					
+					if = {
+						limit = {
+							THIS = {
+								OR = {
+									state = 236
+									state = 237
+									state = 238
+									state = 234
+									state = 218
+									state = 235
+									state = 232
+									state = 233
+									state = 229
+									state = 230
+									state = 231
+									state = 217
+									state = 245
+									state = 265
+								}	
+							}
+						}
+						add_to_array = { SOV.sov_get_kuban_caucasus_bandit_states = THIS }
+					}
+				}
+
+				for_each_scope_loop = { #Transvolga
+					array = SOV.owned_controlled_states
+					
+					if = {
+						limit = {
+							THIS = {
+								OR = {
+									state = 398
+									state = 573
+									state = 582
+									state = 273
+									state = 652
+									state = 400
+									state = 256
+									state = 250
+									state = 401
+									state = 251
+									state = 249
+									state = 399
+								}	
+							}
+						}
+						add_to_array = { SOV.sov_get_transvolga_region_bandit_states = THIS }
+					}
+				}
+
+				for_each_scope_loop = { #Western Russia
+					array = SOV.owned_controlled_states
+					
+					if = {
+						limit = {
+							THIS = {
+								OR = {
+									state = 207
+									state = 206
+									state = 204
+									state = 241
+									state = 243
+									state = 242
+									state = 224
+									state = 194
+									state = 201
+									state = 199
+									state = 198
+									state = 192
+									state = 197
+									state = 196
+									state = 137
+									state = 200
+									state = 227
+									state = 228
+									state = 221
+									state = 225
+									state = 193
+									state = 203
+									state = 259
+									state = 226
+									state = 202
+									state = 246
+									state = 264
+									state = 244
+									state = 263
+									state = 210
+									state = 209
+									state = 208
+									state = 195
+								}	
+							}
+						}
+						add_to_array = { SOV.sov_get_western_russia_bandit_states = THIS }
+					}
+				}
 			}
 		}
 	}
@@ -19918,7 +20255,7 @@ focus_tree = {
 		y = 6
 		prerequisite = { focus = SOV_deal_with_banditry }
 		icon = GFX_goal_generic_major_alliance
-		cost = 8
+		cost = 4
 		ai_will_do = {
 			factor = 7
 		}
@@ -19928,6 +20265,7 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_ANARCHY }
 		completion_reward = {
 			custom_effect_tooltip = SOV_helping_hand_tt
+			add_political_power = 50
 			hidden_effect = {
 				division_template = {
 					name = "Militsii Diviziya"
@@ -20108,9 +20446,9 @@ focus_tree = {
 		y = 5
 		prerequisite = { focus = SOV_state_country }
 		icon = GFX_goal_generic_production
-		cost = 8
+		cost = 6
 		ai_will_do = {
-			factor = 7
+			factor = 6
 		}
 		available = {
 			has_government = anarchy
@@ -20171,7 +20509,7 @@ focus_tree = {
 		y = 6
 		prerequisite = { focus = SOV_forced_quota }
 		icon = GFX_goal_generic_construct_civilian
-		cost = 12
+		cost = 10
 		ai_will_do = {
 			factor = 7
 		}
@@ -20225,7 +20563,7 @@ focus_tree = {
 	}
 
 	#Proclamation of the Commune
-	focus = {
+	focus = { #TODO Focus that allow to open the trade of the country for volin anarchy
 		id = SOV_proclamation_commune
 		x = 99
 		y = 7
@@ -20234,7 +20572,7 @@ focus_tree = {
 		prerequisite = { focus = SOV_helping_hand }
 		mutually_exclusive = { focus = SOV_embrace_total_anarchy }
 		icon = GFX_goal_generic_alliance
-		cost = 10
+		cost = 2
 		ai_will_do = {
 			factor = 7
 		}
@@ -20244,7 +20582,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY }
 		completion_reward = {
-			
+			add_ideas = partial_economic_mobilisation
 		}
 	}
 
@@ -20255,7 +20593,7 @@ focus_tree = {
 		y = 8
 		prerequisite = { focus = SOV_proclamation_commune }
 		icon = GFX_goal_molotov_ribbentrop_pact
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			factor = 7
 		}
@@ -20264,7 +20602,8 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY }
 		completion_reward = {
-			
+			add_ideas = SOV_Anarchist_compromise
+			country_event = { id = soviets.445 days = 5 }
 		}
 	}
 
@@ -20276,6 +20615,49 @@ focus_tree = {
 		prerequisite = { focus = SOV_compromise_anarchist_ideals }
 		mutually_exclusive = { focus = SOV_anarcho_communism }
 		mutually_exclusive = { focus = SOV_individualist_anarchism }
+		icon = GFX_goal_molotov_ribbentrop_pact
+		cost = 10
+		ai_will_do = {
+			factor = 7
+		}
+		available = {
+			has_government = anarchy
+			has_country_flag = has_elected_anarcho_syndicalism
+		}
+		search_filters = { FOCUS_FILTER_ANARCHY }
+		completion_reward = {
+			if = {
+				limit = {
+					NOT = {
+						has_country_leader = {
+							name = "Volin Eikhenbaum"
+						}
+					}
+				}
+				create_country_leader = {
+					name = "Volin Eikhenbaum"
+					desc = "VSEVOLOD_MIKHAILOVICH_EIKHENBAUM_DESC"
+					picture = "Portrait_Vsevolod_Mikhailovich_Eikhenbaum.dds"
+					expire = "1965.1.1"
+					ideology = anarchisme
+					traits = {
+						poet_and_activist_volin participation_makhnovist_insurrection_2
+					}
+				}
+			}
+			else = {
+				add_country_leader_trait = poet_and_activist_volin
+				add_country_leader_trait = participation_makhnovist_insurrection_2
+			}
+		}
+	}
+
+	#Anarchist Synthetism
+	focus = {
+		id = SOV_anarchist_synthetism
+		x = 98
+		y = 10
+		prerequisite = { focus = SOV_anarcho_syndicalism }
 		icon = GFX_goal_molotov_ribbentrop_pact
 		cost = 10
 		ai_will_do = {
@@ -20305,6 +20687,36 @@ focus_tree = {
 		}
 		available = {
 			has_government = anarchy
+			has_country_flag = has_elected_anarcho_communism
+		}
+		search_filters = { FOCUS_FILTER_ANARCHY }
+		completion_reward = { #Aron Baron or Piotr Archinov possible leader
+			create_country_leader = {
+				name = "Peter Arshinov"
+				desc = "POLITICS_PIOTR_ARCHINOV_DESC"
+				picture = "gfx/leaders/SOV/Portrait_Piotr_Archinov.dds"
+				expire = "1965.1.1"
+				ideology = anarcho_communism_sub
+				traits = {
+					dislike_many_politicians participation_makhnovist_insurrection
+				}
+			}
+		}
+	}
+
+	#Individual freedom
+	focus = {
+		id = SOV_individual_freedom
+		x = 95
+		y = 10
+		prerequisite = { focus = SOV_anarcho_communism }
+		icon = GFX_goal_molotov_ribbentrop_pact
+		cost = 10
+		ai_will_do = {
+			factor = 7
+		}
+		available = {
+			has_government = anarchy
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY }
 		completion_reward = {
@@ -20327,6 +20739,36 @@ focus_tree = {
 		}
 		available = {
 			has_government = anarchy
+			has_country_flag = has_elected_anarcho_individualism
+		}
+		search_filters = { FOCUS_FILTER_ANARCHY }
+		completion_reward = { # Alexei Borovoi
+			create_country_leader = {
+				name = "Alexei Borovoi"
+				desc = "POLITICS_ALEXEI_BOROVOI_DESC"
+				picture = "gfx/leaders/SOV/Portrait_Alexey_Borovoy.dds"
+				expire = "1965.1.1"
+				ideology = individualist_anarchism_sub
+				traits = {
+					writer_orator_teacher_propagandist
+				}
+			}
+		}
+	}
+
+	#Mutualism
+	focus = {
+		id = SOV_mutualism_anarchism
+		x = 101
+		y = 10
+		prerequisite = { focus = SOV_individualist_anarchism }
+		icon = GFX_goal_molotov_ribbentrop_pact
+		cost = 10
+		ai_will_do = {
+			factor = 7
+		}
+		available = {
+			has_government = anarchy
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY }
 		completion_reward = {
@@ -20341,7 +20783,7 @@ focus_tree = {
 		y = 9
 		prerequisite = { focus = SOV_compromise_anarchist_ideals }
 		icon = GFX_focus_secret_rearmament
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			factor = 7
 		}
@@ -20350,18 +20792,18 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY }
 		completion_reward = {
-			
+			country_event = { id = soviets.446 days = 1 }
 		}
 	}
 
 	#Trials of the Red Generals
 	focus = {
 		id = SOV_trials_red_generals
-		x = 94
+		x = 93
 		y = 10
 		prerequisite = { focus = SOV_fate_black_guard }
 		icon = GFX_focus_secret_rearmament
-		cost = 10
+		cost = 7
 		ai_will_do = {
 			factor = 7
 		}
@@ -20371,7 +20813,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY }
 		completion_reward = {
-			
+			country_event = { id = soviets.448 days = 1 }
 		}
 	}
 
@@ -20385,7 +20827,7 @@ focus_tree = {
 		prerequisite = { focus = SOV_helping_hand }
 		mutually_exclusive = { focus = SOV_proclamation_commune }
 		icon = GFX_goal_generic_war_with_comintern
-		cost = 10
+		cost = 2
 		ai_will_do = {
 			factor = 7
 		}
