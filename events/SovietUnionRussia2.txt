@@ -20758,6 +20758,11 @@ country_event = {
 		original_tag = SOV
 		has_government = democratic
 		has_country_flag = sov_democratic_opposition_formed
+		has_completed_focus = SOV_reinforce_military_presence
+		has_country_flag = {
+			flag = sov_reinforced_military_presence
+			days > 50
+		}
 		check_variable = {
 			var = united_russia_strength
 			value = 1
@@ -20768,7 +20773,7 @@ country_event = {
 		}
 	}
 
-	mean_time_to_happen = { days = 50 }
+	mean_time_to_happen = { days = 5 }
 
 	option = { #Let it calm down
 		name = soviets.427.a
@@ -20779,7 +20784,7 @@ country_event = {
 
 	option = { #Take action
 		name = soviets.427.b
-		add_political_power = -150
+		add_political_power = -250
 		add_stability = 0.05
 	}
 }
@@ -20832,6 +20837,11 @@ country_event = {
 		has_government = democratic
 		has_country_flag = sov_democratic_opposition_formed
 		has_completed_focus = SOV_temporarily_abolish_elections
+		has_country_flag = {
+			flag = democratic_elections_abolished
+			days > 50
+		}
+		has_elections = no
 		NOT = {
 			OR = {
 				has_completed_focus = SOV_united_russia
@@ -20841,22 +20851,29 @@ country_event = {
 		}
 	}
 
-	mean_time_to_happen = { days = 30 }
+	mean_time_to_happen = { days = 5 }
+
+	stalin_hiding_state_target
 
 	option = { #Accept
 		name = soviets.429.a
 		add_political_power = -50
 		add_to_variable = { united_russia_strength = 1 }
-		set_politics = {
-			ruling_party = democratic
-			elections_allowed = yes
-			election_frequency = 4
+		custom_effect_tooltip = united_russia_gains_strength
+		custom_effect_tooltip = sov_elections_will_be_held
+		hidden_effect = {
+			set_politics = {
+				ruling_party = democratic
+				elections_allowed = yes
+				election_frequency = 4
+			}
 		}
 	}
 
 	option = { #Refuse
 		name = soviets.429.b
 		add_political_power = 100
+		custom_effect_tooltip = united_russia_gains_strength2
 		add_to_variable = { united_russia_strength = 2 }
 	}
 }
@@ -20994,12 +21011,16 @@ country_event = {
 
 	option = { #Send a warning
 		name = soviets.436.a
-		country_event = { id = soviets.437 days = 1 }
+		FROM = {
+			country_event = { id = soviets.437 days = 1 }
+		}
 	}
 
 	option = { #Give up
 		name = soviets.436.b
-		country_event = { id = soviets.438 days = 1 }
+		FROM = {
+			country_event = { id = soviets.438 days = 1 }
+		}
 	}
 }
 
@@ -21014,7 +21035,21 @@ country_event = {
 
 	option = { #Ok Sorry
 		name = soviets.437.a
-		country_event = { id = soviets.434 days = 1 }
+		SOV = {
+			country_event = { id = soviets.434 days = 1 }
+		}
+	}
+
+	option = { #No!
+		name = soviets.437.b
+		add_ideas = SOV_Stalinist_hideout
+		SOV = {
+			add_opinion_modifier = {
+				target = ROOT
+				modifier = refused_transfer_stalin
+			}
+			country_event = { id = soviets.434 days = 1 }
+		}
 	}
 }
 
@@ -21028,14 +21063,16 @@ country_event = {
 	is_triggered_only = yes
 
 	immediate = {
-		SOV = {
-			set_country_flag = sov_gave_up_track
+		hidden_effect = {
+			SOV = {
+				set_country_flag = sov_gave_up_track
+			}
 		}
 	}
 
 	option = { #Yay
 		name = soviets.438.a
-		
+		add_ideas = SOV_Stalinist_hideout
 	}
 }
 
@@ -21047,12 +21084,22 @@ state_event = {
 	picture = GFX_report_event_soviet_soldiers_tank
 
 	trigger = {
-		is_controlled_by = SOV
 		has_state_flag = sov_stalin_hidding_state
 		CONTROLLER = {
-			tag = SOV
-			has_government = democratic
-			has_country_flag = sov_gave_up_track
+			OR = {
+				tag = SOV
+				is_subject_of = SOV
+				AND = {
+					is_in_faction_with = SOV
+				}
+			}
+			SOV = {
+				OR = {
+					has_country_flag = sov_gave_up_track
+					has_country_flag = sov_track_on_hold
+				}
+				has_government = democratic
+			}
 		}
 	}
 
@@ -21086,5 +21133,21 @@ state_event = {
 	option = { #Uh
 		name = soviets.444.a
 		custom_effect_tooltip = SOV_can_track_again
+	}
+}
+
+#FROM Still Refuses
+country_event = {
+	id = soviets.445
+	title = soviets.445.t
+	desc = soviets.445.d
+	picture = GFX_report_event_soviet_soldiers_tank
+
+	is_triggered_only = yes
+
+	option = { #Uh
+		name = soviets.445.a
+		set_country_flag = sov_track_on_hold
+		custom_effect_tooltip = SOV_can_capture_stalin_later
 	}
 }
