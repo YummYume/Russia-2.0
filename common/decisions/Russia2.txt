@@ -26688,4 +26688,1229 @@ SOV_anarchism_election = {
 	}
 }
 
-#Add Factories if there was a civil war
+SOV_return_ukraine_territory = {
+
+	SOV_return_ukraine_claims_state_decision = {
+
+		icon = GFX_decision_generic_political_rally
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			any_state = {
+				has_state_flag = claim_by_ukr_dem_rus
+				is_owned_by = SOV
+			}
+		}
+
+		available = {
+		
+		}
+
+		complete_effect = {
+			every_state = {
+				limit = {
+					has_state_flag = claim_by_ukr_dem_rus
+					is_owned_by = SOV 
+				}
+				UKR = {
+					transfer_state = PREV
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+}
+
+SOV_diplomatic_plays_decisions_democratic = {
+
+	SOV_support_pro_russian_belarus = {
+
+		icon = GFX_decision_generic_military
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			country_exists = BLR
+			NOT = {
+				BLR = {
+					is_subject_of = SOV
+				}
+			}
+		}
+
+		available = {
+			country_exists = BLR
+			NOT = {
+				BLR = {
+					is_subject_of = SOV
+				}
+				has_country_flag = is_doing_diplomatic_play
+			}
+		}
+
+		fire_only_once = yes
+
+		cost = 25
+
+		days_remove = 30
+
+		complete_effect = {
+			set_country_flag = is_doing_diplomatic_play
+		}
+
+		remove_effect = {
+			custom_effect_tooltip = result_of_the_coups_belarus
+			hidden_effect = {
+				random_list = {
+					40 = { #Coup was Successful
+						country_event = { id = soviets.460 days = 10 }
+						every_state = {
+							limit = {
+								is_core_of = BLR
+								is_owned_and_controlled_by = BLR
+							}
+							SOV = {
+								add_state_core = PREV
+							}
+						}
+					}
+					60 = { #Failure
+						country_event = { id = soviets.461 days = 10 }
+					}
+				}
+			}
+			clr_country_flag = is_doing_diplomatic_play
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	SOV_reintegrate_belarus_united_russia = {
+
+		icon = GFX_decision_generic_military
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			has_country_flag = blr_coup_failure_dem
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = blr_is_puppet_or_occupied
+				OR = {
+					AND = {
+						241 = {
+							is_owned_by = SOV
+						}
+						194 = {
+							is_owned_by = SOV
+						}
+						204 = {
+							is_owned_by = SOV
+						}
+						206 = {
+							is_owned_by = SOV
+						}
+						207 = {
+							is_owned_by = SOV
+						}
+					}
+					BLR = {
+						is_subject_of = SOV
+					}
+				}
+			}
+		}
+
+		fire_only_once = yes
+
+		days_remove = 50
+
+		cost = 25
+
+		complete_effect = {
+			
+		}
+
+		remove_effect = {
+			custom_effect_tooltip = core_blr_state_core_owned_sov
+			hidden_effect = {
+				every_state = {
+					limit = {
+						is_core_of = BLR
+						is_owned_and_controlled_by = SOV
+					}
+					SOV = {
+						add_state_core = PREV
+					}
+				}
+				if = {
+					limit = {
+						country_exists = BLR
+						BLR = {
+							is_subject_of = SOV
+						}
+					}
+					every_state = {
+						limit = {
+							is_core_of = BLR
+							is_owned_and_controlled_by = BLR
+						}
+						SOV = {
+							add_state_core = PREV
+						}
+					}
+					SOV = {
+						annex_country = {
+							target = BLR
+						}
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	SOV_incite_tension_central_asia = {
+
+		icon = GFX_decision_generic_ignite_civil_war
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			OR = {
+				country_exists = KAZ
+				country_exists = UZB
+				country_exists = TMS
+				country_exists = TAJ
+				country_exists = KYR
+			}
+		}
+
+		available = {
+			NOT = {
+				has_country_flag = is_doing_diplomatic_play
+			}
+		}
+
+		fire_only_once = yes
+
+		days_remove = 30
+
+		cost = 25
+
+		complete_effect = {
+			set_country_flag = is_doing_diplomatic_play
+			hidden_effect = {
+				every_state = {
+					limit = {
+						OR = {
+							is_core_of = KAZ
+							is_core_of = KYR
+							is_core_of = TAJ
+							is_core_of = TMS
+							is_core_of = UZB
+						}
+					}
+					SOV = {
+						add_state_core = PREV
+					}
+				}
+				KAZ = {
+					random_owned_state = {
+						create_unit = {
+							division = "name = \"6st Free Infantry\" division_template = \"Free Infantry\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+							owner = KAZ
+						}
+						create_unit = {
+							division = "name = \"7nd Free Infantry\" division_template = \"Free Infantry\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+							owner = KAZ
+						}
+						create_unit = {
+							division = "name = \"8rd Free Infantry\" division_template = \"Free Infantry\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+							owner = KAZ
+						}
+						create_unit = {
+							division = "name = \"9th Free Infantry\" division_template = \"Free Infantry\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+							owner = KAZ
+						}
+						create_unit = {
+							division = "name = \"10th Free Infantry\" division_template = \"Free Infantry\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+							owner = KAZ
+						}
+					}
+				}
+				KYR = {
+					random_owned_state = {
+						create_unit = {
+							division = "name = \"6st Free Infantry\" division_template = \"Free Infantry\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+							owner = KYR
+						}
+						create_unit = {
+							division = "name = \"7nd Free Infantry\" division_template = \"Free Infantry\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+							owner = KYR
+						}
+						create_unit = {
+							division = "name = \"8rd Free Infantry\" division_template = \"Free Infantry\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+							owner = KYR
+						}
+						create_unit = {
+							division = "name = \"9th Free Infantry\" division_template = \"Free Infantry\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+							owner = KYR
+						}
+						create_unit = {
+							division = "name = \"10th Free Infantry\" division_template = \"Free Infantry\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+							owner = KYR
+						}
+					}
+				}
+				TAJ = {
+					random_owned_state = {
+						create_unit = {
+							division = "name = \"6st Free Infantry\" division_template = \"Free Infantry\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+							owner = TAJ
+						}
+						create_unit = {
+							division = "name = \"7nd Free Infantry\" division_template = \"Free Infantry\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+							owner = TAJ
+						}
+						create_unit = {
+							division = "name = \"8rd Free Infantry\" division_template = \"Free Infantry\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+							owner = TAJ
+						}
+						create_unit = {
+							division = "name = \"9th Free Infantry\" division_template = \"Free Infantry\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+							owner = TAJ
+						}
+						create_unit = {
+							division = "name = \"10th Free Infantry\" division_template = \"Free Infantry\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+							owner = TAJ
+						}
+					}
+				}
+				TMS = {
+					random_owned_state = {
+						create_unit = {
+							division = "name = \"6st Free Infantry\" division_template = \"Free Infantry\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+							owner = TMS
+						}
+						create_unit = {
+							division = "name = \"7nd Free Infantry\" division_template = \"Free Infantry\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+							owner = TMS
+						}
+						create_unit = {
+							division = "name = \"8rd Free Infantry\" division_template = \"Free Infantry\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+							owner = TMS
+						}
+						create_unit = {
+							division = "name = \"9th Free Infantry\" division_template = \"Free Infantry\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+							owner = TMS
+						}
+						create_unit = {
+							division = "name = \"10th Free Infantry\" division_template = \"Free Infantry\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+							owner = TMS
+						}
+					}
+				}
+				UZB = {
+					random_owned_state = {
+						create_unit = {
+							division = "name = \"6st Free Infantry\" division_template = \"Free Infantry\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+							owner = UZB
+						}
+						create_unit = {
+							division = "name = \"7nd Free Infantry\" division_template = \"Free Infantry\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+							owner = UZB
+						}
+						create_unit = {
+							division = "name = \"8rd Free Infantry\" division_template = \"Free Infantry\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+							owner = UZB
+						}
+						create_unit = {
+							division = "name = \"9th Free Infantry\" division_template = \"Free Infantry\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+							owner = UZB
+						}
+						create_unit = {
+							division = "name = \"10th Free Infantry\" division_template = \"Free Infantry\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+							owner = UZB
+						}
+					}
+				}
+			}
+		}
+
+		remove_effect = {
+			clr_country_flag = is_doing_diplomatic_play
+			custom_effect_tooltip = create_tension_in_central_asia_war
+			hidden_effect = {
+				random_list = {
+					60 = { #Tension was successful
+						country_event = { id = soviets.462 days = 3 }
+					}
+					40 = { #A Failure, coalition created
+						country_event = { id = soviets.463 days = 3 }
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	SOV_intervene_in_central_asia_democratic = { #TODO National spirit so they won't join foreign faction
+
+		icon = GFX_decision_generic_tank
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			has_country_flag = can_intervene_central_asia
+		}
+
+		available = {
+			has_country_flag = successfully_created_tension_central_asia
+			NOT = {
+				has_country_flag = is_doing_diplomatic_play
+			}
+		}
+
+		fire_only_once = yes
+
+		days_remove = 14
+
+		cost = 25
+
+		complete_effect = {
+			set_country_flag = is_doing_diplomatic_play
+		}
+
+		remove_effect = {
+			clr_country_flag = is_doing_diplomatic_play
+			custom_effect_tooltip = declare_war_remaining_country_central_asia
+			custom_effect_tooltip = remaining_central_asia_country_form_coal
+			hidden_effect = { #TODO Optimize Peace Deal
+				every_country = {
+					limit = {
+						exists = yes
+						OR = {
+							TAG = KAZ
+							TAG = KYR
+							TAG = TMS
+							TAG = UZB
+							TAG = TAJ
+						}
+					}
+					KAZ = {
+						white_peace = PREV
+					}
+					KYR = {
+						white_peace = PREV
+					}
+					TMS = {
+						white_peace = PREV
+					}
+					UZB = {
+						white_peace = PREV
+					}
+					TAJ = {
+						white_peace = PREV
+					}
+				}
+				random_scope_in_array = {
+					array = global.sov_central_asia_country
+					limit = {
+						exists = yes
+					}
+	
+					create_faction = anti_russian_coalition
+					add_to_faction = KAZ
+					add_to_faction = KYR
+					add_to_faction = TAJ
+					add_to_faction = TMS
+					add_to_faction = UZB
+				}
+				SOV = {
+					declare_war_on = {
+						target = TMS
+						type = annex_everything
+					}
+					declare_war_on = {
+						target = KAZ
+						type = annex_everything
+					}
+					declare_war_on = {
+						target = UZB
+						type = annex_everything
+					}
+					declare_war_on = {
+						target = TAJ
+						type = annex_everything
+					}
+					declare_war_on = {
+						target = KYR
+						type = annex_everything
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	SOV_march_through_caucasian_countries = {
+
+		icon = GFX_decision_generic_nationalism
+
+		target_array = global.sov_caucasian_democratic_country
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			FROM = {
+				is_neighbor_of = SOV
+				exists = yes
+			}
+		}
+
+		available = {
+			NOT = {
+				FROM = {
+					is_subject_of = SOV
+				}
+				has_country_flag = is_doing_diplomatic_play
+			}
+		}
+
+		days_remove = 15
+
+		cost = 20
+
+		fire_only_once = yes
+
+		complete_effect = {
+			set_country_flag = is_doing_diplomatic_play
+			remove_from_array = { global.sov_caucasian_democratic_country = FROM }
+		}
+
+		remove_effect = {
+			clr_country_flag = is_doing_diplomatic_play
+			hidden_effect = {
+				random_list = {
+					70 = {
+						FROM = {
+							country_event = { id = soviets.467 days = 2 }
+						}
+					}
+					30 = {
+						FROM = {
+							country_event = { id = soviets.468 days = 2 }
+						}
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 10
+		}
+	}
+
+	SOV_core_caucasian_countries_if_fail = {
+
+		icon = GFX_decision_generic_decision
+
+		state_target = yes
+
+		target_array = global.sov_caucasian_state_core
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			FROM = {
+				NOT = {
+					is_core_of = SOV
+				}
+				is_owned_and_controlled_by = SOV
+			}
+		}
+
+		available = {
+			FROM = {
+				NOT = {
+					is_core_of = SOV
+				}
+				is_owned_and_controlled_by = SOV
+			}
+			NOT = {
+				has_country_flag = is_doing_diplomatic_play
+			}
+		}
+
+		days_remove = 30
+
+		cost = 25
+
+		fire_only_once = yes
+
+		complete_effect = {
+			set_country_flag = is_doing_diplomatic_play
+			remove_from_array = { global.sov_caucasian_state_core = FROM }
+			FROM = {
+				clr_state_flag = caucasian_core_state_democratic
+			}
+		}
+
+		remove_effect = {
+			clr_country_flag = is_doing_diplomatic_play
+			SOV = {
+				add_state_core = FROM
+			}
+		}
+
+		ai_will_do = {
+			factor = 10
+		}
+	}
+}
+
+SOV_reconstruction_economy_democratic = {
+
+	SOV_invest_in_military_industry = {
+
+		icon = GFX_decision_generic_industry
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			
+		}
+
+		available = {
+			NOT = {
+				has_country_flag = is_investing_broken_market
+			}
+		}
+
+		fire_only_once = yes
+
+		cost = 50
+
+		days_remove = 70
+
+		complete_effect = {
+			set_country_flag = is_investing_broken_market
+		}
+
+		remove_effect = {
+			clr_country_flag = is_investing_broken_market
+			add_to_variable = {
+			    var = investment_broken_market_vari
+			    value = 1
+			}
+			219 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			217 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			195 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	SOV_invest_in_civilian_industry = {
+
+		icon = GFX_decision_generic_factory
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			
+		}
+
+		available = {
+			NOT = {
+				has_country_flag = is_investing_broken_market
+			}
+		}
+
+		fire_only_once = yes
+
+		cost = 50
+
+		days_remove = 70
+
+		complete_effect = {
+			set_country_flag = is_investing_broken_market
+		}
+
+		remove_effect = {
+			clr_country_flag = is_investing_broken_market
+			add_to_variable = {
+			    var = investment_broken_market_vari
+			    value = 1
+			}
+			219 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			252 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			220 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	SOV_invest_in_aviation = {
+
+		icon = GFX_decision_generic_air
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			
+		}
+
+		available = {
+			NOT = {
+				has_country_flag = is_investing_broken_market
+			}
+		}
+
+		fire_only_once = yes
+
+		cost = 25
+
+		days_remove = 49
+
+		complete_effect = {
+			set_country_flag = is_investing_broken_market
+		}
+
+		remove_effect = {
+			clr_country_flag = is_investing_broken_market
+			add_to_variable = {
+			    var = investment_broken_market_vari
+			    value = 1
+			}
+			220 = {
+				add_building_construction = {
+					type = air_base
+					level = 2
+					instant_build = yes
+				}
+			}
+			209 = {
+				add_building_construction = {
+					type = air_base
+					level = 1
+					instant_build = yes
+				}
+			}
+			219 = {
+				add_building_construction = {
+					type = radar_station
+					level = 1
+					instant_build = yes
+				}
+			}
+			408 = {
+				add_building_construction = {
+					type = radar_station
+					level = 1
+					instant_build = yes
+				}
+			}
+			574 = {
+				add_building_construction = {
+					type = air_base
+					level = 2
+					instant_build = yes
+				}
+			}
+			248 = {
+				add_building_construction = {
+					type = air_base
+					level = 2
+					instant_build = yes
+				}
+			}
+			224 = {
+				add_building_construction = {
+					type = air_base
+					level = 2
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = radar_station
+					level = 1
+					instant_build = yes
+				}
+			}
+			217 = {
+				add_building_construction = {
+					type = air_base
+					level = 2
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = radar_station
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	SOV_invest_in_naval_industry = {
+
+		icon = GFX_decision_generic_naval
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			
+		}
+
+		available = {
+			NOT = {
+				has_country_flag = is_investing_broken_market
+			}
+		}
+
+		fire_only_once = yes
+
+		cost = 30
+
+		days_remove = 70
+
+		complete_effect = {
+			set_country_flag = is_investing_broken_market
+		}
+
+		remove_effect = {
+			clr_country_flag = is_investing_broken_market
+			add_to_variable = {
+			    var = investment_broken_market_vari
+			    value = 1
+			}
+			195 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes
+				}
+			}
+			218 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes
+				}
+			}
+			408 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes
+				}
+			}
+			262 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	SOV_invest_in_wasteland = {
+
+		icon = GFX_decision_generic_construction
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			
+		}
+
+		available = {
+			NOT = {
+				has_country_flag = is_investing_broken_market
+			}
+		}
+
+		fire_only_once = yes
+
+		cost = 25
+
+		days_remove = 42
+
+		complete_effect = {
+			set_country_flag = is_investing_broken_market
+		}
+
+		remove_effect = {
+			clr_country_flag = is_investing_broken_market
+			add_to_variable = {
+			    var = investment_broken_market_vari
+			    value = 1
+			}
+			562 = {
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+			574 = {
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+			575 = {
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+			397 = {
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+			580 = {
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	SOV_invest_in_far_east = {
+
+		icon = GFX_decision_hol_draw_up_staff_plans
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			
+		}
+
+		available = {
+			NOT = {
+				has_country_flag = is_investing_broken_market
+			}
+		}
+
+		fire_only_once = yes
+
+		cost = 25
+
+		days_remove = 35
+
+		complete_effect = {
+			set_country_flag = is_investing_broken_market
+		}
+
+		remove_effect = {
+			clr_country_flag = is_investing_broken_market
+			add_to_variable = {
+			    var = investment_broken_market_vari
+			    value = 1
+			}
+			408 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			409 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	SOV_invest_in_urals = {
+
+		icon = GFX_decision_aluminium
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			
+		}
+
+		available = {
+			NOT = {
+				has_country_flag = is_investing_broken_market
+			}
+		}
+
+		fire_only_once = yes
+
+		cost = 50
+
+		days_remove = 70
+
+		complete_effect = {
+			set_country_flag = is_investing_broken_market
+		}
+
+		remove_effect = {
+			clr_country_flag = is_investing_broken_market
+			add_to_variable = {
+			    var = investment_broken_market_vari
+			    value = 1
+			}
+			add_resource = {
+				type = aluminium
+				amount = 20
+				state = 581
+			}
+			add_resource = {
+				type = chromium
+				amount = 20
+				state = 581
+			}
+			add_resource = {
+				type = oil
+				amount = 25
+				state = 582
+			}
+			add_resource = {
+				type = steel
+				amount = 30
+				state = 582
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	SOV_end_the_reconstruction = {
+
+		icon = GFX_decision_eng_trade_unions_demand
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			
+		}
+
+		available = {
+			NOT = {
+				has_country_flag = is_investing_broken_market
+			}
+		}
+
+		days_remove = 10
+
+		fire_only_once = yes
+
+		complete_effect = {
+			set_country_flag = is_investing_broken_market
+			custom_effect_tooltip = investment_will_stop_forever
+		}
+
+		remove_effect = {
+			clr_country_flag = is_investing_broken_market
+			custom_effect_tooltip = more_invsetment_equal_more_bonus
+			remove_ideas = SOV_Broken_market_2
+			if = {
+				limit = {
+					check_variable = {
+						var = investment_broken_market_vari
+						value = 1
+						compare = greater_than_or_equals
+					}
+					NOT = {
+						check_variable = {
+							var = investment_broken_market_vari
+							value = 4
+							compare = greater_than_or_equals
+						}
+					}
+				}
+				add_ideas = SOV_Reconstructed_economy
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						var = investment_broken_market_vari
+						value = 4
+						compare = greater_than_or_equals
+					}
+					NOT = {
+						check_variable = {
+							var = investment_broken_market_vari
+							value = 7
+							compare = greater_than_or_equals
+						}
+					}
+				}
+				add_ideas = SOV_Reconstructed_economy_2
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						var = investment_broken_market_vari
+						value = 7
+						compare = equals
+					}
+					NOT = {
+						check_variable = {
+							var = investment_broken_market_vari
+							value = 6
+							compare = less_than_or_equals
+						}
+					}
+				}
+				add_ideas = SOV_Reconstructed_economy_3
+			}
+		}
+
+		ai_will_do = {
+			factor = 60
+		}
+	}
+	
+}
+
+#TODO Add Factories if there was a civil war

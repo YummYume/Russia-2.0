@@ -10142,6 +10142,27 @@ focus_tree = {
 		completion_reward = {
 			add_stability = 0.05
 			add_ideas = SOV_Right_believe
+			for_each_scope_loop = {
+				array = SOV.owned_controlled_states
+				if = {
+					limit = {
+						THIS = {
+							OR = {
+								state = 234
+								state = 235
+								state = 233
+								state = 137
+								state = 231
+								state = 230
+								state = 229
+								state = 232
+							}	
+						}
+					}
+					add_to_array = { global.sov_caucasian_state_core = THIS }
+					THIS = { set_state_flag = caucasian_core_state_democratic }
+				}	
+			}
 		}
 	}
 
@@ -11294,7 +11315,7 @@ focus_tree = {
 				check_variable = {
 					var = united_russia_strength
 					value = 1
-					compare = greater_than
+					compare = greater_than_or_equals
 				}
 			}
 			custom_trigger_tooltip = {
@@ -11319,7 +11340,39 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			
+			dismantle_faction = yes
+			remove_ideas = SOV_Russian_sphere_investments
+			add_ideas = SOV_Broken_market
+			custom_effect_tooltip = every_russian_country_will_leave_and_isolate
+			hidden_effect = {
+				every_country = {
+					limit = {
+						OR ={
+							TAG = UKR
+							TAG = BLR
+							TAG = DAG
+							TAG = CIR
+							TAG = CRI
+							TAG = GEO
+							TAG = AZR
+							TAG = ARM
+							TAG = KAZ
+							TAG = TAJ
+							TAG = KYR
+							TAG = UZB
+							TAG = TMS
+						}
+					}
+					SOV = {
+						set_autonomy = {
+							target = PREV
+							autonomy_state = autonomy_free
+						}
+					}
+					add_ideas = SOV_Isolation
+					remove_ideas = SOV_Guided_by_russia
+				}
+			}
 		}
 	}
 
@@ -11338,6 +11391,14 @@ focus_tree = {
 		available = {
 			is_subject = no
 			has_government = democratic
+			custom_trigger_tooltip = {
+				tooltip = SOV_united_russia_tt
+				check_variable = {
+					var = united_russia_strength
+					value = 3
+					compare = greater_than_or_equals
+				}
+			}
 			if = {
 				limit = {
 					has_idea = SOV_Exiled_russia
@@ -11391,7 +11452,59 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			
+			if = {
+				limit = {
+					check_variable = {
+						var = united_russia_strength
+						value = 3
+						compare = equals
+					}
+				}
+				custom_effect_tooltip = more_gain_if_united_russia_is_stronger
+				add_political_power = 50
+				add_stability = -0.1
+				add_popularity = {
+					ideology = democratic
+					popularity = 0.05
+				}
+			}
+
+			else_if = {
+				limit = {
+					check_variable = {
+						var = united_russia_strength
+						value = 4
+						compare = equals
+					}
+				}
+				custom_effect_tooltip = more_gain_if_united_russia_is_stronger
+				add_political_power = 100
+				add_stability = 0.05
+				add_popularity = {
+					ideology = democratic
+					popularity = 0.1
+				}
+			}
+
+			else_if = {
+				limit = {
+					check_variable = {
+						var = united_russia_strength
+						value = 5
+						compare = equals
+					}
+				}
+				add_political_power = 150
+				add_stability = 0.1
+				add_popularity = {
+					ideology = democratic
+					popularity = 0.15
+				}
+			}
+
+			else = {
+				custom_effect_tooltip = will_do_something_if_united_russia_is_stronk
+			}
 		}
 	}
 
@@ -11414,8 +11527,8 @@ focus_tree = {
 				tooltip = SOV_preemptive_coup_tt
 				check_variable = {
 					var = united_russia_strength
-					value = 5
-					compare = less_than
+					value = 2
+					compare = less_than_or_equals
 				}
 			}
 			if = {
@@ -11429,7 +11542,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			
+			set_cosmetic_tag = RRD
 		}
 	}
 
@@ -11458,7 +11571,42 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			
+			if = {
+				limit = {
+					check_variable = {
+						var = united_russia_strength
+						value = 2
+						compare = equals
+					}
+				}
+				custom_effect_tooltip = more_gain_if_united_russia_is_weaker
+				add_political_power = 50
+				add_stability = 0.05
+				add_popularity = {
+					ideology = democratic
+					popularity = 0.01
+				}
+			}
+
+			else_if = {
+				limit = {
+					check_variable = {
+						var = united_russia_strength
+						value = 1
+						compare = equals
+					}
+				}
+				add_political_power = 150
+				add_stability = 0.1
+				add_popularity = {
+					ideology = democratic
+					popularity = 0.15
+				}
+			}
+
+			else = {
+				custom_effect_tooltip = will_do_something_if_united_russia_is_not_stronk
+			}
 		}
 	}
 
@@ -11487,7 +11635,11 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			
+			custom_effect_tooltip = SOV_reconstruction_plans_unlock_tt
+			swap_ideas = {
+				remove_idea = SOV_Broken_market
+				add_idea = SOV_Broken_market_2
+			}
 		}
 	}
 
@@ -11514,9 +11666,62 @@ focus_tree = {
 				}
 			}
 		}
+		bypass = {
+			NOT = {
+				country_exists = BLR
+				country_exists = CIR
+				country_exists = CRI
+				country_exists = DAG
+				country_exists = GEO
+				country_exists = AZR
+				country_exists = ARM
+				country_exists = KAZ
+				country_exists = UZB
+				country_exists = TMS
+				country_exists = TAJ
+				country_exists = KYR
+			}
+		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			
+			custom_effect_tooltip = SOV_diplomatic_plays_unlock_tt
+			custom_effect_tooltip = SOV_diplomatic_plays_tt
+			hidden_effect = {			
+				for_each_scope_loop = {
+					array = global.countries
+					if = {
+						limit = {
+							exists = yes
+							OR = {
+								TAG = KAZ
+								TAG = TMS
+								TAG = UZB
+								TAG = TAJ
+								TAG = KYR
+							}
+						}
+						add_to_array = { global.sov_central_asia_country = THIS }	
+					}	
+				}
+
+				for_each_scope_loop = {
+					array = global.countries
+					if = {
+						limit = {
+							exists = yes
+							OR = {
+								TAG = CIR
+								TAG = CRI
+								TAG = DAG
+								TAG = GEO
+								TAG = AZR
+								TAG = ARM
+							}
+						}
+						add_to_array = { global.sov_caucasian_democratic_country = THIS }	
+					}	
+				}
+			}
 		}
 	}
 
@@ -11542,10 +11747,24 @@ focus_tree = {
 					has_idea = SOV_Exiled_russia
 				}
 			}
+			NOT = {
+				country_exists = BLR
+				country_exists = CIR
+				country_exists = CRI
+				country_exists = DAG
+				country_exists = GEO
+				country_exists = AZR
+				country_exists = ARM
+				country_exists = KAZ
+				country_exists = UZB
+				country_exists = TMS
+				country_exists = TAJ
+				country_exists = KYR
+			}
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			
+			country_event = { id = soviets.450 hours = 15 }
 		}
 	}
 
@@ -20455,11 +20674,11 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY }
 		completion_reward = {
+			country_event = { id = soviets.420 hours = 12 }
 			swap_ideas = {
 				remove_idea = SOV_No_work
 				add_idea = SOV_No_work_2
 			}
-			country_event = { id = soviets.420 hours = 12 }
 			random_owned_controlled_state = {
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
@@ -20518,6 +20737,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY }
 		completion_reward = {
+			country_event = { id = soviets.421 }
 			remove_ideas = SOV_No_work_2
 			random_owned_controlled_state = {
 				add_extra_state_shared_building_slots = 4
@@ -20558,7 +20778,6 @@ focus_tree = {
 					instant_build = yes
 				}
 			}
-			country_event = { id = soviets.421 }
 		}
 	}
 
