@@ -11884,7 +11884,7 @@ focus_tree = {
 		}
 	}
 
-	#The Middle Eastern Nuisance
+	#The Middle Eastern Nuissance
 	focus = {
 		id = SOV_middle_eastern_nuisance
 		x = 5
@@ -11909,7 +11909,29 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			
+			custom_effect_tooltip = SOV_middle_eastern_nuisance_decision_tt
+			for_each_scope_loop = {
+				array = global.countries
+				if = {
+					limit = {
+						exists = yes
+						OR = {
+							TAG = TUR
+							TAG = PER
+							TAG = IRQ
+							TAG = SAU
+							TAG = YEM
+							TAG = OMA
+							TAG = AFG
+						}
+					}
+					add_to_array = { global.sov_middle_east_democratic_country = THIS }	
+				}	
+			}
+			set_variable = {
+				var = middle_east_coalition
+				value = 15
+			}
 		}
 	}
 
@@ -11933,6 +11955,68 @@ focus_tree = {
 				}
 				NOT = {
 					has_idea = SOV_Exiled_russia
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = owns_or_puppet_control_4_capital_middle_east
+				count_triggers = {
+					amount = 4
+					OR = {
+						49 = {
+							is_owned_and_controlled_by = ROOT
+						}
+						TUR = {
+							is_subject_of = SOV
+						}
+					}
+					OR = {
+						266 = {
+							is_owned_and_controlled_by = ROOT
+						}
+						PER = {
+							is_subject_of = SOV
+						}
+					}
+					OR = {
+						267 = {
+							is_owned_and_controlled_by = ROOT
+						}
+						AFG = {
+							is_subject_of = SOV
+						}
+					}
+					OR = {
+						291 = {
+							is_owned_and_controlled_by = ROOT
+						}
+						IRQ = {
+							is_subject_of = SOV
+						}
+					}
+					OR = {
+						292 = {
+							is_owned_and_controlled_by = ROOT
+						}
+						SAU = {
+							is_subject_of = SOV
+						}
+					}
+					OR = {
+						294 = {
+							is_owned_and_controlled_by = ROOT
+						}
+						OMA = {
+							is_subject_of = SOV
+						}
+					}
+					OR = {
+						293 = {
+							is_owned_and_controlled_by = ROOT
+						}
+						YEM = {
+							is_subject_of = SOV
+						}
+					}
 				}
 			}
 		}

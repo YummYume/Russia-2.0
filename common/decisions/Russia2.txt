@@ -27910,7 +27910,509 @@ SOV_reconstruction_economy_democratic = {
 			factor = 60
 		}
 	}
-	
+}
+
+SOV_middle_east_conquest = {
+
+	SOV_ultimatum_country_middle_east_dem = {
+
+		icon = GFX_decision_generic_break_treaty
+
+		target_array = global.sov_middle_east_democratic_country
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			FROM = {
+				exists = yes
+				NOT = {
+					is_subject = yes
+				}
+			}
+			NOT = {
+				has_country_flag = middle_east_coalition_to_protect_against_sov
+			}
+		}
+
+		available = {
+			FROM = {
+				is_neighbor_of = SOV
+			}
+			NOT = {
+				FROM = {
+					is_subject_of = SOV
+				}
+				has_country_flag = is_sending_ultimatum_middle_east
+			}
+		}
+
+		days_remove = 30
+
+		cost = 50
+
+		fire_only_once = yes
+
+		complete_effect = {
+			set_country_flag = is_sending_ultimatum_middle_east
+			remove_from_array = { global.sov_middle_east_democratic_country = FROM }
+			randomize_variable = {
+				var = middle_east_coalition
+				distribution = uniform
+				min = middle_east_coalition
+				max = 100
+			}
+			round_variable = middle_east_coalition
+		}
+
+		remove_effect = {
+			clr_country_flag = is_sending_ultimatum_middle_east
+			FROM = {
+				country_event = { id = soviets.469 days = 6 }
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						check_variable = {
+							var = middle_east_coalition
+							value = 85
+							compare = greater_than_or_equals
+						}
+					}
+					random_scope_in_array = {
+						array = global.sov_middle_east_democratic_country
+						limit = {
+							exists = yes
+							is_subject = no
+						}
+		
+						set_country_flag = leader_faction_coalition_middle_east
+						create_faction = middle_east_faction_dem
+						every_country = {
+							limit = {
+								OR = {
+									TAG = TUR
+									TAG = PER
+									TAG = AFG
+									TAG = IRQ
+									TAG = SAU
+									TAG = YEM
+									TAG = OMA
+								}
+							}
+							add_to_faction = PREV
+						}
+					}
+					SOV = {
+						country_event = { id = soviets.472 days = 2 }
+					}
+				}
+				else = {
+					add_to_variable = {
+						var = middle_east_coalition
+						value = 10
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	SOV_ultimatum_country_middle_east_dem_overlord_edition = {
+
+		icon = GFX_decision_generic_break_treaty
+
+		target_array = global.sov_middle_east_democratic_country
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			FROM = {
+				exists = yes
+				NOT = {
+					is_subject_of = SOV
+				}
+				is_subject = yes
+			}
+		}
+
+		available = {
+			FROM = {
+				is_neighbor_of = SOV
+			}
+			NOT = {
+				FROM = {
+					is_subject_of = SOV
+				}
+				has_country_flag = is_sending_ultimatum_middle_east
+			}
+		}
+
+		days_remove = 30
+
+		cost = 50
+
+		fire_only_once = yes
+
+		complete_effect = {
+			set_country_flag = is_sending_ultimatum_middle_east
+			remove_from_array = { global.sov_middle_east_democratic_country = FROM }
+		}
+
+		remove_effect = {
+			clr_country_flag = is_sending_ultimatum_middle_east
+			if = {
+				limit = {
+					FROM = {
+						is_subject = yes
+					}
+				}
+				FROM = {
+					OVERLORD = {
+						country_event = { id = soviets.473 days = 6 }
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	SOV_attack_the_coalition_middle_east = {
+
+		icon = GFX_decision_generic_ignite_civil_war
+
+		target_array = global.sov_middle_east_democratic_country
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			any_country = {
+				has_country_flag = leader_faction_coalition_middle_east
+				exists = yes
+				NOT = {
+					is_subject = yes
+				}
+			}
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = middle_east_leader_is_alive
+				any_country = {
+					has_country_flag = leader_faction_coalition_middle_east
+					exists = yes
+					NOT = {
+						is_subject = yes
+					}
+				}
+			}
+			NOT = {
+				has_country_flag = is_sending_ultimatum_middle_east
+			}
+		}
+
+		fire_only_once = yes
+
+		cost = 25
+
+		days_remove = 35
+
+		complete_effect = {
+			set_country_flag = is_sending_ultimatum_middle_east
+		}
+
+		remove_effect = {
+			clr_country_flag = is_sending_ultimatum_middle_east
+			create_wargoal = {
+				type = annex_everything
+				target = FROM
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	SOV_ask_foreign_country_to_cede_territory = {
+
+		icon = GFX_decision_generic_operation
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			NOT = {
+				SOV = {
+					AND = {
+						owns_state = 453
+						owns_state = 446
+						owns_state = 447
+						owns_state = 452
+						owns_state = 457
+						owns_state = 456
+						owns_state = 552
+						owns_state = 415
+						owns_state = 267
+						owns_state = 341
+						owns_state = 797
+						owns_state = 293
+						owns_state = 659
+						owns_state = 294
+						owns_state = 658
+						owns_state = 765
+						owns_state = 678
+						owns_state = 679
+						owns_state = 292
+						owns_state = 455
+						owns_state = 454
+						owns_state = 675
+						owns_state = 291
+						owns_state = 656
+						owns_state = 676
+						owns_state = 680
+						owns_state = 677
+						owns_state = 554
+						owns_state = 553
+						owns_state = 419
+						owns_state = 421
+						owns_state = 413
+						owns_state = 412
+						owns_state = 411
+						owns_state = 420
+						owns_state = 417
+						owns_state = 266
+						owns_state = 418
+						owns_state = 416
+						owns_state = 414
+						owns_state = 410
+						owns_state = 418
+						owns_state = 352
+						owns_state = 353
+						owns_state = 354
+						owns_state = 350
+						owns_state = 349
+						owns_state = 355
+						owns_state = 344
+						owns_state = 348
+						owns_state = 356
+						owns_state = 345
+						owns_state = 346
+						owns_state = 49
+						owns_state = 347
+						owns_state = 340
+						owns_state = 343
+						owns_state = 342
+						owns_state = 339
+						owns_state = 800
+						owns_state = 798
+						owns_state = 799
+					}
+				}
+			}
+			FROM = {
+				OR = {
+					owns_state = 453
+					owns_state = 446
+					owns_state = 447
+					owns_state = 452
+					owns_state = 457
+					owns_state = 456
+					owns_state = 552
+					owns_state = 415
+					owns_state = 267
+					owns_state = 341
+					owns_state = 797
+					owns_state = 293
+					owns_state = 659
+					owns_state = 294
+					owns_state = 658
+					owns_state = 765
+					owns_state = 678
+					owns_state = 679
+					owns_state = 292
+					owns_state = 455
+					owns_state = 454
+					owns_state = 675
+					owns_state = 291
+					owns_state = 656
+					owns_state = 676
+					owns_state = 680
+					owns_state = 677
+					owns_state = 554
+					owns_state = 553
+					owns_state = 419
+					owns_state = 421
+					owns_state = 413
+					owns_state = 412
+					owns_state = 411
+					owns_state = 420
+					owns_state = 417
+					owns_state = 266
+					owns_state = 418
+					owns_state = 416
+					owns_state = 414
+					owns_state = 410
+					owns_state = 418
+					owns_state = 352
+					owns_state = 353
+					owns_state = 354
+					owns_state = 350
+					owns_state = 349
+					owns_state = 355
+					owns_state = 344
+					owns_state = 348
+					owns_state = 356
+					owns_state = 345
+					owns_state = 346
+					owns_state = 49
+					owns_state = 347
+					owns_state = 340
+					owns_state = 343
+					owns_state = 342
+					owns_state = 339
+					owns_state = 800
+					owns_state = 798
+					owns_state = 799
+				}
+			}
+		}
+
+		target_root_trigger = {
+			tag = SOV
+			has_completed_focus = SOV_middle_eastern_nuisance
+		}
+
+		target_trigger = {
+			FROM = {
+				NOT = {
+					TAG = TUR
+					TAG = PER
+					TAG = AFG
+					TAG = IRQ
+					TAG = SAU
+					TAG = YEM
+					TAG = OMA
+
+				}
+				OR = {
+					owns_state = 453
+					owns_state = 446
+					owns_state = 447
+					owns_state = 452
+					owns_state = 457
+					owns_state = 456
+					owns_state = 552
+					owns_state = 415
+					owns_state = 267
+					owns_state = 341
+					owns_state = 797
+					owns_state = 293
+					owns_state = 659
+					owns_state = 294
+					owns_state = 658
+					owns_state = 765
+					owns_state = 678
+					owns_state = 679
+					owns_state = 292
+					owns_state = 455
+					owns_state = 454
+					owns_state = 675
+					owns_state = 291
+					owns_state = 656
+					owns_state = 676
+					owns_state = 680
+					owns_state = 677
+					owns_state = 554
+					owns_state = 553
+					owns_state = 419
+					owns_state = 421
+					owns_state = 413
+					owns_state = 412
+					owns_state = 411
+					owns_state = 420
+					owns_state = 417
+					owns_state = 266
+					owns_state = 418
+					owns_state = 416
+					owns_state = 414
+					owns_state = 410
+					owns_state = 418
+					owns_state = 352
+					owns_state = 353
+					owns_state = 354
+					owns_state = 350
+					owns_state = 349
+					owns_state = 355
+					owns_state = 344
+					owns_state = 348
+					owns_state = 356
+					owns_state = 345
+					owns_state = 346
+					owns_state = 49
+					owns_state = 347
+					owns_state = 340
+					owns_state = 343
+					owns_state = 342
+					owns_state = 339
+					owns_state = 800
+					owns_state = 798
+					owns_state = 799
+				}
+			}
+		}
+
+		available = {
+			NOT = {
+				has_war_with = FROM
+				has_country_flag = is_sending_ultimatum_middle_east
+			}
+		}
+
+		fire_only_once = yes
+
+		cost = 25
+
+		days_remove = 35
+
+		complete_effect = {
+			set_country_flag = is_sending_ultimatum_middle_east
+		}
+
+		remove_effect = {
+			if = {
+				limit = {
+					FROM = {
+						is_subject = yes
+					}
+				}
+				custom_effect_tooltip = overlord_will_choose_fate_of_ultimatum
+			}
+			else = {
+				custom_effect_tooltip = will_accept_more_chance_if_faction_sov
+			}
+			clr_country_flag = is_sending_ultimatum_middle_east
+			FROM = {
+				country_event = { id = soviets.476 days = 3 }
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
 }
 
 #TODO Add Factories if there was a civil war
