@@ -28415,4 +28415,183 @@ SOV_middle_east_conquest = {
 	}
 }
 
+SOV_improve_arctic_russia = {
+
+	SOV_improve_arctic_state = {
+
+		icon = GFX_decision_generic_operation
+
+		state_target = yes
+
+		target_array = global.alaska_upgradeable_states
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+
+		}
+
+		available = {
+			FROM = {
+				is_owned_and_controlled_by = RAS
+			}
+		}
+
+		days_remove = 5
+
+		cost = 10
+
+		fire_only_once = yes
+
+		remove_effect = {
+			if = {
+				limit = {
+					FROM = {
+						state = 471
+					}
+				}
+				add_resource = {
+					type = steel
+					amount = 20
+					state = 471
+				}
+			}
+			FROM = {
+				add_extra_state_shared_building_slots = 4
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+			add_to_variable = { local_ressource_ice_puppet = 0.02 }
+			set_variable = { loca_local_ressource_ice_puppet = local_ressource_ice_puppet }
+			multiply_variable = { loca_local_ressource_ice_puppet = 100.00 }
+		}
+	}
+
+	SOV_encourage_immigration = {
+
+		icon = GFX_decision_eng_blackshirt_march
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+
+		}
+
+		available = {
+			RAS = {
+				is_subject_of = SOV
+			}
+			NOT = {
+				custom_trigger_tooltip = {
+					tooltip = not_reached_max_immigration
+					check_variable = {
+						var = alaska_emigration_calculation_demo
+						value = -10000
+						compare = less_than_or_equals
+					}
+				}
+			}
+		}
+
+		days_remove = 5
+
+		cost = 10
+
+		remove_effect = {
+			if = {
+				limit = {
+					AND = {
+						SOV = {
+							NOT = {
+								has_idea = SOV_Emigration_in_alaska_idea
+							}
+						}
+						RAS = {
+							NOT = {
+								has_idea = SOV_Immigration_in_alaska_idea
+							}
+						}
+					}
+				}
+				SOV = {
+					custom_effect_tooltip = idea_emigration_alaska_tooltip
+					hidden_effect = {
+						add_ideas = SOV_Emigration_in_alaska_idea
+						add_dynamic_modifier = { modifier = democratic_alaska_emigration }
+					}
+				}
+				RAS = {
+					custom_effect_tooltip = idea_immigration_alaska_tooltip
+					hidden_effect = {
+						add_ideas = SOV_Immigration_in_alaska_idea
+						add_dynamic_modifier = { modifier = democratic_alaska_immigration }
+					}
+				}
+			}
+			else = {
+				SOV = {
+					custom_effect_tooltip = SOV_emigration_malus_alaska
+					add_to_variable = { alaska_emigration_calculation_demo = -2000 }
+					set_variable = { loca_alaska_emigration_calculation_demo = alaska_emigration_calculation_demo }
+				}
+				RAS = {
+					custom_effect_tooltip = SOV_immigration_bonus_alaska
+					add_to_variable = { alaska_immigration_calculation_demo = 2000 }
+					set_variable = { loca_alaska_immigration_calculation_demo = alaska_immigration_calculation_demo }
+				}
+			}
+		}
+	}
+
+	SOV_stop_immigration_alaska = {
+
+		icon = GFX_decision_eng_trade_unions_support
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+
+		}
+
+		available = {
+			RAS = {
+				is_subject_of = SOV
+				has_idea = SOV_Immigration_in_alaska_idea
+			}
+			has_idea = SOV_Emigration_in_alaska_idea
+		}
+
+		cost = 10
+
+		complete_effect = {
+			SOV = {
+				remove_ideas = SOV_Emigration_in_alaska_idea
+				hidden_effect = {
+					remove_dynamic_modifier = { modifier = democratic_alaska_emigration }
+				}
+			}
+			RAS = {
+				remove_ideas = SOV_Immigration_in_alaska_idea
+				hidden_effect = {
+					remove_dynamic_modifier = { modifier = democratic_alaska_immigration }
+				}
+			}
+		}
+	}
+}
+
 #TODO Add Factories if there was a civil war

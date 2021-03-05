@@ -10142,27 +10142,6 @@ focus_tree = {
 		completion_reward = {
 			add_stability = 0.05
 			add_ideas = SOV_Right_believe
-			for_each_scope_loop = {
-				array = SOV.owned_controlled_states
-				if = {
-					limit = {
-						THIS = {
-							OR = {
-								state = 234
-								state = 235
-								state = 233
-								state = 137
-								state = 231
-								state = 230
-								state = 229
-								state = 232
-							}	
-						}
-					}
-					add_to_array = { global.sov_caucasian_state_core = THIS }
-					THIS = { set_state_flag = caucasian_core_state_democratic }
-				}	
-			}
 		}
 	}
 
@@ -11721,6 +11700,22 @@ focus_tree = {
 						add_to_array = { global.sov_caucasian_democratic_country = THIS }	
 					}	
 				}
+				every_state = {
+					limit = {
+						OR = {
+							state = 234
+							state = 235
+							state = 233
+							state = 137
+							state = 231
+							state = 230
+							state = 229
+							state = 232
+						}	
+					}
+					add_to_array = { global.sov_caucasian_state_core = THIS }
+					THIS = { set_state_flag = caucasian_core_state_democratic }
+				}
 			}
 		}
 	}
@@ -11819,10 +11814,35 @@ focus_tree = {
 					has_idea = SOV_Exiled_russia
 				}
 			}
+			NOT = {
+				463 = {
+					is_owned_and_controlled_by = SOV
+				}
+				any_country = {
+					is_subject_of = SOV
+					owns_state = 463
+				}
+			}
+		}
+		bypass = {
+			OR = {
+				463 = {
+					is_owned_and_controlled_by = SOV
+				}
+				any_country = {
+					is_subject_of = SOV
+					owns_state = 463
+				}
+			}
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			
+			add_state_claim = 463
+			463 = {
+				CONTROLLER = {
+					country_event = { id = americas.11 days = 2 }
+				}
+			}
 		}
 	}
 
@@ -11848,10 +11868,97 @@ focus_tree = {
 					has_idea = SOV_Exiled_russia
 				}
 			}
+			OR = {
+				463 = {
+					is_owned_and_controlled_by = SOV
+				}
+				any_country = {
+					is_subject_of = SOV
+					owns_state = 463
+				}
+			}
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			
+			RAS = {
+				add_state_core = 463
+			}
+			every_state = {
+				limit = {
+					is_core_of = RAS
+					any_country = {
+						OR = {
+							TAG = SOV
+							is_subject_of = SOV
+						}	
+						owns_state = PREV
+					}
+				}
+				RAS = {
+					transfer_state = PREV
+				}
+			}
+			SOV = {
+				set_autonomy = {
+					target = RAS
+					autonomy_state = autonomy_supervised_colony
+				}
+			}
+			hidden_effect = {
+				463 = {
+					add_extra_state_shared_building_slots = 4
+					add_building_construction = {
+						type = arms_factory
+						level = 2
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = industrial_complex
+						level = 2
+						instant_build = yes
+					}
+				}
+				RAS = {
+					division_template = {
+						name = "Arctic Garrison Division"
+						priority = 1
+						regiments = {
+							infantry = { x = 0 y = 0 }
+							infantry = { x = 0 y = 1 }
+							infantry = { x = 0 y = 2 }
+							infantry = { x = 0 y = 3 }
+							infantry = { x = 0 y = 4 }
+							infantry = { x = 1 y = 0 }
+							infantry = { x = 1 y = 1 }
+							infantry = { x = 1 y = 2 }
+							infantry = { x = 1 y = 3 }
+							infantry = { x = 1 y = 4 }
+						}
+						support = {
+							engineer = { x = 0 y = 0 }
+							artillery = { x = 0 y = 1 }
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"1st Arctic Garrison Division\" division_template = \"Arctic Garrison Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = RAS
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"2nd Arctic Garrison Division\" division_template = \"Arctic Garrison Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = RAS
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"3rd Arctic Garrison Division\" division_template = \"Arctic Garrison Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = RAS
+						}
+					}
+				}
+			}
 		}
 	}
 
@@ -11877,10 +11984,51 @@ focus_tree = {
 					has_idea = SOV_Exiled_russia
 				}
 			}
+			RAS = {
+				is_subject_of = SOV
+			}
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			
+			hidden_effect = {
+				add_dynamic_modifier = { modifier = democratic_alaskan_puppet_modifiers }
+				add_ideas = SOV_Excavation_in_alaska
+				every_state = {
+					limit = {
+						OR = {
+							state = 471
+							state = 472
+							state = 473
+							state = 470
+							state = 469
+							state = 467
+							state = 683
+							state = 682
+							state = 466
+							state = 332
+							state = 101
+							state = 100
+						}
+					}
+					add_to_array = { global.alaska_upgradeable_states = THIS }
+				}
+			}
+			custom_effect_tooltip = unlokc_decision_ice_belongs_to_the_motherland_tt
+			custom_effect_tooltip = SOV_ice_belongs_to_motherland_idea_tt
+			RAS = {
+				add_state_core = 471
+				add_state_core = 472
+				add_state_core = 473
+				add_state_core = 470
+				add_state_core = 469
+				add_state_core = 467
+				add_state_core = 683
+				add_state_core = 682
+				add_state_core = 466
+				add_state_core = 332
+				add_state_core = 101
+				add_state_core = 100
+			}
 		}
 	}
 
