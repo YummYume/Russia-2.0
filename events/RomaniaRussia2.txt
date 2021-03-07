@@ -194,3 +194,329 @@ country_event = {
 		}
 	}
 }
+
+#SOV Demands Oil
+country_event = {
+	id = romanias.4
+	title = romanias.4.t
+	desc = romanias.4.d
+	picture = GFX_report_event_stalin_02
+	
+	is_triggered_only = yes
+	
+	#Ok ok
+	option = {
+		name = romanias.4.a
+		ai_chance = {
+			factor = 50
+		}
+		give_resource_rights = { receiver = SOV state = 46 }
+		add_political_power = 50
+		custom_effect_tooltip = may_cancel_sov_oil_but_danger
+		SOV = {
+			country_event = { id = romanias.5 days = 1 }
+		}
+		set_country_flag = giving_46_rights_to_sov
+	}
+
+	#We refuse D:
+	option = {
+		name = romanias.4.b
+		ai_chance = {
+			factor = 50
+		}
+		SOV = {
+			country_event = { id = romanias.6 days = 1 }
+		}
+	}
+}
+
+#Romania Accepts
+country_event = {
+	id = romanias.5
+	title = romanias.5.t
+	desc = romanias.5.d
+	picture = GFX_report_event_stalin_02
+	
+	is_triggered_only = yes
+	
+	#Good
+	option = {
+		name = romanias.5.a
+		custom_effect_tooltip = sov_get_resources_in_state_46
+		give_guarantee = FROM
+		set_country_flag = sov_receiving_46_rights
+	}
+}
+
+#Romania Refuses
+country_event = {
+	id = romanias.6
+	title = romanias.6.t
+	desc = romanias.6.d
+	picture = GFX_report_event_stalin_02
+	
+	is_triggered_only = yes
+	
+	#Fine
+	option = {
+		name = romanias.6.a
+		add_political_power = 50
+		FROM = {
+			country_event = { id = romanias.7 days = 1 }
+		}
+	}
+
+	#War
+	option = {
+		name = romanias.6.b
+		create_wargoal = {
+			type = take_state_focus
+			target = FROM
+			expire = 0
+			generator = { 78 80 79 46 77 }
+		}
+		FROM = {
+			country_event = { id = romanias.8 days = 1 }
+		}
+	}
+
+	#Ask overlord
+	option = {
+		name = romanias.6.c
+		trigger = {
+			FROM = {
+				is_subject = yes
+			}
+		}
+		FROM = {
+			OVERLORD = {
+				country_event = { id = romanias.9 days = 1 }
+			}
+		}
+	}
+}
+
+#SOV Backs down
+country_event = {
+	id = romanias.7
+	title = romanias.7.t
+	desc = romanias.7.d
+	picture = GFX_report_event_stalin_02
+	
+	is_triggered_only = yes
+	
+	#Good
+	option = {
+		name = romanias.7.a
+		add_political_power = 50
+	}
+}
+
+#SOV Mobilizes
+country_event = {
+	id = romanias.8
+	title = romanias.8.t
+	desc = romanias.8.d
+	picture = GFX_report_event_stalin_02
+	
+	is_triggered_only = yes
+	
+	#Oops
+	option = {
+		name = romanias.8.a
+	}
+}
+
+#SOV Asks for [STATE]46 Oil
+country_event = {
+	id = romanias.9
+	title = romanias.9.t
+	desc = romanias.9.d
+	picture = GFX_report_event_stalin_02
+	
+	is_triggered_only = yes
+	
+	#It's just a puppet who cares
+	option = {
+		name = romanias.9.a
+		give_resource_rights = { receiver = SOV state = 46 }
+		SOV = {
+			country_event = { id = romanias.10 days = 1 }
+		}
+		set_country_flag = giving_46_rights_to_sov
+	}
+
+	#Come and get it!
+	option = {
+		name = romanias.9.a
+		SOV = {
+			country_event = { id = romanias.11 days = 1 }
+		}
+	}
+}
+
+#FROM OVERLORD ACCEPTS
+country_event = {
+	id = romanias.10
+	title = romanias.10.t
+	desc = romanias.10.d
+	picture = GFX_report_event_stalin_02
+	
+	is_triggered_only = yes
+	
+	#Good
+	option = {
+		name = romanias.10.a
+		custom_effect_tooltip = sov_get_resources_in_state_46
+		set_country_flag = sov_get_resources_in_state_46
+	}
+}
+
+#FROM OVERLORD REFUSES
+country_event = {
+	id = romanias.11
+	title = romanias.11.t
+	desc = romanias.11.d
+	picture = GFX_report_event_stalin_02
+	
+	is_triggered_only = yes
+	
+	#Ok then
+	option = {
+		name = romanias.11.a
+		hidden_effect = {
+			every_other_country = {
+				limit = {
+					OR = {
+						owns_state = 46
+						controls_state = 46
+						is_subject_of = FROM
+					}
+				}
+				ROOT = {
+					create_wargoal = {
+						type = take_state_focus
+						target = PREV
+						expire = 0
+						generator = { 78 80 79 46 77 }
+					}
+				}
+			}
+		}
+		create_wargoal = {
+			type = puppet_wargoal_focus
+			target = FROM
+			expire = 0
+		}
+	}
+}
+
+#Romania cancels resource rights
+country_event = {
+	id = romanias.12
+	title = romanias.12.t
+	desc = romanias.12.d
+	picture = GFX_report_event_stalin_02
+	
+	is_triggered_only = yes
+	
+	#We don't have time for this
+	option = {
+		name = romanias.12.a
+		FROM = {
+			country_event = { id = romanias.13 days = 1 }
+		}
+	}
+
+	#Ultimatum
+	option = {
+		name = romanias.12.a
+		custom_effect_tooltip = sov_might_lead_to_war_with_from
+		FROM = {
+			country_event = { id = romanias.14 days = 1 }
+		}
+	}
+}
+
+#SOV doesn't care
+country_event = {
+	id = romanias.13
+	title = romanias.13.t
+	desc = romanias.13.d
+	picture = GFX_report_event_stalin_02
+	
+	is_triggered_only = yes
+	
+	#Good
+	option = {
+		name = romanias.13.a
+		add_political_power = 100
+	}
+}
+
+#SOV sends ultimatum
+country_event = {
+	id = romanias.13
+	title = romanias.13.t
+	desc = romanias.13.d
+	picture = GFX_report_event_stalin_02
+	
+	is_triggered_only = yes
+	
+	#Accept
+	option = {
+		name = romanias.13.a
+		give_resource_rights = { receiver = SOV state = 46 }
+		SOV = {
+			country_event = { id = romanias.14 days = 1 }
+		}
+		set_country_flag = giving_46_rights_to_sov_again
+	}
+
+	#Refuse
+	option = {
+		name = romanias.13.a
+		custom_effect_tooltip = sov_will_lead_to_war_with_from
+		SOV = {
+			country_event = { id = romanias.15 days = 1 }
+		}
+	}
+}
+
+#Romania refuses ultimatum
+country_event = {
+	id = romanias.14
+	title = romanias.14.t
+	desc = romanias.14.d
+	picture = GFX_report_event_stalin_02
+	
+	is_triggered_only = yes
+	
+	#Great
+	option = {
+		name = romanias.14.a
+		puppet = FROM
+		custom_effect_tooltip = sov_get_resources_in_state_46
+		set_country_flag = sov_receiving_46_rights_again
+	}
+}
+
+#Romania refuses ultimatum
+country_event = {
+	id = romanias.15
+	title = romanias.15.t
+	desc = romanias.15.d
+	picture = GFX_report_event_stalin_02
+	
+	is_triggered_only = yes
+	
+	#Killing time
+	option = {
+		name = romanias.15.a
+		declare_war_on = {
+			target = FROM
+			type = puppet_wargoal_focus
+		}
+	}
+}

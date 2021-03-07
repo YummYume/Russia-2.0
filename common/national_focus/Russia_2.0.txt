@@ -12109,6 +12109,14 @@ focus_tree = {
 		available = {
 			is_subject = no
 			has_government = democratic
+			any_country = {
+				has_full_control_of_state = 46
+				NOT = {
+					original_tag = ROOT
+					is_in_faction_with = ROOT
+					has_war_with = ROOT
+				}
+			}
 			if = {
 				limit = {
 					has_idea = SOV_Exiled_russia
@@ -12118,9 +12126,24 @@ focus_tree = {
 				}
 			}
 		}
+		bypass = {
+			any_country = {
+				has_full_control_of_state = 46
+				OR = {
+					original_tag = ROOT
+					is_in_faction_with = ROOT
+					has_war_with = ROOT
+				}
+			}
+		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
+		will_lead_to_war_with = ROM
 		completion_reward = {
-			
+			46 = {
+				CONTROLLER = {
+					country_event = { id = romanias.4 days = 1 }
+				}
+			}
 		}
 	}
 
@@ -13352,6 +13375,36 @@ focus_tree = {
 		completion_reward = {
 			custom_effect_tooltip = SOV_perpetual_defense_liberty_tt
 			custom_effect_tooltip = SOV_perpetual_defense_liberty_tt2
+		}
+	}
+
+	#Perpetual Defense of Liberty
+	focus = {
+		id = SOV_the_russian_golden_age
+		x = 30
+		y = 27
+		prerequisite = { focus = SOV_perpetual_defense_liberty }
+		icon = GFX_
+		cost = 10
+		ai_will_do = {
+			factor = 6
+		}
+		available = {
+			is_subject = no
+			has_government = democratic
+			is_major = yes
+			if = {
+				limit = {
+					has_idea = SOV_Exiled_russia
+				}
+				NOT = {
+					has_idea = SOV_Exiled_russia
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_ANNEXATION FOCUS_FILTER_DEMOCRATIC_RUSSIA }
+		completion_reward = {
+			
 		}
 	}
 
