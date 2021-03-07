@@ -27910,7 +27910,897 @@ SOV_reconstruction_economy_democratic = {
 			factor = 60
 		}
 	}
-	
 }
 
-#TODO Add Factories if there was a civil war
+SOV_middle_east_conquest = {
+
+	SOV_ultimatum_country_middle_east_dem = {
+
+		icon = GFX_decision_generic_break_treaty
+
+		target_array = global.sov_middle_east_democratic_country
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			FROM = {
+				exists = yes
+				NOT = {
+					is_subject = yes
+				}
+			}
+			NOT = {
+				has_country_flag = middle_east_coalition_to_protect_against_sov
+			}
+		}
+
+		available = {
+			FROM = {
+				is_neighbor_of = SOV
+			}
+			NOT = {
+				FROM = {
+					is_subject_of = SOV
+				}
+				has_country_flag = is_sending_ultimatum_middle_east
+			}
+		}
+
+		days_remove = 30
+
+		cost = 50
+
+		fire_only_once = yes
+
+		complete_effect = {
+			set_country_flag = is_sending_ultimatum_middle_east
+			remove_from_array = { global.sov_middle_east_democratic_country = FROM }
+			randomize_variable = {
+				var = middle_east_coalition
+				distribution = uniform
+				min = middle_east_coalition
+				max = 100
+			}
+			round_variable = middle_east_coalition
+		}
+
+		remove_effect = {
+			clr_country_flag = is_sending_ultimatum_middle_east
+			FROM = {
+				country_event = { id = soviets.469 days = 6 }
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						check_variable = {
+							var = middle_east_coalition
+							value = 85
+							compare = greater_than_or_equals
+						}
+					}
+					random_scope_in_array = {
+						array = global.sov_middle_east_democratic_country
+						limit = {
+							exists = yes
+							is_subject = no
+						}
+		
+						set_country_flag = leader_faction_coalition_middle_east
+						create_faction = middle_east_faction_dem
+						every_country = {
+							limit = {
+								OR = {
+									TAG = TUR
+									TAG = PER
+									TAG = AFG
+									TAG = IRQ
+									TAG = SAU
+									TAG = YEM
+									TAG = OMA
+								}
+							}
+							add_to_faction = PREV
+						}
+					}
+					SOV = {
+						country_event = { id = soviets.472 days = 2 }
+					}
+				}
+				else = {
+					add_to_variable = {
+						var = middle_east_coalition
+						value = 10
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	SOV_ultimatum_country_middle_east_dem_overlord_edition = {
+
+		icon = GFX_decision_generic_break_treaty
+
+		target_array = global.sov_middle_east_democratic_country
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			FROM = {
+				exists = yes
+				NOT = {
+					is_subject_of = SOV
+				}
+				is_subject = yes
+			}
+		}
+
+		available = {
+			FROM = {
+				is_neighbor_of = SOV
+			}
+			NOT = {
+				FROM = {
+					is_subject_of = SOV
+				}
+				has_country_flag = is_sending_ultimatum_middle_east
+			}
+		}
+
+		days_remove = 30
+
+		cost = 50
+
+		fire_only_once = yes
+
+		complete_effect = {
+			set_country_flag = is_sending_ultimatum_middle_east
+			remove_from_array = { global.sov_middle_east_democratic_country = FROM }
+		}
+
+		remove_effect = {
+			clr_country_flag = is_sending_ultimatum_middle_east
+			if = {
+				limit = {
+					FROM = {
+						is_subject = yes
+					}
+				}
+				FROM = {
+					OVERLORD = {
+						country_event = { id = soviets.473 days = 6 }
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	SOV_attack_the_coalition_middle_east = {
+
+		icon = GFX_decision_generic_ignite_civil_war
+
+		target_array = global.sov_middle_east_democratic_country
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			any_country = {
+				has_country_flag = leader_faction_coalition_middle_east
+				exists = yes
+				NOT = {
+					is_subject = yes
+				}
+			}
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = middle_east_leader_is_alive
+				any_country = {
+					has_country_flag = leader_faction_coalition_middle_east
+					exists = yes
+					NOT = {
+						is_subject = yes
+					}
+				}
+			}
+			NOT = {
+				has_country_flag = is_sending_ultimatum_middle_east
+			}
+		}
+
+		fire_only_once = yes
+
+		cost = 25
+
+		days_remove = 35
+
+		complete_effect = {
+			set_country_flag = is_sending_ultimatum_middle_east
+		}
+
+		remove_effect = {
+			clr_country_flag = is_sending_ultimatum_middle_east
+			create_wargoal = {
+				type = annex_everything
+				target = FROM
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	SOV_ask_foreign_country_to_cede_territory = {
+
+		icon = GFX_decision_generic_operation
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			NOT = {
+				SOV = {
+					AND = {
+						owns_state = 453
+						owns_state = 446
+						owns_state = 447
+						owns_state = 452
+						owns_state = 457
+						owns_state = 456
+						owns_state = 552
+						owns_state = 415
+						owns_state = 267
+						owns_state = 341
+						owns_state = 797
+						owns_state = 293
+						owns_state = 659
+						owns_state = 294
+						owns_state = 658
+						owns_state = 765
+						owns_state = 678
+						owns_state = 679
+						owns_state = 292
+						owns_state = 455
+						owns_state = 454
+						owns_state = 675
+						owns_state = 291
+						owns_state = 656
+						owns_state = 676
+						owns_state = 680
+						owns_state = 677
+						owns_state = 554
+						owns_state = 553
+						owns_state = 419
+						owns_state = 421
+						owns_state = 413
+						owns_state = 412
+						owns_state = 411
+						owns_state = 420
+						owns_state = 417
+						owns_state = 266
+						owns_state = 418
+						owns_state = 416
+						owns_state = 414
+						owns_state = 410
+						owns_state = 418
+						owns_state = 352
+						owns_state = 353
+						owns_state = 354
+						owns_state = 350
+						owns_state = 349
+						owns_state = 355
+						owns_state = 344
+						owns_state = 348
+						owns_state = 356
+						owns_state = 345
+						owns_state = 346
+						owns_state = 49
+						owns_state = 347
+						owns_state = 340
+						owns_state = 343
+						owns_state = 342
+						owns_state = 339
+						owns_state = 800
+						owns_state = 798
+						owns_state = 799
+					}
+				}
+			}
+			FROM = {
+				OR = {
+					owns_state = 453
+					owns_state = 446
+					owns_state = 447
+					owns_state = 452
+					owns_state = 457
+					owns_state = 456
+					owns_state = 552
+					owns_state = 415
+					owns_state = 267
+					owns_state = 341
+					owns_state = 797
+					owns_state = 293
+					owns_state = 659
+					owns_state = 294
+					owns_state = 658
+					owns_state = 765
+					owns_state = 678
+					owns_state = 679
+					owns_state = 292
+					owns_state = 455
+					owns_state = 454
+					owns_state = 675
+					owns_state = 291
+					owns_state = 656
+					owns_state = 676
+					owns_state = 680
+					owns_state = 677
+					owns_state = 554
+					owns_state = 553
+					owns_state = 419
+					owns_state = 421
+					owns_state = 413
+					owns_state = 412
+					owns_state = 411
+					owns_state = 420
+					owns_state = 417
+					owns_state = 266
+					owns_state = 418
+					owns_state = 416
+					owns_state = 414
+					owns_state = 410
+					owns_state = 418
+					owns_state = 352
+					owns_state = 353
+					owns_state = 354
+					owns_state = 350
+					owns_state = 349
+					owns_state = 355
+					owns_state = 344
+					owns_state = 348
+					owns_state = 356
+					owns_state = 345
+					owns_state = 346
+					owns_state = 49
+					owns_state = 347
+					owns_state = 340
+					owns_state = 343
+					owns_state = 342
+					owns_state = 339
+					owns_state = 800
+					owns_state = 798
+					owns_state = 799
+				}
+			}
+		}
+
+		target_root_trigger = {
+			tag = SOV
+			has_completed_focus = SOV_middle_eastern_nuisance
+		}
+
+		target_trigger = {
+			FROM = {
+				NOT = {
+					TAG = TUR
+					TAG = PER
+					TAG = AFG
+					TAG = IRQ
+					TAG = SAU
+					TAG = YEM
+					TAG = OMA
+
+				}
+				OR = {
+					owns_state = 453
+					owns_state = 446
+					owns_state = 447
+					owns_state = 452
+					owns_state = 457
+					owns_state = 456
+					owns_state = 552
+					owns_state = 415
+					owns_state = 267
+					owns_state = 341
+					owns_state = 797
+					owns_state = 293
+					owns_state = 659
+					owns_state = 294
+					owns_state = 658
+					owns_state = 765
+					owns_state = 678
+					owns_state = 679
+					owns_state = 292
+					owns_state = 455
+					owns_state = 454
+					owns_state = 675
+					owns_state = 291
+					owns_state = 656
+					owns_state = 676
+					owns_state = 680
+					owns_state = 677
+					owns_state = 554
+					owns_state = 553
+					owns_state = 419
+					owns_state = 421
+					owns_state = 413
+					owns_state = 412
+					owns_state = 411
+					owns_state = 420
+					owns_state = 417
+					owns_state = 266
+					owns_state = 418
+					owns_state = 416
+					owns_state = 414
+					owns_state = 410
+					owns_state = 418
+					owns_state = 352
+					owns_state = 353
+					owns_state = 354
+					owns_state = 350
+					owns_state = 349
+					owns_state = 355
+					owns_state = 344
+					owns_state = 348
+					owns_state = 356
+					owns_state = 345
+					owns_state = 346
+					owns_state = 49
+					owns_state = 347
+					owns_state = 340
+					owns_state = 343
+					owns_state = 342
+					owns_state = 339
+					owns_state = 800
+					owns_state = 798
+					owns_state = 799
+				}
+			}
+		}
+
+		available = {
+			NOT = {
+				has_war_with = FROM
+				has_country_flag = is_sending_ultimatum_middle_east
+			}
+		}
+
+		fire_only_once = yes
+
+		cost = 25
+
+		days_remove = 35
+
+		complete_effect = {
+			set_country_flag = is_sending_ultimatum_middle_east
+		}
+
+		remove_effect = {
+			if = {
+				limit = {
+					FROM = {
+						is_subject = yes
+					}
+				}
+				custom_effect_tooltip = overlord_will_choose_fate_of_ultimatum
+			}
+			else = {
+				custom_effect_tooltip = will_accept_more_chance_if_faction_sov
+			}
+			clr_country_flag = is_sending_ultimatum_middle_east
+			FROM = {
+				country_event = { id = soviets.476 days = 3 }
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+}
+
+SOV_improve_arctic_russia = {
+
+	SOV_improve_arctic_state = {
+
+		icon = GFX_decision_generic_operation
+
+		state_target = yes
+
+		target_array = global.alaska_upgradeable_states
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+
+		}
+
+		available = {
+			FROM = {
+				is_owned_and_controlled_by = RAS
+			}
+			NOT = {
+				has_country_flag = is_excavating_arctic_russia
+			}
+		}
+
+		days_remove = 50
+
+		cost = 30
+
+		fire_only_once = yes
+
+		complete_effect = {
+			set_country_flag = is_excavating_arctic_russia
+		}
+
+		remove_effect = {
+			clr_country_flag = is_excavating_arctic_russia
+			if = {
+				limit = {
+					FROM = {
+						state = 471
+					}
+				}
+				add_resource = {
+					type = oil 
+					amount = 16
+					state = 471
+				}
+			}
+			else_if = {
+				limit = {
+					FROM = {
+						state = 472
+					}
+				}
+				add_resource = {
+					type = oil 
+					amount = 25
+					state = 472
+				}
+			}
+			else_if = {
+				limit = {
+					FROM = {
+						state = 683
+					}
+				}
+				add_resource = {
+					type = oil 
+					amount = 15
+					state = 683
+				}
+			}
+			else_if = {
+				limit = {
+					FROM = {
+						state = 473
+					}
+				}
+				add_resource = {
+					type = oil 
+					amount = 8
+					state = 473
+				}
+			}
+			else_if = {
+				limit = {
+					FROM = {
+						state = 470
+					}
+				}
+				add_resource = {
+					type = steel 
+					amount = 30
+					state = 470
+				}
+			}
+			else_if = {
+				limit = {
+					FROM = {
+						state = 469
+					}
+				}
+				add_resource = {
+					type = tungsten 
+					amount = 20
+					state = 469
+				}
+			}
+			else_if = {
+				limit = {
+					FROM = {
+						state = 467
+					}
+				}
+				add_resource = {
+					type = steel 
+					amount = 25
+					state = 467
+				}
+			}
+			else_if = {
+				limit = {
+					FROM = {
+						state = 682
+					}
+				}
+				add_resource = {
+					type = aluminium 
+					amount = 18
+					state = 682
+				}
+			}
+			else_if = {
+				limit = {
+					FROM = {
+						state = 466
+					}
+				}
+				add_resource = {
+					type = aluminium 
+					amount = 16
+					state = 466
+				}
+			}
+			else_if = {
+				limit = {
+					FROM = {
+						state = 332
+					}
+				}
+				add_resource = {
+					type = chromium 
+					amount = 30
+					state = 332
+				}
+			}
+			else_if = {
+				limit = {
+					FROM = {
+						state = 101
+					}
+				}
+				add_resource = {
+					type = oil 
+					amount = 27
+					state = 101
+				}
+			}
+			else_if = {
+				limit = {
+					FROM = {
+						state = 100
+					}
+				}
+				add_resource = {
+					type = tungsten 
+					amount = 19
+					state = 100
+				}
+			}
+			FROM = {
+				add_extra_state_shared_building_slots = 4
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+			custom_effect_tooltip = add_excavation_progress_arctic
+			add_to_variable = { local_ressource_ice_puppet = 0.02 }
+			set_variable = { loca_local_ressource_ice_puppet = local_ressource_ice_puppet }
+			multiply_variable = { loca_local_ressource_ice_puppet = 100.00 }
+		}
+	}
+
+	SOV_encourage_immigration = {
+
+		icon = GFX_decision_eng_blackshirt_march
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+
+		}
+
+		available = {
+			RAS = {
+				is_subject_of = SOV
+			}
+			NOT = {
+				custom_trigger_tooltip = {
+					tooltip = not_reached_max_immigration
+					check_variable = {
+						var = alaska_emigration_calculation_demo
+						value = -10000
+						compare = less_than_or_equals
+					}
+				}
+			}
+		}
+
+		days_remove = 35
+
+		cost = 30
+
+		remove_effect = {
+			if = {
+				limit = {
+					AND = {
+						SOV = {
+							NOT = {
+								has_idea = SOV_Emigration_in_alaska_idea
+							}
+						}
+						RAS = {
+							NOT = {
+								has_idea = SOV_Immigration_in_alaska_idea
+							}
+						}
+					}
+				}
+				SOV = {
+					custom_effect_tooltip = idea_emigration_alaska_tooltip
+					hidden_effect = {
+						add_ideas = SOV_Emigration_in_alaska_idea
+						add_dynamic_modifier = { modifier = democratic_alaska_emigration }
+					}
+				}
+				RAS = {
+					custom_effect_tooltip = idea_immigration_alaska_tooltip
+					hidden_effect = {
+						add_ideas = SOV_Immigration_in_alaska_idea
+						add_dynamic_modifier = { modifier = democratic_alaska_immigration }
+					}
+				}
+			}
+			else = {
+				SOV = {
+					custom_effect_tooltip = SOV_emigration_malus_alaska
+					add_to_variable = { alaska_emigration_calculation_demo = -2000 }
+					set_variable = { loca_alaska_emigration_calculation_demo = alaska_emigration_calculation_demo }
+				}
+				RAS = {
+					custom_effect_tooltip = SOV_immigration_bonus_alaska
+					add_to_variable = { alaska_immigration_calculation_demo = 2000 }
+					set_variable = { loca_alaska_immigration_calculation_demo = alaska_immigration_calculation_demo }
+				}
+			}
+		}
+	}
+
+	SOV_stop_immigration_alaska = {
+
+		icon = GFX_decision_eng_trade_unions_support
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+
+		}
+
+		available = {
+			RAS = {
+				is_subject_of = SOV
+				has_idea = SOV_Immigration_in_alaska_idea
+			}
+			has_idea = SOV_Emigration_in_alaska_idea
+		}
+
+		cost = 10
+
+		complete_effect = {
+			SOV = {
+				remove_ideas = SOV_Emigration_in_alaska_idea
+				hidden_effect = {
+					remove_dynamic_modifier = { modifier = democratic_alaska_emigration }
+				}
+			}
+			RAS = {
+				remove_ideas = SOV_Immigration_in_alaska_idea
+				hidden_effect = {
+					remove_dynamic_modifier = { modifier = democratic_alaska_immigration }
+				}
+			}
+			set_variable = { alaska_emigration_calculation_demo = -2000 }
+			set_variable = { loca_alaska_emigration_calculation_demo = alaska_emigration_calculation_demo }
+			set_variable = { alaska_immigration_calculation_demo = 2000 }
+			set_variable = { loca_alaska_immigration_calculation_demo = alaska_immigration_calculation_demo }
+		}
+	}
+
+	SOV_proclaim_greater_alaska = {
+
+		icon = GFX_decision_generic_form_nation
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+
+		}
+
+		fire_only_once = yes
+
+		available = {
+			RAS = {
+				owns_state = 471
+				owns_state = 472
+				owns_state = 473
+				owns_state = 470
+				owns_state = 469
+				owns_state = 467
+				owns_state = 683
+				owns_state = 682
+				owns_state = 466
+				owns_state = 332
+				owns_state = 101
+				owns_state = 100
+				owns_state = 739
+				owns_state = 740
+				owns_state = 276
+				owns_state = 468
+				owns_state = 465
+				owns_state = 464
+				owns_state = 331
+			}
+		}
+
+		complete_effect = {
+			RAS = {
+				set_cosmetic_tag = GRAR
+				add_state_core = 739
+				add_state_core = 740
+				add_state_core = 276
+				add_state_core = 468
+				add_state_core = 465
+				add_state_core = 464
+				add_state_core = 331
+				add_state_claim = 386
+				add_state_claim = 387
+				add_state_claim = 388
+				add_state_claim = 389
+				add_state_claim = 391
+				add_state_claim = 394
+				add_state_claim = 393
+				add_state_claim = 358
+				add_state_claim = 357
+				add_state_claim = 385
+				add_state_claim = 381
+				add_state_claim = 390
+			}
+		}
+	}
+}
+
+#TODO Add Factories if there was a civil war Black Revolution Maybe ?

@@ -20598,8 +20598,6 @@ country_event = {
 
 	mean_time_to_happen = { days = 5 }
 
-	#stalin_hiding_state_target
-
 	option = { #Accept
 		name = soviets.429.a
 		add_political_power = -50
@@ -22358,7 +22356,7 @@ country_event = {
 	}
 }
 
-#Event for Caucasian countries to receive if march was a success
+#Event for Caucasian countries to receive if march was a failure
 country_event = {
 	id = soviets.468
 	title = soviets.468.t
@@ -22372,6 +22370,718 @@ country_event = {
 		ai_chance = { factor = 100 }
 		SOV = {
 			country_event = { id = soviets.466 days = 1 }
+		}
+	}
+}
+
+#Ultimatum send by SOV to Middle East Country
+country_event = {
+	id = soviets.469
+	title = soviets.469.t
+	desc = soviets.469.d
+	picture = GFX_report_event_czech_soldiers_02
+
+	is_triggered_only = yes
+
+	option = { #Yes we want to be annexed
+		name = soviets.469.a
+		ai_chance = { 
+			factor = 50
+			modifier = {
+				factor = 0
+				OR = {
+					is_major = yes
+					is_in_faction = yes
+				}
+			} 
+		}
+		SOV = {
+			country_event = { id = soviets.470 days = 1 }
+		}
+	}
+
+	option = { #No
+		name = soviets.469.a
+		ai_chance = { 
+			factor = 50
+			modifier = {
+				factor = 100
+				OR = {
+					is_major = yes
+					is_in_faction = yes
+				}
+			}  
+		}
+		SOV = {
+			country_event = { id = soviets.471 days = 1 }
+		}
+	}
+}
+
+#Middle East Country Accept to Ultimatum
+country_event = {
+	id = soviets.470
+	title = soviets.470.t
+	desc = soviets.470.d
+	picture = GFX_report_event_dutch_soldiers_indonesia
+
+	is_triggered_only = yes
+
+	option = { #Annex Them
+		name = soviets.470.a
+		ai_chance = { factor = 100 }
+		SOV = {
+			annex_country = {
+				target = FROM
+			}
+		}
+	}
+}
+
+#Middle East Country Refuse to Ultimatum
+country_event = {
+	id = soviets.471
+	title = soviets.471.t
+	desc = soviets.471.d
+	picture = GFX_report_event_dead_soldiers
+
+	is_triggered_only = yes
+
+	option = { #They Refused and Shot our Soldiers
+		name = soviets.471.a
+		ai_chance = { factor = 100 }
+		SOV = {
+			create_wargoal = {
+				type = annex_everything
+				target = FROM
+			}
+		}
+	}
+}
+
+#Middle East Country Form a Coalition
+country_event = {
+	id = soviets.472
+	title = soviets.472.t
+	desc = soviets.472.d
+	picture = GFX_report_event_tur_opposition_party
+
+	is_triggered_only = yes
+
+	option = { #They Want war, they will have war
+		name = soviets.472.a
+		ai_chance = { factor = 100 }
+		custom_effect_tooltip = middle_east_countries_form_huge_coalition_against_sov
+		set_country_flag = middle_east_coalition_to_protect_against_sov
+	}
+}
+
+#Ultimatum send by SOV to Middle East Country - Puppet Edition 
+country_event = {
+	id = soviets.473
+	title = soviets.473.t
+	desc = soviets.473.d
+	picture = GFX_report_event_czech_soldiers_02
+
+	is_triggered_only = yes
+
+	option = { #Yes we want to be annexed
+		name = soviets.473.a
+		ai_chance = { 
+			factor = 70
+		}
+		SOV = {
+			country_event = { id = soviets.474 days = 1 }
+		}
+	}
+
+	option = { #No
+		name = soviets.473.b
+		ai_chance = { 
+			factor = 30
+		}
+		SOV = {
+			country_event = { id = soviets.475 days = 1 }
+		}
+	}
+}
+
+#Middle East Country Accept to Ultimatum
+country_event = {
+	id = soviets.474
+	title = soviets.474.t
+	desc = soviets.474.d
+	picture = GFX_report_event_dutch_soldiers_indonesia
+
+	is_triggered_only = yes
+
+	option = { #Annex Them
+		name = soviets.474.a
+		ai_chance = { factor = 100 }
+		every_country = {
+			limit = {
+				is_subject_of = FROM
+				OR = {
+					TAG = TUR
+					TAG = IRQ
+					TAG = PER
+					TAG = AFG
+					TAG = SAU
+					TAG = OMA
+					TAG = YEM
+				}
+			}
+			SOV = {
+				annex_country = {
+					target = PREV
+				}
+			}
+		}
+	}
+}
+
+#Middle East Country Refuse to Ultimatum
+country_event = {
+	id = soviets.475
+	title = soviets.475.t
+	desc = soviets.475.d
+	picture = GFX_report_event_dead_soldiers
+
+	is_triggered_only = yes
+
+	option = { #They Refused and Shot our Soldiers
+		name = soviets.475.a
+		ai_chance = { factor = 100 }
+		every_country = {
+			limit = {
+				is_subject_of = FROM
+				OR = {
+					TAG = TUR
+					TAG = IRQ
+					TAG = PER
+					TAG = AFG
+					TAG = SAU
+					TAG = OMA
+					TAG = YEM
+				}
+			}
+			SOV = {
+				create_wargoal = {
+					type = annex_everything
+					target = PREV
+				}
+			}
+		}
+	}
+}
+
+#Ultimatum send by SOV Foreign Country Occupying Middle East Territory 
+country_event = {
+	id = soviets.476
+	title = soviets.476.t
+	desc = soviets.476.d
+	picture = GFX_report_event_british_inspect_troops
+
+	is_triggered_only = yes
+
+	option = { #Yes we will give them the territory
+		name = soviets.476.a
+		trigger = {
+			NOT = {
+				is_subject = yes
+			}
+		}
+		ai_chance = { 
+			factor = 25
+			modifier = {
+				factor = 75
+				is_in_faction_with = SOV
+			}
+		}
+		SOV = {
+			country_event = { id = soviets.477 days = 1 }
+		}
+	}
+
+	option = { #No we won't
+		name = soviets.476.b
+		trigger = {
+			NOT = {
+				is_subject = yes
+			}
+		}
+		ai_chance = { 
+			factor = 75
+			modifier = {
+				factor = 25
+				is_in_faction_with = SOV
+			}
+		}
+		SOV = {
+			country_event = { id = soviets.478 days = 1 }
+		}
+	}
+
+	option = { #We will warn our overlord
+		name = soviets.476.c
+		trigger = {
+			is_subject = yes
+		}
+		ai_chance = { 
+			factor = 100
+		}
+		OVERLORD = {
+			country_event = { id = soviets.479 hours = 8 }
+		}
+	}
+}
+
+#FROM Accept to cede land
+country_event = {
+	id = soviets.477
+	title = soviets.477.t
+	desc = soviets.477.d
+	picture = GFX_report_event_degaulle_churchill
+
+	is_triggered_only = yes
+
+	option = { #Good
+		name = soviets.477.a
+		ai_chance = { factor = 100 }
+		every_state = {
+			limit = {
+				is_controlled_by = FROM
+				OR = {
+					state = 453
+					state = 446
+					state = 447
+					state = 452
+					state = 457
+					state = 456
+					state = 552
+					state = 415
+					state = 267
+					state = 341
+					state = 797
+					state = 293
+					state = 659
+					state = 294
+					state = 658
+					state = 765
+					state = 678
+					state = 679
+					state = 292
+					state = 455
+					state = 454
+					state = 675
+					state = 291
+					state = 656
+					state = 676
+					state = 680
+					state = 677
+					state = 554
+					state = 553
+					state = 419
+					state = 421
+					state = 413
+					state = 412
+					state = 411
+					state = 420
+					state = 417
+					state = 266
+					state = 418
+					state = 416
+					state = 414
+					state = 410
+					state = 418
+					state = 352
+					state = 353
+					state = 354
+					state = 350
+					state = 349
+					state = 355
+					state = 344
+					state = 348
+					state = 356
+					state = 345
+					state = 346
+					state = 49
+					state = 347
+					state = 340
+					state = 343
+					state = 342
+					state = 339
+					state = 164
+					state = 800
+					state = 798
+					state = 799
+				}
+			}
+			SOV = {
+				transfer_state = PREV
+			}
+		}
+	}
+}
+
+#FROM Refuse to cede land
+country_event = {
+	id = soviets.478
+	title = soviets.478.t
+	desc = soviets.478.d
+	picture = GFX_report_event_finnish_letter
+
+	is_triggered_only = yes
+
+	option = { #Good
+		name = soviets.478.a
+		ai_chance = { factor = 100 }
+		if = {
+			limit = {
+				FROM = {
+					is_in_faction_with = SOV
+				}
+			}
+			custom_effect_tooltip = because_they_are_ally_no_war_goal_middle_east
+			every_state = {
+				limit = {
+					is_controlled_by = FROM
+					OR = {
+						state = 453
+						state = 446
+						state = 447
+						state = 452
+						state = 457
+						state = 456
+						state = 552
+						state = 415
+						state = 267
+						state = 341
+						state = 797
+						state = 293
+						state = 659
+						state = 294
+						state = 658
+						state = 765
+						state = 678
+						state = 679
+						state = 292
+						state = 455
+						state = 454
+						state = 675
+						state = 291
+						state = 656
+						state = 676
+						state = 680
+						state = 677
+						state = 554
+						state = 553
+						state = 419
+						state = 421
+						state = 413
+						state = 412
+						state = 411
+						state = 420
+						state = 417
+						state = 266
+						state = 418
+						state = 416
+						state = 414
+						state = 410
+						state = 418
+						state = 352
+						state = 353
+						state = 354
+						state = 350
+						state = 349
+						state = 355
+						state = 344
+						state = 348
+						state = 356
+						state = 345
+						state = 346
+						state = 49
+						state = 347
+						state = 340
+						state = 343
+						state = 342
+						state = 339
+						state = 164
+						state = 800
+						state = 798
+						state = 799
+					}
+				}
+				SOV = {
+					add_state_claim = PREV
+				}
+			}
+		}
+		else = {
+			SOV = {
+				create_wargoal = {
+					type = annex_everything
+					target = FROM
+				}
+			}
+		}
+	}
+}
+
+#Ultimatum send by SOV OverLord Edition - foreign countries controlling Middl East Territories
+country_event = {
+	id = soviets.479
+	title = soviets.479.t
+	desc = soviets.479.d
+	picture = GFX_report_event_czech_soldiers_02
+
+	is_triggered_only = yes
+
+	option = { #War, is too risky now
+		name = soviets.479.a
+		ai_chance = { 
+			factor = 60
+		}
+		custom_effect_tooltip = we_receive_this_because_puppet_danger
+		FROM = {
+			country_event = { id = soviets.480 hours = 8 }
+		}
+	}
+
+	option = { #No, they belong to them
+		name = soviets.479.b
+		ai_chance = { 
+			factor = 40
+		}
+		custom_effect_tooltip = we_receive_this_because_puppet_danger
+		FROM = {
+			country_event = { id = soviets.481 hours = 8 }
+		}
+	}
+}
+
+#Overlord Agrees to Cede Land to SOV
+country_event = {
+	id = soviets.480
+	title = soviets.480.t
+	desc = soviets.480.d
+	picture = GFX_soldiers_handshaking_kolchak_russia2
+
+	is_triggered_only = yes
+
+	option = { #We have no choice
+		name = soviets.480.a
+		ai_chance = { 
+			factor = 100
+		}
+		SOV = {
+			country_event = { id = soviets.482 days = 1 }
+		}
+	}
+}
+
+#Overlord Agrees to Cede Land to SOV
+country_event = {
+	id = soviets.481
+	title = soviets.481.t
+	desc = soviets.481.d
+	picture = GFX_soldiers_parade_russia2
+
+	is_triggered_only = yes
+
+	option = { #War is comming
+		name = soviets.481.a
+		ai_chance = { 
+			factor = 100
+		}
+		SOV = {
+			country_event = { id = soviets.483 days = 1 }
+		}
+	}
+}
+
+#Overlord Agrees to Cede Land of puppet to us
+country_event = {
+	id = soviets.482
+	title = soviets.482.t
+	desc = soviets.482.d
+	picture = GFX_handshake_russia2
+
+	is_triggered_only = yes
+
+	option = { #Good
+		name = soviets.482.a
+		ai_chance = { 
+			factor = 100
+		}
+		every_state = {
+			limit = {
+				is_owned_by = FROM
+				OR = {
+					state = 453
+					state = 446
+					state = 447
+					state = 452
+					state = 457
+					state = 456
+					state = 552
+					state = 415
+					state = 267
+					state = 341
+					state = 797
+					state = 293
+					state = 659
+					state = 294
+					state = 658
+					state = 765
+					state = 678
+					state = 679
+					state = 292
+					state = 455
+					state = 454
+					state = 675
+					state = 291
+					state = 656
+					state = 676
+					state = 680
+					state = 677
+					state = 554
+					state = 553
+					state = 419
+					state = 421
+					state = 413
+					state = 412
+					state = 411
+					state = 420
+					state = 417
+					state = 266
+					state = 418
+					state = 416
+					state = 414
+					state = 410
+					state = 418
+					state = 352
+					state = 353
+					state = 354
+					state = 350
+					state = 349
+					state = 355
+					state = 344
+					state = 348
+					state = 356
+					state = 345
+					state = 346
+					state = 49
+					state = 347
+					state = 340
+					state = 343
+					state = 342
+					state = 339
+					state = 164
+					state = 800
+					state = 798
+					state = 799
+				}
+			}
+			SOV = {
+				transfer_state = PREV
+			}
+		}
+	}
+}
+
+#Overlord Refuse to Cede Land of puppet to us
+country_event = {
+	id = soviets.483
+	title = soviets.483.t
+	desc = soviets.483.d
+	picture = GFX_menacing_tanks_russia2
+
+	is_triggered_only = yes
+
+	option = { #We will destroy them
+		name = soviets.483.a
+		ai_chance = { 
+			factor = 100
+		}
+		every_state = {
+			limit = {
+				is_owned_by = FROM
+				OR = {
+					state = 453
+					state = 446
+					state = 447
+					state = 452
+					state = 457
+					state = 456
+					state = 552
+					state = 415
+					state = 267
+					state = 341
+					state = 797
+					state = 293
+					state = 659
+					state = 294
+					state = 658
+					state = 765
+					state = 678
+					state = 679
+					state = 292
+					state = 455
+					state = 454
+					state = 675
+					state = 291
+					state = 656
+					state = 676
+					state = 680
+					state = 677
+					state = 554
+					state = 553
+					state = 419
+					state = 421
+					state = 413
+					state = 412
+					state = 411
+					state = 420
+					state = 417
+					state = 266
+					state = 418
+					state = 416
+					state = 414
+					state = 410
+					state = 418
+					state = 352
+					state = 353
+					state = 354
+					state = 350
+					state = 349
+					state = 355
+					state = 344
+					state = 348
+					state = 356
+					state = 345
+					state = 346
+					state = 49
+					state = 347
+					state = 340
+					state = 343
+					state = 342
+					state = 339
+					state = 164
+					state = 800
+					state = 798
+					state = 799
+				}
+			}
+			SOV = {
+				add_state_claim = PREV
+			}
+		}
+		SOV = {
+			create_wargoal = {
+				type = annex_everything
+				target = FROM
+			}
 		}
 	}
 }
