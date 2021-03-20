@@ -11777,6 +11777,14 @@ focus_tree = {
 		available = {
 			is_subject = no
 			has_government = democratic
+			OR = {
+				NOT = {
+					country_exists = UKR
+				}
+				UKR = {
+					is_subject_of = SOV
+				}
+			}
 			if = {
 				limit = {
 					has_idea = SOV_Exiled_russia
@@ -11788,7 +11796,28 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			
+			add_ideas = SOV_Russian_way
+			custom_effect_tooltip = neighbors_are_scared_of_russia
+			hidden_effect = {
+				every_country = {
+					limit = {
+						is_neighbor_of = SOV
+						NOT = {
+							is_in_faction_with = SOV 
+							is_major = yes
+						}
+					}
+					add_opinion_modifier = {
+						target = PREV
+						modifier = scared_of_russia
+					}
+					add_ai_strategy = {
+						type = alliance
+						id = SOV
+						value = -25
+					}
+				}
+			}
 		}
 	}
 
@@ -12363,7 +12392,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			
+			country_event = { id = soviets.486 }
 		}
 	}
 
@@ -12462,6 +12491,10 @@ focus_tree = {
 		available = {
 			is_subject = no
 			has_government = democratic
+			country_exists = FIN
+			FIN = {
+				is_subject = no
+			}
 			if = {
 				limit = {
 					has_idea = SOV_Exiled_russia
@@ -12473,7 +12506,9 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			
+			FIN = {
+				country_event = { id = finlands.19 days = 1 }
+			}
 		}
 	}
 
