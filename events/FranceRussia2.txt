@@ -212,3 +212,113 @@ country_event = {
 		}
 	}
 }
+
+#SOV Send Ultimatum for France to Join their Faction
+country_event = {
+	id = frances.7
+	title = frances.7.t
+	desc = frances.7.d
+	picture = GFX_report_event_military_planning
+
+	is_triggered_only = yes
+
+	option = {#Join
+		ai_chance = {
+			factor = 75
+			modifier = {
+				factor = 30
+				has_idea = SOV_Allies_menace
+			}
+		}
+		name = frances.7.a
+		FRA = {
+			add_ai_strategy = {
+				type = alliance
+				id = SOV
+				value = 100
+			}
+		}
+		SOV = {
+			add_ai_strategy = {
+				type = alliance
+				id = FRA
+				value = 100
+			}
+		}
+		SOV = {
+			country_event = { id = frances.8 days = 1 }
+		}
+	}
+
+	option = {#No
+		ai_chance = {
+			factor = 25
+			modifier = {
+				factor = 70
+				has_idea = SOV_Allies_menace
+			}
+		}
+		name = frances.7.b
+		SOV = {
+			country_event = { id = frances.9 days = 1 }
+		}
+	}
+}
+
+#France Accept Ultimatum
+country_event = {
+	id = frances.8
+	title = frances.8.t
+	desc = frances.8.d
+	picture = GFX_report_event_gre_allied_diplomacy_military
+
+	is_triggered_only = yes
+
+	option = {#Join
+		ai_chance = {
+			factor = 100
+		}
+		name = frances.8.a
+		if = {
+			limit = {
+				SOV = {
+					NOT = {
+						is_faction_leader = yes
+					}
+				}
+			}
+			SOV = {
+				create_faction = russian_entente
+				add_to_faction = FRA
+			}
+		}
+		else = {
+			SOV = {
+				add_to_faction = FRA
+			}
+		}
+	}
+}
+
+#France Refuse Ultimatum
+country_event = {
+	id = frances.9
+	title = frances.9.t
+	desc = frances.9.d
+	picture = GFX_report_event_french_british_officers
+
+	is_triggered_only = yes
+
+	option = {#Destroy
+		ai_chance = {
+			factor = 100
+		}
+		name = frances.9.a
+		SOV = {
+			create_wargoal = {
+				target = FRA
+				type = puppet_wargoal_focus
+			}
+		}
+	}
+}

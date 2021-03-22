@@ -10625,6 +10625,9 @@ focus_tree = {
 			is_subject = no
 			has_government = democratic
 			has_country_flag = sov_trials_begin
+			NOT = {
+				has_country_flag = sov_trials_end
+			}
 			if = {
 				limit = {
 					has_idea = SOV_Exiled_russia
@@ -10664,6 +10667,9 @@ focus_tree = {
 			is_subject = no
 			has_government = democratic
 			has_country_flag = sov_trials_begin
+			NOT = {
+				has_country_flag = sov_trials_end
+			}
 			if = {
 				limit = {
 					has_idea = SOV_Exiled_russia
@@ -11522,6 +11528,20 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
 			set_cosmetic_tag = RRD
+			set_party_name = {
+				ideology = democratic
+				long_name = SOV_progressive_party_name
+				name = SOV_progressive_party_name_long
+			}
+			create_country_leader = {
+				name = "Ivan Nikolaevich"
+				desc = "POLITICS_IVAN_NIKOLAEVICH_DESC"
+				picture = "Portrait_Ivan_Nikolaevich_Efremov.dds"
+				ideology = liberalism
+				traits = {
+					progressist_democratic_russia
+				}
+			}
 		}
 	}
 
@@ -12393,6 +12413,7 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
 			country_event = { id = soviets.486 }
+			create_faction = russian_entente
 		}
 	}
 
@@ -12473,7 +12494,15 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			
+			FRA = {
+				country_event = { id = frances.7 days = 1 }
+			}
+			if = {
+				limit = {
+					has_idea = SOV_Allies_menace
+				}
+				custom_effect_tooltip = france_less_chance_to_join_because_hostile
+			}
 		}
 	}
 
@@ -12495,12 +12524,33 @@ focus_tree = {
 			FIN = {
 				is_subject = no
 			}
+			NOT = {
+				FIN = {
+					is_in_faction_with = SOV
+				}
+			}
 			if = {
 				limit = {
 					has_idea = SOV_Exiled_russia
 				}
 				NOT = {
 					has_idea = SOV_Exiled_russia
+				}
+			}
+		}
+		bypass = {
+			OR = {
+				NOT = {
+					country_exists = FIN
+				}
+				FIN = {
+					has_war_with = SOV
+				}
+				FIN = {
+					is_subject_of = SOV
+				}
+				FIN = {
+					is_in_faction_with = SOV
 				}
 			}
 		}
@@ -12534,10 +12584,28 @@ focus_tree = {
 					has_idea = SOV_Exiled_russia
 				}
 			}
+			NOT = {
+				GER = {
+					is_in_faction_with = SOV
+					is_subject_of = SOV
+					has_war_with = SOV
+				}
+			}
+		}
+		bypass = {
+			GER = {
+				OR = {
+					is_in_faction_with = SOV
+					is_subject_of = SOV
+					has_war_with = SOV
+				}
+			}	
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			
+			GER = {
+				country_event = { id = germanys.21 days = 1 }
+			}
 		}
 	}
 
@@ -12596,7 +12664,26 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			
+			set_temp_variable = { communist_popularity_democratic = party_popularity@communism }
+			multiply_temp_variable = { communist_popularity_democratic = -0.5 }
+			set_temp_variable = { fascist_popularity_democratic = party_popularity@fascism }
+			multiply_temp_variable = { fascist_popularity_democratic = -0.5 }
+			set_temp_variable = { democratic_support_gain = 0 }
+			add_to_temp_variable = { democratic_support_gain = party_popularity@communism }
+			add_to_temp_variable = { democratic_support_gain = party_popularity@fascism }
+			multiply_temp_variable = { democratic_support_gain = 0.25 }
+			add_popularity = {
+				ideology = communism
+				popularity = communist_popularity_democratic
+			}
+			add_popularity = {
+				ideology = fascism
+				popularity = fascist_popularity_democratic
+			}
+			add_popularity = {
+				ideology = democratic
+				popularity = democratic_support_gain
+			}
 		}
 	}
 
@@ -12625,7 +12712,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			
+			country_event = { id = soviets.487 }
 		}
 	}
 

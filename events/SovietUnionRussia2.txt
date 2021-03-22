@@ -23132,7 +23132,20 @@ country_event = {
 	option = { #The Allies
 		name = soviets.486.a
 		ai_chance = { 
-			factor = 100
+			factor = 33
+			modifier = {
+				factor = 0
+				OR = {
+					has_opinion = {
+						target = ENG
+						value > 50
+					}
+					has_opinion = {
+						target = FRA
+						value > 50
+					}
+				}
+			}
 		}
 		ENG = {
 			add_opinion_modifier = {
@@ -23162,7 +23175,20 @@ country_event = {
 	option = { #The Fascist
 		name = soviets.486.b
 		ai_chance = { 
-			factor = 100
+			factor = 33
+			modifier = {
+				factor = 0
+				OR = {
+					has_opinion = {
+						target = GER
+						value > 50
+					}
+					has_opinion = {
+						target = ITA
+						value > 50
+					}
+				}
+			}
 		}
 		GER = {
 			add_opinion_modifier = {
@@ -23192,7 +23218,14 @@ country_event = {
 	option = { #The Japanese
 		name = soviets.486.c
 		ai_chance = { 
-			factor = 100
+			factor = 33
+			modifier = {
+				factor = 0
+				has_opinion = {
+					target = JAP
+					value > 50
+				}
+			}
 		}
 		JAP = {
 			add_opinion_modifier = {
@@ -23206,5 +23239,51 @@ country_event = {
 			}
 		}
 		add_ideas = SOV_Japanese_menace
+	}
+}
+
+#The Role of the Tsar
+country_event = {
+	id = soviets.487
+	title = soviets.487.t
+	desc = soviets.487.d
+	picture = GFX_military_parade_kremlin_russia2
+
+	is_triggered_only = yes
+
+	option = { #He shall be an Icon
+		name = soviets.487.a
+		ai_chance = { 
+			factor = 33
+		}
+		custom_effect_tooltip = unlock_vladimir_as_politician
+		set_country_flag = vladimir_politician_advisor_chosen
+	}
+
+	option = { #He shall Lead an Army
+		name = soviets.487.b
+		ai_chance = { 
+			factor = 33
+		}
+		create_field_marshal = {
+			name = "Vladimir Kirillovich"
+			picture = "Portrait_Vladimir_Kirillovich.dds"
+			traits = { politically_connected media_personality }
+			skill = 3
+			attack_skill = 2
+			defense_skill = 3
+			planning_skill = 2
+			logistics_skill = 2
+		}
+	}
+
+	option = { #He shall be a military advisor
+		name = soviets.487.c
+		ai_chance = { 
+			factor = 33
+		}
+		custom_effect_tooltip = unlock_vladimir_as_chief_advisor
+		set_country_flag = vladimir_military_advisor_chosen
+		show_ideas_tooltip = SOV_vladimir_kirillovich_military_advisor
 	}
 }
