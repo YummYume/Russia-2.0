@@ -265,7 +265,7 @@ country_event = {
 	}
 }
 
-#France Accept Ultimatum
+#France Accept Ultimatum Faction
 country_event = {
 	id = frances.8
 	title = frances.8.t
@@ -282,25 +282,26 @@ country_event = {
 		if = {
 			limit = {
 				SOV = {
-					NOT = {
-						is_faction_leader = yes
-					}
+					is_faction_leader = yes
 				}
 			}
 			SOV = {
-				create_faction = russian_entente
 				add_to_faction = FRA
 			}
 		}
 		else = {
 			SOV = {
-				add_to_faction = FRA
+				diplomatic_relation = {
+					country = FRA
+					relation = non_aggression_pact
+					active = yes
+				}
 			}
 		}
 	}
 }
 
-#France Refuse Ultimatum
+#France Refuse Ultimatum Faction
 country_event = {
 	id = frances.9
 	title = frances.9.t
@@ -314,6 +315,154 @@ country_event = {
 			factor = 100
 		}
 		name = frances.9.a
+		SOV = {
+			add_opinion_modifier = {
+				target = FRA
+				modifier = refused_russian_alliance
+			}
+		}
+	}
+}
+
+#SOV Fate of France United Russia
+country_event = {
+	id = frances.10
+	title = frances.10.t
+	desc = frances.10.d
+	picture = GFX_report_event_generic_parliament
+
+	is_triggered_only = yes
+
+	option = {#Ultimatum for Puppet
+		ai_chance = {
+			factor = 25
+			modifier = {
+				factor = 90
+				has_idea = SOV_Allies_menace
+			}
+		}
+		name = frances.10.a
+		FRA = {
+			country_event = { id = frances.11 days = 1 }
+		}
+	}
+
+	option = {#Ultimatum for Alliance
+		ai_chance = {
+			factor = 75
+			modifier = {
+				factor = 10
+				has_idea = SOV_Allies_menace
+			}
+		}
+		name = frances.10.b
+		FRA = {
+			country_event = { id = frances.7 days = 1 }
+		}
+	}
+}
+
+#SOV Wants to take control of our government
+country_event = {
+	id = frances.11
+	title = frances.11.t
+	desc = frances.11.d
+	picture = GFX_report_event_finnish_letter
+
+	is_triggered_only = yes
+
+	option = {#Accept
+		ai_chance = {
+			factor = 15
+			modifier = {
+				factor = 70
+				OR = {
+					SOV = {
+						num_of_factories > 250
+						num_subjects > 10
+						strength_ratio = {
+							tag = FRA
+							ratio > 0.7
+						}
+					}
+					GER = {
+						is_subject_of = SOV
+					}
+				}
+			}
+		}
+		name = frances.11.a
+		SOV = {
+			country_event = { id = frances.12 days = 1 }
+			set_country_flag = france_is_puppet_united_russia
+		}
+	}
+
+	option = {#Refuse
+		ai_chance = {
+			factor = 85
+			modifier = {
+				factor = 25
+				OR = {
+					SOV = {
+						num_of_factories > 250
+						num_subjects > 10
+						strength_ratio = {
+							tag = FRA
+							ratio > 0.7
+						}
+					}
+					GER = {
+						is_subject_of = SOV
+					}
+				}
+			}
+		}
+		name = frances.11.b
+		SOV = {
+			country_event = { id = frances.13 days = 1 }
+		}
+	}
+}
+
+#France Accept Puppet
+country_event = {
+	id = frances.12
+	title = frances.12.t
+	desc = frances.12.d
+	picture = GFX_report_event_gre_cabinet_meeting
+
+	is_triggered_only = yes
+
+	option = {#Good
+		ai_chance = {
+			factor = 100
+		}
+		name = frances.12.a
+		SOV = {
+			set_autonomy = {
+				target = FRA
+				autonomy_state = autonomy_russian_influence
+			}
+			set_variable = { france_puppetization_united_russia = 0 }
+		}
+	}
+}
+
+#France Refuse Puppet
+country_event = {
+	id = frances.13
+	title = frances.13.t
+	desc = frances.13.d
+	picture = GFX_report_event_french_british_officers
+
+	is_triggered_only = yes
+
+	option = {#Damn
+		ai_chance = {
+			factor = 100
+		}
+		name = frances.13.a
 		SOV = {
 			create_wargoal = {
 				target = FRA
