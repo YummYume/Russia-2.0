@@ -33945,6 +33945,9 @@ SOV_management_suez_canal = {
 			}
 			NOT = {
 				has_country_flag = is_improving_france_united_russia
+				FRA = {
+					has_autonomy_state = autonomy_russian_satellite
+				}
 			}
 			custom_trigger_tooltip = {
 				tooltip = 100_or_more_puppet_united_france
@@ -33966,12 +33969,32 @@ SOV_management_suez_canal = {
 						is_subject_of = SOV
 					}
 				}
-				SOV = {
-					set_autonomy = {
-						target = FRA
-						autonomy_state = autonomy_russian_puppet
+				hidden_effect = {
+					SOV = {
+						set_autonomy = {
+							target = FRA
+							autonomy_state = autonomy_russian_puppet
+						}
 					}
 				}
+				custom_effect_tooltip = france_becomes_russian_puppet_united
+			}
+			else_if = {
+				limit = {
+					FRA = {
+						has_autonomy_state = autonomy_russian_puppet
+						is_subject_of = SOV
+					}
+				}
+				hidden_effect = {
+					SOV = {
+						set_autonomy = {
+							target = FRA
+							autonomy_state = autonomy_russian_satellite
+						}
+					}
+				}
+				custom_effect_tooltip = france_becomes_russian_satellite_united
 			}
 			else = {
 				custom_effect_tooltip = can_not_decrease_autonomy_anymore_united_france	
