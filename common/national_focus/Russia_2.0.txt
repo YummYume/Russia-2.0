@@ -10625,6 +10625,9 @@ focus_tree = {
 			is_subject = no
 			has_government = democratic
 			has_country_flag = sov_trials_begin
+			NOT = {
+				has_country_flag = sov_trials_end
+			}
 			if = {
 				limit = {
 					has_idea = SOV_Exiled_russia
@@ -10664,6 +10667,9 @@ focus_tree = {
 			is_subject = no
 			has_government = democratic
 			has_country_flag = sov_trials_begin
+			NOT = {
+				has_country_flag = sov_trials_end
+			}
 			if = {
 				limit = {
 					has_idea = SOV_Exiled_russia
@@ -11522,6 +11528,20 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
 			set_cosmetic_tag = RRD
+			set_party_name = {
+				ideology = democratic
+				long_name = SOV_progressive_party_name
+				name = SOV_progressive_party_name_long
+			}
+			create_country_leader = {
+				name = "Ivan Nikolaevich"
+				desc = "POLITICS_IVAN_NIKOLAEVICH_DESC"
+				picture = "Portrait_Ivan_Nikolaevich_Efremov.dds"
+				ideology = liberalism
+				traits = {
+					progressist_democratic_russia
+				}
+			}
 		}
 	}
 
@@ -12393,6 +12413,7 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
 			country_event = { id = soviets.486 }
+			create_faction = russian_entente
 		}
 	}
 
@@ -12473,7 +12494,13 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			
+			country_event = { id = frances.10 days = 1 }
+			if = {
+				limit = {
+					has_idea = SOV_Allies_menace
+				}
+				custom_effect_tooltip = france_less_chance_to_join_because_hostile
+			}
 		}
 	}
 
@@ -12495,12 +12522,33 @@ focus_tree = {
 			FIN = {
 				is_subject = no
 			}
+			NOT = {
+				FIN = {
+					is_in_faction_with = SOV
+				}
+			}
 			if = {
 				limit = {
 					has_idea = SOV_Exiled_russia
 				}
 				NOT = {
 					has_idea = SOV_Exiled_russia
+				}
+			}
+		}
+		bypass = {
+			OR = {
+				NOT = {
+					country_exists = FIN
+				}
+				FIN = {
+					has_war_with = SOV
+				}
+				FIN = {
+					is_subject_of = SOV
+				}
+				FIN = {
+					is_in_faction_with = SOV
 				}
 			}
 		}
@@ -12534,10 +12582,28 @@ focus_tree = {
 					has_idea = SOV_Exiled_russia
 				}
 			}
+			NOT = {
+				GER = {
+					is_in_faction_with = SOV
+					is_subject_of = SOV
+					has_war_with = SOV
+				}
+			}
+		}
+		bypass = {
+			GER = {
+				OR = {
+					is_in_faction_with = SOV
+					is_subject_of = SOV
+					has_war_with = SOV
+				}
+			}	
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			
+			GER = {
+				country_event = { id = germanys.21 days = 1 }
+			}
 		}
 	}
 
@@ -12596,7 +12662,26 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			
+			set_temp_variable = { communist_popularity_democratic = party_popularity@communism }
+			multiply_temp_variable = { communist_popularity_democratic = -0.5 }
+			set_temp_variable = { fascist_popularity_democratic = party_popularity@fascism }
+			multiply_temp_variable = { fascist_popularity_democratic = -0.5 }
+			set_temp_variable = { democratic_support_gain = 0 }
+			add_to_temp_variable = { democratic_support_gain = party_popularity@communism }
+			add_to_temp_variable = { democratic_support_gain = party_popularity@fascism }
+			multiply_temp_variable = { democratic_support_gain = 0.25 }
+			add_popularity = {
+				ideology = communism
+				popularity = communist_popularity_democratic
+			}
+			add_popularity = {
+				ideology = fascism
+				popularity = fascist_popularity_democratic
+			}
+			add_popularity = {
+				ideology = democratic
+				popularity = democratic_support_gain
+			}
 		}
 	}
 
@@ -12625,7 +12710,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			
+			country_event = { id = soviets.487 }
 		}
 	}
 
@@ -19937,7 +20022,7 @@ focus_tree = {
 		x = 100
 		y = 2
 		prerequisite = { focus = SOV_another_revolution }
-		icon = GFX_focus_YUG_pan_slavic_congress
+		icon = GFX_Black_Guard_focus
 		cost = 5
 		ai_will_do = {
 			factor = 7
@@ -20146,7 +20231,7 @@ focus_tree = {
 		x = 100
 		y = 3
 		prerequisite = { focus = SOV_black_guard }
-		icon = GFX_focus_generic_support_the_left_right
+		icon = GFX_End_revolution_anarchy
 		cost = 3
 		ai_will_do = {
 			factor = 7
@@ -20324,7 +20409,7 @@ focus_tree = {
 		x = 100
 		y = 4
 		prerequisite = { focus = SOV_end_revoltion_anarchy }
-		icon = GFX_focus_ger_strike_at_the_source
+		icon = GFX_State_country_anarchist
 		cost = 2
 		ai_will_do = {
 			factor = 7
@@ -20558,7 +20643,7 @@ focus_tree = {
 		x = 100
 		y = 5
 		prerequisite = { focus = SOV_state_country }
-		icon = GFX_goal_generic_political_pressure
+		icon = GFX_Crush_the_anti_revolutionnary
 		cost = 2
 		ai_will_do = {
 			factor = 7
@@ -20578,7 +20663,7 @@ focus_tree = {
 		x = 100
 		y = 6
 		prerequisite = { focus = SOV_crush_antirevolutionary }
-		icon = GFX_goal_generic_axis_build_infantry
+		icon = GFX_Send_recon_unit
 		cost = 6
 		ai_will_do = {
 			factor = 7
@@ -20601,7 +20686,7 @@ focus_tree = {
 		x = 102
 		y = 5
 		prerequisite = { focus = SOV_state_country }
-		icon = GFX_goal_generic_secret_weapon
+		icon = GFX_Deal_with_banditry
 		cost = 2
 		ai_will_do = {
 			factor = 7
@@ -20833,7 +20918,7 @@ focus_tree = {
 		x = 102
 		y = 6
 		prerequisite = { focus = SOV_deal_with_banditry }
-		icon = GFX_goal_generic_major_alliance
+		icon = GFX_A_helping_hand
 		cost = 4
 		ai_will_do = {
 			factor = 7
@@ -21024,7 +21109,7 @@ focus_tree = {
 		x = 98
 		y = 5
 		prerequisite = { focus = SOV_state_country }
-		icon = GFX_goal_generic_production
+		icon = GFX_Forced_quota_anarchist
 		cost = 6
 		ai_will_do = {
 			factor = 6
@@ -21087,7 +21172,7 @@ focus_tree = {
 		x = 98
 		y = 6
 		prerequisite = { focus = SOV_forced_quota }
-		icon = GFX_goal_generic_construct_civilian
+		icon = GFX_Forced_labor_anarchist
 		cost = 10
 		ai_will_do = {
 			factor = 7
@@ -21150,7 +21235,7 @@ focus_tree = {
 		prerequisite = { focus = SOV_recon_units }
 		prerequisite = { focus = SOV_helping_hand }
 		mutually_exclusive = { focus = SOV_embrace_total_anarchy }
-		icon = GFX_goal_generic_alliance
+		icon = GFX_Proclaim_the_commune
 		cost = 2
 		ai_will_do = {
 			factor = 7
@@ -21405,7 +21490,7 @@ focus_tree = {
 		prerequisite = { focus = SOV_recon_units }
 		prerequisite = { focus = SOV_helping_hand }
 		mutually_exclusive = { focus = SOV_proclamation_commune }
-		icon = GFX_goal_generic_war_with_comintern
+		icon = GFX_Embrace_total_anarchy
 		cost = 2
 		ai_will_do = {
 			factor = 7
