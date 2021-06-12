@@ -4663,63 +4663,6 @@ country_event = {
 	}
 }
 
-# SOV Is Democratic
-country_event = {
-	id = soviets.111
-
-	trigger = {
-		tag = SOV
-		has_government = democratic
-		NOT = {
-			has_cosmetic_tag = SOV_democratic_russia
-			has_cosmetic_tag = SOV_temp_democratic_russia
-		}
-	}
-
-	mean_time_to_happen = { days = 1 }
-
-	hidden = yes
-
-	immediate = {
-		if = {
-			limit = {
-				OR = {
-					has_completed_focus = SOV_pavel_guidance
-					has_completed_focus = SOV_trust_alexander
-				}
-			}
-			set_cosmetic_tag = SOV_democratic_russia
-		}
-		else = {
-			set_cosmetic_tag = SOV_temp_democratic_russia
-		}
-	}
-}
-
-# SOV Isn't Democratic Anymore
-country_event = {
-	id = soviets.112
-
-	trigger = {
-		tag = SOV
-		NOT = {
-			has_government = democratic
-		}
-		OR = {
-			has_cosmetic_tag = SOV_temp_democratic_russia
-			has_cosmetic_tag = SOV_democratic_russia
-		}
-	}
-
-	mean_time_to_happen = { days = 1 }
-
-	hidden = yes
-
-	immediate = {
-		drop_cosmetic_tag = yes
-	}
-}
-
 # ENG Blockades Russia
 country_event = {
 	id = soviets.113
@@ -6380,58 +6323,6 @@ country_event = {
 	}
 }
 
-#Add Country to the Russian Sphere Research Agreement
-country_event = {
-	id = soviets.157
-
-	hidden = yes
-
-	trigger = {
-		country_exists = SOV
-		SOV = {
-			has_completed_focus = SOV_keep_expanding_russian_sphere
-		}
-		NOT = {
-			tag = SOV
-			is_in_tech_sharing_group = sov_sphere_research
-		}
-		is_in_faction_with = SOV
-		OR = {
-			has_government = democratic
-			has_government = neutrality
-		}
-	}
-
-	immediate = {
-		add_to_tech_sharing_group = sov_sphere_research
-	}
-}
-
-#Remove Country from the Russian Sphere Research Agreement
-country_event = {
-	id = soviets.158
-
-	hidden = yes
-
-	trigger = {
-		is_in_tech_sharing_group = sov_sphere_research
-		OR = {
-			NOT = {
-				tag = SOV
-				is_in_faction_with = SOV
-			}
-			NOT = {
-				has_government = democratic
-				has_government = neutrality
-			}
-		}
-	}
-
-	immediate = {
-		remove_from_tech_sharing_group = sov_sphere_research
-	}
-}
-
 #Russia Asks for Karelia - Compromise
 country_event = {
 	id = soviets.159
@@ -7094,23 +6985,11 @@ country_event = {
 	desc = soviets.166.d
 	picture = GFX_report_event_crowd_in_prague
 
-	trigger = {
-		SOV = {
-			is_subject = no
-			has_government = democratic
-			NOT = {
-				has_completed_focus = SOV_freedom_all
-			}
-		}
-		is_subject_of = SOV
-		has_country_flag = {
-			flag = russian_culture_promote
-			days > 365
-		}
-	}
+	is_triggered_only = yes
 
 	immediate = {
 		clr_country_flag = russian_culture_promote
+		set_country_flag = receive_promote_russian_culture_event
 	}
 
 	option = { #Okay
@@ -7160,42 +7039,7 @@ country_event = {
 			target = FROM
 			transfer_troops = yes
 		}
-	}
-}
-
-#Add Joint Military Idea
-country_event = {
-	id = soviets.168
-
-	hidden = yes
-
-	trigger = {
-		is_in_faction_with = SOV
-		SOV = {
-			has_completed_focus = SOV_propose_interventions
-		}
-	}
-
-	immediate = {
-		add_ideas = SOV_Joint_military_planning
-	}
-}
-
-#Remove Joint Military Idea
-country_event = {
-	id = soviets.169
-
-	hidden = yes
-
-	trigger = {
-		has_idea = SOV_Joint_military_planning
-		NOT = {
-			is_in_faction_with = SOV
-		}
-	}
-
-	immediate = {
-		remove_ideas = SOV_Joint_military_planning
+		clr_country_flag = russian_culture_promote
 	}
 }
 
@@ -8686,7 +8530,7 @@ country_event = {
 			tag = BUL
 		}
 		SOV = {
-			country_event = { id = soviets.183 days = 1 }
+			country_event = { id = bulgarias.1 days = 1 }
 		}
 	}
 
@@ -8846,17 +8690,7 @@ country_event = {
 
 	hidden = yes
 
-	trigger = {
-		country_exists = SOV
-		SOV = {
-			has_completed_focus = SOV_slavic_alliance
-		}
-		NOT = {
-			tag = SOV
-			is_in_tech_sharing_group = sov_slavic_research
-		}
-		is_in_faction_with = SOV
-	}
+	is_triggered_only = yes
 
 	immediate = {
 		add_to_tech_sharing_group = sov_slavic_research
@@ -8869,13 +8703,7 @@ country_event = {
 
 	hidden = yes
 
-	trigger = {
-		is_in_tech_sharing_group = sov_slavic_research
-		NOT = {
-			tag = SOV
-			is_in_faction_with = SOV
-		}
-	}
+	is_triggered_only = yes
 
 	immediate = {
 		remove_from_tech_sharing_group = sov_slavic_research
@@ -15253,10 +15081,7 @@ country_event = {
 	desc = soviets.313.d
 	picture = GFX_report_event_generic_lend_lease
 
-	trigger = {
-		has_idea = SOV_Root_russian_pact
-		has_war_with = SOV
-	}
+	is_triggered_only = yes
 
 	immediate = {
 		hidden_effect = {
@@ -15489,12 +15314,7 @@ country_event = {
 	
 	hidden = yes
 
-	trigger = {
-		has_country_flag = accepted_russian_root_agreement
-		NOT = {
-			has_idea = SOV_Root_russian_pact
-		}
-	}
+	is_triggered_only = yes
 
 	immediate = {
 		clr_country_flag = accepted_russian_root_agreement
@@ -15944,12 +15764,7 @@ country_event = {
 	desc = soviets.329.d
 	picture = GFX_report_event_poland_rejects
 
-	trigger = {
-		has_country_flag = {
-			flag = SOV_enforced_military_access
-			days > 730
-		}
-	}
+	is_triggered_only = yes
 
 	immediate = {
 		clr_country_flag = SOV_enforced_military_access
@@ -15977,12 +15792,7 @@ country_event = {
 	desc = soviets.330.d
 	picture = GFX_report_event_por_salazar_franco2
 
-	trigger = {
-		NOT = {
-			gives_military_access_to = SOV
-		}
-		has_country_flag = SOV_enforced_military_access
-	}
+	is_triggered_only = yes
 
 	immediate = {
 		clr_country_flag = SOV_enforced_military_access
@@ -16066,10 +15876,7 @@ country_event = {
 
 	hidden = yes
 
-	trigger = {
-		has_country_flag = SOV_enforced_military_access
-		has_war_with = SOV
-	}
+	is_triggered_only = yes
 
 	immediate = {
 		clr_country_flag = SOV_enforced_military_access
@@ -17453,21 +17260,7 @@ country_event = {
 	desc = soviets.367.d
 	picture = GFX_report_event_soviet_in_riga
 
-	trigger = {
-		NOT = {
-			tag = SOV
-			is_in_faction_with = SOV
-			is_subject_of = SOV
-			has_government = communism
-			has_civil_war = yes
-			has_capitulated = yes
-		}
-		has_idea = SOV_Communist_influence_international_3
-		has_country_flag = can_be_target_international
-		NOT = {
-			has_country_flag = communist_ultimatum_triggered
-		}
-	}
+	is_triggered_only = yes
 
 	immediate = {
 		hidden_effect = {
@@ -18260,29 +18053,7 @@ country_event = {
 country_event = {
 	id = soviets.393
 
-	trigger = {
-		is_subject_of = SOV
-		has_autonomy_state = autonomy_collaboration_government
-		OR = {
-			NOT = {
-				has_idea = SOV_Russian_overlord
-			}
-			NOT = {
-				has_idea = SOV_Russian_sphere_market
-			}
-			NOT = {
-				has_idea = SOV_Russian_military_training
-			}
-		}
-		SOV = {
-			has_completed_focus = SOV_freedom_all
-			has_government = democratic
-			is_subject = no
-			NOT = {
-				has_idea = SOV_Exiled_russia
-			}
-		}
-	}
+	is_triggered_only = yes
 
 	hidden = yes
 
@@ -18318,23 +18089,7 @@ country_event = {
 country_event = {
 	id = soviets.394
 
-	trigger = {
-		SOV = {
-			has_completed_focus = SOV_create_russian_sphere
-			NOT = {
-				has_completed_focus = SOV_promote_russian_culture
-			}
-			is_subject = no
-			has_government = democratic
-		}
-		NOT = {
-			original_tag = SOV
-		}
-		is_subject_of = SOV
-		NOT = {
-			has_idea = SOV_Guided_by_russia
-		}
-	}
+	is_triggered_only = yes
 
 	hidden = yes
 
@@ -18347,21 +18102,7 @@ country_event = {
 country_event = {
 	id = soviets.395
 
-	trigger = {
-		SOV = {
-			has_completed_focus = SOV_create_russian_sphere
-			has_completed_focus = SOV_promote_russian_culture
-			is_subject = no
-			has_government = democratic
-		}
-		NOT = {
-			original_tag = SOV
-		}
-		is_subject_of = SOV
-		NOT = {
-			has_idea = SOV_Guided_by_russia2
-		}
-	}
+	is_triggered_only = yes
 
 	hidden = yes
 
@@ -18377,128 +18118,6 @@ country_event = {
 		}
 		else = {
 			add_ideas = SOV_Guided_by_russia2
-		}
-	}
-}
-
-#Hidden Event to rename Stalingrad to Volgograd if SOV is not the owner
-country_event = {
-	id = soviets.396
-
-	trigger = {
-		217 = {
-			NOT = {
-				is_owned_and_controlled_by = SOV
-			}
-			is_owned_and_controlled_by = ROOT
-		}
-		NOT = {
-			original_tag = SOV
-			has_government = communism
-			has_global_flag = renamed_stalingrad_sov
-		}
-	}
-
-	hidden = yes
-
-	immediate = {
-		set_global_flag = renamed_stalingrad_sov
-		set_province_name = { id = 3529 name = "Volgograd"}
-		217 = {
-			set_state_name = "Volgograd"
-		}
-	}
-}
-
-#Hidden Event to rename Volgograd to Stalingrad if Communist Country is the owner
-country_event = {
-	id = soviets.397
-
-	trigger = {
-		217 = {
-			is_owned_and_controlled_by = ROOT
-		}
-		has_government = communism
-		has_global_flag = renamed_stalingrad_sov
-	}
-
-	hidden = yes
-
-	immediate = {
-		clr_global_flag = renamed_stalingrad_sov
-		if = {
-			limit = {
-				has_country_leader = {
-					name = "Leon Trotsky"
-					ruling_only = yes
-				}
-			}
-			set_province_name = { id = 3529 name = "Trotskygrad"}
-			217 = {
-				set_state_name = "Trotskygrad"
-			}
-		}
-		else = {
-			set_province_name = { id = 3529 name = "Stalingrad"}
-			217 = {
-				set_state_name = "Stalingrad"
-			}
-		}
-	}
-}
-
-#Hidden Event to rename Leningrad to ST Petersburg if SOV is not the owner
-country_event = {
-	id = soviets.398
-
-	trigger = {
-		195 = {
-			NOT = {
-				is_owned_and_controlled_by = SOV
-			}
-			is_owned_and_controlled_by = ROOT
-		}
-		NOT = {
-			original_tag = SOV
-			has_government = communism
-			has_global_flag = renamed_leningrad_sov
-		}
-	}
-
-	hidden = yes
-
-	immediate = {
-		set_global_flag = renamed_leningrad_sov
-		set_province_name = { id = 3151 name = "Saint Petersburg"}
-		hidden_effect = {
-			195 = {
-				set_state_name = "Saint Petersburg"
-			}
-		}	
-	}
-}
-
-#Hidden Event to rename St Petersburg to leningrad if Communist Country is the owner
-country_event = {
-	id = soviets.399
-
-	trigger = {
-		195 = {
-			is_owned_and_controlled_by = ROOT
-		}
-		has_government = communism
-		has_global_flag = renamed_leningrad_sov
-	}
-
-	hidden = yes
-
-	immediate = {
-		clr_global_flag = renamed_leningrad_sov
-		set_province_name = { id = 3151 name = "Leningrad"}
-		hidden_effect = {
-			195 = {
-				set_state_name = "Leningrad"
-			}
 		}
 	}
 }
@@ -18668,30 +18287,6 @@ country_event = {
 			add_state_core = 580
 			add_state_core = 579
 			add_state_core = 403
-		}
-	}
-}
-
-#Hidden Event to cancel country flag in case a country doesn't exist anymore
-country_event = {
-	id = soviets.401
-
-	trigger = {
-		tag = SOV
-		has_country_flag = SOV_AI_is_influencing_international
-		NOT = {
-			any_country = {
-				exists = yes
-				has_country_flag = SOV_AI_is_target_international
-			}
-		}
-	}
-
-	hidden = yes
-
-	immediate = {
-		hidden_effect = {
-			clr_country_flag = SOV_AI_is_influencing_international
 		}
 	}
 }
@@ -21934,26 +21529,11 @@ country_event = {
 	desc = soviets.457.d
 	picture = GFX_report_event_gre_city_devastated
 
-	trigger = {
-		TAG = SOV
-		has_country_flag = ukr_accepted_puppet_united_russia
-		UKR = {
-			is_subject_of = SOV
-			country_exists = UKR
-			any_state = {
-				has_state_flag = claim_by_ukr_dem_rus
-				is_owned_and_controlled_by = SOV
-			}
-		}
-		NOT = {
-			UKR = {
-				has_idea = SOV_Ukraininan_uprising
-			}
-			has_country_flag = ukr_core_claim_states
-		}
-	}
+	is_triggered_only = yes
 
-	mean_time_to_happen = { days = 1 }
+	immediate = {
+		set_country_flag = receive_ukraine_complains_land
+	}
 
 	option = { #We have to do something 
 		name = soviets.457.a
@@ -21963,6 +21543,7 @@ country_event = {
 		}
 		custom_effect_tooltip = unlock_decision_returned_ukraine_states_tt
 		hidden_effect = {
+			clr_country_flag = receive_ukraine_complains_land
 			random_owned_controlled_state = {
 				limit = {
 					non_damaged_building_level = {

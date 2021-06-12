@@ -288,5 +288,141 @@ on_actions = {
 				}
 			}
 		}
-	}		
+	}
+	
+	#Rename Stalingrad to Volgograd if SOV is not the owner
+	on_state_control_changed = {
+		effect = {
+			if = {
+				limit = {
+					FROM.FROM = {
+						state = 217
+					}
+					FROM = {
+						TAG = SOV
+					}
+					217 = {
+						NOT = {
+							is_owned_and_controlled_by = SOV
+						}
+						is_controlled_by = ROOT
+					}
+					ROOT = {
+						NOT = {
+							original_tag = SOV
+							has_government = communism
+						}
+					}
+					NOT = {
+						has_global_flag = renamed_stalingrad_sov
+					}
+				}
+				set_global_flag = renamed_stalingrad_sov
+				set_province_name = { id = 3529 name = "Volgograd"}
+				217 = {
+					set_state_name = "Volgograd"
+				}
+			}
+			else_if = {
+				limit = {
+					FROM.FROM = {
+						state = 217
+					}
+					ROOT = {
+						TAG = SOV
+						has_government = communism
+					}
+					217 = {
+						NOT = {
+							is_controlled_by = FROM
+						}
+						is_owned_and_controlled_by = ROOT
+					}
+					has_global_flag = renamed_stalingrad_sov
+				}
+				clr_global_flag = renamed_stalingrad_sov
+				if = {
+					limit = {
+						has_country_leader = {
+							name = "Leon Trotsky"
+							ruling_only = yes
+						}
+					}
+					set_province_name = { id = 3529 name = "Trotskygrad"}
+					217 = {
+						set_state_name = "Trotskygrad"
+					}
+				}
+				else = {
+					set_province_name = { id = 3529 name = "Stalingrad"}
+					217 = {
+						set_state_name = "Stalingrad"
+					}
+				}
+			}
+		}
+	}
+
+	#Rename Leningrad to St Petersburg if SOV is not the owner
+	on_state_control_changed = {
+		effect = {
+			if = {
+				limit = {
+					FROM.FROM = {
+						state = 195
+					}
+					FROM = {
+						TAG = SOV
+					}
+					195 = {
+						NOT = {
+							is_owned_and_controlled_by = SOV
+						}
+						is_controlled_by = ROOT
+					}
+					ROOT = {
+						NOT = {
+							original_tag = SOV
+							has_government = communism
+						}
+					}
+					NOT = {
+						has_global_flag = renamed_leningrad_sov
+					}
+				}
+				set_global_flag = renamed_leningrad_sov
+				set_province_name = { id = 3151 name = "Saint Petersburg"}
+				hidden_effect = {
+					195 = {
+						set_state_name = "Saint Petersburg"
+					}
+				}	
+			}
+			else_if = {
+				limit = {
+					FROM.FROM = {
+						state = 195
+					}
+					ROOT = {
+						TAG = SOV
+						has_government = communism
+					}
+					195 = {
+						NOT = {
+							is_controlled_by = FROM
+						}
+						is_owned_and_controlled_by = ROOT
+					}
+					has_global_flag = renamed_leningrad_sov
+				}
+				clr_global_flag = renamed_leningrad_sov
+				set_province_name = { id = 3151 name = "Leningrad"}
+				hidden_effect = {
+					195 = {
+						set_state_name = "Leningrad"
+					}
+				}
+			}
+		}
+	}
 }
