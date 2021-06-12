@@ -58,6 +58,16 @@ country_event = {
         if = {
             limit = {
                 NOT = {
+                    803 = {
+                        is_claimed_by = ROOT
+                    }
+                }
+            }
+            add_state_claim = 803
+        }
+        if = {
+            limit = {
+                NOT = {
                     731 = {
                         is_claimed_by = ROOT
                     }
@@ -76,14 +86,10 @@ country_event = {
             add_state_claim = 184
         }
         hidden_effect = {
-            every_state = {
-                limit = {
-                    state = 106
-                    state = 731
-                    state = 184
-                }
-                set_state_flag = state_claimed_bulgaria_slavic_alliance
-            }
+            106 = { set_state_flag = state_claimed_bulgaria_slavic_alliance }
+            803 = { set_state_flag = state_claimed_bulgaria_slavic_alliance }
+            731 = { set_state_flag = state_claimed_bulgaria_slavic_alliance }
+            184 = { set_state_flag = state_claimed_bulgaria_slavic_alliance }
             BUL = {
                 add_ai_strategy = {
                     type = alliance
@@ -151,22 +157,10 @@ country_event = {
 	desc = bulgarias.4.d
 	picture = GFX_report_event_stalin_02
 	
-	trigger = {
-        NOT = {
-            tag = BUL
-        }
-        is_in_faction_with = SOV
-        BUL = {
-            is_subject = no
-            is_in_faction_with = SOV
-            has_country_flag = SOV_BUL_accepted_claim
-            NOT = {
-                has_country_flag = SOV_BUL_betrayed_claims
-            }
-        }
-        any_controlled_state = {
-            has_state_flag = state_claimed_bulgaria_slavic_alliance
-        }
+	is_triggered_only = yes
+
+    immediate = {
+        set_country_flag = receive_event_bulgaria
     }
 	
 	option = { #Okay
@@ -203,6 +197,7 @@ country_event = {
         BUL = {
             country_event = { id = bulgarias.5 days = 1 }
         }
+        clr_country_flag = receive_event_bulgaria
 	}
 
     option = { #No

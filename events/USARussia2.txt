@@ -413,3 +413,77 @@ country_event = {
 		name = americas.10.a
 	}
 }
+
+#Russia Wants Alaska (Agressive democracy)
+country_event = {
+	id = americas.11
+	title = americas.11.t
+	desc = americas.11.d
+	picture = GFX_report_event_finnish_letter
+
+	is_triggered_only = yes
+
+	option = { #Accept
+		ai_chance = {
+			factor = 65
+		}
+		name = americas.11.a
+		SOV = {
+			country_event = { id = americas.12 hours = 18 }
+		}
+	}
+
+	option = { #Accept
+		ai_chance = {
+			factor = 35
+		}
+		name = americas.11.b
+		SOV = {
+			country_event = { id = americas.13 hours = 18 }
+		}
+	}
+}
+
+#Alaska Holder Accept
+country_event = {
+	id = americas.12
+	title = americas.12.t
+	desc = americas.12.d
+	picture = GFX_handshake_russia2
+
+	is_triggered_only = yes
+
+	option = { #Alaska is ours again
+		ai_chance = {
+			factor = 100
+		}
+		name = americas.12.a
+		add_timed_idea = {
+			idea = SOV_Alaska_transaction_democratic
+			days = 210
+		}
+		transfer_state = 463
+	}
+}
+
+#Alaska Holder Refuse
+country_event = {
+	id = americas.13
+	title = americas.13.t
+	desc = americas.13.d
+	picture = GFX_report_event_generic_usa_treaty
+
+	is_triggered_only = yes
+
+	option = { #Damn
+		ai_chance = {
+			factor = 100
+		}
+		name = americas.13.a
+		create_wargoal = {
+			type = take_state
+			target = FROM
+			generator = { 463 }
+		}
+	}
+}
