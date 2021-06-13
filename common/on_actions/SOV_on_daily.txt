@@ -1,0 +1,554 @@
+on_actions = {
+	on_weekly = { #Country Gets Event to Give Back Bulgarian Claim
+		effect = {
+			if = {
+				limit = {
+					is_in_faction_with = SOV
+					any_owned_state = {
+						has_state_flag = state_claimed_bulgaria_slavic_alliance
+					}
+					NOT = {
+						tag = BUL
+						has_country_flag = receive_event_bulgaria
+					}
+					BUL = {
+						is_subject = no
+						is_in_faction_with = SOV
+						has_country_flag = SOV_BUL_accepted_claim
+						NOT = {
+							has_country_flag = SOV_BUL_betrayed_claims
+						}
+					}
+				}
+				country_event = { id = bulgarias.4 }
+			}
+		}
+	}
+
+	on_daily = { #If SOV completed Post War Influence focus, any country they puppet will get this national spirit
+		effect = {
+			if = {
+				limit = {
+					SOV = {
+						has_completed_focus = SOV_post_war_influence
+					}
+					FROM = {
+						is_subject_of = SOV
+						NOT = {
+							has_idea = SOV_Post_war_influence
+						}
+					}
+				}
+				FROM = {
+					add_ideas = SOV_Post_war_influence
+				}
+			}
+		}
+	}
+
+	on_daily_SOV = { #Russia is democratic
+		effect = {
+			if = {
+				limit = {
+					has_government = democratic
+					NOT = {
+						has_cosmetic_tag = SOV_democratic_russia
+						has_cosmetic_tag = SOV_temp_democratic_russia
+					}
+				}
+				SOV = {
+					if = {
+						limit = {
+							OR = {
+								has_completed_focus = SOV_pavel_guidance
+								has_completed_focus = SOV_trust_alexander
+							}
+						}
+						set_cosmetic_tag = SOV_democratic_russia
+					}
+					else = {
+						set_cosmetic_tag = SOV_temp_democratic_russia
+					}
+				}
+			}
+		}
+	}
+
+	on_daily_SOV = { #Russia isn't democratic
+		effect = {
+			if = {
+				limit = {
+					NOT = {
+						has_government = democratic
+					}
+					OR = {
+						has_cosmetic_tag = SOV_temp_democratic_russia
+						has_cosmetic_tag = SOV_democratic_russia
+					}
+				}
+				SOV = {
+					drop_cosmetic_tag = yes
+				}
+			}
+		}
+	}
+
+	on_weekly_SOV = { #Germany Slav Incident
+		effect = {
+			if = {
+				limit = {
+					NOT = {
+						has_country_flag = received_event_germany_slav
+					}
+					is_in_faction_with = GER
+					has_completed_focus = SOV_alliance_with_germany_junta
+					has_country_flag = {
+						flag = german_alliance_incident
+						days > 210
+					}
+				}
+				SOV = {
+					country_event = { id = germanys.12 }
+				}
+			}
+		}
+	}
+
+	on_weekly = { #Add Country to the Russian Sphere Research Agreement
+		effect = {
+			if = {
+				limit = {
+					country_exists = SOV
+					SOV = {
+						has_completed_focus = SOV_keep_expanding_russian_sphere
+					}
+					NOT = {
+						tag = SOV
+						is_in_tech_sharing_group = sov_sphere_research
+					}
+					is_in_faction_with = SOV
+					OR = {
+						has_government = democratic
+						has_government = neutrality
+					}
+				}
+				FROM = {
+					add_to_tech_sharing_group = sov_sphere_research
+				}
+			}
+		}
+	}
+
+	on_weekly = { #Remove Country from the Russian Sphere Research Agreement
+		effect = {
+			if = {
+				limit = {
+					is_in_tech_sharing_group = sov_sphere_research
+					OR = {
+						NOT = {
+							tag = SOV
+							is_in_faction_with = SOV
+						}
+						NOT = {
+							has_government = democratic
+							has_government = neutrality
+						}
+					}
+				}
+				FROM = {
+					remove_from_tech_sharing_group = sov_sphere_research
+				}
+			}
+		}
+	}
+
+	on_weekly = { #Russian Culture Promoted!
+		effect = {
+			if = {
+				limit = {
+					SOV = {
+						is_subject = no
+						has_government = democratic
+						NOT = {
+							has_completed_focus = SOV_freedom_all
+						}
+					}
+					FROM = {
+						OR = {
+							TAG = UKR
+							TAG = BLR
+							TAG = CIR
+							TAG = CRI
+							TAG = AZR
+							TAG = GEO
+							TAG = ARM
+							TAG = DAG
+							TAG = KAZ
+							TAG = UZB
+							TAG = KYR
+							TAG = TMS
+							TAG = TAJ
+						}
+					}
+					is_subject_of = SOV
+					has_country_flag = {
+						flag = russian_culture_promote
+						days > 365
+					}
+					NOT = {
+						has_country_flag = receive_promote_russian_culture_event
+					}
+				}
+				FROM = {
+					country_event = { id = soviets.166 }
+				}
+			}
+		}
+	}
+
+	on_weekly = { #Add Joint Military Idea
+		effect = {
+			if = {
+				limit = {
+					is_in_faction_with = SOV
+					SOV = {
+						has_completed_focus = SOV_propose_interventions
+					}
+				}
+				FROM = {
+					add_ideas = SOV_Joint_military_planning
+				}
+			}
+		}
+	}
+
+	on_weekly = { #Remove Joint Military Idea
+		effect = {
+			if = {
+				limit = {
+					has_idea = SOV_Joint_military_planning
+					NOT = {
+						is_in_faction_with = SOV
+					}
+				}
+				FROM = {
+					remove_ideas = SOV_Joint_military_planning
+				}
+			}
+		}
+	}
+
+	on_weekly = { #Add Country to the Slavic Research Agreement
+		effect = {
+			if = {
+				limit = {
+					country_exists = SOV
+					SOV = {
+						has_completed_focus = SOV_slavic_alliance
+					}
+					NOT = {
+						tag = SOV
+						is_in_tech_sharing_group = sov_slavic_research
+					}
+					is_in_faction_with = SOV
+				}
+				FROM = {
+					add_to_tech_sharing_group = sov_slavic_research
+				}
+			}
+		}
+	}
+
+	on_weekly = { #Remove Country from the Slavic Research Agreement
+		effect = {
+			if = {
+				limit = {
+					is_in_tech_sharing_group = sov_slavic_research
+					NOT = {
+						tag = SOV
+						is_in_faction_with = SOV
+					}
+				}
+				FROM = {
+					remove_from_tech_sharing_group = sov_slavic_research
+				}
+			}
+		}
+	}
+
+	on_weekly = { #Broken ROOT-Russian Agreement
+		effect = {
+			if = {
+				limit = {
+					has_idea = SOV_Root_russian_pact
+					has_war_with = SOV
+					NOT = {
+						has_country_flag = receive_broken_russia_agreement
+					}
+				}
+				FROM = {
+					country_event = { id = soviets.313 }
+					set_country_flag = receive_broken_russia_agreement
+				}
+			}
+		}
+	}
+
+	on_weekly = { #Undo the hostile behaviors towards Russian enemies
+		effect = {
+			if = {
+				limit = {
+					has_country_flag = accepted_russian_root_agreement
+					NOT = {
+						has_idea = SOV_Root_russian_pact
+					}
+				}
+				FROM = {
+					clr_country_flag = accepted_russian_root_agreement
+				}
+				every_country = {
+					limit = {
+						has_country_flag = is_target_of_russia_with_agreement
+					}
+					ROOT = {
+						add_ai_strategy = {
+							type = support
+							id = PREV
+							value = 1000
+						}
+
+						add_ai_strategy = {
+							type = alliance
+							id = PREV
+							value = 1000
+						}
+
+						add_ai_strategy = {
+							type = send_volunteers_desire
+							id = PREV
+							value = 1000
+						}
+					}
+				}
+			}
+		}
+	}
+
+	on_weekly = { #Enforced military access ends!
+		effect = {
+			if = {
+				limit = {
+					has_country_flag = {
+						flag = SOV_enforced_military_access
+						days > 730
+					}
+				}
+				FROM = {
+					country_event = { id = soviets.329 }
+				}
+			}
+		}
+	}
+
+	on_weekly = { #SOV ends enforced military access
+		effect = {
+			if = {
+				limit = {
+					NOT = {
+						gives_military_access_to = SOV
+					}
+					has_country_flag = SOV_enforced_military_access
+				}
+				FROM = {
+					country_event = { id = soviets.330 }
+				}
+			}
+		}
+	}
+
+	on_weekly = { #Cancel military access with SOV if war
+		effect = {
+			if = {
+				limit = {
+					has_country_flag = SOV_enforced_military_access
+					has_war_with = SOV
+				}
+				FROM = {
+					country_event = { id = soviets.334 }
+				}
+			}
+		}
+	}
+
+	on_weekly = { #Communist Ultimatum
+		effect = {
+			if = {
+				limit = {
+					NOT = {
+						tag = SOV
+						is_in_faction_with = SOV
+						is_subject_of = SOV
+						has_government = communism
+						has_civil_war = yes
+						has_capitulated = yes
+					}
+					has_idea = SOV_Communist_influence_international_3
+					has_country_flag = can_be_target_international
+					NOT = {
+						has_country_flag = communist_ultimatum_triggered
+					}
+				}
+				FROM = {
+					country_event = { id = soviets.367 }
+				}
+			}
+		}
+	}
+
+	on_monthly = { #Give Ideas to other Russian puppets
+		effect = {
+			if = {
+				limit = {
+					is_subject_of = SOV
+					has_autonomy_state = autonomy_collaboration_government
+					OR = {
+						NOT = {
+							has_idea = SOV_Russian_overlord
+						}
+						NOT = {
+							has_idea = SOV_Russian_sphere_market
+						}
+						NOT = {
+							has_idea = SOV_Russian_military_training
+						}
+					}
+					SOV = {
+						has_completed_focus = SOV_freedom_all
+						has_government = democratic
+						is_subject = no
+						NOT = {
+							has_idea = SOV_Exiled_russia
+						}
+					}
+				}
+				FROM = {
+					country_event = { id = soviets.393 }
+				}
+			}
+		}
+	}
+
+	on_monthly = { #Give Guided by Russia to all the Puppets
+		effect = {
+			if = {
+				limit = {
+					SOV = {
+						has_completed_focus = SOV_create_russian_sphere
+						NOT = {
+							has_completed_focus = SOV_promote_russian_culture
+						}
+						is_subject = no
+						has_government = democratic
+					}
+					NOT = {
+						original_tag = SOV
+					}
+					is_subject_of = SOV
+					NOT = {
+						has_idea = SOV_Guided_by_russia
+					}
+				}
+				FROM = {
+					add_ideas = SOV_Guided_by_russia
+				}
+			}
+		}
+	}
+
+	on_monthly = { #Give Guided by Russia 2 to all the Puppets
+		effect = {
+			if = {
+				limit = {
+					SOV = {
+						has_completed_focus = SOV_create_russian_sphere
+						has_completed_focus = SOV_promote_russian_culture
+						is_subject = no
+						has_government = democratic
+					}
+					NOT = {
+						original_tag = SOV
+					}
+					is_subject_of = SOV
+					NOT = {
+						has_idea = SOV_Guided_by_russia2
+					}
+				}
+				FROM = {
+					if = {
+						limit = {
+							has_idea = SOV_Guided_by_russia
+						}
+						swap_ideas = {
+							remove_idea = SOV_Guided_by_russia
+							add_idea = SOV_Guided_by_russia2
+						}
+					}
+					else = {
+						add_ideas = SOV_Guided_by_russia2
+					}
+				}
+			}
+		}
+	}
+
+	on_monthly_SOV = { #Remove ai Factor if the country doesn't exist anymore
+		effect = {
+			if = {
+				limit = {
+					tag = SOV
+					has_country_flag = SOV_AI_is_influencing_international
+					NOT = {
+						any_country = {
+							exists = yes
+							has_country_flag = SOV_AI_is_target_international
+						}
+					}
+				}
+				FROM = {
+					clr_country_flag = SOV_AI_is_influencing_international
+				}
+			}
+		}
+	}
+
+	on_weekly_SOV = { #SOV Control any States that was Claimed by Ukraine
+		effect = {
+			if = {
+				limit = {
+					TAG = SOV
+					has_country_flag = ukr_accepted_puppet_united_russia
+					NOT = {
+						has_country_flag = receive_ukraine_complains_land
+					}
+					UKR = {
+						is_subject_of = SOV
+						country_exists = UKR
+						any_state = {
+							has_state_flag = claim_by_ukr_dem_rus
+							is_owned_and_controlled_by = SOV
+						}
+					}
+					NOT = {
+						UKR = {
+							has_idea = SOV_Ukraininan_uprising
+						}
+						has_country_flag = ukr_core_claim_states
+					}
+				}
+				FROM = {
+					country_event = { id = soviets.457 }
+				}
+			}
+		}
+	}
+}

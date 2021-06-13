@@ -623,3 +623,327 @@ country_event = {
 		}
 	}
 }
+
+#Russia Propose a Referendum
+country_event = {
+	id = finlands.19
+	title = finlands.19.t
+	desc = finlands.19.d
+	picture = GFX_report_event_hol_cabinet_gerbrandy
+	is_triggered_only = yes
+
+	option = { #What could go wrong ?
+		name = finlands.19.a
+		ai_chance = {
+			factor = 70
+		}
+		SOV = {
+			country_event = { id = finlands.20 hours = 8 }
+		}
+	}
+
+	option = { #It's a trap !
+		name = finlands.19.b
+		ai_chance = {
+			factor = 30
+		}
+		SOV = {
+			country_event = { id = finlands.21 hours = 8 }
+		}
+	}
+}
+
+#Finland Accept Referendum
+country_event = {
+	id = finlands.20
+	title = finlands.20.t
+	desc = finlands.20.d
+	picture = GFX_report_event_canada_patriation
+	is_triggered_only = yes
+
+	option = { #Then the Referendum Shall begin
+		name = finlands.20.a
+		ai_chance = {
+			factor = 100
+		}
+		FIN = {
+			custom_effect_tooltip = finland_referendum_results_event
+			hidden_effect = {
+				random_list = {
+					75 = {
+						country_event = { id = finlands.22 days = 14 }
+					}
+					25 = {
+						country_event = { id = finlands.24 days = 14 }
+					}
+				}
+			}
+		}
+	}
+}
+
+#Finland Refuse Referendum
+country_event = {
+	id = finlands.21
+	title = finlands.21.t
+	desc = finlands.21.d
+	picture = GFX_report_event_poland_rejects
+	is_triggered_only = yes
+
+	option = { #Then we will go to war
+		name = finlands.21.a
+		ai_chance = {
+			factor = 100
+		}
+		SOV = {
+			create_wargoal = {
+				type = annex_everything
+				target = FIN
+			}
+		}
+	}
+}
+
+#Results of the Referendum - Russia Win
+country_event = {
+	id = finlands.22
+	title = finlands.22.t
+	desc = finlands.22.d
+	picture = GFX_report_event_poland_rejects
+	is_triggered_only = yes
+
+	option = { #Impossible ...
+		name = finlands.22.a
+		ai_chance = {
+			factor = 100
+		}
+		SOV = {
+			country_event = { id = finlands.23 hours = 4 }
+		}
+	}
+}
+
+#We Won the Referendum
+country_event = {
+	id = finlands.23
+	title = finlands.23.t
+	desc = finlands.23.d
+	picture = GFX_report_event_soviet_in_riga
+	is_triggered_only = yes
+
+	option = { #It was Rigged until the Beginning
+		name = finlands.23.a
+		ai_chance = {
+			factor = 100
+		}
+		SOV = {
+			annex_country = {
+				target = FIN
+			}
+			hidden_effect = {
+				country_event = { id = finlands.26 days = 21 }
+			}
+		}
+	}
+}
+
+#Results of the Referendum - Russia Lost
+country_event = {
+	id = finlands.24
+	title = finlands.24.t
+	desc = finlands.24.d
+	picture = GFX_report_event_communists_cheer
+	is_triggered_only = yes
+
+	option = { #The People have Spoken
+		name = finlands.24.a
+		ai_chance = {
+			factor = 100
+		}
+		SOV = {
+			country_event = { id = finlands.25 hours = 4 }
+		}
+	}
+}
+
+#We Lost the Referendum
+country_event = {
+	id = finlands.25
+	title = finlands.25.t
+	desc = finlands.25.d
+	picture = GFX_report_event_generic_parliament
+	is_triggered_only = yes
+
+	option = { #Our Master Plan Failed
+		name = finlands.25.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#Mass Protest in Finland
+country_event = {
+	id = finlands.26
+	title = finlands.26.t
+	desc = finlands.26.d
+	picture = GFX_report_event_gathering_protest
+	is_triggered_only = yes
+
+	option = { #Aren't they more Happy with Us ?
+		name = finlands.26.a
+		ai_chance = {
+			factor = 100
+		}
+		SOV = {
+			add_manpower = -500
+			random_owned_controlled_state = {
+				limit = {
+					is_core_of = FIN
+					arms_factory > 0
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					is_core_of = FIN
+					industrial_complex > 0
+				}
+				damage_building = {
+					type = industrial_complex
+					damage = 1
+				}
+			}
+			hidden_effect = {
+				country_event = { id = finlands.27 days = 21 }
+			}
+		}
+	}
+}
+
+#Formation of Finland Rebel
+country_event = {
+	id = finlands.27
+	title = finlands.27.t
+	desc = finlands.27.d
+	picture = GFX_report_event_french_resistance_02
+	is_triggered_only = yes
+
+	option = { #It was worth more troubles than benefits
+		name = finlands.27.a
+		ai_chance = {
+			factor = 100
+		}
+		SOV = {
+			add_manpower = -1000
+			random_owned_controlled_state = {
+				limit = {
+					is_core_of = FIN
+					NOT = {
+						is_core_of = SOV
+					}
+				}
+				add_resistance = 25
+			}
+			hidden_effect = {
+				country_event = { id = finlands.28 days = 14 }
+			}
+		}
+	}
+}
+
+#Rebels Attack in Finland
+country_event = {
+	id = finlands.28
+	title = finlands.28.t
+	desc = finlands.28.d
+	picture = GFX_report_event_dead_soldiers
+	is_triggered_only = yes
+
+	option = { #Why can't somebody do something about them !
+		name = finlands.28.a
+		trigger = {
+			NOT = {
+				country_exists = FIN
+				FIN = {
+					is_subject_of = SOV
+				}
+			}
+		}
+		ai_chance = {
+			factor = 100
+		}
+		SOV = {
+			add_manpower = -2500
+			random_owned_controlled_state = {
+				limit = {
+					is_core_of = FIN
+					NOT = {
+						is_core_of = SOV
+					}
+					resistance < 99
+				}
+				add_resistance = 25
+			}
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = -2500
+			}
+			hidden_effect = {
+				random_list = {
+					20 = {
+						country_event = { id = finlands.29 days = 14 }
+					}
+					80 = {
+						country_event = { id = finlands.28 days = 14 }
+					}
+				}
+			}
+		}
+	}
+
+	option = { #This is their last raids
+		name = finlands.28.b
+		trigger = {
+			country_exists = FIN
+		}
+		ai_chance = {
+			factor = 100
+		}
+		SOV = {
+			add_manpower = -500
+		}
+	}
+}
+
+#The Rebels have been Stopped
+country_event = {
+	id = finlands.29
+	title = finlands.29.t
+	desc = finlands.29.d
+	picture = GFX_ww2_british_soldiers_russia2
+	is_triggered_only = yes
+
+	option = { #Finally
+		name = finlands.29.a
+		ai_chance = {
+			factor = 100
+		}
+		SOV = {
+			add_state_core = 146
+			add_state_core = 147
+			add_state_core = 722
+			every_owned_state = {
+				limit = {
+					is_core_of = FIN
+				}
+				add_resistance = -50
+				add_compliance = 25 
+			}
+		}
+	}
+}
+
