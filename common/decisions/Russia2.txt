@@ -4278,6 +4278,14 @@ SOV_the_second_civil_war_fn = {
 					compare = less_than_or_equals
 				}
 			}
+			custom_trigger_tooltip = {
+				tooltip = has_tokens_to_buy_weapons
+				check_variable = {
+					var = token_buy_weapons
+					value = 1
+					compare = greater_than_or_equals
+				}
+			}
 		}
 		visible = {
 			has_country_flag = second_civil_war_mission
@@ -4303,11 +4311,11 @@ SOV_the_second_civil_war_fn = {
 			factor = 200
 		}
 
-		cost = 25
+		cost = 15
 
-		days_remove = 30
+		days_remove = 14
 		remove_effect = {
-
+			
 		}
 
 		complete_effect = {
@@ -4318,9 +4326,60 @@ SOV_the_second_civil_war_fn = {
 				value = 1
 			}
 			add_to_variable = {
+				var = token_buy_weapons
+				value = -1
+			}
+			add_to_variable = {
 				var = buy_weapons_final_count
 				value = 2500
 			}
+		}
+	}
+
+	SOV_contact_foreign_countries = {
+
+		icon = GFX_decision_eng_trade_unions_support
+
+		target_array = global.sov_foreign_major_country
+
+		allowed = {
+			tag = SOV
+		}
+		available = {
+			FROM = {
+				NOT = {
+					has_civil_war = yes
+				}
+			}
+			NOT = {
+				has_country_flag = is_contacting_foreign_major_power
+			}
+		}
+
+		visible = {
+			
+		}
+
+		fire_only_once = yes
+
+		ai_will_do = {
+			factor = 200
+		}
+
+		cost = 15
+
+		days_remove = 14
+
+		remove_effect = {
+			clr_country_flag = is_contacting_foreign_major_power
+			FROM = {
+				country_event = { id = generics.31 hours = 1 }
+			}
+			remove_from_array = { global.sov_foreign_major_country = FROM }
+		}
+
+		complete_effect = {
+			set_country_flag = is_contacting_foreign_major_power
 		}
 	}
 
@@ -4705,6 +4764,38 @@ SOV_the_second_civil_war_fn = {
 			hidden_effect = {
 				add_command_power = -40
 				set_country_flag = train_elite_soldiers_civil_war
+			}
+		}
+	}
+
+	SOV_purchase_panzer_elite_unit = {
+
+		icon = GFX_decision_generic_tank
+
+		allowed = {
+			tag = SOV
+		}
+		available = {
+			has_civil_war = no
+			command_power > 40
+		}
+		visible = {
+			has_country_flag = can_purchase_panzer
+		}
+
+		ai_will_do = {
+			factor = 400
+		}
+
+		fire_only_once = yes
+
+		cost = 20
+
+		complete_effect = {
+			custom_effect_tooltip = SOV_train_panzer_unit_tt
+			hidden_effect = {
+				add_command_power = -40
+				set_country_flag = has_purchased_panzers_for_civil_war
 			}
 		}
 	}
@@ -11759,6 +11850,442 @@ SOV_second_civil_war_during_bonus = {
 }
 
 SOV_fascist_women_movement_decisions = {
+	SOV_upgrade_fascist_movement_level1 = {
+
+		icon = GFX_decision_generic_speech
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+		available = {
+			fascism > 0.3
+		}
+
+		cost = 50
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			add_to_variable = {
+				women_movement_influence_level = 1
+			}
+		}
+	}
+
+	SOV_upgrade_fascist_movement_level2 = {
+
+		icon = GFX_decision_generic_speech
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+		available = {
+			fascism > 0.4
+		}
+
+		visible = {
+			check_variable = {
+				var = women_movement_influence_level
+				value = 1
+				compare = greater_than_or_equals
+			}
+		}
+
+		cost = 50
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			add_to_variable = {
+				women_movement_influence_level = 1
+			}
+		}
+	}
+
+	SOV_upgrade_fascist_movement_level3 = {
+
+		icon = GFX_decision_generic_speech
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+		available = {
+			fascism > 0.5
+		}
+
+		visible = {
+			check_variable = {
+				var = women_movement_influence_level
+				value = 2
+				compare = greater_than_or_equals
+			}
+		}
+
+		cost = 50
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			add_to_variable = {
+				women_movement_influence_level = 1
+			}
+		}
+	}
+
+	SOV_upgrade_fascist_movement_level4 = {
+
+		icon = GFX_decision_generic_speech
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+		available = {
+			fascism > 0.6
+		}
+
+		visible = {
+			check_variable = {
+				var = women_movement_influence_level
+				value = 3
+				compare = greater_than_or_equals
+			}
+		}
+
+		cost = 50
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			add_to_variable = {
+				women_movement_influence_level = 1
+			}
+		}
+	}
+
+	SOV_upgrade_fascist_movement_level5 = {
+
+		icon = GFX_decision_generic_speech
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+		available = {
+			fascism > 0.7
+		}
+
+		visible = {
+			check_variable = {
+				var = women_movement_influence_level
+				value = 4
+				compare = greater_than_or_equals
+			}
+		}
+
+		cost = 50
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			add_to_variable = {
+				women_movement_influence_level = 1
+			}
+		}
+	}
+
+	SOV_upgrade_fascist_movement_level6 = {
+
+		icon = GFX_decision_generic_speech
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+		available = {
+			fascism > 0.8
+		}
+
+		visible = {
+			check_variable = {
+				var = women_movement_influence_level
+				value = 5
+				compare = greater_than_or_equals
+			}
+		}
+
+		cost = 50
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			add_to_variable = {
+				women_movement_influence_level = 1
+			}
+		}
+	}
+
+	SOV_upgrade_fascist_movement_level7 = {
+
+		icon = GFX_decision_generic_speech
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+		available = {
+			fascism > 0.9
+		}
+
+		visible = {
+			check_variable = {
+				var = women_movement_influence_level
+				value = 6
+				compare = greater_than_or_equals
+			}
+		}
+
+		cost = 50
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			add_to_variable = {
+				women_movement_influence_level = 1
+			}
+		}
+	}
+
+	SOV_upgrade_fascist_movement_level8 = {
+
+		icon = GFX_decision_generic_speech
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+		available = {
+			fascism > 0.99
+		}
+
+		visible = {
+			check_variable = {
+				var = women_movement_influence_level
+				value = 7
+				compare = greater_than_or_equals
+			}
+		}
+
+		cost = 50
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			add_to_variable = {
+				women_movement_influence_level = 1
+			}
+		}
+	}
+
+	SOV_incite_younger_people_fascist = {
+
+		icon = GFX_decision_eng_blackshirt_march
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		days_re_enable = 240
+
+		days_remove = 90
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = has_correct_level_2
+				check_variable = {
+					var = women_movement_influence_level
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			NOT = {
+				has_country_flag = is_organizing_a_parade_fascist
+			}
+		}
+
+		visible = {
+			
+		}
+
+		cost = 75
+
+		ai_will_do = {
+			factor = 30
+		}
+
+		remove_effect = {
+			clr_country_flag = is_organizing_a_parade_fascist
+		}
+
+		complete_effect = {
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.05
+			}
+			add_timed_idea = {
+				idea = SOV_Young_parade_fascist_idea
+				days = 90
+			}
+			set_country_flag = is_organizing_a_parade_fascist
+			army_experience = -10
+			add_war_support = -0.05
+		}
+	}
+
+	SOV_organize_blackshirt_parade = {
+
+		icon = GFX_decision_eng_blackshirt_march
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		days_re_enable = 180
+
+		days_remove = 90
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = has_correct_level_2
+				check_variable = {
+					var = women_movement_influence_level
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			NOT = {
+				has_country_flag = is_organizing_a_parade_fascist
+			}
+		}
+
+		visible = {
+			
+		}
+
+		cost = 100
+
+		ai_will_do = {
+			factor = 30
+		}
+
+		remove_effect = {
+			clr_country_flag = is_organizing_a_parade_fascist
+		}
+
+		complete_effect = {
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.025
+			}
+			add_timed_idea = {
+				idea = SOV_Blackshirt_parade_fascist_idea
+				days = 90
+			}
+			set_country_flag = is_organizing_a_parade_fascist
+			add_stability = 0.02
+		}
+	}
+
+	SOV_organize_military_parade = {
+
+		icon = GFX_decision_eng_blackshirt_march
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		days_re_enable = 180
+
+		days_remove = 90
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = has_correct_level_2
+				check_variable = {
+					var = women_movement_influence_level
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			NOT = {
+				has_country_flag = is_organizing_a_parade_fascist
+			}
+		}
+
+		visible = {
+			
+		}
+
+		cost = 150
+
+		ai_will_do = {
+			factor = 30
+		}
+
+		remove_effect = {
+			clr_country_flag = is_organizing_a_parade_fascist
+		}
+
+		complete_effect = {
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.03
+			}
+			add_timed_idea = {
+				idea = SOV_Military_parade_fascist_idea
+				days = 120
+			}
+			army_experience = 15
+			add_manpower = 10000
+			set_country_flag = is_organizing_a_parade_fascist
+		}
+	}
+
 	SOV_organize_fascist_movement = {
 
 		icon = GFX_decision_eng_trade_unions_support
@@ -11771,6 +12298,14 @@ SOV_fascist_women_movement_decisions = {
 
 		available = {
 			has_country_flag = SOV_25_percent_fascist_exile
+			custom_trigger_tooltip = {
+				tooltip = has_correct_level_1
+				check_variable = {
+					var = women_movement_influence_level
+					value = 1
+					compare = greater_than_or_equals
+				}
+			}
 		}
 
 		cost = 100
@@ -11781,7 +12316,7 @@ SOV_fascist_women_movement_decisions = {
 
 		complete_effect = {
 			custom_effect_tooltip = SOV_organize_fascist_movement_tt
-			add_to_variable = { fascism_anastasy_konstantin = 0.25 }
+			add_to_variable = { fascism_anastasy_konstantin = 0.025 }
 			set_variable = { loca_fascism_anastasy_konstantin = fascism_anastasy_konstantin }
 			add_to_variable = { encryption_anastasy_konstantin = 0.025 }
 			set_variable = { loca_encryption_anastasy_konstantin = encryption_anastasy_konstantin }
@@ -11802,6 +12337,14 @@ SOV_fascist_women_movement_decisions = {
 
 		available = {
 			has_country_flag = SOV_50_percent_fascist_exile
+			custom_trigger_tooltip = {
+				tooltip = has_correct_level_3
+				check_variable = {
+					var = women_movement_influence_level
+					value = 3
+					compare = greater_than_or_equals
+				}
+			}
 		}
 
 		cost = 100
@@ -11812,7 +12355,7 @@ SOV_fascist_women_movement_decisions = {
 
 		complete_effect = {
 			custom_effect_tooltip = SOV_organize_fascist_movement2_tt
-			add_to_variable = { fascism_anastasy_konstantin = 0.25 }
+			add_to_variable = { fascism_anastasy_konstantin = 0.025 }
 			set_variable = { loca_fascism_anastasy_konstantin = fascism_anastasy_konstantin }
 			add_to_variable = { encryption_anastasy_konstantin = 0.025 }
 			set_variable = { loca_encryption_anastasy_konstantin = encryption_anastasy_konstantin }
@@ -11833,6 +12376,14 @@ SOV_fascist_women_movement_decisions = {
 
 		available = {
 			has_country_flag = SOV_75_percent_fascist_exile
+			custom_trigger_tooltip = {
+				tooltip = has_correct_level_3
+				check_variable = {
+					var = women_movement_influence_level
+					value = 3
+					compare = greater_than_or_equals
+				}
+			}
 		}
 
 		cost = 100
@@ -11843,7 +12394,11 @@ SOV_fascist_women_movement_decisions = {
 
 		complete_effect = {
 			custom_effect_tooltip = SOV_organize_fascist_movement3_tt
-			add_to_variable = { fascism_anastasy_konstantin = 0.25 }
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.025
+			}
+			add_to_variable = { fascism_anastasy_konstantin = 0.025 }
 			set_variable = { loca_fascism_anastasy_konstantin = fascism_anastasy_konstantin }
 			add_to_variable = { encryption_anastasy_konstantin = 0.025 }
 			set_variable = { loca_encryption_anastasy_konstantin = encryption_anastasy_konstantin }
@@ -11864,6 +12419,14 @@ SOV_fascist_women_movement_decisions = {
 
 		available = {
 			has_country_flag = SOV_100_percent_fascist_exile
+			custom_trigger_tooltip = {
+				tooltip = has_correct_level_3
+				check_variable = {
+					var = women_movement_influence_level
+					value = 3
+					compare = greater_than_or_equals
+				}
+			}
 		}
 
 		cost = 100
@@ -11874,7 +12437,11 @@ SOV_fascist_women_movement_decisions = {
 
 		complete_effect = {
 			custom_effect_tooltip = SOV_organize_fascist_movement4_tt
-			add_to_variable = { fascism_anastasy_konstantin = 0.25 }
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.025
+			}
+			add_to_variable = { fascism_anastasy_konstantin = 0.025 }
 			set_variable = { loca_fascism_anastasy_konstantin = fascism_anastasy_konstantin }
 			add_to_variable = { encryption_anastasy_konstantin = 0.025 }
 			set_variable = { loca_encryption_anastasy_konstantin = encryption_anastasy_konstantin }
@@ -11896,6 +12463,14 @@ SOV_fascist_women_movement_decisions = {
 		available = {
 			has_idea = SOV_Women_fascist_movement
 			has_idea = SOV_Blackshirts
+			custom_trigger_tooltip = {
+				tooltip = has_correct_level_4
+				check_variable = {
+					var = women_movement_influence_level
+					value = 4
+					compare = greater_than_or_equals
+				}
+			}
 		}
 
 		cost = 200
@@ -11907,7 +12482,11 @@ SOV_fascist_women_movement_decisions = {
 		complete_effect = {
 			add_stability = -0.05
 			custom_effect_tooltip = SOV_merge_fascist_women_and_blackshirts_tt
-			add_to_variable = { fascism_anastasy_konstantin = 0.5 }
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.05
+			}
+			add_to_variable = { fascism_anastasy_konstantin = 0.05 }
 			set_variable = { loca_fascism_anastasy_konstantin = fascism_anastasy_konstantin }
 			add_to_variable = { encryption_anastasy_konstantin = 0.1 }
 			set_variable = { loca_encryption_anastasy_konstantin = encryption_anastasy_konstantin }
@@ -11937,6 +12516,14 @@ SOV_fascist_women_movement_decisions = {
 		available = {
 			has_country_flag = merged_fascist_women_and_blackshirts
 			has_idea = SOV_Otdel_bezopasnosti
+			custom_trigger_tooltip = {
+				tooltip = has_correct_level_3
+				check_variable = {
+					var = women_movement_influence_level
+					value = 3
+					compare = greater_than_or_equals
+				}
+			}
 			custom_trigger_tooltip = {
 				tooltip = less_than_two_times_propaganda
 				check_variable = {
@@ -11982,6 +12569,14 @@ SOV_fascist_women_movement_decisions = {
 			has_country_flag = merged_fascist_women_and_blackshirts
 			has_idea = SOV_Otdel_bezopasnosti
 			custom_trigger_tooltip = {
+				tooltip = has_correct_level_3
+				check_variable = {
+					var = women_movement_influence_level
+					value = 3
+					compare = greater_than_or_equals
+				}
+			}
+			custom_trigger_tooltip = {
 				tooltip = less_than_four_times_special_forces
 				check_variable = {
 					var = special_attack_anastasy_konstantin
@@ -12024,6 +12619,236 @@ SOV_fascist_women_movement_decisions = {
 			set_variable = { loca_special_defence_anastasy_konstantin = special_defence_anastasy_konstantin }
 			multiply_variable = { loca_special_defence_anastasy_konstantin = 100 }
 			force_update_dynamic_modifier = yes
+		}
+	}
+
+	SOV_arrest_communist_supporters = {
+
+		icon = GFX_decision_generic_arrest
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = has_correct_level_3
+				check_variable = {
+					var = women_movement_influence_level
+					value = 3
+					compare = greater_than_or_equals
+				}
+			}
+			has_idea = SOV_Russian_communist_rebels
+		}
+
+		visible = {
+			has_idea = SOV_Russian_communist_rebels
+		}
+
+		cost = 75
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			swap_ideas = {
+				remove_idea = SOV_Russian_communist_rebels
+				add_idea = SOV_Russian_communist_rebels2
+			}
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.025
+			}
+		}
+	}
+
+	SOV_protect_factories_from_communist = {
+
+		icon = GFX_decision_generic_factory
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = has_correct_level_5
+				check_variable = {
+					var = women_movement_influence_level
+					value = 5
+					compare = greater_than_or_equals
+				}
+			}
+			has_idea = SOV_Russian_communist_rebels2
+		}
+
+		visible = {
+			has_idea = SOV_Russian_communist_rebels2
+		}
+
+		cost = 75
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			swap_ideas = {
+				remove_idea = SOV_Russian_communist_rebels2
+				add_idea = SOV_Russian_communist_rebels3
+			}
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.025
+			}
+		}
+	}
+
+	SOV_incite_citizens_denounce = {
+
+		icon = GFX_decision_generic_political_discourse
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = has_correct_level_6
+				check_variable = {
+					var = women_movement_influence_level
+					value = 6
+					compare = greater_than_or_equals
+				}
+			}
+			has_idea = SOV_Russian_communist_rebels3
+		}
+
+		visible = {
+			has_idea = SOV_Russian_communist_rebels3
+		}
+
+		cost = 75
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			swap_ideas = {
+				remove_idea = SOV_Russian_communist_rebels3
+				add_idea = SOV_Russian_communist_rebels4
+			}
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.05
+			}
+		}
+	}
+
+	SOV_destroy_communist_rebels_fascism = {
+
+		icon = GFX_decision_generic_ignite_civil_war
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = has_correct_level_7
+				check_variable = {
+					var = women_movement_influence_level
+					value = 7
+					compare = greater_than_or_equals
+				}
+			}
+			has_idea = SOV_Russian_communist_rebels4
+		}
+
+		visible = {
+			has_idea = SOV_Russian_communist_rebels4
+		}
+
+		cost = 75
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			remove_ideas = SOV_Russian_communist_rebels4
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.05
+			}
+		}
+	}
+
+	SOV_form_special_police_force = {
+
+		icon = GFX_decision_generic_ignite_civil_war
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = has_correct_level_8
+				check_variable = {
+					var = women_movement_influence_level
+					value = 8
+					compare = greater_than_or_equals
+				}
+			}
+		}
+
+		visible = {
+			
+		}
+
+		cost = 50
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		complete_effect = {
+			add_ideas = SOV_Russian_special_police_force
+			division_template = {
+				name = "spetsial'naya politsiya"
+				priority = 2
+				regiments = {
+					armored_car = { x = 0 y = 0 }
+					armored_car = { x = 0 y = 1 }
+					armored_car = { x = 0 y = 2 }
+					armored_car = { x = 0 y = 3 }
+					armored_car = { x = 0 y = 4 }
+					armored_car = { x = 1 y = 0 }
+					cavalry = { x = 1 y = 1 }
+					cavalry = { x = 1 y = 2 }
+					infantry = { x = 2 y = 0 }
+					infantry = { x = 2 y = 1 }
+				}
+				support = {
+					armored_car_recon = { x = 0 y = 0 }
+					military_police = { x = 0 y = 1 }
+				}
+			}
+			custom_effect_tooltip = unlock_new_fascist_division
 		}
 	}
 
@@ -18541,6 +19366,7 @@ SOV_seek_greater_ambition = {
 			hidden_effect = {
 				news_event = {id = newsrussia2.136 hours = 12 }
 			}
+			custom_effect_tooltip = unlock_decision_spread_to_america
 		}
 	}
 
@@ -18878,6 +19704,322 @@ SOV_seek_greater_ambition = {
 				add_state_core = 80
 				add_state_core = 78
 				add_state_core = 766
+			}
+		}
+	}
+}
+
+SOV_spread_america_anasta = {
+
+	SOV_integrate_canadian_corridor = {
+
+		icon = GFX_decision_generic_nationalism
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			463 = {
+				is_controlled_by = ROOT
+			}
+			471 = {
+				is_controlled_by = ROOT
+			}
+			473 = {
+				is_controlled_by = ROOT
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		complete_effect = {
+			SOV = {
+				add_state_core = 463
+				add_state_core = 471
+				add_state_core = 473
+				add_state_core = 739
+				add_state_core = 740
+			}
+		}
+	}
+
+	SOV_integrate_west_coast = {
+
+		icon = GFX_decision_generic_nationalism
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			386 = {
+				is_controlled_by = ROOT
+			}
+			385 = {
+				is_controlled_by = ROOT
+			}
+			378 = {
+				is_controlled_by = ROOT
+			}
+			379 = {
+				is_controlled_by = ROOT
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		complete_effect = {
+			SOV = {
+				add_state_core = 386
+				add_state_core = 385
+				add_state_core = 378
+				add_state_core = 379
+			}
+		}
+	}
+
+	SOV_integrate_south_east_coast = {
+
+		icon = GFX_decision_generic_nationalism
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			366 = {
+				is_controlled_by = ROOT
+			}
+			365 = {
+				is_controlled_by = ROOT
+			}
+			364 = {
+				is_controlled_by = ROOT
+			}
+			367 = {
+				is_controlled_by = ROOT
+			}
+			370 = {
+				is_controlled_by = ROOT
+			}
+			371 = {
+				is_controlled_by = ROOT
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		complete_effect = {
+			SOV = {
+				add_state_core = 366
+				add_state_core = 365
+				add_state_core = 364
+				add_state_core = 367
+				add_state_core = 370
+				add_state_core = 371
+			}
+		}
+	}
+
+	SOV_integrate_baja_california = {
+
+		icon = GFX_decision_generic_nationalism
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			484 = {
+				is_controlled_by = ROOT
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		complete_effect = {
+			SOV = {
+				add_state_core = 484
+			}
+		}
+	}
+
+	SOV_integrate_caraibe = {
+
+		icon = GFX_decision_generic_nationalism
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			315 = {
+				is_controlled_by = ROOT
+			}
+			318 = {
+				is_controlled_by = ROOT
+			}
+			319 = {
+				is_controlled_by = ROOT
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		complete_effect = {
+			SOV = {
+				add_state_core = 315
+				add_state_core = 318
+				add_state_core = 319
+				add_state_core = 689
+				add_state_core = 690
+				add_state_core = 693
+				add_state_core = 686
+				add_state_core = 694
+				add_state_core = 308
+				add_state_core = 692
+			}
+		}
+	}
+
+	SOV_integrate_panama = {
+
+		icon = GFX_decision_generic_nationalism
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			304 = {
+				is_controlled_by = ROOT
+			}
+			685 = {
+				is_controlled_by = ROOT
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		complete_effect = {
+			SOV = {
+				add_state_core = 304
+				add_state_core = 685
+			}
+		}
+	}
+
+	SOV_integrate_south_america = {
+
+		icon = GFX_decision_generic_nationalism
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+
+		available = {
+			512 = {
+				is_controlled_by = ROOT
+			}
+			507 = {
+				is_controlled_by = ROOT
+			}
+			279 = {
+				is_controlled_by = ROOT
+			}
+			278 = {
+				is_controlled_by = ROOT
+			}
+			511 = {
+				is_controlled_by = ROOT
+			}
+			510 = {
+				is_controlled_by = ROOT
+			}
+			300 = {
+				is_controlled_by = ROOT
+			}
+			502 = {
+				is_controlled_by = ROOT
+			}
+			503 = {
+				is_controlled_by = ROOT
+			}
+			501 = {
+				is_controlled_by = ROOT
+			}
+			496 = {
+				is_controlled_by = ROOT
+			}
+			500 = {
+				is_controlled_by = ROOT
+			}
+			499 = {
+				is_controlled_by = ROOT
+			}
+			498 = {
+				is_controlled_by = ROOT
+			}
+			497 = {
+				is_controlled_by = ROOT
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		complete_effect = {
+			SOV = {
+				add_state_core = 512
+				add_state_core = 507
+				add_state_core = 279
+				add_state_core = 278
+				add_state_core = 511
+				add_state_core = 510
+				add_state_core = 300
+				add_state_core = 502
+				add_state_core = 503
+				add_state_core = 501
+				add_state_core = 496
+				add_state_core = 500
+				add_state_core = 499
+				add_state_core = 498
+				add_state_core = 497
 			}
 		}
 	}
@@ -21503,6 +22645,24 @@ SOV_end_second_civil_war = {
 		complete_effect = {
 			SOV = {
 				country_event = { id = soviets.260 }
+			}
+			if = {
+				limit = {
+					SOV = {
+						OR = {
+							has_country_flag = has_negotiated_with_germany_ressource_rights 
+						}
+					}
+				}
+				SOV = {
+					country_event = { id = generics.34 days = 7 }
+				}
+			}
+			every_country = {
+				limit = {
+					has_country_flag = has_helped_whiteguard_by_volunteers
+				}
+				country_event = { id = generics.35 days = 1 }
 			}
 		}
 
@@ -34046,6 +35206,956 @@ SOV_cancel_resource_rights = {
 
 		ai_will_do = {
 			factor = 0
+		}
+	}
+}
+
+SOV_russianize_state = { #TODO Change state id when the Russian update is live
+
+	SOV_rename_kaunas = {
+		icon = GFX_decision_generic_decision
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			
+		}
+
+		fire_only_once = yes
+
+		available = {
+			has_full_control_of_state = 11
+		}
+
+		complete_effect = {
+			set_province_name = { id = 6296 name = "Kovno" }
+			hidden_effect = {
+				11 = {
+					set_state_name = "Kovno"
+				}
+			}
+		}
+	}
+
+	SOV_rename_memel = {
+		icon = GFX_decision_generic_decision
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			
+		}
+
+		fire_only_once = yes
+
+		available = {
+			has_full_control_of_state = 188
+		}
+
+		complete_effect = {
+			set_province_name = { id = 3288 name = "Klaipeda" }
+			hidden_effect = {
+				188 = {
+					set_state_name = "Klaipeda"
+				}
+			}
+		}
+	}
+
+	SOV_rename_liepaja = {
+		icon = GFX_decision_generic_decision
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			
+		}
+
+		fire_only_once = yes
+
+		available = {
+			has_full_control_of_state = 190
+		}
+
+		complete_effect = {
+			set_province_name = { id = 9262 name = "Libava" }
+			hidden_effect = {
+				190 = {
+					set_state_name = "Libava"
+				}
+			}
+		}
+	}
+
+	SOV_rename_daugavpalis = {
+		icon = GFX_decision_generic_decision
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			
+		}
+
+		fire_only_once = yes
+
+		available = {
+			has_full_control_of_state = 12
+		}
+
+		complete_effect = {
+			set_province_name = { id = 310 name = "Dvinsk" }
+			hidden_effect = {
+				12 = {
+					set_state_name = "Dvinsk"
+				}
+			}
+		}
+	}
+
+	SOV_rename_tartu = {
+		icon = GFX_decision_generic_decision
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			
+		}
+
+		fire_only_once = yes
+
+		available = {
+			has_full_control_of_state = 191
+		}
+
+		complete_effect = {
+			set_province_name = { id = 9221 name = "Yuryev" }
+			hidden_effect = {
+				191 = {
+					set_state_name = "Yuryev"
+				}
+			}
+		}
+	}
+
+	SOV_rename_wilno = {
+		icon = GFX_decision_generic_decision
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			
+		}
+
+		fire_only_once = yes
+
+		available = {
+			has_full_control_of_state = 784
+		}
+
+		complete_effect = {
+			set_province_name = { id = 3320 name = "Vilna" }
+			hidden_effect = {
+				784 = {
+					set_state_name = "Vilna"
+				}
+			}
+		}
+	}
+
+	SOV_rename_molodeczno = {
+		icon = GFX_decision_generic_decision
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			
+		}
+
+		fire_only_once = yes
+
+		available = {
+			has_full_control_of_state = 96
+		}
+
+		complete_effect = {
+			set_province_name = { id = 406 name = "Molodechno" }
+			hidden_effect = {
+				96 = {
+					set_state_name = "Molodechno"
+				}
+			}
+		}
+	}
+
+	SOV_rename_bialstok = {
+		icon = GFX_decision_generic_decision
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			
+		}
+
+		fire_only_once = yes
+
+		available = {
+			has_full_control_of_state = 97
+		}
+
+		complete_effect = {
+			set_province_name = { id = 11301 name = "Byelostok" }
+			hidden_effect = {
+				97 = {
+					set_state_name = "Byelostok"
+				}
+			}
+		}
+	}
+
+	SOV_rename_suwalki = {
+		icon = GFX_decision_generic_decision
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			
+		}
+
+		fire_only_once = yes
+
+		available = {
+			has_full_control_of_state = 97
+		}
+
+		complete_effect = {
+			set_province_name = { id = 3254 name = "Suvalkija" }
+		}
+	}
+
+	SOV_rename_baranowicze = {
+		icon = GFX_decision_generic_decision
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			
+		}
+
+		fire_only_once = yes
+
+		available = {
+			has_full_control_of_state = 95
+		}
+
+		complete_effect = {
+			set_province_name = { id = 9304 name = "Baranovichi" }
+			hidden_effect = {
+				95 = {
+					set_state_name = "Baranovichi"
+				}
+			}
+		}
+	}
+
+	SOV_rename_brzesc_litewski = {
+		icon = GFX_decision_generic_decision
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			
+		}
+
+		fire_only_once = yes
+
+		available = {
+			has_full_control_of_state = 94
+		}
+
+		complete_effect = {
+			set_province_name = { id = 3392 name = "Brest" }
+			hidden_effect = {
+				94 = {
+					set_state_name = "Brest"
+				}
+			}
+		}
+	}
+
+	SOV_rename_rowne = {
+		icon = GFX_decision_generic_decision
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			
+		}
+
+		fire_only_once = yes
+
+		available = {
+			has_full_control_of_state = 93
+		}
+
+		complete_effect = {
+			set_province_name = { id = 6557 name = "Rivne" }
+			hidden_effect = {
+				93 = {
+					set_state_name = "Rivne"
+				}
+			}
+		}
+	}
+
+	SOV_rename_lwow = {
+		icon = GFX_decision_generic_decision
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			
+		}
+
+		fire_only_once = yes
+
+		available = {
+			has_full_control_of_state = 91
+		}
+
+		complete_effect = {
+			set_province_name = { id = 11479 name = "Lvov" }
+			hidden_effect = {
+				91 = {
+					set_state_name = "Lvov"
+				}
+			}
+		}
+	}
+
+	SOV_rename_stanislawow = {
+		icon = GFX_decision_generic_decision
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			
+		}
+
+		fire_only_once = yes
+
+		available = {
+			has_full_control_of_state = 89
+		}
+
+		complete_effect = {
+			set_province_name = { id = 11411 name = "Ivano-Frankiwsk" }
+			hidden_effect = {
+				89 = {
+					set_state_name = "Ivano-Frankiwsk"
+				}
+			}
+		}
+	}
+
+	SOV_rename_chernivtsi = {
+		icon = GFX_decision_generic_decision
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			
+		}
+
+		fire_only_once = yes
+
+		available = {
+			has_full_control_of_state = 80
+		}
+
+		complete_effect = {
+			set_province_name = { id = 577 name = "Chernovtsi" }
+			hidden_effect = {
+				80 = {
+					set_state_name = "Chernovtsi"
+				}
+			}
+		}
+	}
+
+	SOV_rename_chisinau = {
+		icon = GFX_decision_generic_decision
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			
+		}
+
+		fire_only_once = yes
+
+		available = {
+			has_full_control_of_state = 78
+		}
+
+		complete_effect = {
+			set_province_name = { id = 3707 name = "Kishinjóv" }
+			hidden_effect = {
+				78 = {
+					set_state_name = "Kishinjóv"
+				}
+			}
+		}
+	}
+
+	SOV_rename_cetatea_alba = {
+		icon = GFX_decision_generic_decision
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			
+		}
+
+		fire_only_once = yes
+
+		available = {
+			has_full_control_of_state = 766
+		}
+
+		complete_effect = {
+			set_province_name = { id = 6727 name = "Bélgorod-Dnestróvskiy" }
+			hidden_effect = {
+				766 = {
+					set_state_name = "Bélgorod-Dnestróvskiy"
+				}
+			}
+		}
+	}
+}
+
+SOV_rename_soviet_cities = {
+
+	SOV_rename_stalingrad = {
+		icon = GFX_decision_generic_decision
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			
+		}
+
+		fire_only_once = yes
+
+		available = {
+			has_full_control_of_state = 217
+			if = {
+				limit = {
+					has_government = neutrality
+				}
+				OR = {
+					has_completed_focus = SOV_restoration_tsar
+					has_completed_focus = SOV_firm_hand
+				}
+			}
+			if = {
+				limit = {
+					has_government = anarchy
+				}
+				OR = {
+					has_completed_focus = SOV_proclamation_commune
+					has_completed_focus = SOV_embrace_total_anarchy
+				}
+			}
+		}
+
+		complete_effect = {
+			if = {
+				limit = {
+					has_completed_focus = SOV_restoration_tsar
+				}
+				set_province_name = { id = 3529 name = "Tsaritsyn"}
+				hidden_effect = {
+					217 = {
+						set_state_name = "Tsaritsyn"
+					}
+				}
+			}
+			else = {
+				set_province_name = { id = 3529 name = "Volgograd"}
+				hidden_effect = {
+					217 = {
+						set_state_name = "Volgograd"
+					}
+				}
+			}
+		}
+	}
+
+	SOV_rename_leningrad = {
+		icon = GFX_decision_generic_decision
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			
+		}
+
+		fire_only_once = yes
+
+		available = {
+			has_full_control_of_state = 195
+			if = {
+				limit = {
+					has_government = democratic
+				}
+				OR = {
+					has_completed_focus = SOV_pavel_guidance
+					has_completed_focus = SOV_trust_alexander
+				}
+			}
+			if = {
+				limit = {
+					has_government = anarchy
+				}
+				OR = {
+					has_completed_focus = SOV_proclamation_commune
+					has_completed_focus = SOV_embrace_total_anarchy
+				}
+			}
+		}
+
+		complete_effect = {
+			if = {
+				limit = {
+					OR = {
+						has_completed_focus = SOV_trust_alexander
+						has_completed_focus = SOV_proclamation_commune
+						has_completed_focus = SOV_embrace_total_anarchy
+					}
+				}
+				set_province_name = { id = 3151 name = "Petrograd"}
+				hidden_effect = {
+					195 = {
+						set_state_name = "Petrograd"
+					}
+				}
+			}
+			else = {
+				set_province_name = { id = 3151 name = "Saint Petersburg"}
+				hidden_effect = {
+					195 = {
+						set_state_name = "Saint Petersburg"
+					}
+				}
+			}
+		}
+	}
+
+	SOV_rename_khmelnytskyi = {
+		icon = GFX_decision_generic_decision
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			
+		}
+
+		fire_only_once = yes
+
+		available = {
+			has_full_control_of_state = 199
+		}
+
+		complete_effect = {
+			set_province_name = { id = 3457 name = "Proskuriv" }
+			hidden_effect = {
+				199 = {
+					set_state_name = "Proskuriv"
+				}
+			}
+		}
+	}
+	
+	SOV_rename_kirov = {
+		icon = GFX_decision_generic_decision
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			
+		}
+
+		fire_only_once = yes
+
+		available = {
+			has_full_control_of_state = 400
+		}
+
+		complete_effect = {
+			400 = {
+				set_state_name = "Vyatka"
+			}
+		}
+	}
+
+	SOV_rename_voroshilovgrad = {
+		icon = GFX_decision_generic_decision
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			
+		}
+
+		fire_only_once = yes
+
+		available = {
+			has_full_control_of_state = 228
+		}
+
+		complete_effect = {
+			set_province_name = { id = 9461 name = "Lugansk" }
+			hidden_effect = {
+				228 = {
+					set_state_name = "Lugansk"
+				}
+			}
+		}
+	}
+
+	SOV_rename_stalino = {
+		icon = GFX_decision_generic_decision
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			
+		}
+
+		fire_only_once = yes
+
+		available = {
+			has_full_control_of_state = 227
+		}
+
+		complete_effect = {
+			set_province_name = { id = 6474 name = "Donetsk" }
+			hidden_effect = {
+				227 = {
+					set_state_name = "Donetsk"
+				}
+			}
+		}
+	}
+
+	SOV_rename_gorki = {
+		icon = GFX_decision_generic_decision
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			
+		}
+
+		fire_only_once = yes
+
+		available = {
+			has_full_control_of_state = 252
+		}
+
+		complete_effect = {
+			set_province_name = { id = 11375 name = "Nizhniy Novgorod" }
+			hidden_effect = {
+				252 = {
+					set_state_name = "Nizhniy Novgorod"
+				}
+			}
+		}
+	}
+
+	SOV_rename_kuibyshev = {
+		icon = GFX_decision_generic_decision
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			
+		}
+
+		fire_only_once = yes
+
+		available = {
+			has_full_control_of_state = 251
+		}
+
+		complete_effect = {
+			set_province_name = { id = 11225 name = "Samara" }
+			hidden_effect = {
+				251 = {
+					set_state_name = "Samara"
+				}
+			}
+		}
+	}
+
+	SOV_rename_kalinin = {
+		icon = GFX_decision_generic_decision
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			
+		}
+
+		fire_only_once = yes
+
+		available = {
+			has_full_control_of_state = 247
+		}
+
+		complete_effect = {
+			set_province_name = { id = 6245 name = "Tver" }
+			hidden_effect = {
+				247 = {
+					set_state_name = "Tver"
+				}
+			}
+		}
+	}
+
+	SOV_rename_ordzhonikidze = {
+		icon = GFX_decision_generic_decision
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			
+		}
+
+		fire_only_once = yes
+
+		available = {
+			has_full_control_of_state = 233
+		}
+
+		complete_effect = {
+			set_province_name = { id = 9628 name = "Vladikavkaz" } #233
+		}
+	}
+
+	SOV_rename_sverdlovsk = {
+		icon = GFX_decision_generic_decision
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			
+		}
+
+		fire_only_once = yes
+
+		available = {
+			has_full_control_of_state = 653
+		}
+
+		complete_effect = {
+			set_province_name = { id = 1821 name = "Ekaterinburg" }
+			hidden_effect = {
+				653 = {
+					set_state_name = "Ekaterinburg"
+				}
+			}
+		}
+	}
+
+	SOV_rename_alma_ata = {
+		icon = GFX_decision_generic_decision
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			
+		}
+
+		fire_only_once = yes
+
+		available = {
+			has_full_control_of_state = 586
+		}
+
+		complete_effect = {
+			set_province_name = { id = 1591 name = "Verniy" }
+			hidden_effect = {
+				586 = {
+					set_state_name = "Verniy"
+				}
+			}
+		}
+	}
+
+	SOV_rename_stalinabad = {
+		icon = GFX_decision_generic_decision
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			
+		}
+
+		fire_only_once = yes
+
+		available = {
+			has_full_control_of_state = 742
+		}
+
+		complete_effect = {
+			742 = {
+				set_state_name = "Dushanbe"
+			}
+		}
+	}
+}
+
+SOV_renegotiate_deals_civil_war = {
+
+	SOV_negotiate_german_rights_ressource = {
+
+		icon = GFX_decision_ger_mefo_bills
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			has_country_flag = has_negotiated_with_germany_ressource_rights
+		}
+
+		fire_only_once = yes
+
+		available = {
+			NOT = {
+				has_war_with = GER
+			}
+		}
+
+		days_remove = 20
+
+		remove_effect = {
+			clr_country_flag = is_negotiating_with_german_for_ressources_redeal
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = chance_german_accept_tt
+			set_country_flag = is_negotiating_with_german_for_ressources_redeal
+			GER = {
+				country_event = { id = germanys.27 days = 7 }
+			}
+		}
+	}
+
+	SOV_cancel_german_rights_ressource = {
+
+		icon = GFX_decision_generic_intelligence_operation
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			has_country_flag = has_negotiated_with_germany_ressource_rights
+		}
+
+		fire_only_once = yes
+
+		available = {
+			NOT = {
+				has_war_with = GER
+			}
+		}
+
+		days_remove = 7
+
+		remove_effect = {
+			clr_country_flag = is_negotiating_with_german_for_ressources_redeal
+			clr_country_flag = has_negotiated_with_germany_ressource_rights
+			remove_ideas = SOV_Payment_russian_ressource_rus
+			GER = {
+				remove_ideas = SOV_Payment_russian_ressource_ger
+				country_event = { id = germanys.30 days = 7 }
+				remove_resource_rights = 582
+				remove_resource_rights = 573
+				remove_resource_rights = 581
+				remove_resource_rights = 564
+				remove_resource_rights = 232
+				remove_resource_rights = 234
+			}
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = war_over_germany_overlord
+			custom_effect_tooltip = chance_german_accept_not_war_tt
+			add_political_power = -150
+			set_country_flag = is_negotiating_with_german_for_ressources_redeal
 		}
 	}
 }

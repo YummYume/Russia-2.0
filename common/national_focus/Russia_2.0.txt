@@ -13859,6 +13859,23 @@ focus_tree = {
 					}
 					add_command_power = 100
 				}
+				for_each_scope_loop = {
+					array = global.countries
+					if = {
+						limit = {
+							exists = yes
+							OR = {
+								TAG = GER
+								TAG = JAP
+								TAG = ITA
+								TAG = FRA
+								TAG = ENG
+								TAG = USA
+							}
+						}
+						add_to_array = { global.sov_foreign_major_country = THIS }	
+					}	
+				}
 			}
 		}
 	}
@@ -13959,6 +13976,7 @@ focus_tree = {
 				country_event = { id = soviets.136 days = 1 }
 				country_event = { id = soviets.227 days = 15 }
 				country_event = { id = soviets.253 hours = 1 }
+				country_event = { id = soviets.488 hours = 1 }
 				set_country_flag = preparation_done
 				set_country_flag = second_civil_war_in_progress
 				set_country_flag = ennemy_second_civil_war
@@ -14048,7 +14066,7 @@ focus_tree = {
 					skill = 4
 					attack_skill = 4
 					defense_skill = 3
-					planning_skill = 4
+					planning_skill = 3
 					logistics_skill = 3
 				}
 				create_corps_commander = {
@@ -14067,7 +14085,7 @@ focus_tree = {
 					picture = "Portrait_Abram_Dragomirov.dds"
 					traits = { cavalry_officer }
 					skill = 3
-					attack_skill = 4
+					attack_skill = 3
 					defense_skill = 2
 					planning_skill = 2
 					logistics_skill = 2
@@ -14084,53 +14102,56 @@ focus_tree = {
 					logistics_skill = 2
 				}
 				create_corps_commander = {
-					name = "Alexander Vassilievich"
+					name = "Alexander V. Golubintzev"
 					picture = "Portrait_Alexander_Golubintzev.dds"
 					traits = { cavalry_officer }
 					skill = 4
-					attack_skill = 4
-					defense_skill = 3
-					planning_skill = 2
-					logistics_skill = 2
+					attack_skill = 3
+					defense_skill = 2
+					planning_skill = 1
+					logistics_skill = 4
 				}
 				create_corps_commander = {
 					name = "Vladimir Kislitsin"
+					id = 515
 					picture = "Portrait_Vladimir_Kislitsin.dds"
 					traits = { brilliant_strategist }
 					skill = 3
 					attack_skill = 3
-					defense_skill = 3
+					defense_skill = 2
 					planning_skill = 3
 					logistics_skill = 3
 				}
 				create_corps_commander = {
 					name = "Viktorin Molchanov"
+					id = 517
 					picture = "Portrait_Viktorin_Molchanov.dds"
 					traits = { winter_specialist inflexible_strategist }
 					skill = 4
-					attack_skill = 2
-					defense_skill = 2
+					attack_skill = 3
+					defense_skill = 3
 					planning_skill = 2
-					logistics_skill = 3
+					logistics_skill = 2
 				}
 				create_corps_commander = {
 					name = "Grigory Mikhaylovich Semyonov"
 					picture = "Potrait_Grigory_Mikhaylovich_Semyonov.dds"
 					traits = { harsh_leader }
 					skill = 3
-					attack_skill = 4
+					attack_skill = 3
 					defense_skill = 3
 					planning_skill = 2
-					logistics_skill = 2
+					logistics_skill = 1
 				}
 				create_corps_commander = {
 					name = "Andrei Shkuro"
+					id = 518
 					picture = "Portrait_Andrei_Shkuro.dds"
 					traits = { brilliant_strategist trickster }
-					skill = 2
-					attack_skill = 2
+					skill = 3
+					attack_skill = 3
 					defense_skill = 1
-					planning_skill = 3
+					planning_skill = 2
 					logistics_skill = 2
 				}
 				create_corps_commander = {
@@ -14149,19 +14170,20 @@ focus_tree = {
 					traits = { trait_reckless }
 					skill = 2
 					attack_skill = 2
-					defense_skill = 2
-					planning_skill = 2
-					logistics_skill = 2
+					defense_skill = 3
+					planning_skill = 1
+					logistics_skill = 1
 				}
 				create_corps_commander = {
 					name = "Mikhail Skorodumov"
+					id = 516
 					picture = "Potrait_Mikhail_Skorodumov.dds"
 					traits = { trait_reckless bearer_of_artillery }
 					skill = 3
 					attack_skill = 4
 					defense_skill = 2
 					planning_skill = 3
-					logistics_skill = 2
+					logistics_skill = 1
 				}
 				create_corps_commander = {
 					name = "Konstantin Petrovich Nechaev"
@@ -14187,10 +14209,10 @@ focus_tree = {
 					name = "Yevgeny Miller"
 					picture = "Potrait_Yevgeny_Miller.dds"
 					traits = { infantry_leader brilliant_strategist organisational_leader }
-					skill = 4
-					attack_skill = 4
+					skill = 3
+					attack_skill = 3
 					defense_skill = 3
-					planning_skill = 3
+					planning_skill = 2
 					logistics_skill = 2
 				}
 				create_field_marshal = {
@@ -14199,18 +14221,18 @@ focus_tree = {
 					picture = "Portrait_Soviet_Anton_IvanovichMilitary.dds"
 					traits = { infantry_leader bearer_of_artillery offensive_doctrine }
 					skill = 5
-					attack_skill = 5
-					defense_skill = 2
+					attack_skill = 4
+					defense_skill = 3
 					planning_skill = 4
-					logistics_skill = 4
+					logistics_skill = 3
 				}
 				create_field_marshal = {
 					name = "Alexander Rodzyanko"
 					id = 512
 					picture = "Portrait_Alexander_Rodzyanko.dds"
 					traits = { inspirational_leader cavalry_officer }
-					skill = 3
-					attack_skill = 3
+					skill = 2
+					attack_skill = 2
 					defense_skill = 2
 					planning_skill = 4
 					logistics_skill = 2
@@ -14838,6 +14860,12 @@ focus_tree = {
 					delete_unit_template_and_units = {
 						division_template = "Mekhanizirovaniy Korpus"
 					}
+				}
+				every_country = {
+					limit = {
+						has_country_flag = help_whiteguard_during_russian_civil_war
+					}
+					add_ideas = SOV_Participation_russian_civil_war_foreign
 				}
 			}
 		}
@@ -18378,7 +18406,10 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_FASCIST_KONSTANTIN_RUSSIA FOCUS_FILTER_FASCIST_ANASTASY_RUSSIA }
 		completion_reward = {
-			add_ideas = SOV_New_way_of_life
+			add_timed_idea = {
+				idea = SOV_New_way_of_life
+				days = 180
+			}
 			custom_effect_tooltip = SOV_new_way_life_tt
 			hidden_effect = {
 				add_popularity = {
