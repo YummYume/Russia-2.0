@@ -49,6 +49,24 @@ on_actions = {
 					country_event = { id = soviets.190 hours = 6 }
 					news_event = { id = newsrussia2.67 days = 1 }
 				}
+				if = {
+					limit = {
+						FROM = {
+							OR = {
+								has_country_flag = has_negotiated_with_germany_ressource_rights 
+							}
+						}
+					}
+					FROM = {
+						country_event = { id = generics.34 days = 7 }
+					}
+				}
+				every_country = {
+					limit = {
+						has_country_flag = has_helped_whiteguard_by_volunteers
+					}
+					country_event = { id = generics.35 days = 1 }
+				}
 			}
 		}
 	}
@@ -421,6 +439,71 @@ on_actions = {
 					195 = {
 						set_state_name = "Leningrad"
 					}
+				}
+			}
+		}
+	}
+
+	#Set a country flag for major that send volunteers to WG durinf CW
+	on_send_volunteers = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						has_country_flag = help_whiteguard_during_russian_civil_war
+						has_idea = SOV_Participation_russian_civil_war_foreign
+					}
+					FROM = {
+						TAG = SOV
+						has_country_flag = second_civil_war_in_progress
+					}
+				}
+				ROOT = {
+					set_country_flag = has_helped_whiteguard_by_volunteers
+				}	
+			}
+		}
+	}
+
+	#If Germany or Russia Attack eachother, cancel the righst of ressources
+	on_war_relation_added = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						TAG = GER
+					}
+					FROM = {
+						TAG = SOV
+						has_country_flag = has_negotiated_with_germany_ressource_rights
+					}
+				}
+				ROOT = {
+					remove_resource_rights = 582
+					remove_resource_rights = 573
+					remove_resource_rights = 581
+					remove_resource_rights = 564
+					remove_resource_rights = 232
+					remove_resource_rights = 234
+				}
+			}
+			else_if = {
+				limit = {
+					ROOT = {
+						TAG = SOV
+						has_country_flag = has_negotiated_with_germany_ressource_rights
+					}
+					FROM = {
+						TAG = GER
+					}
+				}
+				FROM = {
+					remove_resource_rights = 582
+					remove_resource_rights = 573
+					remove_resource_rights = 581
+					remove_resource_rights = 564
+					remove_resource_rights = 232
+					remove_resource_rights = 234
 				}
 			}
 		}

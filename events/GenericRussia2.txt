@@ -930,3 +930,234 @@ country_event = {
 		add_opinion_modifier = { target = FROM modifier = russian_help }
 	}
 }
+
+#SOV Ask for our support
+country_event = {
+	id = generics.31
+	title = generics.31.t
+	desc = generics.31.d
+	picture = GFX_russian_civil_war_russia2
+
+	is_triggered_only = yes
+
+	option = { #We Accept to Help them
+		ai_chance = {
+			factor = 60
+			modifier = {
+				factor = 90
+				TAG = USA
+			}
+		}
+		name = generics.31.a
+		SOV = {
+			country_event = { id = generics.32 hours = 6 }
+		}
+		custom_effect_tooltip = if_we_accept_and_send_volunteers_gain_good_tt
+		custom_effect_tooltip = upon_start_civil_war_idea_tt
+		show_ideas_tooltip = SOV_Participation_russian_civil_war_foreign
+	}
+
+	option = { #No, they will probably die again
+		ai_chance = {
+			factor = 40
+			modifier = {
+				factor = 70
+				OR = {
+					AND = {
+						TAG = GER
+						has_government = fascism
+					}
+					TAG = JAP
+				}
+			}
+		}
+		name = generics.31.b
+		SOV = {
+			country_event = { id = generics.33 hours = 6 }
+		}
+	}
+}
+
+#FROM Accept to support our cause
+country_event = {
+	id = generics.32
+	title = generics.32.t
+	desc = generics.32.d
+	picture = GFX_soldiers_handshaking_kolchak_russia2
+
+	is_triggered_only = yes
+
+	option = { #If From is Germany
+		ai_chance = {
+			factor = 100
+		}
+		trigger = {
+			FROM = {
+				TAG = GER
+			}
+		}
+		name = generics.32.a
+		set_country_flag = can_purchase_panzer
+		custom_effect_tooltip = decision_purchase_panzer_become_available
+		custom_effect_tooltip = gains_token_to_buy_weapons
+		add_to_variable = {
+			var = token_buy_weapons
+			value = 1
+		}
+		GER = {
+			set_country_flag = help_whiteguard_during_russian_civil_war
+		}
+	}
+
+	option = { #If From is Japan
+		ai_chance = {
+			factor = 100
+		}
+		trigger = {
+			FROM = {
+				TAG = JAP
+			}
+		}
+		name = generics.32.b
+		set_country_flag = can_recruit_japanese_volunteer
+		custom_effect_tooltip = decision_recruit_japanese_volunteer_become_available
+		custom_effect_tooltip = gains_token_to_buy_weapons
+		add_to_variable = {
+			var = token_buy_weapons
+			value = 1
+		}
+		JAP = {
+			set_country_flag = help_whiteguard_during_russian_civil_war
+		}
+	}
+}
+
+#FROM Refuse to support our cause
+country_event = {
+	id = generics.33
+	title = generics.33.t
+	desc = generics.33.d
+	picture = GFX_operation_barbarossa
+
+	is_triggered_only = yes
+
+	option = { #Do not Negotiate
+		ai_chance = {
+			factor = 50
+		}
+		name = generics.33.a
+		
+	}
+
+	option = { #We should Negotiate with Germany - Oil Field or Ressources
+		ai_chance = {
+			factor = 50
+		}
+		trigger = {
+			FROM = {
+				TAG = GER
+			}
+		}
+		name = generics.33.b
+		custom_effect_tooltip = if_germany_accept_we_will_have
+		custom_effect_tooltip = future_ocasion_to_cancel_deal
+		GER = {
+			country_event = { id = germanys.24 hours = 8 }
+		}
+	}
+
+	option = { #We should Negotiate with Japan - propose south Sakhalin
+		ai_chance = {
+			factor = 50
+		}
+		trigger = {
+			FROM = {
+				TAG = JAP
+			}
+		}
+		name = generics.33.c
+		custom_effect_tooltip = if_japan_accept_we_will_have_sakhalin
+	}
+
+	option = { #We should Negotiate with Japan - propose Manchurian territory with Sakhalin
+		ai_chance = {
+			factor = 50
+		}
+		trigger = {
+			FROM = {
+				TAG = JAP
+			}
+		}
+		name = generics.33.e
+		custom_effect_tooltip = if_japan_accept_we_will_have_manchu
+		custom_effect_tooltip = future_ocasion_to_cancel_deal_japan_manchu
+	}
+}
+
+#We have to keep our promise
+country_event = {
+	id = generics.34
+	title = generics.34.t
+	desc = generics.34.d
+	picture = GFX_report_event_generic_conference
+
+	is_triggered_only = yes
+
+	option = { #Take back what we've lost in the future
+		ai_chance = {
+			factor = 100
+		}
+		name = generics.34.a
+		if = {
+			limit = {
+				has_country_flag = has_negotiated_with_germany_ressource_rights
+			}
+			give_resource_rights = { receiver = GER state = 582 }
+			give_resource_rights = { receiver = GER state = 573 }
+			give_resource_rights = { receiver = GER state = 581 }
+			give_resource_rights = { receiver = GER state = 564 }
+			give_resource_rights = { receiver = GER state = 232 }
+			give_resource_rights = { receiver = GER state = 234 }
+			SOV = {
+				set_country_flag = receive_payment_from_ger
+				add_ideas = SOV_Payment_russian_ressource_rus
+			}
+			GER = {
+				set_country_flag = is_paying_ressource_for_russia
+				add_ideas = SOV_Payment_russian_ressource_ger
+			}
+		}
+	}
+}
+
+#End of the Russian civil war, we've helped them and we gain xp
+country_event = {
+	id = generics.35
+	title = generics.35.t
+	desc = generics.35.d
+	picture = GFX_menacing_tanks_russia2
+
+	is_triggered_only = yes
+
+	option = { #Sweet Exp
+		ai_chance = {
+			factor = 100
+		}
+		name = generics.35.a
+		army_experience = 50
+		air_experience = 50
+		navy_experience = 50
+		add_tech_bonus = {
+			name = SOV_tech_bonus_civil_war
+			bonus = 1
+			uses = 1
+			category = air_doctrine
+		}
+		add_tech_bonus = {
+			name = SOV_tech_bonus_civil_war
+			bonus = 1
+			uses = 2
+			category = land_doctrine
+		}
+	}
+}
