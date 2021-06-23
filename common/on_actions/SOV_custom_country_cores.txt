@@ -2,6 +2,38 @@ on_actions = {
 	#Add Cores
 	on_startup = {
 		effect = {
+			set_victory_points = {
+				province = 6124
+				value = 1
+			}
+			set_province_name = {
+				id = 6124
+				name = "Kirov"
+			}
+			set_victory_points = {
+				province = 99
+				value = 1
+			}
+			set_province_name = {
+				id = 99
+				name = "Syktyvkar"
+			}
+			EFR = {
+				add_state_core = 644
+				add_state_core = 637
+				add_state_core = 562
+				add_state_core = 574
+				add_state_core = 565
+				add_state_core = 564
+				add_state_core = 563
+				add_state_core = 561
+				add_state_core = 560
+				add_state_core = 657
+				add_state_core = 409
+				add_state_core = 408
+				add_state_core = 655
+				add_state_core = 537
+			}
 			SIB = {
 				add_state_core = 408
 				add_state_core = 409
@@ -60,6 +92,13 @@ on_actions = {
 				add_state_core = 245
 				add_state_core = 238
 				add_state_core = 218
+			}
+			KMI = {
+				add_state_core = 262
+				add_state_core = 397
+			}
+			VYA = {
+				add_state_core = 400
 			}
 			NOV = {
 				add_state_core = 208
@@ -124,12 +163,15 @@ on_actions = {
 					leave_faction = yes
 				}
 				SOV = {
+					release = EFR
 					release = SIB
 					release = KAR
 					release = CIR
 					release = CRI
 					release = DAG
 					release = KAL
+					release = KMI
+					release = VYA
 					release = NOV
 					release = PRM
 					release = ROS
@@ -247,6 +289,61 @@ on_actions = {
 					name = "Saint Petersburg"
 				}
 				set_global_flag = renamed_leningrad_sov
+				400 = {
+					set_state_name = "Vyatka"
+				}
+				set_province_name = {
+					id = 6124
+					name = "Vyatka"
+				}
+				if = {
+					limit = {
+						has_game_rule = {
+							rule = sov_grand_moscow_status
+							option = SOV_GRAND_MOSCOW_RELEASED
+						}
+					}
+					GPM = {
+						add_state_core = 219
+						add_state_core = 223
+						add_state_core = 254
+						add_state_core = 253
+						add_state_core = 248
+						add_state_core = 247
+						add_state_core = 246
+						add_state_core = 242
+						add_state_core = 205
+						add_state_core = 243
+						add_state_core = 224
+						add_state_core = 220
+						add_state_core = 252
+						add_state_core = 255
+						add_state_core = 239
+						add_state_core = 260
+						add_state_core = 240
+						add_state_core = 222
+						add_state_core = 250
+						add_state_core = 256
+						add_state_core = 257
+						add_state_core = 258
+						add_ideas = SOV_Grand_muscovy
+						every_state = {
+							limit = {
+								is_core_of = GPM
+							}
+							GPM = {
+								transfer_state = PREV
+							}
+						}
+						change_tag_from = SOV
+						every_state = {
+							limit = {
+								is_core_of = SOV
+							}
+							remove_core_of = SOV
+						}
+					}
+				}
 			}
 		}
 	}
