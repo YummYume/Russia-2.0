@@ -22647,3 +22647,44 @@ country_event = {
 		}
 	}
 }
+
+#Event to Spawn French Artillery and Support Equipment if the Player Bought them
+country_event = {
+	id = soviets.492
+
+	is_triggered_only = yes
+
+	hidden = yes
+		
+	immediate = {
+		if = {
+			limit = {
+				SOV = {
+					has_country_flag = has_bought_french_artillery_for_civil_war
+				}
+			}
+			SOV = {
+				add_equipment_to_stockpile = {
+					type = artillery_equipment
+					amount = 500
+					producer = FRA
+				}
+			}
+		}
+
+		if = {
+			limit = {
+				SOV = {
+					has_country_flag = has_bought_french_support_equipment_for_civil_war
+				}
+			}
+			SOV = {
+				add_equipment_to_stockpile = {
+					type = support_equipment
+					amount = 500
+					producer = GER
+				}
+			}
+		}
+	}
+}

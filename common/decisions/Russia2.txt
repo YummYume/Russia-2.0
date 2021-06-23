@@ -4866,7 +4866,7 @@ SOV_the_second_civil_war_fn = {
 
 	SOV_buy_american_planes_cw = {
 
-		icon = GFX_decision_generic_naval
+		icon = GFX_decision_generic_air
 
 		allowed = {
 			tag = SOV
@@ -4890,6 +4890,66 @@ SOV_the_second_civil_war_fn = {
 			custom_effect_tooltip = SOV_buy_american_planes_cw_tt
 			hidden_effect = {
 				set_country_flag = has_bought_american_planes_for_civil_war
+			}
+		}
+	}
+
+	SOV_buy_french_artillery_cw = {
+
+		icon = GFX_decision_generic_industry
+
+		allowed = {
+			tag = SOV
+		}
+		available = {
+			has_civil_war = no
+		}
+		visible = {
+			has_country_flag = can_buy_french_artillery
+		}
+
+		ai_will_do = {
+			factor = 400
+		}
+
+		fire_only_once = yes
+
+		cost = 25
+
+		complete_effect = {
+			custom_effect_tooltip = SOV_buy_french_artillery_cw_tt
+			hidden_effect = {
+				set_country_flag = has_bought_french_artillery_for_civil_war
+			}
+		}
+	}
+
+	SOV_buy_french_support_equipment_cw = {
+
+		icon = GFX_decision_ger_military_buildup
+
+		allowed = {
+			tag = SOV
+		}
+		available = {
+			has_civil_war = no
+		}
+		visible = {
+			has_country_flag = can_buy_french_support_equipment
+		}
+
+		ai_will_do = {
+			factor = 400
+		}
+
+		fire_only_once = yes
+
+		cost = 25
+
+		complete_effect = {
+			custom_effect_tooltip = SOV_buy_french_support_equipment_cw_tt
+			hidden_effect = {
+				set_country_flag = has_bought_french_support_equipment_for_civil_war
 			}
 		}
 	}
@@ -22746,10 +22806,11 @@ SOV_end_second_civil_war = {
 			}
 			if = {
 				limit = {
-					SOV = {
-						OR = {
-							has_country_flag = has_negotiated_with_germany_ressource_rights 
-						}
+					OR = {
+						has_country_flag = japan_accept_to_help_give_russian_far_east
+						has_country_flag = has_negotiated_with_germany_ressource_rights
+						has_country_flag = accept_american_occupation_siberia_after_cw 
+						has_country_flag = accept_french_factories_after_cw 
 					}
 				}
 				SOV = {
@@ -36199,6 +36260,10 @@ SOV_renegotiate_deals_civil_war = {
 			}
 		}
 
+		ai_will_do = {
+			factor = 100
+		}
+
 		days_remove = 20
 
 		remove_effect = {
@@ -36235,6 +36300,10 @@ SOV_renegotiate_deals_civil_war = {
 				has_war_with = GER
 				has_country_flag = is_negotiating_with_german_for_ressources_redeal
 			}
+		}
+
+		ai_will_do = {
+			factor = 10
 		}
 
 		days_remove = 7
@@ -36297,6 +36366,10 @@ SOV_renegotiate_deals_civil_war = {
 			}
 		}
 
+		ai_will_do = {
+			factor = 100
+		}
+
 		days_remove = 15
 
 		remove_effect = {
@@ -36352,6 +36425,10 @@ SOV_renegotiate_deals_civil_war = {
 			}
 		}
 
+		ai_will_do = {
+			factor = 10
+		}
+
 		complete_effect = {
 			MAN = {
 				country_event = { id = manchukuos.11 days = 1 }
@@ -36401,6 +36478,10 @@ SOV_renegotiate_deals_civil_war = {
 			}
 		}
 
+		ai_will_do = {
+			factor = 10
+		}
+
 		complete_effect = {
 			JAP = {
 				country_event = { id = japans.33 days = 1 }
@@ -36430,6 +36511,10 @@ SOV_renegotiate_deals_civil_war = {
 			has_full_control_of_state = 560
 			has_full_control_of_state = 657
 			has_full_control_of_state = 561
+		}
+
+		ai_will_do = {
+			factor = 100
 		}
 
 		days_remove = 50
@@ -36473,6 +36558,10 @@ SOV_renegotiate_deals_civil_war = {
 				has_full_control_of_state = 644
 				has_full_control_of_state = 574
 			}
+		}
+
+		ai_will_do = {
+			factor = 30
 		}
 
 		days_remove = 15
@@ -36525,6 +36614,10 @@ SOV_renegotiate_deals_civil_war = {
 			}
 		}
 
+		ai_will_do = {
+			factor = 10
+		}
+
 		cancel_trigger = {
 			NOT = {
 				divisions_in_state = {
@@ -36556,6 +36649,89 @@ SOV_renegotiate_deals_civil_war = {
 					}
 				}
 			}
+		}
+	}
+}
+
+SOV_alternative_flag = {
+
+	SOV_alternative_flag_third_rome = {
+		icon = GFX_decision_generic_form_nation
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			has_cosmetic_tag = THR
+		}
+
+		available = {
+			has_full_control_of_state = 2
+		}
+
+		complete_effect = {
+			set_cosmetic_tag = RSPQ
+		}
+	}
+
+	SOV_alternative_flag_greater_russia = {
+		icon = GFX_decision_generic_form_nation
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			has_cosmetic_tag = GTR
+		}
+		
+		available = {
+			
+		}
+
+		complete_effect = {
+			set_cosmetic_tag = AGTR
+		}
+	}
+
+	SOV_alternative_flag_third_rome_return = {
+		icon = GFX_decision_generic_form_nation
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			has_cosmetic_tag = RSPQ
+		}
+
+		available = {
+			
+		}
+
+		complete_effect = {
+			set_cosmetic_tag = THR
+		}
+	}
+
+	SOV_alternative_flag_greater_russia_return = {
+		icon = GFX_decision_generic_form_nation
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			has_cosmetic_tag = AGTR
+		}
+
+		available = {
+			
+		}
+
+		complete_effect = {
+			set_cosmetic_tag = GTR
 		}
 	}
 }
