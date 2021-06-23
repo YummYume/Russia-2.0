@@ -8831,6 +8831,9 @@ country_event = {
 					amount = -20000
 				}
 			}
+			delete_unit_template_and_units = {
+				division_template = "Yaponskiy dobrovol'cheskiy diviziya"
+			}
 		}
 		add_threat = -5
 		remove_ideas = SOV_Supply_line
@@ -9991,12 +9994,41 @@ country_event = {
 country_event = {
 	id = soviets.227
 	title = soviets.227.t
-	desc = soviets.227.d
+	desc = {
+		text = soviets.227.d
+		trigger = {
+			JAP = {
+				NOT = {
+					has_country_flag = japan_accept_to_help_give_north_sakhalin
+					has_country_flag = japan_accept_to_help_give_russian_far_east
+				}	
+			}
+		}
+	}
+	desc = {
+		text = soviets.227.d_2
+		trigger = {
+			JAP = {
+				OR = {
+					has_country_flag = japan_accept_to_help_give_north_sakhalin
+					has_country_flag = japan_accept_to_help_give_russian_far_east
+				}
+			}
+		}
+	} 
 	picture = GFX_report_event_japanese_transport_soldiers
 
 	is_triggered_only = yes
 
 	option = { #Ask Non-Agression Pact for North Sakhalin
+		trigger = {
+			JAP = {
+				NOT = {
+					has_country_flag = japan_accept_to_help_give_north_sakhalin
+					has_country_flag = japan_accept_to_help_give_russian_far_east
+				}	
+			}
+		}
 		name = soviets.227.a
 		ai_chance = {
 			factor = 100
@@ -10007,9 +10039,40 @@ country_event = {
 	}
 
 	option = { #Never
+		trigger = {
+			JAP = {
+				NOT = {
+					has_country_flag = japan_accept_to_help_give_north_sakhalin
+					has_country_flag = japan_accept_to_help_give_russian_far_east
+				}	
+			}
+		}
 		name = soviets.227.b
 		ai_chance = {
 			factor = 0
+		}
+	}
+
+	option = { #Give Them due to the Deal
+		trigger = {
+			JAP = {
+				OR = {
+					has_country_flag = japan_accept_to_help_give_north_sakhalin
+					has_country_flag = japan_accept_to_help_give_russian_far_east
+				}
+			}
+		}
+		name = soviets.227.c
+		ai_chance = {
+			factor = 100
+		}
+		JAP = {
+			transfer_state = 655
+			add_ai_strategy = {
+				type = befriend
+				id = SOV
+				value = 100
+			}
 		}
 	}
 }
@@ -12821,6 +12884,9 @@ country_event = {
 					type = infantry_equipment
 					amount = -20000
 				}
+			}
+			delete_unit_template_and_units = {
+				division_template = "Yaponskiy dobrovol'cheskiy diviziya"
 			}
 		}
 		add_threat = -5
@@ -22497,6 +22563,86 @@ country_event = {
 			}
 			SOV = {
 				load_oob = "SOV_panzer_elite_civil_war"
+			}
+		}
+	}
+}
+
+#Event to Spawn Japanese Elite if the Player Recruited them
+country_event = {
+	id = soviets.489
+
+	is_triggered_only = yes
+
+	hidden = yes
+		
+	immediate = {
+		if = {
+			limit = {
+				SOV = {
+					has_country_flag = has_recruited_japanese_elite_for_civil_war
+				}
+			}
+			SOV = {
+				load_oob = "SOV_japanese_volunteers_elite_civil_war"
+			}
+		}
+	}
+}
+
+#Event to Spawn Japanese Ships if the Player Bought them
+country_event = {
+	id = soviets.490
+
+	is_triggered_only = yes
+
+	hidden = yes
+		
+	immediate = {
+		if = {
+			limit = {
+				SOV = {
+					has_country_flag = has_recruited_japanese_elite_for_civil_war
+				}
+				has_dlc = "Man the Guns"
+			}
+			SOV = {
+				load_oob = "SOV_japanese_ships_civil_war"
+			}
+		}
+		else_if = {
+			limit = {
+				SOV = {
+					has_country_flag = has_recruited_japanese_elite_for_civil_war
+				}
+				NOT ={
+					has_dlc = "Man the Guns"
+				}
+			}
+			SOV = {
+				load_oob = "SOV_japanese_ships_civil_war_legacy"
+			}
+		}
+	}
+}
+
+#Event to Spawn American Planes Player Bought them
+country_event = {
+	id = soviets.491
+
+	is_triggered_only = yes
+
+	hidden = yes
+		
+	immediate = {
+		if = {
+			limit = {
+				SOV = {
+					has_country_flag = has_bought_american_planes_for_civil_war
+				}
+			}
+			SOV = {
+				load_oob = "SOV_american_planes_civil_war"
 			}
 		}
 	}

@@ -4350,6 +4350,7 @@ SOV_the_second_civil_war_fn = {
 				NOT = {
 					has_civil_war = yes
 				}
+				exists = yes
 			}
 			NOT = {
 				has_country_flag = is_contacting_foreign_major_power
@@ -4697,7 +4698,7 @@ SOV_the_second_civil_war_fn = {
 		available = {
 			has_country_flag = control_caucasus
 			has_civil_war = no
-			command_power > 75
+			command_power > 50
 		}
 		visible = {
 			has_country_flag = second_civil_war_mission
@@ -4719,7 +4720,7 @@ SOV_the_second_civil_war_fn = {
 		complete_effect = {
 			custom_effect_tooltip = train_caucasian_soldiers
 			hidden_effect = {
-				add_command_power = -75
+				add_command_power = -50
 				set_country_flag = train_caucasian_soldiers_civil_war
 			}
 		}
@@ -4796,6 +4797,98 @@ SOV_the_second_civil_war_fn = {
 			hidden_effect = {
 				add_command_power = -40
 				set_country_flag = has_purchased_panzers_for_civil_war
+			}
+		}
+	}
+
+	SOV_recruit_japanese_elite_unit = {
+
+		icon = GFX_decision_jap_pacific_guardian
+
+		allowed = {
+			tag = SOV
+		}
+		available = {
+			has_civil_war = no
+			command_power > 40
+		}
+		visible = {
+			has_country_flag = can_recruit_japanese_volunteer
+		}
+
+		ai_will_do = {
+			factor = 400
+		}
+
+		fire_only_once = yes
+
+		cost = 20
+
+		complete_effect = {
+			custom_effect_tooltip = SOV_recruit_japanese_unit_tt
+			hidden_effect = {
+				add_command_power = -40
+				set_country_flag = has_recruited_japanese_elite_for_civil_war
+			}
+		}
+	}
+
+	SOV_buy_japanese_ships_cw = {
+
+		icon = GFX_decision_generic_naval
+
+		allowed = {
+			tag = SOV
+		}
+		available = {
+			has_civil_war = no
+		}
+		visible = {
+			has_country_flag = can_recruit_japanese_volunteer
+		}
+
+		ai_will_do = {
+			factor = 400
+		}
+
+		fire_only_once = yes
+
+		cost = 50
+
+		complete_effect = {
+			custom_effect_tooltip = SOV_buy_japanese_ships_cw_tt
+			hidden_effect = {
+				set_country_flag = has_bought_japanese_ships_for_civil_war
+			}
+		}
+	}
+
+	SOV_buy_american_planes_cw = {
+
+		icon = GFX_decision_generic_naval
+
+		allowed = {
+			tag = SOV
+		}
+		available = {
+			has_civil_war = no
+		}
+		visible = {
+			has_country_flag = can_buy_american_planes
+		}
+
+		ai_will_do = {
+			factor = 400
+		}
+
+		fire_only_once = yes
+
+		cost = 25
+
+		complete_effect = {
+			custom_effect_tooltip = SOV_buy_american_planes_cw_tt
+			hidden_effect = {
+				set_country_flag = has_bought_american_planes_for_civil_war
 			}
 		}
 	}
@@ -19833,6 +19926,10 @@ SOV_spread_america_anasta = {
 				add_state_core = 367
 				add_state_core = 370
 				add_state_core = 371
+				add_victory_points = {
+					province = 7388
+					value = 5
+				}
 			}
 		}
 	}
@@ -36090,11 +36187,14 @@ SOV_renegotiate_deals_civil_war = {
 			has_country_flag = has_negotiated_with_germany_ressource_rights
 		}
 
+		cost = 25
+
 		fire_only_once = yes
 
 		available = {
 			NOT = {
 				has_war_with = GER
+				has_country_flag = is_negotiating_with_german_for_ressources_redeal
 			}
 		}
 
@@ -36108,7 +36208,7 @@ SOV_renegotiate_deals_civil_war = {
 			custom_effect_tooltip = chance_german_accept_tt
 			set_country_flag = is_negotiating_with_german_for_ressources_redeal
 			GER = {
-				country_event = { id = germanys.27 days = 7 }
+				country_event = { id = germanys.27 days = 10 }
 			}
 		}
 	}
@@ -36125,11 +36225,14 @@ SOV_renegotiate_deals_civil_war = {
 			has_country_flag = has_negotiated_with_germany_ressource_rights
 		}
 
+		cost = 150
+
 		fire_only_once = yes
 
 		available = {
 			NOT = {
 				has_war_with = GER
+				has_country_flag = is_negotiating_with_german_for_ressources_redeal
 			}
 		}
 
@@ -36138,10 +36241,12 @@ SOV_renegotiate_deals_civil_war = {
 		remove_effect = {
 			clr_country_flag = is_negotiating_with_german_for_ressources_redeal
 			clr_country_flag = has_negotiated_with_germany_ressource_rights
+			clr_country_flag = receive_payment_from_ger
 			remove_ideas = SOV_Payment_russian_ressource_rus
 			GER = {
+				clr_country_flag = is_paying_ressource_for_russia
 				remove_ideas = SOV_Payment_russian_ressource_ger
-				country_event = { id = germanys.30 days = 7 }
+				country_event = { id = germanys.30 days = 4 }
 				remove_resource_rights = 582
 				remove_resource_rights = 573
 				remove_resource_rights = 581
@@ -36154,8 +36259,302 @@ SOV_renegotiate_deals_civil_war = {
 		complete_effect = {
 			custom_effect_tooltip = war_over_germany_overlord
 			custom_effect_tooltip = chance_german_accept_not_war_tt
-			add_political_power = -150
 			set_country_flag = is_negotiating_with_german_for_ressources_redeal
+		}
+	}
+
+	SOV_negotiate_with_japan_far_east = {
+
+		icon = GFX_decision_generic_political_discourse
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			has_country_flag = japan_receive_far_east_generic
+		}
+
+		cost = 50
+
+		fire_only_once = yes
+
+		available = {
+			NOT = {
+				has_war_with = JAP
+				JAP = {
+					has_civil_war = yes
+				}
+			}
+			MAN = {
+				is_subject_of = JAP
+				has_full_control_of_state = 408
+				has_full_control_of_state = 409
+				has_full_control_of_state = 560
+				has_full_control_of_state = 657
+				has_full_control_of_state = 561
+			}
+		}
+
+		days_remove = 15
+
+		remove_effect = {
+			JAP = {
+				country_event = { id = japans.30 days = 1 }
+			}
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = chance_japan_accept_return_tt
+		}
+	}
+
+	SOV_ultimatum_to_manchuria_far_east = {
+
+		icon = GFX_decision_hol_draw_up_staff_plans
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			has_country_flag = japan_receive_far_east_generic
+			MAN = {
+				is_subject = no
+				owns_state = 408
+				owns_state = 409
+				owns_state = 560
+				owns_state = 657
+				owns_state = 561
+			}
+		}
+
+		cost = 50
+
+		fire_only_once = yes
+
+		available = {
+			NOT = {
+				is_in_faction_with = MAN
+				has_war_with = MAN
+				MAN = {
+					has_civil_war = yes
+				}
+			}
+			MAN = {
+				is_subject = no
+				has_full_control_of_state = 408
+				has_full_control_of_state = 409
+				has_full_control_of_state = 560
+				has_full_control_of_state = 657
+				has_full_control_of_state = 561
+			}
+		}
+
+		complete_effect = {
+			MAN = {
+				country_event = { id = manchukuos.11 days = 1 }
+			}
+		}
+	}
+
+	SOV_ultimatum_to_japan_far_east = {
+
+		icon = GFX_decision_hol_draw_up_staff_plans
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			has_country_flag = japan_receive_far_east_generic
+			JAP = {
+				is_subject = no
+				owns_state = 408
+				owns_state = 409
+				owns_state = 560
+				owns_state = 657
+				owns_state = 561
+			}
+		}
+
+		cost = 50
+
+		fire_only_once = yes
+
+		available = {
+			NOT = {
+				is_in_faction_with = JAP
+				has_war_with = JAP
+				JAP = {
+					has_civil_war = yes
+				}
+			}
+			JAP = {
+				is_subject = no
+				has_full_control_of_state = 408
+				has_full_control_of_state = 409
+				has_full_control_of_state = 560
+				has_full_control_of_state = 657
+				has_full_control_of_state = 561
+			}
+		}
+
+		complete_effect = {
+			JAP = {
+				country_event = { id = japans.33 days = 1 }
+			}
+		}
+	}
+
+	SOV_reintegrate_if_reconquer_far_east = {
+
+		icon = GFX_decision_hol_draw_up_staff_plans
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			has_country_flag = japan_receive_far_east_generic
+		}
+
+		cost = 100
+
+		fire_only_once = yes
+
+		available = {
+			has_full_control_of_state = 408
+			has_full_control_of_state = 409
+			has_full_control_of_state = 560
+			has_full_control_of_state = 657
+			has_full_control_of_state = 561
+		}
+
+		days_remove = 50
+
+		remove_effect = {
+			clr_country_flag = japan_receive_far_east_generic
+			add_state_core = 408
+			add_state_core = 409
+			add_state_core = 560
+			add_state_core = 657
+			add_state_core = 561
+		}
+	}
+
+	SOV_negotiate_with_america_siberia = {
+
+		icon = GFX_decision_generic_break_treaty
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			has_country_flag = america_receive_siberia_generic
+		}
+
+		cost = 50
+
+		fire_only_once = yes
+
+		available = {
+			NOT = {
+				has_war_with = USA
+				USA = {
+					has_civil_war = yes
+				}
+			}
+			USA = {
+				has_full_control_of_state = 562
+				has_full_control_of_state = 637
+				has_full_control_of_state = 644
+				has_full_control_of_state = 574
+			}
+		}
+
+		days_remove = 15
+
+		remove_effect = {
+			USA = {
+				country_event = { id = americas.16 days = 1 }
+			}
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = chance_america_accept_return_tt
+		}
+	}
+
+	SOV_force_america_siberia_get_out = {
+
+		icon = GFX_decision_generic_break_treaty
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			has_country_flag = america_receive_siberia_generic
+		}
+
+		cost = 50
+
+		fire_only_once = yes
+
+		available = {
+			NOT = {
+				is_in_faction_with = USA
+				has_war_with = USA
+				USA = {
+					has_civil_war = yes
+				}
+			}
+			USA = {
+				has_full_control_of_state = 562
+				has_full_control_of_state = 637
+				has_full_control_of_state = 644
+				has_full_control_of_state = 574
+			}
+			divisions_in_state = {
+				type = infantry
+				size > 6
+				state = 565
+			}
+		}
+
+		cancel_trigger = {
+			NOT = {
+				divisions_in_state = {
+					type = infantry
+					size > 6
+					state = 565
+				}
+			}
+		}
+
+		days_remove = 15
+
+		remove_effect = {
+			SOV = {
+				start_border_war = {
+					change_state_after_war = no
+					attacker = {
+						state = 565
+						num_provinces = 3
+						on_win = americas.19
+						on_lose = americas.20
+					}
+								
+					defender = {
+						state = 574
+						num_provinces = 3
+						on_win = americas.21
+						on_lose = americas.22
+					}
+				}
+			}
 		}
 	}
 }

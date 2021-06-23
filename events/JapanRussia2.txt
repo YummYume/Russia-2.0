@@ -203,7 +203,7 @@ country_event = {
 			add_ai_strategy = {
 				type = befriend
 				id = SOV
-				value = 200
+				value = 100
 			}
 		}
 		SOV = {
@@ -769,6 +769,554 @@ country_event = {
 		name = japans.22.a
 		ai_chance = {
 			factor = 100
+		}
+	}
+}
+
+#Russia propose North Sakhalin
+country_event = {
+	id = japans.23
+	title = japans.23.t
+	desc = japans.23.d
+	picture = GFX_report_event_chinese_soldiers_running
+
+	is_triggered_only = yes
+
+	option = { #We accept
+		name = japans.23.a
+		ai_chance = {
+			factor = 60
+		}
+		custom_effect_tooltip = we_will_receive_north_sakhalin_from_russia_japan_tt
+		custom_effect_tooltip = if_we_accept_and_send_volunteers_gain_good_tt
+		custom_effect_tooltip = upon_start_civil_war_idea_tt
+		show_ideas_tooltip = SOV_Participation_russian_civil_war_foreign
+		SOV = {
+			country_event = { id = japans.24 days = 1 }
+			set_country_flag = japan_accept_to_help_give_north_sakhalin
+		}
+	}
+
+	option = { #We Refuse
+		name = japans.23.b
+		ai_chance = {
+			factor = 40
+		}
+		SOV = {
+			country_event = { id = japans.25 days = 1 }
+		}
+		set_country_flag = has_refused_sak_localisation_event
+	}
+}
+
+#Japans Accept Sakhalin Offer
+country_event = {
+	id = japans.24
+	title = japans.24.t
+	desc = japans.24.d
+	picture = GFX_handshake_russia2
+
+	is_triggered_only = yes
+
+	option = { #A needed Sacrifice
+		name = japans.24.a
+		ai_chance = {
+			factor = 100
+		}
+		set_country_flag = can_recruit_japanese_volunteer
+		custom_effect_tooltip = decision_recruit_japanese_volunteer_become_available
+		custom_effect_tooltip = gains_token_to_buy_weapons
+		add_to_variable = {
+			var = token_buy_weapons
+			value = 1
+		}
+		JAP = {
+			set_country_flag = help_whiteguard_during_russian_civil_war
+		}
+	}
+}
+
+#Japans Refuse Sakhalin Offer
+country_event = {
+	id = japans.25
+	title = japans.25.t
+	desc = japans.25.d
+	picture = GFX_report_event_german_detained_china
+
+	is_triggered_only = yes
+
+	option = { #We could maybe Offer them the Russia Far East ...
+		name = japans.25.a
+		ai_chance = {
+			factor = 0
+		}
+		custom_effect_tooltip = if_japan_accept_we_will_have_manchu
+		custom_effect_tooltip = future_ocasion_to_cancel_deal_japan_manchu
+		JAP = {
+			country_event = { id = japans.26 days = 1 }
+		}
+	}
+
+	option = { #Then we will leave them alone 
+		name = japans.25.b
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#Russia Wants to offer the Far East
+country_event = {
+	id = japans.26
+	title = japans.26.t
+	desc = {
+		text = japans.26.d
+		trigger = {
+			NOT = {
+				has_country_flag = japan_accept_to_help_give_north_sakhalin
+			}
+		}
+	}
+	desc = {
+		text = japans.26.d_2
+		trigger = {
+			has_country_flag = has_refused_sak_localisation_event
+		}
+	}
+	picture = GFX_russian_civil_war_russia2
+
+	is_triggered_only = yes
+
+	option = { #Accept Offer
+		name = japans.26.a
+		ai_chance = {
+			factor = 90
+		}
+		custom_effect_tooltip = we_will_receive_far_east_from_russia_japan_tt
+		custom_effect_tooltip = if_we_accept_and_send_volunteers_gain_good_tt
+		custom_effect_tooltip = upon_start_civil_war_idea_tt
+		show_ideas_tooltip = SOV_Participation_russian_civil_war_foreign
+		SOV = {
+			country_event = { id = japans.27 days = 1 }
+		}
+		set_country_flag = japan_accept_to_help_give_russian_far_east
+	}
+
+	option = { #Refuse Offer
+		name = japans.26.b
+		ai_chance = {
+			factor = 10
+		}
+		SOV = {
+			country_event = { id = japans.28 days = 1 }
+		}
+	}
+}
+
+#Japans Accept Far East Offer
+country_event = {
+	id = japans.27
+	title = japans.27.t
+	desc = japans.27.d
+	picture = GFX_soldiers_handshaking_kolchak_russia2
+
+	is_triggered_only = yes
+
+	option = { #Help but at What Cost ?
+		name = japans.27.a
+		ai_chance = {
+			factor = 100
+		}
+		set_country_flag = can_recruit_japanese_volunteer
+		set_country_flag = can_buy_japanese_ships
+		custom_effect_tooltip = decision_recruit_japanese_volunteer_become_available
+		custom_effect_tooltip = decision_buy_japanese_ships_become_available
+		custom_effect_tooltip = gains_token_to_buy_weapons
+		add_to_variable = {
+			var = token_buy_weapons
+			value = 1
+		}
+		JAP = {
+			set_country_flag = help_whiteguard_during_russian_civil_war
+		}
+	}
+}
+
+#Japans Refuse Far East Offer
+country_event = {
+	id = japans.28
+	title = japans.28.t
+	desc = japans.28.d
+	picture = GFX_report_event_germany_politician_handshake
+
+	is_triggered_only = yes
+
+	option = { #But Why ?
+		name = japans.28.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#The Rusian Far East
+country_event = {
+	id = japans.29
+	title = japans.29.t
+	desc = japans.29.d
+	picture = GFX_soldiers_handshaking_kolchak_russia2
+
+	is_triggered_only = yes
+
+	option = { #Good
+		name = japans.29.a
+		ai_chance = {
+			factor = 100
+		}
+		MAN = {
+			transfer_state = 408
+			transfer_state = 409
+			transfer_state = 560
+			transfer_state = 657
+			transfer_state = 561
+			add_state_core = 408
+			add_state_core = 409
+			add_state_core = 560
+			add_state_core = 657
+			add_state_core = 561
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					SOV = {
+						NOT = {
+							has_country_flag = america_receive_siberia_generic
+						}
+					}
+				}
+				563 = {
+					set_demilitarized_zone = yes
+				}
+				574 = {
+					set_demilitarized_zone = yes
+				}
+				562 = {
+					set_demilitarized_zone = yes
+				}
+			}
+			else_if = {
+				limit = {
+					SOV = {
+						has_country_flag = america_receive_siberia_generic
+					}
+				}
+				563 = {
+					set_demilitarized_zone = yes
+				}
+			}
+		}
+	}
+}
+
+#Russia Wants the Far East Back
+country_event = {
+	id = japans.30
+	title = japans.30.t
+	desc = japans.30.d
+	picture = GFX_report_event_soviet_finnish_pact
+
+	is_triggered_only = yes
+
+	option = { #Let's give it Back
+		name = japans.30.a
+		ai_chance = {
+			factor = 30
+			modifier = {
+				factor = 90
+				SOV = {
+					OR = {
+						has_completed_focus = SOV_unthinkable_alliance
+						is_in_faction_with = JAP 
+					}
+					NOT = {
+						has_country_flag = SOV_fascist_focus_on_asia
+						has_idea = SOV_anti_japanese_sentiment
+					}
+				}
+			}
+		}
+		SOV = {
+			country_event = { id = japans.31 days = 1 }
+		}
+	}
+
+	option = { #Do not Give it back
+		name = japans.30.a
+		ai_chance = {
+			factor = 70
+			modifier = {
+				factor = 10
+				SOV = {
+					OR = {
+						has_country_flag = SOV_fascist_focus_on_asia
+						has_idea = SOV_anti_japanese_sentiment
+					}
+					NOT = {
+						has_completed_focus = SOV_unthinkable_alliance
+						is_in_faction_with = JAP 
+					}
+				}
+			}
+		}
+		SOV = {
+			country_event = { id = japans.32 days = 1 }
+		}
+	}
+}
+
+#japan Accept to Return the Far East
+country_event = {
+	id = japans.31
+	title = japans.31.t
+	desc = japans.31.d
+	picture = GFX_soldiers_handshaking_kolchak_russia2
+
+	is_triggered_only = yes
+
+	option = { #Good
+		name = japans.31.a
+		ai_chance = {
+			factor = 100
+		}
+		SOV = {
+			clr_country_flag = japan_receive_far_east_generic
+			transfer_state = 408
+			transfer_state = 409
+			transfer_state = 560
+			transfer_state = 657
+			transfer_state = 561
+			add_state_core = 408
+			add_state_core = 409
+			add_state_core = 560
+			add_state_core = 657
+			add_state_core = 561
+		}
+		hidden_effect = {
+			MAN = {
+				remove_state_core = 408
+				remove_state_core = 409
+				remove_state_core = 560
+				remove_state_core = 657
+				remove_state_core = 561
+			}
+			if = {
+				limit = {
+					SOV = {
+						NOT = {
+							has_country_flag = america_receive_siberia_generic
+						}
+					}
+				}
+				563 = {
+					set_demilitarized_zone = no
+				}
+				574 = {
+					set_demilitarized_zone = no
+				}
+				562 = {
+					set_demilitarized_zone = no
+				}
+			}
+			else_if = {
+				limit = {
+					SOV = {
+						has_country_flag = america_receive_siberia_generic
+					}
+				}
+				563 = {
+					set_demilitarized_zone = no
+				}
+			}
+		}
+	}
+}
+
+#japan Refuse to Return the Far East
+country_event = {
+	id = japans.32
+	title = japans.32.t
+	desc = japans.32.d
+	picture = GFX_report_event_soviet_in_riga
+
+	is_triggered_only = yes
+
+	option = { #Damn
+		name = japans.32.a
+		ai_chance = {
+			factor = 100
+		}
+		SOV = {
+			add_state_claim = 408
+			add_state_claim = 409
+			add_state_claim = 560
+			add_state_claim = 657
+			add_state_claim = 561
+		}
+		if = {
+			limit = {
+				NOT = {
+					is_in_faction_with = JAP
+				}
+			}
+			create_wargoal = {
+				target = MAN
+				type = take_claimed_state
+			}
+		}
+		else_if = {
+			limit = {
+				is_in_faction_with = JAP
+			}
+			custom_effect_tooltip = nothing_because_faction_with_jap
+		}
+	}
+}
+
+#Russia Ultimatum to Return the Far East
+country_event = {
+	id = japans.33
+	title = japans.33.t
+	desc = japans.33.d
+	picture = GFX_menacing_tanks_russia2
+
+	is_triggered_only = yes
+
+	option = { #Let's give it Back
+		name = japans.33.a
+		ai_chance = {
+			factor = 30
+			modifier = {
+				factor = 80
+				SOV = {
+					num_of_factories > 150
+					num_divisions > 200
+				}
+			}
+		}
+		SOV = {
+			country_event = { id = japans.34 days = 1 }
+		}
+	}
+
+	option = { #Do not Give it back
+		name = japans.33.a
+		ai_chance = {
+			factor = 70
+			modifier = {
+				factor = 10
+				SOV = {
+					num_of_factories > 150
+					num_divisions > 200
+				}
+			}
+		}
+		SOV = {
+			country_event = { id = japans.35 days = 1 }
+		}
+	}
+}
+
+#Japan Accept to return
+country_event = {
+	id = japans.34
+	title = japans.34.t
+	desc = japans.34.d
+	picture = GFX_cavalry_parade_russia2
+
+	is_triggered_only = yes
+
+	option = { #Good
+		name = japans.34.a
+		ai_chance = {
+			factor = 100
+		}
+		SOV = {
+			clr_country_flag = japan_receive_far_east_generic
+			transfer_state = 408
+			transfer_state = 409
+			transfer_state = 560
+			transfer_state = 657
+			transfer_state = 561
+			add_state_core = 408
+			add_state_core = 409
+			add_state_core = 560
+			add_state_core = 657
+			add_state_core = 561
+		}
+		hidden_effect = {
+			MAN = {
+				remove_state_core = 408
+				remove_state_core = 409
+				remove_state_core = 560
+				remove_state_core = 657
+				remove_state_core = 561
+			}
+			if = {
+				limit = {
+					SOV = {
+						NOT = {
+							has_country_flag = america_receive_siberia_generic
+						}
+					}
+				}
+				563 = {
+					set_demilitarized_zone = no
+				}
+				574 = {
+					set_demilitarized_zone = no
+				}
+				562 = {
+					set_demilitarized_zone = no
+				}
+			}
+			else_if = {
+				limit = {
+					SOV = {
+						has_country_flag = america_receive_siberia_generic
+					}
+				}
+				563 = {
+					set_demilitarized_zone = no
+				}
+			}
+		}
+	}
+}
+
+#Japan Refuse to return
+country_event = {
+	id = japans.35
+	title = japans.35.t
+	desc = japans.35.d
+	picture = GFX_menacing_tanks_russia2
+
+	is_triggered_only = yes
+
+	option = { #Damn
+		name = japans.35.a
+		ai_chance = {
+			factor = 100
+		}
+		SOV = {
+			add_state_claim = 408
+			add_state_claim = 409
+			add_state_claim = 560
+			add_state_claim = 657
+			add_state_claim = 561
+			create_wargoal = {
+				target = MAN
+				type = take_claimed_state
+			}
 		}
 	}
 }
