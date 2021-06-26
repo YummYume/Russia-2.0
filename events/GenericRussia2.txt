@@ -988,6 +988,10 @@ country_event = {
 	option = { #Only if we can get something in return
 		ai_chance = {
 			factor = 40
+			modifier = {
+				factor = 80
+				TAG = ITA
+			}
 		}
 		trigger = {
 			FROM = {
@@ -1012,6 +1016,18 @@ country_event = {
 				TAG = FRA
 			}
 			custom_effect_tooltip = explain_player_receive_industry
+		}
+		if = {
+			limit = {
+				TAG = ITA
+			}
+			custom_effect_tooltip = explain_player_diplomatic_build_up
+		}
+		if = {
+			limit = {
+				TAG = ENG
+			}
+			custom_effect_tooltip = explain_player_ressource_money
 		}
 	}
 }
@@ -1100,7 +1116,7 @@ country_event = {
 				TAG = FRA
 			}
 		}
-		name = generics.32.c
+		name = generics.32.e
 		set_country_flag = can_buy_french_artillery
 		set_country_flag = can_buy_french_support_equipment
 		custom_effect_tooltip = decision_buy_french_artillery_become_available
@@ -1111,6 +1127,54 @@ country_event = {
 			value = 1
 		}
 		FRA = {
+			set_country_flag = help_whiteguard_during_russian_civil_war
+		}
+	}
+
+	option = { #If From is ITA
+		ai_chance = {
+			factor = 100
+		}
+		trigger = {
+			FROM = {
+				TAG = ITA
+			}
+		}
+		name = generics.32.f
+		set_country_flag = can_train_mountaineers
+		set_country_flag = can_engage_italian_volunteers
+		custom_effect_tooltip = decision_train_mountaineers_become_available
+		custom_effect_tooltip = decision_engage_italian_volunteers_caucasus_become_available
+		custom_effect_tooltip = gains_token_to_buy_weapons
+		add_to_variable = {
+			var = token_buy_weapons
+			value = 1
+		}
+		ITA = {
+			set_country_flag = help_whiteguard_during_russian_civil_war
+		}
+	}
+
+	option = { #If From is ENG
+		ai_chance = {
+			factor = 100
+		}
+		trigger = {
+			FROM = {
+				TAG = ENG
+			}
+		}
+		name = generics.32.g
+		set_country_flag = can_buy_english_ships
+		set_country_flag = can_train_russian_marine
+		custom_effect_tooltip = decision_buy_english_ships_become_available
+		custom_effect_tooltip = decision_train_russian_marine_become_available
+		custom_effect_tooltip = gains_token_to_buy_weapons
+		add_to_variable = {
+			var = token_buy_weapons
+			value = 1
+		}
+		ENG = {
 			set_country_flag = help_whiteguard_during_russian_civil_war
 		}
 	}
@@ -1188,7 +1252,7 @@ country_event = {
 	}
 }
 
-#We have to keep our promise
+#We have to keep our promise - Treaty of vladivostok
 country_event = {
 	id = generics.34
 	title = generics.34.t
@@ -1296,6 +1360,122 @@ country_event = {
 			}
 			custom_effect_tooltip = america_wont_receive_anything_cuz_cw
 		}
+		if = {
+			limit = {
+				has_country_flag = accept_french_factories_after_cw
+				FRA = {
+					NOT = {
+						has_civil_war = yes
+					}
+				}
+			}
+			random_owned_state = {
+				limit = {
+					arms_factory > 0
+				}
+				remove_building = {
+					type = arms_factory
+					level = 1
+				}
+			}
+			random_owned_state = {
+				limit = {
+					arms_factory > 0
+				}
+				remove_building = {
+					type = arms_factory
+					level = 1
+				}
+			}
+			random_owned_state = {
+				limit = {
+					arms_factory > 0
+				}
+				remove_building = {
+					type = arms_factory
+					level = 1
+				}
+			}
+			random_owned_state = {
+				limit = {
+					arms_factory > 0
+				}
+				remove_building = {
+					type = arms_factory
+					level = 1
+				}
+			}
+			random_owned_state = {
+				limit = {
+					arms_factory > 0
+				}
+				remove_building = {
+					type = arms_factory
+					level = 1
+				}
+			}
+			random_owned_state = {
+				limit = {
+					industrial_complex > 0
+				}
+				remove_building = {
+					type = industrial_complex
+					level = 1
+				}
+			}
+			random_owned_state = {
+				limit = {
+					industrial_complex > 0
+				}
+				remove_building = {
+					type = industrial_complex
+					level = 1
+				}
+			}
+			random_owned_state = {
+				limit = {
+					industrial_complex > 0
+				}
+				remove_building = {
+					type = industrial_complex
+					level = 1
+				}
+			}
+			random_owned_state = {
+				limit = {
+					industrial_complex > 0
+				}
+				remove_building = {
+					type = industrial_complex
+					level = 1
+				}
+			}
+			random_owned_state = {
+				limit = {
+					industrial_complex > 0
+				}
+				remove_building = {
+					type = industrial_complex
+					level = 1
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_country_flag = accept_french_factories_after_cw
+				FRA = {
+					has_civil_war = yes
+				}
+			}
+			custom_effect_tooltip = french_wont_get_any_factories_cw
+		}
+		if = {
+			limit = {
+				has_country_flag = accept_diplomatic_relation_with_italy
+			}
+			set_country_flag = enter_diplomatic_relation_with_italy_possible
+			custom_effect_tooltip = unlock_decision_diplomatic_relation_italy_minigame
+		}
 	}
 }
 
@@ -1397,9 +1577,6 @@ country_event = {
 			var = token_buy_weapons
 			value = 1
 		}
-		FRA = {
-			set_country_flag = help_whiteguard_during_russian_civil_war
-		}
 		add_to_variable = {
 			var = token_buy_weapons
 			value = 1
@@ -1407,6 +1584,63 @@ country_event = {
 		FRA = {
 			set_country_flag = help_whiteguard_during_russian_civil_war
 			country_event = { id = frances.15 days = 1 }
+		}
+	}
+
+	option = { #If From is ITA - They to Re-open Diplomatic Relation 
+		ai_chance = {
+			factor = 100
+		}
+		trigger = {
+			FROM = {
+				TAG = ITA
+			}
+		}
+		name = generics.36.e
+		set_country_flag = can_train_mountaineers
+		set_country_flag = can_engage_italian_volunteers
+		set_country_flag = accept_diplomatic_relation_with_italy
+		custom_effect_tooltip = if_we_accept_we_will_enter_diplomatic_relation_italy
+		custom_effect_tooltip = decision_train_mountaineers_become_available
+		custom_effect_tooltip = decision_engage_italian_volunteers_caucasus_become_available
+		custom_effect_tooltip = gains_token_to_buy_weapons
+		add_to_variable = {
+			var = token_buy_weapons
+			value = 1
+		}
+		ITA = {
+			set_country_flag = help_whiteguard_during_russian_civil_war
+			country_event = { id = italys.15 days = 1 }
+		}
+	}
+
+	option = { #If From is ENG - They want Shipment of Ressources and Money
+		ai_chance = {
+			factor = 100
+		}
+		trigger = {
+			FROM = {
+				TAG = ENG
+			}
+		}
+		name = generics.36.f
+		set_country_flag = can_buy_english_ships
+		set_country_flag = can_train_russian_marine
+		set_country_flag = accept_english_help_for_shipment
+		custom_effect_tooltip = if_we_accept_we_will_send_ressource_money_shipment_eng
+		custom_effect_tooltip = decision_buy_english_ships_become_available
+		custom_effect_tooltip = decision_train_russian_marine_become_available
+		custom_effect_tooltip = gains_token_to_buy_weapons
+		add_to_variable = {
+			var = token_buy_weapons
+			value = 1
+		}
+		ENG = {
+			set_country_flag = help_whiteguard_during_russian_civil_war
+		}
+		ENG = {
+			set_country_flag = help_whiteguard_during_russian_civil_war
+			country_event = { id = italys.15 days = 1 }
 		}
 	}
 }

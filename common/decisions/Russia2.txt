@@ -4359,7 +4359,12 @@ SOV_the_second_civil_war_fn = {
 		}
 
 		visible = {
-			
+			FROM = {
+				NOT = {
+					has_civil_war = yes
+				}
+				exists = yes
+			}
 		}
 
 		fire_only_once = yes
@@ -4378,6 +4383,7 @@ SOV_the_second_civil_war_fn = {
 				country_event = { id = generics.31 hours = 1 }
 			}
 			remove_from_array = { global.sov_foreign_major_country = FROM }
+			custom_effect_tooltip = result_of_contacting_foreing_country
 		}
 
 		complete_effect = {
@@ -4727,6 +4733,70 @@ SOV_the_second_civil_war_fn = {
 		}
 	}
 
+	SOV_train_mountaineers_elite_unit = {
+
+		icon = GFX_decision_generic_prepare_civil_war
+
+		allowed = {
+			tag = SOV
+		}
+		available = {
+			has_civil_war = no
+			command_power > 25
+		}
+		visible = {
+			has_country_flag = can_train_mountaineers
+		}
+
+		ai_will_do = {
+			factor = 400
+		}
+
+		fire_only_once = yes
+
+		cost = 20
+
+		complete_effect = {
+			custom_effect_tooltip = SOV_train_mountaineers_tt
+			custom_effect_tooltip = if_we_own_caucasus_they_will_spanw_here
+			hidden_effect = {
+				add_command_power = -25
+				set_country_flag = has_trained_mountaineers_for_civil_war
+			}
+		}
+	}
+
+	SOV_engage_italian_unit = {
+
+		icon = GFX_decision_generic_prepare_civil_war
+
+		allowed = {
+			tag = SOV
+		}
+		available = {
+			has_civil_war = no
+			has_country_flag = control_caucasus
+		}
+		visible = {
+			has_country_flag = can_engage_italian_volunteers
+		}
+
+		ai_will_do = {
+			factor = 400
+		}
+
+		fire_only_once = yes
+
+		cost = 20
+
+		complete_effect = {
+			custom_effect_tooltip = SOV_engage_italian_unit_tt
+			hidden_effect = {
+				set_country_flag = has_engaged_italian_division_for_civil_war
+			}
+		}
+	}
+
 	SOV_train_elite_unit = {
 
 		icon = GFX_decision_generic_army_support
@@ -4854,7 +4924,7 @@ SOV_the_second_civil_war_fn = {
 
 		fire_only_once = yes
 
-		cost = 50
+		cost = 40
 
 		complete_effect = {
 			custom_effect_tooltip = SOV_buy_japanese_ships_cw_tt
@@ -4884,7 +4954,7 @@ SOV_the_second_civil_war_fn = {
 
 		fire_only_once = yes
 
-		cost = 25
+		cost = 20
 
 		complete_effect = {
 			custom_effect_tooltip = SOV_buy_american_planes_cw_tt
@@ -4914,7 +4984,7 @@ SOV_the_second_civil_war_fn = {
 
 		fire_only_once = yes
 
-		cost = 25
+		cost = 20
 
 		complete_effect = {
 			custom_effect_tooltip = SOV_buy_french_artillery_cw_tt
@@ -4944,12 +5014,72 @@ SOV_the_second_civil_war_fn = {
 
 		fire_only_once = yes
 
-		cost = 25
+		cost = 20
 
 		complete_effect = {
 			custom_effect_tooltip = SOV_buy_french_support_equipment_cw_tt
 			hidden_effect = {
 				set_country_flag = has_bought_french_support_equipment_for_civil_war
+			}
+		}
+	}
+
+	SOV_buy_english_ships_cw = {
+
+		icon = GFX_decision_generic_naval
+
+		allowed = {
+			tag = SOV
+		}
+		available = {
+			has_civil_war = no
+		}
+		visible = {
+			has_country_flag = can_buy_english_ships
+		}
+
+		ai_will_do = {
+			factor = 400
+		}
+
+		fire_only_once = yes
+
+		cost = 40
+
+		complete_effect = {
+			custom_effect_tooltip = SOV_buy_english_ships_cw_tt
+			hidden_effect = {
+				set_country_flag = has_bought_english_ships_for_civil_war
+			}
+		}
+	}
+
+	SOV_train_russian_marine_cw = {
+
+		icon = GFX_decision_generic_intelligence_operation
+
+		allowed = {
+			tag = SOV
+		}
+		available = {
+			has_civil_war = no
+		}
+		visible = {
+			has_country_flag = can_buy_english_ships
+		}
+
+		ai_will_do = {
+			factor = 400
+		}
+
+		fire_only_once = yes
+
+		cost = 20
+
+		complete_effect = {
+			custom_effect_tooltip = SOV_train_russian_marine_cw_tt
+			hidden_effect = {
+				set_country_flag = has_trained_russian_marine_for_civil_war
 			}
 		}
 	}
@@ -22806,7 +22936,7 @@ SOV_end_second_civil_war = {
 			}
 			if = {
 				limit = {
-					OR = {
+					OR = { #TODO Add other country flag
 						has_country_flag = japan_accept_to_help_give_russian_far_east
 						has_country_flag = has_negotiated_with_germany_ressource_rights
 						has_country_flag = accept_american_occupation_siberia_after_cw 

@@ -8832,7 +8832,10 @@ country_event = {
 				}
 			}
 			delete_unit_template_and_units = {
-				division_template = "Yaponskiy dobrovol'cheskiy diviziya"
+				division_template = "Yaponskiy Dobrovol'cheskiy Diviziya"
+			}
+			delete_unit_template_and_units = {
+				division_template = "Ital'yanskiy Dobrovol'cheskiy Diviziya"
 			}
 		}
 		add_threat = -5
@@ -12887,6 +12890,9 @@ country_event = {
 			}
 			delete_unit_template_and_units = {
 				division_template = "Yaponskiy dobrovol'cheskiy diviziya"
+			}
+			delete_unit_template_and_units = {
+				division_template = "Ital'yanskiy Dobrovol'cheskiy Diviziya"
 			}
 		}
 		add_threat = -5
@@ -22666,7 +22672,7 @@ country_event = {
 			SOV = {
 				add_equipment_to_stockpile = {
 					type = artillery_equipment
-					amount = 500
+					amount = 750
 					producer = FRA
 				}
 			}
@@ -22682,8 +22688,100 @@ country_event = {
 				add_equipment_to_stockpile = {
 					type = support_equipment
 					amount = 500
-					producer = GER
+					producer = FRA
 				}
+			}
+		}
+	}
+}
+
+#Event to Spawn Italian Volunteers and Mountaineers at the start of the civil war
+country_event = {
+	id = soviets.493
+
+	is_triggered_only = yes
+
+	hidden = yes
+		
+	immediate = {
+		if = {
+			limit = {
+				SOV = {
+					has_country_flag = has_trained_mountaineers_for_civil_war
+					NOT = {
+						has_country_flag = control_caucasus
+					}
+				}
+			}
+			SOV = {
+				load_oob = "SOV_elite_mountaineers_no_caucasus_civil_war"
+			}
+		}
+		else_if = {
+			limit = {
+				SOV = {
+					has_country_flag = has_trained_mountaineers_for_civil_war
+					has_country_flag = control_caucasus
+				}
+			}
+			SOV = {
+				load_oob = "SOV_elite_mountaineers_has_caucasus_civil_war"
+			}
+		}
+		if = {
+			limit = {
+				SOV = {
+					has_country_flag = has_engaged_italian_division_for_civil_war
+				}
+			}
+			SOV = {
+				load_oob = "SOV_italian_volunteers_caucasus_civil_war"
+			}
+		}
+	}
+}
+
+#Event to Spawn English Ships and Marines at the start of the civil war
+country_event = {
+	id = soviets.494
+
+	is_triggered_only = yes
+
+	hidden = yes
+		
+	immediate = {
+		if = {
+			limit = {
+				SOV = {
+					has_country_flag = has_bought_english_ships_for_civil_war
+					has_dlc = "Man the Guns"
+				}
+			}
+			SOV = {
+				load_oob = "SOV_english_naval_ships_civil_war"
+			}
+		}
+		else_if = {
+			limit = {
+				SOV = {
+					has_country_flag = has_bought_english_ships_for_civil_war
+					NOT = {
+						has_dlc = "Man the Guns"
+					}
+				}
+			}
+			SOV = {
+				load_oob = "SOV_english_naval_ships_legacy_civil_war"
+			}
+		}
+		if = {
+			limit = {
+				SOV = {
+					has_country_flag = has_trained_russian_marine_for_civil_war
+				}
+			}
+			SOV = {
+				load_oob = "SOV_elite_marines_civil_war"
 			}
 		}
 	}
