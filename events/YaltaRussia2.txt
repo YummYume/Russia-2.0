@@ -84,471 +84,18 @@ country_event = {
 	}
 }
 
-#Split German Land
+#Germany is ded
 country_event = {
 	id = yaltas.4
 	title = yaltas.4.t
 	desc = yaltas.4.d
 	picture = GFX_report_event_generic_parliament
 
-	fire_only_once = yes
-	
-	timeout_days = 5
-
-	trigger = { #Will happen when Germany reaches 80% capitulation to prevent them from capitulating too fast (the event can still fire after capitulation)
-		TAG = SOV
-		has_completed_focus = SOV_yalta_conference
-		has_government = communism
-		is_subject = no
-		NOT = {
-			has_war_with = USA
-			has_war_with = ENG
-			has_war_with = FRA
-			has_country_flag = yalta_conference_over
-		}
-		OR = {
-			AND = {
-				SOV = {
-					has_war_with = GER
-				}
-				GER = {
-					surrender_progress > 0.75
-				}
-				OR = {
-					USA = {
-						has_government = democratic
-						has_war_with = GER
-						is_major = yes
-						has_country_flag = usa_accepted_yalta_conference
-					}
-					ENG = {
-						has_government = democratic
-						has_war_with = GER
-						is_major = yes
-						has_country_flag = eng_accepted_yalta_conference
-					}
-					FRA = {
-						has_government = democratic
-						has_war_with = GER
-						is_major = yes
-						has_country_flag = fra_accepted_yalta_conference
-					}
-				}
-			}
-			AND = {
-				OR = {
-					USA = {
-						has_government = democratic
-						is_major = yes
-						has_country_flag = usa_accepted_yalta_conference
-					}
-					ENG = {
-						has_government = democratic
-						is_major = yes
-						has_country_flag = eng_accepted_yalta_conference
-					}
-					FRA = {
-						has_government = democratic
-						is_major = yes
-						has_country_flag = fra_accepted_yalta_conference
-					}
-				}
-				OR = {
-					NOT = {
-						country_exists = GER
-					}
-					GER = {
-						is_subject = yes
-						OR = {
-							has_government = democratic
-							has_government = communism
-						}
-					}
-				}
-				NOT = {
-					GER = {
-						has_war_with = SOV
-					}
-					any_country = {
-						OR = {
-							has_country_flag = usa_accepted_yalta_conference
-							has_country_flag = eng_accepted_yalta_conference
-							has_country_flag = fra_accepted_yalta_conference
-						}
-						has_war_with = GER
-					}
-				}
-			}
-		}
-	}
+	is_triggered_only = yes
 
 	option = {
 		ai_chance = { factor = 100 }
 		name = yaltas.4.a
-		if = { #USA, ENG and FRA accepted (historical Yalta Conference)
-			limit = {
-				USA = {
-					has_country_flag = usa_accepted_yalta_conference
-				}
-				ENG = {
-					has_country_flag = eng_accepted_yalta_conference
-				}
-				FRA = {
-					has_country_flag = fra_accepted_yalta_conference
-				}
-			}
-			hidden_effect = {
-				every_state = { #Making sure Germany has cores so they can capitulate instantly
-				    limit = {
-				    	NOT = { is_core_of = GER }
-				    	is_owned_by = GER
-				    }
-			    	GER = { add_state_core = PREV }
-				}
-				GER = {
-					add_ideas = SOV_Yalta_conference
-					set_major = no
-				}
-			}
-			SOV = {
-				transfer_state = 60
-				transfer_state = 65
-				transfer_state = 64
-				transfer_state = 61
-				transfer_state = 62
-				transfer_state = 63
-				transfer_state = 68
-				transfer_state = 66
-				transfer_state = 67
-				transfer_state = 5
-				transfer_state = 763
-				add_opinion_modifier = { target = USA modifier = yalta_conference }
-				add_opinion_modifier = { target = ENG modifier = yalta_conference }
-				add_opinion_modifier = { target = FRA modifier = yalta_conference }
-				set_country_flag = yalta_conference_over
-			}
-			USA = {
-				transfer_state = 55
-				transfer_state = 54
-				transfer_state = 55
-				transfer_state = 53
-				transfer_state = 52
-				add_opinion_modifier = { target = SOV modifier = yalta_conference }
-			}
-			ENG = {
-				transfer_state = 56
-				transfer_state = 57
-				transfer_state = 58
-				transfer_state = 59
-				add_opinion_modifier = { target = SOV modifier = yalta_conference }
-			}
-			FRA = {
-				transfer_state = 50
-				transfer_state = 42
-				transfer_state = 51
-				add_opinion_modifier = { target = SOV modifier = yalta_conference }
-			}
-			hidden_effect = {
-				news_event = { id = newsrussia2.27  days = 1 }
-			}
-		}
-		else_if = { #USA and ENG accepted
-			limit = {
-				USA = {
-					has_country_flag = usa_accepted_yalta_conference
-				}
-				ENG = {
-					has_country_flag = eng_accepted_yalta_conference
-				}
-			}
-			every_state = {
-			    limit = {
-			    	NOT = { is_core_of = GER }
-			    	is_owned_by = GER
-			    }
-		    	GER = { add_state_core = PREV }
-			}
-			SOV = {
-				transfer_state = 60
-				transfer_state = 65
-				transfer_state = 64
-				transfer_state = 61
-				transfer_state = 62
-				transfer_state = 63
-				transfer_state = 68
-				transfer_state = 66
-				transfer_state = 67
-				transfer_state = 5
-				transfer_state = 763
-				add_opinion_modifier = { target = USA modifier = yalta_conference }
-				add_opinion_modifier = { target = ENG modifier = yalta_conference }
-				set_country_flag = yalta_conference_over
-			}
-			USA = {
-				transfer_state = 55
-				transfer_state = 56
-				transfer_state = 57
-				transfer_state = 58
-				transfer_state = 59
-				transfer_state = 51
-				add_opinion_modifier = { target = SOV modifier = yalta_conference }
-			}
-			ENG = {
-				transfer_state = 50
-				transfer_state = 42
-				transfer_state = 54
-				transfer_state = 53
-				transfer_state = 52
-				add_opinion_modifier = { target = SOV modifier = yalta_conference }
-			}
-			hidden_effect = {
-				news_event = { id = newsrussia2.27  days = 1 }
-			}
-		}
-		else_if = { #USA and FRA accepted
-			limit = {
-				USA = {
-					has_country_flag = usa_accepted_yalta_conference
-				}
-				FRA = {
-					has_country_flag = fra_accepted_yalta_conference
-				}
-			}
-			every_state = {
-			    limit = {
-			    	NOT = { is_core_of = GER }
-			    	is_owned_by = GER
-			    }
-		    	GER = { add_state_core = PREV }
-			}
-			SOV = {
-				transfer_state = 60
-				transfer_state = 65
-				transfer_state = 64
-				transfer_state = 61
-				transfer_state = 62
-				transfer_state = 63
-				transfer_state = 68
-				transfer_state = 66
-				transfer_state = 67
-				transfer_state = 5
-				transfer_state = 763
-				add_opinion_modifier = { target = USA modifier = yalta_conference }
-				add_opinion_modifier = { target = FRA modifier = yalta_conference }
-				set_country_flag = yalta_conference_over
-			}
-			USA = {
-				transfer_state = 55
-				transfer_state = 56
-				transfer_state = 57
-				transfer_state = 58
-				transfer_state = 59
-				add_opinion_modifier = { target = SOV modifier = yalta_conference }
-			}
-			FRA = {
-				transfer_state = 50
-				transfer_state = 42
-				transfer_state = 51
-				transfer_state = 54
-				transfer_state = 53
-				transfer_state = 52
-				add_opinion_modifier = { target = SOV modifier = yalta_conference }
-			}
-			hidden_effect = {
-				news_event = { id = newsrussia2.27  days = 1 }
-			}
-		}
-		else_if = { #USA accepted
-			limit = {
-				USA = {
-					has_country_flag = usa_accepted_yalta_conference
-				}
-			}
-			every_state = {
-			    limit = {
-			    	NOT = { is_core_of = GER }
-			    	is_owned_by = GER
-			    }
-		    	GER = { add_state_core = PREV }
-			}
-			SOV = {
-				transfer_state = 60
-				transfer_state = 65
-				transfer_state = 64
-				transfer_state = 61
-				transfer_state = 62
-				transfer_state = 63
-				transfer_state = 68
-				transfer_state = 66
-				transfer_state = 67
-				transfer_state = 5
-				transfer_state = 763
-				add_opinion_modifier = { target = USA modifier = yalta_conference }
-				set_country_flag = yalta_conference_over
-			}
-			USA = {
-				transfer_state = 55
-				transfer_state = 54
-				transfer_state = 53
-				transfer_state = 52
-				transfer_state = 56
-				transfer_state = 57
-				transfer_state = 58
-				transfer_state = 59
-				transfer_state = 50
-				transfer_state = 42
-				transfer_state = 51
-				add_opinion_modifier = { target = SOV modifier = yalta_conference }
-			}
-			hidden_effect = {
-				news_event = { id = newsrussia2.27  days = 1 }
-			}
-		}
-		else_if = { #ENG and FRA accepted
-			limit = {
-				ENG = {
-					has_country_flag = eng_accepted_yalta_conference
-				}
-				FRA = {
-					has_country_flag = fra_accepted_yalta_conference
-				}
-			}
-			every_state = {
-			    limit = {
-			    	NOT = { is_core_of = GER }
-			    	is_owned_by = GER
-			    }
-		    	GER = { add_state_core = PREV }
-			}
-			SOV = {
-				transfer_state = 60
-				transfer_state = 65
-				transfer_state = 64
-				transfer_state = 61
-				transfer_state = 62
-				transfer_state = 63
-				transfer_state = 68
-				transfer_state = 66
-				transfer_state = 67
-				transfer_state = 5
-				transfer_state = 763
-				add_opinion_modifier = { target = ENG modifier = yalta_conference }
-				add_opinion_modifier = { target = FRA modifier = yalta_conference }
-				set_country_flag = yalta_conference_over
-			}
-			ENG = {
-				transfer_state = 55
-				transfer_state = 56
-				transfer_state = 57
-				transfer_state = 58
-				transfer_state = 59
-				add_opinion_modifier = { target = SOV modifier = yalta_conference }
-			}
-			FRA = {
-				transfer_state = 50
-				transfer_state = 42
-				transfer_state = 51
-				transfer_state = 54
-				transfer_state = 53
-				transfer_state = 52
-				add_opinion_modifier = { target = SOV modifier = yalta_conference }
-			}
-			hidden_effect = {
-				news_event = { id = newsrussia2.27  days = 1 }
-			}
-		}
-		else_if = { #ENG accepted
-			limit = {
-				ENG = {
-					has_country_flag = eng_accepted_yalta_conference
-				}
-			}
-			every_state = {
-			    limit = {
-			    	NOT = { is_core_of = GER }
-			    	is_owned_by = GER
-			    }
-		    	GER = { add_state_core = PREV }
-			}
-			SOV = {
-				transfer_state = 60
-				transfer_state = 65
-				transfer_state = 64
-				transfer_state = 61
-				transfer_state = 62
-				transfer_state = 63
-				transfer_state = 68
-				transfer_state = 66
-				transfer_state = 67
-				transfer_state = 5
-				transfer_state = 763
-				add_opinion_modifier = { target = ENG modifier = yalta_conference }
-				set_country_flag = yalta_conference_over
-			}
-			ENG = {
-				transfer_state = 55
-				transfer_state = 54
-				transfer_state = 53
-				transfer_state = 52
-				transfer_state = 56
-				transfer_state = 57
-				transfer_state = 58
-				transfer_state = 59
-				transfer_state = 50
-				transfer_state = 42
-				transfer_state = 51
-				add_opinion_modifier = { target = SOV modifier = yalta_conference }
-			}
-			hidden_effect = {
-				news_event = { id = newsrussia2.27  days = 1 }
-			}
-		}
-		else_if = { #FRA accepted
-			limit = {
-				FRA = {
-					has_country_flag = fra_accepted_yalta_conference
-				}
-			}
-			every_state = {
-			    limit = {
-			    	NOT = { is_core_of = GER }
-			    	is_owned_by = GER
-			    }
-		    	GER = { add_state_core = PREV }
-			}
-			SOV = {
-				transfer_state = 60
-				transfer_state = 65
-				transfer_state = 64
-				transfer_state = 61
-				transfer_state = 62
-				transfer_state = 63
-				transfer_state = 68
-				transfer_state = 66
-				transfer_state = 67
-				transfer_state = 5
-				transfer_state = 763
-				add_opinion_modifier = { target = FRA modifier = yalta_conference }
-				set_country_flag = yalta_conference_over
-			}
-			FRA = {
-				transfer_state = 55
-				transfer_state = 54
-				transfer_state = 53
-				transfer_state = 52
-				transfer_state = 56
-				transfer_state = 57
-				transfer_state = 58
-				transfer_state = 59
-				transfer_state = 50
-				transfer_state = 42
-				transfer_state = 51
-				add_opinion_modifier = { target = SOV modifier = yalta_conference }
-			}
-			hidden_effect = {
-				news_event = { id = newsrussia2.27  days = 1 }
-			}
-		}
 	}
 }
 
@@ -886,11 +433,13 @@ country_event = {
 	picture = GFX_report_event_soviet_in_riga
 	
 	trigger = { #Is USA and at war with Japan
-		TAG = USA
+		tag = USA
+		is_subject = no
 		has_war_with = JAP
 		has_country_flag = usa_accepted_yalta_conference
 		SOV = {
 			has_war = no
+			is_subject = no
 			has_country_flag = yalta_conference_over
 			has_government = communism
 		}
@@ -898,7 +447,7 @@ country_event = {
 
 	fire_only_once = yes
 
-	mean_time_to_happen = { days = 35 }
+	mean_time_to_happen = { days = 15 }
 
 	option = { #Ask the Soviets to join
 		name = yaltas.7.a
@@ -995,113 +544,9 @@ country_event = {
 	}
 }
 
-#Non visible event, making sure Germany doesn't exist and won't be puppeted
-country_event = {
-	id = yaltas.11
-
-	trigger = {
-		SOV = {
-			has_country_flag = yalta_conference_over
-			NOT = { has_war_with = GER }
-		}
-	}
-
-	hidden = yes
-
-	fire_only_once = yes
-
-	immediate = {
-		GER = {
-			remove_ideas = SOV_Yalta_conference
-		}
-		every_state = {
-		    limit = {
-		    	is_core_of = GER
-		    }
-	    	GER = { remove_state_core = PREV }
-		}
-		every_state = {
-		    limit = {
-		    	is_claimed_by = GER
-		    }
-	    	GER = { remove_state_claim = PREV }
-		}
-		if = {
-			limit = {
-				country_exists = GER
-				GER = {
-					has_government = democratic
-				}
-			}
-			if = {
-				limit = {
-					country_exists = USA
-					USA = {
-						has_government = democratic
-						has_country_flag = usa_accepted_yalta_conference
-					}
-				}
-				USA = {
-					annex_country = {
-						target = GER
-					}
-				}
-			}
-			else_if = {
-				limit = {
-					country_exists = ENG
-					ENG = {
-						has_government = democratic
-						has_country_flag = eng_accepted_yalta_conference
-					}
-				}
-				ENG = {
-					annex_country = {
-						target = GER
-					}
-				}
-			}
-			else_if = {
-				limit = {
-					country_exists = FRA
-					FRA = {
-						has_government = democratic
-						has_country_flag = fra_accepted_yalta_conference
-					}
-				}
-				FRA = {
-					annex_country = {
-						target = GER
-					}
-				}
-			}
-			else = {
-				SOV = {
-					annex_country = {
-						target = GER
-					}
-				}
-			}
-		}
-		else_if = {
-			limit = {
-				country_exists = GER
-				GER = {
-					NOT = { has_government = democratic }
-				}
-			}
-			SOV = {
-				annex_country = {
-					target = GER
-				}
-			}
-		}
-	}
-}
-
 #West Germany New Capital
 country_event = {
-	id = yaltas.12
+	id = yaltas.11
 	
 	fire_only_once = yes
 	
@@ -1122,6 +567,130 @@ country_event = {
 	immediate = {
 		WGR = {
 			set_capital = 51
+		}
+	}
+}
+
+#USA, ENG or FRA gets event that Yalta Conference is cancelled
+country_event = {
+	id = yaltas.12
+	title = yaltas.12.t
+	desc = yaltas.12.d
+	picture = GFX_report_event_generic_usa_treaty
+	
+	is_triggered_only = yes
+
+	option = { #Traitors!
+		name = yaltas.12.a
+		if = {
+			limit = {
+				NOT = {
+					any_country = {
+						OR = {
+							has_country_flag = usa_accepted_yalta_conference
+							has_country_flag = eng_accepted_yalta_conference
+							has_country_flag = fra_accepted_yalta_conference
+						}
+					}
+				}
+			}
+			custom_effect_tooltip = yalta_conference_cancelled
+		}
+		else = {
+			custom_effect_tooltip = yalta_conference_cancelled_with_sov
+		}
+	}
+}
+
+#SOV gets event that Yalta Conference with USA is cancelled
+country_event = {
+	id = yaltas.13
+	title = yaltas.13.t
+	desc = yaltas.13.d
+	picture = GFX_report_event_generic_usa_treaty
+	
+	is_triggered_only = yes
+
+	option = { #Traitors!
+		name = yaltas.13.a
+		if = {
+			limit = {
+				NOT = {
+					any_country = {
+						OR = {
+							has_country_flag = usa_accepted_yalta_conference
+							has_country_flag = eng_accepted_yalta_conference
+							has_country_flag = fra_accepted_yalta_conference
+						}
+					}
+				}
+			}
+			custom_effect_tooltip = yalta_conference_cancelled
+		}
+		else = {
+			custom_effect_tooltip = yalta_conference_cancelled_with_usa
+		}
+	}
+}
+
+#SOV gets event that Yalta Conference with ENG is cancelled
+country_event = {
+	id = yaltas.14
+	title = yaltas.14.t
+	desc = yaltas.14.d
+	picture = GFX_report_event_generic_usa_treaty
+	
+	is_triggered_only = yes
+
+	option = { #Traitors!
+		name = yaltas.14.a
+		if = {
+			limit = {
+				NOT = {
+					any_country = {
+						OR = {
+							has_country_flag = usa_accepted_yalta_conference
+							has_country_flag = eng_accepted_yalta_conference
+							has_country_flag = fra_accepted_yalta_conference
+						}
+					}
+				}
+			}
+			custom_effect_tooltip = yalta_conference_cancelled
+		}
+		else = {
+			custom_effect_tooltip = yalta_conference_cancelled_with_eng
+		}
+	}
+}
+
+#SOV gets event that Yalta Conference with FRA is cancelled
+country_event = {
+	id = yaltas.15
+	title = yaltas.15.t
+	desc = yaltas.15.d
+	picture = GFX_report_event_generic_usa_treaty
+	
+	is_triggered_only = yes
+
+	option = { #Traitors!
+		name = yaltas.15.a
+		if = {
+			limit = {
+				NOT = {
+					any_country = {
+						OR = {
+							has_country_flag = usa_accepted_yalta_conference
+							has_country_flag = eng_accepted_yalta_conference
+							has_country_flag = fra_accepted_yalta_conference
+						}
+					}
+				}
+			}
+			custom_effect_tooltip = yalta_conference_cancelled
+		}
+		else = {
+			custom_effect_tooltip = yalta_conference_cancelled_with_fra
 		}
 	}
 }
