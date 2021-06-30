@@ -1,0 +1,674 @@
+on_actions = {
+
+	#GER Surrendered at least once to SOV
+	on_capitulation = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						original_tag = GER
+					}
+					FROM = {
+						original_tag = SOV
+					}
+				}
+				GER = {
+					set_country_flag = has_surrendered_to_sov
+				}
+			}
+		}
+	}
+
+	# Andrey Vlasov Captured
+	on_state_control_changed = {
+		effect = {
+			if = {
+				limit = {
+					FROM.FROM = {
+						state = 244
+					}
+					FROM = {
+						original_tag = SOV
+						has_government = communism
+						has_unit_leader = 412
+						has_war_with = ROOT
+					}
+				}
+				ROOT = {
+					country_event = { id = soviets.501 }
+					save_event_target_as = andrey_vlasov_new_nationality
+					set_country_flag = captured_andrey_vlasov
+				}
+				FROM = {
+					country_event = { id = soviets.500 }
+					every_unit_leader = {
+						limit = {
+							has_id = 412
+						}
+						set_nationality = ROOT
+					}
+					kill_ideology_leader = neutrality
+					create_country_leader = {
+						name = "Pavel Bermondt-Avalov"
+						desc = "POLITICS_PAVEL_BERMONDT_DESC"
+						picture = "Portrait_Pavel_Bermondt_Avalov.dds"
+						ideology = military_junta_russia
+						traits = {
+							firm_grip imperial_russian_army
+						}
+					}
+				}
+			}
+		}
+	}
+
+	# Andrey Vlasov Dies
+	on_capitulation = {
+		effect = {
+			if = {
+				limit = {
+					FROM = {
+						original_tag = SOV
+						NOT = {
+							has_unit_leader = 412
+						}
+					}
+					ROOT = {
+						has_unit_leader = 412
+						has_country_flag = captured_andrey_vlasov
+						NOT = {
+							has_country_flag = andrey_vlasov_died
+						}
+					}
+				}
+				ROOT = {
+					save_event_target_as = andrey_vlasov_new_nationality
+					country_event = { id = soviets.503 }
+					every_unit_leader = {
+						limit = {
+							has_id = 412
+						}
+						retire = yes
+					}
+					clr_country_flag = captured_andrey_vlasov
+					set_global_flag = andrey_vlasov_died
+				}
+				FROM = {
+					country_event = { id = soviets.502 }
+				}
+			}
+		}
+	}
+
+	# Yalta Conference (Improved)
+	on_capitulation = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						tag = GER
+					}
+					FROM = {
+						AND = {
+							tag = SOV
+							has_completed_focus = SOV_yalta_conference
+							has_government = communism
+							is_subject = no
+							NOT = {
+								has_country_flag = yalta_conference_over
+							}
+						}
+						OR = {
+							AND = {
+								USA = {
+									has_war_with = GER
+									is_major = yes
+									has_country_flag = usa_accepted_yalta_conference
+									NOT = {
+										has_war_with = SOV
+									}
+								}
+							}
+							AND = {
+								ENG = {
+									has_war_with = GER
+									is_major = yes
+									has_country_flag = eng_accepted_yalta_conference
+									NOT = {
+										has_war_with = SOV
+									}
+								}
+							}
+							AND = {
+								FRA = {
+									has_war_with = GER
+									is_major = yes
+									has_country_flag = fra_accepted_yalta_conference
+									NOT = {
+										has_war_with = SOV
+									}
+								}
+							}
+						}
+					}
+				}
+				if = { #USA, ENG and FRA accepted (historical Yalta Conference)
+					limit = {
+						USA = {
+							has_country_flag = usa_accepted_yalta_conference
+						}
+						ENG = {
+							has_country_flag = eng_accepted_yalta_conference
+						}
+						FRA = {
+							has_country_flag = fra_accepted_yalta_conference
+						}
+					}
+					SOV = {
+						transfer_state = 60
+						transfer_state = 65
+						transfer_state = 64
+						transfer_state = 61
+						transfer_state = 62
+						transfer_state = 63
+						transfer_state = 68
+						transfer_state = 66
+						transfer_state = 67
+						transfer_state = 5
+						transfer_state = 763
+						add_opinion_modifier = { target = USA modifier = yalta_conference }
+						add_opinion_modifier = { target = ENG modifier = yalta_conference }
+						add_opinion_modifier = { target = FRA modifier = yalta_conference }
+						set_country_flag = yalta_conference_over
+						country_event = { id = yaltas.4 }
+					}
+					USA = {
+						transfer_state = 55
+						transfer_state = 54
+						transfer_state = 55
+						transfer_state = 53
+						transfer_state = 52
+						add_opinion_modifier = { target = SOV modifier = yalta_conference }
+						country_event = { id = yaltas.4 }
+					}
+					ENG = {
+						transfer_state = 56
+						transfer_state = 57
+						transfer_state = 58
+						transfer_state = 59
+						add_opinion_modifier = { target = SOV modifier = yalta_conference }
+						country_event = { id = yaltas.4 }
+					}
+					FRA = {
+						transfer_state = 50
+						transfer_state = 42
+						transfer_state = 51
+						add_opinion_modifier = { target = SOV modifier = yalta_conference }
+						country_event = { id = yaltas.4 }
+					}
+					hidden_effect = {
+						news_event = { id = newsrussia2.27  days = 1 }
+					}
+				}
+				else_if = { #USA and ENG accepted
+					limit = {
+						USA = {
+							has_country_flag = usa_accepted_yalta_conference
+						}
+						ENG = {
+							has_country_flag = eng_accepted_yalta_conference
+						}
+					}
+					SOV = {
+						transfer_state = 60
+						transfer_state = 65
+						transfer_state = 64
+						transfer_state = 61
+						transfer_state = 62
+						transfer_state = 63
+						transfer_state = 68
+						transfer_state = 66
+						transfer_state = 67
+						transfer_state = 5
+						transfer_state = 763
+						add_opinion_modifier = { target = USA modifier = yalta_conference }
+						add_opinion_modifier = { target = ENG modifier = yalta_conference }
+						set_country_flag = yalta_conference_over
+						country_event = { id = yaltas.4 }
+					}
+					USA = {
+						transfer_state = 55
+						transfer_state = 56
+						transfer_state = 57
+						transfer_state = 58
+						transfer_state = 59
+						transfer_state = 51
+						add_opinion_modifier = { target = SOV modifier = yalta_conference }
+						country_event = { id = yaltas.4 }
+					}
+					ENG = {
+						transfer_state = 50
+						transfer_state = 42
+						transfer_state = 54
+						transfer_state = 53
+						transfer_state = 52
+						add_opinion_modifier = { target = SOV modifier = yalta_conference }
+						country_event = { id = yaltas.4 }
+					}
+					hidden_effect = {
+						news_event = { id = newsrussia2.27  days = 1 }
+					}
+				}
+				else_if = { #USA and FRA accepted
+					limit = {
+						USA = {
+							has_country_flag = usa_accepted_yalta_conference
+						}
+						FRA = {
+							has_country_flag = fra_accepted_yalta_conference
+						}
+					}
+					SOV = {
+						transfer_state = 60
+						transfer_state = 65
+						transfer_state = 64
+						transfer_state = 61
+						transfer_state = 62
+						transfer_state = 63
+						transfer_state = 68
+						transfer_state = 66
+						transfer_state = 67
+						transfer_state = 5
+						transfer_state = 763
+						add_opinion_modifier = { target = USA modifier = yalta_conference }
+						add_opinion_modifier = { target = FRA modifier = yalta_conference }
+						set_country_flag = yalta_conference_over
+						country_event = { id = yaltas.4 }
+					}
+					USA = {
+						transfer_state = 55
+						transfer_state = 56
+						transfer_state = 57
+						transfer_state = 58
+						transfer_state = 59
+						add_opinion_modifier = { target = SOV modifier = yalta_conference }
+						country_event = { id = yaltas.4 }
+					}
+					FRA = {
+						transfer_state = 50
+						transfer_state = 42
+						transfer_state = 51
+						transfer_state = 54
+						transfer_state = 53
+						transfer_state = 52
+						add_opinion_modifier = { target = SOV modifier = yalta_conference }
+						country_event = { id = yaltas.4 }
+					}
+					hidden_effect = {
+						news_event = { id = newsrussia2.27  days = 1 }
+					}
+				}
+				else_if = { #USA accepted
+					limit = {
+						USA = {
+							has_country_flag = usa_accepted_yalta_conference
+						}
+					}
+					SOV = {
+						transfer_state = 60
+						transfer_state = 65
+						transfer_state = 64
+						transfer_state = 61
+						transfer_state = 62
+						transfer_state = 63
+						transfer_state = 68
+						transfer_state = 66
+						transfer_state = 67
+						transfer_state = 5
+						transfer_state = 763
+						add_opinion_modifier = { target = USA modifier = yalta_conference }
+						set_country_flag = yalta_conference_over
+						country_event = { id = yaltas.4 }
+					}
+					USA = {
+						transfer_state = 55
+						transfer_state = 54
+						transfer_state = 53
+						transfer_state = 52
+						transfer_state = 56
+						transfer_state = 57
+						transfer_state = 58
+						transfer_state = 59
+						transfer_state = 50
+						transfer_state = 42
+						transfer_state = 51
+						add_opinion_modifier = { target = SOV modifier = yalta_conference }
+						country_event = { id = yaltas.4 }
+					}
+					hidden_effect = {
+						news_event = { id = newsrussia2.27  days = 1 }
+					}
+				}
+				else_if = { #ENG and FRA accepted
+					limit = {
+						ENG = {
+							has_country_flag = eng_accepted_yalta_conference
+						}
+						FRA = {
+							has_country_flag = fra_accepted_yalta_conference
+						}
+					}
+					SOV = {
+						transfer_state = 60
+						transfer_state = 65
+						transfer_state = 64
+						transfer_state = 61
+						transfer_state = 62
+						transfer_state = 63
+						transfer_state = 68
+						transfer_state = 66
+						transfer_state = 67
+						transfer_state = 5
+						transfer_state = 763
+						add_opinion_modifier = { target = ENG modifier = yalta_conference }
+						add_opinion_modifier = { target = FRA modifier = yalta_conference }
+						set_country_flag = yalta_conference_over
+						country_event = { id = yaltas.4 }
+					}
+					ENG = {
+						transfer_state = 55
+						transfer_state = 56
+						transfer_state = 57
+						transfer_state = 58
+						transfer_state = 59
+						add_opinion_modifier = { target = SOV modifier = yalta_conference }
+						country_event = { id = yaltas.4 }
+					}
+					FRA = {
+						transfer_state = 50
+						transfer_state = 42
+						transfer_state = 51
+						transfer_state = 54
+						transfer_state = 53
+						transfer_state = 52
+						add_opinion_modifier = { target = SOV modifier = yalta_conference }
+						country_event = { id = yaltas.4 }
+					}
+					hidden_effect = {
+						news_event = { id = newsrussia2.27  days = 1 }
+					}
+				}
+				else_if = { #ENG accepted
+					limit = {
+						ENG = {
+							has_country_flag = eng_accepted_yalta_conference
+						}
+					}
+					SOV = {
+						transfer_state = 60
+						transfer_state = 65
+						transfer_state = 64
+						transfer_state = 61
+						transfer_state = 62
+						transfer_state = 63
+						transfer_state = 68
+						transfer_state = 66
+						transfer_state = 67
+						transfer_state = 5
+						transfer_state = 763
+						add_opinion_modifier = { target = ENG modifier = yalta_conference }
+						set_country_flag = yalta_conference_over
+						country_event = { id = yaltas.4 }
+					}
+					ENG = {
+						transfer_state = 55
+						transfer_state = 54
+						transfer_state = 53
+						transfer_state = 52
+						transfer_state = 56
+						transfer_state = 57
+						transfer_state = 58
+						transfer_state = 59
+						transfer_state = 50
+						transfer_state = 42
+						transfer_state = 51
+						add_opinion_modifier = { target = SOV modifier = yalta_conference }
+						country_event = { id = yaltas.4 }
+					}
+					hidden_effect = {
+						news_event = { id = newsrussia2.27  days = 1 }
+					}
+				}
+				else_if = { #FRA accepted
+					limit = {
+						FRA = {
+							has_country_flag = fra_accepted_yalta_conference
+						}
+					}
+					SOV = {
+						transfer_state = 60
+						transfer_state = 65
+						transfer_state = 64
+						transfer_state = 61
+						transfer_state = 62
+						transfer_state = 63
+						transfer_state = 68
+						transfer_state = 66
+						transfer_state = 67
+						transfer_state = 5
+						transfer_state = 763
+						add_opinion_modifier = { target = FRA modifier = yalta_conference }
+						set_country_flag = yalta_conference_over
+						country_event = { id = yaltas.4 }
+					}
+					FRA = {
+						transfer_state = 55
+						transfer_state = 54
+						transfer_state = 53
+						transfer_state = 52
+						transfer_state = 56
+						transfer_state = 57
+						transfer_state = 58
+						transfer_state = 59
+						transfer_state = 50
+						transfer_state = 42
+						transfer_state = 51
+						add_opinion_modifier = { target = SOV modifier = yalta_conference }
+						country_event = { id = yaltas.4 }
+					}
+					hidden_effect = {
+						news_event = { id = newsrussia2.27  days = 1 }
+					}
+				}
+				if = {
+					limit = {
+						NOT = {
+							any_country = {
+								is_in_faction_with = GER
+								OR = {
+									has_war_with = SOV
+									if = {
+										limit = {
+											USA = {
+												has_country_flag = usa_accepted_yalta_conference
+											}
+										}
+										has_war_with = USA
+									}
+									if = {
+										limit = {
+											ENG = {
+												has_country_flag = eng_accepted_yalta_conference
+											}
+										}
+										has_war_with = ENG
+									}
+									if = {
+										limit = {
+											FRA = {
+												has_country_flag = fra_accepted_yalta_conference
+											}
+										}
+										has_war_with = FRA
+									}
+								}
+							}
+							any_state = {
+								NOT = {
+									state = 52
+									state = 53
+									state = 50
+									state = 54
+									state = 42
+									state = 55
+									state = 51
+									state = 57
+									state = 60
+									state = 65
+									state = 66
+									state = 68
+									state = 64
+									state = 59
+									state = 56
+									state = 58
+									state = 61
+									state = 62
+									state = 63
+									state = 5
+									state = 763
+								}
+								is_owned_by = GER
+							}
+						}
+					}
+					every_state = {
+						limit = {
+							is_core_of = GER
+						}
+						remove_core_of = GER
+					}
+					every_state = {
+						limit = {
+							is_claimed_by = GER
+						}
+						remove_claim_by = GER
+					}
+				}
+			}
+		}
+	}
+
+	# Make sure GER is GONE
+	on_peaceconference_ended = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						tag = SOV
+						has_country_flag = yalta_conference_over
+						NOT = {
+							has_country_flag = yalta_germany_dismantled
+						}
+					}
+					FROM = {
+						tag = GER
+					}
+				}
+				every_state = {
+					limit = {
+						is_core_of = GER
+					}
+					remove_core_of = GER
+				}
+				every_state = {
+					limit = {
+						is_claimed_by = GER
+					}
+					remove_claim_by = GER
+				}
+				if = {
+					limit = {
+						country_exists = GER
+					}
+					if = {
+						limit = {
+							GER = {
+								is_subject = yes
+							}
+						}
+						GER = {
+							OVERLORD = {
+								annex = GER
+							}
+						}
+					}
+					else = {
+						if = {
+							limit = {
+								GER = {
+									has_government = democratic
+								}
+							}
+							if = {
+								limit = {
+									country_exists = USA
+									USA = {
+										is_subject = no
+										has_government = democratic
+										has_country_flag = usa_accepted_yalta_conference
+										NOT = {
+											has_war_with = SOV
+										}
+									}
+								}
+								USA = {
+									annex = GER
+								}
+							}
+							else_if = {
+								limit = {
+									country_exists = ENG
+									ENG = {
+										is_subject = no
+										has_government = democratic
+										has_country_flag = eng_accepted_yalta_conference
+										NOT = {
+											has_war_with = SOV
+										}
+									}
+								}
+								ENG = {
+									annex = GER
+								}
+							}
+							else_if = {
+								limit = {
+									country_exists = FRA
+									FRA = {
+										is_subject = no
+										has_government = democratic
+										has_country_flag = fra_accepted_yalta_conference
+										NOT = {
+											has_war_with = SOV
+										}
+									}
+								}
+								FRA = {
+									annex = GER
+								}
+							}
+						}
+						else = {
+							SOV = {
+								annex = GER
+							}
+						}
+					}
+				}
+				ROOT = {
+					set_country_flag = yalta_germany_dismantled
+				}
+			}
+		}
+	}
+}

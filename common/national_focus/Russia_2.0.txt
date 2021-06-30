@@ -6724,6 +6724,12 @@ focus_tree = {
 				uses = 1
 				category = land_doctrine
 			}
+			if = {
+				limit = {
+					has_completed_focus = SOV_great_purge2
+				}
+				unlock_decision_tooltip = SOV_red_army_offensive_russia2
+			}
 		}
 	}
 
@@ -7869,13 +7875,10 @@ focus_tree = {
 			any_state = {
 				is_controlled_by = ROOT
 				is_core_of = GER
-				custom_trigger_tooltip = { #using a custom tooltip because game displays "is not in Europe"
-					tooltip = SOV_yalta_conference_in_europe_tt
-					is_on_continent = europe
-				}
+				is_on_continent = europe
 			}
 			GER = {
-				has_added_tension_amount > 25
+				has_added_tension_amount > 20
 				surrender_progress > 0.20
 				is_subject = no
 			}
@@ -7906,49 +7909,25 @@ focus_tree = {
 				}
 			}
 			OR = {
-				AND = {
-					USA = {
-						has_government = democratic
-						has_war_with = GER
-						is_major = yes
-					}
-					any_state = {
-						is_controlled_by = USA
-						is_core_of = GER
-						custom_trigger_tooltip = {
-							tooltip = SOV_yalta_conference_in_europe_tt
-							is_on_continent = europe
-						}
+				USA = {
+					has_war_with = GER
+					is_major = yes
+					NOT = {
+						has_war_with = ROOT
 					}
 				}
-				AND = {
-					ENG = {
-						has_government = democratic
-						has_war_with = GER
-						is_major = yes
-					}
-					any_state = {
-						is_controlled_by = ENG
-						is_core_of = GER
-						custom_trigger_tooltip = {
-							tooltip = SOV_yalta_conference_in_europe_tt
-							is_on_continent = europe
-						}
+				ENG = {
+					has_war_with = GER
+					is_major = yes
+					NOT = {
+						has_war_with = ROOT
 					}
 				}
-				AND = {
-					FRA = {
-						has_government = democratic
-						has_war_with = GER
-						is_major = yes
-					}
-					any_state = {
-						is_controlled_by = FRA
-						is_core_of = GER
-						custom_trigger_tooltip = {
-							tooltip = SOV_yalta_conference_in_europe_tt
-							is_on_continent = europe
-						}
+				FRA = {
+					has_war_with = GER
+					is_major = yes
+					NOT = {
+						has_war_with = ROOT
 					}
 				}
 			}
@@ -7966,131 +7945,29 @@ focus_tree = {
 			if = {
 				limit = {
 					USA = {
-						has_government = democratic
 						has_war_with = GER
 						is_major = yes
-					}
-					any_state = {
-						is_controlled_by = USA
-						is_core_of = GER
-						is_on_continent = europe
 					}
 				}
 				USA = { country_event = { days = 1 id = yaltas.1 } }
-				if = {
-					limit = {
-						ENG = {
-							has_government = democratic
-							has_war_with = GER
-							is_major = yes
-							OR = {
-								is_in_faction_with = USA
-								has_war_together_with = USA
-							}
-						}
-					}
-					ENG = { country_event = { days = 1 id = yaltas.1 } }
-				}
-				if = {
-					limit = {
-						FRA = {
-							has_government = democratic
-							has_war_with = GER
-							is_major = yes
-							OR = {
-								is_in_faction_with = USA
-								has_war_together_with = USA
-							}
-						}
-					}
-					FRA = { country_event = { days = 1 id = yaltas.1 } }
-				}
 			}
-			else_if = {
+			if = {
 				limit = {
 					ENG = {
-						has_government = democratic
 						has_war_with = GER
 						is_major = yes
-					}
-					any_state = {
-						is_controlled_by = ENG
-						is_core_of = GER
-						is_on_continent = europe
 					}
 				}
 				ENG = { country_event = { days = 1 id = yaltas.1 } }
-				if = {
-					limit = {
-						USA = {
-							has_government = democratic
-							has_war_with = GER
-							is_major = yes
-							OR = {
-								is_in_faction_with = ENG
-								has_war_together_with = ENG
-							}
-						}
-					}
-					USA = { country_event = { days = 1 id = yaltas.1 } }
-				}
-				if = {
-					limit = {
-						FRA = {
-							has_government = democratic
-							has_war_with = GER
-							is_major = yes
-							OR = {
-								is_in_faction_with = ENG
-								has_war_together_with = ENG
-							}
-						}
-					}
-					FRA = { country_event = { days = 1 id = yaltas.1 } }
-				}
 			}
-			else_if = {
+			if = {
 				limit = {
 					FRA = {
-						has_government = democratic
 						has_war_with = GER
 						is_major = yes
 					}
-					any_state = {
-						is_controlled_by = FRA
-						is_core_of = GER
-						is_on_continent = europe
-					}
 				}
 				FRA = { country_event = { days = 1 id = yaltas.1 } }
-				if = {
-					limit = {
-						USA = {
-							has_government = democratic
-							has_war_with = GER
-							is_major = yes
-							OR = {
-								is_in_faction_with = FRA
-								has_war_together_with = FRA
-							}
-						}
-					}
-					USA = { country_event = { days = 1 id = yaltas.1 } }
-				}
-				if = {
-					limit = {
-						ENG = {
-							has_government = democratic
-							has_war_with = GER
-							is_major = yes
-							OR = {
-								is_in_faction_with = FRA
-								has_war_together_with = FRA
-							}
-						}
-					}
-					ENG = { country_event = { days = 1 id = yaltas.1 } }
-				}
 			}
 			custom_effect_tooltip = SOV_yalta_conference_tt
 			custom_effect_tooltip = SOV_yalta_conference_tt3
@@ -8152,20 +8029,9 @@ focus_tree = {
 		y = 10
 		prerequisite = { focus = SOV_for_the_motherland }
 		icon = GFX_focus_generic_anti_fascist_diplomacy
-		cost = 10
+		cost = 4
 		available = {
-			always = no
-		}
-		bypass = {
 			OR = {
-				GER = {
-					OR = {
-						has_capitulated = yes
-						exists = no
-						is_subject = yes
-						is_major = no
-					}
-				}
 				date > 1945.9.2
 				custom_trigger_tooltip = {
 		    		tooltip = SOV_yalta_over_tt
@@ -8176,17 +8042,29 @@ focus_tree = {
 						FRA = { has_country_flag = fra_accepted_yalta_conference }
 					}
 				}
-				AND = {
-					is_in_peace_conference = yes
-					GER = {
-						surrender_progress > 0.9
+				GER = {
+					has_capitulated = yes
+				}
+				GER = {
+					exists = no
+				}
+				GER = {
+					is_subject = yes
+				}
+				GER = {
+					is_major = no
+				}
+				GER = {
+					custom_trigger_tooltip = {
+						tooltip = has_surrendered_to_sov
+						has_country_flag = has_surrendered_to_sov
 					}
 				}
 			}
 		}
 		search_filters = { FOCUS_FILTER_COMMUNISM_STALIN_RUSSIA }
 		completion_reward = {
-			custom_effect_tooltip = SOV_end_of_war_tt
+			add_ideas = SOV_Triumph_communist_will
 		}
 	}
 
@@ -8236,6 +8114,12 @@ focus_tree = {
 		completion_reward = {
 			hidden_effect = {
 				news_event = { hours = 6 id = newsrussia2.35 }
+				every_state = {
+					limit = {
+						is_core_of = GER
+					}
+					remove_core_of = GER
+				}
 				DDR = {
 					add_state_core = 60
 					add_state_core = 61

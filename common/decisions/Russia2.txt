@@ -37871,11 +37871,11 @@ SOV_great_patriotic_war_russia2 = {
 			}
 		}
 
-		days_remove = 720
-
-		modifier = {
-			army_core_defence_factor = 0.25
-			mobilization_speed = 0.15
+		complete_effect = {
+			add_timed_idea = {
+				idea = SOV_Order_227
+    			days = 730
+			}
 		}
 
 		ai_will_do = {
@@ -37887,9 +37887,59 @@ SOV_great_patriotic_war_russia2 = {
 		}
 	}
 
+	SOV_red_army_offensive_russia2 = {
+
+		icon = generic_nationalism
+
+		available = {
+			has_war = yes
+			any_enemy_country = {
+				is_major = yes
+				capital_scope = {
+					is_on_continent = europe
+				}
+			}
+			has_civil_war = no
+			surrender_progress < 0.05
+			any_state = {
+				is_on_continent = europe
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
+				}
+			}
+			has_completed_focus = SOV_lesson_of_war
+		}
+
+		cost = 25
+
+		fire_only_once = yes
+
+		visible = {
+			has_war = yes
+			any_enemy_country = {
+				is_major = yes
+				capital_scope = {
+					is_on_continent = europe
+				}
+			}
+		}
+
+		complete_effect = {
+			add_timed_idea = {
+				idea = SOV_Red_army_offensive
+    			days = 730
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
 	SOV_komintern_red_army_russia2 = {
 
-		icon = generic_army_support
+		icon = generic_military
 
 		available = {
 			has_war = yes
@@ -37945,6 +37995,13 @@ SOV_great_patriotic_war_russia2 = {
 		icon = generic_scorched_earth
 
 		available = {
+			has_war = yes
+			any_enemy_country = {
+				is_major = yes
+				capital_scope = {
+					is_on_continent = europe
+				}
+			}
 			surrender_progress > 0.05
 		}
 
@@ -38855,7 +38912,7 @@ SOV_great_patriotic_war_russia2 = {
 	#Capture 202 "Berlin"
 	SOV_capture_berlin_russia2 = {
 
-		icon = generic_civil_support
+		icon = generic_tank
 
 		allowed = {
 			original_tag = SOV
@@ -38867,7 +38924,7 @@ SOV_great_patriotic_war_russia2 = {
 				controls_state = 64
 				any_country = {
 					is_in_faction_with = ROOT
-					has_war_with = 64.CONTROLLER
+					has_war_together_with = ROOT
 					controls_state = 64
 				}
 			}
@@ -38975,6 +39032,514 @@ SOV_great_patriotic_war_russia2 = {
 				add_ideas = SOV_Unstoppable_red_army1
 			}
 			64 = { save_event_target_as = state_captured_gpw_russia2 }
+			country_event = soviets.497
+		}
+	}
+
+	#Capture 16 "Paris"
+	SOV_capture_paris_russia2 = {
+
+		icon = generic_tank
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		#Success trigger
+		available = {
+			OR = {
+				controls_state = 16
+				any_country = {
+					is_in_faction_with = ROOT
+					has_war_together_with = ROOT
+					controls_state = 16
+				}
+			}
+		}
+
+		highlight_states = {
+			state = 16
+		}
+
+		days_mission_timeout = 180
+
+		fire_only_once = yes
+
+		is_good = no
+
+		activation = {
+			is_subject = no
+			has_government = communism
+			OR = {
+				has_country_leader = {
+					name = "Joseph Stalin"
+					ruling_only = yes
+				}
+				has_country_leader = {
+					name = "Vasily Stalin"
+					ruling_only = yes
+				}
+			}
+			has_war = yes
+			has_civil_war = no
+			surrender_progress < 0.05
+			any_enemy_country = {
+				is_major = yes
+				capital_scope = {
+					state = 16
+				}
+			}
+			any_state = {
+				distance_to = {
+					value < 500
+					target = 16
+				}
+				OR = {
+					is_controlled_by = ROOT
+					any_country = {
+						is_in_faction_with = ROOT
+						controls_state = PREV
+					}
+				}
+			}
+			NOT = {
+				has_country_flag = second_civil_war_in_progress
+				has_country_flag = black_revolution_civil_war_in_progress
+				controls_state = 16
+				owns_state = 16
+			}
+		}
+
+		#Fail
+		timeout_effect = {
+			add_war_support = -0.05
+			add_political_power = -100
+			16 = { save_event_target_as = state_captured_gpw_russia2 }
+			country_event = soviets.498
+		}
+		#Success
+		complete_effect = {
+			if = {
+				limit = {
+					has_idea = SOV_Unstoppable_red_army1
+				}
+				swap_ideas = {
+					remove_idea = SOV_Unstoppable_red_army1
+					add_idea = SOV_Unstoppable_red_army2
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = SOV_Unstoppable_red_army2
+				}
+				swap_ideas = {
+					remove_idea = SOV_Unstoppable_red_army2
+					add_idea = SOV_Unstoppable_red_army3
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = SOV_Unstoppable_red_army3
+				}
+				swap_ideas = {
+					remove_idea = SOV_Unstoppable_red_army3
+					add_idea = SOV_Unstoppable_red_army4
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = SOV_Unstoppable_red_army4
+				}
+				swap_ideas = {
+					remove_idea = SOV_Unstoppable_red_army4
+					add_idea = SOV_Unstoppable_red_army5
+				}
+			}
+			else = {
+				add_ideas = SOV_Unstoppable_red_army1
+			}
+			16 = { save_event_target_as = state_captured_gpw_russia2 }
+			country_event = soviets.497
+		}
+	}
+
+	#Capture 2 "Rome"
+	SOV_capture_rome_russia2 = {
+
+		icon = generic_tank
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		#Success trigger
+		available = {
+			OR = {
+				controls_state = 2
+				any_country = {
+					is_in_faction_with = ROOT
+					has_war_together_with = ROOT
+					controls_state = 2
+				}
+			}
+		}
+
+		highlight_states = {
+			state = 2
+		}
+
+		days_mission_timeout = 180
+
+		fire_only_once = yes
+
+		is_good = no
+
+		activation = {
+			is_subject = no
+			has_government = communism
+			OR = {
+				has_country_leader = {
+					name = "Joseph Stalin"
+					ruling_only = yes
+				}
+				has_country_leader = {
+					name = "Vasily Stalin"
+					ruling_only = yes
+				}
+			}
+			has_war = yes
+			has_civil_war = no
+			surrender_progress < 0.05
+			any_enemy_country = {
+				is_major = yes
+				capital_scope = {
+					state = 2
+				}
+			}
+			any_state = {
+				distance_to = {
+					value < 500
+					target = 2
+				}
+				OR = {
+					is_controlled_by = ROOT
+					any_country = {
+						is_in_faction_with = ROOT
+						controls_state = PREV
+					}
+				}
+			}
+			NOT = {
+				has_country_flag = second_civil_war_in_progress
+				has_country_flag = black_revolution_civil_war_in_progress
+				controls_state = 2
+				owns_state = 2
+			}
+		}
+
+		#Fail
+		timeout_effect = {
+			add_war_support = -0.05
+			add_political_power = -100
+			2 = { save_event_target_as = state_captured_gpw_russia2 }
+			country_event = soviets.498
+		}
+		#Success
+		complete_effect = {
+			if = {
+				limit = {
+					has_idea = SOV_Unstoppable_red_army1
+				}
+				swap_ideas = {
+					remove_idea = SOV_Unstoppable_red_army1
+					add_idea = SOV_Unstoppable_red_army2
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = SOV_Unstoppable_red_army2
+				}
+				swap_ideas = {
+					remove_idea = SOV_Unstoppable_red_army2
+					add_idea = SOV_Unstoppable_red_army3
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = SOV_Unstoppable_red_army3
+				}
+				swap_ideas = {
+					remove_idea = SOV_Unstoppable_red_army3
+					add_idea = SOV_Unstoppable_red_army4
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = SOV_Unstoppable_red_army4
+				}
+				swap_ideas = {
+					remove_idea = SOV_Unstoppable_red_army4
+					add_idea = SOV_Unstoppable_red_army5
+				}
+			}
+			else = {
+				add_ideas = SOV_Unstoppable_red_army1
+			}
+			2 = { save_event_target_as = state_captured_gpw_russia2 }
+			country_event = soviets.497
+		}
+	}
+
+	#Capture 126 "London"
+	SOV_capture_london_russia2 = {
+
+		icon = generic_tank
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		#Success trigger
+		available = {
+			OR = {
+				controls_state = 126
+				any_country = {
+					is_in_faction_with = ROOT
+					has_war_together_with = ROOT
+					controls_state = 126
+				}
+			}
+		}
+
+		highlight_states = {
+			state = 126
+		}
+
+		days_mission_timeout = 180
+
+		fire_only_once = yes
+
+		is_good = no
+
+		activation = {
+			is_subject = no
+			has_government = communism
+			OR = {
+				has_country_leader = {
+					name = "Joseph Stalin"
+					ruling_only = yes
+				}
+				has_country_leader = {
+					name = "Vasily Stalin"
+					ruling_only = yes
+				}
+			}
+			has_war = yes
+			has_civil_war = no
+			surrender_progress < 0.05
+			any_enemy_country = {
+				is_major = yes
+				capital_scope = {
+					state = 126
+				}
+			}
+			any_state = {
+				distance_to = {
+					value < 500
+					target = 126
+				}
+				OR = {
+					is_controlled_by = ROOT
+					any_country = {
+						is_in_faction_with = ROOT
+						controls_state = PREV
+					}
+				}
+			}
+			NOT = {
+				has_country_flag = second_civil_war_in_progress
+				has_country_flag = black_revolution_civil_war_in_progress
+				controls_state = 126
+				owns_state = 126
+			}
+		}
+
+		#Fail
+		timeout_effect = {
+			add_war_support = -0.05
+			add_political_power = -100
+			126 = { save_event_target_as = state_captured_gpw_russia2 }
+			country_event = soviets.498
+		}
+		#Success
+		complete_effect = {
+			if = {
+				limit = {
+					has_idea = SOV_Unstoppable_red_army1
+				}
+				swap_ideas = {
+					remove_idea = SOV_Unstoppable_red_army1
+					add_idea = SOV_Unstoppable_red_army2
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = SOV_Unstoppable_red_army2
+				}
+				swap_ideas = {
+					remove_idea = SOV_Unstoppable_red_army2
+					add_idea = SOV_Unstoppable_red_army3
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = SOV_Unstoppable_red_army3
+				}
+				swap_ideas = {
+					remove_idea = SOV_Unstoppable_red_army3
+					add_idea = SOV_Unstoppable_red_army4
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = SOV_Unstoppable_red_army4
+				}
+				swap_ideas = {
+					remove_idea = SOV_Unstoppable_red_army4
+					add_idea = SOV_Unstoppable_red_army5
+				}
+			}
+			else = {
+				add_ideas = SOV_Unstoppable_red_army1
+			}
+			126 = { save_event_target_as = state_captured_gpw_russia2 }
+			country_event = soviets.497
+		}
+	}
+
+	#Capture 41 "Madrid"
+	SOV_capture_madrid_russia2 = {
+
+		icon = generic_tank
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		#Success trigger
+		available = {
+			OR = {
+				controls_state = 41
+				any_country = {
+					is_in_faction_with = ROOT
+					has_war_together_with = ROOT
+					controls_state = 41
+				}
+			}
+		}
+
+		highlight_states = {
+			state = 41
+		}
+
+		days_mission_timeout = 180
+
+		fire_only_once = yes
+
+		is_good = no
+
+		activation = {
+			is_subject = no
+			has_government = communism
+			OR = {
+				has_country_leader = {
+					name = "Joseph Stalin"
+					ruling_only = yes
+				}
+				has_country_leader = {
+					name = "Vasily Stalin"
+					ruling_only = yes
+				}
+			}
+			has_war = yes
+			has_civil_war = no
+			surrender_progress < 0.05
+			any_enemy_country = {
+				is_major = yes
+				capital_scope = {
+					state = 41
+				}
+			}
+			any_state = {
+				distance_to = {
+					value < 500
+					target = 41
+				}
+				OR = {
+					is_controlled_by = ROOT
+					any_country = {
+						is_in_faction_with = ROOT
+						controls_state = PREV
+					}
+				}
+			}
+			NOT = {
+				has_country_flag = second_civil_war_in_progress
+				has_country_flag = black_revolution_civil_war_in_progress
+				controls_state = 41
+				owns_state = 41
+			}
+		}
+
+		#Fail
+		timeout_effect = {
+			add_war_support = -0.05
+			add_political_power = -100
+			41 = { save_event_target_as = state_captured_gpw_russia2 }
+			country_event = soviets.498
+		}
+		#Success
+		complete_effect = {
+			if = {
+				limit = {
+					has_idea = SOV_Unstoppable_red_army1
+				}
+				swap_ideas = {
+					remove_idea = SOV_Unstoppable_red_army1
+					add_idea = SOV_Unstoppable_red_army2
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = SOV_Unstoppable_red_army2
+				}
+				swap_ideas = {
+					remove_idea = SOV_Unstoppable_red_army2
+					add_idea = SOV_Unstoppable_red_army3
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = SOV_Unstoppable_red_army3
+				}
+				swap_ideas = {
+					remove_idea = SOV_Unstoppable_red_army3
+					add_idea = SOV_Unstoppable_red_army4
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = SOV_Unstoppable_red_army4
+				}
+				swap_ideas = {
+					remove_idea = SOV_Unstoppable_red_army4
+					add_idea = SOV_Unstoppable_red_army5
+				}
+			}
+			else = {
+				add_ideas = SOV_Unstoppable_red_army1
+			}
+			41 = { save_event_target_as = state_captured_gpw_russia2 }
 			country_event = soviets.497
 		}
 	}
