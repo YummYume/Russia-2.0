@@ -45,4 +45,74 @@ on_actions = {
 			}
 		}
 	}
+
+	#Create Russian Protectorate if Freedom for All was completed
+	on_release_as_puppet = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						OR = {
+							tag = UKR
+							tag = BLR
+							tag = ARM
+							tag = GEO
+							tag = AZR
+							tag = KAZ
+							tag = TMS
+							tag = UZB
+							tag = TAG
+							tag = KYR
+							tag = CIR
+							tag = CRI
+							tag = DAG
+							tag = KAL
+							tag = KAR
+							tag = KUB
+							tag = NOV
+							tag = PRM
+							tag = ROS
+							tag = SIB
+							tag = STP
+							tag = TAT
+							tag = URA
+							tag = VLG
+							tag = MON
+							tag = TAN
+							tag = EFR
+							tag = KMI
+							tag = VYA
+						}
+						is_subject_of = SOV
+						NOT = {
+							has_autonomy_state = autonomy_collaboration_government
+						}
+					}
+					FROM = {
+						tag = SOV
+						has_completed_focus = SOV_freedom_all
+						has_government = democratic
+						is_subject = no
+						NOT = {
+							has_idea = SOV_Exiled_russia
+						}
+					}
+				}
+				FROM = {
+					set_autonomy = {
+						target = ROOT
+						autonomy_state = autonomy_russian_protectorate
+					}
+				}
+				ROOT = {
+					set_popularities = {
+						democratic = 70
+						neutrality = 10
+						fascism = 10
+						communism = 10
+					}
+				}
+			}
+		}
+	}
 }

@@ -512,6 +512,46 @@ on_actions = {
 		}
 	}
 
+	#If Romania or Russia Attack eachother, cancel the righst of ressources
+	on_war_relation_added = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						TAG = ROM
+						OR = {
+							has_country_flag = giving_46_rights_to_sov
+							has_country_flag = giving_46_rights_to_sov_again
+						}
+					}
+					FROM = {
+						TAG = SOV
+					}
+				}
+				ROOT = {
+					remove_resource_rights = 46
+				}
+			}
+			else_if = {
+				limit = {
+					ROOT = {
+						TAG = SOV
+					}
+					FROM = {
+						TAG = ROM
+						OR = {
+							has_country_flag = giving_46_rights_to_sov
+							has_country_flag = giving_46_rights_to_sov_again
+						}
+					}
+				}
+				FROM = {
+					remove_resource_rights = 46
+				}
+			}
+		}
+	}
+
 	#Lock Division Template On Startup
 	on_startup = {
 		effect = {

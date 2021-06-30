@@ -551,4 +551,118 @@ on_actions = {
 			}
 		}
 	}
+
+	on_monthly_SOV = { #SOV has puppet non Soviet Republic
+		effect = {
+			if = {
+				limit = {
+					any_country = {
+						is_subject_of = SOV
+						NOT = {
+							has_autonomy_state = autonomy_imperial_governorates
+						}
+					}
+					SOV = {
+						has_completed_focus = SOV_great_purge2
+						has_government = communism
+						is_subject = no
+					}
+				}
+				every_country = {
+					limit = {
+						is_subject_of = SOV
+						NOT = {
+							has_autonomy_state = autonomy_soviet_republic
+						}
+					}
+					SOV = {
+						set_autonomy = {
+							target = PREV
+							autonomy_state = autonomy_soviet_republic
+						}
+					}
+					set_popularities = {
+						democratic = 10
+						neutrality = 10
+						fascism = 10
+						communism = 70
+					}
+				}
+			}
+		}
+	}
+
+	on_monthly_SOV = { #SOV has puppet non Russian Protectorate
+		effect = {
+			if = {
+				limit = {
+					any_country = {
+						is_subject_of = SOV
+						NOT = {
+							has_autonomy_state = autonomy_russian_protectorate
+						}
+					}
+					SOV = {
+						has_completed_focus = SOV_freedom_all
+						has_government = democratic
+						is_subject = no
+						NOT = {
+							has_idea = SOV_Exiled_russia
+						}
+					}
+				}
+				every_country = {
+					limit = {
+						OR = {
+							tag = UKR
+							tag = BLR
+							tag = ARM
+							tag = GEO
+							tag = AZR
+							tag = KAZ
+							tag = TMS
+							tag = UZB
+							tag = TAG
+							tag = KYR
+							tag = CIR
+							tag = CRI
+							tag = DAG
+							tag = KAL
+							tag = KAR
+							tag = KUB
+							tag = NOV
+							tag = PRM
+							tag = ROS
+							tag = SIB
+							tag = STP
+							tag = TAT
+							tag = URA
+							tag = VLG
+							tag = MON
+							tag = TAN
+							tag = EFR
+							tag = KMI
+							tag = VYA
+						}
+						is_subject_of = SOV
+						NOT = {
+							has_autonomy_state = autonomy_collaboration_government
+						}
+					}
+					SOV = {
+						set_autonomy = {
+							target = PREV
+							autonomy_state = autonomy_russian_protectorate
+						}
+					}
+					set_popularities = {
+						democratic = 70
+						neutrality = 10
+						fascism = 10
+						communism = 10
+					}
+				}
+			}
+		}
+	}
 }
