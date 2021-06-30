@@ -10,12 +10,13 @@ SOV_reform_military_purge = {
 		}
 		
 		visible = {
-			
+			has_idea = SOV_The_great_officer_purge
 		}
 
 		available = {
 			has_government = communism
 			has_completed_focus = SOV_reign_of_terror
+			has_idea = SOV_The_great_officer_purge
 		}
 
 		cost = 150
@@ -43,12 +44,13 @@ SOV_reform_military_purge = {
 		}
 		
 		visible = {
-			
+			has_idea = SOV_The_great_officer_purge_2
 		}
 
 		available = {
 			has_government = communism
 			has_completed_focus = SOV_train_new_officers
+			has_idea = SOV_The_great_officer_purge_2
 		}
 
 		cost = 150
@@ -76,13 +78,14 @@ SOV_reform_military_purge = {
 		}
 		
 		visible = {
-			
+			has_idea = SOV_The_great_officer_purge_3
 		}
 
 		available = {
 			has_government = communism
 			has_completed_focus = SOV_new_russia_military
 			has_army_experience > 50
+			has_idea = SOV_The_great_officer_purge_3
 		}
 
 		cost = 50
@@ -117,7 +120,7 @@ SOV_reform_military_purge = {
 		}
 		
 		visible = {
-			
+			has_idea = SOV_The_great_officer_purge_4
 		}
 
 		available = {
@@ -127,6 +130,7 @@ SOV_reform_military_purge = {
 				is_major = yes
 				has_war_with = SOV
 			}
+			has_idea = SOV_The_great_officer_purge_4
 		}
 
 		cost = 50
@@ -156,7 +160,7 @@ SOV_reform_military_purge = {
 		}
 		
 		visible = {
-			
+			has_idea = SOV_The_great_officer_purge_5
 		}
 
 		available = {
@@ -166,6 +170,7 @@ SOV_reform_military_purge = {
 				is_major = yes
 				has_war_with = SOV
 			}
+			has_idea = SOV_The_great_officer_purge_5
 		}
 
 		cost = 50
@@ -194,7 +199,7 @@ SOV_reform_military_purge = {
 		}
 		
 		visible = {
-			
+			has_idea = SOV_The_great_officer_purge_6
 		}
 
 		available = {
@@ -204,6 +209,7 @@ SOV_reform_military_purge = {
 				is_major = yes
 				has_war_with = SOV
 			}
+			has_idea = SOV_The_great_officer_purge_6
 		}
 
 		cost = 50
@@ -217,6 +223,169 @@ SOV_reform_military_purge = {
 		remove_effect = {
 			remove_ideas = SOV_The_great_officer_purge_6
 			army_experience = -50
+		}
+	}
+
+	SOV_reform_hastily_the_army = {
+
+		icon = GFX_decision_generic_nationalism
+
+		allowed = {
+			original_tag = SOV
+		}
+		
+		visible = {
+			
+		}
+
+		available = {
+			has_government = communism
+			custom_trigger_tooltip = {
+				tooltip = not_has_any_purge_idea
+				NOT = {
+					has_idea = SOV_The_great_officer_purge
+					has_idea = SOV_The_great_officer_purge_2
+					has_idea = SOV_The_great_officer_purge_3
+					has_idea = SOV_The_great_officer_purge_4
+					has_idea = SOV_The_great_officer_purge_5
+					has_idea = SOV_The_great_officer_purge_6
+				}
+			}
+			surrender_progress > 0.4
+		}
+
+		cost = 50
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		complete_effect = {
+			remove_ideas = SOV_The_great_officer_purge
+			hidden_effect = {
+				remove_ideas = SOV_The_great_officer_purge_2
+				remove_ideas = SOV_The_great_officer_purge_3
+				remove_ideas = SOV_The_great_officer_purge_4
+				remove_ideas = SOV_The_great_officer_purge_5
+				remove_ideas = SOV_The_great_officer_purge_6
+			}
+		}
+	}
+
+	SOV_allow_formation_penal_batallion = {
+
+		icon = GFX_decision_generic_arrest
+
+		allowed = {
+			original_tag = SOV
+		}
+		
+		visible = {
+			
+		}
+
+		available = {
+			has_government = communism
+		}
+
+		cost = 50
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		complete_effect = {
+			division_template = {
+				name = "Shtrafbats Diviziya"
+				is_locked = no
+				priority = 0
+				template_counter = 2
+				regiments = {
+					infantry = { x = 0 y = 0 }
+					infantry = { x = 0 y = 1 }
+					infantry = { x = 1 y = 0 }		
+					infantry = { x = 1 y = 1 }	
+					infantry = { x = 2 y = 0 }		
+					infantry = { x = 2 y = 1 }	
+					infantry = { x = 2 y = 2 }
+					infantry = { x = 2 y = 3 }			
+				}
+				support = {
+					engineer = { x = 0 y = 0 }
+					recon = { x = 0 y = 1 }
+				}
+			}
+			add_stability = -0.05
+			add_war_support = -0.05
+			add_manpower = -132000
+			custom_effect_tooltip = unlock_shtrafbat_temlate_capital
+			hidden_effect = {
+				random_owned_controlled_state = {
+					limit = {
+						is_capital = yes
+					}
+					create_unit = {
+						division = "name = \"1st Shtrafbats Diviziya\" division_template = \"Shtrafbats Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"2nd Shtrafbats Diviziya\" division_template = \"Shtrafbats Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"3rd Shtrafbats Diviziya\" division_template = \"Shtrafbats Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"4th Shtrafbats Diviziya\" division_template = \"Shtrafbats Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"5th Shtrafbats Diviziya\" division_template = \"Shtrafbats Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"6th Shtrafbats Diviziya\" division_template = \"Shtrafbats Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"7th Shtrafbats Diviziya\" division_template = \"Shtrafbats Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"8th Shtrafbats Diviziya\" division_template = \"Shtrafbats Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"9th Shtrafbats Diviziya\" division_template = \"Shtrafbats Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"10th Shtrafbats Diviziya\" division_template = \"Shtrafbats Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"11th Shtrafbats Diviziya\" division_template = \"Shtrafbats Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"12th Shtrafbats Diviziya\" division_template = \"Shtrafbats Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"13th Shtrafbats Diviziya\" division_template = \"Shtrafbats Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"14th Shtrafbats Diviziya\" division_template = \"Shtrafbats Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"15th Shtrafbats Diviziya\" division_template = \"Shtrafbats Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+						owner = SOV
+					}
+				}
+			}
 		}
 	}
 
