@@ -8330,6 +8330,7 @@ country_event = {
 			target = FROM
 			modifier = russian_diplomats
 		}
+		set_country_flag = sov_invited_focus_tsar
 		ROOT = {
 			add_ai_strategy = {
 				type = alliance
@@ -8455,6 +8456,7 @@ country_event = {
 			target = FROM
 			modifier = russian_diplomats
 		}
+		set_country_flag = sov_invited_focus_tsar
 		ROOT = {
 			add_ai_strategy = {
 				type = alliance
@@ -11051,7 +11053,7 @@ country_event = {
 	}
 }
 
-#Event for SOU to Release SOV if it Win the Civil War
+#Event for SOU to Release SOV if it Wins the Civil War
 country_event = {
 	id = soviets.238
 	title = soviets.238.t
@@ -18566,7 +18568,8 @@ country_event = {
 
 	immediate = {
 		hidden_effect = {
-			country_event = { id = soviets.410 days = 30 }
+			set_country_flag = sov_trials_begin
+			country_event = { id = soviets.422 days = 30 }
 		}
 	}
 
@@ -18575,12 +18578,10 @@ country_event = {
 		ai_chance = {
 			factor = 100
 		}
-		set_country_flag = sov_trials_begin
-		set_variable = { time_remaining_before_end_trials = 200 }
 	}
 }
 
-#First Trial
+#First Trial - Fate of the Syndicates
 country_event = {
 	id = soviets.410
 	title = soviets.410.t
@@ -18591,32 +18592,51 @@ country_event = {
 
 	immediate = {
 		hidden_effect = {
-			#country_event = { id = soviets.411 days = 30 }
+			set_country_flag = sov_fate_syndicates
+			country_event = { id = soviets.426 days = 15 }
 		}
 	}
 
-	option = { #
+	option = { #They are clearly Communist
 		name = soviets.410.a
 		ai_chance = {
-			factor = 100
+			factor = 50
 		}
-
+		add_stability = -0.05
 	}
 
-	option = { #
+	option = { #We will take control over them
 		name = soviets.410.b
 		ai_chance = {
-			factor = 100
+			factor = 25
 		}
-		
+		add_to_variable = { united_russia_strength = 1 }
+		round_variable = united_russia_strength
+		clamp_variable = {
+			var = united_russia_strength
+			min = 0
+			max = 4
+		}
+		custom_effect_tooltip = united_russia_gains_strength
 	}
 
-	option = { #
+	option = { #We will let them operate, the workers need the Syndicates
 		name = soviets.410.c
 		ai_chance = {
-			factor = 100
+			factor = 25
 		}
-		
+		subtract_from_variable = { united_russia_strength = 1 }
+		round_variable = united_russia_strength
+		clamp_variable = {
+			var = united_russia_strength
+			min = 0
+			max = 4
+		}
+		custom_effect_tooltip = united_russia_lose_strength
+		add_popularity = {
+			ideology = democratic
+			popularity = -0.10
+		}
 	}
 }
 
@@ -19646,6 +19666,7 @@ country_event = {
 	immediate = {
 		hidden_effect = {
 			set_country_flag = sov_democratic_opposition_formed
+			country_event = { id = soviets.410 days = 30 }
 		}
 	}
 
@@ -19666,6 +19687,13 @@ country_event = {
 
 	is_triggered_only = yes
 
+	immediate = {
+		hidden_effect = {
+			set_country_flag = sov_students_protest
+			country_event = { id = soviets.428 days = 30 }
+		}
+	}
+
 	option = { #Help them
 		name = soviets.423.a
 		add_political_power = -200
@@ -19677,6 +19705,13 @@ country_event = {
 		add_political_power = 50
 		add_ideas = SOV_Students_protest
 		add_to_variable = { united_russia_strength = 1 }
+		round_variable = united_russia_strength
+		clamp_variable = {
+			var = united_russia_strength
+			min = 0
+			max = 4
+		}
+		custom_effect_tooltip = united_russia_gains_strength
 	}
 }
 
@@ -19698,6 +19733,13 @@ country_event = {
 		name = soviets.424.b
 		add_political_power = 100
 		add_to_variable = { united_russia_strength = 1 }
+		round_variable = united_russia_strength
+		clamp_variable = {
+			var = united_russia_strength
+			min = 0
+			max = 4
+		}
+		custom_effect_tooltip = united_russia_gains_strength
 	}
 }
 
@@ -19719,6 +19761,13 @@ country_event = {
 		name = soviets.425.b
 		add_political_power = 100
 		add_to_variable = { united_russia_strength = 1 }
+		round_variable = united_russia_strength
+		clamp_variable = {
+			var = united_russia_strength
+			min = 0
+			max = 4
+		}
+		custom_effect_tooltip = united_russia_gains_strength
 	}
 }
 
@@ -19730,6 +19779,13 @@ country_event = {
 	picture = GFX_report_event_soviet_soldiers_tank
 
 	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			set_country_flag = sov_beria_trial
+			country_event = { id = soviets.423 days = 15 }
+		}
+	}
 
 	option = { #Execute him
 		name = soviets.426.a
@@ -19776,6 +19832,10 @@ country_event = {
 		}
 	}
 
+	immediate = {
+		set_country_flag = sov_problems_army
+	}
+
 	mean_time_to_happen = { days = 5 }
 
 	option = { #Let it calm down
@@ -19783,6 +19843,13 @@ country_event = {
 		add_stability = -0.05
 		add_ideas = SOV_Army_disobedience
 		add_to_variable = { united_russia_strength = 1 }
+		round_variable = united_russia_strength
+		clamp_variable = {
+			var = united_russia_strength
+			min = 0
+			max = 4
+		}
+		custom_effect_tooltip = united_russia_gains_strength
 	}
 
 	option = { #Take action
@@ -19800,6 +19867,13 @@ country_event = {
 	picture = GFX_report_event_soviet_soldiers_tank
 
 	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			set_country_flag = sov_moscow_trials
+			country_event = { id = soviets.504 days = 15 }
+		}
+	}
 
 	option = { #Force them into the army
 		name = soviets.428.a
@@ -19821,8 +19895,22 @@ country_event = {
 
 	option = { #Use it as an excuse to emprison opposition
 		name = soviets.428.e
+		trigger = {
+			check_variable = {
+				var = united_russia_strength
+				value = 1
+				compare = greater_than_or_equals
+			}
+		}
 		add_stability = -0.05
+		custom_effect_tooltip = united_russia_lose_strength
 		subtract_from_variable = { united_russia_strength = 1 }
+		round_variable = united_russia_strength
+		clamp_variable = {
+			var = united_russia_strength
+			min = 0
+			max = 4
+		}
 	}
 }
 
@@ -19849,9 +19937,14 @@ country_event = {
 			OR = {
 				has_completed_focus = SOV_united_russia
 				has_completed_focus = SOV_preemptive_coup
+				has_completed_focus = SOV_continue_investments
 				has_country_flag = sov_democratic_opposition_destroyed
 			}
 		}
+	}
+
+	immediate = {
+		set_country_flag = sov_opposition_calls_fair_elections
 	}
 
 	mean_time_to_happen = { days = 5 }
@@ -19860,6 +19953,12 @@ country_event = {
 		name = soviets.429.a
 		add_political_power = -50
 		add_to_variable = { united_russia_strength = 1 }
+		round_variable = united_russia_strength
+		clamp_variable = {
+			var = united_russia_strength
+			min = 0
+			max = 4
+		}
 		custom_effect_tooltip = united_russia_gains_strength
 		custom_effect_tooltip = sov_elections_will_be_held
 		hidden_effect = {
@@ -19876,6 +19975,12 @@ country_event = {
 		add_political_power = 100
 		custom_effect_tooltip = united_russia_gains_strength2
 		add_to_variable = { united_russia_strength = 2 }
+		round_variable = united_russia_strength
+		clamp_variable = {
+			var = united_russia_strength
+			min = 0
+			max = 4
+		}
 	}
 }
 
@@ -19888,10 +19993,13 @@ country_event = {
 
 	is_triggered_only = yes
 
+	immediate = {
+		set_country_flag = sov_track_begin
+	}
+
 	option = { #Accept
 		name = soviets.430.a
 		custom_effect_tooltip = SOV_track_begin_tt
-		set_country_flag = sov_track_begin
 	}
 }
 
@@ -19948,6 +20056,7 @@ country_event = {
 		trigger = {
 			has_government = communism
 		}
+		add_ideas = SOV_Joseph_stalin_exiled_idea
 		SOV = {
 			country_event = { id = soviets.436 days = 1 }
 		}
@@ -19983,16 +20092,19 @@ country_event = {
 	option = { #Execute him
 		name = soviets.434.a
 		set_country_flag = sov_stalin_executed
+		add_political_power = 100
 	}
 
 	option = { #Put him in prison
 		name = soviets.434.b
 		set_country_flag = sov_stalin_prison
+		add_political_power = -25
 	}
 
 	option = { #Exile him in Siberia
 		name = soviets.434.c
 		set_country_flag = sov_stalin_exiled_siberia
+		add_political_power = -25
 	}
 }
 
@@ -20000,19 +20112,66 @@ country_event = {
 country_event = {
 	id = soviets.435
 	title = soviets.435.t
-	desc = soviets.435.d
+	desc = {
+		text = soviets.435.d
+		trigger = {
+			has_country_flag = sov_stalin_prison
+		}
+	}
+	desc = {
+		text = soviets.435.d_siberia
+		trigger = {
+			has_country_flag = sov_stalin_exiled_siberia
+		}
+	}
 	picture = GFX_report_event_soviet_soldiers_tank
 
-	is_triggered_only = yes
+	trigger = {
+		tag = SOV
+		has_government = democratic
+		has_capitulated = no
+		is_subject = no
+		OR = {
+			has_country_flag = sov_stalin_prison
+			has_country_flag = sov_stalin_exiled_siberia
+		}
+		NOT = {
+			has_country_flag = sov_stalin_proposal
+		}
+		any_country = {
+			is_major = yes
+			has_war_with = ROOT
+		}
+	}
+
+	fire_only_once = yes
+
+	immediate = {
+		set_country_flag = sov_stalin_proposal
+	}
 
 	option = { #Sure
 		name = soviets.435.a
-		
+		set_country_flag = sov_joseph_stalin_is_cool_now
+		if = {
+			limit = {
+				has_country_flag = sov_stalin_exiled_siberia
+			}
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = SOV_joseph_stalin_democratic_priest
+		}
+		else_if = {
+			limit = {
+				has_country_flag = sov_stalin_prison
+			}
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = SOV_joseph_stalin_democratic_army
+		}
 	}
 
 	option = { #Refuse
 		name = soviets.435.b
-		
+		add_political_power = 150
 	}
 }
 
@@ -22906,5 +23065,161 @@ country_event = {
 	option = {
 		name = soviets.503.a
 		custom_effect_tooltip = andrey_vlasov_dies_tt
+	}
+}
+
+# The Trials End
+country_event = {
+	id = soviets.504
+	title = soviets.504.t
+	desc = soviets.504.d
+	picture = GFX_report_event_german_troops
+
+	is_triggered_only = yes
+	
+	option = {
+		name = soviets.504.a
+		set_country_flag = sov_trials_end
+		add_stability = 0.05
+	}
+}
+
+#Country gets slavic help from SOV
+country_event = {
+	id = soviets.505
+	title = soviets.505.t
+	desc = soviets.505.d
+	picture = GFX_report_event_physics_lab_02
+
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			set_variable = { random_resource_slavic = 0 }
+			randomize_variable = {
+				var = random_resource_slavic
+				distribution = uniform
+				min = 1
+				max = 6
+			}
+			round_variable = random_resource_slavic
+		}
+	}
+
+	option = { #Cool
+		name = soviets.505.a
+		ai_chance = {
+			factor = 100
+		}
+		add_opinion_modifier = {
+			target = SOV
+			modifier = russian_help_slavic
+		}
+		random_owned_state = {
+			add_extra_state_shared_building_slots = 1
+			add_building_construction  = {
+				type = arms_factory
+				level = 1
+				instant_build = yes
+			}
+		}
+		random_owned_state = {
+			add_extra_state_shared_building_slots = 1
+			add_building_construction  = {
+				type = industrial_complex
+				level = 1
+				instant_build = yes
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					var = random_resource_slavic
+					value = 1
+					compare = equals
+				}
+			}
+			random_owned_state = {
+				add_resource = {
+					type = oil
+					amount = 10
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				check_variable = {
+					var = random_resource_slavic
+					value = 2
+					compare = equals
+				}
+			}
+			random_owned_state = {
+				add_resource = {
+					type = aluminium
+					amount = 10
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				check_variable = {
+					var = random_resource_slavic
+					value = 3
+					compare = equals
+				}
+			}
+			random_owned_state = {
+				add_resource = {
+					type = rubber
+					amount = 10
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				check_variable = {
+					var = random_resource_slavic
+					value = 4
+					compare = equals
+				}
+			}
+			random_owned_state = {
+				add_resource = {
+					type = tungsten
+					amount = 10
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				check_variable = {
+					var = random_resource_slavic
+					value = 5
+					compare = equals
+				}
+			}
+			random_owned_state = {
+				add_resource = {
+					type = steel
+					amount = 10
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				check_variable = {
+					var = random_resource_slavic
+					value = 6
+					compare = equals
+				}
+			}
+			random_owned_state = {
+				add_resource = {
+					type = chromium
+					amount = 10
+				}
+			}
+		}
 	}
 }
