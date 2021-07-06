@@ -1,5 +1,144 @@
 on_actions = {
 
+	#Cosmetic tag for changing ideology
+	on_ruling_party_change = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						tag = SOV
+					}
+				}
+				#Democratic
+				if = {
+					limit = {
+						ROOT = {
+							has_government = democratic
+							NOT = {
+								has_cosmetic_tag = SOV_democratic_russia
+								has_cosmetic_tag = SOV_temp_democratic_russia
+							}
+						}
+					}
+					if = {
+						limit = {
+							OR = {
+								has_completed_focus = SOV_pavel_guidance
+								has_completed_focus = SOV_trust_alexander
+							}
+						}
+						set_cosmetic_tag = SOV_democratic_russia
+					}
+					else = {
+						set_cosmetic_tag = SOV_temp_democratic_russia
+					}
+				}
+				#Neutral
+				else_if = {
+					limit = {
+						ROOT = {
+							has_government = neutrality
+							NOT = {
+								has_cosmetic_tag = RUS
+								has_cosmetic_tag = NRG
+								has_cosmetic_tag = RSE
+							}
+						}
+					}
+					if = {
+						limit = {
+							has_completed_focus = SOV_restoration_tsar
+						}
+						set_cosmetic_tag = RUS
+					}
+					else_if = {
+						limit = {
+							has_global_flag = SOV_became_slavic_empire
+						}
+						set_cosmetic_tag = RSE
+					}
+					else = {
+						set_cosmetic_tag = NRG
+					}
+				}
+				#Fascist
+				else_if = {
+					limit = {
+						ROOT = {
+							has_government = fascism
+							NOT = {
+								has_cosmetic_tag = RFP
+								has_cosmetic_tag = THR
+								has_cosmetic_tag = GTR
+							}
+						}
+					}
+					if = {
+						limit = {
+							has_country_flag = has_formed_third_rome
+						}
+						set_cosmetic_tag = THR
+					}
+					else_if = {
+						limit = {
+							has_country_flag = has_formed_greater_russia
+						}
+						set_cosmetic_tag = GTR
+					}
+					else = {
+						set_cosmetic_tag = RFP
+					}
+				}
+				#Anarchist
+				else_if = {
+					limit = {
+						ROOT = {
+							has_government = anarchy
+							NOT = {
+								has_cosmetic_tag = ANAC
+							}
+						}
+					}
+					set_cosmetic_tag = ANAC
+				}
+				#Communist (drop if nothing)
+				else_if = {
+					limit = {
+						ROOT = {
+							has_government = communism
+							NOT = {
+								has_cosmetic_tag = SOV_proletarian_union
+								has_cosmetic_tag = SUW
+								has_cosmetic_tag = SNAU
+							}
+						}
+					}
+					if = {
+						limit = {
+							has_country_flag = has_formed_proletarian_union
+						}
+						set_cosmetic_tag = SOV_proletarian_union
+					}
+					else_if = {
+						limit = {
+							has_country_flag = socialist_union_worker_formed
+						}
+						set_cosmetic_tag = SUW
+					}
+					else_if = {
+						limit = {
+							has_country_flag = fall_of_america
+						}
+						set_cosmetic_tag = SNAU
+					}
+					else = {
+						drop_cosmetic_tag = yes
+					}
+				}
+			}
+		}
+	}
+
 	#GER Surrendered at least once to SOV
 	on_capitulation = {
 		effect = {

@@ -4511,7 +4511,16 @@ focus_tree = {
 			factor = 10
 		}
 		available = {
-			always = no
+			is_subject = no
+			is_major = yes
+			if = {
+				limit = {
+					has_idea = SOV_Exiled_russia
+				}
+				NOT = {
+					has_idea = SOV_Exiled_russia
+				}
+			}
 		}
 		search_filters = { FOCUS_FILTER_GOLDEN_FOCUS FOCUS_FILTER_INDUSTRY }
 		completion_reward = {
@@ -4592,7 +4601,16 @@ focus_tree = {
 			factor = 10
 		}
 		available = {
-			always = no
+			is_subject = no
+			is_major = yes
+			if = {
+				limit = {
+					has_idea = SOV_Exiled_russia
+				}
+				NOT = {
+					has_idea = SOV_Exiled_russia
+				}
+			}
 		}
 		search_filters = { FOCUS_FILTER_GOLDEN_FOCUS FOCUS_FILTER_INDUSTRY }
 		completion_reward = {
@@ -5158,7 +5176,16 @@ focus_tree = {
 			factor = 10
 		}
 		available = {
-			always = no
+			is_subject = no
+			is_major = yes
+			if = {
+				limit = {
+					has_idea = SOV_Exiled_russia
+				}
+				NOT = {
+					has_idea = SOV_Exiled_russia
+				}
+			}
 		}
 		search_filters = { FOCUS_FILTER_GOLDEN_FOCUS FOCUS_FILTER_ARMY_RUSSIA }
 		completion_reward = {
@@ -6204,7 +6231,16 @@ focus_tree = {
 			factor = 10
 		}
 		available = {
-			always = no
+			is_subject = no
+			is_major = yes
+			if = {
+				limit = {
+					has_idea = SOV_Exiled_russia
+				}
+				NOT = {
+					has_idea = SOV_Exiled_russia
+				}
+			}
 		}
 		search_filters = { FOCUS_FILTER_NAVY_RUSSIA FOCUS_FILTER_INDUSTRY }
 		completion_reward = {
@@ -6294,7 +6330,7 @@ focus_tree = {
 		id = SOV_great_purge2
 		x = 75
 		y = 1
-		mutually_exclusive = { focus = SOV_avoid_purge }
+		mutually_exclusive = { focus = SOV_avoid_purge focus = SOV_another_revolution }
 		icon = GFX_focus_the_purge
 		cost = 30
 		ai_will_do = {
@@ -8355,7 +8391,17 @@ focus_tree = {
 			factor = 10
 		}
 		available = {
-			always = no
+			is_subject = no
+			has_government = communism
+			is_major = yes
+			if = {
+				limit = {
+					has_idea = SOV_Exiled_russia
+				}
+				NOT = {
+					has_idea = SOV_Exiled_russia
+				}
+			}
 		}
 		search_filters = { FOCUS_FILTER_GOLDEN_FOCUS FOCUS_FILTER_COMMUNISM_STALIN_RUSSIA }
 		completion_reward = {
@@ -8484,7 +8530,7 @@ focus_tree = {
 		id = SOV_avoid_purge
 		x = 89
 		y = 1
-		mutually_exclusive = { focus = SOV_great_purge2 }
+		mutually_exclusive = { focus = SOV_great_purge2 focus = SOV_another_revolution }
 		icon = GFX_goal_anti_comintern_pact
 		cost = 10
 		ai_will_do = {
@@ -9934,7 +9980,17 @@ focus_tree = {
 			factor = 10
 		}
 		available = {
-			always = no
+			is_subject = no
+			has_government = communism
+			is_major = yes
+			if = {
+				limit = {
+					has_idea = SOV_Exiled_russia
+				}
+				NOT = {
+					has_idea = SOV_Exiled_russia
+				}
+			}
 		}
 		search_filters = { FOCUS_FILTER_GOLDEN_FOCUS FOCUS_FILTER_COMMUNISM_TROTSKY_RUSSIA }
 		completion_reward = {
@@ -10563,9 +10619,6 @@ focus_tree = {
 		cancelable = no
 		cancel_if_invalid = yes
 		available_if_capitulated = yes
-		select_effect = {
-			add_to_variable = { time_remaining_before_end_trials = 35 }
-		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
 			country_event = { id = soviets.425 }
@@ -10605,9 +10658,6 @@ focus_tree = {
 		cancelable = no
 		cancel_if_invalid = yes
 		available_if_capitulated = yes
-		select_effect = {
-			add_to_variable = { time_remaining_before_end_trials = 35 }
-		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
 			country_event = { id = soviets.424 }
@@ -10622,7 +10672,7 @@ focus_tree = {
 		prerequisite = { focus = SOV_the_remaining_deserters }
 		prerequisite = { focus = SOV_communism_fate }
 		icon = GFX_Supreme_court
-		cost = 8
+		cost = 5
 		ai_will_do = {
 			factor = 5
 		}
@@ -10660,6 +10710,19 @@ focus_tree = {
 		available = {
 			is_subject = no
 			has_government = democratic
+			NOT = {
+				has_completed_focus = SOV_united_russia
+				has_completed_focus = SOV_preemptive_coup
+				has_completed_focus = SOV_continue_investments
+			}
+			custom_trigger_tooltip = {
+				tooltip = united_russia_has_strength
+				check_variable = {
+					var = united_russia_strength
+					value = 1
+					compare = greater_than_or_equals
+				}
+			}
 			if = {
 				limit = {
 					has_idea = SOV_Exiled_russia
@@ -10674,6 +10737,13 @@ focus_tree = {
 			add_stability = -0.05
 			set_country_flag = democratic_elections_abolished
 			custom_effect_tooltip = SOV_temporarily_abolish_elections_tt
+			subtract_from_variable = { united_russia_strength = 1 }
+			round_variable = united_russia_strength
+			clamp_variable = {
+				var = united_russia_strength
+				min = 0
+				max = 4
+			}
 			custom_effect_tooltip = united_russia_lose_strength
 			custom_effect_tooltip = SOV_temporarily_abolish_elections_tt2
 			hidden_effect = {
@@ -11005,22 +11075,26 @@ focus_tree = {
 			has_government = democratic
 			has_country_flag = sov_trials_end
 			custom_trigger_tooltip = {
-				tooltip = SOV_end_investments_tt
+				tooltip = SOV_continue_investments_tt
 				check_variable = {
 					var = united_russia_strength
-					value = 1
-					compare = greater_than_or_equals
+					value = 3
+					compare = less_than
 				}
 			}
 			custom_trigger_tooltip = {
-				tooltip = SOV_end_investments_tt2
-				set_temp_variable = { medium_investment = sov_country_investment_count }
-				divide_temp_variable = { medium_investment = 3 }
-				multiply_temp_variable = { medium_investment = 2 }
+				tooltip = SOV_continue_investments_tt2
+				set_temp_variable = { weak_investment = sov_country_investment_count }
+				divide_temp_variable = { weak_investment = 3 }
 				check_variable = {
 					var = sov_total_investment
-					value = medium_investment
-					compare = less_than_or_equals
+					value = 0
+					compare = greater_than
+				}
+				check_variable = {
+					var = sov_total_investment
+					value = weak_investment
+					compare = greater_than_or_equals
 				}
 			}
 			if = {
@@ -11034,7 +11108,21 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			
+			add_political_power = 100
+			set_temp_variable = { stability_add = 0.05 }
+			if = {
+				limit = {
+					check_variable = {
+						var = united_russia_strength
+						value = 1
+						compare = greater_than_or_equals
+					}
+				}
+				multiply_temp_variable = { stability_add = -1 }
+				multiply_temp_variable = { stability_add = united_russia_strength }
+				custom_effect_tooltip = suffer_stability_united_russia_strength
+			}
+			add_stability = var:stability_add
 		}
 	}
 
@@ -11339,7 +11427,7 @@ focus_tree = {
 		prerequisite = { focus = SOV_end_investments }
 		mutually_exclusive = { focus = SOV_preemptive_coup }
 		icon = GFX_United_Russia
-		cost = 5
+		cost = 6
 		ai_will_do = {
 			factor = 5
 		}
@@ -11379,6 +11467,21 @@ focus_tree = {
 					grand_orient_russia_peoples
 				}
 			}
+			if = {
+				limit = {
+					check_variable = {
+						var = united_russia_strength
+						value = 3
+						compare = greater_than_or_equals
+					}
+				}
+				set_temp_variable = { stability_add = 0.05 }
+				set_temp_variable = { united_russia_strength_minus_one = united_russia_strength }
+				subtract_from_temp_variable = { united_russia_strength_minus_one = 1 }
+				multiply_temp_variable = { stability_add = united_russia_strength_minus_one }
+				custom_effect_tooltip = gain_stability_united_russia_strength
+				add_stability = var:stability_add
+			}
 		}
 	}
 
@@ -11389,7 +11492,7 @@ focus_tree = {
 		y = 25
 		prerequisite = { focus = SOV_united_russia }
 		icon = GFX_Deal_With_the_Political_Opponents
-		cost = 5
+		cost = 6
 		ai_will_do = {
 			factor = 5
 		}
@@ -11471,7 +11574,7 @@ focus_tree = {
 		prerequisite = { focus = SOV_end_investments }
 		mutually_exclusive = { focus = SOV_united_russia }
 		icon = GFX_Preemptive_Coup
-		cost = 5
+		cost = 6
 		ai_will_do = {
 			factor = 5
 		}
@@ -11482,8 +11585,8 @@ focus_tree = {
 				tooltip = SOV_preemptive_coup_tt
 				check_variable = {
 					var = united_russia_strength
-					value = 2
-					compare = less_than_or_equals
+					value = 4
+					compare = less_than
 				}
 			}
 			if = {
@@ -11512,6 +11615,20 @@ focus_tree = {
 					progressist_democratic_russia
 				}
 			}
+			set_temp_variable = { stability_add = 0.05 }
+			if = {
+				limit = {
+					check_variable = {
+						var = united_russia_strength
+						value = 1
+						compare = greater_than_or_equals
+					}
+				}
+				multiply_temp_variable = { stability_add = -1 }
+				multiply_temp_variable = { stability_add = united_russia_strength }
+				custom_effect_tooltip = suffer_stability_united_russia_strength
+			}
+			add_stability = var:stability_add
 		}
 	}
 
@@ -11522,7 +11639,7 @@ focus_tree = {
 		y = 25
 		prerequisite = { focus = SOV_preemptive_coup }
 		icon = GFX_A_New_Kind_of_Russia
-		cost = 5
+		cost = 6
 		ai_will_do = {
 			factor = 5
 		}
@@ -11619,7 +11736,7 @@ focus_tree = {
 		y = 25
 		prerequisite = { focus = SOV_united_russia }
 		icon = GFX_Diplomatic_plays
-		cost = 5
+		cost = 6
 		ai_will_do = {
 			factor = 5
 		}
@@ -11717,7 +11834,7 @@ focus_tree = {
 		y = 26
 		prerequisite = { focus = SOV_diplomatic_plays }
 		icon = GFX_Ukranian_Problem
-		cost = 5
+		cost = 6
 		ai_will_do = {
 			factor = 5
 		}
@@ -11818,7 +11935,7 @@ focus_tree = {
 		y = 28
 		prerequisite = { focus = SOV_russian_way }
 		icon = GFX_Towards_The_Americas
-		cost = 5
+		cost = 6
 		ai_will_do = {
 			factor = 5
 		}
@@ -11872,7 +11989,7 @@ focus_tree = {
 		y = 29
 		prerequisite = { focus = SOV_towards_americas }
 		icon = GFX_Revive_Russian_America
-		cost = 5
+		cost = 6
 		ai_will_do = {
 			factor = 5
 		}
@@ -12014,7 +12131,7 @@ focus_tree = {
 		y = 30
 		prerequisite = { focus = SOV_revive_russian_america }
 		icon = GFX_All_the_Ice_Belongs_to_the_Motherland
-		cost = 5
+		cost = 8
 		ai_will_do = {
 			factor = 5
 		}
@@ -12096,7 +12213,7 @@ focus_tree = {
 		y = 28
 		prerequisite = { focus = SOV_russian_way }
 		icon = GFX_Middle_Eastern_Nuisance
-		cost = 5
+		cost = 8
 		ai_will_do = {
 			factor = 5
 		}
@@ -12239,7 +12356,7 @@ focus_tree = {
 		y = 25
 		prerequisite = { focus = SOV_united_russia }
 		icon = GFX_Increased_minimum_wage
-		cost = 5
+		cost = 6
 		ai_will_do = {
 			factor = 5
 		}
@@ -12298,13 +12415,14 @@ focus_tree = {
 		prerequisite = { focus = SOV_russian_principles }
 		mutually_exclusive = { focus = SOV_army_principle }
 		icon = GFX_Work_principle
-		cost = 5
+		cost = 4
 		ai_will_do = {
 			factor = 5
 		}
 		available = {
 			is_subject = no
 			has_government = democratic
+			has_idea = SOV_Russian_principles
 			if = {
 				limit = {
 					has_idea = SOV_Exiled_russia
@@ -12331,13 +12449,14 @@ focus_tree = {
 		prerequisite = { focus = SOV_russian_principles }
 		mutually_exclusive = { focus = SOV_work_principle }
 		icon = GFX_Army_principle
-		cost = 5
+		cost = 4
 		ai_will_do = {
 			factor = 5
 		}
 		available = {
 			is_subject = no
 			has_government = democratic
+			has_idea = SOV_Russian_principles
 			if = {
 				limit = {
 					has_idea = SOV_Exiled_russia
@@ -12393,7 +12512,7 @@ focus_tree = {
 		y = 29
 		prerequisite = { focus = SOV_russia_biggest_threat }
 		icon = GFX_Secure_the_Romanian_Oil
-		cost = 5
+		cost = 8
 		ai_will_do = {
 			factor = 5
 		}
@@ -12445,7 +12564,7 @@ focus_tree = {
 		y = 30
 		prerequisite = { focus = SOV_secure_romanian_oil }
 		icon = GFX_Send_Ultimatum_to_France
-		cost = 5
+		cost = 10
 		ai_will_do = {
 			factor = 5
 		}
@@ -12480,7 +12599,7 @@ focus_tree = {
 		y = 29
 		prerequisite = { focus = SOV_russia_biggest_threat }
 		icon = GFX_Organize_a_Finnish_Referendum
-		cost = 5
+		cost = 8
 		ai_will_do = {
 			factor = 5
 		}
@@ -12536,7 +12655,7 @@ focus_tree = {
 		y = 30
 		prerequisite = { focus = SOV_finnish_referendum }
 		icon = GFX_End_the_German_Menace
-		cost = 5
+		cost = 10
 		ai_will_do = {
 			factor = 5
 		}
@@ -13105,6 +13224,7 @@ focus_tree = {
 		available = {
 			is_subject = no
 			has_government = democratic
+			is_major = yes
 			if = {
 				limit = {
 					has_idea = SOV_Exiled_russia
@@ -13117,6 +13237,121 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_GOLDEN_FOCUS FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
 			
+		}
+	}
+
+	#Keep Expanding the Russian Sphere
+	focus = {
+		id = SOV_keep_expanding_russian_sphere
+		x = 34
+		y = 25
+		prerequisite = { focus = SOV_reunification focus = SOV_freedom_all }
+		mutually_exclusive = { focus = SOV_reform_entente }
+		icon = GFX_Expanding_the_Russian_Sphere
+		cost = 5
+		ai_will_do = {
+			factor = 6
+		}
+		available = {
+			is_subject = no
+			has_government = democratic
+			date > 1939.01.01
+			if = {
+				limit = {
+					has_idea = SOV_Exiled_russia
+				}
+				NOT = {
+					has_idea = SOV_Exiled_russia
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA FOCUS_FILTER_RESEARCH }
+		completion_reward = {
+			add_ideas = SOV_Expansion_russian_sphere
+			add_to_tech_sharing_group = sov_sphere_research
+			custom_effect_tooltip = SOV_keep_expanding_russian_sphere_tt
+			hidden_effect = {
+				every_country = {
+					limit = {
+						is_in_faction_with = SOV
+					}
+					add_to_tech_sharing_group = sov_sphere_research
+				}
+			}
+		}
+	}
+
+	#Reform the Entente
+	focus = {
+		id = SOV_reform_entente
+		x = 38
+		y = 25
+		prerequisite = { focus = SOV_reunification focus = SOV_freedom_all focus = SOV_royal_orders }
+		mutually_exclusive = { focus = SOV_slavic_alliance }
+		mutually_exclusive = { focus = SOV_keep_expanding_russian_sphere }
+		icon = GFX_Reform_Entente
+		cost = 10
+		ai_will_do = {
+			factor = 6
+			modifier = {
+				factor = 8
+				FRA = {
+					is_major = yes
+					has_built = {
+						type = arms_factory
+						value > 50
+					}
+					ic_ratio = {
+						tag = GER
+						ratio > 0.5
+					}
+				}
+			}
+		}
+		available = {
+			is_subject = no
+			OR = {
+				has_government = democratic
+				has_government = neutrality
+			}
+			FRA = {
+				OR = {
+					has_government = democratic
+					has_government = neutrality
+				}
+				is_subject = no
+				has_capitulated = no
+			}
+			date > 1939.01.01
+			if = {
+				limit = {
+					has_idea = SOV_Exiled_russia
+				}
+				NOT = {
+					has_idea = SOV_Exiled_russia
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA }
+		completion_reward = {
+			if = {
+				limit = {
+					is_faction_leader = yes
+				}
+				set_faction_name = entente_reformed
+			}
+			else = {
+				create_faction = entente_reformed
+			}
+			FRA = {
+				country_event = { id = soviets.151 days = 1 }
+			}
+			custom_effect_tooltip = SOV_reform_entente_tt
+			hidden_effect = {
+				news_event = {
+					id = newsrussia2.80 days = 1
+				}
+			}
 		}
 	}
 
@@ -13143,6 +13378,7 @@ focus_tree = {
 		available = {
 			is_subject = no
 			has_government = democratic
+			has_completed_focus = SOV_reunification
 			any_country = {
 				has_country_flag = sov_refused_reunification
 			}
@@ -13479,23 +13715,21 @@ focus_tree = {
 			}
 		}
 	}
-
-	#Keep Expanding the Russian Sphere
+	
+	#Russia can Strike Anywhere
 	focus = {
-		id = SOV_keep_expanding_russian_sphere
+		id = SOV_russia_can_strike_anywhere
 		x = 34
-		y = 25
-		prerequisite = { focus = SOV_reunification focus = SOV_freedom_all }
-		mutually_exclusive = { focus = SOV_reform_entente }
-		icon = GFX_Expanding_the_Russian_Sphere
-		cost = 5
+		y = 29
+		prerequisite = { focus = SOV_demand_return_land focus = SOV_compromise_strategy }
+		icon = GFX_
+		cost = 10
 		ai_will_do = {
-			factor = 6
+			factor = 8
 		}
 		available = {
 			is_subject = no
 			has_government = democratic
-			date > 1939.01.01
 			if = {
 				limit = {
 					has_idea = SOV_Exiled_russia
@@ -13505,64 +13739,32 @@ focus_tree = {
 				}
 			}
 		}
-		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA FOCUS_FILTER_RESEARCH }
+		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			add_ideas = SOV_Expansion_russian_sphere
-			add_to_tech_sharing_group = sov_sphere_research
-			custom_effect_tooltip = SOV_keep_expanding_russian_sphere_tt
-			hidden_effect = {
-				every_country = {
-					limit = {
-						is_in_faction_with = SOV
-					}
-					add_to_tech_sharing_group = sov_sphere_research
-				}
+			add_ideas = SOV_We_can_strike_anywhere
+			add_tech_bonus = {
+				name = SOV_russia_can_strike_anywhere
+				bonus = 1
+				uses = 1
+				category = marine_tech
 			}
 		}
 	}
 
-	#Reform the Entente
+	#Democracy in China
 	focus = {
-		id = SOV_reform_entente
+		id = SOV_democracy_china
 		x = 38
-		y = 25
-		prerequisite = { focus = SOV_reunification focus = SOV_freedom_all focus = SOV_contact_german_exiles }
-		mutually_exclusive = { focus = SOV_slavic_alliance }
-		mutually_exclusive = { focus = SOV_keep_expanding_russian_sphere }
-		icon = GFX_Reform_Entente
-		cost = 10
+		y = 29
+		prerequisite = { focus = SOV_demand_return_land focus = SOV_compromise_strategy }
+		icon = GFX_
+		cost = 8
 		ai_will_do = {
-			factor = 6
-			modifier = {
-				factor = 8
-				FRA = {
-					is_major = yes
-					has_built = {
-						type = arms_factory
-						value > 50
-					}
-					ic_ratio = {
-						tag = GER
-						ratio > 0.5
-					}
-				}
-			}
+			factor = 8
 		}
 		available = {
 			is_subject = no
-			OR = {
-				has_government = democratic
-				has_government = neutrality
-			}
-			FRA = {
-				OR = {
-					has_government = democratic
-					has_government = neutrality
-				}
-				is_subject = no
-				has_capitulated = no
-			}
-			date > 1939.01.01
+			has_government = democratic
 			if = {
 				limit = {
 					has_idea = SOV_Exiled_russia
@@ -13572,26 +13774,9 @@ focus_tree = {
 				}
 			}
 		}
-		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA }
+		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			if = {
-				limit = {
-					is_faction_leader = yes
-				}
-				set_faction_name = entente_reformed
-			}
-			else = {
-				create_faction = entente_reformed
-			}
-			FRA = {
-				country_event = { id = soviets.151 days = 1 }
-			}
-			custom_effect_tooltip = SOV_reform_entente_tt
-			hidden_effect = {
-				news_event = {
-					id = newsrussia2.80 days = 1
-				}
-			}
+
 		}
 	}
 
@@ -13599,8 +13784,9 @@ focus_tree = {
 	focus = {
 		id = SOV_those_who_threaten_democracy
 		x = 36
-		y = 29
-		prerequisite = { focus = SOV_demand_return_land focus = SOV_compromise_strategy }
+		y = 30
+		prerequisite = { focus = SOV_russia_can_strike_anywhere }
+		prerequisite = { focus = SOV_democracy_china }
 		icon = GFX_Those_who_threaten_democracy
 		cost = 10
 		ai_will_do = {
@@ -13643,7 +13829,7 @@ focus_tree = {
 	focus = {
 		id = SOV_propose_interventions
 		x = 34
-		y = 30
+		y = 31
 		prerequisite = { focus = SOV_those_who_threaten_democracy }
 		mutually_exclusive = { focus = SOV_russia_takes_the_lead }
 		icon = GFX_goal_generic_national_unity
@@ -13675,7 +13861,7 @@ focus_tree = {
 	focus = {
 		id = SOV_russia_takes_the_lead
 		x = 38
-		y = 30
+		y = 31
 		prerequisite = { focus = SOV_those_who_threaten_democracy }
 		mutually_exclusive = { focus = SOV_propose_interventions }
 		icon = GFX_focus_generic_support_the_left_right
@@ -13712,7 +13898,7 @@ focus_tree = {
 	focus = {
 		id = SOV_perpetual_defense_liberty
 		x = 36
-		y = 31
+		y = 32
 		prerequisite = { focus = SOV_propose_interventions focus = SOV_russia_takes_the_lead }
 		icon = GFX_Defense_of_Liberty
 		cost = 10
@@ -13743,7 +13929,7 @@ focus_tree = {
 	focus = {
 		id = SOV_the_russian_golden_age
 		x = 36
-		y = 32
+		y = 33
 		prerequisite = { focus = SOV_perpetual_defense_liberty }
 		icon = GFX_goal_unknown_golden
 		cost = 6
@@ -15342,7 +15528,6 @@ focus_tree = {
 				}
 			}
 			drop_cosmetic_tag = yes
-			set_cosmetic_tag = RUS
 			add_ideas = SOV_Tsar_we_trust
 			remove_ideas = SOV_Political_Unstability2
 			if = {
@@ -17397,6 +17582,43 @@ focus_tree = {
 		}
 	}
 
+	#Restore the Monarchy in Italy
+	focus = {
+		id = SOV_restore_monarchy_italy
+		x = 56
+		y = 25
+		prerequisite = { focus = SOV_convince_italy }
+		icon = GFX_
+		cost = 5
+		ai_will_do = {
+			factor = 6
+		}
+		available = {
+			is_subject = no
+			has_government = neutrality
+			is_faction_leader = yes
+			has_completed_focus = SOV_restoration_tsar
+			ITA = {
+				is_in_faction_with = ROOT
+				NOT = {
+					is_subject = yes
+					has_government = neutrality
+				}
+			}
+			if = {
+				limit = {
+					has_idea = SOV_Exiled_russia
+				}
+				NOT = {
+					has_idea = SOV_Exiled_russia
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA }
+		completion_reward = {
+			
+		}
+	}
 
 	#The Destiny of Our Monarchy
 	focus = {
@@ -17653,12 +17875,246 @@ focus_tree = {
 		}
 	}
 
-	#Contact German Monarchist Exiles
+	#The Fate of Turkey
 	focus = {
-		id = SOV_contact_german_exiles
+		id = SOV_fate_turkey
+		x = 52
+		y = 23
+		prerequisite = { focus = SOV_destiny_monarchy }
+		icon = GFX_
+		cost = 8
+		ai_will_do = {
+			factor = 4
+			modifier = {
+				factor = 7
+				NOT = {
+					any_country = {
+						is_major = yes
+						OR = {
+							has_guaranteed = TUR
+							is_in_faction_with = TUR
+						}
+					}
+				}
+			}
+		}
+		available = {
+			is_subject = no
+			has_government = neutrality
+			OR = {
+				is_neighbor_of = TUR
+				any_country = {
+					is_subject_of = ROOT
+					is_neighbor_of = TUR
+				}
+			}
+			TUR = {
+				exists = yes
+				is_subject = no
+				NOT = {
+					has_war_with = ROOT
+				}
+			}
+			if = {
+				limit = {
+					has_idea = SOV_Exiled_russia
+				}
+				NOT = {
+					has_idea = SOV_Exiled_russia
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_ANNEXATION }
+		will_lead_to_war_with = TUR
+		completion_reward = {
+			
+		}
+	}
+
+	#The Fate of Japan
+	focus = {
+		id = SOV_fate_japan
+		x = 48
+		y = 24
+		prerequisite = { focus = SOV_fate_poland }
+		icon = GFX_
+		cost = 8
+		ai_will_do = {
+			factor = 4
+			modifier = {
+				factor = 7
+				NOT = {
+					any_country = {
+						is_major = yes
+						OR = {
+							has_guaranteed = TUR
+							is_in_faction_with = TUR
+						}
+					}
+				}
+			}
+		}
+		available = {
+			is_subject = no
+			has_government = neutrality
+			OR = {
+				is_neighbor_of = JAP
+				any_country = {
+					is_subject_of = ROOT
+					is_neighbor_of = JAP
+				}
+			}
+			JAP = {
+				exists = yes
+				is_subject = no
+				NOT = {
+					has_war_with = ROOT
+				}
+			}
+			if = {
+				limit = {
+					has_idea = SOV_Exiled_russia
+				}
+				NOT = {
+					has_idea = SOV_Exiled_russia
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_ANNEXATION }
+		will_lead_to_war_with = JAP
+		completion_reward = {
+			
+		}
+	}
+
+	#Royal Orders
+	focus = {
+		id = SOV_royal_orders
 		x = 50
 		y = 24
 		prerequisite = { focus = SOV_fate_poland }
+		icon = GFX_
+		cost = 5
+		ai_will_do = {
+			factor = 6
+		}
+		available = {
+			is_subject = no
+			is_major = yes
+			has_government = neutrality
+			if = {
+				limit = {
+					has_idea = SOV_Exiled_russia
+				}
+				NOT = {
+					has_idea = SOV_Exiled_russia
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA }
+		completion_reward = {
+			
+		}
+	}
+
+	#Purchase African Colonies
+	focus = {
+		id = SOV_purchase_african_colonies
+		x = 52
+		y = 25
+		prerequisite = { focus = SOV_royal_orders }
+		icon = GFX_
+		cost = 5
+		ai_will_do = {
+			factor = 6
+		}
+		available = {
+			is_subject = no
+			is_major = yes
+			has_government = neutrality
+			if = {
+				limit = {
+					has_idea = SOV_Exiled_russia
+				}
+				NOT = {
+					has_idea = SOV_Exiled_russia
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA }
+		completion_reward = {
+			
+		}
+	}
+
+	#The Emperor
+	focus = {
+		id = SOV_the_emperor
+		x = 50
+		y = 26
+		prerequisite = { focus = SOV_purchase_african_colonies }
+		mutually_exclusive =  { focus = SOV_the_empress }
+		icon = GFX_
+		cost = 5
+		ai_will_do = {
+			factor = 6
+		}
+		available = {
+			is_subject = no
+			is_major = yes
+			has_government = neutrality
+			if = {
+				limit = {
+					has_idea = SOV_Exiled_russia
+				}
+				NOT = {
+					has_idea = SOV_Exiled_russia
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA }
+		completion_reward = {
+			
+		}
+	}
+
+	#The Empress
+	focus = {
+		id = SOV_the_empress
+		x = 54
+		y = 26
+		prerequisite = { focus = SOV_purchase_african_colonies }
+		mutually_exclusive =  { focus = SOV_the_emperor }
+		icon = GFX_
+		cost = 5
+		ai_will_do = {
+			factor = 6
+		}
+		available = {
+			is_subject = no
+			is_major = yes
+			has_government = neutrality
+			if = {
+				limit = {
+					has_idea = SOV_Exiled_russia
+				}
+				NOT = {
+					has_idea = SOV_Exiled_russia
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA }
+		completion_reward = {
+			
+		}
+	}
+
+	#Contact German Monarchy
+	focus = {
+		id = SOV_contact_german_exiles
+		x = 54
+		y = 27
+		prerequisite = { focus = SOV_the_empress }
 		icon = GFX_focus_rom_royal_dictatorship
 		cost = 5
 		ai_will_do = {
@@ -17692,13 +18148,73 @@ focus_tree = {
 		}
 	}
 
+	#Contact French Monarchy
+	focus = {
+		id = SOV_contact_french_exiles
+		x = 50
+		y = 27
+		prerequisite = { focus = SOV_the_emperor }
+		icon = GFX_
+		cost = 5
+		ai_will_do = {
+			factor = 6
+		}
+		available = {
+			is_subject = no
+			is_major = yes
+			has_government = neutrality
+			if = {
+				limit = {
+					has_idea = SOV_Exiled_russia
+				}
+				NOT = {
+					has_idea = SOV_Exiled_russia
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA }
+		completion_reward = {
+			
+		}
+	}
+
+	#Imperial Obligations
+	focus = {
+		id = SOV_imperial_obligations_focus
+		x = 52
+		y = 28
+		prerequisite = { focus = SOV_contact_german_exiles focus = SOV_contact_french_exiles }
+		icon = GFX_goal_unknown_golden
+		cost = 6
+		ai_will_do = {
+			factor = 10
+		}
+		available = {
+			is_subject = no
+			has_government = neutrality
+			is_major = yes
+			if = {
+				limit = {
+					has_idea = SOV_Exiled_russia
+				}
+				NOT = {
+					has_idea = SOV_Exiled_russia
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_GOLDEN_FOCUS FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA }
+		completion_reward = {
+			
+		}
+	}
+
 	#Slavic Alliance
 	focus = {
 		id = SOV_slavic_alliance
-		x = 46
+		x = 44
 		y = 25
 		mutually_exclusive = { focus = SOV_reform_entente }
-		prerequisite = { focus = SOV_contact_german_exiles }
+		prerequisite = { focus = SOV_royal_orders }
 		icon = GFX_Slavic_Alliance
 		cost = 5
 		ai_will_do = {
@@ -17749,7 +18265,7 @@ focus_tree = {
 	#Invite Yugoslavia
 	focus = {
 		id = SOV_invite_yugoslavia
-		x = 45
+		x = 43
 		y = 28
 		prerequisite = { focus = SOV_slavic_alliance }
 		icon = GFX_focus_invite_yugoslavia
@@ -17950,7 +18466,7 @@ focus_tree = {
 	#Invite Czechoslovakia
 	focus = {
 		id = SOV_invite_czechoslovakia
-		x = 49
+		x = 47
 		y = 26
 		prerequisite = { focus = SOV_slavic_alliance }
 		icon = GFX_Improve_relations_czechoslovakia
@@ -18013,7 +18529,7 @@ focus_tree = {
 	#Make an Exception for Hungary
 	focus = {
 		id = SOV_exception_hungary
-		x = 44
+		x = 42
 		y = 27
 		prerequisite = { focus = SOV_slavic_alliance }
 		icon = GFX_Improve_relations_hungary
@@ -18076,7 +18592,7 @@ focus_tree = {
 	#Make an Exception for Romania
 	focus = {
 		id = SOV_exception_romania
-		x = 48
+		x = 46
 		y = 27
 		prerequisite = { focus = SOV_slavic_alliance }
 		icon = GFX_focus_invite_romania
@@ -18139,7 +18655,7 @@ focus_tree = {
 	#Invite Baltics
 	focus = {
 		id = SOV_invite_baltics
-		x = 43
+		x = 41
 		y = 26
 		prerequisite = { focus = SOV_slavic_alliance }
 		icon = GFX_improve_relations_baltics
@@ -18306,7 +18822,7 @@ focus_tree = {
 	#Invite Bulgaria
 	focus = {
 		id = SOV_invite_bulgaria
-		x = 47
+		x = 45
 		y = 28
 		prerequisite = { focus = SOV_slavic_alliance }
 		icon = GFX_Improve_relations_bulgaria
@@ -18379,6 +18895,36 @@ focus_tree = {
 				}
 				custom_effect_tooltip = SOV_invite_bulgaria_tt2
 			}
+		}
+	}
+
+	#Slavic Alliance
+	focus = {
+		id = SOV_slavic_assistance
+		x = 44
+		y = 29
+		prerequisite = { focus = SOV_slavic_alliance }
+		icon = GFX_
+		cost = 5
+		ai_will_do = {
+			factor = 6
+		}
+		available = {
+			is_subject = no
+			has_government = neutrality
+			is_faction_leader = yes
+			if = {
+				limit = {
+					has_idea = SOV_Exiled_russia
+				}
+				NOT = {
+					has_idea = SOV_Exiled_russia
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA }
+		completion_reward = {
+			custom_effect_tooltip = SOV_slavic_assistance_tt
 		}
 	}
 
@@ -20085,7 +20631,7 @@ focus_tree = {
 		}
 		available = {
 			is_subject = no
-			has_government = democratic
+			has_government = fascism
 			is_major = yes
 			if = {
 				limit = {
@@ -20108,6 +20654,7 @@ focus_tree = {
 		x = 118
 		y = 1
 		icon = GFX_focus_spr_anarchism_knows_no_borders
+		mutually_exclusive = { focus = SOV_great_purge2 focus = SOV_avoid_purge }
 		cost = 7
 		ai_will_do = {
 			factor = 7

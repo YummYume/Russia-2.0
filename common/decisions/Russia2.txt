@@ -4241,6 +4241,7 @@ SOV_invest_russian_sphere = {
 						}
 					}
 				}
+				has_completed_focus = SOV_continue_investments
 			}
 			else_if = {
 				limit = {
@@ -4261,6 +4262,15 @@ SOV_invest_russian_sphere = {
 							compare = less_than
 						}
 					}
+				}
+				has_completed_focus = SOV_continue_investments
+			}
+			custom_trigger_tooltip = {
+				tooltip = SOV_preemptive_coup_tt
+				check_variable = {
+					var = united_russia_strength
+					value = 2
+					compare = less_than_or_equals
 				}
 			}
 		}
@@ -5778,7 +5788,6 @@ SOV_expand_entente_decision = {
 				OR = {
 					tag = ENG
 					tag = USA
-					tag = JAP
 					tag = ITA
 					tag = SER
 					tag = MNT
@@ -5787,7 +5796,6 @@ SOV_expand_entente_decision = {
 					tag = POR
 					tag = ROM
 					tag = GRE
-					tag = CHI
 					tag = SIA
 					tag = BRA
 				}
@@ -5824,16 +5832,6 @@ SOV_expand_entente_decision = {
 					}
 
 					has_war_support > 0.5
-				}
-				if = {
-					limit = {
-						FROM = {
-							tag = CHI
-						}
-					}
-					NOT = {
-						has_war_with = JAP
-					}
 				}
 				if = {
 					limit = {
@@ -40106,6 +40104,57 @@ SOV_great_patriotic_war_russia2 = {
 			}
 			41 = { save_event_target_as = state_captured_gpw_russia2 }
 			country_event = soviets.497
+		}
+	}
+}
+
+SOV_slavic_help = {
+
+	SOV_help_slavic = {
+
+		icon = GFX_decision_ger_military_buildup
+
+		fire_only_once = yes
+
+		days_remove = 30
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			is_faction_leader = yes
+			has_completed_focus = SOV_slavic_assistance
+			has_government = neutrality
+			FROM = {
+				exists = yes
+				is_in_faction_with = ROOT
+				has_country_flag = sov_invited_focus_tsar
+			}
+		}
+
+		target_root_trigger = {
+			has_completed_focus = SOV_slavic_assistance
+		}
+
+		target_trigger = {
+			FROM = {
+				exists = yes
+				is_in_faction_with = ROOT
+				has_country_flag = sov_invited_focus_tsar
+			}
+		}
+
+		cost = 25
+
+		remove_effect = {
+			FROM = {
+				country_event = soviets.505
+			}
+		}
+
+		ai_will_do = {
+			factor = 80
 		}
 	}
 }
