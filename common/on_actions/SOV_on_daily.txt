@@ -665,4 +665,116 @@ on_actions = {
 			}
 		}
 	}
+
+	on_daily_SOV = { #If One of Yalta participant is at war with SOV ande vice versa
+		effect = {
+			if = {
+				limit = {
+					any_country = {
+						OR = {
+							TAG = ENG
+							TAG = USA
+							TAG = FRA
+						}
+						NOT = {
+							has_country_flag = eng_accepted_yalta_conference
+							has_country_flag = usa_accepted_yalta_conference
+							has_country_flag = fra_accepted_yalta_conference
+							has_country_flag = receive_new_status_yalta
+						}
+						has_war_with = SOV
+					}
+				}
+				every_country = {
+					limit = {
+						OR = {
+							TAG = ENG
+							TAG = USA
+							TAG = FRA
+						}
+						NOT = {
+							has_country_flag = eng_accepted_yalta_conference
+							has_country_flag = usa_accepted_yalta_conference
+							has_country_flag = fra_accepted_yalta_conference
+							has_country_flag = receive_new_status_yalta
+						}
+						has_war_with = SOV
+					}
+					country_event = { id = yaltas.12 days = 1 }
+				}
+				SOV = {
+					if = {
+						limit = {
+							has_war_with = USA
+							USA = {
+								NOT = {
+									has_country_flag = receive_new_status_yalta
+								}
+							}
+						}
+						country_event = { id = yaltas.13 days = 1 }
+						USA = {
+							set_country_flag = receive_new_status_yalta
+						}
+					}
+					if = {
+						limit = {
+							has_war_with = ENG
+							ENG = {
+								NOT = {
+									has_country_flag = receive_new_status_yalta
+								}
+							}
+						}
+						country_event = { id = yaltas.14 days = 1 }
+						ENG = {
+							set_country_flag = receive_new_status_yalta
+						}
+					}
+					if = {
+						limit = {
+							has_war_with = FRA
+							FRA = {
+								NOT = {
+									has_country_flag = receive_new_status_yalta
+								}
+							}
+						}
+						country_event = { id = yaltas.15 days = 1 }
+						FRA = {
+							set_country_flag = receive_new_status_yalta
+						}
+					}
+				}
+			}
+		}
+	}
+
+	on_daily_SOV = { #If Russia has Compromised Russian-Italia Diplomatic Relation
+		effect = {
+			if = {
+				limit = {
+					has_country_flag = has_compromised_russian_italian_relation
+				}
+				SOV = {
+					clr_country_flag = has_compromised_russian_italian_relation
+					country_event = { id = generics.39 hours = 2 }
+				}
+			}
+		}
+	}
+
+	on_daily_ITA = { #If Russia has Compromised Russian-Italia Diplomatic Relation
+		effect = {
+			if = {
+				limit = {
+					has_country_flag = has_compromised_russian_italian_relation
+				}
+				ITA = {
+					clr_country_flag = has_compromised_russian_italian_relation
+					country_event = { id = generics.39 hours = 2 }
+				}
+			}
+		}
+	}
 }

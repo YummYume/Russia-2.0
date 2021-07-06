@@ -223,6 +223,7 @@ SOV_reform_military_purge = {
 		remove_effect = {
 			remove_ideas = SOV_The_great_officer_purge_6
 			army_experience = -50
+			custom_effect_tooltip = we_lose_other_decision_if_we_remove_purge
 		}
 	}
 
@@ -262,6 +263,7 @@ SOV_reform_military_purge = {
 
 		complete_effect = {
 			remove_ideas = SOV_The_great_officer_purge
+			custom_effect_tooltip = we_lose_other_decision_if_we_remove_purge
 			hidden_effect = {
 				remove_ideas = SOV_The_great_officer_purge_2
 				remove_ideas = SOV_The_great_officer_purge_3
@@ -732,9 +734,6 @@ SOV_europe_expansion = {
      	}
 
 		visible = {
-			NOT = {
-				has_government = democratic
-			}
 			POL = {
 				exists = yes
 				NOT = {
@@ -830,9 +829,6 @@ SOV_europe_expansion = {
      	}
 
 		visible = {
-			NOT = {
-				has_government = democratic
-			}
 			POL = {
 				exists = yes
 				NOT = {
@@ -910,9 +906,6 @@ SOV_europe_expansion = {
      	}
 
 		visible = {
-			NOT = {
-				has_government = democratic
-			}
 			NOT = {
 				owns_state = 78
 			}
@@ -994,9 +987,6 @@ SOV_europe_expansion = {
      	}
 
 		visible = {
-			NOT = {
-				has_government = democratic
-			}
 			EST = {
 				exists = yes
 				NOT = {
@@ -1075,9 +1065,6 @@ SOV_europe_expansion = {
      	}
 
 		visible = {
-			NOT = {
-				has_government = democratic
-			}
 			LAT = {
 				exists = yes
 				NOT = {
@@ -1156,9 +1143,6 @@ SOV_europe_expansion = {
      	}
 
 		visible = {
-			NOT = {
-				has_government = democratic
-			}
 			LIT = {
 				exists = yes
 				NOT = {
@@ -23458,11 +23442,13 @@ SOV_end_second_civil_war = {
 			}
 			if = {
 				limit = {
-					OR = { #TODO Add other country flag
+					OR = {
 						has_country_flag = japan_accept_to_help_give_russian_far_east
 						has_country_flag = has_negotiated_with_germany_ressource_rights
 						has_country_flag = accept_american_occupation_siberia_after_cw 
 						has_country_flag = accept_french_factories_after_cw 
+						has_country_flag = accept_diplomatic_relation_with_italy 
+						has_country_flag = accept_english_help_for_shipment 
 					}
 				}
 				SOV = {
@@ -24760,7 +24746,7 @@ SOV_iron_curtain = {
 			has_government = communism
 			FROM = {
 				exists = yes
-				NOT {
+				NOT = {
 					is_in_faction_with = ROOT
 					has_government = communism
 				}
@@ -24841,7 +24827,7 @@ SOV_iron_curtain = {
 			FROM = {
 				exists = yes
 				num_of_controlled_states > 1
-				NOT {
+				NOT = {
 					is_in_faction_with = ROOT
 					has_government = communism
 				}
@@ -24868,7 +24854,7 @@ SOV_iron_curtain = {
 			FROM = {
 				exists = yes
 				num_of_controlled_states > 1
-				NOT {
+				NOT = {
 					is_in_faction_with = ROOT
 					has_government = communism
 				}
@@ -24927,7 +24913,7 @@ SOV_iron_curtain = {
 			has_government = communism
 			FROM = {
 				exists = yes
-				NOT {
+				NOT = {
 					is_in_faction_with = ROOT
 				}
 				has_government = communism
@@ -24952,7 +24938,7 @@ SOV_iron_curtain = {
 		target_trigger = {
 			FROM = {
 				exists = yes
-				NOT {
+				NOT = {
 					is_in_faction_with = ROOT
 				}
 				has_government = communism
@@ -25032,6 +25018,7 @@ SOV_iron_curtain = {
 		available = {
 			NOT = {
 				has_war_with = FROM
+				is_subject_of = SOV
 			}
 			FROM = {
 				NOT = {
@@ -25060,7 +25047,22 @@ SOV_iron_curtain = {
 					}
 				}
 			}
-			puppet = FROM
+			hidden_effect = {
+				SOV = {
+					set_autonomy = {
+						target = FROM
+						autonomy_state = autonomy_soviet_republic
+					}
+				}
+				FROM = {
+					set_popularities = {
+						democratic = 10
+						neutrality = 10
+						fascism = 10
+						communism = 70
+					}
+				}
+			}
 			if = {
 				limit = {
 					FROM = {
@@ -25068,12 +25070,6 @@ SOV_iron_curtain = {
 					}
 				}
 				custom_effect_tooltip = join_civil_war_from
-			}
-			hidden_effect = {
-				set_autonomy = {
-					target = FROM
-					autonomy_state = autonomy_puppet
-				}
 			}
 		}
 
@@ -25233,13 +25229,20 @@ SOV_the_black_revolution = {
 		}
 
 		complete_effect = {
-
 			SOV = {
 				country_event = { id = soviets.413 }
 				set_politics = {
 					ruling_party = anarchy
 				}
 				hidden_effect = {
+					country_lock_all_division_template = no
+					set_popularities = {
+						democratic = 10
+						neutrality = 10
+						fascism = 10
+						communism = 50
+						anarchy = 20
+					}
 					set_cosmetic_tag = ANAC
 					clr_country_flag = civil_war_black_revolution
 					remove_ideas = SOV_Anarchist_terrorist
@@ -26273,8 +26276,16 @@ SOV_the_black_revolution = {
 					}
 				}
 				SOV = {
+					country_lock_all_division_template = no
 					set_politics = {
 						ruling_party = anarchy
+					}
+					set_popularities = {
+						democratic = 10
+						neutrality = 10
+						fascism = 10
+						communism = 50
+						anarchy = 20
 					}
 					create_country_leader = {
 						name = "People's Council"
@@ -26449,8 +26460,16 @@ SOV_the_black_revolution = {
 					}
 				}
 				SOV = {
+					country_lock_all_division_template = no
 					set_politics = {
 						ruling_party = anarchy
+					}
+					set_popularities = {
+						democratic = 10
+						neutrality = 10
+						fascism = 10
+						communism = 50
+						anarchy = 20
 					}
 					create_country_leader = {
 						name = "Supreme Military Council"
@@ -26591,8 +26610,16 @@ SOV_the_black_revolution = {
 					}
 				}
 				SOV = {
+					country_lock_all_division_template = no
 					set_politics = {
 						ruling_party = anarchy
+					}
+					set_popularities = {
+						democratic = 10
+						neutrality = 10
+						fascism = 10
+						communism = 50
+						anarchy = 20
 					}
 					create_country_leader = {
 						name = "Supreme Military Council"
@@ -35987,10 +36014,6 @@ SOV_cancel_resource_rights = {
 	cancel_resource_rights = {
 		icon = GFX_decision_eng_trade_unions_support
 
-		allowed = {
-			original_tag = SOV
-		}
-
 		visible = {
 			has_country_flag = giving_46_rights_to_sov
 			has_full_control_of_state = 46
@@ -36012,6 +36035,7 @@ SOV_cancel_resource_rights = {
 		remove_effect = {
 			SOV = {
 				country_event = { id = romanias.12 days = 1 }
+				remove_resource_rights = 46
 			}
 		}
 
@@ -36918,6 +36942,10 @@ SOV_renegotiate_deals_civil_war = {
 
 		days_remove = 20
 
+		cancel_trigger = {
+			has_war_with = GER
+		}
+
 		remove_effect = {
 			clr_country_flag = is_negotiating_with_german_for_ressources_redeal
 		}
@@ -36959,6 +36987,11 @@ SOV_renegotiate_deals_civil_war = {
 		}
 
 		days_remove = 7
+
+		cancel_trigger = {
+			has_war_with = GER
+			is_in_faction_with = GER
+		}
 
 		remove_effect = {
 			clr_country_flag = is_negotiating_with_german_for_ressources_redeal
@@ -37023,6 +37056,10 @@ SOV_renegotiate_deals_civil_war = {
 		}
 
 		days_remove = 15
+
+		cancel_trigger = {
+			has_war_with = JAP
+		}
 
 		remove_effect = {
 			JAP = {
@@ -37178,6 +37215,36 @@ SOV_renegotiate_deals_civil_war = {
 			add_state_core = 560
 			add_state_core = 657
 			add_state_core = 561
+			hidden_effect = {
+				if = {
+					limit = {
+						SOV = {
+							NOT = {
+								has_country_flag = america_receive_siberia_generic
+							}
+						}
+					}
+					563 = {
+						set_demilitarized_zone = no
+					}
+					574 = {
+						set_demilitarized_zone = no
+					}
+					562 = {
+						set_demilitarized_zone = no
+					}
+				}
+				else_if = {
+					limit = {
+						SOV = {
+							has_country_flag = america_receive_siberia_generic
+						}
+					}
+					563 = {
+						set_demilitarized_zone = no
+					}
+				}
+			}
 		}
 	}
 
@@ -37218,6 +37285,10 @@ SOV_renegotiate_deals_civil_war = {
 
 		days_remove = 15
 
+		cancel_trigger = {
+			has_war_with = USA
+		}
+
 		remove_effect = {
 			USA = {
 				country_event = { id = americas.16 days = 1 }
@@ -37231,7 +37302,7 @@ SOV_renegotiate_deals_civil_war = {
 
 	SOV_force_america_siberia_get_out = {
 
-		icon = GFX_decision_generic_break_treaty
+		icon = GFX_decision_generic_ignite_civil_war
 
 		allowed = {
 			original_tag = SOV
@@ -37270,6 +37341,8 @@ SOV_renegotiate_deals_civil_war = {
 			factor = 10
 		}
 
+		war_with_on_remove = USA
+
 		cancel_trigger = {
 			NOT = {
 				divisions_in_state = {
@@ -37278,9 +37351,19 @@ SOV_renegotiate_deals_civil_war = {
 					state = 565
 				}
 			}
+			has_war_with = USA
+			is_in_faction_with = USA
 		}
 
-		days_remove = 15
+		days_remove = 30
+
+		complete_effect = {
+			hidden_effect = {
+				USA = {
+					country_event = { id = americas.23 days = 1 }
+				}
+			}
+		}
 
 		remove_effect = {
 			SOV = {
@@ -37300,6 +37383,488 @@ SOV_renegotiate_deals_civil_war = {
 						on_lose = americas.22
 					}
 				}
+			}
+		}
+	}
+
+	SOV_renegotiate_english_treaty = {
+
+		icon = GFX_decision_generic_break_treaty
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			has_country_flag = deliver_english_ressources
+		}
+
+		cost = 75
+
+		fire_only_once = yes
+
+		available = {
+			NOT = {
+				has_war_with = ENG
+				ENG = {
+					has_civil_war = yes
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 10
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = more_chance_if_condition_english
+			ENG = {
+				country_event = { id = englands.9 days = 1 }
+			}
+		}
+	}
+
+	SOV_cancel_shipment_english = {
+
+		icon = GFX_decision_generic_naval
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			has_country_flag = deliver_english_ressources
+		}
+
+		cost = 150
+
+		fire_only_once = yes
+
+		available = {
+			NOT = {
+				is_in_faction_with = ENG
+				has_war_with = ENG
+				ENG = {
+					has_civil_war = yes
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 10
+		}
+
+		days_remove = 70
+
+		cancel_trigger = {
+			has_war_with = ENG
+			is_in_faction_with = ENG
+		}
+
+		complete_effect = {
+			
+		}
+
+		remove_effect = {
+			if = {
+				limit = {
+					NOT = {
+						has_country_flag = english_refused_our_first_demand
+					}
+				}
+				add_stability = -0.1
+				custom_effect_tooltip = no_real_reason_to_cancel_that_way
+			}
+			remove_ideas = SOV_Russian_concession_britain_civil_war
+			clr_country_flag = deliver_english_ressources
+			ENG = {
+				country_event = { id = englands.12 days = 1 }
+			}
+		}
+	}
+
+	SOV_sabotage_diplomatic_relation_italy = {
+
+		icon = GFX_decision_generic_political_discourse
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			has_country_flag = enter_diplomatic_relation_with_italy_possible
+		}
+
+		days_re_enable = 70
+
+		cost = 75
+
+		available = {
+			NOT = {
+				has_country_flag = is_doing_diplo_with_italy
+				has_war_with = ITA
+				ITA = {
+					has_civil_war = yes
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 10
+		}
+
+		days_remove = 50
+
+		cancel_trigger = {
+			has_war_with = ITA
+		}
+
+		remove_effect = {
+			clr_country_flag = is_doing_diplo_with_italy
+			custom_effect_tooltip = remove_15_points_diplo_relation_ita
+			add_to_variable = {
+				var = russian_italian_diplomacy_relation_var
+				value = -15
+			}
+		}
+
+		complete_effect = {
+			set_country_flag = is_doing_diplo_with_italy
+		}
+	}
+
+	SOV_improve_diplomatic_relation_italy = {
+
+		icon = GFX_decision_eng_trade_unions_support
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			has_country_flag = enter_diplomatic_relation_with_italy_possible
+			NOT = {
+				has_completed_focus = SOV_the_tables_have_turned
+			}
+		}
+
+		days_re_enable = 50
+
+		cost = 75
+
+		available = {
+			NOT = {
+				has_country_flag = is_doing_diplo_with_italy
+				has_war_with = ITA
+				ITA = {
+					has_civil_war = yes
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 10
+		}
+
+		days_remove = 50
+
+		cancel_trigger = {
+			has_war_with = ITA
+		}
+
+		remove_effect = {
+			clr_country_flag = is_doing_diplo_with_italy
+			custom_effect_tooltip = add_15_points_diplo_relation_ita
+			add_to_variable = {
+				var = russian_italian_diplomacy_relation_var
+				value = 15
+			}
+		}
+
+		complete_effect = {
+			set_country_flag = is_doing_diplo_with_italy
+		}
+	}
+
+	SOV_condemn_italy_ethiopian_invasion = {
+
+		icon = GFX_decision_generic_prepare_civil_war
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			has_country_flag = enter_diplomatic_relation_with_italy_possible
+		}
+
+		cost = 50
+
+		fire_only_once = yes
+
+		available = {
+			ITA = {
+				owns_state = 271
+			}
+			NOT = {
+				country_exists = ETH
+				has_country_flag = is_doing_diplo_with_italy
+				has_war_with = ITA
+				ITA = {
+					has_civil_war = yes
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 10
+		}
+
+		days_remove = 30
+
+		cancel_trigger = {
+			has_war_with = ITA
+		}
+
+		remove_effect = {
+			clr_country_flag = is_doing_diplo_with_italy
+			custom_effect_tooltip = remove_20_points_diplo_relation_ita
+			add_to_variable = {
+				var = russian_italian_diplomacy_relation_var
+				value = -20
+			}
+			ITA = {
+				country_event = { id = italys.17 days = 1 }
+			}
+		}
+
+		complete_effect = {
+			set_country_flag = is_doing_diplo_with_italy
+		}
+	}
+
+	SOV_condemn_italy_for_war = {
+
+		icon = GFX_decision_generic_ignite_civil_war
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			has_country_flag = enter_diplomatic_relation_with_italy_possible
+		}
+
+		cost = 50
+
+		fire_only_once = yes
+
+		available = {
+			ITA = {
+				has_offensive_war = yes
+			}
+			NOT = {
+				has_country_flag = is_doing_diplo_with_italy
+				has_war_with = ITA
+				ITA = {
+					has_civil_war = yes
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 10
+		}
+
+		cancel_trigger = {
+			ITA = {
+				has_offensive_war = no
+			}
+		}
+
+		days_remove = 7
+
+		cancel_trigger = {
+			has_war_with = ITA
+		}
+
+		remove_effect = {
+			clr_country_flag = is_doing_diplo_with_italy
+			custom_effect_tooltip = remove_25_points_diplo_relation_ita
+			add_to_variable = {
+				var = russian_italian_diplomacy_relation_var
+				value = -25
+			}
+			ITA = {
+				country_event = { id = italys.18 days = 1 }
+			}
+		}
+
+		complete_effect = {
+			set_country_flag = is_doing_diplo_with_italy
+		}
+	}
+
+	SOV_close_all_diplomatic_relation_italy = {
+
+		icon = GFX_decision_generic_break_treaty
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			has_country_flag = enter_diplomatic_relation_with_italy_possible
+		}
+
+		cost = 100
+
+		fire_only_once = yes
+
+		available = {
+			NOT = {
+				has_war_with = ITA
+				ITA = {
+					has_civil_war = yes
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = russian_italian_diplomacy_bad_shape
+				check_variable = {
+					var = russian_italian_diplomacy_relation_var
+					value = -80
+					compare = less_than_or_equals
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 10
+		}
+
+		complete_effect = {
+			ITA = {
+				country_event = { id = italys.16 days = 1 }
+			}
+			clr_country_flag = enter_diplomatic_relation_with_italy_possible
+			if = {
+				limit = {
+					has_non_aggression_pact_with = ITA
+				}
+				SOV = {
+					diplomatic_relation = {
+						country = ITA
+						relation = non_aggression_pact
+						active = no
+					}
+				}
+			}
+		}
+	}
+
+	SOV_declare_friendship_with_italy = {
+
+		icon = GFX_decision_hol_exchange_intelligence_data
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			has_country_flag = enter_diplomatic_relation_with_italy_possible
+		}
+
+		cost = 100
+
+		fire_only_once = yes
+
+		available = {
+			NOT = {
+				has_war_with = ITA
+				ITA = {
+					has_civil_war = yes
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = russian_italian_diplomacy_good_shape
+				check_variable = {
+					var = russian_italian_diplomacy_relation_var
+					value = 70
+					compare = greater_than_or_equals
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 10
+		}
+
+		complete_effect = {
+			ITA = {
+				country_event = { id = italys.19 days = 1 }
+			}
+			clr_country_flag = enter_diplomatic_relation_with_italy_possible
+		}
+	}
+
+	SOV_form_military_alliance_with_italy = {
+
+		icon = GFX_decision_generic_decision
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			has_country_flag = can_create_faction_with_ita
+			NOT = {
+				has_completed_focus = SOV_convince_italy
+			}
+		}
+
+		cost = 75
+
+		fire_only_once = yes
+
+		available = {
+			NOT = {
+				has_war_with = ITA
+				ITA = {
+					has_civil_war = yes
+					has_government = communism
+					is_in_faction_with = SOV
+				}
+				has_completed_focus = SOV_the_tables_have_turned
+			}
+			OR = {
+				is_faction_leader = yes
+				is_in_faction = no
+			}
+			if = {
+				limit = {
+					has_government = fascism
+				}
+				NOT = {
+					has_country_flag = SOV_fascist_focus_on_europe
+				}
+			}
+			if = {
+				limit = {
+					has_completed_focus = SOV_restoration_tsar
+				}
+				NOT = {
+					has_completed_focus = SOV_convince_italy
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 10
+		}
+
+		complete_effect = {
+			ITA = {
+				country_event = { id = italys.22 days = 1 }
 			}
 		}
 	}

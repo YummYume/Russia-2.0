@@ -15,9 +15,12 @@ country_event = {
 
 	option = {
 		ai_chance = {
-			factor = 80
+			factor = 75
 			modifier = {
-				has_government = neutrality
+				OR = {
+					has_country_flag = can_create_faction_with_ita
+					has_government = neutrality
+				}
 				factor = 100
 			}
 		}
@@ -56,10 +59,13 @@ country_event = {
 
 	option = {
 		ai_chance = {
-			factor = 20
+			factor = 25
 			modifier = {
-				has_government = neutrality
-				factor = 0
+				OR = {
+					has_country_flag = can_create_faction_with_ita
+					has_government = neutrality
+				}
+				factor = 100
 			}
 		}
 		name = italys.1.b
@@ -457,5 +463,233 @@ country_event = {
 		custom_effect_tooltip = if_we_accept_and_send_volunteers_gain_good_tt
 		custom_effect_tooltip = upon_start_civil_war_idea_tt
 		show_ideas_tooltip = SOV_Participation_russian_civil_war_foreign
+	}
+}
+
+#Russia Close Diplomatic Relation with Us
+country_event = {
+	id = italys.16
+	title = italys.16.t
+	desc = italys.16.d
+	picture = GFX_report_event_generic_read_write
+
+	is_triggered_only = yes
+
+	option = { #It was bound to happen ...
+		ai_chance = {
+			factor = 100
+		}
+		name = italys.16.a
+	}
+}
+
+#Russia Condemn Us for the Invasion of Ethiopia
+country_event = {
+	id = italys.17
+	title = italys.17.t
+	desc = italys.17.d
+	picture = GFX_report_event_generic_sign_treaty1
+	
+	is_triggered_only = yes
+
+	option = { #A bit late for that
+		ai_chance = {
+			factor = 100
+		}
+		name = italys.17.a
+	}
+}
+
+#Russia Condemn Us for Starting a war with a Foreign Country
+country_event = {
+	id = italys.18
+	title = italys.18.t
+	desc = italys.18.d
+	picture = GFX_report_event_german_troops
+	
+	is_triggered_only = yes
+
+	option = { #We're not going to make peace
+		ai_chance = {
+			factor = 100
+		}
+		name = italys.18.a
+	}
+}
+
+#Russian Friendship
+country_event = {
+	id = italys.19
+	title = italys.19.t
+	desc = italys.19.d
+	picture = GFX_report_event_german_italian_pact
+	
+	is_triggered_only = yes
+
+	option = { #Friends
+		ai_chance = {
+			factor = 85
+		}
+		name = italys.19.a
+		SOV = {
+			country_event = { id = italys.20 days = 1 }
+		}
+		add_political_power = 75
+		add_stability = 0.05
+	}
+
+	option = { #No
+		ai_chance = {
+			factor = 15
+		}
+		name = italys.19.b
+		SOV = {
+			country_event = { id = italys.21 days = 1 }
+		}
+	}
+}
+
+#Italy Accept Friendship
+country_event = {
+	id = italys.20
+	title = italys.20.t
+	desc = italys.20.d
+	picture = GFX_soldiers_handshaking_kolchak_russia2
+	
+	is_triggered_only = yes
+
+	option = { #Friends !
+		ai_chance = {
+			factor = 100
+		}
+		name = italys.20.a
+		set_country_flag = can_create_faction_with_ita
+		custom_effect_tooltip = unlock_decision_create_faction_italy
+		ITA = {
+			add_ai_strategy = {
+				type = alliance
+				id = SOV
+				value = 50
+			}
+			add_ai_strategy = {
+				type = befriend
+				id = SOV
+				value = 15
+			}
+		}
+		add_political_power = 75
+		add_stability = 0.05
+	}
+}
+
+#Italy Refuse Friendship
+country_event = {
+	id = italys.21
+	title = italys.21.t
+	desc = italys.21.d
+	picture = GFX_report_event_poland_rejects
+	
+	is_triggered_only = yes
+
+	option = { #Retard
+		ai_chance = {
+			factor = 100
+		}
+		name = italys.21.a
+	}
+}
+
+#Russian Proposition of Military Alliance
+country_event = {
+	id = italys.22
+	title = italys.22.t
+	desc = italys.22.d
+	picture = GFX_soldiers_parade_russia2
+	
+	is_triggered_only = yes
+
+	option = { #Friends
+		ai_chance = {
+			factor = 85
+			modifier = {
+				factor = 60
+				is_in_faction = yes
+			}
+		}
+		name = italys.22.a
+		SOV = {
+			country_event = { id = italys.23 days = 1 }
+		}
+	}
+
+	option = { #No
+		ai_chance = {
+			factor = 15
+			modifier = {
+				factor = 40
+				is_in_faction = yes
+			}
+		}
+		name = italys.22.b
+		if = {
+			limit = {
+				SOV = {
+					is_faction_leader = yes
+				}
+			}
+			SOV = {
+				country_event = { id = italys.24 days = 1 }
+			}
+		}
+		else = {
+			SOV = {
+				create_faction = moscow_rome_alliance
+				add_to_faction = ITA
+			}
+		}
+	}
+}
+
+#Italy Accept Alliance
+country_event = {
+	id = italys.23
+	title = italys.23.t
+	desc = italys.23.d
+	picture = GFX_soldiers_with_guns_russia2
+	
+	is_triggered_only = yes
+
+	option = { #Nice
+		ai_chance = {
+			factor = 100
+		}
+		name = italys.23.a
+		SOV = {
+			add_to_faction = ITA
+		}
+		ITA = {
+			add_ai_strategy = {
+				type = alliance
+				id = SOV
+				value = 125
+			}
+		}
+	}
+}
+
+#Italy Refuse Alliance
+country_event = {
+	id = italys.24
+	title = italys.24.t
+	desc = italys.24.d
+	picture = GFX_report_event_poland_rejects
+	
+	is_triggered_only = yes
+
+	option = { #Why !
+		ai_chance = {
+			factor = 100
+		}
+		name = italys.24.a
 	}
 }

@@ -700,6 +700,18 @@ country_event = {
 		set_country_flag = purged_khrushchev
 		hidden_effect = {
 			remove_ideas = nikita_khrushchev
+			UKR = {
+				retire_ideology_leader = communism
+				create_country_leader = {
+					name = "Vladimir Antonov-Ovseyenko"
+					desc = "POLITICS_VLADIMIR_ANTONOV_DESC"
+					picture = "gfx/leaders/UKR/Vladimir_Antonov_Ovseyenko.dds"
+					ideology = leninism
+					traits = {
+						
+					}
+				}
+			}
 		}
 	}
 	option = {
@@ -1269,7 +1281,20 @@ country_event = {
 
 	option = {
 		name = soviets.39.a
-		puppet = FROM
+		set_autonomy = {
+			target = FROM
+			autonomy_state = autonomy_soviet_republic
+		}
+		hidden_effect = {
+			FROM = {
+				set_popularities = {
+					democratic = 10
+					neutrality = 10
+					fascism = 10
+					communism = 70
+				}
+			}
+		}
 	}
 }
 
@@ -2174,6 +2199,15 @@ country_event = {
 			hidden_effect = {
 				UKR = {
 					retire_ideology_leader = communism
+					create_country_leader = {
+						name = "Vladimir Antonov-Ovseyenko"
+						desc = "POLITICS_VLADIMIR_ANTONOV_DESC"
+						picture = "gfx/leaders/UKR/Vladimir_Antonov_Ovseyenko.dds"
+						ideology = leninism
+						traits = {
+							
+						}
+					}
 				}
 			}
 		}
@@ -2237,6 +2271,15 @@ country_event = {
 			hidden_effect = {
 				UKR = {
 					retire_ideology_leader = communism
+					create_country_leader = {
+						name = "Vladimir Antonov-Ovseyenko"
+						desc = "POLITICS_VLADIMIR_ANTONOV_DESC"
+						picture = "gfx/leaders/UKR/Vladimir_Antonov_Ovseyenko.dds"
+						ideology = leninism
+						traits = {
+							
+						}
+					}
 				}
 			}
 		}
@@ -2582,6 +2625,15 @@ country_event = {
 					ruling_party = communism
 				}
 				retire_ideology_leader = communism
+				create_country_leader = {
+					name = "Vladimir Antonov-Ovseyenko"
+					desc = "POLITICS_VLADIMIR_ANTONOV_DESC"
+					picture = "gfx/leaders/UKR/Vladimir_Antonov_Ovseyenko.dds"
+					ideology = leninism
+					traits = {
+						
+					}
+				}
 				add_ideas = {
 					SOV_Ukrainian_revolt
 				}
@@ -3007,6 +3059,7 @@ country_event = {
 		hidden_effect = {
 			country_event = { id = soviets.89 days = 10 }
 		}
+		set_country_flag = has_formed_proletarian_union
 	}
 
 	option = { #No
@@ -3181,6 +3234,7 @@ country_event = {
 				add_compliance = 10
 				set_resistance = 0
 			}
+			set_country_flag = socialist_union_worker_formed
 		}
 		hidden_effect = {
 			news_event = { id = newsrussia2.43 days = 1 }
@@ -8787,6 +8841,17 @@ country_event = {
 			}
 			if = {
 				limit = {
+					has_country_flag = control_caucasus
+				}
+				delete_unit_template_and_units = {
+					division_template = "Kavkazskaya kazach'ya diviziya"
+				}
+				delete_unit_template_and_units = {
+					division_template = "Opytnyy Kavkazskaya kazach'ya diviziya"
+				}
+			}
+			if = {
+				limit = {
 					has_equipment = {
 						infantry_equipment > 50000
 					}
@@ -10007,22 +10072,18 @@ country_event = {
 	desc = {
 		text = soviets.227.d
 		trigger = {
-			JAP = {
-				NOT = {
-					has_country_flag = japan_accept_to_help_give_north_sakhalin
-					has_country_flag = japan_accept_to_help_give_russian_far_east
-				}	
-			}
+			NOT = {
+				has_country_flag = japan_accept_to_help_give_north_sakhalin
+				has_country_flag = japan_accept_to_help_give_russian_far_east
+			}	
 		}
 	}
 	desc = {
 		text = soviets.227.d_2
 		trigger = {
-			JAP = {
-				OR = {
-					has_country_flag = japan_accept_to_help_give_north_sakhalin
-					has_country_flag = japan_accept_to_help_give_russian_far_east
-				}
+			OR = {
+				has_country_flag = japan_accept_to_help_give_north_sakhalin
+				has_country_flag = japan_accept_to_help_give_russian_far_east
 			}
 		}
 	} 
@@ -10032,11 +10093,9 @@ country_event = {
 
 	option = { #Ask Non-Agression Pact for North Sakhalin
 		trigger = {
-			JAP = {
-				NOT = {
-					has_country_flag = japan_accept_to_help_give_north_sakhalin
-					has_country_flag = japan_accept_to_help_give_russian_far_east
-				}	
+			NOT = {
+				has_country_flag = japan_accept_to_help_give_north_sakhalin
+				has_country_flag = japan_accept_to_help_give_russian_far_east
 			}
 		}
 		name = soviets.227.a
@@ -10050,12 +10109,10 @@ country_event = {
 
 	option = { #Never
 		trigger = {
-			JAP = {
-				NOT = {
-					has_country_flag = japan_accept_to_help_give_north_sakhalin
-					has_country_flag = japan_accept_to_help_give_russian_far_east
-				}	
-			}
+			NOT = {
+				has_country_flag = japan_accept_to_help_give_north_sakhalin
+				has_country_flag = japan_accept_to_help_give_russian_far_east
+			}	
 		}
 		name = soviets.227.b
 		ai_chance = {
@@ -10065,11 +10122,9 @@ country_event = {
 
 	option = { #Give Them due to the Deal
 		trigger = {
-			JAP = {
-				OR = {
-					has_country_flag = japan_accept_to_help_give_north_sakhalin
-					has_country_flag = japan_accept_to_help_give_russian_far_east
-				}
+			OR = {
+				has_country_flag = japan_accept_to_help_give_north_sakhalin
+				has_country_flag = japan_accept_to_help_give_russian_far_east
 			}
 		}
 		name = soviets.227.c
@@ -11058,22 +11113,9 @@ country_event = {
 	desc = soviets.238.d
 	picture = GFX_report_event_finnish_soldiers_snow
 
-	trigger = {
-		TAG = SOU
-		NOT = {
-			country_exists = SOV
-		}
-		SOU = {
-			has_war = no
-			is_subject = no
-		}
-	}
+	is_triggered_only = yes
 
 	fire_only_once = yes
-
-	mean_time_to_happen = {
-		days = 10
-	}
 
 	option = {
 		name = soviets.238.a
@@ -12766,6 +12808,12 @@ country_event = {
 		}
 		custom_effect_tooltip = end_civil_war_focus
 		hidden_effect = {
+			delete_unit_template_and_units = {
+				division_template = "Yaponskiy Dobrovol'cheskiy Diviziya"
+			}
+			delete_unit_template_and_units = {
+				division_template = "Ital'yanskiy Dobrovol'cheskiy Diviziya"
+			}
 			every_state = {
 				limit = {
 					is_core_of = SOU
@@ -12804,6 +12852,9 @@ country_event = {
 				}
 				delete_unit_template_and_units = {
 					division_template = "Kavkazskaya kazach'ya diviziya"
+				}
+				delete_unit_template_and_units = {
+					division_template = "Opytnyy Kavkazskaya kazach'ya diviziya"
 				}
 			}
 			else_if = {
@@ -12894,12 +12945,6 @@ country_event = {
 					type = infantry_equipment
 					amount = -20000
 				}
-			}
-			delete_unit_template_and_units = {
-				division_template = "Yaponskiy dobrovol'cheskiy diviziya"
-			}
-			delete_unit_template_and_units = {
-				division_template = "Ital'yanskiy Dobrovol'cheskiy Diviziya"
 			}
 		}
 		add_threat = -5
@@ -16121,7 +16166,7 @@ country_event = {
 			target = GER
 			modifier = anti_german_sentiment
 		}
-		add_ideas = SOV_anti_german_sentiment
+		add_ideas = SOV_Anti_german_sentiment
 		hidden_effect = {
 			GER = {
 				country_event = { id = soviets.347 days = 1 }
@@ -16144,7 +16189,7 @@ country_event = {
 			target = JAP
 			modifier = anti_japanese_sentiment
 		}
-		add_ideas = SOV_anti_japanese_sentiment
+		add_ideas = SOV_Anti_japanese_sentiment
 		hidden_effect = {
 			JAP = {
 				country_event = { id = soviets.347 days = 1 }
@@ -16219,7 +16264,7 @@ country_event = {
 			target = GER
 			modifier = anti_german_sentiment
 		}
-		add_ideas = SOV_anti_german_sentiment
+		add_ideas = SOV_Anti_german_sentiment
 		hidden_effect = {
 			GER = {
 				country_event = { id = soviets.348 days = 1 }
@@ -16242,7 +16287,7 @@ country_event = {
 			target = JAP
 			modifier = anti_japanese_sentiment
 		}
-		add_ideas = SOV_anti_japanese_sentiment
+		add_ideas = SOV_Anti_japanese_sentiment
 		hidden_effect = {
 			JAP = {
 				country_event = { id = soviets.348 days = 1 }
@@ -22628,7 +22673,15 @@ country_event = {
 				}
 			}
 			SOV = {
-				load_oob = "SOV_american_planes_civil_war"
+				add_equipment_to_stockpile = {
+					type = fighter_equipment_1
+					amount = 250
+				}
+				add_equipment_to_stockpile = {
+					type = tac_bomber_equipment_0
+					amount = 250
+					producer = USA
+				}
 			}
 		}
 	}
@@ -22761,6 +22814,9 @@ country_event = {
 				}
 			}
 			SOV = {
+				set_technology = {
+					marines = 1
+				}
 				load_oob = "SOV_elite_marines_civil_war"
 			}
 		}

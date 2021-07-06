@@ -972,11 +972,9 @@ country_event = {
 			}
 		}
 		trigger = {
-			FROM = {
-				OR = {
-					TAG = GER
-					TAG = JAP
-				}
+			OR = {
+				TAG = GER
+				TAG = JAP
 			}
 		}
 		name = generics.31.b
@@ -989,16 +987,14 @@ country_event = {
 		ai_chance = {
 			factor = 40
 			modifier = {
-				factor = 80
+				factor = 60
 				TAG = ITA
 			}
 		}
 		trigger = {
-			FROM = {
-				NOT = {
-					TAG = GER
-					TAG = JAP
-				}
+			NOT = {
+				TAG = GER
+				TAG = JAP
 			}
 		}
 		name = generics.31.c
@@ -1288,6 +1284,9 @@ country_event = {
 			GER = {
 				set_country_flag = is_paying_ressource_for_russia
 				add_ideas = SOV_Payment_russian_ressource_ger
+				hidden_effect = {
+					country_event = { id  = germanys.33 days = 1 }
+				}
 			}
 		}
 		else_if = {
@@ -1315,11 +1314,13 @@ country_event = {
 				country_event = { id = japans.29 hours = 12 }
 			}
 			set_country_flag = japan_receive_far_east_generic
-			remove_state_core = 408
-			remove_state_core = 409
-			remove_state_core = 560
-			remove_state_core = 657
-			remove_state_core = 561
+			hidden_effect = {
+				remove_state_core = 408
+				remove_state_core = 409
+				remove_state_core = 560
+				remove_state_core = 657
+				remove_state_core = 561
+			}
 		}
 		else_if = {
 			limit = {
@@ -1369,94 +1370,102 @@ country_event = {
 					}
 				}
 			}
-			random_owned_state = {
-				limit = {
-					arms_factory > 0
+			custom_effect_tooltip = lose_five_mil_factories
+			hidden_effect = {
+				random_owned_state = {
+					limit = {
+						arms_factory > 0
+					}
+					remove_building = {
+						type = arms_factory
+						level = 1
+					}
 				}
-				remove_building = {
-					type = arms_factory
-					level = 1
+				random_owned_state = {
+					limit = {
+						arms_factory > 0
+					}
+					remove_building = {
+						type = arms_factory
+						level = 1
+					}
+				}
+				random_owned_state = {
+					limit = {
+						arms_factory > 0
+					}
+					remove_building = {
+						type = arms_factory
+						level = 1
+					}
+				}
+				random_owned_state = {
+					limit = {
+						arms_factory > 0
+					}
+					remove_building = {
+						type = arms_factory
+						level = 1
+					}
+				}
+				random_owned_state = {
+					limit = {
+						arms_factory > 0
+					}
+					remove_building = {
+						type = arms_factory
+						level = 1
+					}
+				}
+				random_owned_state = {
+					limit = {
+						industrial_complex > 0
+					}
+					remove_building = {
+						type = industrial_complex
+						level = 1
+					}
+				}
+				random_owned_state = {
+					limit = {
+						industrial_complex > 0
+					}
+					remove_building = {
+						type = industrial_complex
+						level = 1
+					}
+				}
+				random_owned_state = {
+					limit = {
+						industrial_complex > 0
+					}
+					remove_building = {
+						type = industrial_complex
+						level = 1
+					}
+				}
+				random_owned_state = {
+					limit = {
+						industrial_complex > 0
+					}
+					remove_building = {
+						type = industrial_complex
+						level = 1
+					}
+				}
+				random_owned_state = {
+					limit = {
+						industrial_complex > 0
+					}
+					remove_building = {
+						type = industrial_complex
+						level = 1
+					}
 				}
 			}
-			random_owned_state = {
-				limit = {
-					arms_factory > 0
-				}
-				remove_building = {
-					type = arms_factory
-					level = 1
-				}
-			}
-			random_owned_state = {
-				limit = {
-					arms_factory > 0
-				}
-				remove_building = {
-					type = arms_factory
-					level = 1
-				}
-			}
-			random_owned_state = {
-				limit = {
-					arms_factory > 0
-				}
-				remove_building = {
-					type = arms_factory
-					level = 1
-				}
-			}
-			random_owned_state = {
-				limit = {
-					arms_factory > 0
-				}
-				remove_building = {
-					type = arms_factory
-					level = 1
-				}
-			}
-			random_owned_state = {
-				limit = {
-					industrial_complex > 0
-				}
-				remove_building = {
-					type = industrial_complex
-					level = 1
-				}
-			}
-			random_owned_state = {
-				limit = {
-					industrial_complex > 0
-				}
-				remove_building = {
-					type = industrial_complex
-					level = 1
-				}
-			}
-			random_owned_state = {
-				limit = {
-					industrial_complex > 0
-				}
-				remove_building = {
-					type = industrial_complex
-					level = 1
-				}
-			}
-			random_owned_state = {
-				limit = {
-					industrial_complex > 0
-				}
-				remove_building = {
-					type = industrial_complex
-					level = 1
-				}
-			}
-			random_owned_state = {
-				limit = {
-					industrial_complex > 0
-				}
-				remove_building = {
-					type = industrial_complex
-					level = 1
+			hidden_effect = {
+				FRA = {
+					country_event = { id = frances.14 days = 1 }
 				}
 			}
 		}
@@ -1474,7 +1483,42 @@ country_event = {
 				has_country_flag = accept_diplomatic_relation_with_italy
 			}
 			set_country_flag = enter_diplomatic_relation_with_italy_possible
-			custom_effect_tooltip = unlock_decision_diplomatic_relation_italy_minigame
+			SOV = {
+				diplomatic_relation = {
+					country = ITA
+					relation = non_aggression_pact
+					active = yes
+				}
+			}
+			set_variable = { russian_italian_diplomacy_relation_var = 0 }
+		}
+		if = {
+			limit = {
+				has_country_flag = accept_english_help_for_shipment
+				NOT = {
+					ENG = {
+						has_civil_war = yes
+					}
+				}
+			}
+			set_country_flag = deliver_english_ressources
+			SOV = {
+				add_ideas = SOV_Russian_concession_britain_civil_war
+			}
+			hidden_effect = {
+				ENG = {
+					country_event = { id = englands.8 days = 1 }
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_country_flag = accept_english_help_for_shipment
+				ENG = {
+					has_civil_war = yes
+				}
+			}
+			custom_effect_tooltip = english_wont_get_anything_cw
 		}
 	}
 }
@@ -1637,10 +1681,7 @@ country_event = {
 		}
 		ENG = {
 			set_country_flag = help_whiteguard_during_russian_civil_war
-		}
-		ENG = {
-			set_country_flag = help_whiteguard_during_russian_civil_war
-			country_event = { id = italys.15 days = 1 }
+			country_event = { id = englands.7 days = 1 }
 		}
 	}
 }
@@ -1675,5 +1716,24 @@ country_event = {
 			ideology = anarchy
 			popularity = -0.2
 		}
+	}
+}
+
+#FROM has broken Italian-Russian diplomacy
+country_event = {
+	id = generics.39
+	title = generics.39.t
+	desc = generics.39.d
+	picture = GFX_report_event_poland_rejects
+
+	is_triggered_only = yes
+
+	option = { #We didn't have any choice
+		ai_chance = {
+			factor = 100
+		}
+		name = generics.39.a
+		add_stability = -0.25
+		add_war_support = -0.25
 	}
 }

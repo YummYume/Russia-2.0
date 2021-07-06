@@ -97,9 +97,9 @@ country_event = {
 
 	option = { #No
 	ai_chance = {
-			factor = 20
-		}	
-		name = englands.4.a
+		factor = 20
+	}	
+	name = englands.4.a
 		SOV = {
 			country_event = { id = englands.6 days = 2 }
 		}
@@ -117,6 +117,9 @@ country_event = {
 	
 	option = { #Yay
 		name = englands.5.a
+		ai_chance = {
+			factor = 80
+		}
 		add_ideas = SOV_Old_enemies_old_allies_sov
 		add_opinion_modifier = {
 			target = ENG
@@ -136,9 +139,249 @@ country_event = {
 	
 	option = { #Yay
 		name = englands.6.a
+		ai_chance = {
+			factor = 80
+		}
 		add_opinion_modifier = {
 			target = ENG
 			modifier = refused_old_new_allies
 		}
+	}
+}
+
+#White Guard Accept
+country_event = {
+	id = englands.7
+	title = englands.7.t
+	desc = englands.7.d
+	picture = GFX_handshake_russia2
+	
+	is_triggered_only = yes
+	
+	option = { #Yay
+		name = englands.7.a
+		ai_chance = {
+			factor = 80
+		}
+		custom_effect_tooltip = if_we_accept_and_send_volunteers_gain_good_tt
+		custom_effect_tooltip = upon_start_civil_war_idea_tt
+		show_ideas_tooltip = SOV_Participation_russian_civil_war_foreign
+	}
+}
+
+#Russian Ressources
+country_event = {
+	id = englands.8
+	title = englands.8.t
+	desc = englands.8.d
+	picture = GFX_report_event_generic_naval_treaty
+	
+	is_triggered_only = yes
+	
+	option = { #Yay
+		name = englands.8.a
+		ai_chance = {
+			factor = 80
+		}
+		add_ideas = SOV_English_concession_russia_civil_war
+	}
+}
+
+#Russian Wants to Renegotiate Shipment
+country_event = {
+	id = englands.9
+	title = englands.9.t
+	desc = englands.9.d
+	picture = GFX_report_event_soviet_finnish_pact
+	
+	is_triggered_only = yes
+	
+	option = { #Yay
+		name = englands.9.a
+		ai_chance = {
+			factor = 60
+			modifier = {
+				factor = 90
+				ENG = {
+					is_in_faction_with = SOV
+				}
+			}
+		}
+		SOV = {
+			country_event = { id = englands.10 days = 1 }
+		}
+		remove_ideas = SOV_English_concession_russia_civil_war
+		add_timed_idea = {
+			idea = SOV_English_payment_concession_russia_civil_war
+			days = 90
+		}
+	}
+
+	option = { #No
+		name = englands.9.b
+		ai_chance = {
+			factor = 40
+			modifier = {
+				factor = 80
+				OR = {
+					SOV = {
+						has_country_flag = SOV_fascist_focus_on_europe
+					}
+					any_country = {
+						has_war_with = SOV
+						is_major = yes
+					}
+				}
+			}
+		}
+		SOV = {
+			country_event = { id = englands.11 days = 1 }
+		}
+	}
+}
+
+#England Accept to Remove Shipment
+country_event = {
+	id = englands.10
+	title = englands.10.t
+	desc = englands.10.d
+	picture = GFX_handshake_russia2
+	
+	is_triggered_only = yes
+	
+	option = { #Yay
+		name = englands.10.a
+		ai_chance = {
+			factor = 80
+		}
+		remove_ideas = SOV_Russian_concession_britain_civil_war
+		clr_country_flag = deliver_english_ressources
+		add_timed_idea = {
+			idea = SOV_Russian_payment_concession_britain_civil_war
+			days = 90
+		}
+	}
+}
+
+#England Refuse to Remove Shipment
+country_event = {
+	id = englands.11
+	title = englands.11.t
+	desc = englands.11.d
+	picture = GFX_report_event_soviet_purge_officers_02
+	
+	is_triggered_only = yes
+	
+	option = { #No
+		name = englands.11.a
+		ai_chance = {
+			factor = 80
+		}
+		set_country_flag = english_refused_our_first_demand
+		custom_effect_tooltip = can_do_cancel_without_penalty
+	}
+
+	option = { #maybe pay the fouble ?
+		name = englands.11.b
+		ai_chance = {
+			factor = 80
+		}
+		ENG = {
+			country_event = { id = englands.13 days = 1 }
+		}
+	}
+}
+
+#Russia Cancel our Shipment
+country_event = {
+	id = englands.12
+	title = englands.12.t
+	desc = englands.12.d
+	picture = GFX_report_event_merchant_ship_01
+	
+	is_triggered_only = yes
+	
+	option = { #No
+		name = englands.12.a
+		ai_chance = {
+			factor = 80
+		}
+		remove_ideas = SOV_English_concession_russia_civil_war
+	}
+}
+
+#Russia Wants to pay double
+country_event = {
+	id = englands.13
+	title = englands.13.t
+	desc = englands.13.d
+	picture = GFX_report_event_mussolini_hotel
+	
+	is_triggered_only = yes
+	
+	option = { #Yes
+		name = englands.13.a
+		ai_chance = {
+			factor = 80
+		}
+		remove_ideas = SOV_English_concession_russia_civil_war
+		add_timed_idea = {
+			idea = SOV_English_payment_concession_russia_civil_war2
+			days = 180
+		}
+		SOV = {
+			country_event = { id = englands.14 days = 1 }
+		}
+	}
+
+	option = { #No
+		name = englands.13.b
+		ai_chance = {
+			factor = 20
+		}
+		SOV = {
+			country_event = { id = englands.15 days = 1 }
+		}
+	}
+}
+
+#England Accept New Deal
+country_event = {
+	id = englands.14
+	title = englands.14.t
+	desc = englands.14.d
+	picture = GFX_handshake_russia2
+	
+	is_triggered_only = yes
+	
+	option = { #No
+		name = englands.14.a
+		ai_chance = {
+			factor = 80
+		}
+		remove_ideas = SOV_Russian_concession_britain_civil_war
+		clr_country_flag = deliver_english_ressources
+		add_timed_idea = {
+			idea = SOV_Russian_payment_concession_britain_civil_war2
+			days = 180
+		}
+	}
+}
+
+#England still Refuse
+country_event = {
+	id = englands.15
+	title = englands.15.t
+	desc = englands.15.d
+	picture = GFX_report_event_pierre_laval
+	
+	is_triggered_only = yes
+	
+	option = { #No
+		name = englands.15.a
+		ai_chance = {
+			factor = 80
+		}
+
 	}
 }
