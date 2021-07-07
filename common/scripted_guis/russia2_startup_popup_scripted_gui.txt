@@ -1,0 +1,53 @@
+scripted_gui = {
+    russia_reworked_startup_popup_scripted_gui = {
+        window_name = "russia_reworked_startup_popup"
+        context_type = player_context
+
+        visible = {
+            tag = SOV
+            is_ai = no
+            has_global_flag = russia_reworked_error
+            NOT = {
+                has_country_flag = russia_reworked_error_closed
+            }
+        }
+
+        properties = {
+            warning_checkbox = {
+                frame = var:ROOT.approved_error
+            }
+        }
+
+        effects = {
+            warning_checkbox_click = {
+                if = {
+                    limit = {
+                        check_variable = {
+                            var = ROOT.approved_error
+                            value = 1
+                            compare = equals
+                        }
+                    }
+                    set_variable = { ROOT.approved_error = 2 }
+                }
+                else = {
+                    set_variable = { ROOT.approved_error = 1 }
+                }
+            }
+
+            warning_close_button_click = {
+                set_country_flag = russia_reworked_error_closed
+            }
+        }
+
+        triggers = {
+            warning_close_button_click_enabled = {
+                check_variable = {
+                    var = ROOT.approved_error
+                    value = 2
+                    compare = equals
+                }
+            }
+        }
+    }
+}
