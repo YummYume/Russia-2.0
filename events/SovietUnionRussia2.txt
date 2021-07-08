@@ -23292,3 +23292,130 @@ country_event = {
 		}
 	}
 }
+
+# Give Territory to KUR
+country_event = {
+	id = soviets.506
+	title = soviets.506.t
+	desc = soviets.506.d
+	picture = GFX_report_event_german_troops
+
+	is_triggered_only = yes
+	
+	#Accept
+	option = {
+		name = soviets.506.a
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 100
+				OR = {
+					is_subject = yes
+					strength_ratio = {
+						tag = SOV
+						ratio < 1
+					}
+				}
+			}
+		}
+		every_owned_state = {
+			limit = {
+				OR = {
+					is_core_of = KUR
+					is_claimed_by = KUR
+				}
+			}
+			KUR = {
+				transfer_state = PREV
+			}
+		}
+		SOV = {
+			country_event = soviets.507
+		}
+		hidden_effect = {
+			KUR = {
+				country_event = soviets.507
+			}
+		}
+	}
+
+	#Refuse
+	option = {
+		name = soviets.506.b
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 0
+				OR = {
+					is_subject = yes
+					strength_ratio = {
+						tag = SOV
+						ratio < 1
+					}
+				}
+			}
+		}
+		trigger = {
+			ROOT = {
+				NOT = {
+					tag = SOV
+					tag = KUR
+					is_in_faction_with = SOV
+					if = {
+						limit = {
+							is_subject = yes
+						}
+						OVERLORD = {
+							OR = {
+								tag = SOV
+								is_in_faction_with = SOV
+							}
+						}
+					}
+				}
+			}
+		}
+		SOV = {
+			country_event = soviets.508
+		}
+		hidden_effect = {
+			KUR = {
+				country_event = soviets.508
+			}
+		}
+	}
+}
+
+# FROM Accepts
+country_event = {
+	id = soviets.507
+	title = soviets.507.t
+	desc = soviets.507.d
+	picture = GFX_report_event_german_troops
+
+	is_triggered_only = yes
+	
+	#Great
+	option = {
+		name = soviets.507.a
+	}
+}
+
+# FROM Refuses
+country_event = {
+	id = soviets.508
+	title = soviets.508.t
+	desc = soviets.508.d
+	picture = GFX_report_event_german_troops
+
+	is_triggered_only = yes
+	
+	#War
+	option = {
+		name = soviets.508.a
+		create_wargoal = {
+			target = FROM
+			type = take_claimed_state
+		}
+	}
+}

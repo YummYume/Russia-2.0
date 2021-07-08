@@ -40124,8 +40124,165 @@ SOV_great_patriotic_war_russia2 = {
 	}
 }
 
-SOV_kurdish_help = {
-	
+SOV_greater_kurdistan = {
+
+	SOV_ask_kurdistan_territory = {
+
+		icon = GFX_decision_ger_military_buildup
+
+		fire_only_once = yes
+
+		days_remove = 10
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			FROM = {
+				OR = {
+					is_neighbor_of = ROOT
+					any_country = {
+						OR = {
+							is_in_faction_with = ROOT
+							is_subject_of = ROOT
+						}
+						is_neighbor_of = FROM
+					}
+				}
+			}
+		}
+
+		visible = {
+			is_faction_leader = yes
+			is_subject = no
+			has_government = neutrality
+			has_completed_focus = SOV_fate_turkey
+			KUR = {
+				is_subject_of = SOV
+			}
+			has_country_flag = choose_kurdistan_over_other
+			is_subject = no
+			FROM = {
+				exists = yes
+				NOT = {
+					tag = ROOT
+					tag = KUR
+				}
+				any_state = {
+					is_owned_and_controlled_by = FROM
+					OR = {
+						is_claimed_by = KUR
+						is_core_of = KUR
+					}
+				}
+			}
+		}
+
+		target_root_trigger = {
+			has_completed_focus = SOV_fate_turkey
+		}
+
+		target_trigger = {
+			FROM = {
+				exists = yes
+				NOT = {
+					tag = ROOT
+					tag = KUR
+				}
+				any_state = {
+					is_owned_and_controlled_by = FROM
+					OR = {
+						is_claimed_by = KUR
+						is_core_of = KUR
+					}
+				}
+			}
+		}
+
+		cost = 50
+
+		war_with_target_on_remove = yes
+
+		remove_effect = {
+			FROM = {
+				country_event = soviets.506
+			}
+		}
+
+		ai_will_do = {
+			factor = 0
+			modifier = {
+				factor = 100
+				strength_ratio = {
+					tag = FROM
+					ratio > 1
+				}
+			}
+		}
+	}
+
+	SOV_give_back_kurdistan_territory = {
+
+		icon = GFX_decision_ger_military_buildup
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		state_target = yes
+
+		available = {
+			FROM = {
+				is_owned_and_controlled_by = ROOT
+				OR = {
+					is_core_of = KUR
+					is_claimed_by = KUR
+				}
+			}
+		}
+
+		visible = {
+			ROOT = {
+				is_faction_leader = yes
+				is_subject = no
+				has_government = neutrality
+				has_completed_focus = SOV_fate_turkey
+				has_country_flag = choose_kurdistan_over_other
+				is_subject = no
+			}
+			KUR = {
+				is_subject_of = ROOT
+			}
+			FROM = {
+				is_owned_and_controlled_by = ROOT
+				OR = {
+					is_core_of = KUR
+					is_claimed_by = KUR
+				}
+			}
+		}
+
+		target_trigger = {
+			FROM = {
+				is_owned_and_controlled_by = ROOT
+				OR = {
+					is_core_of = KUR
+					is_claimed_by = KUR
+				}
+			}
+		}
+
+		complete_effect = {
+			KUR = {
+				transfer_state = FROM
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
 }
 
 SOV_slavic_help = {
@@ -40153,6 +40310,12 @@ SOV_slavic_help = {
 			}
 		}
 
+		available = {
+			NOT = {
+				has_country_flag = sov_helping_slavic_country
+			}
+		}
+
 		target_root_trigger = {
 			has_completed_focus = SOV_slavic_assistance
 		}
@@ -40167,7 +40330,12 @@ SOV_slavic_help = {
 
 		cost = 25
 
+		complete_effect = {
+			set_country_flag = sov_helping_slavic_country
+		}
+
 		remove_effect = {
+			clr_country_flag = sov_helping_slavic_country
 			FROM = {
 				country_event = soviets.505
 			}
