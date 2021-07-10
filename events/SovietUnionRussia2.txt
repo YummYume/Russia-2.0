@@ -10076,7 +10076,7 @@ country_event = {
 				Heir_of_the_Tsar
 			}
 		}
-		add_stability = -0.15
+		add_stability = -0.05
 	}
 }
 
@@ -23416,6 +23416,417 @@ country_event = {
 		create_wargoal = {
 			target = FROM
 			type = take_claimed_state
+		}
+	}
+}
+
+#TODO AI factors
+
+# Grand Duchess Anastasia Nikolaevna of Russia Returns (Anna Anderson)
+country_event = {
+	id = soviets.509
+	title = soviets.509.t
+	desc = soviets.509.d
+	picture = GFX_report_event_german_troops
+
+	is_triggered_only = yes
+
+	timeout_days = 2
+
+	immediate = {
+		hidden_effect = {
+			if = {
+				limit = {
+					tag = SOV
+					has_government = neutrality
+					is_subject = no
+					has_capitulated = no
+					has_completed_focus = SOV_restoration_tsar
+					OR = {
+						has_country_leader = {
+							name = "Kirill Vladimirovich"
+							ruling_only = yes
+						}
+						has_country_leader = {
+							name = "Vladimir Kirillovich"
+							ruling_only = yes
+						}
+					}
+					NOT = {
+						has_completed_focus = SOV_the_emperor
+						has_completed_focus = SOV_the_empress
+						has_country_leader = {
+							name = "Anastasia Nikolaevna"
+							ruling_only = yes
+						}
+					}
+				}
+				country_event = { id = soviets.510 days = 50 }
+			}
+		}
+	}
+	
+	#Oh hi
+	option = {
+		name = soviets.509.a
+		set_country_flag = sov_anna_anderson_returns_russia
+		custom_effect_tooltip = unlock_decisions_anna_anderson
+	}
+}
+
+# Meeting with Princess Irene of Hesse and by Rhine
+country_event = {
+	id = soviets.510
+	title = soviets.510.t
+	desc = soviets.510.d
+	picture = GFX_report_event_german_troops
+
+	is_triggered_only = yes
+
+	immediate = {
+		set_country_flag = sov_met_princess_irene
+		if = {
+			limit = {
+				tag = SOV
+				has_government = neutrality
+				is_subject = no
+				has_capitulated = no
+				has_completed_focus = SOV_restoration_tsar
+				OR = {
+					has_country_leader = {
+						name = "Kirill Vladimirovich"
+						ruling_only = yes
+					}
+					has_country_leader = {
+						name = "Vladimir Kirillovich"
+						ruling_only = yes
+					}
+				}
+				NOT = {
+					has_completed_focus = SOV_the_emperor
+					has_completed_focus = SOV_the_empress
+					has_country_leader = {
+						name = "Anastasia Nikolaevna"
+						ruling_only = yes
+					}
+				}
+			}
+			country_event = { id = soviets.511 days = 50 }
+		}
+	}
+	
+	#Recognized
+	option = {
+		name = soviets.510.a
+		add_to_variable = { anna_anderson_legitimacy = 0.05 }
+		clamp_variable = {
+			var = anna_anderson_legitimacy
+			min = 0
+			max = 1
+		}
+		set_variable = { anna_anderson_legitimacy_gui = anna_anderson_legitimacy }
+		multiply_variable = { anna_anderson_legitimacy_gui = 100 }
+				round_variable = anna_anderson_legitimacy_gui
+		custom_effect_tooltip = anna_anderson_add_legitimacy_5
+		set_country_flag = sov_met_princess_irene_yes
+		add_stability = 0.05
+	}
+
+	#Not Recognized
+	option = {
+		name = soviets.510.b
+		subtract_from_variable = { anna_anderson_legitimacy = 0.05 }
+		clamp_variable = {
+			var = anna_anderson_legitimacy
+			min = 0
+			max = 1
+		}
+		set_variable = { anna_anderson_legitimacy_gui = anna_anderson_legitimacy }
+		multiply_variable = { anna_anderson_legitimacy_gui = 100 }
+				round_variable = anna_anderson_legitimacy_gui
+		custom_effect_tooltip = anna_anderson_remove_legitimacy_5
+		set_country_flag = sov_met_princess_irene_no
+		add_stability = -0.05
+	}
+}
+
+# Meeting with Prince Felix Felixovich Yusupov
+country_event = {
+	id = soviets.511
+	title = soviets.511.t
+	desc = soviets.511.d
+	picture = GFX_report_event_german_troops
+
+	is_triggered_only = yes
+
+	immediate = {
+		set_country_flag = sov_met_prince_felix
+		if = {
+			limit = {
+				tag = SOV
+				has_government = neutrality
+				is_subject = no
+				has_capitulated = no
+				has_completed_focus = SOV_restoration_tsar
+				OR = {
+					has_country_leader = {
+						name = "Kirill Vladimirovich"
+						ruling_only = yes
+					}
+					has_country_leader = {
+						name = "Vladimir Kirillovich"
+						ruling_only = yes
+					}
+				}
+				NOT = {
+					has_completed_focus = SOV_the_emperor
+					has_completed_focus = SOV_the_empress
+					has_country_leader = {
+						name = "Anastasia Nikolaevna"
+						ruling_only = yes
+					}
+				}
+			}
+			country_event = { id = soviets.512 days = 50 }
+		}
+	}
+	
+	#Recognized
+	option = {
+		name = soviets.511.a
+		add_to_variable = { anna_anderson_legitimacy = 0.05 }
+		clamp_variable = {
+			var = anna_anderson_legitimacy
+			min = 0
+			max = 1
+		}
+		set_variable = { anna_anderson_legitimacy_gui = anna_anderson_legitimacy }
+		multiply_variable = { anna_anderson_legitimacy_gui = 100 }
+				round_variable = anna_anderson_legitimacy_gui
+		custom_effect_tooltip = anna_anderson_add_legitimacy_5
+		add_stability = -0.05
+		set_country_flag = sov_met_prince_felix_yes
+	}
+
+	#Not Recognized
+	option = {
+		name = soviets.511.b
+		if = {
+			limit = {
+				check_variable = {
+					var = anna_anderson_legitimacy
+					value = 0.5
+					compare = greater_than_or_equals
+				}
+			}
+			subtract_from_variable = { anna_anderson_legitimacy = 0.07 }
+			clamp_variable = {
+				var = anna_anderson_legitimacy
+				min = 0
+				max = 1
+			}
+			set_variable = { anna_anderson_legitimacy_gui = anna_anderson_legitimacy }
+			multiply_variable = { anna_anderson_legitimacy_gui = 100 }
+				round_variable = anna_anderson_legitimacy_gui
+			custom_effect_tooltip = anna_anderson_remove_legitimacy_7
+		}
+		else = {
+			subtract_from_variable = { anna_anderson_legitimacy = 0.03 }
+			clamp_variable = {
+				var = anna_anderson_legitimacy
+				min = 0
+				max = 1
+			}
+			set_variable = { anna_anderson_legitimacy_gui = anna_anderson_legitimacy }
+			multiply_variable = { anna_anderson_legitimacy_gui = 100 }
+				round_variable = anna_anderson_legitimacy_gui
+			custom_effect_tooltip = anna_anderson_remove_legitimacy_3
+		}
+		set_country_flag = sov_met_prince_felix_no
+	}
+
+	#He left unsure
+	option = {
+		name = soviets.511.c
+		add_political_power = -200
+		set_country_flag = sov_met_prince_felix_unsure
+	}
+}
+
+# Meeting with Grand Duchess Xenia Alexandrovna of Russia
+country_event = {
+	id = soviets.512
+	title = soviets.512.t
+	desc = soviets.512.d
+	picture = GFX_report_event_german_troops
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = SOV
+		has_government = neutrality
+		is_subject = no
+		has_capitulated = no
+		has_completed_focus = SOV_restoration_tsar
+		OR = {
+			has_country_leader = {
+				name = "Kirill Vladimirovich"
+				ruling_only = yes
+			}
+			has_country_leader = {
+				name = "Vladimir Kirillovich"
+				ruling_only = yes
+			}
+		}
+		NOT = {
+			has_completed_focus = SOV_the_emperor
+			has_completed_focus = SOV_the_empress
+			has_country_leader = {
+				name = "Anastasia Nikolaevna"
+				ruling_only = yes
+			}
+		}
+		has_country_flag = {
+			flag = sov_anna_anderson_returns_russia
+			days > 150
+		}
+	}
+
+	mean_time_to_happen = { days = 1 }
+
+	immediate = {
+		set_country_flag = sov_met_grand_duchess_xenia
+	}
+	
+	#Recognized
+	option = {
+		name = soviets.512.a
+		add_to_variable = { anna_anderson_legitimacy = 0.05 }
+		clamp_variable = {
+			var = anna_anderson_legitimacy
+			min = 0
+			max = 1
+		}
+		set_variable = { anna_anderson_legitimacy_gui = anna_anderson_legitimacy }
+		multiply_variable = { anna_anderson_legitimacy_gui = 100 }
+				round_variable = anna_anderson_legitimacy_gui
+		custom_effect_tooltip = anna_anderson_add_legitimacy_5
+		add_stability = -0.1
+		set_country_flag = sov_met_grand_duchess_xenia_yes
+	}
+
+	#Not Recognized
+	option = {
+		name = soviets.512.b
+		subtract_from_variable = { anna_anderson_legitimacy = 0.05 }
+		clamp_variable = {
+			var = anna_anderson_legitimacy
+			min = 0
+			max = 1
+		}
+		set_variable = { anna_anderson_legitimacy_gui = anna_anderson_legitimacy }
+		multiply_variable = { anna_anderson_legitimacy_gui = 100 }
+				round_variable = anna_anderson_legitimacy_gui
+		custom_effect_tooltip = anna_anderson_remove_legitimacy_5
+		add_stability = -0.1
+		set_country_flag = sov_met_grand_duchess_xenia_no
+	}
+}
+
+# Meeting with Prince Michael Andreevich of Russia
+country_event = {
+	id = soviets.513
+	title = soviets.513.t
+	desc = soviets.513.d
+	picture = GFX_report_event_german_troops
+
+	is_triggered_only = yes
+
+	immediate = {
+		set_country_flag = sov_met_prince_michael
+	}
+	
+	#Recognized
+	option = {
+		name = soviets.513.a
+		add_to_variable = { anna_anderson_legitimacy = 0.05 }
+		clamp_variable = {
+			var = anna_anderson_legitimacy
+			min = 0
+			max = 1
+		}
+		set_variable = { anna_anderson_legitimacy_gui = anna_anderson_legitimacy }
+		multiply_variable = { anna_anderson_legitimacy_gui = 100 }
+				round_variable = anna_anderson_legitimacy_gui
+		custom_effect_tooltip = anna_anderson_add_legitimacy_5
+		set_country_flag = sov_met_prince_michael_yes
+	}
+
+	#Not Recognized
+	option = {
+		name = soviets.513.b
+		subtract_from_variable = { anna_anderson_legitimacy = 0.05 }
+		clamp_variable = {
+			var = anna_anderson_legitimacy
+			min = 0
+			max = 1
+		}
+		set_variable = { anna_anderson_legitimacy_gui = anna_anderson_legitimacy }
+		multiply_variable = { anna_anderson_legitimacy_gui = 100 }
+				round_variable = anna_anderson_legitimacy_gui
+		custom_effect_tooltip = anna_anderson_remove_legitimacy_5
+		set_country_flag = sov_met_prince_michael_no
+	}
+}
+
+# Anna Anderson Defeated
+country_event = {
+	id = soviets.514
+	title = soviets.514.t
+	desc = soviets.514.d
+	picture = GFX_report_event_german_troops
+
+	is_triggered_only = yes
+
+	immediate = {
+		set_country_flag = sov_anna_anderson_struggle_over
+		set_country_flag = sov_anna_anderson_defeated
+	}
+	
+	#Bye Bye Impostor
+	option = {
+		name = soviets.514.a
+		remove_country_leader_trait = challenged_leader
+		add_country_leader_trait = true_romanov
+	}
+}
+
+# Anna Anderson Wins
+country_event = {
+	id = soviets.515
+	title = soviets.515.t
+	desc = soviets.515.d
+	picture = GFX_report_event_german_troops
+
+	is_triggered_only = yes
+
+	immediate = {
+		set_country_flag = sov_anna_anderson_struggle_over
+		set_country_flag = sov_anna_anderson_win
+	}
+	
+	#Anastasia!
+	option = {
+		name = soviets.515.a
+		create_country_leader = {
+			name = "Anastasia Nikolaevna"
+			desc = "POLITICS_ANASTASIA_NIKOLAEVNA_DESC"
+			picture = "Portrait_Anastasia_Nikolaevna.dds"
+			expire = "1965.1.1"
+			ideology = despotism
+			traits = {
+				saint_grand_duchess_and_passion_bearer
+			}
 		}
 	}
 }

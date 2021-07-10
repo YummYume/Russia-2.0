@@ -548,8 +548,6 @@ SOV_democratic_help = {
 
 		days_re_enable = 50
 
-		days_remove = 1
-
 		allowed = {
 			original_tag = SOV
 		}
@@ -586,8 +584,6 @@ SOV_democratic_help = {
 
 		days_re_enable = 50
 
-		days_remove = 1
-
 		allowed = {
 			original_tag = SOV
 		}
@@ -623,8 +619,6 @@ SOV_democratic_help = {
 		icon = GFX_decision_generic_army_support
 
 		days_re_enable = 50
-
-		days_remove = 1
 
 		allowed = {
 			original_tag = SOV
@@ -1730,18 +1724,20 @@ SOV_unhappy_peasants = {
 
 		icon = generic_civil_support
 
-		allowed = { TAG = SOV }
+		allowed = {
+			original_tag = SOV
+		}
 
 		available = {
 			custom_trigger_tooltip = {
-		    tooltip = SOV_peasants_rebelion_tt
-			NOT = {
-				has_idea = SOV_Unhappy_peasants1
-				has_idea = SOV_Unhappy_peasants2
-				has_idea = SOV_Unhappy_peasants3
-				has_idea = SOV_Unhappy_peasants4
-				has_idea = SOV_Unhappy_peasants5
-				has_idea = SOV_Unhappy_peasants6
+		    	tooltip = SOV_peasants_rebelion_tt
+				NOT = {
+					has_idea = SOV_Unhappy_peasants1
+					has_idea = SOV_Unhappy_peasants2
+					has_idea = SOV_Unhappy_peasants3
+					has_idea = SOV_Unhappy_peasants4
+					has_idea = SOV_Unhappy_peasants5
+					has_idea = SOV_Unhappy_peasants6
 				}
 			}
 		}
@@ -1774,9 +1770,7 @@ SOV_unhappy_peasants = {
 		}
 
 		timeout_effect = {
-			SOV = {
-            	country_event = { id = soviets.18 }
-			}
+            country_event = soviets.18
         }
 
 		complete_effect = {
@@ -40343,6 +40337,358 @@ SOV_slavic_help = {
 
 		ai_will_do = {
 			factor = 80
+		}
+	}
+}
+
+SOV_anna_anderson_legitimacy = {
+
+	SOV_gather_support_tsar = {
+
+		icon = hol_radio_oranje
+
+		fire_only_once = yes
+
+		allowed = {
+			original_tag = SOV
+		}
+		
+		visible = {
+			NOT = {
+				has_country_flag = sov_anna_anderson_struggle_over
+			}
+			has_country_flag = sov_anna_anderson_returns_russia
+			has_government = neutrality
+			is_subject = no
+			has_capitulated = no
+			has_completed_focus = SOV_restoration_tsar
+			OR = {
+				has_country_leader = {
+					name = "Kirill Vladimirovich"
+					ruling_only = yes
+				}
+				has_country_leader = {
+					name = "Vladimir Kirillovich"
+					ruling_only = yes
+				}
+			}
+			NOT = {
+				has_completed_focus = SOV_the_emperor
+				has_completed_focus = SOV_the_empress
+				has_country_leader = {
+					name = "Anastasia Nikolaevna"
+					ruling_only = yes
+				}
+			}
+		}
+
+		available = {
+			NOT = {
+				has_country_flag = sov_gathering_support_anna
+			}
+		}
+
+		cost = 50
+
+		days_remove = 25
+
+		ai_will_do = {
+			factor = 0
+			#TODO
+		}
+
+		complete_effect = {
+			set_country_flag = sov_gathering_support_tsar
+			subtract_from_variable = { anna_anderson_daily_legitimacy_gain = 0.002 }
+		}
+
+		remove_effect = {
+			clr_country_flag = sov_gathering_support_tsar
+			add_to_variable = { anna_anderson_daily_legitimacy_gain = 0.002 }
+		}
+
+		modifier = {
+			custom_modifier_tooltip = anna_anderson_legitimacy_gain_daily_minus_02
+		}
+	}
+
+	SOV_gather_support_anna = {
+
+		icon = hol_radio_oranje
+
+		fire_only_once = yes
+
+		allowed = {
+			original_tag = SOV
+		}
+		
+		visible = {
+			NOT = {
+				has_country_flag = sov_anna_anderson_struggle_over
+			}
+			has_country_flag = sov_anna_anderson_returns_russia
+			has_government = neutrality
+			is_subject = no
+			has_capitulated = no
+			has_completed_focus = SOV_restoration_tsar
+			OR = {
+				has_country_leader = {
+					name = "Kirill Vladimirovich"
+					ruling_only = yes
+				}
+				has_country_leader = {
+					name = "Vladimir Kirillovich"
+					ruling_only = yes
+				}
+			}
+			NOT = {
+				has_completed_focus = SOV_the_emperor
+				has_completed_focus = SOV_the_empress
+				has_country_leader = {
+					name = "Anastasia Nikolaevna"
+					ruling_only = yes
+				}
+			}
+		}
+
+		available = {
+			NOT = {
+				has_country_flag = sov_gathering_support_tsar
+			}
+		}
+
+		cost = 50
+
+		days_remove = 25
+
+		ai_will_do = {
+			factor = 0
+			#TODO
+		}
+
+		complete_effect = {
+			set_country_flag = sov_gathering_support_anna
+			add_to_variable = { anna_anderson_daily_legitimacy_gain = 0.002 }
+		}
+
+		remove_effect = {
+			clr_country_flag = sov_gathering_support_anna
+			subtract_from_variable = { anna_anderson_daily_legitimacy_gain = 0.002 }
+		}
+
+		modifier = {
+			custom_modifier_tooltip = anna_anderson_legitimacy_gain_daily_plus_02
+		}
+
+	}
+
+	SOV_ask_public_opinion = {
+
+		icon = generic_political_rally
+
+		fire_only_once = yes
+
+		allowed = {
+			original_tag = SOV
+		}
+		
+		visible = {
+			NOT = {
+				has_country_flag = sov_anna_anderson_struggle_over
+			}
+			has_country_flag = sov_anna_anderson_returns_russia
+			has_government = neutrality
+			is_subject = no
+			has_capitulated = no
+			has_completed_focus = SOV_restoration_tsar
+			OR = {
+				has_country_leader = {
+					name = "Kirill Vladimirovich"
+					ruling_only = yes
+				}
+				has_country_leader = {
+					name = "Vladimir Kirillovich"
+					ruling_only = yes
+				}
+			}
+			NOT = {
+				has_completed_focus = SOV_the_emperor
+				has_completed_focus = SOV_the_empress
+				has_country_leader = {
+					name = "Anastasia Nikolaevna"
+					ruling_only = yes
+				}
+			}
+		}
+
+		available = {
+			
+		}
+
+		cost = 50
+
+		ai_will_do = {
+			factor = 0
+			#TODO
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = anna_anderson_above_50
+			if = {
+				limit = {
+					check_variable = {
+						var = anna_anderson_legitimacy
+						value = 0.5
+						compare = greater_than_or_equals
+					}
+				}
+				add_to_variable = { anna_anderson_legitimacy = 0.03 }
+				clamp_variable = {
+					var = anna_anderson_legitimacy
+					min = 0
+					max = 1
+				}
+				set_variable = { anna_anderson_legitimacy_gui = anna_anderson_legitimacy }
+				multiply_variable = { anna_anderson_legitimacy_gui = 100 }
+				round_variable = anna_anderson_legitimacy_gui
+				custom_effect_tooltip = anna_anderson_add_legitimacy_3
+			}
+			else = {
+				subtract_from_variable = { anna_anderson_legitimacy = 0.03 }
+				clamp_variable = {
+					var = anna_anderson_legitimacy
+					min = 0
+					max = 1
+				}
+				set_variable = { anna_anderson_legitimacy_gui = anna_anderson_legitimacy }
+				multiply_variable = { anna_anderson_legitimacy_gui = 100 }
+				round_variable = anna_anderson_legitimacy_gui
+				custom_effect_tooltip = anna_anderson_remove_legitimacy_3
+			}
+		}
+	}
+
+	SOV_meeting_prince_michael_andreevich = {
+
+		icon = generic_political_discourse
+
+		fire_only_once = yes
+
+		allowed = {
+			original_tag = SOV
+		}
+		
+		visible = {
+			NOT = {
+				has_country_flag = sov_anna_anderson_struggle_over
+			}
+			has_country_flag = sov_anna_anderson_returns_russia
+			has_government = neutrality
+			is_subject = no
+			has_capitulated = no
+			has_completed_focus = SOV_restoration_tsar
+			OR = {
+				has_country_leader = {
+					name = "Kirill Vladimirovich"
+					ruling_only = yes
+				}
+				has_country_leader = {
+					name = "Vladimir Kirillovich"
+					ruling_only = yes
+				}
+			}
+			NOT = {
+				has_completed_focus = SOV_the_emperor
+				has_completed_focus = SOV_the_empress
+				has_country_leader = {
+					name = "Anastasia Nikolaevna"
+					ruling_only = yes
+				}
+			}
+		}
+
+		available = {
+			has_country_flag = sov_met_grand_duchess_xenia
+		}
+
+		cost = 100
+
+		ai_will_do = {
+			factor = 0
+			#TODO
+		}
+
+		complete_effect = {
+			country_event = soviets.513
+		}
+	}
+
+	SOV_discover_truth = {
+
+		icon = generic_arrest
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = sov_anna_anderson_legitimacy_100
+				check_variable = {
+					var = anna_anderson_legitimacy
+					value = 1
+					compare = greater_than_or_equals
+				}
+			}
+		}
+
+		is_good = no
+
+		activation = {
+			has_country_flag = sov_anna_anderson_returns_russia
+		}
+
+		visible = {
+			NOT = {
+				has_country_flag = sov_anna_anderson_struggle_over
+			}
+			has_country_flag = sov_anna_anderson_returns_russia
+			has_government = neutrality
+			is_subject = no
+			has_capitulated = no
+			has_completed_focus = SOV_restoration_tsar
+			OR = {
+				has_country_leader = {
+					name = "Kirill Vladimirovich"
+					ruling_only = yes
+				}
+				has_country_leader = {
+					name = "Vladimir Kirillovich"
+					ruling_only = yes
+				}
+			}
+			NOT = {
+				has_completed_focus = SOV_the_emperor
+				has_completed_focus = SOV_the_empress
+				has_country_leader = {
+					name = "Anastasia Nikolaevna"
+					ruling_only = yes
+				}
+			}
+		}
+
+		is_good = no
+
+		fire_only_once = yes
+
+		days_mission_timeout = 222
+
+		timeout_effect = {
+            country_event = soviets.514
+        }
+
+		complete_effect = {
+			country_event = soviets.515
 		}
 	}
 }
