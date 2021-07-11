@@ -1699,6 +1699,7 @@ SOV_integrate_the_baltics = {
 			owns_state = FROM
 			NOT = {
 				has_government = fascism
+				has_government = anarchy
 			}
 		}
 
@@ -25289,6 +25290,7 @@ SOV_the_black_revolution = {
 	}
 
 	SOV_control_state_decision_black_revolution = {
+
 		icon = GFX_decision_eng_trade_unions_support
 
 		on_map_mode = map_only
@@ -40689,6 +40691,141 @@ SOV_anna_anderson_legitimacy = {
 
 		complete_effect = {
 			country_event = soviets.515
+		}
+	}
+}
+
+SOV_buy_african_colonies_decisions = {
+
+	SOV_buy_african_state = {
+
+		icon = GFX_decision_generic_form_nation
+
+		state_target = yes
+
+		target_trigger = {
+			FROM = {
+				OR = {
+					state = 268
+					state = 269
+					state = 271
+					state = 559
+					state = 550
+					state = 543
+					state = 706
+					state = 708
+					state = 707
+					state = 709
+					state = 705
+					state = 297
+					state = 298
+					state = 796
+					state = 540
+					state = 771
+					state = 770
+					state = 544
+					state = 774
+					state = 295
+					state = 538
+					state = 718
+					state = 768
+					state = 769
+					state = 539
+					state = 772
+					state = 773
+					state = 660
+					state = 546
+					state = 547
+					state = 548
+					state = 545
+					state = 542
+				}
+			}
+		}
+
+		available = {
+			NOT = {
+				has_country_flag = sov_buying_african_state
+			}
+			FROM = {
+				NOT = {
+					is_controlled_by = ROOT
+				}
+				NOT = {
+					is_owned_by = ROOT
+				}
+				NOT = {
+					is_core_of = FROM.CONTROLLER
+				}
+			}
+			FROM.OWNER = {
+				controls_state = FROM
+				NOT = {
+					has_war_with = ROOT
+				}
+				NOT = {
+					is_in_faction_with = ROOT
+				}
+				NOT = {
+					is_subject_of = ROOT
+				}
+			}
+		}
+
+		cancel_trigger = {
+			OR = {
+				FROM = {
+					is_controlled_by = ROOT
+				}
+				FROM = {
+					is_owned_by = ROOT
+				}
+				FROM = {
+					is_core_of = FROM.CONTROLLER
+				}
+				FROM.OWNER = {
+					NOT = {
+						controls_state = FROM
+					}
+				}
+				FROM.OWNER = {
+					has_war_with = ROOT
+				}
+				FROM.OWNER = {
+					is_in_faction_with = ROOT
+				}
+				FROM.OWNER = {
+					is_subject_of = ROOT
+				}
+			}
+		}
+
+		visible = {
+			has_government = neutrality
+			is_subject = no
+			has_capitulated = no
+			has_completed_focus = SOV_purchase_african_colonies
+		}
+
+		fire_only_once = yes
+
+		cost = 50
+
+		ai_will_do = {
+			factor = 80
+		}
+
+		days_remove = 10
+
+		complete_effect = {
+			set_country_flag = sov_buying_african_state
+		}
+
+		remove_effect = {
+			clr_country_flag = sov_buying_african_state
+			FROM.OWNER = {
+				country_event = soviets.516
+			}
 		}
 	}
 }
