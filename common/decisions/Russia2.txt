@@ -7953,6 +7953,1064 @@ SOV_buy_guns_foreign_country = {
 	}
 }
 
+SOV_unite_slavic_nation_ultimatum_decision = {
+
+	SOV_ultimatum_poland_slavic = {
+
+		icon = GFX_decision_generic_operation
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			country_exists = POL
+			NOT = {
+				POL = {
+					is_subject_of = SOV
+					is_in_faction_with = SOV
+					has_capitulated = yes
+				}
+			}
+		}
+
+		visible = {
+			country_exists = POL
+			NOT = {
+				POL = {
+					is_subject_of = SOV
+				}
+			}
+		}
+
+		fire_only_once = yes
+
+		cost = 75
+
+		ai_will_do = {
+			factor = 150
+		}
+
+		days_remove = 50
+
+		complete_effect = {
+
+		}
+
+		cancel_trigger = {
+			NOT = {
+				country_exists = POL
+			}
+		}
+
+		remove_effect = {
+			POL = {
+				country_event = { id = generics.15 days = 1 }
+			}
+		}
+	}
+
+	SOV_ultimatum_poland_non_slavic = {
+
+		icon = GFX_decision_generic_ignite_civil_war
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			FROM = {
+				any_state = {
+					has_state_flag = slavic_states
+					is_core_of = POL
+				}
+				NOT = {
+					is_subject_of = SOV
+				}
+			}
+		}
+
+		target_trigger = {
+			FROM = {
+				any_state = {
+					has_state_flag = slavic_states
+					is_core_of = POL
+					is_owned_by = FROM
+				}
+				NOT = {
+					TAG = POL
+					TAG = CZE
+					TAG = YUG
+					TAG = BUL
+					TAG = SLO
+					is_subject_of = SOV
+					has_capitulated = yes
+				}
+			}
+		}
+
+		visible = {
+			FROM = {
+				any_state = {
+					has_state_flag = slavic_states
+					is_core_of = POL
+					is_owned_by = FROM
+				}
+				NOT = {
+					TAG = POL
+					TAG = CZE
+					TAG = YUG
+					TAG = BUL
+					TAG = SLO
+					is_subject_of = SOV
+				}
+			}
+		}
+
+		fire_only_once = yes
+
+		cost = 75
+
+		ai_will_do = {
+			factor = 150
+		}
+
+		days_remove = 50
+
+		complete_effect = {
+
+		}
+
+		cancel_trigger = {
+			NOT = {
+				FROM = {
+					any_state = {
+						has_state_flag = slavic_states
+						is_core_of = POL
+						is_owned_by = FROM
+					}
+				}
+			}
+		}
+
+		remove_effect = {
+			FROM = {
+				country_event = { id = generics.15 days = 1 }
+			}
+		}
+	}
+
+	SOV_integrate_poland_slavic = {
+
+		icon = GFX_decision_generic_decision
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = SOV_slavic_empire_pol_states
+				controls_state = 89
+				controls_state = 91
+				controls_state = 93
+				controls_state = 94
+				controls_state = 95
+				controls_state = 96
+				controls_state = 784
+				controls_state = 97
+				controls_state = 92
+				controls_state = 88
+				controls_state = 90
+				controls_state = 10
+				controls_state = 98
+				controls_state = 87
+			}
+		}
+
+		visible = {
+			
+		}
+
+		fire_only_once = yes
+
+		cost = 150
+
+		ai_will_do = {
+			factor = 150
+		}
+
+		days_remove = 50
+
+		complete_effect = {
+
+		}
+
+		cancel_trigger = {
+
+		}
+
+		complete_effect = {
+		
+		}
+
+		remove_effect = {
+			custom_effect_tooltip = gains_core_on_polish_state_slavic
+			hidden_effect = {
+				set_country_flag = has_integrated_pol_core_states
+				every_state = {
+					limit = {
+						has_state_flag = slavic_states
+						is_core_of = POL
+						is_owned_by = ROOT	
+					}
+					SOV = {
+						add_state_core = PREV
+					}
+				}
+				every_state = {
+					limit = {
+						has_state_flag = german_baltic_state
+						is_owned_by = SOV
+					}
+					SOV = {
+						add_state_core = PREV
+					}
+				}			
+			}	
+		}
+	}
+
+	SOV_ultimatum_yugoslavia_slavic = {
+
+		icon = GFX_decision_generic_operation
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			country_exists = YUG
+			NOT = {
+				YUG = {
+					is_subject_of = SOV
+					is_in_faction_with = SOV
+					has_completed_focus = YUG_limited_self_government
+					has_capitulated = yes
+				}
+			}
+		}
+
+		visible = {
+			has_completed_focus = SOV_unite_western_balkan
+			country_exists = YUG
+			NOT = {
+				YUG = {
+					is_subject_of = SOV
+					has_completed_focus = YUG_limited_self_government
+				}
+			}
+		}
+
+		fire_only_once = yes
+
+		cost = 75
+
+		ai_will_do = {
+			factor = 150
+		}
+
+		days_remove = 50
+
+		complete_effect = {
+
+		}
+
+		cancel_trigger = {
+			NOT = {
+				country_exists = YUG
+			}
+		}
+
+		remove_effect = {
+			YUG = {
+				country_event = { id = generics.15 days = 1 }
+			}
+		}
+	}
+
+	SOV_ultimatum_yugoslavia_disolved_slavic = {
+
+		icon = GFX_decision_generic_operation
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			country_exists = YUG
+			NOT = {
+				YUG = {
+					is_subject_of = SOV
+					is_in_faction_with = SOV
+					has_capitulated = yes
+				}
+			}
+			any_country = {
+				OR = {
+					TAG = SLV
+					TAG = CRO
+					TAG = BOS
+					TAG = HRZ
+					TAG = MNT
+					TAG = KOS
+					TAG = MAC
+					TAG = TRA
+				}
+				is_subject_of = YUG
+				has_capitulated = no
+			}
+		}
+
+		visible = {
+			has_completed_focus = SOV_unite_western_balkan
+			country_exists = YUG
+			OR = {
+				country_exists = SLV
+				country_exists = CRO
+				country_exists = BOS
+				country_exists = HRZ
+				country_exists = MNT
+				country_exists = KOS
+				country_exists = MAC
+				country_exists = TRA
+			}
+			NOT = {
+				YUG = {
+					is_subject_of = SOV
+				}
+			}
+			YUG = {
+				has_completed_focus = YUG_limited_self_government
+			}
+		}
+
+		fire_only_once = yes
+
+		cost = 75
+
+		ai_will_do = {
+			factor = 150
+		}
+
+		days_remove = 50
+
+		complete_effect = {
+
+		}
+
+		cancel_trigger = {
+			NOT = {
+				country_exists = YUG
+			}
+		}
+
+		remove_effect = {
+			YUG = {
+				country_event = { id = generics.15 days = 1 }
+			}
+		}
+	}
+
+	SOV_ultimatum_yugoslavia_non_slavic = {
+
+		icon = GFX_decision_generic_ignite_civil_war
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			FROM = {
+				any_state = {
+					has_state_flag = slavic_states
+					is_core_of = YUG
+				}
+				NOT = {
+					is_subject_of = SOV
+				}
+			}
+		}
+
+		target_trigger = {
+			FROM = {
+				any_state = {
+					has_state_flag = slavic_states
+					OR = {
+						is_core_of = YUG
+						is_core_of = SLV
+						is_core_of = CRO
+						is_core_of = BOS
+						is_core_of = HRZ
+						is_core_of = MNT
+						is_core_of = KOS
+						is_core_of = MAC
+						is_core_of = TRA
+					}
+					is_owned_by = FROM
+				}
+				NOT = {
+					TAG = POL
+					TAG = CZE
+					TAG = YUG
+					TAG = BUL
+					TAG = SLO
+					TAG = SLV
+					TAG = CRO
+					TAG = BOS
+					TAG = HRZ
+					TAG = MNT
+					TAG = KOS
+					TAG = MAC
+					TAG = TRA
+					is_subject_of = SOV
+					has_capitulated = yes
+				}
+			}
+		}
+
+		visible = {
+			has_completed_focus = SOV_unite_western_balkan
+			FROM = {
+				any_state = {
+					has_state_flag = slavic_states
+					is_core_of = YUG
+					is_owned_by = FROM
+				}
+				NOT = {
+					TAG = POL
+					TAG = CZE
+					TAG = YUG
+					TAG = BUL
+					TAG = SLO
+					TAG = SLV
+					TAG = CRO
+					TAG = BOS
+					TAG = HRZ
+					TAG = MNT
+					TAG = KOS
+					TAG = MAC
+					TAG = TRA
+					is_subject_of = SOV
+				}
+			}
+		}
+
+		fire_only_once = yes
+
+		cost = 75
+
+		ai_will_do = {
+			factor = 150
+		}
+
+		days_remove = 50
+
+		complete_effect = {
+
+		}
+
+		cancel_trigger = {
+			NOT = {
+				FROM = {
+					any_state = {
+						has_state_flag = slavic_states
+						is_core_of = YUG
+						is_owned_by = FROM
+					}
+				}
+			}
+		}
+
+		remove_effect = {
+			FROM = {
+				country_event = { id = generics.15 days = 1 }
+			}
+		}
+	}
+
+	SOV_integrate_yugoslavia_slavic = {
+
+		icon = GFX_decision_generic_decision
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = SOV_slavic_empire_yug_states
+				controls_state = 106
+				controls_state = 107
+				controls_state = 108
+				controls_state = 764
+				controls_state = 45
+				controls_state = 109
+				controls_state = 104
+				controls_state = 103
+				controls_state = 105
+				controls_state = 102
+				controls_state = 802
+				controls_state = 803
+				controls_state = 804
+			}
+		}
+
+		visible = {
+			has_completed_focus = SOV_unite_western_balkan
+		}
+
+		fire_only_once = yes
+
+		cost = 150
+
+		ai_will_do = {
+			factor = 150
+		}
+
+		days_remove = 50
+
+		complete_effect = {
+
+		}
+
+		cancel_trigger = {
+
+		}
+
+		complete_effect = {
+		
+		}
+
+		remove_effect = {
+			custom_effect_tooltip = gains_core_on_yugoslavian_state_slavic
+			hidden_effect = {
+				set_country_flag = has_integrated_yug_core_states
+				add_state_core = 106
+				add_state_core = 107
+				add_state_core = 108
+				add_state_core = 764
+				add_state_core = 45
+				add_state_core = 109
+				add_state_core = 104
+				add_state_core = 103
+				add_state_core = 105
+				add_state_core = 102
+				add_state_core = 802
+				add_state_core = 803
+				add_state_core = 804	
+			}	
+		}
+	}
+
+	SOV_ultimatum_bulgaria_slavic = {
+
+		icon = GFX_decision_generic_operation
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			country_exists = BUL
+			NOT = {
+				BUL = {
+					is_subject_of = SOV
+					is_in_faction_with = SOV
+					has_capitulated = yes
+				}
+			}
+		}
+
+		visible = {
+			has_completed_focus = SOV_unite_eastern_balkan
+			country_exists = BUL
+			NOT = {
+				BUL = {
+					is_subject_of = SOV
+				}
+			}
+		}
+
+		fire_only_once = yes
+
+		cost = 75
+
+		ai_will_do = {
+			factor = 150
+		}
+
+		days_remove = 50
+
+		complete_effect = {
+
+		}
+
+		cancel_trigger = {
+			NOT = {
+				country_exists = BUL
+			}
+		}
+
+		remove_effect = {
+			BUL = {
+				country_event = { id = generics.15 days = 1 }
+			}
+		}
+	}
+
+	SOV_ultimatum_bulgaria_non_slavic = {
+
+		icon = GFX_decision_generic_ignite_civil_war
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			FROM = {
+				any_state = {
+					has_state_flag = slavic_states
+					is_core_of = BUL
+				}
+				NOT = {
+					is_subject_of = SOV
+				}
+			}
+		}
+
+		target_trigger = {
+			FROM = {
+				any_state = {
+					has_state_flag = slavic_states
+					is_core_of = BUL
+					is_owned_by = FROM
+				}
+				NOT = {
+					TAG = POL
+					TAG = CZE
+					TAG = YUG
+					TAG = BUL
+					is_subject_of = SOV
+					has_capitulated = yes
+				}
+			}
+		}
+
+		visible = {
+			has_completed_focus = SOV_unite_eastern_balkan
+			FROM = {
+				any_state = {
+					has_state_flag = slavic_states
+					is_core_of = BUL
+					is_owned_by = FROM
+				}
+				NOT = {
+					TAG = POL
+					TAG = CZE
+					TAG = YUG
+					TAG = BUL
+					TAG = SLO
+					is_subject_of = SOV
+				}
+			}
+		}
+
+		fire_only_once = yes
+
+		cost = 75
+
+		ai_will_do = {
+			factor = 150
+		}
+
+		days_remove = 50
+
+		complete_effect = {
+
+		}
+
+		cancel_trigger = {
+			NOT = {
+				FROM = {
+					any_state = {
+						has_state_flag = slavic_states
+						is_core_of = BUL
+						is_owned_by = FROM
+					}
+				}
+			}
+		}
+
+		remove_effect = {
+			FROM = {
+				country_event = { id = generics.15 days = 1 }
+			}
+		}
+	}
+
+	SOV_integrate_bulgaria_slavic = {
+
+		icon = GFX_decision_generic_decision
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = SOV_slavic_empire_bul_states
+				controls_state = 211
+				controls_state = 212
+				controls_state = 48
+				controls_state = 801
+			}
+		}
+
+		visible = {
+			has_completed_focus = SOV_unite_eastern_balkan
+		}
+
+		fire_only_once = yes
+
+		cost = 150
+
+		ai_will_do = {
+			factor = 150
+		}
+
+		days_remove = 50
+
+		complete_effect = {
+
+		}
+
+		cancel_trigger = {
+
+		}
+
+		complete_effect = {
+		
+		}
+
+		remove_effect = {
+			custom_effect_tooltip = gains_core_on_bulgarian_state_slavic
+			hidden_effect = {
+				set_country_flag = has_integrated_bul_core_states
+				every_state = {
+					limit = {
+						has_state_flag = slavic_states
+						is_core_of = BUL
+						is_owned_by = ROOT	
+					}
+					SOV = {
+						add_state_core = PREV
+					}
+				}			
+			}	
+		}
+	}
+
+	SOV_ultimatum_czechoslovakia_slavic = {
+
+		icon = GFX_decision_generic_operation
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			country_exists = CZE
+			NOT = {
+				CZE = {
+					is_subject_of = SOV
+					is_in_faction_with = SOV
+					has_capitulated = yes
+				}
+			}
+		}
+
+		visible = {
+			has_completed_focus = SOV_unite_central_europe
+			country_exists = CZE
+			NOT = {
+				CZE = {
+					is_subject_of = SOV
+				}
+			}
+		}
+
+		fire_only_once = yes
+
+		cost = 75
+
+		ai_will_do = {
+			factor = 150
+		}
+
+		days_remove = 50
+
+		complete_effect = {
+
+		}
+
+		cancel_trigger = {
+			NOT = {
+				country_exists = CZE
+			}
+		}
+
+		remove_effect = {
+			CZE = {
+				country_event = { id = generics.15 days = 1 }
+			}
+		}
+	}
+
+	SOV_ultimatum_slovakia_slavic = {
+
+		icon = GFX_decision_generic_operation
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			country_exists = SLO
+			NOT = {
+				SLO = {
+					is_subject_of = SOV
+					is_subject_of = GER
+					is_in_faction_with = SOV
+					has_capitulated = yes
+				}
+			}
+		}
+
+		visible = {
+			has_completed_focus = SOV_unite_central_europe
+			country_exists = SLO
+			NOT = {
+				SLO = {
+					is_subject_of = SOV
+					is_subject_of = GER
+					is_in_faction_with = SOV
+				}
+			}
+		}
+
+		fire_only_once = yes
+
+		cost = 75
+
+		ai_will_do = {
+			factor = 150
+		}
+
+		days_remove = 50
+
+		complete_effect = {
+
+		}
+
+		cancel_trigger = {
+			NOT = {
+				country_exists = SLO
+			}
+		}
+
+		remove_effect = {
+			SLO = {
+				country_event = { id = generics.15 days = 1 }
+			}
+		}
+	}
+
+	SOV_ultimatum_czechoslovakia_non_slavic = {
+
+		icon = GFX_decision_generic_ignite_civil_war
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			FROM = {
+				any_state = {
+					has_state_flag = slavic_states
+					OR = {
+						is_core_of = CZE
+						is_core_of = SLO
+					}
+				}
+				NOT = {
+					is_subject_of = SOV
+					has_capitulated = yes
+				}
+			}
+		}
+
+		target_trigger = {
+			FROM = {
+				any_state = {
+					has_state_flag = slavic_states
+					OR = {
+						is_core_of = CZE
+						is_core_of = SLO
+					}
+					is_owned_by = FROM
+				}
+				NOT = {
+					TAG = POL
+					TAG = CZE
+					TAG = YUG
+					TAG = BUL
+					TAG = SLO
+					TAG = GER
+					is_subject_of = SOV
+				}
+			}
+		}
+
+		visible = {
+			has_completed_focus = SOV_unite_central_europe
+			FROM = {
+				any_state = {
+					has_state_flag = slavic_states
+					is_core_of = CZE
+					is_owned_by = FROM
+				}
+				NOT = {
+					TAG = POL
+					TAG = CZE
+					TAG = YUG
+					TAG = BUL
+					TAG = SLO
+					is_subject_of = SOV
+				}
+			}
+		}
+
+		fire_only_once = yes
+
+		cost = 75
+
+		ai_will_do = {
+			factor = 150
+		}
+
+		days_remove = 50
+
+		complete_effect = {
+
+		}
+
+		cancel_trigger = {
+			NOT = {
+				FROM = {
+					any_state = {
+						has_state_flag = slavic_states
+						is_core_of = CZE
+						is_owned_by = FROM
+					}
+				}
+			}
+		}
+
+		remove_effect = {
+			FROM = {
+				country_event = { id = generics.15 days = 1 }
+			}
+		}
+	}
+
+	SOV_integrate_czechoslovakia_slavic = {
+
+		icon = GFX_decision_generic_decision
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = SOV_slavic_empire_slo_states
+				OR = {
+					AND = {
+						controls_state = 70
+						controls_state = 71
+						controls_state = 73
+						controls_state = 664
+					}
+					AND = {
+						controls_state = 72
+						controls_state = 74
+						controls_state = 75
+						controls_state = 69
+						controls_state = 9
+					}
+				}	
+			}
+		}
+
+		visible = {
+			has_completed_focus = SOV_unite_central_europe
+		}
+
+		fire_only_once = yes
+
+		cost = 150
+
+		ai_will_do = {
+			factor = 150
+		}
+
+		days_remove = 50
+
+		complete_effect = {
+
+		}
+
+		cancel_trigger = {
+
+		}
+
+		complete_effect = {
+		
+		}
+
+		remove_effect = {
+			custom_effect_tooltip = gains_core_on_czechoslovakian_state_slavic
+			hidden_effect = {
+				set_country_flag = has_integrated_cze_core_states
+				every_state = {
+					limit = {
+						has_state_flag = slavic_states
+						OR = {
+							is_core_of = CZE
+							is_core_of = SLO
+						}
+						is_owned_by = ROOT	
+					}
+					SOV = {
+						add_state_core = PREV
+					}
+				}			
+			}	
+		}
+	}
+}
+
 SOV_appeasement_communist = { #TODO remove national spirit if the player did it too quickly
 
 	SOV_return_the_lands = {
@@ -28645,7 +29703,7 @@ SOV_anarchism_election = {
 			
 		}
 
-		days_mission_timeout = 10
+		#days_mission_timeout = 10
 
 		is_good = no
 

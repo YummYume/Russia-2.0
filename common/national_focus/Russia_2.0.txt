@@ -14806,7 +14806,7 @@ focus_tree = {
 						}
 						support = {
 							engineer = { x = 0 y = 0 }
-							artillery = { x = 0 y = 0 }
+							artillery = { x = 0 y = 1 }
 						}
 					}
 					division_template = {
@@ -15138,7 +15138,7 @@ focus_tree = {
 			}
 			hidden_effect = {
 				ROOT = {
-					country_event = { id = soviets.210 days = 135 }
+					country_event = { id = soviets.210 days = 70 }
 				}
 			}
 		}
@@ -15193,7 +15193,7 @@ focus_tree = {
 		y = 18
 		prerequisite = { focus = SOV_military_junta }
 		icon = GFX_focus_generic_tank_production
-		cost = 5
+		cost = 8
 		ai_will_do = {
 			factor = 8
 		}
@@ -15241,6 +15241,7 @@ focus_tree = {
 					has_idea = SOV_Exiled_russia
 				}
 			}
+			has_country_flag = monarchist_restoration_path
 		}
 		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_POLITICAL }
 		completion_reward = {
@@ -15279,6 +15280,7 @@ focus_tree = {
 					has_idea = SOV_Exiled_russia
 				}
 			}
+			has_country_flag = military_junta_leader
 		}
 		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
 		completion_reward = {
@@ -15426,7 +15428,7 @@ focus_tree = {
 		id = SOV_restoration_tsar
 		x = 50
 		y = 20
-		prerequisite = { focus = SOV_destroy_communist focus = SOV_appease_communist }
+		prerequisite = { focus = SOV_appease_communist }
 		icon = GFX_Russian_Tsar
 		cost = 8
 		ai_will_do = {
@@ -15580,7 +15582,7 @@ focus_tree = {
 		id = SOV_firm_hand
 		x = 62
 		y = 20
-		prerequisite = { focus = SOV_destroy_communist focus = SOV_appease_communist }
+		prerequisite = { focus = SOV_destroy_communist }
 		icon = GFX_Firm_Hand
 		cost = 8
 		ai_will_do = {
@@ -15667,6 +15669,7 @@ focus_tree = {
 			drop_cosmetic_tag = yes
 			set_cosmetic_tag = NRG
 			add_ideas = SOV_Denikin_trust
+			add_ideas = SOV_Anti_military_junta_protestor
 			remove_ideas = SOV_Political_Unstability2
 			if = {
 				limit = {
@@ -16236,6 +16239,7 @@ focus_tree = {
 				news_event = {
 					id = newsrussia2.104 days = 1
 				}
+				country_event = { id = soviets.506 days = 40 }
 			}
 			custom_effect_tooltip = SOV_announce_our_ambitions_tt
 		}
@@ -16300,34 +16304,36 @@ focus_tree = {
 		will_lead_to_war_with = BUL
 		will_lead_to_war_with = GER
 		completion_reward = {
-			custom_effect_tooltip = SOV_unite_slavic_nations_tt2
-			every_other_country = {
-				limit = {
-					NOT = {
-						OR = {
-							AND = {
-								is_subject_of = SOV
-								is_in_faction_with = SOV
-							}
-							TAG = GER
-							TAG = ITA
-						}
-					}
-					any_state = {
-						OR = {
-							has_state_flag = slavic_states
-							has_state_flag = slavic_states_czech
-							has_state_flag = german_slavic_state
-						}	
-						is_controlled_by = PREV
-					}
-				}
-				country_event = { id = generics.15 days = 1 }
-			}
+			custom_effect_tooltip = unlock_unite_slavic_nation_decision
+			custom_effect_tooltip = unlock_unite_slavic_nation_poland_decision
+			#every_other_country = {
+			#	limit = {
+			#		NOT = {
+			#			OR = {
+			#				AND = {
+			#					is_subject_of = SOV
+			#					is_in_faction_with = SOV
+			#				}
+			#				TAG = GER
+			#				TAG = ITA
+			#			}
+			#		}
+			#		any_state = {
+			#			OR = {
+			#				has_state_flag = slavic_states
+			#				has_state_flag = slavic_states_czech
+			#				has_state_flag = german_slavic_state
+			#			}	
+			#			is_controlled_by = PREV
+			#		}
+			#	}
+			#	country_event = { id = generics.15 days = 1 }
+			#}
 			hidden_effect = {
 				news_event = {
 					id = newsrussia2.105 days = 1
 				}
+				#country_event = { id =  days = 110 }
 			}
 		}
 	}
@@ -16976,7 +16982,7 @@ focus_tree = {
 	#Agreement With France
 	focus = {
 		id = SOV_agreement_france
-		x = 65
+		x = 66
 		y = 24
 		prerequisite = { focus = SOV_announce_our_ambitions }
 		icon = GFX_focus_chi_reach_out_to_france
@@ -17035,7 +17041,7 @@ focus_tree = {
 	#The Few Obstacles Left
 	focus = {
 		id = SOV_few_obstacles_left
-		x = 65
+		x = 66
 		y = 25
 		prerequisite = { focus = SOV_agreement_france }
 		icon = GFX_few_obstacles_left
@@ -17170,204 +17176,112 @@ focus_tree = {
 		}
 	}
 
+	#Strike Down the Protestors
+	focus = {
+		id = SOV_strike_down_protestors
+		x = 58
+		y = 25
+		prerequisite = { focus = SOV_unite_slavic_nations }
+		icon = GFX_goal_generic_attack_allies
+		cost = 8
+		ai_will_do = {
+			factor = 5
+		}
+		available = {
+			has_country_flag = protestors_has_striked
+		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_ANNEXATION }
+		completion_reward = {
+
+		}
+	}
+
+	#Unite Western Balkan
+	focus = {
+		id = SOV_unite_western_balkan
+		x = 60
+		y = 25
+		prerequisite = { focus = SOV_unite_slavic_nations }
+		icon = GFX_goal_generic_attack_allies
+		cost = 7
+		ai_will_do = {
+			factor = 5
+		}
+		available = {
+			
+		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_ANNEXATION }
+		completion_reward = {
+			custom_effect_tooltip = unlock_unite_slavic_nation_yugoslavia_decision
+		}
+	}
+
+	#Unite Eastern Balkan
+	focus = {
+		id = SOV_unite_eastern_balkan
+		x = 62
+		y = 25
+		prerequisite = { focus = SOV_unite_slavic_nations }
+		icon = GFX_goal_generic_attack_allies
+		cost = 7
+		ai_will_do = {
+			factor = 5
+		}
+		available = {
+			
+		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_ANNEXATION }
+		completion_reward = {
+			custom_effect_tooltip = unlock_unite_slavic_nation_bulgaria_decision
+		}
+	}
+
+	#Unite Central Europe
+	focus = {
+		id = SOV_unite_central_europe
+		x = 64
+		y = 25
+		prerequisite = { focus = SOV_unite_slavic_nations }
+		icon = GFX_goal_generic_attack_allies
+		cost = 7
+		ai_will_do = {
+			factor = 5
+		}
+		available = {
+			
+		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_ANNEXATION }
+		completion_reward = {
+			custom_effect_tooltip = unlock_unite_slavic_nation_czech_decision
+		}
+	}
+
 	#Proclaim the Slavic Empire
 	focus = {
 		id = SOV_slavic_empire
 		x = 62
-		y = 25
-		prerequisite = { focus = SOV_unite_slavic_nations }
+		y = 26
+		prerequisite = { focus = SOV_unite_western_balkan }
+		prerequisite = { focus = SOV_unite_eastern_balkan }
+		prerequisite = { focus = SOV_unite_central_europe }
 		icon = GFX_slavic_empire
 		cost = 10
 		ai_will_do = {
 			factor = 9
 		}
 		available = {
+			NOT = {
+				has_idea = SOV_Anti_military_junta_protestor
+			}
 			has_government = neutrality
 			is_subject = no
 			is_major = yes
 			custom_trigger_tooltip = {
-				tooltip = SOV_slavic_empire_sov_states
-				controls_state = 402
-				controls_state = 590
-				controls_state = 586
-				controls_state = 214
-				controls_state = 230
-				controls_state = 584
-				controls_state = 236
-				controls_state = 589
-				controls_state = 229
-				controls_state = 40
-				controls_state = 240
-				controls_state = 204
-				controls_state = 565
-				controls_state = 567
-				controls_state = 224
-				controls_state = 233
-				controls_state = 256
-				controls_state = 572
-				controls_state = 203
-				controls_state = 193
-				controls_state = 563
-				controls_state = 137
-				controls_state = 226
-				controls_state = 237
-				controls_state = 401
-				controls_state = 231
-				controls_state = 241
-				controls_state = 252
-				controls_state = 654
-				controls_state = 232
-				controls_state = 406
-				controls_state = 566
-				controls_state = 253
-				controls_state = 399
-				controls_state = 247
-				controls_state = 205
-				controls_state = 637
-				controls_state = 249
-				controls_state = 569
-				controls_state = 221
-				controls_state = 196
-				controls_state = 199
-				controls_state = 202
-				controls_state = 575
-				controls_state = 400
-				controls_state = 234
-				controls_state = 568
-				controls_state = 251
-				controls_state = 220
-				controls_state = 583
-				controls_state = 404
-				controls_state = 195
-				controls_state = 258
-				controls_state = 208
-				controls_state = 582
-				controls_state = 265
-				controls_state = 245
-				controls_state = 206
-				controls_state = 219
-				controls_state = 194
-				controls_state = 213
-				controls_state = 197
-				controls_state = 210
-				controls_state = 644
-				controls_state = 581
-				controls_state = 516
-				controls_state = 263
-				controls_state = 570
-				controls_state = 192
-				controls_state = 562
-				controls_state = 216
-				controls_state = 571
-				controls_state = 215
-				controls_state = 222
-				controls_state = 652
-				controls_state = 732
-				controls_state = 262
-				controls_state = 255
-				controls_state = 398
-				controls_state = 259
-				controls_state = 209
-				controls_state = 243
-				controls_state = 218
-				controls_state = 254
-				controls_state = 246
-				controls_state = 579
-				controls_state = 239
-				controls_state = 588
-				controls_state = 242
-				controls_state = 742
-				controls_state = 217
-				controls_state = 227
-				controls_state = 235
-				controls_state = 225
-				controls_state = 577
-				controls_state = 653
-				controls_state = 397
-				controls_state = 257
-				controls_state = 405
-				controls_state = 264
-				controls_state = 580
-				controls_state = 578
-				controls_state = 223
-				controls_state = 403
-				controls_state = 651
-				controls_state = 564
-				controls_state = 250
-				controls_state = 407
-				controls_state = 585
-				controls_state = 587
-				controls_state = 198
-				controls_state = 207
-				controls_state = 238
-				controls_state = 244
-				controls_state = 351
-				controls_state = 260
-				controls_state = 228
-				controls_state = 574
-				controls_state = 248
-				controls_state = 576
-				controls_state = 200
-				controls_state = 201
-				controls_state = 573
-			}
-			custom_trigger_tooltip = {
-				tooltip = SOV_slavic_empire_pol_states
-				controls_state = 89
-				controls_state = 91
-				controls_state = 93
-				controls_state = 94
-				controls_state = 95
-				controls_state = 96
-				controls_state = 784
-				controls_state = 97
-				controls_state = 92
-				controls_state = 88
-				controls_state = 90
-				controls_state = 10
-				controls_state = 98
-				controls_state = 87
-			}
-			custom_trigger_tooltip = {
-				tooltip = SOV_slavic_empire_bul_states
-				controls_state = 211
-				controls_state = 212
-				controls_state = 48
-				controls_state = 801
-			}
-			custom_trigger_tooltip = {
-				tooltip = SOV_slavic_empire_yug_states
-				controls_state = 106
-				controls_state = 107
-				controls_state = 108
-				controls_state = 764
-				controls_state = 45
-				controls_state = 109
-				controls_state = 104
-				controls_state = 103
-				controls_state = 105
-				controls_state = 102
-				controls_state = 802
-				controls_state = 803
-				controls_state = 804
-			}
-			custom_trigger_tooltip = {
-				tooltip = SOV_slavic_empire_slo_states
-				OR = {
-					AND = {
-						controls_state = 70
-						controls_state = 71
-						controls_state = 73
-						controls_state = 664
-					}
-					AND = {
-						controls_state = 72
-						controls_state = 74
-						controls_state = 75
-						controls_state = 69
-						controls_state = 9
-					}
-				}	
+				tooltip = has_integrated_slavic_core_state
+				has_country_flag = has_integrated_pol_core_states
+				has_country_flag = has_integrated_yug_core_states
+				has_country_flag = has_integrated_bul_core_states
+				has_country_flag = has_integrated_cze_core_states
 			}
 			if = {
 				limit = {
@@ -17385,21 +17299,9 @@ focus_tree = {
 				set_cosmetic_tag = RSE
 			}
 			set_country_flag = SOV_became_slavic_empire
-			custom_effect_tooltip = SOV_slavic_empire_tt
 			custom_effect_tooltip = SOV_slavic_empire_tt2
 			custom_effect_tooltip = SOV_slavic_empire_tt3
 			hidden_effect = {
-				every_state = {
-					limit = {
-						OR = {
-							has_state_flag = slavic_states
-							has_state_flag = slavic_states_czech
-						}	
-					}
-					SOV = {
-						add_state_core = PREV
-					}
-				}
 				every_state = {
 					limit = {
 						OR = {
@@ -17423,7 +17325,7 @@ focus_tree = {
 	focus = {
 		id = SOV_extend_influence
 		x = 61
-		y = 26
+		y = 27
 		prerequisite = { focus = SOV_slavic_empire }
 		mutually_exclusive = { focus = SOV_protect_influence }
 		icon = GFX_focus_generic_provoke_border_clashes
@@ -17479,7 +17381,7 @@ focus_tree = {
 	focus = {
 		id = SOV_protect_influence
 		x = 63
-		y = 26
+		y = 27
 		prerequisite = { focus = SOV_slavic_empire }
 		mutually_exclusive = { focus = SOV_extend_influence }
 		icon = GFX_goal_generic_fortify_city
