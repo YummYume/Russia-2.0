@@ -150,24 +150,19 @@ SOV_worker_liberation_europe = { #Liberate the workers of Europe
 			value > 0
 		}
 
-		FROM = {
-			any_owned_state = {
-			    is_on_continent = europe
-			    compliance < 80
-			    has_resistance = yes
-			    NOT = {
-					is_core_of = FROM
-				}
-			}
-			NOT = {
-				has_government = communism
-				is_in_faction_with = SOV
-			}
-		}
-
 		has_completed_focus = SOV_european_revolution
 
 		num_of_operatives > 0
+	}
+
+	available = {
+		FROM = {
+			NOT = {
+				has_government = communism
+				is_in_faction_with = SOV
+				is_subject_of = SOV
+			}
+		}
 	}
 
 	operatives = 2
@@ -175,17 +170,26 @@ SOV_worker_liberation_europe = { #Liberate the workers of Europe
 	network_strength = 40
 	
 	equipment = {
-		infantry_equipment = 1000
-		support_equipment = 150
-		artillery_equipment = 100
+		infantry_equipment = 5000
+		support_equipment = 250
+		artillery_equipment = 150
 	}
 
 	selection_target_state = {
 		is_on_continent = europe
-		compliance < 80
+		compliance < 75
 		has_resistance = yes
 		NOT = {
 			is_core_of = FROM
+			is_core_of = SOV
+		}
+		any_of_scopes = {
+			array = global.countries
+
+			PREV = {
+				is_core_of = PREV
+			}
+			exists = no
 		}
 	}
 
@@ -209,43 +213,475 @@ SOV_worker_liberation_europe = { #Liberate the workers of Europe
 
 	outcome_execute = {
 		FROM = {
-			add_popularity = {
-			    ideology = communism
-			    popularity = 0.05
-			}
 			clr_country_flag = target_europe
 		}
+
 		if = {
 			limit = {
-				SOV = {
-					has_completed_focus = SOV_liberation_of_the_workers
+				FROM = {
+					controls_state = FROM.FROM
+				}
+				any_of_scopes = {
+					array = global.countries
+
+					FROM.FROM = {
+						is_core_of = PREV
+					}
+					exists = no
 				}
 			}
-			FROM.FROM = {
-				add_resistance = 100
+			random_scope_in_array = {
+				array = global.countries
+				limit = {
+					FROM.FROM = {
+						is_core_of = PREV
+					}
+					exists = no
+				}
+				
+				PREV = {
+					transfer_state = FROM.FROM
+					set_country_flag = liberated_by_sov
+					leave_faction = yes
+					army_experience = 25
+					add_political_power = 150
+					add_opinion_modifier = { target = SOV modifier = liberator_workers }
+					hidden_effect = {
+						set_popularities = {
+							democratic = 0
+							neutrality = 0
+							fascism = 0
+							communism = 100
+						}
+						set_politics = {
+							ruling_party = communism
+						}
+						add_timed_idea = {
+							idea = SOV_Fight_revolution
+							days = 182
+						}
+						set_technology = {
+							gw_artillery = 1
+							tech_recon = 1
+							tech_support = 1		
+							tech_engineers = 1
+						}
+
+						if = {
+							limit = {
+								NOT = {
+									has_template = "Soviet Workers"
+								}
+							}
+							division_template = {
+								name = "Soviet Workers"
+								priority = 1
+								regiments = {
+									infantry = { x = 0 y = 0 }
+									infantry = { x = 0 y = 1 }
+									infantry = { x = 0 y = 2 }
+									infantry = { x = 0 y = 3 }
+									infantry = { x = 0 y = 4 }
+								}
+								support = {
+									artillery = { x = 0 y = 0 }
+									recon = { x = 0 y = 1 }
+								}
+							}
+						}
+
+						set_division_template_lock = {
+							division_template = "Soviet Workers"
+							is_locked = yes
+						}
+
+						if = {
+							limit = {
+								NOT = {
+									has_template = "Soviet Volunteers"
+								}
+							}
+							division_template = {
+								name = "Soviet Volunteers"
+								priority = 2
+								regiments = {
+									infantry = { x = 0 y = 0 }
+									infantry = { x = 0 y = 1 }
+									infantry = { x = 0 y = 2 }
+									infantry = { x = 0 y = 3 }
+									infantry = { x = 0 y = 4 }
+									artillery_brigade = { x = 1 y = 0 }
+									artillery_brigade = { x = 1 y = 1 }
+								}
+								support = {
+									artillery = { x = 0 y = 0 }
+									recon = { x = 0 y = 1 }
+									engineer = { x = 0 y = 2 }
+								}
+							}
+						}
+
+						set_division_template_lock = {
+							division_template = "Soviet Volunteers"
+							is_locked = yes
+						}
+
+						set_temp_variable = { revolution_normal_division_count = 1 }
+						set_temp_variable = { revolution_soviet_division_count = 1 }
+						if = {
+							limit = {
+								FROM.FROM = {
+									has_resistance = yes
+								}
+							}
+							set_temp_variable = { resistance_division_multiplier = FROM.FROM.resistance }
+
+							divide_temp_variable = { resistance_division_multiplier = 10 }
+							clamp_temp_variable = {
+								var = resistance_division_multiplier
+								min = 1
+								max = 10
+							}
+							round_temp_variable = resistance_division_multiplier
+							multiply_temp_variable = { revolution_normal_division_count = resistance_division_multiplier }
+
+							divide_temp_variable = { resistance_division_multiplier = 2 }
+							clamp_temp_variable = {
+								var = resistance_division_multiplier
+								min = 1
+								max = 10
+							}
+							round_temp_variable = resistance_division_multiplier
+							multiply_temp_variable = { revolution_soviet_division_count = resistance_division_multiplier }
+						}
+						
+						while_loop_effect = {
+							break = break_loop
+							limit = {
+								check_variable = {
+									var = revolution_normal_division_count
+									value = 1
+									compare = greater_than_or_equals
+								}
+							}
+							
+							FROM.FROM = {
+								create_unit = {
+									division = "name = \"Soviet Workers\" division_template = \"Soviet Workers\" start_experience_factor = 0.3"
+									owner = PREV
+								}
+								if = {
+									limit = {
+										check_variable = {
+											var = revolution_soviet_division_count
+											value = 1
+											compare = greater_than_or_equals
+										}
+									}
+									create_unit = {
+										division = "name = \"Soviet Volunteers\" division_template = \"Soviet Volunteers\" start_experience_factor = 1"
+										owner = PREV
+									}
+									PREV = {
+										subtract_from_temp_variable = { revolution_soviet_division_count = 1 }
+									}
+								}
+							}
+							subtract_from_temp_variable = { revolution_normal_division_count = 1 }
+						}
+
+						FROM = {
+							declare_war_on = {
+								target = PREV
+								type = annex_everything
+							}
+						}
+					}
+				}
+			}
+		}
+		else = {
+			if = {
+				limit = {
+					SOV = {
+						has_completed_focus = SOV_liberation_of_the_workers
+					}
+				}
+				FROM = {
+					add_popularity = {
+						ideology = communism
+						popularity = 0.1
+					}
+				}
+			}
+			else = {
+				FROM = {
+					add_popularity = {
+						ideology = communism
+						popularity = 0.05
+					}
+				}
+			}
+			if = {
+				limit = {
+					FROM.FROM = {
+						has_resistance = yes
+					}
+				}
+				if = {
+					limit = {
+						SOV = {
+							has_completed_focus = SOV_liberation_of_the_workers
+						}
+					}
+					FROM.FROM = {
+						add_resistance = 50
+					}
+				}
+				else = {
+					FROM.FROM = {
+						add_resistance = 25
+					}
+				}
 			}
 		}
 		SOV = {
 			clr_country_flag = SOV_is_liberating_europe
-		}	
+		}
 	}
 
 	outcome_extra_execute = {
 		FROM = {
-			add_popularity = {
-			    ideology = communism
-			    popularity = 0.10
-			}
 			clr_country_flag = target_europe
 		}
+
 		if = {
 			limit = {
-				SOV = {
-					has_completed_focus = SOV_liberation_of_the_workers
+				FROM = {
+					controls_state = FROM.FROM
+				}
+				any_of_scopes = {
+					array = global.countries
+
+					FROM.FROM = {
+						is_core_of = PREV
+					}
+					exists = no
 				}
 			}
-			FROM.FROM = {
-				add_resistance = 100
+			random_scope_in_array = {
+				array = global.countries
+				limit = {
+					FROM.FROM = {
+						is_core_of = PREV
+					}
+					exists = no
+				}
+				
+				PREV = {
+					transfer_state = FROM.FROM
+					set_country_flag = liberated_by_sov
+					leave_faction = yes
+					army_experience = 25
+					add_political_power = 150
+					add_opinion_modifier = { target = SOV modifier = liberator_workers }
+					hidden_effect = {
+						set_popularities = {
+							democratic = 0
+							neutrality = 0
+							fascism = 0
+							communism = 100
+						}
+						set_politics = {
+							ruling_party = communism
+						}
+						add_timed_idea = {
+							idea = SOV_Fight_revolution
+							days = 182
+						}
+						set_technology = {
+							gw_artillery = 1
+							tech_recon = 1
+							tech_support = 1		
+							tech_engineers = 1
+						}
+
+						if = {
+							limit = {
+								NOT = {
+									has_template = "Soviet Workers"
+								}
+							}
+							division_template = {
+								name = "Soviet Workers"
+								priority = 1
+								regiments = {
+									infantry = { x = 0 y = 0 }
+									infantry = { x = 0 y = 1 }
+									infantry = { x = 0 y = 2 }
+									infantry = { x = 0 y = 3 }
+									infantry = { x = 0 y = 4 }
+								}
+								support = {
+									artillery = { x = 0 y = 0 }
+									recon = { x = 0 y = 1 }
+								}
+							}
+						}
+
+						set_division_template_lock = {
+							division_template = "Soviet Workers"
+							is_locked = yes
+						}
+
+						if = {
+							limit = {
+								NOT = {
+									has_template = "Soviet Volunteers"
+								}
+							}
+							division_template = {
+								name = "Soviet Volunteers"
+								priority = 2
+								regiments = {
+									infantry = { x = 0 y = 0 }
+									infantry = { x = 0 y = 1 }
+									infantry = { x = 0 y = 2 }
+									infantry = { x = 0 y = 3 }
+									infantry = { x = 0 y = 4 }
+									artillery_brigade = { x = 1 y = 0 }
+									artillery_brigade = { x = 1 y = 1 }
+								}
+								support = {
+									artillery = { x = 0 y = 0 }
+									recon = { x = 0 y = 1 }
+									engineer = { x = 0 y = 2 }
+								}
+							}
+						}
+
+						set_division_template_lock = {
+							division_template = "Soviet Volunteers"
+							is_locked = yes
+						}
+
+						set_temp_variable = { revolution_normal_division_count = 2 }
+						set_temp_variable = { revolution_soviet_division_count = 2 }
+						if = {
+							limit = {
+								FROM.FROM = {
+									has_resistance = yes
+								}
+							}
+							set_temp_variable = { resistance_division_multiplier = FROM.FROM.resistance }
+							
+							divide_temp_variable = { resistance_division_multiplier = 10 }
+							clamp_temp_variable = {
+								var = resistance_division_multiplier
+								min = 1
+								max = 10
+							}
+							round_temp_variable = resistance_division_multiplier
+							multiply_temp_variable = { revolution_normal_division_count = resistance_division_multiplier }
+
+							divide_temp_variable = { resistance_division_multiplier = 2 }
+							clamp_temp_variable = {
+								var = resistance_division_multiplier
+								min = 1
+								max = 10
+							}
+							round_temp_variable = resistance_division_multiplier
+							multiply_temp_variable = { revolution_soviet_division_count = resistance_division_multiplier }
+						}
+						
+						while_loop_effect = {
+							break = break_loop
+							limit = {
+								check_variable = {
+									var = revolution_normal_division_count
+									value = 1
+									compare = greater_than_or_equals
+								}
+							}
+							
+							FROM.FROM = {
+								create_unit = {
+									division = "name = \"Soviet Workers\" division_template = \"Soviet Workers\" start_experience_factor = 0.3"
+									owner = PREV
+								}
+								if = {
+									limit = {
+										check_variable = {
+											var = revolution_soviet_division_count
+											value = 1
+											compare = greater_than_or_equals
+										}
+									}
+									create_unit = {
+										division = "name = \"Soviet Volunteers\" division_template = \"Soviet Volunteers\" start_experience_factor = 1"
+										owner = PREV
+									}
+									PREV = {
+										subtract_from_temp_variable = { revolution_soviet_division_count = 1 }
+									}
+								}
+							}
+							subtract_from_temp_variable = { revolution_normal_division_count = 1 }
+						}
+
+						FROM = {
+							declare_war_on = {
+								target = PREV
+								type = annex_everything
+							}
+						}
+					}
+				}
+			}
+		}
+		else = {
+			if = {
+				limit = {
+					SOV = {
+						has_completed_focus = SOV_liberation_of_the_workers
+					}
+				}
+				FROM = {
+					add_popularity = {
+						ideology = communism
+						popularity = 0.15
+					}
+				}
+			}
+			else = {
+				FROM = {
+					add_popularity = {
+						ideology = communism
+						popularity = 0.1
+					}
+				}
+			}
+			if = {
+				limit = {
+					FROM.FROM = {
+						has_resistance = yes
+					}
+				}
+				if = {
+					limit = {
+						SOV = {
+							has_completed_focus = SOV_liberation_of_the_workers
+						}
+					}
+					FROM.FROM = {
+						add_resistance = 75
+					}
+				}
+				else = {
+					FROM.FROM = {
+						add_resistance = 50
+					}
+				}
 			}
 		}
 		SOV = {
@@ -254,20 +690,7 @@ SOV_worker_liberation_europe = { #Liberate the workers of Europe
 	}
 
 	outcome_potential = {
-		FROM = {
-			add_popularity = {
-			    ideology = communism
-			    popularity = 0.05
-			}
-		}
-		if = {
-			limit = {
-				SOV = {
-					has_completed_focus = SOV_liberation_of_the_workers
-				}
-			}
-			custom_effect_tooltip = SOV_worker_liberation_europe_tt
-		}
+		custom_effect_tooltip = revolution_will_happen_in_state_europe
 	}
 	
 	phases = {
