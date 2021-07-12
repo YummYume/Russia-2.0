@@ -730,4 +730,49 @@ on_actions = {
 			}
 		}
 	}
+
+	#Anastasia Struggle
+	on_daily_SOV = {
+		effect = {
+			if = {
+				limit = {
+					NOT = {
+						has_country_flag = sov_anna_anderson_struggle_over
+					}
+					has_country_flag = sov_anna_anderson_returns_russia
+					has_government = neutrality
+					is_subject = no
+					has_capitulated = no
+					has_completed_focus = SOV_restoration_tsar
+					OR = {
+						has_country_leader = {
+							name = "Kirill Vladimirovich"
+							ruling_only = yes
+						}
+						has_country_leader = {
+							name = "Vladimir Kirillovich"
+							ruling_only = yes
+						}
+					}
+					NOT = {
+						has_completed_focus = SOV_the_emperor
+						has_completed_focus = SOV_the_empress
+						has_country_leader = {
+							name = "Anastasia Nikolaevna"
+							ruling_only = yes
+						}
+					}
+				}
+				add_to_variable = { anna_anderson_legitimacy = var:anna_anderson_daily_legitimacy_gain }
+				clamp_variable = {
+					var = anna_anderson_legitimacy
+					min = 0
+					max = 1
+				}
+				set_variable = { anna_anderson_legitimacy_gui = anna_anderson_legitimacy }
+				multiply_variable = { anna_anderson_legitimacy_gui = 100 }
+				multiply_variable = { anna_anderson_legitimacy_gui = 2 }
+			}
+		}
+	}
 }

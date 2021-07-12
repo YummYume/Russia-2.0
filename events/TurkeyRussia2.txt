@@ -22,7 +22,7 @@ country_event = {
 
 	is_triggered_only = yes
 
-	option = { #Demande Annexiation
+	option = { #Demand Annexation
 		name = turkeys.1.a
 		ai_chance = {
 			factor = 5
@@ -32,7 +32,7 @@ country_event = {
 		}
 	}
 
-	option = { #Demande Imperial Puppet
+	option = { #Demand Imperial Puppet
 		name = turkeys.1.b
 		ai_chance = {
 			factor = 15
@@ -42,25 +42,49 @@ country_event = {
 		}
 	}
 
-	option = { #Demand the Strait
+	option = { #Demand the Straits
 		name = turkeys.1.c
 		ai_chance = {
 			factor = 70
+		}
+		trigger = {
+			TUR = {
+				OR = {
+					owns_state = 797
+					controls_state = 797
+					owns_state = 341
+					controls_state = 341
+				}
+			}
 		}
 		TUR = {
 			country_event = { id = turkeys.8 days = 1 }
 		}
 	}
 
-	option = { #Free Kurdistan !
+	option = { #Free Kurdistan!
 		name = turkeys.1.e
 		ai_chance = {
 			factor = 10
+		}
+		trigger = {
+			any_state = {
+				is_owned_by = TUR
+				is_core_of = KUR
+			}
 		}
 		TUR = {
 			country_event = { id = turkeys.11 days = 1 }
 		}
 		set_country_flag = choose_kurdistan_over_other
+		hidden_effect = {
+			#Pretty borders plz :)
+			KUR = {
+				add_state_claim = 354
+				add_state_claim = 675
+				add_state_claim = 656
+			}
+		}
 	}
 }
 
@@ -73,12 +97,12 @@ country_event = {
 
 	is_triggered_only = yes
 
-	option = { #Accept Annexiation
+	option = { #Accept Annexation
 		name = turkeys.2.a
 		ai_chance = {
-			factor = 30
+			factor = 20
 			modifier = {
-				factor = 5
+				factor = 0
 				OR = {
 					any_country = {
 						is_major = yes
@@ -104,12 +128,12 @@ country_event = {
 		}
 	}
 
-	option = { #Refuse Annexiation
+	option = { #Refuse Annexation
 		name = turkeys.2.b
 		ai_chance = {
-			factor = 70
+			factor = 80
 			modifier = {
-				factor = 95
+				factor = 100
 				OR = {
 					any_country = {
 						is_major = yes
@@ -136,7 +160,7 @@ country_event = {
 	}
 }
 
-#Turkey Accept Annexiation
+#Turkey Accepts Annexation
 country_event = {
 	id = turkeys.3
 	title = turkeys.3.t
@@ -145,7 +169,7 @@ country_event = {
 
 	is_triggered_only = yes
 
-	option = { #Accept Annexiation
+	option = { #Accept Annexation
 		name = turkeys.3.a
 		ai_chance = {
 			factor = 100
@@ -164,7 +188,7 @@ country_event = {
 	}
 }
 
-#Turkey Refuse Annexiation
+#Turkey Refuses Annexation
 country_event = {
 	id = turkeys.4
 	title = turkeys.4.t
@@ -259,7 +283,7 @@ country_event = {
 	}
 }
 
-#Turkey Accept Subjugation
+#Turkey Accepts Subjugation
 country_event = {
 	id = turkeys.6
 	title = turkeys.6.t
@@ -268,7 +292,7 @@ country_event = {
 
 	is_triggered_only = yes
 
-	option = { #Accept Annexiation
+	option = { #Accept Annexation
 		name = turkeys.6.a
 		ai_chance = {
 			factor = 100
@@ -292,7 +316,7 @@ country_event = {
 	}
 }
 
-#Turkey Refuse Annexiation
+#Turkey Refuses Annexation
 country_event = {
 	id = turkeys.7
 	title = turkeys.7.t
@@ -387,7 +411,7 @@ country_event = {
 	}
 }
 
-#Turkey Accept Subjugation
+#Turkey Accepts Subjugation
 country_event = {
 	id = turkeys.9
 	title = turkeys.9.t
@@ -402,8 +426,28 @@ country_event = {
 			factor = 100
 		}
 		SOV = {
-			transfer_state = 797
-			transfer_state = 341
+			if = {
+				limit = {
+					TUR = {
+						OR = {
+							owns_state = 797
+							controls_state = 797
+						}
+					}
+				}
+				transfer_state = 797
+			}
+			if = {
+				limit = {
+					TUR = {
+						OR = {
+							owns_state = 341
+							controls_state = 341
+						}
+					}
+				}
+				transfer_state = 341
+			}
 		}
 		if = {
 			limit = {
@@ -426,7 +470,7 @@ country_event = {
 	}
 }
 
-#Turkey Refuse Annexiation
+#Turkey Refuses Annexation
 country_event = {
 	id = turkeys.10
 	title = turkeys.10.t
@@ -450,7 +494,7 @@ country_event = {
 	}
 }
 
-#Russia Ask for Kurdistan
+#Russia Asks for Kurdistan
 country_event = {
 	id = turkeys.11
 	title = turkeys.11.t
@@ -522,7 +566,7 @@ country_event = {
 	}
 }
 
-#Turkey Accept to Release Kurdistan
+#Turkey Accepts to Release Kurdistan
 country_event = {
 	id = turkeys.12
 	title = turkeys.12.t
@@ -537,22 +581,17 @@ country_event = {
 			factor = 100
 		}
 		hidden_effect = {
-			every_state = {
-				limit = {
-					NOT = {
-						is_core_of = KUR
-					}
-					OR = {
-						state = 350
-						state = 352
-						state = 353
-						state = 800
-					}
-				}
-				add_core_of = KUR
-			}
 			TUR = {
 				release = KUR
+			}
+			every_state = {
+				limit = {
+					is_owned_by = TUR
+					is_claimed_by = KUR
+				}
+				KUR = {
+					transfer_state = PREV
+				}
 			}
 		}
 		SOV = {
@@ -561,6 +600,7 @@ country_event = {
 				autonomy_state = autonomy_imperial_governorates
 			}
 		}
+		custom_effect_tooltip = unlocks_kurdistan_territory_decisions
 		hidden_effect = {
 			KUR = {
 				set_popularities = {
@@ -574,7 +614,7 @@ country_event = {
 	}
 }
 
-#Turkey Refuse Annexiation
+#Turkey Refuses Annexation
 country_event = {
 	id = turkeys.13
 	title = turkeys.13.t
