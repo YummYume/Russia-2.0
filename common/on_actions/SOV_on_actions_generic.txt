@@ -869,4 +869,106 @@ on_actions = {
 			}
 		}
 	}
+
+	# Annex PRT when they Capitulate and vice versa and relaunch event
+	on_capitulation = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						tag = PRT
+						has_war_with = SOV
+					}
+					FROM = {
+						tag = SOV
+						has_country_flag = is_crushing_the_protestors
+					}
+				}
+				every_state = {
+					limit = {
+						is_owned_by = ROOT
+					}
+					FROM = {
+						transfer_state = PREV
+					}
+				}
+				FROM = {
+					country_event = { id = soviets.521 days = 35 }
+				}
+			}
+			else_if = {
+				limit = {
+					ROOT = {
+						tag = SOV
+						has_war_with = PRT
+						has_country_flag = protestors_has_striked
+					}
+					FROM = {
+						tag = PRT
+						has_war_with = SOV
+					}
+				}
+				every_state = {
+					limit = {
+						is_owned_by = ROOT
+					}
+					FROM = {
+						transfer_state = PREV
+						add_state_core = PREV
+					}
+				}
+			}
+		}
+	}
+
+	# Annex PRT when they Capitulate and Finish off Protestors
+	on_capitulation = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						tag = PRT
+						has_war_with = SOV
+					}
+					FROM = {
+						tag = SOV
+						has_country_flag = killed_the_protestor_junta
+					}
+				}
+				every_state = {
+					limit = {
+						is_owned_by = ROOT
+					}
+					FROM = {
+						transfer_state = PREV
+					}
+				}
+				FROM = {
+					country_event = { id = soviets.522 days = 1 }
+				}
+			}
+			else_if = {
+				limit = {
+					ROOT = {
+						tag = SOV
+						has_war_with = PRT
+						has_country_flag = protestors_has_striked
+					}
+					FROM = {
+						tag = PRT
+						has_war_with = SOV
+					}
+				}
+				every_state = {
+					limit = {
+						is_owned_by = ROOT
+					}
+					FROM = {
+						transfer_state = PREV
+						add_state_core = PREV
+					}
+				}
+			}
+		}
+	}
 }
