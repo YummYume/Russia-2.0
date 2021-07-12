@@ -821,4 +821,52 @@ on_actions = {
 			}
 		}
 	}
+
+	# Annex PRT when they Capitulate and vice versa
+	on_capitulation = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						tag = PRT
+						has_war_with = SOV
+					}
+					FROM = {
+						tag = SOV
+						has_country_flag = protestors_has_striked
+					}
+				}
+				every_state = {
+					limit = {
+						is_owned_by = ROOT
+					}
+					FROM = {
+						transfer_state = PREV
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					ROOT = {
+						tag = SOV
+						has_war_with = PRT
+						has_country_flag = protestors_has_striked
+					}
+					FROM = {
+						tag = PRT
+						has_war_with = SOV
+					}
+				}
+				every_state = {
+					limit = {
+						is_owned_by = ROOT
+					}
+					FROM = {
+						transfer_state = PREV
+						add_state_core = PREV
+					}
+				}
+			}
+		}
+	}
 }

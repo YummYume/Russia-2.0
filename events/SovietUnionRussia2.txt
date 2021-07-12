@@ -24337,6 +24337,7 @@ country_event = {
 				release = PRT
 			}
 			PRT = {
+				add_ideas = SOV_Protestors_neutrality
 				set_popularities = {
 					democratic = 20
 					neutrality = 40
@@ -24451,6 +24452,50 @@ country_event = {
 					target = SOV
 					type = annex_everything
 				}
+			}
+		}
+	}
+}
+
+#The Protestors Strikes Again
+country_event = {
+	id = soviets.521
+	title = soviets.521.t
+	desc = soviets.521.d
+	picture = GFX_report_event_generic_riot
+
+	is_triggered_only = yes
+	
+	option = { #We must stay vigilant
+		name = soviets.521.a
+		hidden_effect = {
+			if = {
+				limit = {
+					check_variable = {
+						var = protestors_destruction_variable
+						value = 85
+						compare = greater_than_or_equals
+					}
+				}
+				SOV = {
+					country_event = { id = soviets.199 hours = 2 }
+				}
+			}
+			else = {
+				SOV = {
+					country_event = { id = soviets.200 hours = 2 }
+				}
+				add_to_variable = {
+					var = protestors_destruction_variable
+					value = 15
+				}
+				randomize_variable = {
+					var = protestors_destruction_variable
+					distribution = uniform
+					min = protestors_destruction_variable
+					max = 100
+				}
+				round_variable = protestors_destruction_variable
 			}
 		}
 	}
