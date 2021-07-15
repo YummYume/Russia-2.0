@@ -15647,6 +15647,7 @@ focus_tree = {
 				news_event = {
 					id = newsrussia2.83 hours = 12
 				}
+				country_event = { id = soviets.519 days = 80 }
 			}
 			set_party_name = { 
 				ideology = neutrality 
@@ -15665,7 +15666,6 @@ focus_tree = {
 			}
 			set_cosmetic_tag = NRG
 			add_ideas = SOV_Denikin_trust
-			add_ideas = SOV_Anti_military_junta_protestor
 			remove_ideas = SOV_Political_Unstability2
 			if = {
 				limit = {
@@ -16235,7 +16235,6 @@ focus_tree = {
 				news_event = {
 					id = newsrussia2.104 days = 1
 				}
-				country_event = { id = soviets.506 days = 40 }
 			}
 			custom_effect_tooltip = SOV_announce_our_ambitions_tt
 		}
@@ -16302,34 +16301,10 @@ focus_tree = {
 		completion_reward = {
 			custom_effect_tooltip = unlock_unite_slavic_nation_decision
 			custom_effect_tooltip = unlock_unite_slavic_nation_poland_decision
-			#every_other_country = {
-			#	limit = {
-			#		NOT = {
-			#			OR = {
-			#				AND = {
-			#					is_subject_of = SOV
-			#					is_in_faction_with = SOV
-			#				}
-			#				TAG = GER
-			#				TAG = ITA
-			#			}
-			#		}
-			#		any_state = {
-			#			OR = {
-			#				has_state_flag = slavic_states
-			#				has_state_flag = slavic_states_czech
-			#				has_state_flag = german_slavic_state
-			#			}	
-			#			is_controlled_by = PREV
-			#		}
-			#	}
-			#	country_event = { id = generics.15 days = 1 }
-			#}
 			hidden_effect = {
 				news_event = {
 					id = newsrussia2.105 days = 1
 				}
-				#country_event = { id =  days = 110 }
 			}
 		}
 	}
@@ -17218,7 +17193,7 @@ focus_tree = {
 		y = 25
 		prerequisite = { focus = SOV_unite_slavic_nations }
 		icon = GFX_goal_generic_attack_allies
-		cost = 7
+		cost = 8
 		ai_will_do = {
 			factor = 5
 		}
@@ -17238,7 +17213,7 @@ focus_tree = {
 		y = 25
 		prerequisite = { focus = SOV_unite_slavic_nations }
 		icon = GFX_goal_generic_attack_allies
-		cost = 7
+		cost = 8
 		ai_will_do = {
 			factor = 5
 		}
@@ -17258,7 +17233,7 @@ focus_tree = {
 		y = 25
 		prerequisite = { focus = SOV_unite_slavic_nations }
 		icon = GFX_goal_generic_attack_allies
-		cost = 7
+		cost = 8
 		ai_will_do = {
 			factor = 5
 		}
@@ -17388,6 +17363,93 @@ focus_tree = {
 						}
 					}
 				}
+			}
+		}
+	}
+
+	#Russianize Finland
+	focus = {
+		id = SOV_russianize_finland
+		x = 59
+		y = 28
+		prerequisite = { focus = SOV_extend_influence }
+		icon = GFX_focus_generic_provoke_border_clashes
+		cost = 5
+		ai_will_do = {
+			factor = 8
+		}
+		available = {
+			is_subject = no
+			has_government = neutrality
+			is_major = yes
+			country_exists = FIN
+			NOT = {
+				has_war_with = FIN
+				FIN = {
+					is_subject_of = SOV
+				}
+			}
+			if = {
+				limit = {
+					has_idea = SOV_Exiled_russia
+				}
+				NOT = {
+					has_idea = SOV_Exiled_russia
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_ANNEXATION }
+		completion_reward = {
+			FIN = {
+				country_event = { id = finlands.30 days = 1 }
+			}
+			custom_effect_tooltip = unlock_decision_russianize_finland
+		}
+	}
+
+	#Russianize the Balkans
+	focus = {
+		id = SOV_russianize_the_balkans
+		x = 61
+		y = 28
+		prerequisite = { focus = SOV_extend_influence }
+		icon = GFX_focus_generic_provoke_border_clashes
+		cost = 5
+		ai_will_do = {
+			factor = 8
+		}
+		available = {
+			is_subject = no
+			has_government = neutrality
+			is_major = yes
+			OR = {
+				ROM = {
+					is_subject_of = SOV
+				}
+				HUN = {
+					is_subject_of = SOV
+				}
+			}
+			if = {
+				limit = {
+					has_idea = SOV_Exiled_russia
+				}
+				NOT = {
+					has_idea = SOV_Exiled_russia
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_ANNEXATION }
+		completion_reward = {
+			custom_effect_tooltip = unlock_decision_russianize_romania
+			custom_effect_tooltip = unlock_decision_russianize_hungary
+			set_variable = {
+				var = romania_russianization_slavic
+				value = 0
+			}
+			set_variable = {
+				var = hungary_russianization_slavic
+				value = 0
 			}
 		}
 	}
