@@ -23536,6 +23536,12 @@ country_event = {
 		set_variable = { anna_anderson_legitimacy_gui = anna_anderson_legitimacy }
 		multiply_variable = { anna_anderson_legitimacy_gui = 100 }
 		multiply_variable = { anna_anderson_legitimacy_gui = 2 }
+		round_variable = anna_anderson_legitimacy_gui
+		clamp_variable = {
+			var = anna_anderson_legitimacy
+			min = 0
+			max = 200
+		}
 		custom_effect_tooltip = anna_anderson_add_legitimacy_5
 		set_country_flag = sov_met_princess_irene_yes
 		add_stability = 0.05
@@ -23552,7 +23558,13 @@ country_event = {
 		}
 		set_variable = { anna_anderson_legitimacy_gui = anna_anderson_legitimacy }
 		multiply_variable = { anna_anderson_legitimacy_gui = 100 }
-		multiply_variable = { anna_anderson_legitimacy_gui = 2 }	
+		multiply_variable = { anna_anderson_legitimacy_gui = 2 }
+		round_variable = anna_anderson_legitimacy_gui
+		clamp_variable = {
+			var = anna_anderson_legitimacy
+			min = 0
+			max = 200
+		}	
 		custom_effect_tooltip = anna_anderson_remove_legitimacy_5
 		set_country_flag = sov_met_princess_irene_no
 		add_stability = -0.05
@@ -23612,6 +23624,12 @@ country_event = {
 		set_variable = { anna_anderson_legitimacy_gui = anna_anderson_legitimacy }
 		multiply_variable = { anna_anderson_legitimacy_gui = 100 }
 		multiply_variable = { anna_anderson_legitimacy_gui = 2 }
+		round_variable = anna_anderson_legitimacy_gui
+		clamp_variable = {
+			var = anna_anderson_legitimacy
+			min = 0
+			max = 200
+		}
 		custom_effect_tooltip = anna_anderson_add_legitimacy_5
 		add_stability = -0.05
 		set_country_flag = sov_met_prince_felix_yes
@@ -23637,6 +23655,12 @@ country_event = {
 			set_variable = { anna_anderson_legitimacy_gui = anna_anderson_legitimacy }
 			multiply_variable = { anna_anderson_legitimacy_gui = 100 }
 			multiply_variable = { anna_anderson_legitimacy_gui = 2 }
+			round_variable = anna_anderson_legitimacy_gui
+			clamp_variable = {
+				var = anna_anderson_legitimacy
+				min = 0
+				max = 200
+			}
 			custom_effect_tooltip = anna_anderson_remove_legitimacy_7
 		}
 		else = {
@@ -23649,6 +23673,12 @@ country_event = {
 			set_variable = { anna_anderson_legitimacy_gui = anna_anderson_legitimacy }
 			multiply_variable = { anna_anderson_legitimacy_gui = 100 }
 			multiply_variable = { anna_anderson_legitimacy_gui = 2 }
+			round_variable = anna_anderson_legitimacy_gui
+			clamp_variable = {
+				var = anna_anderson_legitimacy
+				min = 0
+				max = 200
+			}
 			custom_effect_tooltip = anna_anderson_remove_legitimacy_3
 		}
 		set_country_flag = sov_met_prince_felix_no
@@ -23719,6 +23749,12 @@ country_event = {
 		set_variable = { anna_anderson_legitimacy_gui = anna_anderson_legitimacy }
 		multiply_variable = { anna_anderson_legitimacy_gui = 100 }
 		multiply_variable = { anna_anderson_legitimacy_gui = 2 }
+		round_variable = anna_anderson_legitimacy_gui
+		clamp_variable = {
+			var = anna_anderson_legitimacy
+			min = 0
+			max = 200
+		}
 		custom_effect_tooltip = anna_anderson_add_legitimacy_5
 		add_stability = -0.1
 		set_country_flag = sov_met_grand_duchess_xenia_yes
@@ -23736,6 +23772,12 @@ country_event = {
 		set_variable = { anna_anderson_legitimacy_gui = anna_anderson_legitimacy }
 		multiply_variable = { anna_anderson_legitimacy_gui = 100 }
 		multiply_variable = { anna_anderson_legitimacy_gui = 2 }
+		round_variable = anna_anderson_legitimacy_gui
+		clamp_variable = {
+			var = anna_anderson_legitimacy
+			min = 0
+			max = 200
+		}
 		custom_effect_tooltip = anna_anderson_remove_legitimacy_5
 		add_stability = -0.1
 		set_country_flag = sov_met_grand_duchess_xenia_no
@@ -23767,6 +23809,12 @@ country_event = {
 		set_variable = { anna_anderson_legitimacy_gui = anna_anderson_legitimacy }
 		multiply_variable = { anna_anderson_legitimacy_gui = 100 }
 		multiply_variable = { anna_anderson_legitimacy_gui = 2 }
+		round_variable = anna_anderson_legitimacy_gui
+		clamp_variable = {
+			var = anna_anderson_legitimacy
+			min = 0
+			max = 200
+		}
 		custom_effect_tooltip = anna_anderson_add_legitimacy_5
 		set_country_flag = sov_met_prince_michael_yes
 	}
@@ -23783,6 +23831,12 @@ country_event = {
 		set_variable = { anna_anderson_legitimacy_gui = anna_anderson_legitimacy }
 		multiply_variable = { anna_anderson_legitimacy_gui = 100 }
 		multiply_variable = { anna_anderson_legitimacy_gui = 2 }
+		round_variable = anna_anderson_legitimacy_gui
+		clamp_variable = {
+			var = anna_anderson_legitimacy
+			min = 0
+			max = 200
+		}
 		custom_effect_tooltip = anna_anderson_remove_legitimacy_5
 		set_country_flag = sov_met_prince_michael_no
 	}
@@ -24667,5 +24721,561 @@ country_event = {
 	option = { #We are done with the protestors
 		name = soviets.522.a
 		remove_ideas = SOV_Anti_military_junta_protestor
+	}
+}
+
+#Fuck operations
+country_event = {
+	id = soviets.523
+	
+	hidden = yes
+
+	is_triggered_only = yes
+	
+	immediate = {
+		if = {
+			limit = {
+				ROOT = {
+					controls_state = event_target:sov_target_country_revolution
+				}
+				any_of_scopes = {
+					array = global.countries
+
+					event_target:sov_target_country_revolution = {
+						is_core_of = PREV
+					}
+					exists = no
+				}
+			}
+			random_scope_in_array = {
+				array = global.countries
+				limit = {
+					event_target:sov_target_country_revolution = {
+						is_core_of = PREV
+					}
+					exists = no
+				}
+				
+				set_temp_variable = { revolution_normal_division_count = 1 }
+				set_temp_variable = { revolution_soviet_division_count = 1 }
+				if = {
+					limit = {
+						event_target:sov_target_country_revolution = {
+							has_resistance = yes
+						}
+					}
+					set_temp_variable = { resistance_division_multiplier = event_target:sov_target_country_revolution.resistance }
+
+					divide_temp_variable = { resistance_division_multiplier = 10 }
+					if = {
+						limit = {
+							SOV = {
+								has_completed_focus = SOV_liberation_of_the_workers
+							}
+						}
+						clamp_temp_variable = {
+							var = resistance_division_multiplier
+							min = 1
+							max = 10
+						}
+					}
+					else = {
+						clamp_temp_variable = {
+							var = resistance_division_multiplier
+							min = 1
+							max = 5
+						}
+					}
+					round_temp_variable = resistance_division_multiplier
+					multiply_temp_variable = { revolution_normal_division_count = resistance_division_multiplier }
+
+					divide_temp_variable = { resistance_division_multiplier = 2 }
+					if = {
+						limit = {
+							SOV = {
+								has_completed_focus = SOV_liberation_of_the_workers
+							}
+						}
+						clamp_temp_variable = {
+							var = resistance_division_multiplier
+							min = 1
+							max = 10
+						}
+					}
+					else = {
+						clamp_temp_variable = {
+							var = resistance_division_multiplier
+							min = 0
+							max = 5
+						}
+					}
+					round_temp_variable = resistance_division_multiplier
+					multiply_temp_variable = { revolution_soviet_division_count = resistance_division_multiplier }
+				}
+				
+				transfer_state = event_target:sov_target_country_revolution
+				set_country_flag = liberated_by_sov
+				leave_faction = yes
+				if = {
+					limit = {
+						SOV = {
+							has_completed_focus = SOV_liberation_of_the_workers
+						}
+					}
+					add_political_power = 300
+					army_experience = 50
+				}
+				else = {
+					add_political_power = 150
+					army_experience = 25
+				}
+				add_opinion_modifier = { target = SOV modifier = liberator_workers }
+				hidden_effect = {
+					set_popularities = {
+						democratic = 0
+						neutrality = 0
+						fascism = 0
+						communism = 100
+					}
+					set_politics = {
+						ruling_party = communism
+					}
+					add_timed_idea = {
+						idea = SOV_Fight_revolution
+						days = 182
+					}
+					set_technology = {
+						gw_artillery = 1
+						tech_recon = 1
+						tech_support = 1		
+						tech_engineers = 1
+					}
+
+					if = {
+						limit = {
+							NOT = {
+								has_template = "Soviet Workers"
+							}
+						}
+						division_template = {
+							name = "Soviet Workers"
+							priority = 1
+							regiments = {
+								infantry = { x = 0 y = 0 }
+								infantry = { x = 0 y = 1 }
+								infantry = { x = 0 y = 2 }
+								infantry = { x = 0 y = 3 }
+								infantry = { x = 0 y = 4 }
+							}
+							support = {
+								artillery = { x = 0 y = 0 }
+								recon = { x = 0 y = 1 }
+							}
+						}
+					}
+
+					set_division_template_lock = {
+						division_template = "Soviet Workers"
+						is_locked = yes
+					}
+
+					if = {
+						limit = {
+							NOT = {
+								has_template = "Soviet Volunteers"
+							}
+						}
+						division_template = {
+							name = "Soviet Volunteers"
+							priority = 2
+							regiments = {
+								infantry = { x = 0 y = 0 }
+								infantry = { x = 0 y = 1 }
+								infantry = { x = 0 y = 2 }
+								infantry = { x = 0 y = 3 }
+								infantry = { x = 0 y = 4 }
+								artillery_brigade = { x = 1 y = 0 }
+								artillery_brigade = { x = 1 y = 1 }
+							}
+							support = {
+								artillery = { x = 0 y = 0 }
+								recon = { x = 0 y = 1 }
+								engineer = { x = 0 y = 2 }
+							}
+						}
+					}
+
+					set_division_template_lock = {
+						division_template = "Soviet Volunteers"
+						is_locked = yes
+					}
+					
+					while_loop_effect = {
+						break = break_loop
+						limit = {
+							check_variable = {
+								var = revolution_normal_division_count
+								value = 1
+								compare = greater_than_or_equals
+							}
+						}
+						
+						event_target:sov_target_country_revolution = {
+							create_unit = {
+								division = "name = \"Soviet Workers\" division_template = \"Soviet Workers\" start_experience_factor = 0.3"
+								owner = PREV
+							}
+							if = {
+								limit = {
+									check_variable = {
+										var = revolution_soviet_division_count
+										value = 1
+										compare = greater_than_or_equals
+									}
+								}
+								create_unit = {
+									division = "name = \"Soviet Volunteers\" division_template = \"Soviet Volunteers\" start_experience_factor = 1"
+									owner = PREV
+								}
+								PREV = {
+									subtract_from_temp_variable = { revolution_soviet_division_count = 1 }
+								}
+							}
+						}
+						subtract_from_temp_variable = { revolution_normal_division_count = 1 }
+					}
+
+					ROOT = {
+						declare_war_on = {
+							target = PREV
+							type = annex_everything
+						}
+					}
+				}
+			}
+		}
+		else = {
+			if = {
+				limit = {
+					SOV = {
+						has_completed_focus = SOV_liberation_of_the_workers
+					}
+				}
+				ROOT = {
+					add_popularity = {
+						ideology = communism
+						popularity = 0.1
+					}
+				}
+			}
+			else = {
+				ROOT = {
+					add_popularity = {
+						ideology = communism
+						popularity = 0.05
+					}
+				}
+			}
+			if = {
+				limit = {
+					event_target:sov_target_country_revolution = {
+						has_resistance = yes
+					}
+				}
+				if = {
+					limit = {
+						SOV = {
+							has_completed_focus = SOV_liberation_of_the_workers
+						}
+					}
+					event_target:sov_target_country_revolution = {
+						add_resistance = 50
+					}
+				}
+				else = {
+					event_target:sov_target_country_revolution = {
+						add_resistance = 25
+					}
+				}
+			}
+		}
+	}
+}
+
+#Really
+country_event = {
+	id = soviets.524
+	
+	hidden = yes
+
+	is_triggered_only = yes
+	
+	immediate = {
+		if = {
+			limit = {
+				ROOT = {
+					controls_state = event_target:sov_target_country_revolution
+				}
+				any_of_scopes = {
+					array = global.countries
+
+					event_target:sov_target_country_revolution = {
+						is_core_of = PREV
+					}
+					exists = no
+				}
+			}
+			random_scope_in_array = {
+				array = global.countries
+				limit = {
+					event_target:sov_target_country_revolution = {
+						is_core_of = PREV
+					}
+					exists = no
+				}
+
+				set_temp_variable = { revolution_normal_division_count = 2 }
+				set_temp_variable = { revolution_soviet_division_count = 2 }
+				if = {
+					limit = {
+						event_target:sov_target_country_revolution = {
+							has_resistance = yes
+						}
+					}
+					set_temp_variable = { resistance_division_multiplier = event_target:sov_target_country_revolution.resistance }
+
+					divide_temp_variable = { resistance_division_multiplier = 10 }
+					if = {
+						limit = {
+							SOV = {
+								has_completed_focus = SOV_liberation_of_the_workers
+							}
+						}
+						clamp_temp_variable = {
+							var = resistance_division_multiplier
+							min = 1
+							max = 10
+						}
+					}
+					else = {
+						clamp_temp_variable = {
+							var = resistance_division_multiplier
+							min = 1
+							max = 5
+						}
+					}
+					round_temp_variable = resistance_division_multiplier
+					multiply_temp_variable = { revolution_normal_division_count = resistance_division_multiplier }
+
+					divide_temp_variable = { resistance_division_multiplier = 2 }
+					if = {
+						limit = {
+							SOV = {
+								has_completed_focus = SOV_liberation_of_the_workers
+							}
+						}
+						clamp_temp_variable = {
+							var = resistance_division_multiplier
+							min = 1
+							max = 10
+						}
+					}
+					else = {
+						clamp_temp_variable = {
+							var = resistance_division_multiplier
+							min = 0
+							max = 5
+						}
+					}
+					round_temp_variable = resistance_division_multiplier
+					multiply_temp_variable = { revolution_soviet_division_count = resistance_division_multiplier }
+				}
+				
+				transfer_state = event_target:sov_target_country_revolution
+				set_country_flag = liberated_by_sov
+				leave_faction = yes
+				if = {
+					limit = {
+						SOV = {
+							has_completed_focus = SOV_liberation_of_the_workers
+						}
+					}
+					add_political_power = 300
+					army_experience = 50
+				}
+				else = {
+					add_political_power = 150
+					army_experience = 25
+				}
+				add_opinion_modifier = { target = SOV modifier = liberator_workers }
+				hidden_effect = {
+					set_popularities = {
+						democratic = 0
+						neutrality = 0
+						fascism = 0
+						communism = 100
+					}
+					set_politics = {
+						ruling_party = communism
+					}
+					add_timed_idea = {
+						idea = SOV_Fight_revolution
+						days = 182
+					}
+					set_technology = {
+						gw_artillery = 1
+						tech_recon = 1
+						tech_support = 1		
+						tech_engineers = 1
+					}
+
+					if = {
+						limit = {
+							NOT = {
+								has_template = "Soviet Workers"
+							}
+						}
+						division_template = {
+							name = "Soviet Workers"
+							priority = 1
+							regiments = {
+								infantry = { x = 0 y = 0 }
+								infantry = { x = 0 y = 1 }
+								infantry = { x = 0 y = 2 }
+								infantry = { x = 0 y = 3 }
+								infantry = { x = 0 y = 4 }
+							}
+							support = {
+								artillery = { x = 0 y = 0 }
+								recon = { x = 0 y = 1 }
+							}
+						}
+					}
+
+					set_division_template_lock = {
+						division_template = "Soviet Workers"
+						is_locked = yes
+					}
+
+					if = {
+						limit = {
+							NOT = {
+								has_template = "Soviet Volunteers"
+							}
+						}
+						division_template = {
+							name = "Soviet Volunteers"
+							priority = 2
+							regiments = {
+								infantry = { x = 0 y = 0 }
+								infantry = { x = 0 y = 1 }
+								infantry = { x = 0 y = 2 }
+								infantry = { x = 0 y = 3 }
+								infantry = { x = 0 y = 4 }
+								artillery_brigade = { x = 1 y = 0 }
+								artillery_brigade = { x = 1 y = 1 }
+							}
+							support = {
+								artillery = { x = 0 y = 0 }
+								recon = { x = 0 y = 1 }
+								engineer = { x = 0 y = 2 }
+							}
+						}
+					}
+
+					set_division_template_lock = {
+						division_template = "Soviet Volunteers"
+						is_locked = yes
+					}
+					
+					while_loop_effect = {
+						break = break_loop
+						limit = {
+							check_variable = {
+								var = revolution_normal_division_count
+								value = 1
+								compare = greater_than_or_equals
+							}
+						}
+						
+						event_target:sov_target_country_revolution = {
+							create_unit = {
+								division = "name = \"Soviet Workers\" division_template = \"Soviet Workers\" start_experience_factor = 0.3"
+								owner = PREV
+							}
+							if = {
+								limit = {
+									check_variable = {
+										var = revolution_soviet_division_count
+										value = 1
+										compare = greater_than_or_equals
+									}
+								}
+								create_unit = {
+									division = "name = \"Soviet Volunteers\" division_template = \"Soviet Volunteers\" start_experience_factor = 1"
+									owner = PREV
+								}
+								PREV = {
+									subtract_from_temp_variable = { revolution_soviet_division_count = 1 }
+								}
+							}
+						}
+						subtract_from_temp_variable = { revolution_normal_division_count = 1 }
+					}
+
+					ROOT = {
+						declare_war_on = {
+							target = PREV
+							type = annex_everything
+						}
+					}
+				}
+			}
+		}
+		else = {
+			if = {
+				limit = {
+					SOV = {
+						has_completed_focus = SOV_liberation_of_the_workers
+					}
+				}
+				ROOT = {
+					add_popularity = {
+						ideology = communism
+						popularity = 0.15
+					}
+				}
+			}
+			else = {
+				ROOT = {
+					add_popularity = {
+						ideology = communism
+						popularity = 0.1
+					}
+				}
+			}
+			if = {
+				limit = {
+					event_target:sov_target_country_revolution = {
+						has_resistance = yes
+					}
+				}
+				if = {
+					limit = {
+						SOV = {
+							has_completed_focus = SOV_liberation_of_the_workers
+						}
+					}
+					event_target:sov_target_country_revolution = {
+						add_resistance = 75
+					}
+				}
+				else = {
+					event_target:sov_target_country_revolution = {
+						add_resistance = 50
+					}
+				}
+			}
+		}
 	}
 }

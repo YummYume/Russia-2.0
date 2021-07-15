@@ -1709,3 +1709,342 @@ country_event = {
 		}
 	}
 }
+
+#Democratic Russia Asks for Democracy in China
+country_event = {
+	id = chinas.33
+	title = chinas.33.t
+	desc = chinas.33.d
+	picture = GFX_report_event_poland_rejects
+
+	is_triggered_only = yes
+
+	option = { #Yes
+		name = chinas.33.a
+		ai_chance = {
+			factor = 80
+			modifier = {
+				factor = 100
+				has_government = democratic
+			}
+		}
+		add_ideas = SOV_Democracy_china
+		FROM = {
+			add_to_faction = ROOT
+			add_ai_strategy = {
+				type = alliance
+				id = SOV
+				value = 250
+			}
+			country_event = { id = chinas.34 days = 1 }
+		}
+	}
+
+	option = { #No
+		name = chinas.33.b
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 0
+				has_government = democratic
+			}
+		}
+		FROM = {
+			country_event = { id = chinas.35 days = 1 }
+		}
+	}
+}
+
+#China Accepts
+country_event = {
+	id = chinas.34
+	title = chinas.34.t
+	desc = chinas.34.d
+	picture = GFX_report_event_poland_rejects
+
+	is_triggered_only = yes
+
+	option = { #Perfect
+		name = chinas.34.a
+		ai_chance = {
+			factor = 100
+		}
+		add_ai_strategy = {
+			type = alliance
+			id = FROM
+			value = 250
+		}
+	}
+}
+
+#China Refuses
+country_event = {
+	id = chinas.35
+	title = chinas.35.t
+	desc = chinas.35.d
+	picture = GFX_report_event_poland_rejects
+
+	is_triggered_only = yes
+
+	option = { #Die
+		name = chinas.35.a
+		ai_chance = {
+			factor = 100
+		}
+		ROOT = {
+			create_wargoal = {
+				type = puppet_wargoal_focus
+				target = FROM
+			}
+		}
+	}
+}
+
+#China Cancels Democracy
+country_event = {
+	id = chinas.36
+	title = chinas.36.t
+	desc = chinas.36.d
+	picture = GFX_report_event_poland_rejects
+
+	is_triggered_only = yes
+
+	option = { #Let it slide...
+		name = chinas.36.a
+		ai_chance = {
+			factor = 75
+		}
+		add_political_power = -50
+		hidden_effect = {
+			var:SOV.current_china_democracy_target = {
+				country_event = { id = chinas.40 days = 1 }
+			}
+		}
+	}
+
+	option = { #Ask for Subjugation
+		name = chinas.36.b
+		ai_chance = {
+			factor = 25
+		}
+		var:SOV.current_china_democracy_target = {
+			country_event = { id = chinas.37 days = 1 }
+		}
+	}
+}
+
+#Russia Asks for Subjugation
+country_event = {
+	id = chinas.37
+	title = chinas.37.t
+	desc = chinas.37.d
+	picture = GFX_report_event_poland_rejects
+
+	is_triggered_only = yes
+
+	option = { #Yes
+		name = chinas.37.a
+		ai_chance = {
+			factor = 75
+		}
+		SOV = {
+			country_event = { id = chinas.38 days = 1 }
+		}
+	}
+
+	option = { #No
+		name = chinas.37.b
+		ai_chance = {
+			factor = 25
+		}
+		SOV = {
+			country_event = { id = chinas.39 days = 1 }
+		}
+	}
+}
+
+#China Accepts Subjugation
+country_event = {
+	id = chinas.38
+	title = chinas.38.t
+	desc = chinas.38.d
+	picture = GFX_report_event_poland_rejects
+
+	is_triggered_only = yes
+
+	option = { #Die
+		name = chinas.38.a
+		ai_chance = {
+			factor = 100
+		}
+		ROOT = {
+			set_autonomy = {
+				target = FROM
+				autonomy_state = autonomy_puppet
+			}
+			if = {
+				limit = {
+					FROM = {
+						NOT = {
+							has_idea = SOV_Democracy_china
+						}
+					}
+				}
+				FROM = {
+					add_ideas = SOV_Democracy_china
+				}
+			}
+		}
+	}
+}
+
+#China Refuses Subjugation
+country_event = {
+	id = chinas.39
+	title = chinas.39.t
+	desc = chinas.39.d
+	picture = GFX_report_event_poland_rejects
+
+	is_triggered_only = yes
+
+	option = { #Die
+		name = chinas.39.a
+		ai_chance = {
+			factor = 100
+		}
+		if = {
+			limit = {
+				FROM = {
+					is_in_faction_with = ROOT
+					NOT = {
+						is_faction_leader = yes
+					}
+				}
+			}
+			FROM = {
+				leave_faction = yes
+			}
+		}
+		else_if = {
+			limit = {
+				is_in_faction_with = FROM
+				NOT = {
+					is_faction_leader = yes
+				}
+			}
+			leave_faction = yes
+		}
+		ROOT = {
+			create_wargoal = {
+				type = puppet_wargoal_focus
+				target = FROM
+			}
+		}
+	}
+}
+
+#Russia Gives Up
+country_event = {
+	id = chinas.40
+	title = chinas.40.t
+	desc = chinas.40.d
+	picture = GFX_report_event_poland_rejects
+
+	is_triggered_only = yes
+
+	option = { #Cool
+		name = chinas.40.a
+		ai_chance = {
+			factor = 100
+		}
+		add_political_power = 50
+	}
+}
+
+#New China Chooses to Stay with Democratic Russia or Not
+country_event = {
+	id = chinas.41
+	title = chinas.41.t
+	desc = chinas.41.d
+	picture = GFX_report_event_poland_rejects
+
+	is_triggered_only = yes
+
+	option = { #Yes
+		name = chinas.41.a
+		ai_chance = {
+			factor = 80
+			modifier = {
+				factor = 100
+				has_government = democratic
+			}
+		}
+		set_temp_variable = { pp_add_democracy = party_popularity_100@democratic }
+		add_political_power = var:pp_add_democracy
+		SOV = {
+			add_to_faction = ROOT
+			country_event = chinas.42
+		}
+		add_ai_strategy = {
+			type = alliance
+			id = SOV
+			value = 250
+		}
+	}
+
+	option = { #No
+		name = chinas.41.b
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 0
+				has_government = democratic
+			}
+		}
+		set_temp_variable = { pp_remove_democracy = party_popularity_100@democratic }
+		multiply_temp_variable = { pp_remove_democracy = -1 }
+		add_political_power = var:pp_remove_democracy
+		SOV = {
+			country_event = chinas.43
+		}
+	}
+}
+
+#New China Stays in Faction
+country_event = {
+	id = chinas.42
+	title = chinas.42.t
+	desc = chinas.42.d
+	picture = GFX_report_event_poland_rejects
+
+	is_triggered_only = yes
+
+	option = { #Cool
+		name = chinas.42.a
+		ai_chance = {
+			factor = 100
+		}
+		add_ai_strategy = {
+			type = alliance
+			id = FROM
+			value = 250
+		}
+	}
+}
+
+#New China Leaves Faction
+country_event = {
+	id = chinas.43
+	title = chinas.43.t
+	desc = chinas.43.d
+	picture = GFX_report_event_poland_rejects
+
+	is_triggered_only = yes
+
+	option = { #Uh...
+		name = chinas.43.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
