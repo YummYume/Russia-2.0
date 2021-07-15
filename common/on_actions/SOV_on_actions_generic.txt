@@ -971,4 +971,56 @@ on_actions = {
 			}
 		}
 	}
+
+	#China got annexed by a warlord
+	on_annex = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						OR = {
+							tag = event_target:WTT_current_china_leader
+							tag = GXC
+							tag = SHX
+							tag = PRC
+							tag = XSM
+							tag = YUN
+							tag = SIK
+							tag = CHI
+						}
+						NOT = {
+							tag = var:SOV.current_china_democracy_target
+						}
+					}
+					FROM = {
+						tag = var:SOV.current_china_democracy_target
+					}
+				}
+				ROOT = {
+					add_ideas = SOV_Democracy_china
+					add_popularity = {
+						ideology = democratic
+						popularity = var:FROM.party_popularity@democratic
+					}
+					if = {
+						limit = {
+							NOT = {
+								is_in_faction_with = SOV
+							}
+							OR = {
+								has_government = democratic
+								has_government = neutrality
+							}
+							SOV = {
+								is_subject = no
+								has_government = democratic
+								is_faction_leader = yes
+							}
+						}
+						country_event = chinas.41
+					}
+				}
+			}
+		}
+	}
 }

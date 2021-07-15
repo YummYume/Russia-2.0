@@ -13763,6 +13763,21 @@ focus_tree = {
 		available = {
 			is_subject = no
 			has_government = democratic
+			is_faction_leader = yes
+			event_target:WTT_current_china_leader = {
+				OR = {
+					has_government = neutrality
+					has_government = democratic
+				}
+				is_subject = no
+				is_faction_leader = no
+			}
+			NOT = {
+				any_country = {
+					has_war_with = event_target:WTT_current_china_leader
+					is_major = yes
+				}
+			}
 			if = {
 				limit = {
 					has_idea = SOV_Exiled_russia
@@ -13774,7 +13789,9 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-
+			event_target:WTT_current_china_leader = {
+				country_event = { id = chinas.33 days = 1 }
+			}
 		}
 	}
 
@@ -13783,8 +13800,7 @@ focus_tree = {
 		id = SOV_those_who_threaten_democracy
 		x = 36
 		y = 30
-		prerequisite = { focus = SOV_russia_can_strike_anywhere }
-		prerequisite = { focus = SOV_democracy_china }
+		prerequisite = { focus = SOV_russia_can_strike_anywhere focus = SOV_democracy_china }
 		icon = GFX_Those_who_threaten_democracy
 		cost = 10
 		ai_will_do = {

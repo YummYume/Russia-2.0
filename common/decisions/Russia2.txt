@@ -13707,6 +13707,7 @@ SOV_second_civil_war_during_bonus = {
 }
 
 SOV_fascist_women_movement_decisions = {
+
 	SOV_upgrade_fascist_movement_level1 = {
 
 		icon = GFX_decision_generic_speech
@@ -24617,335 +24618,6 @@ SOV_help_manchuria = {
 }
 
 SOV_fourth_international_council = {
-	
-	SOV_influence_country_communism1 = {
-
-		icon = GFX_decision_eng_propaganda_campaigns
-
-		fire_only_once = yes
-
-		days_remove = 30
-
-		allowed = {
-			original_tag = SOV
-		}
-
-		#Makes the game WAY too laggy when decisions are opened (~10fps)
-		#highlight_states = {
-		#	is_owned_and_controlled_by = FROM
-		#	is_capital = yes
-		#}
-
-		visible = {
-			is_faction_leader = yes
-			has_completed_focus = SOV_fourth_int_council
-			has_government = communism
-			is_subject = no
-			FROM = {
-				exists = yes
-				NOT = {
-					has_civil_war = yes
-					is_in_faction_with = ROOT
-					has_war_with = ROOT
-					has_government = communism
-					is_subject_of = ROOT
-					has_idea = SOV_Communist_influence_international_1
-					has_idea = SOV_Communist_influence_international_2
-					has_idea = SOV_Communist_influence_international_3
-				}
-			}
-		}
-
-		target_root_trigger = {
-			has_completed_focus = SOV_fourth_int_council
-		}
-
-		target_trigger = {
-			FROM = {
-				exists = yes
-				NOT = {
-					has_civil_war = yes
-					is_in_faction_with = ROOT
-					has_war_with = ROOT
-					has_government = communism
-					is_subject_of = ROOT
-					has_idea = SOV_Communist_influence_international_1
-					has_idea = SOV_Communist_influence_international_2
-					has_idea = SOV_Communist_influence_international_3
-				}
-			}
-		}
-
-		available = {
-			NOT = {
-				has_war_with = FROM
-			}
-			set_temp_variable = { number_core_states_from = FROM.core_states }
-			multiply_temp_variable = { number_core_states_from = 5 }
-			clamp_temp_variable = {
-				var = number_core_states_from
-				min = 0
-				max = 300
-			}
-			has_political_power > number_core_states_from
-		}
-
-		modifier = {
-			political_power_gain = -0.1
-		}
-
-		complete_effect = {
-			set_temp_variable = { number_core_states_from = FROM.core_states }
-			multiply_temp_variable = { number_core_states_from = -5 }
-			clamp_temp_variable = {
-				var = number_core_states_from
-				min = -300
-				max = 0
-			}
-			add_political_power = number_core_states_from
-		}
-
-		remove_effect = {
-			FROM = {
-				country_event = soviets.362
-				set_country_flag = SOV_AI_is_target_international
-			}
-			set_country_flag = SOV_AI_is_influencing_international
-		}
-
-		ai_will_do = {
-			factor = 100
-			modifier = {
-				factor = 0
-				has_country_flag = SOV_AI_is_target_international
-			}
-		}
-	}
-
-	SOV_influence_country_communism2 = {
-
-		icon = GFX_decision_generic_speech
-
-		fire_only_once = yes
-
-		days_remove = 20
-
-		allowed = {
-			original_tag = SOV
-		}
-
-		visible = {
-			is_faction_leader = yes
-			has_completed_focus = SOV_fourth_int_council
-			has_government = communism
-			is_subject = no
-			FROM = {
-				exists = yes
-				has_idea = SOV_Communist_influence_international_1
-				has_country_flag = communist_influence_2_ready
-				NOT = {
-					has_civil_war = yes
-					is_in_faction_with = ROOT
-					has_war_with = ROOT
-					has_government = communism
-					is_subject_of = ROOT
-					has_idea = SOV_Communist_influence_international_2
-					has_idea = SOV_Communist_influence_international_3
-				}
-			}
-		}
-
-		target_root_trigger = {
-			has_completed_focus = SOV_fourth_int_council
-		}
-
-		target_trigger = {
-			FROM = {
-				exists = yes
-				has_idea = SOV_Communist_influence_international_1
-				has_country_flag = communist_influence_2_ready
-				NOT = {
-					has_civil_war = yes
-					is_in_faction_with = ROOT
-					has_war_with = ROOT
-					has_government = communism
-					is_subject_of = ROOT
-					has_idea = SOV_Communist_influence_international_2
-					has_idea = SOV_Communist_influence_international_3
-				}
-			}
-		}
-
-		available = {
-			NOT = {
-				has_war_with = FROM
-			}
-			set_temp_variable = { from_popularity_non_communism = 1 }
-			subtract_from_temp_variable = { from_popularity_non_communism = FROM.party_popularity@communism }
-			add_to_temp_variable = { from_popularity_non_communism = 4 }
-			set_temp_variable = { from_stability = FROM.stability }
-			add_to_temp_variable = { from_stability = 1 }
-			set_temp_variable = { pp_spend = 25 }
-			multiply_temp_variable = { pp_spend = from_stability }
-			multiply_temp_variable = { pp_spend = from_popularity_non_communism }
-			clamp_temp_variable = {
-				var = pp_spend
-				min = 0
-				max = 500
-			}
-			has_political_power > pp_spend
-		}
-
-		modifier = {
-			political_power_gain = -0.15
-		}
-
-		complete_effect = {
-			set_temp_variable = { from_popularity_non_communism = 1 }
-			subtract_from_temp_variable = { from_popularity_non_communism = FROM.party_popularity@communism }
-			add_to_temp_variable = { from_popularity_non_communism = 4 }
-			set_temp_variable = { from_stability = FROM.stability }
-			add_to_temp_variable = { from_stability = 1 }
-			set_temp_variable = { pp_spend = 25 }
-			multiply_temp_variable = { pp_spend = from_stability }
-			multiply_temp_variable = { pp_spend = from_popularity_non_communism }
-			multiply_temp_variable = { pp_spend = -1 }
-			clamp_temp_variable = {
-				var = pp_spend
-				min = -500
-				max = 0
-			}
-			add_political_power = pp_spend
-		}
-
-		remove_effect = {
-			FROM = {
-				country_event = soviets.364
-			}
-		}
-
-		ai_will_do = {
-			factor = 1000
-			modifier = {
-				factor = 0
-				FROM = {
-					communism < 0.15
-				}
-			}
-		}
-	}
-
-	SOV_influence_country_communism3 = {
-
-		icon = GFX_decision_generic_prepare_civil_war
-
-		fire_only_once = yes
-
-		days_remove = 10
-
-		allowed = {
-			original_tag = SOV
-		}
-
-		visible = {
-			is_faction_leader = yes
-			has_completed_focus = SOV_fourth_int_council
-			has_government = communism
-			is_subject = no
-			FROM = {
-				exists = yes
-				has_idea = SOV_Communist_influence_international_2
-				has_country_flag = communist_influence_3_ready
-				NOT = {
-					has_civil_war = yes
-					is_in_faction_with = ROOT
-					has_war_with = ROOT
-					has_government = communism
-					is_subject_of = ROOT
-					has_idea = SOV_Communist_influence_international_1
-					has_idea = SOV_Communist_influence_international_3
-				}
-			}
-		}
-
-		target_root_trigger = {
-			has_completed_focus = SOV_fourth_int_council
-		}
-
-		target_trigger = {
-			FROM = {
-				exists = yes
-				has_idea = SOV_Communist_influence_international_2
-				has_country_flag = communist_influence_3_ready
-				NOT = {
-					has_civil_war = yes
-					is_in_faction_with = ROOT
-					has_war_with = ROOT
-					has_government = communism
-					is_subject_of = ROOT
-					has_idea = SOV_Communist_influence_international_1
-					has_idea = SOV_Communist_influence_international_3
-				}
-			}
-		}
-
-		available = {
-			NOT = {
-				has_war_with = FROM
-			}
-			set_temp_variable = { from_army_size = FROM.num_battalions }
-			set_temp_variable = { from_owned_controlled_states = FROM.owned_controlled_states }
-			multiply_temp_variable = { from_owned_controlled_states = 1.5}
-			round_temp_variable = from_owned_controlled_states
-			multiply_temp_variable = { from_army_size = from_owned_controlled_states }
-			clamp_temp_variable = {
-				var = from_army_size
-				min = 0
-				max = 30000
-			}
-			has_equipment = {
-				infantry_equipment > from_army_size
-			}
-		}
-
-		modifier = {
-			political_power_gain = -0.20
-		}
-
-		complete_effect = {
-			set_temp_variable = { from_army_size = FROM.num_battalions }
-			set_temp_variable = { from_owned_controlled_states = FROM.owned_controlled_states }
-			multiply_temp_variable = { from_owned_controlled_states = 1.5}
-			round_temp_variable = from_owned_controlled_states
-			multiply_temp_variable = { from_army_size = from_owned_controlled_states }
-			multiply_temp_variable = { from_army_size = -1 }
-			clamp_temp_variable = {
-				var = from_army_size
-				min = -30000
-				max = 0
-			}
-			add_equipment_to_stockpile = {
-				type = infantry_equipment
-				amount = from_army_size
-			}
-		}
-
-		remove_effect = {
-			FROM = {
-				country_event = soviets.366
-			}
-		}
-
-		ai_will_do = {
-			factor = 10000
-			modifier = {
-				factor = 0
-				FROM = {
-					communism < 0.25
-				}
-			}
-		}
-	}
 
 	SOV_puppet_communist_influenced = {
 
@@ -25093,6 +24765,347 @@ SOV_fourth_international_council = {
 
 		ai_will_do = {
 			factor = 10000
+		}
+	}
+
+	SOV_influence_country_communism3 = {
+
+		icon = GFX_decision_generic_prepare_civil_war
+
+		fire_only_once = yes
+
+		days_remove = 10
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			is_faction_leader = yes
+			has_completed_focus = SOV_fourth_int_council
+			has_government = communism
+			is_subject = no
+			FROM = {
+				exists = yes
+				has_idea = SOV_Communist_influence_international_2
+				has_country_flag = communist_influence_3_ready
+				NOT = {
+					has_civil_war = yes
+					is_in_faction_with = ROOT
+					has_war_with = ROOT
+					has_government = communism
+					is_subject_of = ROOT
+					has_idea = SOV_Communist_influence_international_1
+					has_idea = SOV_Communist_influence_international_3
+				}
+			}
+		}
+
+		target_root_trigger = {
+			has_completed_focus = SOV_fourth_int_council
+		}
+
+		target_trigger = {
+			FROM = {
+				exists = yes
+				has_idea = SOV_Communist_influence_international_2
+				has_country_flag = communist_influence_3_ready
+				NOT = {
+					has_civil_war = yes
+					is_in_faction_with = ROOT
+					has_war_with = ROOT
+					has_government = communism
+					is_subject_of = ROOT
+					has_idea = SOV_Communist_influence_international_1
+					has_idea = SOV_Communist_influence_international_3
+				}
+			}
+		}
+
+		available = {
+			NOT = {
+				has_war_with = FROM
+			}
+			set_temp_variable = { from_army_size = FROM.num_battalions }
+			set_temp_variable = { from_owned_controlled_states = FROM.owned_controlled_states }
+			multiply_temp_variable = { from_owned_controlled_states = 1.5}
+			round_temp_variable = from_owned_controlled_states
+			multiply_temp_variable = { from_army_size = from_owned_controlled_states }
+			clamp_temp_variable = {
+				var = from_army_size
+				min = 0
+				max = 30000
+			}
+			has_equipment = {
+				infantry_equipment > from_army_size
+			}
+		}
+
+		cancel_trigger = {
+			has_war_with = FROM
+		}
+
+		modifier = {
+			political_power_gain = -0.20
+		}
+
+		complete_effect = {
+			set_temp_variable = { from_army_size = FROM.num_battalions }
+			set_temp_variable = { from_owned_controlled_states = FROM.owned_controlled_states }
+			multiply_temp_variable = { from_owned_controlled_states = 1.5}
+			round_temp_variable = from_owned_controlled_states
+			multiply_temp_variable = { from_army_size = from_owned_controlled_states }
+			multiply_temp_variable = { from_army_size = -1 }
+			clamp_temp_variable = {
+				var = from_army_size
+				min = -30000
+				max = 0
+			}
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = from_army_size
+			}
+		}
+
+		remove_effect = {
+			FROM = {
+				country_event = soviets.366
+			}
+		}
+
+		ai_will_do = {
+			factor = 10000
+			modifier = {
+				factor = 0
+				FROM = {
+					communism < 0.25
+				}
+			}
+		}
+	}
+
+	SOV_influence_country_communism2 = {
+
+		icon = GFX_decision_generic_speech
+
+		fire_only_once = yes
+
+		days_remove = 20
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			is_faction_leader = yes
+			has_completed_focus = SOV_fourth_int_council
+			has_government = communism
+			is_subject = no
+			FROM = {
+				exists = yes
+				has_idea = SOV_Communist_influence_international_1
+				has_country_flag = communist_influence_2_ready
+				NOT = {
+					has_civil_war = yes
+					is_in_faction_with = ROOT
+					has_war_with = ROOT
+					has_government = communism
+					is_subject_of = ROOT
+					has_idea = SOV_Communist_influence_international_2
+					has_idea = SOV_Communist_influence_international_3
+				}
+			}
+		}
+
+		target_root_trigger = {
+			has_completed_focus = SOV_fourth_int_council
+		}
+
+		target_trigger = {
+			FROM = {
+				exists = yes
+				has_idea = SOV_Communist_influence_international_1
+				has_country_flag = communist_influence_2_ready
+				NOT = {
+					has_civil_war = yes
+					is_in_faction_with = ROOT
+					has_war_with = ROOT
+					has_government = communism
+					is_subject_of = ROOT
+					has_idea = SOV_Communist_influence_international_2
+					has_idea = SOV_Communist_influence_international_3
+				}
+			}
+		}
+
+		available = {
+			NOT = {
+				has_war_with = FROM
+			}
+			set_temp_variable = { from_popularity_non_communism = 1 }
+			subtract_from_temp_variable = { from_popularity_non_communism = FROM.party_popularity@communism }
+			add_to_temp_variable = { from_popularity_non_communism = 4 }
+			set_temp_variable = { from_stability = FROM.stability }
+			add_to_temp_variable = { from_stability = 1 }
+			set_temp_variable = { pp_spend = 25 }
+			multiply_temp_variable = { pp_spend = from_stability }
+			multiply_temp_variable = { pp_spend = from_popularity_non_communism }
+			clamp_temp_variable = {
+				var = pp_spend
+				min = 0
+				max = 500
+			}
+			has_political_power > pp_spend
+		}
+
+		cancel_trigger = {
+			has_war_with = FROM
+		}
+
+		modifier = {
+			political_power_gain = -0.15
+		}
+
+		complete_effect = {
+			set_temp_variable = { from_popularity_non_communism = 1 }
+			subtract_from_temp_variable = { from_popularity_non_communism = FROM.party_popularity@communism }
+			add_to_temp_variable = { from_popularity_non_communism = 4 }
+			set_temp_variable = { from_stability = FROM.stability }
+			add_to_temp_variable = { from_stability = 1 }
+			set_temp_variable = { pp_spend = 25 }
+			multiply_temp_variable = { pp_spend = from_stability }
+			multiply_temp_variable = { pp_spend = from_popularity_non_communism }
+			multiply_temp_variable = { pp_spend = -1 }
+			clamp_temp_variable = {
+				var = pp_spend
+				min = -500
+				max = 0
+			}
+			add_political_power = pp_spend
+		}
+
+		remove_effect = {
+			FROM = {
+				country_event = soviets.364
+			}
+		}
+
+		ai_will_do = {
+			factor = 1000
+			modifier = {
+				factor = 0
+				FROM = {
+					communism < 0.15
+				}
+			}
+		}
+	}
+	
+	SOV_influence_country_communism1 = {
+
+		icon = GFX_decision_eng_propaganda_campaigns
+
+		fire_only_once = yes
+
+		days_remove = 30
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		#Makes the game WAY too laggy when decisions are opened (~10fps)
+		#highlight_states = {
+		#	is_owned_and_controlled_by = FROM
+		#	is_capital = yes
+		#}
+
+		visible = {
+			is_faction_leader = yes
+			has_completed_focus = SOV_fourth_int_council
+			has_government = communism
+			is_subject = no
+			FROM = {
+				exists = yes
+				NOT = {
+					has_civil_war = yes
+					is_in_faction_with = ROOT
+					has_war_with = ROOT
+					has_government = communism
+					is_subject_of = ROOT
+					has_idea = SOV_Communist_influence_international_1
+					has_idea = SOV_Communist_influence_international_2
+					has_idea = SOV_Communist_influence_international_3
+				}
+			}
+		}
+
+		target_root_trigger = {
+			has_completed_focus = SOV_fourth_int_council
+		}
+
+		target_trigger = {
+			FROM = {
+				exists = yes
+				NOT = {
+					has_civil_war = yes
+					is_in_faction_with = ROOT
+					has_war_with = ROOT
+					has_government = communism
+					is_subject_of = ROOT
+					has_idea = SOV_Communist_influence_international_1
+					has_idea = SOV_Communist_influence_international_2
+					has_idea = SOV_Communist_influence_international_3
+				}
+			}
+		}
+
+		available = {
+			NOT = {
+				has_war_with = FROM
+			}
+			set_temp_variable = { number_core_states_from = FROM.core_states }
+			multiply_temp_variable = { number_core_states_from = 5 }
+			clamp_temp_variable = {
+				var = number_core_states_from
+				min = 0
+				max = 300
+			}
+			has_political_power > number_core_states_from
+		}
+
+		cancel_trigger = {
+			has_war_with = FROM
+		}
+
+		modifier = {
+			political_power_gain = -0.1
+		}
+
+		complete_effect = {
+			set_temp_variable = { number_core_states_from = FROM.core_states }
+			multiply_temp_variable = { number_core_states_from = -5 }
+			clamp_temp_variable = {
+				var = number_core_states_from
+				min = -300
+				max = 0
+			}
+			add_political_power = number_core_states_from
+		}
+
+		remove_effect = {
+			FROM = {
+				country_event = soviets.362
+				set_country_flag = SOV_AI_is_target_international
+			}
+			set_country_flag = SOV_AI_is_influencing_international
+		}
+
+		ai_will_do = {
+			factor = 100
+			modifier = {
+				factor = 0
+				has_country_flag = SOV_AI_is_target_international
+			}
 		}
 	}
 }
@@ -41611,6 +41624,12 @@ SOV_anna_anderson_legitimacy = {
 				set_variable = { anna_anderson_legitimacy_gui = anna_anderson_legitimacy }
 				multiply_variable = { anna_anderson_legitimacy_gui = 100 }
 				multiply_variable = { anna_anderson_legitimacy_gui = 2 }
+				round_variable = anna_anderson_legitimacy_gui
+				clamp_variable = {
+					var = anna_anderson_legitimacy
+					min = 0
+					max = 200
+				}
 				custom_effect_tooltip = anna_anderson_add_legitimacy_3
 			}
 			else = {
@@ -41623,6 +41642,12 @@ SOV_anna_anderson_legitimacy = {
 				set_variable = { anna_anderson_legitimacy_gui = anna_anderson_legitimacy }
 				multiply_variable = { anna_anderson_legitimacy_gui = 100 }
 				multiply_variable = { anna_anderson_legitimacy_gui = 2 }
+				round_variable = anna_anderson_legitimacy_gui
+				clamp_variable = {
+					var = anna_anderson_legitimacy
+					min = 0
+					max = 200
+				}
 				custom_effect_tooltip = anna_anderson_remove_legitimacy_3
 			}
 		}

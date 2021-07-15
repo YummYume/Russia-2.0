@@ -7438,6 +7438,67 @@ ideas = {
 				}
 			}
 		}
+
+		SOV_Democracy_china = {
+
+			removal_cost = -1
+
+			allowed = {
+				always = no
+			}
+
+			picture = neutrality_second
+
+			cancel = {
+				OR = {
+					NOT = {
+						has_government = democratic
+						has_government = neutrality
+					}
+					has_war_with = SOV
+				}
+			}
+
+			on_add = {
+				SOV = {
+					set_variable = { current_china_democracy_target = ROOT.id }
+				}
+			}
+
+			on_remove = {
+				if = {
+					limit = {
+						NOT = {
+							has_war_with = SOV
+							has_government = democratic
+							has_government = neutrality
+						}
+						SOV = {
+							has_government = democratic
+							is_subject = no
+						}
+						is_subject = no
+						exists = yes
+					}
+					SOV = {
+						country_event = chinas.36
+					}
+				}
+			}
+
+			modifier = {
+				democratic_acceptance = 50
+				democratic_drift = 0.1
+				political_power_gain = 0.15
+				stability_factor = 0.05
+			}
+
+			targeted_modifier = {
+        		tag = SOV
+				extra_trade_to_target_factor = 0.1
+				trade_cost_for_target_factor = -0.2
+        	}
+		}
 	}
 
 	political_advisor = { #TODO Advisor for Anarchists
