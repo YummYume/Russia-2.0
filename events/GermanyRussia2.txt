@@ -1178,3 +1178,48 @@ country_event = {
 		custom_effect_tooltip = gain_ressources_from_russia_thanks_cw
 	}
 }
+
+#3rd Prussian state
+country_event = {
+	id = germanys.34
+
+	is_triggered_only = yes
+
+	hidden = yes
+
+	immediate = {
+		random_state = {
+			limit = {
+				NOT = {
+					state = 762
+				}
+				is_core_of = GER
+				is_owned_and_controlled_by = GER
+				any_neighbor_state = {
+					OR = {
+						is_owned_and_controlled_by = SOV
+						if = {
+							limit = {
+								POL = {
+									is_subject_of = SOV
+								}
+							}
+							is_owned_and_controlled_by = POL
+						}
+					}
+					NOT = {
+						has_state_flag = random_prussian_state_1
+						has_state_flag = random_prussian_state_2
+						has_state_flag = random_prussian_state_3
+						has_state_flag = random_prussian_state_4
+						has_state_flag = random_prussian_state_5
+					}
+				}
+			}
+			PRE = {
+				add_state_core = PREV
+			}
+			set_state_flag = random_prussian_state_3
+		}
+	}
+}

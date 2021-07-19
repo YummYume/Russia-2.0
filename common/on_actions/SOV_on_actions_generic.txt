@@ -1047,4 +1047,301 @@ on_actions = {
 			}
 		}
 	}
+
+	#Germany Capitulate to Prussia
+	on_capitulation = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						TAG = GER
+					}
+					FROM = {
+						any_country = {
+							has_war_with = GER
+						}
+					}
+					SOV = {
+						has_country_flag = will_launch_monarchist_insurrection
+					}
+					country_exists = PRE
+				}
+				GER = {
+					leave_faction = yes
+				}
+				every_country = {
+					limit = {
+						has_war_with = GER
+					}
+					white_peace = {
+						tag = GER
+						message = restoration_of_the_kaiser
+					}
+				}
+				every_state = {
+					limit = {
+						is_initial_core_of_ger = yes
+					}
+					PRE = {
+						remove_state_core = PREV
+					}
+				}
+				ROOT = {
+					annex_country = {
+						target = PRE
+					}
+				}
+				SOV = {
+					if = {
+						limit = {
+							has_country_flag = ger_exiles_accept_puppet
+						}
+						set_autonomy = {
+							target = GER
+							autonomy_state = autonomy_imperial_governorates
+						}
+						GER = {
+							set_politics = {
+								ruling_party = neutrality
+								elections_allowed = no
+							}
+							hidden_effect = {
+								set_popularities = {
+									democratic = 10
+									neutrality = 70
+									fascism = 10
+									communism = 10
+								}
+							}
+							if = {
+								limit = {
+									date < 1941.06.04
+								}
+								create_country_leader = {
+									name = "Wilhelm II"
+									desc = "POLITICS_WILHELM_II_DESC"
+									picture = GFX_portrait_ger_wilhelm_ii
+									expire = "1965.1.1"
+									ideology = despotism
+									traits = {
+										anti_democrat imperial_connections
+									}
+								}
+							}
+							else = {
+								create_country_leader = {
+									name = "Wilhelm III"
+									desc = "POLITICS_WILHELM_III_DESC"
+									picture = GFX_portrait_ger_wilhelm_iii
+									expire = "1965.1.1"
+									ideology = despotism
+									traits = {
+										popular_figurehead2
+									}
+								}
+							}
+						}
+					}
+					else_if = {
+						limit = {
+							has_country_flag = ger_exiles_accept_puppet_reduced
+						}
+						set_autonomy = {
+							target = GER
+							autonomy_state = autonomy_dominion
+						}
+						GER = {
+							set_cosmetic_tag = GEC
+							set_politics = {
+								ruling_party = neutrality
+								elections_allowed = no
+							}
+							hidden_effect = {
+								set_popularities = {
+									democratic = 10
+									neutrality = 70
+									fascism = 10
+									communism = 10
+								}
+							}
+							if = {
+								limit = {
+									date < 1941.06.04
+								}
+								create_country_leader = {
+									name = "Wilhelm II"
+									desc = "POLITICS_WILHELM_II_DESC"
+									picture = GFX_portrait_ger_wilhelm_ii
+									expire = "1965.1.1"
+									ideology = despotism
+									traits = {
+										anti_democrat imperial_connections
+									}
+								}
+							}
+							else = {
+								create_country_leader = {
+									name = "Wilhelm III"
+									desc = "POLITICS_WILHELM_III_DESC"
+									picture = GFX_portrait_ger_wilhelm_iii
+									expire = "1965.1.1"
+									ideology = despotism
+									traits = {
+										popular_figurehead2
+									}
+								}
+							}
+							set_country_flag = GER_dominion_no_imperial
+							set_country_flag = germany_no_imperial_transform
+						}
+					}
+					else = {
+						add_to_faction = GER
+						GER = {
+							add_ai_strategy = {
+								type = alliance
+								id = SOV
+								value = 300
+							}
+							set_politics = {
+								ruling_party = neutrality
+								elections_allowed = no
+							}
+							hidden_effect = {
+								set_popularities = {
+									democratic = 10
+									neutrality = 70
+									fascism = 10
+									communism = 10
+								}
+							}
+							if = {
+								limit = {
+									date < 1941.06.04
+								}
+								create_country_leader = {
+									name = "Wilhelm II"
+									desc = "POLITICS_WILHELM_II_DESC"
+									picture = GFX_portrait_ger_wilhelm_ii
+									expire = "1965.1.1"
+									ideology = despotism
+									traits = {
+										anti_democrat imperial_connections
+									}
+								}
+							}
+							else = {
+								create_country_leader = {
+									name = "Wilhelm III"
+									desc = "POLITICS_WILHELM_III_DESC"
+									picture = GFX_portrait_ger_wilhelm_iii
+									expire = "1965.1.1"
+									ideology = despotism
+									traits = {
+										popular_figurehead2
+									}
+								}
+							}
+						}
+					}
+					every_state = {
+						limit = {
+							is_core_of = AUS
+							NOT = {
+								is_core_of = ITA
+							}
+							any_country = {
+								OR = {
+									is_in_faction_with = SOV
+									is_subject_of = SOV
+									TAG = SOV
+								}
+								owns_state = PREV
+							}
+						}
+						AUS = {
+							transfer_state = PREV
+						}
+						SOV = {
+							set_autonomy = {
+								target = AUS
+								autonomy_state = autonomy_puppet
+							}
+						}
+					}
+					if = {
+						limit = {
+							POL = {
+								is_subject_of = SOV
+							}
+							SOV = {
+								has_country_flag = poland_accept_imperial_puppet
+							}
+						}
+						every_state = {
+							limit = {
+								is_core_of = POL
+								any_country = {
+									OR = {
+										TAG = SOV
+										TAG = GER
+										is_in_faction_with = SOV
+										is_subject_of = SOV
+									}
+									owns_state = PREV
+								}
+							}
+							POL = {
+								transfer_state = PREV
+							}
+						}
+					}
+					every_state = {
+						limit = {
+							is_core_of = CZE
+							any_country = {
+								OR = {
+									is_in_faction_with = SOV
+									is_subject_of = SOV
+									TAG = SOV
+								}
+								owns_state = PREV
+							}
+						}
+						CZE = {
+							transfer_state = PREV
+						}
+						SOV = {
+							set_autonomy = {
+								target = CZE
+								autonomy_state = autonomy_puppet
+							}
+						}	
+					}
+					every_state = {
+						limit = {
+							is_core_of = FRA
+							any_country = {
+								OR = {
+									is_in_faction_with = SOV
+									is_subject_of = SOV
+									TAG = SOV
+								}
+								owns_state = PREV
+							}
+						}
+						FRA = {
+							transfer_state = PREV
+						}	
+					}
+					hidden_effect = {
+						news_event = {
+							id = newsrussia2.97 days = 2
+						}	
+					}
+					set_country_flag = restoration_german_monarchy_kaiser
+				}
+			}
+		}
+	}
 }

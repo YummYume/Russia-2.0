@@ -16317,6 +16317,8 @@ focus_tree = {
 		completion_reward = {
 			custom_effect_tooltip = unlock_unite_slavic_nation_decision
 			custom_effect_tooltip = unlock_unite_slavic_nation_poland_decision
+			custom_effect_tooltip = not_able_to_continue_unitl_cored_poland
+			set_country_flag = is_focusing_on_area_slavic_state
 			hidden_effect = {
 				news_event = {
 					id = newsrussia2.105 days = 1
@@ -17175,6 +17177,17 @@ focus_tree = {
 			factor = 5
 		}
 		available = {
+			is_subject = no
+			has_government = neutrality
+			has_idea = SOV_Anti_military_junta_protestor
+			if = {
+				limit = {
+					has_idea = SOV_Exiled_russia
+				}
+				NOT = {
+					has_idea = SOV_Exiled_russia
+				}
+			}
 			has_country_flag = protestors_has_striked
 			NOT = {
 				has_war_with = PRT
@@ -17214,11 +17227,25 @@ focus_tree = {
 			factor = 5
 		}
 		available = {
-			
+			is_subject = no
+			has_government = neutrality
+			if = {
+				limit = {
+					has_idea = SOV_Exiled_russia
+				}
+				NOT = {
+					has_idea = SOV_Exiled_russia
+				}
+			}
+			NOT = {
+				has_country_flag = is_focusing_on_area_slavic_state
+			}
 		}
 		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_ANNEXATION }
 		completion_reward = {
+			set_country_flag = is_focusing_on_area_slavic_state
 			custom_effect_tooltip = unlock_unite_slavic_nation_yugoslavia_decision
+			custom_effect_tooltip = not_able_to_progress_unitl_done
 		}
 	}
 
@@ -17234,11 +17261,25 @@ focus_tree = {
 			factor = 5
 		}
 		available = {
-			
+			is_subject = no
+			has_government = neutrality
+			if = {
+				limit = {
+					has_idea = SOV_Exiled_russia
+				}
+				NOT = {
+					has_idea = SOV_Exiled_russia
+				}
+			}
+			NOT = {
+				has_country_flag = is_focusing_on_area_slavic_state
+			}
 		}
 		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_ANNEXATION }
 		completion_reward = {
+			set_country_flag = is_focusing_on_area_slavic_state
 			custom_effect_tooltip = unlock_unite_slavic_nation_bulgaria_decision
+			custom_effect_tooltip = not_able_to_progress_unitl_done
 		}
 	}
 
@@ -17254,11 +17295,25 @@ focus_tree = {
 			factor = 5
 		}
 		available = {
-			
+			is_subject = no
+			has_government = neutrality
+			if = {
+				limit = {
+					has_idea = SOV_Exiled_russia
+				}
+				NOT = {
+					has_idea = SOV_Exiled_russia
+				}
+			}
+			NOT = {
+				has_country_flag = is_focusing_on_area_slavic_state
+			}
 		}
 		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_ANNEXATION }
 		completion_reward = {
+			set_country_flag = is_focusing_on_area_slavic_state
 			custom_effect_tooltip = unlock_unite_slavic_nation_czech_decision
+			custom_effect_tooltip = not_able_to_progress_unitl_done
 		}
 	}
 
@@ -17390,7 +17445,7 @@ focus_tree = {
 		y = 28
 		prerequisite = { focus = SOV_extend_influence }
 		icon = GFX_focus_generic_provoke_border_clashes
-		cost = 5
+		cost = 8
 		ai_will_do = {
 			factor = 8
 		}
@@ -17430,7 +17485,7 @@ focus_tree = {
 		y = 28
 		prerequisite = { focus = SOV_extend_influence }
 		icon = GFX_focus_generic_provoke_border_clashes
-		cost = 5
+		cost = 8
 		ai_will_do = {
 			factor = 8
 		}
@@ -17498,6 +17553,79 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
 		completion_reward = {
 			add_ideas = SOV_Protect_legacy
+		}
+	}
+
+	#Pre-Emptive Strike in the Middle East
+	focus = {
+		id = SOV_preemptive_strike_middle_east
+		x = 63
+		y = 28
+		prerequisite = { focus = SOV_protect_influence }
+		icon = GFX_goal_generic_fortify_city
+		cost = 8
+		ai_will_do = {
+			factor = 8
+		}
+		available = {
+			is_subject = no
+			has_government = neutrality
+			is_major = yes
+			OR = {
+				country_exists = TUR
+				country_exists = PER
+				country_exists = AFG
+				country_exists = IRQ
+			}
+			OR = {
+				TUR = {
+					NOT = {
+						is_subject_of = SOV
+					}
+				}
+				PER = {
+					NOT = {
+						is_subject_of = SOV
+					}
+				}
+				AFG = {
+					NOT = {
+						is_subject_of = SOV
+					}
+				}
+				IRQ = {
+					NOT = {
+						is_subject_of = SOV
+					}
+				}
+			}
+			if = {
+				limit = {
+					has_idea = SOV_Exiled_russia
+				}
+				NOT = {
+					has_idea = SOV_Exiled_russia
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
+		completion_reward = {
+			every_country = {
+				limit = {
+					NOT = {
+						is_subject_of = SOV
+					}
+					exists = yes
+					OR = {
+						TAG = TUR
+						TAG = PER
+						TAG = AFG
+						TAG = IRQ
+					}
+				}
+				country_event = { id = generics.40 days = 1 }
+			}
+			custom_effect_tooltip = unlock_decision_fortify_slavic_borders
 		}
 	}
 
@@ -18132,7 +18260,7 @@ focus_tree = {
 			}
 		}
 		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA }
-		completion_reward = {
+		completion_reward = { #TODO Add female portrait or remove the rule
 			add_country_leader_trait = the_empress
 			set_rule = {
 				can_generate_female_aces = yes
@@ -18176,6 +18304,7 @@ focus_tree = {
 		completion_reward = {
 			country_event = { id = soviets.192 days = 2 }
 			custom_effect_tooltip = SOV_contact_german_exiles_tt
+			custom_effect_tooltip = unlock_decision_reinstore_german_monarchy
 		}
 	}
 
@@ -19908,6 +20037,9 @@ focus_tree = {
 			is_subject = no
 			has_government = fascism
 			has_country_flag = order_triumphed_over_law
+			has_country_leader = {
+				name = "Anastasy Vonsyatsky"
+			}
 			if = {
 				limit = {
 					has_idea = SOV_Exiled_russia
@@ -19919,6 +20051,17 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_FASCIST_ANASTASY_RUSSIA FOCUS_FILTER_STABILITY }
 		completion_reward = {
+			if = {
+				limit = {
+					has_country_flag = order_triumphed_over_law
+					NOT = {
+						has_country_leader = {
+							name = "Anastasy Vonsyatsky"
+						}
+					}
+				}
+				custom_effect_tooltip = error_incompatible_mod_break_game
+			}
 			add_stability = 0.15
 			hidden_effect = {
 				add_country_leader_trait = different_kind_of_fascism

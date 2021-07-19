@@ -8988,7 +8988,7 @@ country_event = {
 	option = { #Yes
 		name = soviets.192.a
 		ai_chance = {
-			factor = 100
+			factor = 70
 		}
 		set_temp_variable = { random_factor_german_exilee = 0 }
 		randomize_temp_variable = {
@@ -9019,8 +9019,17 @@ country_event = {
 		}
 	}
 
-	option = { #No
+	option = { #Germany shall never be unified again
 		name = soviets.192.b
+		ai_chance = {
+			factor = 30
+		}
+		custom_effect_tooltip = choosing_this_option_destroy_german_unification
+		set_country_flag = decide_to_restore_prussia_and_other_kingdom
+	}
+
+	option = { #No
+		name = soviets.192.c
 		ai_chance = {
 			factor = 0
 		}
@@ -10168,54 +10177,11 @@ country_event = {
 	desc = soviets.228.d
 	picture = GFX_report_event_german_reichstag_gathering
 
-	fire_only_once = yes
-
-	trigger = {
-		original_tag = SOV
-		has_war = no
-		is_subject = no
-		OR = {
-			has_country_flag = ger_exiles_accept_puppet
-			has_country_flag = ger_exiles_accept_puppet_reduced
-			has_country_flag = ger_exiles_accept_no_puppet
-		}
-		OR = {
-			AND = {
-				NOT = {
-					country_exists = GER
-				}
-				OR = {
-					SOV = {
-						any_owned_state = {
-							is_core_of = GER
-						}
-					}
-					any_country = {
-						any_owned_state = {
-							is_core_of = GER
-						}
-						is_in_faction_with = SOV
-					}
-				}
-			}
-			GER = {
-				is_subject_of = SOV
-			}
-			any_country = {
-				GER = {
-					is_subject_of = PREV
-				}
-				is_in_faction_with = SOV
-			}
-		}
-	}
-
-	mean_time_to_happen = {
-		days = 10
-	}
+	is_triggered_only = yes
 
 	option = {
 		name = soviets.228.a
+		custom_effect_tooltip = unlock_decision_fate_of_poland_monarchist
 		if = {
 			limit = {
 				has_country_flag = ger_exiles_accept_puppet
@@ -10252,10 +10218,10 @@ country_event = {
 				}
 				hidden_effect = {
 					set_popularities = {
-						democratic = 25
-						neutrality = 50
+						democratic = 10
+						neutrality = 70
 						fascism = 10
-						communism = 15
+						communism = 10
 					}
 				}
 				if = {
@@ -10327,10 +10293,10 @@ country_event = {
 				}
 				hidden_effect = {
 					set_popularities = {
-						democratic = 25
-						neutrality = 50
+						democratic = 10
+						neutrality = 70
 						fascism = 10
-						communism = 15
+						communism = 10
 					}
 				}
 				if = {
@@ -10394,10 +10360,10 @@ country_event = {
 				}
 				hidden_effect = {
 					set_popularities = {
-						democratic = 25
-						neutrality = 50
+						democratic = 10
+						neutrality = 70
 						fascism = 10
-						communism = 15
+						communism = 10
 					}
 				}
 				if = {
@@ -10442,6 +10408,151 @@ country_event = {
 				}
 			}
 		}
+		GER = {
+			random_owned_state = {
+				limit = {
+					has_state_flag = random_prussian_state_1
+				}
+				create_unit = {
+					division = "name = \"1st Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+					owner = GER
+				}
+				create_unit = {
+					division = "name = \"2nd Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+					owner = GER
+				}
+				create_unit = {
+					division = "name = \"3rd Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+					owner = GER
+				}
+				create_unit = {
+					division = "name = \"4th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+					owner = GER
+				}
+				create_unit = {
+					division = "name = \"5th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+					owner = GER
+				}
+				create_unit = {
+					division = "name = \"6th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+					owner = GER
+				}
+				create_unit = {
+					division = "name = \"7th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+					owner = GER
+				}
+				create_unit = {
+					division = "name = \"1st Panzer-Division\" division_template = \"Panzer-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+					owner = GER
+				}
+				create_unit = {
+					division = "name = \"2nd Panzer-Division\" division_template = \"Panzer-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+					owner = GER
+				}
+			}
+			random_owned_state = {
+				limit = {
+					has_state_flag = random_prussian_state_2
+				}
+				create_unit = {
+					division = "name = \"8th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+					owner = GER
+				}
+				create_unit = {
+					division = "name = \"9th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+					owner = GER
+				}
+				create_unit = {
+					division = "name = \"10th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+					owner = GER
+				}
+				create_unit = {
+					division = "name = \"11th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+					owner = GER
+				}
+				create_unit = {
+					division = "name = \"12th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+					owner = GER
+				}
+				create_unit = {
+					division = "name = \"13th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+					owner = GER
+				}
+				create_unit = {
+					division = "name = \"14th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+					owner = GER
+				}
+				create_unit = {
+					division = "name = \"15th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+					owner = GER
+				}
+				create_unit = {
+					division = "name = \"16th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+					owner = GER
+				}
+				create_unit = {
+					division = "name = \"3rd Panzer-Division\" division_template = \"Panzer-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+					owner = GER
+				}
+				create_unit = {
+					division = "name = \"4th Panzer-Division\" division_template = \"Panzer-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+					owner = GER
+				}
+			}
+			random_owned_state = {
+				limit = {
+					has_state_flag = random_prussian_state_3
+				}
+				create_unit = {
+					division = "name = \"17th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+					owner = GER
+				}
+				create_unit = {
+					division = "name = \"18th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+					owner = GER
+				}
+				create_unit = {
+					division = "name = \"19th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+					owner = GER
+				}
+				create_unit = {
+					division = "name = \"20th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+					owner = GER
+				}
+				create_unit = {
+					division = "name = \"21th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+					owner = GER
+				}
+				create_unit = {
+					division = "name = \"22th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+					owner = GER
+				}
+				create_unit = {
+					division = "name = \"23th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+					owner = GER
+				}
+				create_unit = {
+					division = "name = \"24th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+					owner = GER
+				}
+				create_unit = {
+					division = "name = \"25th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+					owner = GER
+				}
+				create_unit = {
+					division = "name = \"26th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+					owner = GER
+				}
+				create_unit = {
+					division = "name = \"5th Panzer-Division\" division_template = \"Panzer-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+					owner = GER
+				}
+				create_unit = {
+					division = "name = \"6th Panzer-Division\" division_template = \"Panzer-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+					owner = GER
+				}
+			}
+		}
 		every_state = {
 			limit = {
 				is_core_of = GER
@@ -10458,20 +10569,20 @@ country_event = {
 				transfer_state = PREV
 			}
 		}
-		every_other_country = {
-			limit = {
-				any_state = {
-					is_owned_by = PREV
-					is_core_of = GER
-				}
-				NOT = {
-					TAG = GER
-					is_in_faction_with = SOV
-					is_subject_of = SOV
-				}
-			}
-			country_event = { id = soviets.229 days = 1 }
-		}
+		#every_other_country = {
+		#	limit = {
+		#		any_state = {
+		#			is_owned_by = PREV
+		#			is_core_of = GER
+		#		}
+		#		NOT = {
+		#			TAG = GER
+		#			is_in_faction_with = SOV
+		#			is_subject_of = SOV
+		#		}
+		#	}
+		#	country_event = { id = soviets.229 days = 1 }
+		#}
 		every_state = {
 			limit = {
 				is_core_of = AUS
@@ -10668,35 +10779,7 @@ country_event = {
 
 	fire_only_once = yes
 
-	trigger = {
-		TAG = SOV
-		has_war = no
-		SOV = {
-			is_subject = no
-		}
-		OR = {
-			has_country_flag = ger_exiles_accept_puppet
-			has_country_flag = ger_exiles_accept_puppet_reduced
-			has_country_flag = ger_exiles_accept_no_puppet
-		}
-		any_country = {
-			GER = {
-				is_subject_of = PREV
-			}
-			NOT = {
-				is_in_faction_with = SOV
-			}
-		}
-		NOT = {
-			GER = {
-				is_subject_of = SOV
-			}
-		}
-	}
-
-	mean_time_to_happen = {
-		days = 10
-	}
+	is_triggered_only = yes
 
 	option = { #Send Ultimatum
 		name = soviets.232.a
@@ -11860,38 +11943,7 @@ country_event = {
 	desc = soviets.248.d
 	picture = GFX_report_event_hol_cabinet_gerbrandy
 
-	fire_only_once = yes
-
-	trigger = {
-		TAG = SOV
-		has_country_flag = poland_accept_imperial_puppet
-		is_subject = no
-		has_war = no
-		has_government = neutrality
-		OR = {
-			has_country_flag = ger_exiles_accept_puppet
-			has_country_flag = ger_exiles_accept_puppet_reduced
-			has_country_flag = ger_exiles_accept_no_puppet
-		}
-		GER = {
-			OR = {
-				is_subject_of = SOV
-				AND = {
-					is_in_faction_with = SOV
-					has_government = neutrality
-				}
-			}
-		}
-		POL = {
-			is_subject_of = SOV
-		}
-		country_exists = POL
-		has_country_flag = restoration_german_monarchy_kaiser
-	}
-
-	mean_time_to_happen = {
-		days = 10
-	}
+	is_triggered_only = yes
 
 	option = { #Ask to Trade Land for the Three Nations
 		name = soviets.248.a
@@ -12129,40 +12181,7 @@ country_event = {
 	desc = soviets.252.d
 	picture = GFX_report_event_generic_conference
 
-	fire_only_once = yes
-
-	trigger = {
-		TAG = SOV
-		has_country_flag = has_given_eastern_poland
-		is_subject = no
-		has_war = no
-		has_government = neutrality
-		OR = {
-			has_country_flag = ger_exiles_accept_puppet
-			has_country_flag = ger_exiles_accept_puppet_reduced
-			has_country_flag = ger_exiles_accept_no_puppet
-		}
-		GER = {
-			OR = {
-				is_subject_of = SOV
-				AND = {
-					is_in_faction_with = SOV
-					has_government = neutrality
-				}
-			}
-		}
-		NOT = {
-			POL = {
-				is_subject_of = SOV
-			}
-		}
-		country_exists = POL
-		has_country_flag = restoration_german_monarchy_kaiser
-	}
-
-	mean_time_to_happen = {
-		days = 10
-	}
+	is_triggered_only = yes
 
 	option = { #Ask Poland to Become a Puppet
 		name = soviets.252.a
@@ -12642,45 +12661,7 @@ country_event = {
 	desc = soviets.258.d
 	picture = GFX_report_event_generic_conference
 
-	fire_only_once = yes
-
-	trigger = {
-		TAG = SOV
-		NOT = {
-			OR = {
-				has_country_flag = has_given_eastern_poland
-				has_country_flag = poland_accept_imperial_puppet
-			}
-		}
-		is_subject = no
-		has_war = no
-		has_government = neutrality
-		OR = {
-			has_country_flag = ger_exiles_accept_puppet
-			has_country_flag = ger_exiles_accept_puppet_reduced
-			has_country_flag = ger_exiles_accept_no_puppet
-		}		
-		GER = {
-			OR = {
-				is_subject_of = SOV
-				AND = {
-					is_in_faction_with = SOV
-					has_government = neutrality
-				}
-			}		
-		}
-		NOT = {
-			POL = {
-				is_subject_of = SOV
-			}
-		}
-		country_exists = POL
-		has_country_flag = restoration_german_monarchy_kaiser
-	}
-
-	mean_time_to_happen = {
-		days = 10
-	}
+	is_triggered_only = yes
 
 	option = { #Repartionante the Land Between Germany and Russia
 		name = soviets.258.a
