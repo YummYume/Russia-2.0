@@ -1,0 +1,30 @@
+calculate_sov_gui_percentage_democratic_vote = {
+    if = {
+        limit = {
+            OR = {
+                check_variable = {
+                    var = current_democratic_vote^0
+                    value = 1
+                    compare = greater_than_or_equals
+                }
+                check_variable = {
+                    var = current_democratic_vote^1
+                    value = 1
+                    compare = greater_than_or_equals
+                }
+            }
+        }
+        set_variable = { sov_gui_percentage_democratic_vote = current_democratic_vote^0 }
+        divide_variable = { sov_gui_percentage_democratic_vote = current_democratic_vote_registered^num }
+        multiply_variable = { sov_gui_percentage_democratic_vote = 100 }
+        round_variable = sov_gui_percentage_democratic_vote
+        clamp_variable = {
+            var = sov_gui_percentage_democratic_vote
+            min = 0
+            max = 100
+        }
+    }
+    else = {
+        set_variable = { sov_gui_percentage_democratic_vote = 50 }
+    }
+}

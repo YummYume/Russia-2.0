@@ -10110,7 +10110,7 @@ country_event = {
 
 	is_triggered_only = yes
 
-	option = { #Ask Non-Agression Pact for North Sakhalin
+	option = { #Ask Non-Aggression Pact for North Sakhalin
 		trigger = {
 			NOT = {
 				has_country_flag = japan_accept_to_help_give_north_sakhalin
@@ -15126,7 +15126,7 @@ country_event = {
 	}
 }
 
-#Policy of Agression
+#Policy of Aggression
 country_event = {
 	id = soviets.315
 	title = soviets.315.t
@@ -25276,6 +25276,407 @@ country_event = {
 					}
 				}
 			}
+		}
+	}
+}
+
+#Defend SOV (UNUSED)
+country_event = {
+	id = soviets.525
+	title = soviets.525.t
+	desc = soviets.525.d
+	picture = GFX_report_event_dead_soldiers
+
+	is_triggered_only = yes
+	
+	option = { #Ok
+		name = soviets.525.a
+		add_political_power = 25
+	}
+}
+
+#Attack with SOV (UNUSED)
+country_event = {
+	id = soviets.526
+	title = soviets.526.t
+	desc = soviets.526.d
+	picture = GFX_report_event_dead_soldiers
+
+	is_triggered_only = yes
+	
+	option = { #Ok
+		name = soviets.526.a
+		add_political_power = 25
+	}
+}
+
+#Vote on Ultimatum
+country_event = {
+	id = soviets.527
+	title = soviets.527.t
+	desc = soviets.527.d
+	picture = GFX_report_event_dead_soldiers
+
+	timeout_days = 8
+
+	is_triggered_only = yes
+	
+	option = { #Yes
+		name = soviets.527.a
+		ai_chance = {
+			factor = 85
+			modifier = {
+				factor = 10
+				OR = {
+					has_opinion = {
+						target = event_target:sov_current_democratic_target_event_target
+						value > 50
+					}
+					has_non_aggression_pact_with = event_target:sov_current_democratic_target_event_target
+					surrender_progress > 0.1
+				}
+			}
+			modifier = {
+				factor = 50
+				OR = {
+					has_opinion = {
+						target = event_target:sov_current_democratic_target_event_target
+						value > 25
+					}
+					has_war = yes
+				}
+			}
+		}
+		set_country_flag = sov_voted_yes_last_vote
+		custom_effect_tooltip = sov_will_vote_for
+		hidden_effect = {
+			SOV = {
+				add_to_variable = { current_democratic_vote^0 = 1 }
+				add_to_array = { current_democratic_vote_for = THIS }
+				add_to_array = { current_democratic_vote_registered = THIS }
+				calculate_sov_gui_percentage_democratic_vote = yes
+			}
+		}
+	}
+
+	option = { #No
+		name = soviets.527.b
+		ai_chance = {
+			factor = 10
+			modifier = {
+				factor = 90
+				OR = {
+					has_opinion = {
+						target = event_target:sov_current_democratic_target_event_target
+						value > 50
+					}
+					has_non_aggression_pact_with = event_target:sov_current_democratic_target_event_target
+					surrender_progress > 0.1
+				}
+			}
+			modifier = {
+				factor = 50
+				OR = {
+					has_opinion = {
+						target = event_target:sov_current_democratic_target_event_target
+						value > 25
+					}
+					has_war = yes
+				}
+			}
+		}
+		set_country_flag = sov_voted_no_last_vote
+		custom_effect_tooltip = sov_will_vote_against
+		hidden_effect = {
+			SOV = {
+				add_to_variable = { current_democratic_vote^1 = 1 }
+				add_to_array = { current_democratic_vote_against = THIS }
+				add_to_array = { current_democratic_vote_registered = THIS }
+				calculate_sov_gui_percentage_democratic_vote = yes
+			}
+		}
+	}
+
+	option = { #Don't vote
+		name = soviets.527.c
+		ai_chance = {
+			factor = 5
+		}
+		set_country_flag = sov_voted_not_last_vote
+		custom_effect_tooltip = sov_will_skip_vote
+		hidden_effect = {
+			SOV = {
+				add_to_array = { current_democratic_vote_not = THIS }
+			}
+		}
+	}
+}
+
+#Voting Result - We win (50% or above)
+country_event = {
+	id = soviets.528
+	title = soviets.528.t
+	desc = soviets.528.d
+	picture = GFX_report_event_dead_soldiers
+
+	is_triggered_only = yes
+
+	timeout_days = 5
+	
+	option = { #Yay
+		name = soviets.528.a
+		clear_array = SOV.current_democratic_vote
+		clear_array = SOV.current_democratic_vote_not
+		clear_array = SOV.current_democratic_vote_for
+		clear_array = SOV.current_democratic_vote_against
+		clear_array = SOV.current_democratic_vote_registered
+		clear_array = SOV.current_democratic_vote_participants
+		if = {
+			limit = {
+				has_country_flag = sov_democratic_target_alone
+			}
+			var:SOV.current_democratic_target = {
+				country_event = soviets.533
+			}
+			clr_country_flag = sov_democratic_target_alone
+		}
+		else_if = {
+			limit = {
+				has_country_flag = sov_democratic_target_alliance
+			}
+			var:SOV.current_democratic_target = {
+				country_event = soviets.530
+			}
+			clr_country_flag = sov_democratic_target_alliance
+		}
+		clr_country_flag = sov_democratic_vote_started
+		custom_effect_tooltip = sov_democratic_can_launch_another_vote
+	}
+}
+
+#Voting Result - We lose (less than 50%)
+country_event = {
+	id = soviets.529
+	title = soviets.529.t
+	desc = soviets.529.d
+	picture = GFX_report_event_dead_soldiers
+
+	is_triggered_only = yes
+
+	timeout_days = 5
+	
+	option = { #Aw
+		name = soviets.529.a
+		clear_array = SOV.current_democratic_vote
+		clear_array = SOV.current_democratic_vote_not
+		clear_array = SOV.current_democratic_vote_for
+		clear_array = SOV.current_democratic_vote_against
+		clear_array = SOV.current_democratic_vote_registered
+		clear_array = SOV.current_democratic_vote_participants
+		clr_country_flag = sov_democratic_target_alone
+		clr_country_flag = sov_democratic_target_alliance
+		add_political_power = 25
+		clr_country_flag = sov_democratic_vote_started
+		custom_effect_tooltip = sov_democratic_can_launch_another_vote
+	}
+}
+
+#Democratic Russia Demands Dismantle of our Faction
+country_event = {
+	id = soviets.530
+	title = soviets.530.t
+	desc = soviets.530.d
+	picture = GFX_report_event_dead_soldiers
+
+	is_triggered_only = yes
+	
+	option = { #Yes
+		name = soviets.530.a
+		if = {
+			limit = {
+				is_faction_leader = yes
+			}
+			dismantle_faction = yes
+		}
+		else_if = {
+			limit = {
+				is_in_faction = yes
+				is_subject = no
+			}
+			leave_faction = yes
+		}
+		add_timed_idea = {
+			idea = SOV_Restrictions_democratic_russia
+			days = 90
+		}
+		SOV = {
+			country_event = soviets.531
+		}
+	}
+
+	option = { #No
+		name = soviets.530.b
+		custom_effect_tooltip = will_lead_to_war_with_sov_democratic
+		SOV = {
+			country_event = soviets.532
+		}
+	}
+}
+
+#FROM Accepts
+country_event = {
+	id = soviets.531
+	title = soviets.531.t
+	desc = soviets.531.d
+	picture = GFX_report_event_dead_soldiers
+
+	is_triggered_only = yes
+	
+	option = { #Yay
+		name = soviets.531.a
+		add_political_power = 50
+	}
+}
+
+#FROM Refuses
+country_event = {
+	id = soviets.532
+	title = soviets.532.t
+	desc = soviets.532.d
+	picture = GFX_report_event_dead_soldiers
+
+	is_triggered_only = yes
+	
+	option = { #Kill
+		name = soviets.532.a
+		declare_war_on = {
+			target = FROM
+			type = puppet_wargoal_focus
+		}
+	}
+}
+
+#Democratic Russia Demands Subjugation
+country_event = {
+	id = soviets.533
+	title = soviets.533.t
+	desc = soviets.533.d
+	picture = GFX_report_event_dead_soldiers
+
+	is_triggered_only = yes
+	
+	option = { #Yes
+		name = soviets.533.a
+		SOV = {
+			set_autonomy = {
+				target = ROOT
+				autonomy_state = autonomy_dominion
+			}
+			country_event = soviets.534
+		}
+		hidden_effect = {
+			set_popularities = {
+				democratic = 70
+				neutrality = 10
+				fascism = 10
+				communism = 10
+			}
+		}
+	}
+
+	option = { #No
+		name = soviets.533.b
+		custom_effect_tooltip = will_lead_to_war_with_sov_democratic
+		SOV = {
+			country_event = soviets.535
+		}
+	}
+}
+
+#FROM Accepts
+country_event = {
+	id = soviets.534
+	title = soviets.534.t
+	desc = soviets.534.d
+	picture = GFX_report_event_dead_soldiers
+
+	is_triggered_only = yes
+	
+	option = { #Yay
+		name = soviets.534.a
+		add_political_power = 50
+	}
+}
+
+#FROM Refuses
+country_event = {
+	id = soviets.535
+	title = soviets.535.t
+	desc = soviets.535.d
+	picture = GFX_report_event_dead_soldiers
+
+	is_triggered_only = yes
+	
+	option = { #Kill
+		name = soviets.535.a
+		declare_war_on = {
+			target = FROM
+			type = puppet_wargoal_focus
+		}
+	}
+}
+
+#Voting Result (passes)
+country_event = {
+	id = soviets.536
+	title = soviets.536.t
+	desc = soviets.536.d
+	picture = GFX_report_event_dead_soldiers
+
+	is_triggered_only = yes
+
+	timeout_days = 5
+	
+	option = { #Ok
+		name = soviets.536.a
+		add_political_power = 25
+		custom_effect_tooltip = will_help_sov_no_matter_what
+	}
+}
+
+#Voting Result (fails)
+country_event = {
+	id = soviets.537
+	title = soviets.537.t
+	desc = soviets.537.d
+	picture = GFX_report_event_dead_soldiers
+
+	is_triggered_only = yes
+
+	timeout_days = 5
+	
+	option = { #Ok
+		name = soviets.537.a
+		add_political_power = 25
+	}
+}
+
+#Russian Show of Force
+country_event = {
+	id = soviets.538
+	title = soviets.538.t
+	desc = soviets.538.d
+	picture = GFX_report_event_dead_soldiers
+
+	is_triggered_only = yes
+
+	timeout_days = 5
+	
+	option = { #Oh
+		name = soviets.538.a
+		add_timed_idea = {
+			idea = SOV_Russian_show_of_force
+			days = 730
 		}
 	}
 }

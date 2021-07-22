@@ -197,7 +197,7 @@ country_event = {
 	}
 }
 
-#Japan Receive Russian Proposition for Non-Agression Pact
+#Japan Receive Russian Proposition for Non-Aggression Pact
 country_event = {
 	id = japans.8
 	title = japans.8.t
@@ -1324,6 +1324,757 @@ country_event = {
 			create_wargoal = {
 				target = JAP
 				type = take_claimed_state
+			}
+		}
+	}
+}
+
+#Fate of Japan
+country_event = {
+	id = japans.36
+	title = japans.36.t
+	desc = japans.36.d
+	picture = GFX_menacing_tanks_russia2
+
+	is_triggered_only = yes
+
+	option = { #Send Delegation
+		name = japans.36.a
+		ai_chance = {
+			factor = 20
+		}
+		add_political_power = 25
+		JAP = {
+			country_event = japans.37
+		}
+	}
+
+	option = { #Demand Manchuria
+		name = japans.36.b
+		ai_chance = {
+			factor = 20
+		}
+		trigger = {
+			any_state = {
+				OR = {
+					state = 714
+					state = 761
+					state = 610
+					state = 328
+					state = 715
+					state = 716
+					state = 717
+					state = 745
+				}
+				OR = {
+					is_owned_by = JAP
+					any_country = {
+						OR = {
+							is_subject_of = JAP
+							is_in_faction_with = JAP
+						}
+						owns_state = PREV
+					}
+				}
+			}
+		}
+		JAP = {
+			country_event = japans.39
+		}
+	}
+
+	option = { #Alliance
+		name = japans.36.c
+		ai_chance = {
+			factor = 20
+		}
+		trigger = {
+			JAP = {
+				has_government = democratic
+			}
+			OR = {
+				is_faction_leader = yes
+				JAP = {
+					is_faction_leader = yes
+				}
+			}
+		}
+		JAP = {
+			country_event = japans.42
+		}
+	}
+
+	option = { #Non-Aggression Pact
+		name = japans.36.e
+		ai_chance = {
+			factor = 20
+		}
+		trigger = {
+			JAP = {
+				NOT = {
+					has_government = democratic
+				}
+			}
+		}
+		JAP = {
+			country_event = japans.45
+		}
+	}
+}
+
+#Japan Receives Delegation
+country_event = {
+	id = japans.37
+	title = japans.37.t
+	desc = japans.37.d
+	picture = GFX_menacing_tanks_russia2
+
+	is_triggered_only = yes
+
+	option = { #Okay send back
+		name = japans.37.a
+		ai_chance = {
+			factor = 100
+		}
+		add_political_power = 25
+		add_opinion_modifier = {
+			target = FROM
+			modifier = russian_sent_delegation
+		}
+		FROM = {
+			country_event = japans.38
+		}
+	}
+}
+
+#Japan Sends Back
+country_event = {
+	id = japans.38
+	title = japans.38.t
+	desc = japans.38.d
+	picture = GFX_menacing_tanks_russia2
+
+	is_triggered_only = yes
+
+	option = { #Yay
+		name = japans.38.a
+		ai_chance = {
+			factor = 100
+		}
+		add_opinion_modifier = {
+			target = FROM
+			modifier = russian_sent_delegation
+		}
+	}
+}
+
+#Russia Demands Manchuria
+country_event = {
+	id = japans.39
+	title = japans.39.t
+	desc = japans.39.d
+	picture = GFX_menacing_tanks_russia2
+
+	is_triggered_only = yes
+
+	option = { #Yes
+		name = japans.39.a
+		ai_chance = {
+			factor = 40
+			modifier = {
+				factor = 80
+				strength_ratio = {
+					tag = SOV
+					ratio < 0.8
+				}
+				NOT = {
+					has_war_with = event_target:WTT_current_china_leader
+				}
+			}
+			modifier = {
+				factor = 10
+				has_war_with = event_target:WTT_current_china_leader
+			}
+		}
+		every_state = {
+			limit = {
+				OR = {
+					state = 714
+					state = 761
+					state = 610
+					state = 328
+					state = 715
+					state = 716
+					state = 717
+					state = 745
+				}
+				OR = {
+					is_owned_by = ROOT
+					any_country = {
+						owns_state = PREV
+						is_subject_of = ROOT
+					}
+				}
+			}
+			FROM = {
+				transfer_state = PREV
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						has_resistance = no
+						NOT = {
+							is_core_of = SOV
+						}
+					}
+					start_resistance = yes
+				}
+			}
+		}
+		diplomatic_relation = {
+			country = FROM
+			relation = non_aggression_pact
+			active = yes
+		}
+		FROM = {
+			country_event = japans.40
+		}
+	}
+
+	option = { #No
+		name = japans.39.b
+		ai_chance = {
+			factor = 60
+			modifier = {
+				factor = 20
+				strength_ratio = {
+					tag = SOV
+					ratio < 0.8
+				}
+				NOT = {
+					has_war_with = event_target:WTT_current_china_leader
+				}
+			}
+			modifier = {
+				factor = 90
+				has_war_with = event_target:WTT_current_china_leader
+			}
+		}
+		FROM = {
+			country_event = japans.41
+		}
+	}
+}
+
+#Japan Accepts
+country_event = {
+	id = japans.40
+	title = japans.40.t
+	desc = japans.40.d
+	picture = GFX_menacing_tanks_russia2
+
+	is_triggered_only = yes
+
+	option = { #Yay
+		name = japans.40.a
+		ai_chance = {
+			factor = 100
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					any_state = {
+						OR = {
+							state = 714
+							state = 761
+							state = 610
+							state = 328
+							state = 715
+							state = 716
+							state = 717
+							state = 745
+						}
+						is_owned_by = ROOT
+					}
+				}
+			}
+			country_event = japans.48
+		}
+	}
+}
+
+#Japan Refuses
+country_event = {
+	id = japans.41
+	title = japans.41.t
+	desc = japans.41.d
+	picture = GFX_menacing_tanks_russia2
+
+	is_triggered_only = yes
+
+	option = { #War
+		name = japans.41.a
+		ai_chance = {
+			factor = 100
+		}
+		create_wargoal = {
+			type = take_state_focus
+			target = JAP
+			expire = 0
+			generator = { 714 761 610 328 715 716 717 }
+		}
+	}
+}
+
+#Russia Demands Alliance
+country_event = {
+	id = japans.42
+	title = japans.42.t
+	desc = japans.42.d
+	picture = GFX_menacing_tanks_russia2
+
+	is_triggered_only = yes
+
+	option = { #Yes
+		name = japans.42.a
+		ai_chance = {
+			factor = 75
+			modifier = {
+				factor = 100
+				OR = {
+					has_war = no
+					AND = {
+						has_war = yes
+						is_in_faction = no
+					}
+				}
+				OR = {
+					AND = {
+						is_faction_leader = yes
+						SOV = {
+							NOT = {
+								is_faction_leader = yes
+							}
+						}
+					}
+					AND = {
+						is_faction_leader = no
+						SOV = {
+							is_faction_leader = yes
+						}
+					}
+				}
+			}
+			modifier = {
+				factor = 0
+				is_faction_leader = Yes
+				SOV = {
+					is_faction_leader = yes
+				}
+			}
+		}
+		if = {
+			limit = {
+				FROM = {
+					is_faction_leader = yes
+				}
+			}
+			FROM = {
+				add_to_faction = ROOT
+			}
+		}
+		else_if = {
+			limit = {
+				is_faction_leader = yes
+			}
+			add_to_faction = FROM
+		}
+		FROM = {
+			country_event = japans.43
+		}
+	}
+
+	option = { #No
+		name = japans.42.b
+		ai_chance = {
+			factor = 25
+			modifier = {
+				factor = 0
+				OR = {
+					has_war = no
+					AND = {
+						has_war = yes
+						is_in_faction = no
+					}
+				}
+				OR = {
+					AND = {
+						is_faction_leader = yes
+						SOV = {
+							NOT = {
+								is_faction_leader = yes
+							}
+						}
+					}
+					AND = {
+						is_faction_leader = no
+						SOV = {
+							is_faction_leader = yes
+						}
+					}
+				}
+			}
+			modifier = {
+				factor = 100
+				is_faction_leader = Yes
+				SOV = {
+					is_faction_leader = yes
+				}
+			}
+		}
+		FROM = {
+			country_event = japans.44
+		}
+	}
+}
+
+#Japan Accepts Alliance
+country_event = {
+	id = japans.43
+	title = japans.43.t
+	desc = japans.43.d
+	picture = GFX_menacing_tanks_russia2
+
+	is_triggered_only = yes
+
+	option = { #Yay
+		name = japans.43.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#Japan Refuses Alliance
+country_event = {
+	id = japans.44
+	title = japans.44.t
+	desc = japans.44.d
+	picture = GFX_menacing_tanks_russia2
+
+	is_triggered_only = yes
+
+	option = { #Damn
+		name = japans.44.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#Russia Demands Non-Aggression Pact
+country_event = {
+	id = japans.45
+	title = japans.45.t
+	desc = japans.45.d
+	picture = GFX_menacing_tanks_russia2
+
+	is_triggered_only = yes
+
+	option = { #Yes
+		name = japans.45.a
+		ai_chance = {
+			factor = 80
+			modifier = {
+				factor = 10
+				OR = {
+					has_wargoal_against = SOV
+					is_justifying_wargoal_against = SOV
+				}
+			}
+		}
+		diplomatic_relation = {
+			country = FROM
+			relation = non_aggression_pact
+			active = yes
+		}
+		FROM = {
+			country_event = japans.46
+		}
+	}
+
+	option = { #No
+		name = japans.45.b
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 90
+				OR = {
+					has_wargoal_against = SOV
+					is_justifying_wargoal_against = SOV
+				}
+			}
+		}
+		FROM = {
+			country_event = japans.47
+		}
+	}
+}
+
+#Japan Accepts Non-Aggression Pact
+country_event = {
+	id = japans.46
+	title = japans.46.t
+	desc = japans.46.d
+	picture = GFX_menacing_tanks_russia2
+
+	is_triggered_only = yes
+
+	option = { #Yay
+		name = japans.46.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#Japan Refuses Non-Aggression Pact
+country_event = {
+	id = japans.47
+	title = japans.47.t
+	desc = japans.47.d
+	picture = GFX_menacing_tanks_russia2
+
+	is_triggered_only = yes
+
+	option = { #Damn
+		name = japans.47.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#Fate of Manchuria
+country_event = {
+	id = japans.48
+	title = japans.48.t
+	desc = japans.48.d
+	picture = GFX_menacing_tanks_russia2
+
+	is_triggered_only = yes
+
+	option = { #Annex it
+		name = japans.48.a
+		ai_chance = {
+			factor = 0
+		}
+		every_state = {
+			limit = {
+				OR = {
+					state = 714
+					state = 761
+					state = 610
+					state = 328
+					state = 715
+					state = 716
+					state = 717
+					state = 745
+				}
+				is_owned_by = ROOT
+			}
+			add_compliance = 10
+		}
+	}
+
+	option = { #Puppet it
+		name = japans.48.b
+		ai_chance = {
+			factor = 100
+		}
+		trigger = {
+			any_of_scopes = {
+				array = global.countries
+
+				exists = no
+				any_state = {
+					OR = {
+						state = 714
+						state = 761
+						state = 610
+						state = 328
+						state = 715
+						state = 716
+						state = 717
+						state = 745
+					}
+					is_core_of = PREV
+				}
+			}
+		}
+		random_scope_in_array = {
+			array = global.countries
+			limit = {
+				exists = no
+				any_state = {
+					OR = {
+						state = 714
+						state = 761
+						state = 610
+						state = 328
+						state = 715
+						state = 716
+						state = 717
+						state = 745
+					}
+					is_core_of = PREV
+				}
+			}
+
+			if = {
+				limit = {
+					ROOT = {
+						owns_state = 714
+					}
+				}
+				transfer_state = 714
+			}
+			if = {
+				limit = {
+					ROOT = {
+						owns_state = 761
+					}
+				}
+				transfer_state = 761
+			}
+			if = {
+				limit = {
+					ROOT = {
+						owns_state = 610
+					}
+				}
+				transfer_state = 610
+			}
+			if = {
+				limit = {
+					ROOT = {
+						owns_state = 328
+					}
+				}
+				transfer_state = 328
+			}
+			if = {
+				limit = {
+					ROOT = {
+						owns_state = 715
+					}
+				}
+				transfer_state = 715
+			}
+			if = {
+				limit = {
+					ROOT = {
+						owns_state = 716
+					}
+				}
+				transfer_state = 716
+			}
+			if = {
+				limit = {
+					ROOT = {
+						owns_state = 717
+					}
+				}
+				transfer_state = 717
+			}
+			if = {
+				limit = {
+					ROOT = {
+						owns_state = 745
+					}
+				}
+				transfer_state = 745
+			}
+			ROOT = {
+				set_autonomy = {
+					target = PREV
+					autonomy_state = autonomy_imperial_governorates
+				}
+			}
+		}
+	}
+
+	option = { #Give to ally
+		name = japans.48.c
+		ai_chance = {
+			factor = 100
+		}
+		trigger = {
+			any_country = {
+				OR = {
+					is_in_faction_with = ROOT
+					is_subject_of = ROOT
+				}
+				any_state = {
+					is_core_of = PREV
+					is_owned_by = ROOT
+					OR = {
+						state = 714
+						state = 761
+						state = 610
+						state = 328
+						state = 715
+						state = 716
+						state = 717
+						state = 745
+					}
+				}
+			}
+		}
+		every_owned_state = {
+			limit = {
+				OR = {
+					state = 714
+					state = 761
+					state = 610
+					state = 328
+					state = 715
+					state = 716
+					state = 717
+					state = 745
+				}
+			}
+
+			if = {
+				limit = {
+					any_country = {
+						OR = {
+							is_in_faction_with = ROOT
+							is_subject_of = ROOT
+						}
+						PREV = {
+							is_core_of = PREV
+							is_owned_by = ROOT
+						}
+					}
+				}
+				random_country = {
+					limit = {
+						OR = {
+							is_in_faction_with = ROOT
+							is_subject_of = ROOT
+						}
+						PREV = {
+							is_core_of = PREV
+						}
+					}
+					transfer_state = PREV
+				}
+			}
+			else = {
+				PREV = {
+					add_compliance = 10
+				}
 			}
 		}
 	}

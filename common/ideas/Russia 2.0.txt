@@ -7498,10 +7498,13 @@ ideas = {
 		}
 
 		SOV_Russianization_balkan_medium = {
+
 			removal_cost = -1
+
 			allowed = {
 				always = no
 			}
+
 			picture = neutrality_second
 
 			modifier = {
@@ -7512,10 +7515,13 @@ ideas = {
 		}
 
 		SOV_Russianization_balkan_large = {
+
 			removal_cost = -1
+
 			allowed = {
 				always = no
 			}
+
 			picture = neutrality_second
 
 			modifier = {
@@ -7523,6 +7529,245 @@ ideas = {
 				industrial_capacity_factory = 0.25
 				research_speed_factor = 0.15
 			}
+		}
+
+		SOV_Ban_extreme_political_elements_idea = {
+
+			removal_cost = -1
+
+			allowed = {
+				always = no
+			}
+
+			cancel = {
+				OR = {
+					has_government = communism
+					has_government = fascism
+				}
+			}
+
+			picture = neutrality_second
+
+			modifier = {
+				communism_drift = -0.05
+				fascism_drift = -0.05
+			}
+		}
+
+		SOV_Russian_professionnal_army = {
+
+			removal_cost = -1
+
+			allowed = {
+				always = no
+			}
+
+			picture = neutrality_second
+
+			modifier = {
+				acclimatization_cold_climate_gain_factor = 0.5
+				army_core_attack_factor = 0.1
+				army_core_defence_factor = 0.1
+				experience_gain_army_factor = 0.15
+			}
+		}
+
+		SOV_Restrictions_democratic_russia = {
+
+			removal_cost = -1
+
+			allowed = {
+				always = no
+			}
+
+			on_add = {
+				if = {
+					limit = {
+						has_rule = can_create_factions
+					}
+					set_country_flag = sov_democratic_target_can_create_factions
+				}
+				if = {
+					limit = {
+						has_rule = can_join_factions
+					}
+					set_country_flag = sov_democratic_target_can_join_factions
+				}
+				set_rule = {
+					can_create_factions = no
+					can_join_factions = no
+				}
+			}
+
+			on_remove = {
+				if = {
+					limit = {
+						has_country_flag = sov_democratic_target_can_create_factions
+					}
+					set_rule = {
+						can_create_factions = yes
+					}
+				}
+				if = {
+					limit = {
+						has_country_flag = sov_democratic_target_can_join_factions
+					}
+					set_rule = {
+						can_join_factions = yes
+					}
+				}
+			}
+
+			picture = neutrality_second
+
+			rule = {
+				can_create_factions = no
+				can_join_factions = no
+			}
+		}
+
+		SOV_External_threats_idea = {
+
+			removal_cost = -1
+
+			allowed = {
+				always = no
+			}
+
+			cancel = {
+				OR = {
+					NOT = {
+						has_government = democratic
+					}
+					is_faction_leader = no
+					is_subject = yes
+				}
+			}
+
+			picture = neutrality_second
+
+			modifier = {
+				custom_modifier_tooltip = SOV_External_threats_idea_tt
+			}
+		}
+
+		SOV_United_russia_idea = {
+
+			removal_cost = -1
+
+			allowed = {
+				always = no
+			}
+
+			on_add = {
+				set_rule = {
+					can_declare_war_on_same_ideology = yes
+				}
+			}
+
+			on_remove = {
+				set_rule = {
+					can_declare_war_on_same_ideology = no
+				}
+			}
+
+			cancel = {
+				OR = {
+					NOT = {
+						has_government = democratic
+					}
+					is_faction_leader = no
+					is_subject = yes
+				}
+			}
+
+			picture = neutrality_second
+
+			modifier = {
+				war_support_factor = 0.05
+				custom_modifier_tooltip = SOV_can_attack_democracies
+			}
+
+			rule = {
+				can_declare_war_on_same_ideology = yes
+				can_only_justify_war_on_threat_country = no
+			}
+		}
+
+		SOV_New_russia_idea = {
+
+			removal_cost = -1
+
+			allowed = {
+				always = no
+			}
+
+			on_add = {
+				set_rule = {
+					can_join_opposite_factions = no
+				}
+			}
+
+			on_remove = {
+				set_rule = {
+					can_join_opposite_factions = yes
+				}
+			}
+
+			cancel = {
+				OR = {
+					NOT = {
+						has_government = democratic
+					}
+					is_faction_leader = no
+					is_subject = yes
+				}
+			}
+
+			picture = neutrality_second
+
+			modifier = {
+				stability_factor = 0.05
+			}
+
+			rule = {
+				can_join_opposite_factions = no
+			}
+		}
+
+		SOV_Russian_show_of_force = {
+
+			removal_cost = -1
+
+			allowed = {
+				always = no
+			}
+
+			cancel = {
+				OR = {
+					SOV = {
+						OR = {
+							NOT = {
+								has_government = democratic
+							}
+							is_faction_leader = no
+							is_subject = yes
+							exists = no
+						}
+					}
+					is_in_faction_with = SOV
+					has_government = neutrality
+					has_government = democratic
+				}
+			}
+
+			picture = neutrality_second
+
+			targeted_modifier = {
+        		tag = SOV
+				attack_bonus_against = -0.05
+				defense_bonus_against = -0.05
+        	}
 		}
 	}
 

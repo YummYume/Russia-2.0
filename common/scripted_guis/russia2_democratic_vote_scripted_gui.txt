@@ -1,0 +1,81 @@
+scripted_gui = {
+
+	sov_democratic_vote_gui = {
+		context_type = decision_category
+		window_name = "sov_democratic_vote_gui_main"
+
+		visible = {
+            has_government = democratic
+            is_subject = no
+            has_capitulated = no
+            has_completed_focus = SOV_external_threats
+        }
+
+        ai_enabled = {
+			always = no
+		}
+
+        dynamic_lists = {
+			sov_democratic_vote_participants_grid = {
+				array = current_democratic_vote_participants
+				change_scope = yes
+				entry_container = sov_democratic_vote_participants_entry
+			}
+
+            sov_democratic_vote_participants_grid_alternate = {
+				array = current_democratic_vote_participants
+				change_scope = yes
+				entry_container = sov_democratic_vote_participants_entry_alternate
+			}
+		}
+
+        effects = {
+            switch_view_click = {
+                if = {
+                    limit = {
+                        has_country_flag = sov_democratic_gui_alternate_view
+                    }
+                    clr_country_flag = sov_democratic_gui_alternate_view
+                }
+                else = {
+                    set_country_flag = sov_democratic_gui_alternate_view
+                }
+            }
+        }
+
+        triggers = {
+            switch_view_visible = {
+                always = no
+            }
+
+            switch_view_click_enabled = {
+                check_variable = {
+                    var = current_democratic_vote_participants^num
+                    value = 1
+                    compare = greater_than_or_equals
+                }
+            }
+
+            #This doesn't work (thx Paradox)
+            sov_democratic_vote_participants_container_visible = {
+                NOT = {
+                    has_country_flag = sov_democratic_gui_alternate_view
+                }
+            }
+
+            sov_democratic_vote_participants_container_alternate_visible = {
+                has_country_flag = sov_democratic_gui_alternate_view
+            }
+        }
+
+        properties = {
+            participant_flag = {
+                image = "[This.GetFlag]" #apparently putting a localisation key doesn't work
+            }
+
+            democratic_vote_progress = {
+                frame = var:sov_gui_percentage_democratic_vote
+            }
+        }
+	}
+}
