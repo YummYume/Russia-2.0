@@ -10569,20 +10569,6 @@ country_event = {
 				transfer_state = PREV
 			}
 		}
-		#every_other_country = {
-		#	limit = {
-		#		any_state = {
-		#			is_owned_by = PREV
-		#			is_core_of = GER
-		#		}
-		#		NOT = {
-		#			TAG = GER
-		#			is_in_faction_with = SOV
-		#			is_subject_of = SOV
-		#		}
-		#	}
-		#	country_event = { id = soviets.229 days = 1 }
-		#}
 		every_state = {
 			limit = {
 				is_core_of = AUS
@@ -11950,8 +11936,22 @@ country_event = {
 		ai_chance = {
 			factor = 70
 		}
-		GER = {
-			country_event = { id = soviets.249 days = 1 }
+		if = {
+			limit = {
+				has_country_flag = decide_to_restore_prussia_and_other_kingdom
+				country_exists = PRE
+				PRE = {
+					is_subject_of = SOV
+				}
+			}
+			PRE = {
+				country_event = { id = soviets.249 days = 1 }
+			}
+		}
+		else = {
+			GER = {
+				country_event = { id = soviets.249 days = 1 }
+			}
 		}
 	}
 
@@ -11961,26 +11961,53 @@ country_event = {
 			factor = 10
 		}
 		trigger = {
-			GER = {
-				is_subject_of = SOV
-			}
-			5 = {
-				is_owned_by = GER
-			}
-			763 = {
-				is_owned_by = GER
-			}
-			63 = {
-				is_owned_by = GER
-			}
-			68 = {
-				is_owned_by = GER
-			}
-			66 = {
-				is_owned_by = GER
-			}
-			67 = {
-				is_owned_by = GER
+			OR = {
+				AND = {
+					GER = {
+						is_subject_of = SOV
+					}
+					5 = {
+						is_owned_by = GER
+					}
+					763 = {
+						is_owned_by = GER
+					}
+					63 = {
+						is_owned_by = GER
+					}
+					68 = {
+						is_owned_by = GER
+					}
+					66 = {
+						is_owned_by = GER
+					}
+					67 = {
+						is_owned_by = GER
+					}
+				}
+				AND = {
+					PRE = {
+						is_subject_of = SOV
+					}
+					5 = {
+						is_owned_by = PRE
+					}
+					763 = {
+						is_owned_by = PRE
+					}
+					63 = {
+						is_owned_by = PRE
+					}
+					68 = {
+						is_owned_by = PRE
+					}
+					66 = {
+						is_owned_by = PRE
+					}
+					67 = {
+						is_owned_by = PRE
+					}
+				}
 			}
 		}
 		SOV = {
@@ -12026,8 +12053,22 @@ country_event = {
 		}
 		custom_effect_tooltip = anger_germany_poland_deal
 		hidden_effect = {
-			GER = {
-				add_ideas = SOV_German_independence_movement
+			if = {
+				limit = {
+					has_country_flag = decide_to_restore_prussia_and_other_kingdom
+					country_exists = PRE
+					PRE = {
+						is_subject_of = SOV
+					}
+				}
+				PRE = {
+					add_ideas = SOV_German_independence_movement
+				}
+			}
+			else = {
+				GER = {
+					add_ideas = SOV_German_independence_movement
+				}
 			}
 			news_event = {
 				id = newsrussia2.99 days = 1
@@ -12040,11 +12081,32 @@ country_event = {
 		ai_chance = {
 			factor = 20
 		}
-		GER = {
-			transfer_state = 86
-			transfer_state = 85
-			add_state_core = 86
-			add_state_core = 85
+		if = {
+			limit = {
+				has_country_flag = decide_to_restore_prussia_and_other_kingdom
+				country_exists = PRE
+				PRE = {
+					is_subject_of = SOV
+				}
+			}
+			PRE = {
+				transfer_state = 86
+				transfer_state = 85
+				transfer_state = 762
+				add_state_core = 86
+				add_state_core = 85
+				add_state_core = 762
+			}
+		}
+		else = {
+			GER = {
+				transfer_state = 86
+				transfer_state = 85
+				transfer_state = 762
+				add_state_core = 86
+				add_state_core = 85
+				add_state_core = 762
+			}
 		}
 		every_state = {
 			limit = {
@@ -12077,7 +12139,7 @@ country_event = {
 	option = { #It's a Good Deal
 		name = soviets.249.a
 		ai_chance = {
-			factor = 90
+			factor = 95
 		}
 		SOV = {
 			country_event = { id = soviets.250 hours = 10 }
@@ -12087,7 +12149,7 @@ country_event = {
 	option = { #Are They Insane !
 		name = soviets.249.b
 		ai_chance = {
-			factor = 10
+			factor = 5
 		}
 		SOV = {
 			country_event = { id = soviets.251 hours = 10 }
@@ -12131,24 +12193,54 @@ country_event = {
 			add_state_core = 5
 			add_state_core = 763
 		}
-		GER = {
-			transfer_state = 86
-			add_state_core = 86
-		}
-		every_state = {
+		if = {
 			limit = {
-				is_owned_by = POL
-				is_core_of = GER
-				NOT = {
-					state = 5
-					state = 763
-					state = 85
+				has_country_flag = decide_to_restore_prussia_and_other_kingdom
+				country_exists = PRE
+				PRE = {
+					is_subject_of = SOV
 				}
 			}
-			GER = {
-				transfer_state = PREV
+			PRE = {
+				transfer_state = 86
+				add_state_core = 86
+			}
+			every_state = {
+				limit = {
+					is_owned_by = POL
+					is_core_of = PRE
+					NOT = {
+						state = 5
+						state = 763
+						state = 85
+					}
+				}
+				PRE = {
+					transfer_state = PREV
+				}
 			}
 		}
+		else = {
+			GER = {
+				transfer_state = 86
+				add_state_core = 86
+			}
+			every_state = {
+				limit = {
+					is_owned_by = POL
+					is_core_of = GER
+					NOT = {
+						state = 5
+						state = 763
+						state = 85
+					}
+				}
+				GER = {
+					transfer_state = PREV
+				}
+			}
+		}
+
 		hidden_effect = {
 			news_event = {
 				id = newsrussia2.98 days = 1
