@@ -8170,6 +8170,7 @@ SOV_unite_slavic_nation_ultimatum_decision = {
 		remove_effect = {
 			custom_effect_tooltip = gains_core_on_polish_state_slavic
 			clr_country_flag = is_integrating_slavic_states_decision
+			clr_country_flag = is_focusing_on_area_slavic_state
 			hidden_effect = {
 				set_country_flag = has_integrated_pol_core_states
 				every_state = {
@@ -8184,7 +8185,7 @@ SOV_unite_slavic_nation_ultimatum_decision = {
 				}
 				every_state = {
 					limit = {
-						has_state_flag = german_baltic_state
+						has_state_flag = german_slavic_state
 						is_owned_by = SOV
 					}
 					SOV = {
@@ -8534,6 +8535,7 @@ SOV_unite_slavic_nation_ultimatum_decision = {
 		remove_effect = {
 			custom_effect_tooltip = gains_core_on_yugoslavian_state_slavic
 			clr_country_flag = is_integrating_slavic_states_decision
+			clr_country_flag = is_focusing_on_area_slavic_state
 			hidden_effect = {
 				set_country_flag = has_integrated_yug_core_states
 				add_state_core = 106
@@ -8753,6 +8755,7 @@ SOV_unite_slavic_nation_ultimatum_decision = {
 		remove_effect = {
 			custom_effect_tooltip = gains_core_on_bulgarian_state_slavic
 			clr_country_flag = is_integrating_slavic_states_decision
+			clr_country_flag = is_focusing_on_area_slavic_state
 			hidden_effect = {
 				set_country_flag = has_integrated_bul_core_states
 				every_state = {
@@ -9060,6 +9063,7 @@ SOV_unite_slavic_nation_ultimatum_decision = {
 		remove_effect = {
 			custom_effect_tooltip = gains_core_on_czechoslovakian_state_slavic
 			clr_country_flag = is_integrating_slavic_states_decision
+			clr_country_flag = is_focusing_on_area_slavic_state
 			hidden_effect = {
 				set_country_flag = has_integrated_cze_core_states
 				every_state = {
@@ -9724,6 +9728,113 @@ SOV_unite_slavic_nation_ultimatum_decision = {
 			annex_country = {
 				target = HUN
 				transfer_troops = yes
+			}
+		}
+	}
+}
+
+SOV_defend_slavic_borders_category = {
+
+	SOV_fortify_slavic_border_states = {
+
+		icon = GFX_decision_generic_construction
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		on_map_mode = map_and_decisions_view
+
+		state_target = yes
+
+		target_trigger = {
+			FROM = {
+				is_core_of = SOV
+				any_neighbor_state = {
+					NOT = {
+						is_core_of = SOV
+						is_fully_controlled_by = SOV
+					}
+				}
+				bunker < 7
+				anti_air_building < 4
+			}
+		}
+
+		available = {
+			ROOT = {
+				has_full_control_of_state = FROM
+			}
+			FROM = {
+				bunker < 7
+				anti_air_building < 4
+			}
+			NOT = {
+				has_country_flag = fortification_slavic_country_timeout
+			}
+		}
+
+		visible = {
+			FROM = {
+				is_core_of = SOV
+				any_neighbor_state = {
+					NOT = {
+						is_core_of = SOV
+						is_fully_controlled_by = SOV
+					}
+				}
+				bunker < 7
+				anti_air_building < 4
+			}
+		}
+
+		fire_only_once = yes
+
+		cost = 50
+
+		ai_will_do = {
+			factor = 150
+		}
+
+		modifier = {
+			civilian_factory_use = 10
+		}
+
+		days_remove = 70
+
+		complete_effect = {
+			set_country_flag = fortification_slavic_country_timeout
+		}
+
+		remove_effect = {
+			clr_country_flag = fortification_slavic_country_timeout
+			FROM = {
+				add_building_construction = {
+					type = bunker
+					level = 3
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = anti_air_building
+					level = 1
+					instant_build = yes
+				}
+			}
+			if = {
+				limit = {
+					FROM = {
+						NOT = {
+							infrastructure > 7
+						}
+					}
+				}
+				FROM = {
+					add_building_construction = {
+						type = infrastructure
+						level = 3
+						instant_build = yes
+					}
+				}
 			}
 		}
 	}
@@ -43021,4 +43132,2301 @@ SOV_external_threats_decisions = {
 			}
 		}
     }
+}
+
+SOV_reinstore_german_monarchy_decisions = {
+
+	SOV_restore_german_monarchy = {
+
+		icon = GFX_decision_eng_ally_imperialist_coup
+	
+		fire_only_once = yes
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			OR = {
+				has_country_flag = ger_exiles_accept_puppet
+				has_country_flag = ger_exiles_accept_puppet_reduced
+				has_country_flag = ger_exiles_accept_no_puppet
+			}
+			NOT = {
+				has_country_flag = will_launch_monarchist_insurrection
+			}
+		}
+
+		available = {
+			NOT = {
+				has_country_flag = will_launch_monarchist_insurrection
+			}
+			has_war = no
+			is_subject = no
+			custom_trigger_tooltip = {
+				tooltip = has_successfully_contacted_german_exile_monarch
+				OR = {
+					has_country_flag = ger_exiles_accept_puppet
+					has_country_flag = ger_exiles_accept_puppet_reduced
+					has_country_flag = ger_exiles_accept_no_puppet
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = germany_condition_to_restore_kaiser_in_throne
+				OR = {
+					AND = {
+						NOT = {
+							country_exists = GER
+						}
+						OR = {
+							SOV = {
+								any_owned_state = {
+									is_core_of = GER
+								}
+							}
+							any_country = {
+								any_owned_state = {
+									is_core_of = GER
+								}
+								OR = {
+									is_in_faction_with = SOV
+									is_subject_of = SOV
+								}
+							}
+						}
+					}
+					GER = {
+						is_subject_of = SOV
+					}
+					any_country = {
+						GER = {
+							is_subject_of = PREV
+						}
+						is_in_faction_with = SOV
+					}
+				}
+			}
+		}
+
+		complete_effect = {
+			country_event = { id = soviets.228 }
+		}
+
+		ai_will_do = {
+			factor = 80
+		}
+	}
+
+	SOV_ultimatum_foreign_country_for_german_puppet = {
+
+		icon = GFX_decision_eng_support_imperialist_coup
+	
+		fire_only_once = yes
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		target_trigger = {
+			FROM = {
+				NOT = {
+					is_in_faction_with = SOV
+					has_war_with = SOV
+				}
+			}
+			GER = {
+				is_subject_of = FROM
+			}
+		}
+
+		visible = {
+			OR = {
+				has_country_flag = ger_exiles_accept_puppet
+				has_country_flag = ger_exiles_accept_puppet_reduced
+				has_country_flag = ger_exiles_accept_no_puppet
+			}
+			country_exists = GER
+			any_country = {
+				GER = {
+					is_subject_of = FROM
+				}
+				NOT = {
+					is_in_faction_with = SOV
+				}
+			}
+			NOT = {
+				GER = {
+					is_subject_of = SOV
+				}
+			}
+		}
+
+		available = {
+			has_war = no
+			is_subject = no
+			country_exists = GER
+			NOT = {
+				FROM = {
+					has_war_with = SOV
+					is_in_faction_with = SOV
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = has_successfully_contacted_german_exile_monarch
+				OR = {
+					has_country_flag = ger_exiles_accept_puppet
+					has_country_flag = ger_exiles_accept_puppet_reduced
+					has_country_flag = ger_exiles_accept_no_puppet
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = ger_is_subject_of_from
+				any_country = {
+					GER = {
+						is_subject_of = FROM
+					}
+					NOT = {
+						is_in_faction_with = SOV
+					}
+				}
+			}
+			NOT = {
+				GER = {
+					is_subject_of = SOV
+				}
+			}
+		}
+
+		cost = 50
+
+		complete_effect = {
+			country_event = { id = soviets.232 }
+		}
+
+		ai_will_do = {
+			factor = 80
+		}
+	}
+
+	SOV_launch_monarchist_insurrection = {
+
+		icon = GFX_decision_eng_trade_unions_demand
+	
+		fire_only_once = yes
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			OR = {
+				has_country_flag = ger_exiles_accept_puppet
+				has_country_flag = ger_exiles_accept_puppet_reduced
+				has_country_flag = ger_exiles_accept_no_puppet
+			}
+			NOT = {
+				GER = {
+					is_subject_of = SOV
+				}
+			}
+			country_exists = GER
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = any_neighbor_states_is_german
+				OR = {
+					any_state = {
+						is_owned_and_controlled_by = SOV
+						any_neighbor_state = {
+							is_core_of = GER
+							is_owned_and_controlled_by = GER
+						}
+					}
+					POL = {
+						is_subject_of = SOV
+						any_state = {
+							is_owned_and_controlled_by = PREV
+							any_neighbor_state = {
+								is_core_of = GER
+								is_owned_and_controlled_by = GER
+							}
+						}
+					}
+				}
+			}
+			country_exists = GER
+			NOT = {
+				has_war_with = GER
+				GER = {
+					OR = {
+						is_subject_of = SOV
+						is_in_faction_with = SOV
+					}
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = has_successfully_contacted_german_exile_monarch
+				OR = {
+					has_country_flag = ger_exiles_accept_puppet
+					has_country_flag = ger_exiles_accept_puppet_reduced
+					has_country_flag = ger_exiles_accept_no_puppet
+				}
+			}
+		}
+
+		cost = 100
+
+		days_remove = 70
+
+		cancel_trigger = {
+			has_war_with = GER
+		}
+
+		complete_effect = {
+			hidden_effect = {
+				random_state = {
+					limit = {
+						NOT = {
+							state = 762
+						}
+						is_core_of = GER
+						is_owned_and_controlled_by = GER
+						any_neighbor_state = {
+							OR = {
+								is_owned_and_controlled_by = SOV
+								if = {
+									limit = {
+										POL = {
+											is_subject_of = SOV
+										}
+									}
+									is_owned_and_controlled_by = POL
+								}
+							}
+							NOT = {
+								has_state_flag = random_prussian_state_1
+								has_state_flag = random_prussian_state_2
+								has_state_flag = random_prussian_state_3
+								has_state_flag = random_prussian_state_4
+								has_state_flag = random_prussian_state_5
+							}
+						}
+					}
+					PRE = {
+						add_state_core = PREV
+					}
+					set_state_flag = random_prussian_state_1
+				}
+			}
+		}
+
+		remove_effect = {
+			custom_effect_tooltip = release_imperial_prussia_and_strat_war_with_germany
+			hidden_effect = {
+				set_country_flag = will_launch_monarchist_insurrection
+				random_state = {
+					limit = {
+						NOT = {
+							state = 762
+						}
+						is_core_of = GER
+						is_owned_and_controlled_by = GER
+						any_neighbor_state = {
+							OR = {
+								is_owned_and_controlled_by = SOV
+								if = {
+									limit = {
+										POL = {
+											is_subject_of = SOV
+										}
+									}
+									is_owned_and_controlled_by = POL
+								}
+							}
+							NOT = {
+								has_state_flag = random_prussian_state_1
+								has_state_flag = random_prussian_state_2
+								has_state_flag = random_prussian_state_3
+								has_state_flag = random_prussian_state_4
+								has_state_flag = random_prussian_state_5
+							}
+						}
+					}
+					PRE = {
+						add_state_core = PREV
+					}
+					set_state_flag = random_prussian_state_2
+				}
+				country_event = { id = germanys.34 }
+				GER = {
+					release = PRE
+				}
+				declare_war_on = {
+					target = GER
+					type = puppet_wargoal_focus
+				}
+				if = {
+					limit = {
+						POL = {
+							is_subject_of = SOV
+						}
+					}
+					POL = {
+						add_to_war = { 
+							targeted_alliance = SOV 
+							enemy = GER
+							hostility_reason = asked_to_join
+						}
+					}
+				}
+				PRE = {
+					set_cosmetic_tag = GEC
+					declare_war_on = {
+						target = GER
+						type = annex_everything
+					}
+					if = {
+						limit = {
+							SOV = {
+								has_country_flag = ger_exiles_accept_puppet
+							}
+						}
+						SOV = {
+							set_autonomy = {
+								target = PRE
+								autonomy_state = autonomy_imperial_governorates
+							}
+						}
+						set_politics = {
+							ruling_party = neutrality
+							elections_allowed = no
+						}
+						hidden_effect = {
+							set_popularities = {
+								democratic = 10
+								neutrality = 70
+								fascism = 10
+								communism = 10
+							}
+						}
+						if = {
+							limit = {
+								date < 1941.06.04
+							}
+							create_country_leader = {
+								name = "Wilhelm II"
+								desc = "POLITICS_WILHELM_II_DESC"
+								picture = GFX_portrait_ger_wilhelm_ii
+								expire = "1965.1.1"
+								ideology = despotism
+								traits = {
+									anti_democrat imperial_connections
+								}
+							}
+						}
+						else = {
+							create_country_leader = {
+								name = "Wilhelm III"
+								desc = "POLITICS_WILHELM_III_DESC"
+								picture = GFX_portrait_ger_wilhelm_iii
+								expire = "1965.1.1"
+								ideology = despotism
+								traits = {
+									popular_figurehead2
+								}
+							}
+						}
+					}
+					else_if = {
+						limit = {
+							has_country_flag = ger_exiles_accept_puppet_reduced
+						}
+						SOV = {
+							set_autonomy = {
+								target = PRE
+								autonomy_state = autonomy_dominion
+							}
+						}
+						set_politics = {
+							ruling_party = neutrality
+							elections_allowed = no
+						}
+						hidden_effect = {
+							set_popularities = {
+								democratic = 10
+								neutrality = 70
+								fascism = 10
+								communism = 10
+							}
+						}
+						if = {
+							limit = {
+								date < 1941.06.04
+							}
+							create_country_leader = {
+								name = "Wilhelm II"
+								desc = "POLITICS_WILHELM_II_DESC"
+								picture = GFX_portrait_ger_wilhelm_ii
+								expire = "1965.1.1"
+								ideology = despotism
+								traits = {
+									anti_democrat imperial_connections
+								}
+							}
+						}
+						else = {
+							create_country_leader = {
+								name = "Wilhelm III"
+								desc = "POLITICS_WILHELM_III_DESC"
+								picture = GFX_portrait_ger_wilhelm_iii
+								expire = "1965.1.1"
+								ideology = despotism
+								traits = {
+									popular_figurehead2
+								}
+							}
+						}
+						set_country_flag = GER_dominion_no_imperial
+						set_country_flag = germany_no_imperial_transform
+					}
+					else = {
+						SOV = {
+							add_to_faction = PRE
+						}
+						add_ai_strategy = {
+							type = alliance
+							id = SOV
+							value = 500
+						}
+						set_politics = {
+							ruling_party = neutrality
+							elections_allowed = no
+						}
+						hidden_effect = {
+							set_popularities = {
+								democratic = 10
+								neutrality = 70
+								fascism = 10
+								communism = 10
+							}
+						}
+						if = {
+							limit = {
+								date < 1941.06.04
+							}
+							create_country_leader = {
+								name = "Wilhelm II"
+								desc = "POLITICS_WILHELM_II_DESC"
+								picture = GFX_portrait_ger_wilhelm_ii
+								expire = "1965.1.1"
+								ideology = despotism
+								traits = {
+									anti_democrat imperial_connections
+								}
+							}
+						}
+						else = {
+							create_country_leader = {
+								name = "Wilhelm III"
+								desc = "POLITICS_WILHELM_III_DESC"
+								picture = GFX_portrait_ger_wilhelm_iii
+								expire = "1965.1.1"
+								ideology = despotism
+								traits = {
+									popular_figurehead2
+								}
+							}
+						}
+					}
+					division_template = {
+						name = "Infanterie-Division"
+						division_names_group = GER_Inf_01
+					
+						regiments = {
+							infantry = { x = 0 y = 0 }
+							infantry = { x = 0 y = 1 }
+							infantry = { x = 0 y = 2 }
+							infantry = { x = 1 y = 0 }
+							infantry = { x = 1 y = 1 }
+							infantry = { x = 1 y = 2 }
+							infantry = { x = 2 y = 0 }
+							infantry = { x = 2 y = 1 }
+							infantry = { x = 2 y = 2 }
+						}
+						support = {
+							engineer = { x = 0 y = 0 }
+							artillery = { x = 0 y = 1 }
+						}
+					}
+					division_template = {
+						name = "Panzer-Division"
+						division_names_group = GER_Arm_01
+					
+						regiments = {
+							light_armor = { x = 0 y = 0 }
+							light_armor = { x = 0 y = 1 }		
+							light_armor = { x = 1 y = 0 }
+							light_armor = { x = 1 y = 1 }
+							motorized = { x = 2 y = 0 }
+							motorized = { x = 2 y = 1 }
+							motorized = { x = 2 y = 2 }
+						}
+						support = {
+							mot_recon = { x = 0 y = 0 }
+							engineer = { x = 0 y = 1 }
+						}
+					}
+					random_owned_state = {
+						limit = {
+							has_state_flag = random_prussian_state_1
+						}
+						create_unit = {
+							division = "name = \"1st Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+						create_unit = {
+							division = "name = \"2nd Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+						create_unit = {
+							division = "name = \"3rd Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+						create_unit = {
+							division = "name = \"4th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+						create_unit = {
+							division = "name = \"5th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+						create_unit = {
+							division = "name = \"6th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+						create_unit = {
+							division = "name = \"7th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+						create_unit = {
+							division = "name = \"1st Panzer-Division\" division_template = \"Panzer-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+						create_unit = {
+							division = "name = \"2nd Panzer-Division\" division_template = \"Panzer-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+					}
+					random_owned_state = {
+						limit = {
+							has_state_flag = random_prussian_state_2
+						}
+						create_unit = {
+							division = "name = \"8th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+						create_unit = {
+							division = "name = \"9th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+						create_unit = {
+							division = "name = \"10th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+						create_unit = {
+							division = "name = \"11th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+						create_unit = {
+							division = "name = \"12th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+						create_unit = {
+							division = "name = \"13th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+						create_unit = {
+							division = "name = \"14th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+						create_unit = {
+							division = "name = \"15th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+						create_unit = {
+							division = "name = \"16th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+						create_unit = {
+							division = "name = \"3rd Panzer-Division\" division_template = \"Panzer-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+						create_unit = {
+							division = "name = \"4th Panzer-Division\" division_template = \"Panzer-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+					}
+					random_owned_state = {
+						limit = {
+							has_state_flag = random_prussian_state_3
+						}
+						create_unit = {
+							division = "name = \"17th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+						create_unit = {
+							division = "name = \"18th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+						create_unit = {
+							division = "name = \"19th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+						create_unit = {
+							division = "name = \"20th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+						create_unit = {
+							division = "name = \"21th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+						create_unit = {
+							division = "name = \"22th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+						create_unit = {
+							division = "name = \"23th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+						create_unit = {
+							division = "name = \"24th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+						create_unit = {
+							division = "name = \"25th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+						create_unit = {
+							division = "name = \"26th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+						create_unit = {
+							division = "name = \"5th Panzer-Division\" division_template = \"Panzer-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+						create_unit = {
+							division = "name = \"6th Panzer-Division\" division_template = \"Panzer-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+					}
+					every_state = {
+						limit = {
+							is_initial_core_of_ger = yes
+						}
+						PRE = {
+							add_state_core = PREV
+						}
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 80
+		}
+	}
+
+	SOV_demand_foreign_country_german_land = {
+
+		icon = GFX_decision_eng_trade_unions_demand
+	
+		fire_only_once = yes
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			OR = {
+				has_country_flag = ger_exiles_accept_puppet
+				has_country_flag = ger_exiles_accept_puppet_reduced
+				has_country_flag = ger_exiles_accept_no_puppet
+			}
+			FROM = {
+				any_state = {
+					is_owned_by = PREV
+					is_core_of = GER
+				}
+				NOT = {
+					TAG = GER
+					TAG = SOV
+					is_in_faction_with = SOV
+					is_subject_of = SOV
+				}
+			}
+		}
+
+		target_trigger = {
+			FROM = {
+				any_state = {
+					is_owned_by = PREV
+					is_core_of = GER
+				}
+				NOT = {
+					TAG = GER
+					TAG = SOV
+					is_in_faction_with = SOV
+					is_subject_of = SOV
+				}
+			}
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = has_successfully_contacted_german_exile_monarch
+				OR = {
+					has_country_flag = ger_exiles_accept_puppet
+					has_country_flag = ger_exiles_accept_puppet_reduced
+					has_country_flag = ger_exiles_accept_no_puppet
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = from_own_core_of_germany
+				FROM = {
+					any_state = {
+						is_owned_and_controlled_by = PREV
+						is_core_of = GER
+					}
+				} 
+			}
+		}
+
+		cost = 50
+
+		complete_effect = {
+			FROM = {
+				country_event = { id = soviets.229 days = 1 }
+			}
+		}
+
+		ai_will_do = {
+			factor = 80
+		}
+	}
+
+	SOV_restore_prussia_monarchy = {
+
+		icon = GFX_decision_eng_support_imperialist_coup
+	
+		fire_only_once = yes
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			has_country_flag = decide_to_restore_prussia_and_other_kingdom
+		}
+
+		available = {
+			has_war = no
+			is_subject = no
+			custom_trigger_tooltip = {
+				tooltip = prussia_is_owned_by_root_or_puppet
+				OR = {
+					64 = {
+						is_owned_and_controlled_by = ROOT
+					}
+					any_country = {
+						owns_state = 64
+						is_subject_of = SOV
+					}
+				}
+				OR = {
+					61 = {
+						is_owned_and_controlled_by = ROOT
+					}
+					any_country = {
+						owns_state = 61
+						is_subject_of = SOV
+					}
+				}	
+				OR = {
+					62 = {
+						is_owned_and_controlled_by = ROOT
+					}
+					any_country = {
+						owns_state = 62
+						is_subject_of = SOV
+					}
+				}
+				OR = {
+					65 = {
+						is_owned_and_controlled_by = ROOT
+					}
+					any_country = {
+						owns_state = 65
+						is_subject_of = SOV
+					}
+				}
+				OR = {
+					66 = {
+						is_owned_and_controlled_by = ROOT
+					}
+					any_country = {
+						owns_state = 66
+						is_subject_of = SOV
+					}
+				}
+				OR = {
+					67 = {
+						is_owned_and_controlled_by = ROOT
+					}
+					any_country = {
+						owns_state = 67
+						is_subject_of = SOV
+					}
+				}
+				OR = {
+					68 = {
+						is_owned_and_controlled_by = ROOT
+					}
+					any_country = {
+						owns_state = 68
+						is_subject_of = SOV
+					}
+				}
+				OR = {
+					63 = {
+						is_owned_and_controlled_by = ROOT
+					}
+					any_country = {
+						owns_state = 63
+						is_subject_of = SOV
+					}
+				}
+				OR = {
+					55 = {
+						is_owned_and_controlled_by = ROOT
+					}
+					any_country = {
+						owns_state = 55
+						is_subject_of = SOV
+					}
+				}
+				OR = {
+					60 = {
+						is_owned_and_controlled_by = ROOT
+					}
+					any_country = {
+						owns_state = 60
+						is_subject_of = SOV
+					}
+				}
+				OR = {
+					5 = {
+						is_owned_and_controlled_by = ROOT
+					}
+					any_country = {
+						owns_state = 5
+						is_subject_of = SOV
+					}
+				}
+				OR = {
+					763 = {
+						is_owned_and_controlled_by = ROOT
+					}
+					any_country = {
+						owns_state = 763
+						is_subject_of = SOV
+					}
+				}
+			}
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = release_prussia_as_puppet
+			set_country_flag = restoration_german_monarchy_kaiser
+			hidden_effect = {
+				PRE = {
+					add_state_core = 5
+					add_state_core = 763
+					add_state_core = 67
+					add_state_core = 66
+					add_state_core = 68
+					add_state_core = 63
+					add_state_core = 62
+					add_state_core = 55
+					add_state_core = 64
+					add_state_core = 65
+					add_state_core = 60
+					add_state_core = 61
+				}
+				every_state = {
+					limit = {
+						is_core_of = PRE
+						any_country = {
+							OR = {
+								TAG = SOV
+								is_subject_of = SOV
+							}	
+							owns_state = PREV
+						}
+					}
+					PRE = {
+						transfer_state = PREV
+					}
+				}
+				SOV = {
+					set_autonomy = {
+						target = PRE
+						autonomy_state = autonomy_puppet
+					}
+				}
+				PRE = {
+					division_template = {
+						name = "Infanterie-Division"
+						division_names_group = GER_Inf_01
+						priority = 1
+						regiments = {
+							infantry = { x = 0 y = 0 }
+							infantry = { x = 0 y = 1 }
+							infantry = { x = 0 y = 2 }
+							infantry = { x = 0 y = 3 }
+							infantry = { x = 0 y = 4 }
+							infantry = { x = 1 y = 0 }
+							infantry = { x = 1 y = 1 }
+							infantry = { x = 1 y = 2 }
+							infantry = { x = 1 y = 3 }
+							infantry = { x = 1 y = 4 }
+						}
+						support = {
+							engineer = { x = 0 y = 0 }
+							artillery = { x = 0 y = 1 }
+						}
+					}
+					division_template = {
+						name = "Panzer-Division"
+						division_names_group = GER_Arm_01
+					
+						regiments = {
+							light_armor = { x = 0 y = 0 }
+							light_armor = { x = 0 y = 1 }		
+							light_armor = { x = 1 y = 0 }
+							light_armor = { x = 1 y = 1 }
+							motorized = { x = 2 y = 0 }
+							motorized = { x = 2 y = 1 }
+							motorized = { x = 2 y = 2 }
+						}
+						support = {
+							mot_recon = { x = 0 y = 0 }
+							engineer = { x = 0 y = 1 }
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"1st Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"2nd Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"3rd Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"4th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"5th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"6th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"7th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"8th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"9th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"10th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"11th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"12th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"13th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"14th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"15th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"16th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"17th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"18th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"19th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"20th Infanterie-Division\" division_template = \"Infanterie-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"1st Panzer-Division\" division_template = \"Panzer-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"2nd Panzer-Division\" division_template = \"Panzer-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"3rd Panzer-Division\" division_template = \"Panzer-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"4th Panzer-Division\" division_template = \"Panzer-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"5th Panzer-Division\" division_template = \"Panzer-Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = PRE
+						}
+					}
+					set_popularities = {
+						democratic = 10
+						neutrality = 70
+						fascism = 10
+						communism = 10	
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 80
+		}
+	}
+
+	SOV_restore_bavaria_monarchy = {
+
+		icon = GFX_decision_eng_support_imperialist_coup
+	
+		fire_only_once = yes
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			has_country_flag = decide_to_restore_prussia_and_other_kingdom
+			NOT = {
+				country_exists = CFR
+			}
+		}
+
+		available = {
+			NOT = {
+				country_exists = CFR
+			}
+			has_war = no
+			is_subject = no
+			custom_trigger_tooltip = {
+				tooltip = bavaria_is_owned_by_root_or_puppet
+				OR = {
+					54 = {
+						is_owned_and_controlled_by = ROOT
+					}
+					any_country = {
+						owns_state = 54
+						is_subject_of = SOV
+					}
+				}
+				OR = {
+					53 = {
+						is_owned_and_controlled_by = ROOT
+					}
+					any_country = {
+						owns_state = 53
+						is_subject_of = SOV
+					}
+				}	
+				OR = {
+					52 = {
+						is_owned_and_controlled_by = ROOT
+					}
+					any_country = {
+						owns_state = 52
+						is_subject_of = SOV
+					}
+				}
+			}
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = release_bavaria_as_puppet
+			hidden_effect = {
+				BAY = {
+					add_state_core = 52
+					add_state_core = 53
+					add_state_core = 54
+				}
+				every_state = {
+					limit = {
+						is_core_of = BAY
+						any_country = {
+							OR = {
+								TAG = SOV
+								is_subject_of = SOV
+							}	
+							owns_state = PREV
+						}
+					}
+					BAY = {
+						transfer_state = PREV
+					}
+				}
+				SOV = {
+					set_autonomy = {
+						target = BAY
+						autonomy_state = autonomy_puppet
+					}
+				}
+				BAY = {
+					division_template = {
+						name = "Bavarian Division"
+						priority = 1
+						regiments = {
+							infantry = { x = 0 y = 0 }
+							infantry = { x = 0 y = 1 }
+							infantry = { x = 0 y = 2 }
+							infantry = { x = 0 y = 3 }
+							infantry = { x = 0 y = 4 }
+							infantry = { x = 1 y = 0 }
+							infantry = { x = 1 y = 1 }
+							infantry = { x = 1 y = 2 }
+							infantry = { x = 1 y = 3 }
+							infantry = { x = 1 y = 4 }
+						}
+						support = {
+							engineer = { x = 0 y = 0 }
+							artillery = { x = 0 y = 1 }
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"1st Bavarian Division\" division_template = \"Bavarian Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = BAY
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"2nd Bavarian Division\" division_template = \"Bavarian Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = BAY
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"3rd Bavarian Division\" division_template = \"Bavarian Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = BAY
+						}
+					}
+					set_popularities = {
+						democratic = 10
+						neutrality = 70
+						fascism = 10
+						communism = 10	
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 80
+		}
+	}
+
+	SOV_restore_wurttemberg_monarchy = {
+
+		icon = GFX_decision_eng_support_imperialist_coup
+	
+		fire_only_once = yes
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			has_country_flag = decide_to_restore_prussia_and_other_kingdom
+			NOT = {
+				country_exists = CFR
+			}
+		}
+
+		available = {
+			NOT = {
+				country_exists = CFR
+			}
+			has_war = no
+			is_subject = no
+			OR = {
+				50 = {
+					is_owned_and_controlled_by = ROOT
+				}
+				any_country = {
+					owns_state = 50
+					is_subject_of = SOV
+				}
+			}
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = release_wurttemberg_as_puppet
+			hidden_effect = {
+				WUR = {
+					add_state_core = 50
+				}
+				every_state = {
+					limit = {
+						is_core_of = WUR
+						any_country = {
+							OR = {
+								TAG = SOV
+								is_subject_of = SOV
+							}	
+							owns_state = PREV
+						}
+					}
+					WUR = {
+						transfer_state = PREV
+					}
+				}
+				SOV = {
+					set_autonomy = {
+						target = WUR
+						autonomy_state = autonomy_puppet
+					}
+				}
+				WUR = {
+					division_template = {
+						name = "Wurttemberg Division"
+						priority = 1
+						regiments = {
+							infantry = { x = 0 y = 0 }
+							infantry = { x = 0 y = 1 }
+							infantry = { x = 0 y = 2 }
+							infantry = { x = 0 y = 3 }
+							infantry = { x = 0 y = 4 }
+							infantry = { x = 1 y = 0 }
+							infantry = { x = 1 y = 1 }
+							infantry = { x = 1 y = 2 }
+							infantry = { x = 1 y = 3 }
+							infantry = { x = 1 y = 4 }
+						}
+						support = {
+							engineer = { x = 0 y = 0 }
+							artillery = { x = 0 y = 1 }
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"1st Wurttemberg Division\" division_template = \"Wurttemberg Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = WUR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"2nd Wurttemberg Division\" division_template = \"Wurttemberg Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = WUR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"3rd Wurttemberg Division\" division_template = \"Wurttemberg Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = WUR
+						}
+					}
+					set_popularities = {
+						democratic = 10
+						neutrality = 70
+						fascism = 10
+						communism = 10	
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 80
+		}
+	}
+
+	SOV_restore_westphalia_monarchy = {
+
+		icon = GFX_decision_eng_support_imperialist_coup
+	
+		fire_only_once = yes
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			has_country_flag = decide_to_restore_prussia_and_other_kingdom
+			NOT = {
+				country_exists = CFR
+			}
+		}
+
+		available = {
+			NOT = {
+				country_exists = CFR
+			}
+			has_war = no
+			is_subject = no
+			custom_trigger_tooltip = {
+				tooltip = westphalia_is_owned_by_root_or_puppet
+				OR = {
+					58 = {
+						is_owned_and_controlled_by = ROOT
+					}
+					any_country = {
+						owns_state = 58
+						is_subject_of = SOV
+					}
+				}
+				OR = {
+					59 = {
+						is_owned_and_controlled_by = ROOT
+					}
+					any_country = {
+						owns_state = 59
+						is_subject_of = SOV
+					}
+				}	
+				OR = {
+					56 = {
+						is_owned_and_controlled_by = ROOT
+					}
+					any_country = {
+						owns_state = 56
+						is_subject_of = SOV
+					}
+				}
+				OR = {
+					57 = {
+						is_owned_and_controlled_by = ROOT
+					}
+					any_country = {
+						owns_state = 57
+						is_subject_of = SOV
+					}
+				}
+			}
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = release_westphalia_as_puppet
+			hidden_effect = {
+				HAN = {
+					add_state_core = 58
+					add_state_core = 59
+					add_state_core = 56
+					add_state_core = 57
+				}
+				every_state = {
+					limit = {
+						is_core_of = HAN
+						any_country = {
+							OR = {
+								TAG = SOV
+								is_subject_of = SOV
+							}	
+							owns_state = PREV
+						}
+					}
+					HAN = {
+						transfer_state = PREV
+					}
+				}
+				SOV = {
+					set_autonomy = {
+						target = HAN
+						autonomy_state = autonomy_puppet
+					}
+				}
+				HAN = {
+					division_template = {
+						name = "Westphalian Division"
+						priority = 1
+						regiments = {
+							infantry = { x = 0 y = 0 }
+							infantry = { x = 0 y = 1 }
+							infantry = { x = 0 y = 2 }
+							infantry = { x = 0 y = 3 }
+							infantry = { x = 0 y = 4 }
+							infantry = { x = 1 y = 0 }
+							infantry = { x = 1 y = 1 }
+							infantry = { x = 1 y = 2 }
+							infantry = { x = 1 y = 3 }
+							infantry = { x = 1 y = 4 }
+						}
+						support = {
+							engineer = { x = 0 y = 0 }
+							artillery = { x = 0 y = 1 }
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"1st Westphalian Division\" division_template = \"Westphalian Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = HAN
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"2nd Westphalian Division\" division_template = \"Westphalian Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = HAN
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"3rd Westphalian Division\" division_template = \"Westphalian Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = HAN
+						}
+					}
+					set_popularities = {
+						democratic = 10
+						neutrality = 70
+						fascism = 10
+						communism = 10	
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 80
+		}
+	}
+
+	SOV_release_rhineland_monarchy = {
+
+		icon = GFX_decision_eng_support_imperialist_coup
+	
+		fire_only_once = yes
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			has_country_flag = decide_to_restore_prussia_and_other_kingdom
+			NOT = {
+				country_exists = CFR
+			}
+		}
+
+		available = {
+			NOT = {
+				country_exists = CFR
+			}
+			has_war = no
+			is_subject = no
+			custom_trigger_tooltip = {
+				tooltip = rhineland_is_owned_by_root_or_puppet
+				OR = {
+					51 = {
+						is_owned_and_controlled_by = ROOT
+					}
+					any_country = {
+						owns_state = 51
+						is_subject_of = SOV
+					}
+				}
+				OR = {
+					42 = {
+						is_owned_and_controlled_by = ROOT
+					}
+					any_country = {
+						owns_state = 42
+						is_subject_of = SOV
+					}
+				}	
+			}
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = release_rhineland_as_puppet
+			hidden_effect = {
+				RHI = {
+					add_state_core = 51
+					add_state_core = 42
+				}
+				every_state = {
+					limit = {
+						is_core_of = RHI
+						any_country = {
+							OR = {
+								TAG = SOV
+								is_subject_of = SOV
+							}	
+							owns_state = PREV
+						}
+					}
+					RHI = {
+						transfer_state = PREV
+					}
+				}
+				SOV = {
+					set_autonomy = {
+						target = RHI
+						autonomy_state = autonomy_puppet
+					}
+				}
+				RHI = {
+					division_template = {
+						name = "Rhenish Division"
+						priority = 1
+						regiments = {
+							infantry = { x = 0 y = 0 }
+							infantry = { x = 0 y = 1 }
+							infantry = { x = 0 y = 2 }
+							infantry = { x = 0 y = 3 }
+							infantry = { x = 0 y = 4 }
+							infantry = { x = 1 y = 0 }
+							infantry = { x = 1 y = 1 }
+							infantry = { x = 1 y = 2 }
+							infantry = { x = 1 y = 3 }
+							infantry = { x = 1 y = 4 }
+						}
+						support = {
+							engineer = { x = 0 y = 0 }
+							artillery = { x = 0 y = 1 }
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"1st Rhenish Division\" division_template = \"Rhenish Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = RHI
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"2nd Rhenish Division\" division_template = \"Rhenish Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = RHI
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"3rd Rhenish Division\" division_template = \"Rhenish Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = RHI
+						}
+					}
+					set_popularities = {
+						democratic = 10
+						neutrality = 70
+						fascism = 10
+						communism = 10	
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 80
+		}
+	}
+
+	SOV_release_confederation_rhine_monarchy = {
+
+		icon = GFX_decision_eng_support_imperialist_coup
+	
+		fire_only_once = yes
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			has_country_flag = decide_to_restore_prussia_and_other_kingdom
+			NOT = {
+				country_exists = BAY
+				country_exists = WUR
+				country_exists = HAN
+				country_exists = RHI
+			}
+		}
+
+		available = {
+			NOT = {
+				country_exists = BAY
+				country_exists = WUR
+				country_exists = HAN
+				country_exists = RHI
+			}
+			has_war = no
+			is_subject = no
+			custom_trigger_tooltip = {
+				tooltip = confederation_state_is_owned_by_root_or_puppet
+				OR = {
+					54 = {
+						is_owned_and_controlled_by = ROOT
+					}
+					any_country = {
+						owns_state = 54
+						is_subject_of = SOV
+					}
+				}
+				OR = {
+					53 = {
+						is_owned_and_controlled_by = ROOT
+					}
+					any_country = {
+						owns_state = 53
+						is_subject_of = SOV
+					}
+				}	
+				OR = {
+					52 = {
+						is_owned_and_controlled_by = ROOT
+					}
+					any_country = {
+						owns_state = 52
+						is_subject_of = SOV
+					}
+				}
+				OR = {
+					50 = {
+						is_owned_and_controlled_by = ROOT
+					}
+					any_country = {
+						owns_state = 50
+						is_subject_of = SOV
+					}
+				}
+				OR = {
+					58 = {
+						is_owned_and_controlled_by = ROOT
+					}
+					any_country = {
+						owns_state = 58
+						is_subject_of = SOV
+					}
+				}
+				OR = {
+					59 = {
+						is_owned_and_controlled_by = ROOT
+					}
+					any_country = {
+						owns_state = 59
+						is_subject_of = SOV
+					}
+				}	
+				OR = {
+					56 = {
+						is_owned_and_controlled_by = ROOT
+					}
+					any_country = {
+						owns_state = 56
+						is_subject_of = SOV
+					}
+				}
+				OR = {
+					57 = {
+						is_owned_and_controlled_by = ROOT
+					}
+					any_country = {
+						owns_state = 57
+						is_subject_of = SOV
+					}
+				}
+				OR = {
+					51 = {
+						is_owned_and_controlled_by = ROOT
+					}
+					any_country = {
+						owns_state = 51
+						is_subject_of = SOV
+					}
+				}
+				OR = {
+					42 = {
+						is_owned_and_controlled_by = ROOT
+					}
+					any_country = {
+						owns_state = 42
+						is_subject_of = SOV
+					}
+				}
+			}
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = release_confederate_rhenish_state_puppet
+			hidden_effect = {
+				CFR = {
+					add_state_core = 50
+					add_state_core = 52
+					add_state_core = 53
+					add_state_core = 54
+					add_state_core = 58
+					add_state_core = 59
+					add_state_core = 56
+					add_state_core = 57
+					add_state_core = 51
+					add_state_core = 42
+				}
+				every_state = {
+					limit = {
+						is_core_of = CFR
+						any_country = {
+							OR = {
+								TAG = SOV
+								is_subject_of = SOV
+							}	
+							owns_state = PREV
+						}
+					}
+					CFR = {
+						transfer_state = PREV
+					}
+				}
+				SOV = {
+					set_autonomy = {
+						target = CFR
+						autonomy_state = autonomy_puppet
+					}
+				}
+				CFR = {
+					division_template = {
+						name = "Rhenish Confederate Division"
+						priority = 1
+						regiments = {
+							infantry = { x = 0 y = 0 }
+							infantry = { x = 0 y = 1 }
+							infantry = { x = 0 y = 2 }
+							infantry = { x = 0 y = 3 }
+							infantry = { x = 0 y = 4 }
+							infantry = { x = 1 y = 0 }
+							infantry = { x = 1 y = 1 }
+							infantry = { x = 1 y = 2 }
+							infantry = { x = 1 y = 3 }
+							infantry = { x = 1 y = 4 }
+						}
+						support = {
+							engineer = { x = 0 y = 0 }
+							artillery = { x = 0 y = 1 }
+						}
+					}
+					division_template = {
+						name = "Rhenish Confederate Panzer Division"
+					
+						regiments = {
+							light_armor = { x = 0 y = 0 }
+							light_armor = { x = 0 y = 1 }		
+							light_armor = { x = 1 y = 0 }
+							light_armor = { x = 1 y = 1 }
+							motorized = { x = 2 y = 0 }
+							motorized = { x = 2 y = 1 }
+							motorized = { x = 2 y = 2 }
+						}
+						support = {
+							mot_recon = { x = 0 y = 0 }
+							engineer = { x = 0 y = 1 }
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"1st Rhenish Confederate Division\" division_template = \"Rhenish Confederate Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = CFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"2nd Rhenish Confederate Division\" division_template = \"Rhenish Confederate Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = CFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"3rd Rhenish Confederate Division\" division_template = \"Rhenish Confederate Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = CFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"4th Rhenish Confederate Division\" division_template = \"Rhenish Confederate Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = CFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"5th Rhenish Confederate Division\" division_template = \"Rhenish Confederate Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = CFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"6th Rhenish Confederate Division\" division_template = \"Rhenish Confederate Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = CFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"7th Rhenish Confederate Division\" division_template = \"Rhenish Confederate Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = CFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"8th Rhenish Confederate Division\" division_template = \"Rhenish Confederate Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = CFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"9th Rhenish Confederate Division\" division_template = \"Rhenish Confederate Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = CFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"10th Rhenish Confederate Division\" division_template = \"Rhenish Confederate Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = CFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"11th Rhenish Confederate Division\" division_template = \"Rhenish Confederate Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = CFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"12th Rhenish Confederate Division\" division_template = \"Rhenish Confederate Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = CFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"13th Rhenish Confederate Division\" division_template = \"Rhenish Confederate Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = CFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"14th Rhenish Confederate Division\" division_template = \"Rhenish Confederate Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = CFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"15th Rhenish Confederate Division\" division_template = \"Rhenish Confederate Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = CFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"16th Rhenish Confederate Division\" division_template = \"Rhenish Confederate Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = CFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"17th Rhenish Confederate Division\" division_template = \"Rhenish Confederate Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = CFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"18th Rhenish Confederate Division\" division_template = \"Rhenish Confederate Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = CFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"19th Rhenish Confederate Division\" division_template = \"Rhenish Confederate Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = CFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"20th Rhenish Confederate Division\" division_template = \"Rhenish Confederate Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = CFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"21th Rhenish Confederate Division\" division_template = \"Rhenish Confederate Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = CFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"1st Rhenish Confederate Panzer Division\" division_template = \"Rhenish Confederate Panzer Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = CFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"2nd Rhenish Confederate Panzer Division\" division_template = \"Rhenish Confederate Panzer Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = CFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"3rd Rhenish Confederate Panzer Division\" division_template = \"Rhenish Confederate Panzer Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = CFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"4th Rhenish Confederate Panzer Division\" division_template = \"Rhenish Confederate Panzer Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = CFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"5th Rhenish Confederate Panzer Division\" division_template = \"Rhenish Confederate Panzer Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = CFR
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"6th Rhenish Confederate Panzer Division\" division_template = \"Rhenish Confederate Panzer Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+							owner = CFR
+						}
+					}
+					set_popularities = {
+						democratic = 10
+						neutrality = 70
+						fascism = 10
+						communism = 10	
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 80
+		}
+	}
+	
+	SOV_fate_of_poland_monarchist_choice_subject = {
+
+		icon = GFX_decision_generic_operation
+	
+		fire_only_once = yes
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			has_country_flag = poland_accept_imperial_puppet
+			has_country_flag = restoration_german_monarchy_kaiser
+		}
+
+		available = {
+			country_exists = POL
+			is_subject = no
+			has_war = no
+			has_government = neutrality
+			if = {
+				limit = {
+					has_country_flag = decide_to_restore_prussia_and_other_kingdom
+					country_exists = PRE
+					PRE = {
+						is_subject_of = SOV
+					}
+				}
+				custom_trigger_tooltip = {
+					tooltip = SOV_fate_of_poland_monarchist_choice_subject_tt_trig_pre
+					PRE = {
+						OR = {
+							is_subject_of = SOV
+							AND = {
+								is_in_faction_with = SOV
+								has_government = neutrality
+							}
+						}
+					}
+				}
+			}
+			else = {
+				custom_trigger_tooltip = {
+					tooltip = has_successfully_contacted_german_exile_monarch
+					OR = {
+						has_country_flag = ger_exiles_accept_puppet
+						has_country_flag = ger_exiles_accept_puppet_reduced
+						has_country_flag = ger_exiles_accept_no_puppet
+					}
+				}
+				custom_trigger_tooltip = {
+					tooltip = SOV_fate_of_poland_monarchist_choice_subject_tt_trig
+					GER = {
+						OR = {
+							is_subject_of = SOV
+							AND = {
+								is_in_faction_with = SOV
+								has_government = neutrality
+							}
+						}
+					}
+				}
+			}
+			POL = {
+				is_subject_of = SOV
+			}
+		}
+
+		complete_effect = {
+			country_event = { id = soviets.248 }
+		}
+
+		ai_will_do = {
+			factor = 80
+		}
+	}
+
+	SOV_fate_of_poland_monarchist_choice_cede_eastern_pol = {
+
+		icon = GFX_decision_generic_operation
+	
+		fire_only_once = yes
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			has_country_flag = has_given_eastern_poland
+			has_country_flag = restoration_german_monarchy_kaiser
+		}
+
+		available = {
+			is_subject = no
+			has_war = no
+			has_government = neutrality
+			if = {
+				limit = {
+					has_country_flag = decide_to_restore_prussia_and_other_kingdom
+					country_exists = PRE
+					PRE = {
+						is_subject_of = SOV
+					}
+				}
+				custom_trigger_tooltip = {
+					tooltip = SOV_fate_of_poland_monarchist_choice_subject_tt_trig_pre
+					PRE = {
+						OR = {
+							is_subject_of = SOV
+							AND = {
+								is_in_faction_with = SOV
+								has_government = neutrality
+							}
+						}
+					}
+				}
+			}
+			else = {
+				custom_trigger_tooltip = {
+					tooltip = has_successfully_contacted_german_exile_monarch
+					OR = {
+						has_country_flag = ger_exiles_accept_puppet
+						has_country_flag = ger_exiles_accept_puppet_reduced
+						has_country_flag = ger_exiles_accept_no_puppet
+					}
+				}
+				custom_trigger_tooltip = {
+					tooltip = SOV_fate_of_poland_monarchist_choice_subject_tt_trig
+					GER = {
+						OR = {
+							is_subject_of = SOV
+							AND = {
+								is_in_faction_with = SOV
+								has_government = neutrality
+							}
+						}
+					}
+				}
+			}
+			NOT = {
+				POL = {
+					is_subject_of = SOV
+				}
+			}
+			country_exists = POL
+		}
+
+		complete_effect = {
+			country_event = { id = soviets.252 }
+		}
+
+		ai_will_do = {
+			factor = 80
+		}
+	}
+
+	SOV_fate_of_poland_monarchist_choice_refuse_every_choice = {
+
+		icon = GFX_decision_generic_operation
+	
+		fire_only_once = yes
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			NOT = {
+				has_country_flag = has_given_eastern_poland
+				has_country_flag = poland_accept_imperial_puppet
+			}
+		}
+
+		available = {
+			is_subject = no
+			has_war = no
+			has_government = neutrality
+			if = {
+				limit = {
+					has_country_flag = decide_to_restore_prussia_and_other_kingdom
+					country_exists = PRE
+					PRE = {
+						is_subject_of = SOV
+					}
+				}
+				custom_trigger_tooltip = {
+					tooltip = SOV_fate_of_poland_monarchist_choice_subject_tt_trig_pre
+					PRE = {
+						OR = {
+							is_subject_of = SOV
+							AND = {
+								is_in_faction_with = SOV
+								has_government = neutrality
+							}
+						}
+					}
+				}
+			}
+			else = {
+				custom_trigger_tooltip = {
+					tooltip = has_successfully_contacted_german_exile_monarch
+					OR = {
+						has_country_flag = ger_exiles_accept_puppet
+						has_country_flag = ger_exiles_accept_puppet_reduced
+						has_country_flag = ger_exiles_accept_no_puppet
+					}
+				}
+				custom_trigger_tooltip = {
+					tooltip = SOV_fate_of_poland_monarchist_choice_subject_tt_trig
+					GER = {
+						OR = {
+							is_subject_of = SOV
+							AND = {
+								is_in_faction_with = SOV
+								has_government = neutrality
+							}
+						}
+					}
+				}
+			}
+			NOT = {
+				POL = {
+					is_subject_of = SOV
+				}
+			}
+			country_exists = POL
+		}
+
+		complete_effect = {
+			country_event = { id = soviets.258 }
+		}
+
+		ai_will_do = {
+			factor = 80
+		}
+	}
 }
