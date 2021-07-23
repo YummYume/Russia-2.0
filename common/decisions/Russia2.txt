@@ -44994,3 +44994,651 @@ SOV_reinstore_german_monarchy_decisions = {
 		}
 	}
 }
+
+SOV_restore_french_monarchy_decisions_cat = {
+
+	SOV_support_monarchist_movement_france = {
+
+		icon = GFX_decision_eng_propaganda_campaigns
+
+		days_re_enable = 140
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			country_exists = FRA
+			NOT = {
+				FRA = {
+					has_government = neutrality
+				}	
+			}
+		}
+
+		available = {
+			NOT = {
+				FRA = {
+					has_government = neutrality
+					is_subject = yes
+				}
+			}
+			country_exists = FRA
+		}
+
+		cost = 100
+
+		days_remove = 70
+
+		complete_effect = {
+			set_country_flag = boosting_french_monarchy_party
+		}
+
+		remove_effect = {
+			clr_country_flag = boosting_french_monarchy_party
+			FRA = {
+				add_popularity = {
+					ideology = neutrality
+					popularity = 0.05
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 80
+		}
+	}
+
+	SOV_fund_the_monarchist_party_france = {
+
+		icon = GFX_decision_hol_attract_foreign_investors
+
+		days_re_enable = 190
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			country_exists = FRA
+			NOT = {
+				FRA = {
+					has_government = neutrality
+				}	
+			}	
+		}
+
+		available = {
+			NOT = {
+				FRA = {
+					has_government = neutrality
+					is_subject = yes
+				}
+			}
+			country_exists = FRA
+		}
+
+		cost = 50
+
+		days_remove = 120
+
+		complete_effect = {
+			FRA = {
+				swap_ideas = {
+					remove_idea = SOV_french_monarchist_sentiment_idea
+					add_idea = SOV_french_monarchist_sentiment_idea_2
+				}
+			}
+		}
+
+		remove_effect = {
+			FRA = {
+				swap_ideas = {
+					remove_idea = SOV_french_monarchist_sentiment_idea_2
+					add_idea = SOV_french_monarchist_sentiment_idea
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 80
+		}
+	}
+
+	SOV_influence_monarchist_leaders_france = {
+
+		icon = GFX_decision_generic_political_discourse
+
+		days_re_enable = 140
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			country_exists = FRA
+			NOT = {
+				FRA = {
+					has_government = neutrality
+				}	
+			}	
+		}
+
+		available = {
+			NOT = {
+				FRA = {
+					has_government = neutrality
+					is_subject = yes
+				}
+				check_variable = {
+					var = french_monarchist_leader_influence_var
+					value = 100
+					compare = greater_than_or_equals
+				}
+			}
+			country_exists = FRA
+		}
+
+		cost = 75
+
+		complete_effect = {
+			
+		}
+
+		days_remove = 70
+
+		remove_effect = {
+			add_to_variable = {
+				var = french_monarchist_leader_influence_var
+			    value = 20
+			}
+			custom_effect_tooltip = wil_add_20_chance_french
+		}
+
+		ai_will_do = {
+			factor = 80
+		}
+	}
+
+	SOV_launch_civil_war_french_monarchist = {
+
+		fire_only_once = yes
+
+		icon = GFX_decision_generic_military
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			country_exists = FRA
+			NOT = {
+				FRA = {
+					has_government = neutrality
+				}	
+			}
+		}
+
+		available = {
+			FRA = {
+				neutrality > 0.3
+			}
+			NOT = {
+				has_country_flag = boosting_french_monarchy_party
+				FRA = {
+					has_government = neutrality
+					is_subject = yes
+					has_war = yes
+				}
+			}
+			country_exists = FRA
+		}
+
+		cost = 100
+
+		complete_effect = {
+			custom_effect_tooltip = more_neutrality_and_more_power_monarchy
+			set_country_flag = is_doing_finale_france
+		}
+
+		days_remove = 70
+
+		remove_effect = {
+			set_country_flag = launched_civil_war_for_monarchist_france
+			clr_country_flag = is_doing_finale_france
+			FRA = {
+				remove_ideas = SOV_french_monarchist_sentiment_idea
+				start_civil_war = {
+					ideology = neutrality
+					size = party_popularity@neutrality
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 80
+		}
+	}
+
+	SOV_help_french_monarchist_coup_detat = {
+
+		fire_only_once = yes
+
+		icon = GFX_decision_generic_political_rally
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			NOT = {
+				has_country_flag = launched_civil_war_for_monarchist_france
+			}
+			country_exists = FRA
+			NOT = {
+				FRA = {
+					has_government = neutrality
+				}	
+			}
+		}
+
+		available = {
+			hidden_trigger = {
+				NOT = {
+					has_country_flag = is_doing_finale_france
+				}
+			}
+			FRA = {
+				neutrality > 0.5
+			}
+			NOT = {
+				has_country_flag = boosting_french_monarchy_party
+				FRA = {
+					has_government = neutrality
+					is_subject = yes
+					has_war = yes
+				}
+			}
+			country_exists = FRA
+		}
+
+		cost = 150
+
+		complete_effect = {
+			FRA = {
+				remove_ideas = SOV_french_monarchist_sentiment_idea
+				set_politics = {
+					ruling_party = neutrality
+				}
+				set_party_name = {
+					ideology = neutrality
+					long_name = FRA_orleanist_party_long
+					name = FRA_orleanist_party
+				}
+				if = {
+					limit = {
+						date < 1940.8.25
+					}
+					create_country_leader = {
+						name = "Jean III"
+						desc = "POLITICS_ÉDOUARD_DALADIER_DESC"
+						picture = GFX_portrait_fra_jean_duke_of_guise
+						expire = "1965.1.1"
+						ideology = moderatism
+						traits = {
+							duke_of_orleans
+						}
+					}
+				}
+				else = {
+					create_country_leader = {
+						name = "Henri VI"
+						desc = "POLITICS_ÉDOUARD_DALADIER_DESC"
+						picture = GFX_portrait_fra_henry_count_of_paris
+						expire = "1965.1.1"
+						ideology = moderatism
+						traits = {
+							count_of_paris
+						}
+					}
+				}
+			}
+			hidden_effect = {
+				randomize_variable = {
+					var = french_monarchist_leader_influence_var
+					distribution = uniform
+					min = french_monarchist_leader_influence_var
+					max = 200
+				}
+				round_variable = french_monarchist_leader_influence_var
+				if = {
+					limit = {
+						check_variable = {
+							var = french_monarchist_leader_influence_var
+							value = 100
+							compare = greater_than_or_equals
+						}
+					}
+					SOV = {
+						set_autonomy = {
+							target = FRA
+							autonomy_state = autonomy_imperial_governorates
+						}
+					}
+				}
+				else = {
+					SOV = {
+						add_to_faction = FRA
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 80
+		}
+	}
+
+	SOV_proclaim_orleanist_party_french_monarch = {
+
+		icon = GFX_decision_generic_decision
+
+		fire_only_once = yes
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			NOT = {
+				has_country_flag = has_chosen_monarchy_party
+			}
+			FRA = {
+				has_government = neutrality
+				is_subject_of = SOV
+			}
+		}
+
+		available = {
+			FRA = {
+				has_government = neutrality
+				is_subject_of = SOV
+			}
+		}
+
+		complete_effect = {
+			set_country_flag = has_chosen_monarchy_party
+			FRA = {
+				hidden_effect = {
+					if = {
+						limit = {
+							date < 1941.2.21
+						}
+						create_country_leader = {
+							name = "Alphonse I"
+							desc = "POLITICS_ÉDOUARD_DALADIER_DESC"
+							picture = GFX_portrait_SPA_alfonso_xiii
+							expire = "1965.1.1"
+							ideology = despotism
+							traits = {
+								
+							}
+						}
+					}
+					else = {
+						create_country_leader = {
+							name = "Jacques II"
+							desc = "POLITICS_ÉDOUARD_DALADIER_DESC"
+							picture = GFX_portrait_fra_infante_jaime
+							expire = "1965.1.1"
+							ideology = despotism
+							traits = {
+								
+							}
+						}
+					}
+					set_party_name = {
+						ideology = neutrality
+						long_name = FRA_legitimist_party_long
+						name = FRA_legitimist_party
+					}
+				}
+				add_popularity = {
+					ideology = neutrality
+					popularity = 0.1
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 80
+		}
+	}
+
+	SOV_proclaim_legitimist_party_french_monarch = {
+
+		icon = GFX_decision_generic_decision
+
+		fire_only_once = yes
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			NOT = {
+				has_country_flag = has_chosen_monarchy_party
+			}
+			FRA = {
+				has_government = neutrality
+				is_subject_of = SOV
+			}
+		}
+
+		available = {
+			FRA = {
+				has_government = neutrality
+				is_subject_of = SOV
+			}
+		}
+
+		complete_effect = {
+			set_country_flag = has_chosen_monarchy_party
+			FRA = {
+				if = {
+					limit = {
+						date < 1941.2.21
+					}
+					create_country_leader = {
+						name = "Alphonse I"
+						desc = "POLITICS_ÉDOUARD_DALADIER_DESC"
+						picture = GFX_portrait_SPA_alfonso_xiii
+						expire = "1965.1.1"
+						ideology = despotism
+						traits = {
+							
+						}
+					}
+				}
+				else = {
+					create_country_leader = {
+						name = "Jacques II"
+						desc = "POLITICS_ÉDOUARD_DALADIER_DESC"
+						picture = GFX_portrait_fra_infante_jaime
+						expire = "1965.1.1"
+						ideology = despotism
+						traits = {
+							
+						}
+					}
+				}
+				set_party_name = {
+					ideology = neutrality
+					long_name = FRA_legitimist_party_long
+					name = FRA_legitimist_party
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 80
+		}
+	}
+
+	SOV_proclaim_bonapartiste_party_french_monarch = {
+
+		icon = GFX_decision_generic_decision
+
+		fire_only_once = yes
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			NOT = {
+				has_country_flag = has_chosen_monarchy_party
+			}
+			FRA = {
+				has_government = neutrality
+				is_subject_of = SOV
+			}
+		}
+
+		available = {
+			FRA = {
+				has_government = neutrality
+				is_subject_of = SOV
+			}
+		}
+
+		complete_effect = {
+			set_country_flag = has_chosen_monarchy_party
+			FRA = {
+				create_country_leader = {
+					name = "Napoléon VI"
+					desc = "POLITICS_ÉDOUARD_DALADIER_DESC"
+					picture = GFX_portraits_fra_napoleon_vi
+					expire = "1965.1.1"
+					ideology = despotism
+					traits = {
+						
+					}
+				}
+				set_party_name = {
+					ideology = neutrality
+					long_name = FRA_bonepartist_party_long
+					name = FRA_bonepartist_party
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 80
+		}
+	}
+}
+
+SOV_deal_with_french_monarchy_rise_cat = {
+
+	SOV_remove_monarchy_sentiment = {
+
+		icon = GFX_decision_generic_decision
+
+		fire_only_once = yes
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			has_idea = SOV_french_monarchist_sentiment_idea
+		}
+
+		available = {
+			has_idea = SOV_french_monarchist_sentiment_idea
+			neutrality < 0.1
+		}
+
+		complete_effect = {
+			remove_ideas = SOV_french_monarchist_sentiment_idea
+		}
+
+		cost = 50
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	SOV_send_police_monarchy_sentiment = {
+
+		icon = GFX_decision_generic_decision
+
+		fire_only_once = yes
+
+		days_re_enable = 210
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			has_idea = SOV_french_monarchist_sentiment_idea
+		}
+
+		available = {
+			has_idea = SOV_french_monarchist_sentiment_idea
+		}
+
+		cost = 150
+
+		complete_effect = {
+			add_popularity = {
+				ideology = neutrality
+				popularity = 0.1
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	SOV_use_propagande_against_monarchy_sentiment = {
+
+		icon = GFX_decision_generic_decision
+
+		fire_only_once = yes
+
+		days_re_enable = 70
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			has_idea = SOV_french_monarchist_sentiment_idea
+		}
+
+		available = {
+			has_idea = SOV_french_monarchist_sentiment_idea
+		}
+
+		cost = 100
+
+		days_remove = 70
+
+		complete_effect = {
+			add_ideas = SOV_french_stamp_down_monarchist_idea
+		}
+
+		remove_effect = {
+			remove_ideas = SOV_french_stamp_down_monarchist_idea
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+}

@@ -1344,4 +1344,100 @@ on_actions = {
 			}
 		}
 	}
+
+	#Germany Capitulate to Prussia
+	on_civil_war_end_before_annexation = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						original_tag = FRA
+						has_government = neutrality
+					}
+					FROM = {
+						TAG = FRA
+						NOT = {
+							has_government = neutrality
+						}
+					}
+					SOV = {
+						has_country_flag = launched_civil_war_for_monarchist_france
+					}
+				}
+				ROOT = {
+					every_unit_leader = {
+						set_nationality = FRA
+					}
+				}
+				FROM = {
+					annex_country = {
+						target = ROOT
+						transfer_troops = yes
+					}
+					set_politics = {
+						ruling_party = neutrality
+					}
+					set_party_name = {
+						ideology = neutrality
+						long_name = FRA_orleanist_party_long
+						name = FRA_orleanist_party
+					}
+					if = {
+						limit = {
+							date < 1940.8.25
+						}
+						create_country_leader = {
+							name = "Jean III"
+							desc = "POLITICS_ÉDOUARD_DALADIER_DESC"
+							picture = GFX_portrait_fra_jean_duke_of_guise
+							expire = "1965.1.1"
+							ideology = moderatism
+							traits = {
+								duke_of_orleans
+							}
+						}
+					}
+					else = {
+						create_country_leader = {
+							name = "Henri VI"
+							desc = "POLITICS_ÉDOUARD_DALADIER_DESC"
+							picture = GFX_portrait_fra_henry_count_of_paris
+							expire = "1965.1.1"
+							ideology = moderatism
+							traits = {
+								count_of_paris
+							}
+						}
+					}
+					randomize_variable = {
+						var = french_monarchist_leader_influence_var
+						distribution = uniform
+						min = french_monarchist_leader_influence_var
+						max = 200
+					}
+					round_variable = french_monarchist_leader_influence_var
+					if = {
+						limit = {
+							check_variable = {
+								var = french_monarchist_leader_influence_var
+								value = 100
+								compare = greater_than_or_equals
+							}
+						}
+						SOV = {
+							set_autonomy = {
+								target = FRA
+								autonomy_state = autonomy_imperial_governorates
+							}
+						}
+					}
+					else = {
+						SOV = {
+							add_to_faction = FRA
+						}
+					}
+				}
+			}
+		}
+	}
 }
