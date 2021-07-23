@@ -787,6 +787,7 @@ SOV_europe_expansion = {
 		}
 
      	complete_effect = {
+			set_country_flag = sov_russian_expansion_war_poland
 			every_country = {
 				limit = {
 					has_guaranteed = POL
@@ -873,6 +874,7 @@ SOV_europe_expansion = {
 		}
 
      	complete_effect = {
+			set_country_flag = sov_russian_expansion_ultimatum_poland
 			if = {
 				limit = {
 					POL = {
@@ -941,6 +943,7 @@ SOV_europe_expansion = {
 		}
 
      	complete_effect = {
+			set_country_flag = sov_russian_expansion_ultimatum_bessarabia
 			if = {
 				limit = {
 					any_country = {
@@ -1025,6 +1028,7 @@ SOV_europe_expansion = {
 		}
 
      	complete_effect = {
+			set_country_flag = sov_russian_expansion_ultimatum_estonia
 			if = {
 				limit = {
 					EST = {
@@ -1103,6 +1107,7 @@ SOV_europe_expansion = {
 		}
 
      	complete_effect = {
+			set_country_flag = sov_russian_expansion_ultimatum_latvia
 			if = {
 				limit = {
 					LAT = {
@@ -1181,6 +1186,7 @@ SOV_europe_expansion = {
 		}
 
      	complete_effect = {
+			set_country_flag = sov_russian_expansion_ultimatum_lithuania
 			if = {
 				limit = {
 					LIT = {
@@ -1264,6 +1270,7 @@ SOV_europe_expansion_democratic = {
 		}
 
      	complete_effect = {
+			set_country_flag = sov_russian_expansion_ultimatum_poland
 			POL = {
 				country_event = soviets.170
 			}
@@ -1329,6 +1336,7 @@ SOV_europe_expansion_democratic = {
 		}
 
      	complete_effect = {
+			set_country_flag = sov_russian_expansion_ultimatum_bessarabia
 			ROM = {
 				country_event = soviets.170
 			}
@@ -1394,6 +1402,7 @@ SOV_europe_expansion_democratic = {
 		}
 
      	complete_effect = {
+			set_country_flag = sov_russian_expansion_ultimatum_estonia
 			EST = {
 				country_event = soviets.170
 			}
@@ -1459,6 +1468,7 @@ SOV_europe_expansion_democratic = {
 		}
 
      	complete_effect = {
+			set_country_flag = sov_russian_expansion_ultimatum_latvia
 			LAT = {
 				country_event = soviets.170
 			}
@@ -1524,6 +1534,7 @@ SOV_europe_expansion_democratic = {
 		}
 
      	complete_effect = {
+			set_country_flag = sov_russian_expansion_ultimatum_lithuania
 			LIT = {
 				country_event = soviets.170
 			}
@@ -42106,7 +42117,7 @@ SOV_greater_kurdistan = {
 				factor = 100
 				strength_ratio = {
 					tag = FROM
-					ratio > 1
+					ratio > 0.9
 				}
 			}
 		}
@@ -42696,6 +42707,431 @@ SOV_buy_african_colonies_decisions = {
 			}
 		}
 	}
+}
+
+SOV_encourage_investments_democratic_decisions = {
+
+	SOV_encourage_investment_democratic_in_state = {
+
+		icon = gre_paying_ifc_debt
+
+		state_target = yes
+
+		target_array = sov_democratic_investments_random_states
+
+		available = {
+			FROM = {
+				is_core_of = ROOT
+				is_fully_controlled_by = ROOT
+			}
+			political_power_daily > 0.09
+		}
+
+		cancel_trigger = {
+			FROM = {
+				OR = {
+					NOT = {
+						is_core_of = ROOT
+					}
+					NOT = {
+						is_fully_controlled_by = ROOT
+					}
+				}
+			}
+		}
+
+		visible = {
+			owns_state = FROM
+			has_government = democratic
+			is_subject = no
+			has_capitulated = no
+			has_completed_focus = SOV_encourage_investments
+		}
+
+		fire_only_once = yes
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		days_remove = 90
+
+		complete_effect = {
+			set_temp_variable = { cost_pp_infrastructure = 10 }
+			subtract_from_temp_variable = { cost_pp_infrastructure = FROM.infrastructure_level }
+			multiply_temp_variable = { cost_pp_infrastructure = -10 }
+			if = {
+				limit = {
+					NOT = {
+						check_variable = {
+							var = cost_pp_infrastructure
+							value = 0
+							compare = equals
+						}
+					}
+				}
+				add_political_power = var:cost_pp_infrastructure
+			}
+		}
+
+		modifier = {
+			political_power_gain = -0.1
+		}
+
+		remove_effect = {
+			FROM = {
+				add_extra_state_shared_building_slots = 4
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+				if = {
+					limit = {
+						is_coastal = yes
+					}
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = dockyard
+						level = 1
+						instant_build = yes
+					}
+				}
+				else = {
+					add_building_construction = {
+						type = arms_factory
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
+		}
+	}
+}
+
+SOV_external_threats_decisions = {
+
+	SOV_demand_dismantle_faction = {
+
+		icon = generic_break_treaty
+
+     	available = {
+     	    has_completed_focus = SOV_fight_extremist_ideas
+			num_faction_members > 1
+			surrender_progress < 0.05
+			NOT = {
+				has_country_flag = sov_democratic_vote_started
+			}
+			NOT = {
+				has_war_with = FROM
+			}
+     	}
+
+		visible = {
+			has_government = democratic
+			is_subject = no
+			has_capitulated = no
+			has_completed_focus = SOV_external_threats
+			FROM = {
+				exists = yes
+				is_subject = no
+				is_faction_leader = yes
+				OR = {
+					NOT = {
+						has_government = democratic
+						has_government = neutrality
+					}
+					has_added_tension_amount > 10
+					has_wargoal_against = ROOT
+				}
+			}
+		}
+
+		target_root_trigger = {
+			tag = SOV
+			has_completed_focus = SOV_fight_extremist_ideas
+		}
+
+		target_trigger = {
+			FROM = {
+				exists = yes
+				is_subject = no
+				is_faction_leader = yes
+				OR = {
+					NOT = {
+						has_government = democratic
+						has_government = neutrality
+					}
+					has_added_tension_amount > 10
+					has_wargoal_against = ROOT
+				}
+			}
+		}
+
+		cancel_trigger = {
+			OR = {
+				NOT = {
+					has_government = democratic
+				}
+				is_subject = yes
+				has_capitulated = yes
+			}
+		}
+
+     	fire_only_once = yes
+
+     	cost = 50
+
+		days_remove = 10
+
+		ai_will_do = {
+			factor = 0
+			modifier = {
+				factor = 1000
+				strength_ratio = {
+					tag = FROM
+					ratio > 1
+				}
+			}
+		}
+
+     	complete_effect = {
+			hidden_effect = {
+				clear_array = SOV.current_democratic_vote
+				clear_array = SOV.current_democratic_vote_not
+				clear_array = SOV.current_democratic_vote_for
+				clear_array = SOV.current_democratic_vote_against
+				clear_array = SOV.current_democratic_vote_registered
+				clear_array = SOV.current_democratic_vote_participants
+				clr_country_flag = sov_democratic_target_alone
+				clr_country_flag = sov_democratic_target_alliance
+				clr_country_flag = sov_democratic_vote_started
+				every_country = {
+					limit = {
+						OR = {
+							has_country_flag = sov_voted_yes_last_vote
+							has_country_flag = sov_voted_no_last_vote
+							has_country_flag = sov_voted_not_last_vote
+						}
+					}
+					clr_country_flag = sov_voted_yes_last_vote
+					clr_country_flag = sov_voted_no_last_vote
+					clr_country_flag = sov_voted_not_last_vote
+				}
+			}
+			FROM = {
+				save_event_target_as = sov_current_democratic_target_event_target
+			}
+			set_country_flag = sov_democratic_vote_started
+			set_country_flag = sov_democratic_target_alliance
+			set_variable = { SOV.current_democratic_target = FROM.id }
+			resize_array = { current_democratic_vote = 2 }
+			calculate_sov_gui_percentage_democratic_vote = yes
+			every_country = {
+				limit = {
+					exists = yes
+					OR = {
+						tag = ROOT
+						is_in_faction_with = ROOT
+						is_subject_of = ROOT
+					}
+				}
+				hidden_effect = {
+					SOV = {
+						add_to_array = { current_democratic_vote_participants = PREV }
+					}
+				}
+				country_event = soviets.527
+			}
+		}
+
+		remove_effect = {
+			if = {
+				limit = {
+					check_variable = {
+						var = SOV.current_democratic_vote^0
+						value = SOV.current_democratic_vote^1
+						compare = greater_than_or_equals
+					}
+				}
+				country_event = soviets.528
+			}
+			else = {
+				country_event = soviets.529
+			}
+		}
+    }
+
+	SOV_demand_puppet_external_threat = {
+
+		icon = hol_war_on_pacifism
+
+     	available = {
+     	    has_completed_focus = SOV_defenders_of_democracy
+			num_faction_members > 1
+			surrender_progress < 0.05
+			NOT = {
+				has_country_flag = sov_democratic_vote_started
+			}
+			NOT = {
+				has_war_with = FROM
+			}
+     	}
+
+		visible = {
+			has_government = democratic
+			is_subject = no
+			has_capitulated = no
+			has_completed_focus = SOV_external_threats
+			FROM = {
+				exists = yes
+				is_subject = no
+				is_in_faction = no
+				OR = {
+					NOT = {
+						has_government = democratic
+						has_government = neutrality
+					}
+					has_added_tension_amount > 10
+					has_wargoal_against = ROOT
+				}
+			}
+		}
+
+		target_root_trigger = {
+			tag = SOV
+			has_completed_focus = SOV_defenders_of_democracy
+		}
+
+		target_trigger = {
+			FROM = {
+				exists = yes
+				is_subject = no
+				is_in_faction = no
+				OR = {
+					NOT = {
+						has_government = democratic
+						has_government = neutrality
+					}
+					has_added_tension_amount > 10
+					has_wargoal_against = ROOT
+				}
+			}
+		}
+
+		cancel_trigger = {
+			OR = {
+				NOT = {
+					has_government = democratic
+				}
+				is_subject = yes
+				has_capitulated = yes
+			}
+		}
+
+     	fire_only_once = yes
+
+     	cost = 50
+
+		days_remove = 10
+
+		ai_will_do = {
+			factor = 0
+			modifier = {
+				factor = 1000
+				strength_ratio = {
+					tag = FROM
+					ratio > 1
+				}
+			}
+		}
+
+     	complete_effect = {
+			hidden_effect = {
+				clear_array = SOV.current_democratic_vote
+				clear_array = SOV.current_democratic_vote_not
+				clear_array = SOV.current_democratic_vote_for
+				clear_array = SOV.current_democratic_vote_against
+				clear_array = SOV.current_democratic_vote_registered
+				clear_array = SOV.current_democratic_vote_participants
+				clr_country_flag = sov_democratic_target_alone
+				clr_country_flag = sov_democratic_target_alliance
+				clr_country_flag = sov_democratic_vote_started
+				every_country = {
+					limit = {
+						OR = {
+							has_country_flag = sov_voted_yes_last_vote
+							has_country_flag = sov_voted_no_last_vote
+							has_country_flag = sov_voted_not_last_vote
+						}
+					}
+					clr_country_flag = sov_voted_yes_last_vote
+					clr_country_flag = sov_voted_no_last_vote
+					clr_country_flag = sov_voted_not_last_vote
+				}
+			}
+			FROM = {
+				save_event_target_as = sov_current_democratic_target_event_target
+			}
+			set_country_flag = sov_democratic_vote_started
+			set_country_flag = sov_democratic_target_alone
+			set_variable = { current_democratic_target = FROM.id }
+			resize_array = { current_democratic_vote = 2 }
+			calculate_sov_gui_percentage_democratic_vote = yes
+			every_country = {
+				limit = {
+					exists = yes
+					OR = {
+						tag = ROOT
+						is_in_faction_with = ROOT
+						is_subject_of = ROOT
+					}
+				}
+				hidden_effect = {
+					SOV = {
+						add_to_array = { current_democratic_vote_participants = PREV }
+					}
+				}
+				country_event = soviets.527
+			}
+		}
+
+		remove_effect = {
+			if = {
+				limit = {
+					check_variable = {
+						var = SOV.current_democratic_vote^0
+						value = SOV.current_democratic_vote^1
+						compare = greater_than_or_equals
+					}
+				}
+				country_event = soviets.528
+				hidden_effect = {
+					for_each_scope_loop = {
+						array = current_democratic_vote_participants
+						
+						country_event = soviets.536
+					}
+				}
+			}
+			else = {
+				country_event = soviets.529
+				hidden_effect = {
+					for_each_scope_loop = {
+						array = current_democratic_vote_participants
+						
+						country_event = soviets.537
+					}
+				}
+			}
+		}
+    }
 }
 
 SOV_reinstore_german_monarchy_decisions = {

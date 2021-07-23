@@ -1048,6 +1048,88 @@ on_actions = {
 		}
 	}
 
+	#Defensive
+	on_war_relation_added = {
+		effect = {
+			if = {
+				limit = {
+					FROM = {
+						OR = {
+							tag = SOV
+							is_in_faction_with = SOV
+						}
+					}
+					ROOT = {
+						NOT = {
+							is_in_faction_with = SOV
+						}
+					}
+					SOV = {
+						has_idea = SOV_External_threats_idea
+						has_government = democratic
+						is_subject = no
+						is_faction_leader = yes
+					}
+				}
+				every_country = {
+					limit = {
+						OR = {
+							tag = SOV
+							is_in_faction_with = SOV
+						}
+						NOT = {
+							has_war_with = ROOT
+						}
+					}
+					ROOT = {
+						declare_war_on = {
+							target = PREV
+							type = defense_external_threats
+						}
+					}
+				}
+			}
+		}
+	}
+
+	#Offensive
+	on_war_relation_added = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						tag = SOV
+						has_idea = SOV_External_threats_idea
+						has_government = democratic
+						is_subject = no
+						is_faction_leader = yes
+					}
+					FROM = {
+						OR = {
+							NOT = {
+								has_government = democratic
+								has_government = neutrality
+							}
+							has_added_tension_amount > 10
+						}
+					}
+				}
+				every_country = {
+					limit = {
+						is_in_faction_with = SOV
+						NOT = {
+							has_war_with = FROM
+						}
+					}
+					declare_war_on = {
+						target = FROM
+						type = defense_external_threats
+					}
+				}
+			}
+		}
+	}
+	
 	#Germany Capitulate to Prussia
 	on_capitulation = {
 		effect = {

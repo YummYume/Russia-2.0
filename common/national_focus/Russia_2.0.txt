@@ -3821,6 +3821,9 @@ focus_tree = {
 				}
 			}
 		}
+		bypass = {
+			has_completed_focus = SOV_abandon_foreign_claims
+		}
 		search_filters = { FOCUS_FILTER_ANNEXATION }
 		completion_reward = {
 			custom_effect_tooltip = SOV_russian_expansion_tt3
@@ -10330,9 +10333,6 @@ focus_tree = {
 				remove = temporary_leader
 				add = abolished_death_penalty
 			}
-			custom_effect_tooltip = SOV_skip_line
-			custom_effect_tooltip = available_political_advisor
-			show_ideas_tooltip = alexander_kerensky
 		}
 	}
 
@@ -10392,8 +10392,6 @@ focus_tree = {
 					stupidity_or_treason
 				}
 			}
-			custom_effect_tooltip = available_political_advisor
-			show_ideas_tooltip = pavel_milyukov
 		}
 	}
 
@@ -10499,8 +10497,10 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			country_event = { id = soviets.409 }
 			custom_effect_tooltip = SOV_the_trials_tt
+			hidden_effect = {
+				country_event = { id = soviets.409 days = 1 }
+			}
 		}
 	}
 
@@ -11121,6 +11121,20 @@ focus_tree = {
 				custom_effect_tooltip = suffer_stability_united_russia_strength
 			}
 			add_stability = var:stability_add
+			if = {
+				limit = {
+					has_completed_focus = SOV_trust_alexander
+				}
+				custom_effect_tooltip = available_political_advisor
+				show_ideas_tooltip = alexander_kerensky
+			}
+			else_if = {
+				limit = {
+					has_completed_focus = SOV_pavel_guidance
+				}
+				custom_effect_tooltip = available_political_advisor
+				show_ideas_tooltip = pavel_milyukov
+			}
 		}
 	}
 
@@ -11480,6 +11494,8 @@ focus_tree = {
 				custom_effect_tooltip = gain_stability_united_russia_strength
 				add_stability = var:stability_add
 			}
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = alexander_konovalov
 		}
 	}
 
@@ -11508,58 +11524,38 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			if = {
+			add_ideas = SOV_United_russia_idea
+			custom_effect_tooltip = bonus_changes_depending_on_opposition_strength
+			set_temp_variable = { united_russia_influence = united_russia_strength }
+			clamp_temp_variable = {
+				var = united_russia_influence
+				max = 4
+				min = 0
+			}
+			round_temp_variable = united_russia_influence
+			set_temp_variable = { stability_add = -0.1 }
+			set_temp_variable = { pp_add = -150 }
+			set_temp_variable = { democracy_add = -0.1 }
+
+			while_loop_effect = {
 				limit = {
 					check_variable = {
-						var = united_russia_strength
-						value = 3
-						compare = equals
+						var = united_russia_influence
+						value = 1
+						compare = greater_than
 					}
 				}
-				custom_effect_tooltip = more_gain_if_united_russia_is_stronger
-				add_political_power = 50
-				add_stability = -0.1
-				add_popularity = {
-					ideology = democratic
-					popularity = 0.05
-				}
+				add_to_temp_variable = { stability_add = 0.05 }
+				add_to_temp_variable = { pp_add = 100 }
+				add_to_temp_variable = { democracy_add = 0.05 }
+				subtract_from_temp_variable = { united_russia_influence = 1 }
 			}
 
-			else_if = {
-				limit = {
-					check_variable = {
-						var = united_russia_strength
-						value = 4
-						compare = equals
-					}
-				}
-				custom_effect_tooltip = more_gain_if_united_russia_is_stronger
-				add_political_power = 100
-				add_stability = 0.05
-				add_popularity = {
-					ideology = democratic
-					popularity = 0.1
-				}
-			}
-
-			else_if = {
-				limit = {
-					check_variable = {
-						var = united_russia_strength
-						value = 5
-						compare = equals
-					}
-				}
-				add_political_power = 150
-				add_stability = 0.1
-				add_popularity = {
-					ideology = democratic
-					popularity = 0.15
-				}
-			}
-
-			else = {
-				custom_effect_tooltip = will_do_something_if_united_russia_is_stronk
+			add_political_power = var:pp_add
+			add_stability = var:stability_add
+			add_popularity = {
+				ideology = democratic
+				popularity = var:democracy_add
 			}
 		}
 	}
@@ -11627,6 +11623,8 @@ focus_tree = {
 				custom_effect_tooltip = suffer_stability_united_russia_strength
 			}
 			add_stability = var:stability_add
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = ivan_nikolaevich
 		}
 	}
 
@@ -11655,41 +11653,38 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			if = {
-				limit = {
-					check_variable = {
-						var = united_russia_strength
-						value = 2
-						compare = equals
-					}
-				}
-				custom_effect_tooltip = more_gain_if_united_russia_is_weaker
-				add_political_power = 50
-				add_stability = 0.05
-				add_popularity = {
-					ideology = democratic
-					popularity = 0.01
-				}
+			add_ideas = SOV_New_russia_idea
+			custom_effect_tooltip = bonus_changes_depending_on_opposition_strength
+			set_temp_variable = { united_russia_influence = united_russia_strength }
+			clamp_temp_variable = {
+				var = united_russia_influence
+				max = 4
+				min = 0
 			}
+			round_temp_variable = united_russia_influence
+			set_temp_variable = { stability_add = 0.1 }
+			set_temp_variable = { pp_add = 150 }
+			set_temp_variable = { democracy_add = 0.1 }
 
-			else_if = {
+			while_loop_effect = {
 				limit = {
 					check_variable = {
-						var = united_russia_strength
+						var = united_russia_influence
 						value = 1
-						compare = equals
+						compare = greater_than
 					}
 				}
-				add_political_power = 150
-				add_stability = 0.1
-				add_popularity = {
-					ideology = democratic
-					popularity = 0.15
-				}
+				subtract_from_temp_variable = { stability_add = 0.05 }
+				subtract_from_temp_variable = { pp_add = 100 }
+				subtract_from_temp_variable = { democracy_add = 0.05 }
+				subtract_from_temp_variable = { united_russia_influence = 1 }
 			}
 
-			else = {
-				custom_effect_tooltip = will_do_something_if_united_russia_is_not_stronk
+			add_political_power = var:pp_add
+			add_stability = var:stability_add
+			add_popularity = {
+				ideology = democratic
+				popularity = var:democracy_add
 			}
 		}
 	}
@@ -12768,6 +12763,7 @@ focus_tree = {
 				ideology = democratic
 				popularity = democratic_support_gain
 			}
+			add_ideas = SOV_Ban_extreme_political_elements_idea
 		}
 	}
 
@@ -12785,6 +12781,7 @@ focus_tree = {
 		available = {
 			is_subject = no
 			has_government = democratic
+			has_country_flag = return_tsar_democratic
 			if = {
 				limit = {
 					has_idea = SOV_Exiled_russia
@@ -12825,7 +12822,30 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			
+			custom_effect_tooltip = SOV_encourage_investments_tt
+			set_temp_variable = { loop_count = 0 }
+			while_loop_effect = {
+				limit = {
+					check_variable = {
+						var = loop_count
+						value = 10
+						compare = less_than_or_equals
+					}
+				}
+				random_scope_in_array = {
+					array = ROOT.owned_states
+					limit = {
+						NOT = {
+							is_in_array = { SOV.sov_democratic_investments_random_states = PREV }
+						}
+					}
+					
+					SOV = {
+						add_to_array = { sov_democratic_investments_random_states = PREV }
+					}
+				}
+				add_to_temp_variable = { loop_count = 1 }
+			}
 		}
 	}
 
@@ -12854,7 +12874,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			
+			country_event = soviets.542
 		}
 	}
 
@@ -12882,9 +12902,31 @@ focus_tree = {
 				}
 			}
 		}
+		bypass = {
+			NOT = {
+				any_country = {
+					OR = {
+						has_government = communism
+						has_government = fascism
+					}
+				}
+			}
+		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			
+			every_other_country = {
+				limit = {
+					OR = {
+						has_government = communism
+						has_government = fascism
+					}
+				}
+				country_event = soviets.538
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = russian_anti_extremists
+				}
+			}
 		}
 	}
 
@@ -12902,6 +12944,7 @@ focus_tree = {
 		available = {
 			is_subject = no
 			has_government = democratic
+			is_major = yes
 			if = {
 				limit = {
 					has_idea = SOV_Exiled_russia
@@ -12913,7 +12956,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			
+			add_ideas = SOV_Russian_professionnal_army
 		}
 	}
 
@@ -12924,13 +12967,14 @@ focus_tree = {
 		y = 31
 		prerequisite = { focus = SOV_towards_professional_army }
 		icon = GFX_The_External_Threats
-		cost = 5
+		cost = 6
 		ai_will_do = {
 			factor = 5
 		}
 		available = {
 			is_subject = no
 			has_government = democratic
+			is_faction_leader = yes
 			if = {
 				limit = {
 					has_idea = SOV_Exiled_russia
@@ -12942,7 +12986,8 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			
+			custom_effect_tooltip = SOV_external_threats_tt
+			add_ideas = SOV_External_threats_idea
 		}
 	}
 
@@ -12953,13 +12998,14 @@ focus_tree = {
 		y = 32
 		prerequisite = { focus = SOV_external_threats }
 		icon = GFX_Defenders_of_Democracy
-		cost = 5
+		cost = 10
 		ai_will_do = {
 			factor = 5
 		}
 		available = {
 			is_subject = no
 			has_government = democratic
+			is_faction_leader = yes
 			if = {
 				limit = {
 					has_idea = SOV_Exiled_russia
@@ -12971,7 +13017,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			
+			custom_effect_tooltip = SOV_defenders_of_democracy_tt
 		}
 	}
 
@@ -12982,13 +13028,14 @@ focus_tree = {
 		y = 32
 		prerequisite = { focus = SOV_external_threats }
 		icon = GFX_Fight_Extremist_Ideas
-		cost = 5
+		cost = 10
 		ai_will_do = {
 			factor = 5
 		}
 		available = {
 			is_subject = no
 			has_government = democratic
+			is_faction_leader = yes
 			if = {
 				limit = {
 					has_idea = SOV_Exiled_russia
@@ -13000,7 +13047,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			
+			custom_effect_tooltip = SOV_fight_extremist_ideas_tt
 		}
 	}
 
@@ -13011,7 +13058,7 @@ focus_tree = {
 		y = 26
 		prerequisite = { focus = SOV_new_kind_of_russia }
 		icon = GFX_
-		cost = 5
+		cost = 4
 		ai_will_do = {
 			factor = 5
 		}
@@ -13029,7 +13076,42 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			
+			if = {
+				limit = {
+					is_faction_leader = yes
+				}
+				set_faction_name = alliance_democratic_nations
+			}
+			else_if = {
+				limit = {
+					is_in_faction = yes
+				}
+				leave_faction = yes
+				create_faction = alliance_democratic_nations
+			}
+			else = {
+				create_faction = alliance_democratic_nations
+			}
+			add_political_power = 150
+			add_to_tech_sharing_group = sov_progressive_research
+			custom_effect_tooltip = SOV_help_from_abroad_tt
+			hidden_effect = {
+				every_country = {
+					limit = {
+						is_in_faction_with = SOV
+					}
+					add_to_tech_sharing_group = sov_progressive_research
+				}		
+			}
+			every_other_country = {
+				limit = {
+					has_government = democratic
+				}
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = russian_true_democracy
+				}
+			}
 		}
 	}
 
@@ -13040,13 +13122,16 @@ focus_tree = {
 		y = 27
 		prerequisite = { focus = SOV_help_from_abroad }
 		icon = GFX_
-		cost = 5
+		cost = 4
 		ai_will_do = {
 			factor = 5
 		}
 		available = {
 			is_subject = no
 			has_government = democratic
+			any_state = {
+				is_claimed_by = ROOT
+			}
 			if = {
 				limit = {
 					has_idea = SOV_Exiled_russia
@@ -13056,9 +13141,44 @@ focus_tree = {
 				}
 			}
 		}
+		bypass = {
+			NOT = {
+				any_state = {
+					is_claimed_by = ROOT
+				}
+			}
+		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			
+			if = {
+				limit = {
+					has_completed_focus = SOV_russian_expansion
+				}
+				custom_effect_tooltip = SOV_abandon_foreign_claims_tt2
+			}
+			custom_effect_tooltip = SOV_abandon_foreign_claims_tt
+			set_temp_variable = { pp_add = 0 }
+			every_state = {
+				limit = {
+					is_claimed_by = ROOT
+				}
+				remove_claim_by = ROOT
+				hidden_effect = {
+					ROOT = {
+						add_to_temp_variable = { pp_add = 25 }
+					}
+				}
+			}
+			if = {
+				limit = {
+					check_variable = {
+						var = pp_add
+						value = 0
+						compare = greater_than
+					}
+				}
+				add_political_power = var:pp_add
+			}
 		}
 	}
 
@@ -13076,6 +13196,28 @@ focus_tree = {
 		available = {
 			is_subject = no
 			has_government = democratic
+			OR = {
+				FRA = {
+					has_government = democratic
+					is_subject = no
+					exists = yes
+					has_civil_war = no
+					NOT = {
+						has_war_with = ROOT
+						is_in_faction_with = ROOT
+					}
+				}
+				ENG = {
+					has_government = democratic
+					is_subject = no
+					exists = yes
+					has_civil_war = no
+					NOT = {
+						has_war_with = ROOT
+						is_in_faction_with = ROOT
+					}
+				}
+			}
 			if = {
 				limit = {
 					has_idea = SOV_Exiled_russia
@@ -13085,9 +13227,121 @@ focus_tree = {
 				}
 			}
 		}
+		bypass = {
+			FRA = {
+				OR = {
+					NOT = {
+						has_government = democratic
+					}
+					is_subject = yes
+					exists = no
+					has_civil_war = yes
+					has_war_with = ROOT
+					is_in_faction_with = ROOT
+				}
+			}
+			ENG = {
+				OR = {
+					NOT = {
+						has_government = democratic
+					}
+					is_subject = yes
+					exists = no
+					has_civil_war = yes
+					has_war_with = ROOT
+					is_in_faction_with = ROOT
+				}
+			}
+		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			
+			if = {
+				limit = {
+					FRA = {
+						has_government = democratic
+						is_subject = no
+						exists = yes
+						has_civil_war = no
+						NOT = {
+							has_war_with = ROOT
+							is_in_faction_with = ROOT
+						}
+					}
+				}
+				FRA = {
+					country_event = { id = soviets.543 days = 1 }
+				}
+				if = {
+					limit = {
+						OR = {
+							has_country_flag = sov_russian_expansion_ultimatum_poland
+							has_country_flag = sov_russian_expansion_ultimatum_bessarabia
+							has_country_flag = sov_russian_expansion_ultimatum_lithuania
+							has_country_flag = sov_russian_expansion_ultimatum_latvia
+							has_country_flag = sov_russian_expansion_ultimatum_estonia
+						}
+					}
+					custom_effect_tooltip = sov_fra_will_refuse_friendship_treaty
+				}
+			}
+			if = {
+				limit = {
+					ENG = {
+						has_government = democratic
+						is_subject = no
+						exists = yes
+						has_civil_war = no
+						NOT = {
+							has_war_with = ROOT
+							is_in_faction_with = ROOT
+						}
+					}
+				}
+				ENG = {
+					country_event = { id = soviets.543 days = 1 }
+				}
+				if = {
+					limit = {
+						OR = {
+							has_country_flag = sov_russian_expansion_ultimatum_poland
+							has_country_flag = sov_russian_expansion_ultimatum_bessarabia
+							has_country_flag = sov_russian_expansion_ultimatum_lithuania
+							has_country_flag = sov_russian_expansion_ultimatum_latvia
+							has_country_flag = sov_russian_expansion_ultimatum_estonia
+						}
+					}
+					custom_effect_tooltip = sov_eng_will_refuse_friendship_treaty
+				}
+			}
+			if = {
+				limit = {
+					FRA = {
+						OR = {
+							NOT = {
+								has_government = democratic
+							}
+							is_subject = yes
+							exists = no
+							has_civil_war = yes
+							has_war_with = ROOT
+							is_in_faction_with = ROOT
+						}
+					}
+					ENG = {
+						OR = {
+							NOT = {
+								has_government = democratic
+							}
+							is_subject = yes
+							exists = no
+							has_civil_war = yes
+							has_war_with = ROOT
+							is_in_faction_with = ROOT
+						}
+					}
+				}
+				custom_effect_tooltip = SOV_friendship_treaty_west_tt
+			}
 		}
 	}
 
@@ -13098,13 +13352,35 @@ focus_tree = {
 		y = 29
 		prerequisite = { focus = SOV_friendship_treaty_west }
 		icon = GFX_
-		cost = 5
+		cost = 6
 		ai_will_do = {
 			factor = 5
 		}
 		available = {
 			is_subject = no
 			has_government = democratic
+			OR = {
+				FRA = {
+					has_government = democratic
+					is_subject = no
+					exists = yes
+					has_civil_war = no
+					NOT = {
+						has_war_with = ROOT
+						is_in_faction_with = ROOT
+					}
+				}
+				ENG = {
+					has_government = democratic
+					is_subject = no
+					exists = yes
+					has_civil_war = no
+					NOT = {
+						has_war_with = ROOT
+						is_in_faction_with = ROOT
+					}
+				}
+			}
 			if = {
 				limit = {
 					has_idea = SOV_Exiled_russia
@@ -13114,9 +13390,102 @@ focus_tree = {
 				}
 			}
 		}
+		bypass = {
+			FRA = {
+				OR = {
+					NOT = {
+						has_government = democratic
+					}
+					is_subject = yes
+					exists = no
+					has_civil_war = yes
+					has_war_with = ROOT
+					is_in_faction_with = ROOT
+				}
+			}
+			ENG = {
+				OR = {
+					NOT = {
+						has_government = democratic
+					}
+					is_subject = yes
+					exists = no
+					has_civil_war = yes
+					has_war_with = ROOT
+					is_in_faction_with = ROOT
+				}
+			}
+		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			
+			if = {
+				limit = {
+					FRA = {
+						has_government = democratic
+						is_subject = no
+						exists = yes
+						has_civil_war = no
+						NOT = {
+							has_war_with = ROOT
+							is_in_faction_with = ROOT
+						}
+					}
+				}
+				FRA = {
+					country_event = { id = soviets.539 days = 1 }
+				}
+				if = {
+					limit = {
+						any_state = {
+							is_owned_by = FRA
+							is_claimed_by = ROOT
+						}
+					}
+					custom_effect_tooltip = sov_fra_will_refuse_alliance_democratic
+				}
+				else_if = {
+					limit = {
+						FRA = {
+							has_country_flag = sov_friendship_treaty_signed
+						}
+					}
+					custom_effect_tooltip = sov_fra_will_accept_alliance_democratic
+				}
+			}
+			if = {
+				limit = {
+					ENG = {
+						has_government = democratic
+						is_subject = no
+						exists = yes
+						has_civil_war = no
+						NOT = {
+							has_war_with = ROOT
+							is_in_faction_with = ROOT
+						}
+					}
+				}
+				ENG = {
+					country_event = { id = soviets.539 days = 1 }
+				}
+				if = {
+					limit = {
+						any_state = {
+							is_owned_by = ENG
+							is_claimed_by = ROOT
+						}
+					}
+					custom_effect_tooltip = sov_eng_will_refuse_alliance_democratic
+				}
+				else_if = {
+					limit = {
+						ENG = {
+							has_country_flag = sov_friendship_treaty_signed
+						}
+					}
+					custom_effect_tooltip = sov_eng_will_accept_alliance_democratic
+				}
+			}
 		}
 	}
 
@@ -13127,7 +13496,7 @@ focus_tree = {
 		y = 27
 		prerequisite = { focus = SOV_help_from_abroad }
 		icon = GFX_
-		cost = 5
+		cost = 4
 		ai_will_do = {
 			factor = 5
 		}
@@ -13163,6 +13532,22 @@ focus_tree = {
 		available = {
 			is_subject = no
 			has_government = democratic
+			NOT = {
+				has_country_flag = sov_russian_expansion_ultimatum_poland
+			}
+			POL = {
+				OR = {
+					has_government = democratic
+					has_government = neutrality
+				}
+				is_subject = no
+				exists = yes
+				has_civil_war = no
+				NOT = {
+					has_war_with = ROOT
+					is_in_faction_with = ROOT
+				}
+			}
 			if = {
 				limit = {
 					has_idea = SOV_Exiled_russia
@@ -13172,9 +13557,29 @@ focus_tree = {
 				}
 			}
 		}
+		bypass = {
+			OR = {
+				has_country_flag = sov_russian_expansion_ultimatum_poland
+				POL = {
+					OR = {
+						NOT = {
+							has_government = democratic
+							has_government = neutrality
+						}
+						is_subject = yes
+						exists = no
+						has_civil_war = yes
+						has_war_with = ROOT
+						is_in_faction_with = ROOT
+					}
+				}
+			}
+		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			
+			POL = {
+				country_event = { id = soviets.539 days = 1 }
+			}
 		}
 	}
 
@@ -13185,13 +13590,61 @@ focus_tree = {
 		y = 29
 		prerequisite = { focus = SOV_polish_buffer_state }
 		icon = GFX_
-		cost = 5
+		cost = 6
 		ai_will_do = {
 			factor = 5
 		}
 		available = {
 			is_subject = no
 			has_government = democratic
+			any_country = {
+				OR = {
+					tag = LIT
+					tag = LAT
+					tag = EST
+				}
+				OR = {
+					has_government = democratic
+					has_government = neutrality
+				}
+				if = {
+					limit = {
+						tag = LIT
+					}
+					SOV = {
+						NOT = {
+							has_country_flag = sov_russian_expansion_ultimatum_lithuania
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						tag = LAT
+					}
+					SOV = {
+						NOT = {
+							has_country_flag = sov_russian_expansion_ultimatum_latvia
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						tag = EST
+					}
+					SOV = {
+						NOT = {
+							has_country_flag = sov_russian_expansion_ultimatum_estonia
+						}
+					}
+				}
+				is_subject = no
+				exists = yes
+				has_civil_war = no
+				NOT = {
+					has_war_with = ROOT
+					is_in_faction_with = ROOT
+				}
+			}
 			if = {
 				limit = {
 					has_idea = SOV_Exiled_russia
@@ -13201,9 +13654,111 @@ focus_tree = {
 				}
 			}
 		}
+		bypass = {
+			NOT = {
+				any_country = {
+					OR = {
+						tag = LIT
+						tag = LAT
+						tag = EST
+					}
+					OR = {
+						has_government = democratic
+						has_government = neutrality
+					}
+					if = {
+						limit = {
+							tag = LIT
+						}
+						SOV = {
+							NOT = {
+								has_country_flag = sov_russian_expansion_ultimatum_lithuania
+							}
+						}
+					}
+					else_if = {
+						limit = {
+							tag = LAT
+						}
+						SOV = {
+							NOT = {
+								has_country_flag = sov_russian_expansion_ultimatum_latvia
+							}
+						}
+					}
+					else_if = {
+						limit = {
+							tag = EST
+						}
+						SOV = {
+							NOT = {
+								has_country_flag = sov_russian_expansion_ultimatum_estonia
+							}
+						}
+					}
+					is_subject = no
+					exists = yes
+					has_civil_war = no
+					NOT = {
+						has_war_with = ROOT
+						is_in_faction_with = ROOT
+					}
+				}
+			}
+		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_RUSSIA }
 		completion_reward = {
-			
+			every_other_country = {
+				limit = {
+					OR = {
+						tag = LIT
+						tag = LAT
+						tag = EST
+					}
+					OR = {
+						has_government = democratic
+						has_government = neutrality
+					}
+					if = {
+						limit = {
+							tag = LIT
+						}
+						SOV = {
+							NOT = {
+								has_country_flag = sov_russian_expansion_ultimatum_lithuania
+							}
+						}
+					}
+					else_if = {
+						limit = {
+							tag = LAT
+						}
+						SOV = {
+							NOT = {
+								has_country_flag = sov_russian_expansion_ultimatum_latvia
+							}
+						}
+					}
+					else_if = {
+						limit = {
+							tag = EST
+						}
+						SOV = {
+							NOT = {
+								has_country_flag = sov_russian_expansion_ultimatum_estonia
+							}
+						}
+					}
+					is_subject = no
+					exists = yes
+					has_civil_war = no
+					NOT = {
+						has_war_with = ROOT
+						is_in_faction_with = ROOT
+					}
+				}
+				country_event = { id = soviets.539 days = 1 }
+			}
 		}
 	}
 
@@ -15256,7 +15811,7 @@ focus_tree = {
 			}
 			has_country_flag = monarchist_restoration_path
 		}
-		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_POLITICAL }
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_POLITICAL }
 		completion_reward = {
 			swap_ideas = {
 				remove_idea = SOV_Communist_resistance
@@ -15295,7 +15850,7 @@ focus_tree = {
 			}
 			has_country_flag = military_junta_leader
 		}
-		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
+		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
 		completion_reward = {
 			swap_ideas = {
 				remove_idea = SOV_Communist_resistance
@@ -15739,7 +16294,7 @@ focus_tree = {
 				}
 			}
 		}
-		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
+		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
 		completion_reward = {
 			custom_effect_tooltip = SOV_buying_equipment_tt
 			custom_effect_tooltip = SOV_buying_equipment_decision_tt
@@ -15987,7 +16542,7 @@ focus_tree = {
 				}
 			}
 		}
-		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_POLITICAL }
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_POLITICAL }
 		completion_reward = {
 			add_political_power = 50
 			add_timed_idea = {
@@ -18098,8 +18653,20 @@ focus_tree = {
 			OR = {
 				is_neighbor_of = JAP
 				any_country = {
-					is_subject_of = ROOT
-					is_neighbor_of = JAP
+					OR = {
+						is_subject_of = ROOT
+						is_in_faction_with = ROOT
+					}
+					OR = {
+						is_neighbor_of = JAP
+						any_country = {
+							OR = {
+								is_subject_of = JAP
+								is_in_faction_with = JAP
+							}
+							is_neighbor_of = PREV
+						}
+					}
 				}
 			}
 			JAP = {
@@ -18121,7 +18688,7 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_ANNEXATION }
 		will_lead_to_war_with = JAP
 		completion_reward = {
-			
+			country_event = japans.36
 		}
 	}
 
@@ -18496,25 +19063,9 @@ focus_tree = {
 						is_in_faction_with = SOV
 					}
 					is_subject = no
-					if = {
-						limit = {
-							SOV = {
-								has_completed_focus = SOV_appease_communist
-							}
-						}
-						NOT = {
-							has_government = fascism
-						}
-					}
-					else_if = {
-						limit = {
-							SOV = {
-								has_completed_focus = SOV_destroy_communist
-							}
-						}
-						NOT = {
-							has_government = communism
-						}
+					NOT = {
+						has_government = fascism
+						has_government = communism
 					}
 				}
 			}
@@ -18529,25 +19080,9 @@ focus_tree = {
 						is_in_faction_with = SOV
 					}
 					is_subject = no
-					if = {
-						limit = {
-							SOV = {
-								has_completed_focus = SOV_appease_communist
-							}
-						}
-						NOT = {
-							has_government = fascism
-						}
-					}
-					else_if = {
-						limit = {
-							SOV = {
-								has_completed_focus = SOV_destroy_communist
-							}
-						}
-						NOT = {
-							has_government = communism
-						}
+					NOT = {
+						has_government = fascism
+						has_government = communism
 					}
 				}
 			}
@@ -18598,25 +19133,9 @@ focus_tree = {
 							is_in_faction_with = SOV
 						}
 						is_subject = no
-						if = {
-							limit = {
-								SOV = {
-									has_completed_focus = SOV_appease_communist
-								}
-							}
-							NOT = {
-								has_government = fascism
-							}
-						}
-						else_if = {
-							limit = {
-								SOV = {
-									has_completed_focus = SOV_destroy_communist
-								}
-							}
-							NOT = {
-								has_government = communism
-							}
+						NOT = {
+							has_government = fascism
+							has_government = communism
 						}
 					}
 					country_event = { id = soviets.178 days = 1 }
@@ -18672,25 +19191,9 @@ focus_tree = {
 					is_in_faction_with = SOV
 				}
 				is_subject = no
-				if = {
-					limit = {
-						SOV = {
-							has_completed_focus = SOV_appease_communist
-						}
-					}
-					NOT = {
-						has_government = fascism
-					}
-				}
-				else_if = {
-					limit = {
-						SOV = {
-							has_completed_focus = SOV_destroy_communist
-						}
-					}
-					NOT = {
-						has_government = communism
-					}
+				NOT = {
+					has_government = fascism
+					has_government = communism
 				}
 			}
 			if = {
@@ -18735,25 +19238,9 @@ focus_tree = {
 					is_in_faction_with = SOV
 				}
 				is_subject = no
-				if = {
-					limit = {
-						SOV = {
-							has_completed_focus = SOV_appease_communist
-						}
-					}
-					NOT = {
-						has_government = fascism
-					}
-				}
-				else_if = {
-					limit = {
-						SOV = {
-							has_completed_focus = SOV_destroy_communist
-						}
-					}
-					NOT = {
-						has_government = communism
-					}
+				NOT = {
+					has_government = fascism
+					has_government = communism
 				}
 			}
 			if = {
@@ -18798,25 +19285,9 @@ focus_tree = {
 					is_in_faction_with = SOV
 				}
 				is_subject = no
-				if = {
-					limit = {
-						SOV = {
-							has_completed_focus = SOV_appease_communist
-						}
-					}
-					NOT = {
-						has_government = fascism
-					}
-				}
-				else_if = {
-					limit = {
-						SOV = {
-							has_completed_focus = SOV_destroy_communist
-						}
-					}
-					NOT = {
-						has_government = communism
-					}
+				NOT = {
+					has_government = fascism
+					has_government = communism
 				}
 			}
 			if = {
@@ -18863,25 +19334,9 @@ focus_tree = {
 							is_in_faction_with = SOV
 						}
 						is_subject = no
-						if = {
-							limit = {
-								SOV = {
-									has_completed_focus = SOV_appease_communist
-								}
-							}
-							NOT = {
-								has_government = fascism
-							}
-						}
-						else_if = {
-							limit = {
-								SOV = {
-									has_completed_focus = SOV_destroy_communist
-								}
-							}
-							NOT = {
-								has_government = communism
-							}
+						NOT = {
+							has_government = fascism
+							has_government = communism
 						}
 					}
 				}
@@ -18896,25 +19351,9 @@ focus_tree = {
 							is_in_faction_with = SOV
 						}
 						is_subject = no
-						if = {
-							limit = {
-								SOV = {
-									has_completed_focus = SOV_appease_communist
-								}
-							}
-							NOT = {
-								has_government = fascism
-							}
-						}
-						else_if = {
-							limit = {
-								SOV = {
-									has_completed_focus = SOV_destroy_communist
-								}
-							}
-							NOT = {
-								has_government = communism
-							}
+						NOT = {
+							has_government = fascism
+							has_government = communism
 						}
 					}
 				}
@@ -18929,25 +19368,9 @@ focus_tree = {
 							is_in_faction_with = SOV
 						}
 						is_subject = no
-						if = {
-							limit = {
-								SOV = {
-									has_completed_focus = SOV_appease_communist
-								}
-							}
-							NOT = {
-								has_government = fascism
-							}
-						}
-						else_if = {
-							limit = {
-								SOV = {
-									has_completed_focus = SOV_destroy_communist
-								}
-							}
-							NOT = {
-								has_government = communism
-							}
+						NOT = {
+							has_government = fascism
+							has_government = communism
 						}
 					}
 				}
@@ -18977,25 +19400,9 @@ focus_tree = {
 						is_in_faction_with = SOV
 					}
 					is_subject = no
-					if = {
-						limit = {
-							SOV = {
-								has_completed_focus = SOV_appease_communist
-							}
-						}
-						NOT = {
-							has_government = fascism
-						}
-					}
-					else_if = {
-						limit = {
-							SOV = {
-								has_completed_focus = SOV_destroy_communist
-							}
-						}
-						NOT = {
-							has_government = communism
-						}
+					NOT = {
+						has_government = fascism
+						has_government = communism
 					}
 				}
 				country_event = { id = soviets.178 days = 1 }
@@ -19028,25 +19435,9 @@ focus_tree = {
 					is_in_faction_with = SOV
 				}
 				is_subject = no
-				if = {
-					limit = {
-						SOV = {
-							has_completed_focus = SOV_appease_communist
-						}
-					}
-					NOT = {
-						has_government = fascism
-					}
-				}
-				else_if = {
-					limit = {
-						SOV = {
-							has_completed_focus = SOV_destroy_communist
-						}
-					}
-					NOT = {
-						has_government = communism
-					}
+				NOT = {
+					has_government = fascism
+					has_government = communism
 				}
 			}
 			if = {
@@ -19342,6 +19733,10 @@ focus_tree = {
 			is_subject = no
 			has_government = fascism
 			has_country_flag = law_triumphed_over_order
+			has_country_leader = {
+				name = "Konstantin Rodzaevsky"
+				ruling_only = yes
+			}
 			if = {
 				limit = {
 					has_idea = SOV_Exiled_russia
@@ -20063,6 +20458,7 @@ focus_tree = {
 			has_country_flag = order_triumphed_over_law
 			has_country_leader = {
 				name = "Anastasy Vonsyatsky"
+				ruling_only = yes
 			}
 			if = {
 				limit = {
