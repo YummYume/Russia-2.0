@@ -229,6 +229,44 @@ on_actions = {
 		}
 	}
 
+	on_weekly = { #Add Country to the Research Agreement of Democratic Nations
+		effect = {
+			if = {
+				limit = {
+					country_exists = SOV
+					SOV = {
+						has_completed_focus = SOV_help_from_abroad
+					}
+					NOT = {
+						tag = SOV
+						is_in_tech_sharing_group = sov_progressive_research
+					}
+					is_in_faction_with = SOV
+				}
+				FROM = {
+					add_to_tech_sharing_group = sov_progressive_research
+				}
+			}
+		}
+	}
+
+	on_weekly = { #Remove Country from the Research Agreement of Democratic Nations
+		effect = {
+			if = {
+				limit = {
+					is_in_tech_sharing_group = sov_progressive_research
+					NOT = {
+						tag = SOV
+						is_in_faction_with = SOV
+					}
+				}
+				FROM = {
+					remove_from_tech_sharing_group = sov_progressive_research
+				}
+			}
+		}
+	}
+
 	on_weekly = { #Broken ROOT-Russian Agreement
 		effect = {
 			if = {
