@@ -43395,14 +43395,7 @@ SOV_reinstore_german_monarchy_decisions = {
 						any_neighbor_state = {
 							OR = {
 								is_owned_and_controlled_by = SOV
-								if = {
-									limit = {
-										POL = {
-											is_subject_of = SOV
-										}
-									}
-									is_owned_and_controlled_by = POL
-								}
+								is_owned_and_controlled_by = POL
 							}
 							NOT = {
 								has_state_flag = random_prussian_state_1
@@ -43413,10 +43406,11 @@ SOV_reinstore_german_monarchy_decisions = {
 							}
 						}
 					}
-					PRE = {
-						add_state_core = PREV
-					}
 					set_state_flag = random_prussian_state_1
+				}
+				GER = {
+					activate_mission = SOV_civil_war_monarchy_incomming
+					set_country_flag = is_victim_of_russia_civil_war
 				}
 			}
 		}
@@ -43435,32 +43429,33 @@ SOV_reinstore_german_monarchy_decisions = {
 						any_neighbor_state = {
 							OR = {
 								is_owned_and_controlled_by = SOV
-								if = {
-									limit = {
-										POL = {
-											is_subject_of = SOV
-										}
-									}
-									is_owned_and_controlled_by = POL
-								}
+								is_owned_and_controlled_by = POL
 							}
 							NOT = {
 								has_state_flag = random_prussian_state_1
 								has_state_flag = random_prussian_state_2
 								has_state_flag = random_prussian_state_3
-								has_state_flag = random_prussian_state_4
-								has_state_flag = random_prussian_state_5
 							}
+						}
+					}
+					set_state_flag = random_prussian_state_2
+				}
+				country_event = { id = germanys.34 }
+				every_state = {
+					limit = {
+						OR = {
+							has_state_flag = random_prussian_state_1
+							has_state_flag = random_prussian_state_2
+							has_state_flag = random_prussian_state_3
 						}
 					}
 					PRE = {
 						add_state_core = PREV
 					}
-					set_state_flag = random_prussian_state_2
 				}
-				country_event = { id = germanys.34 }
 				GER = {
 					release = PRE
+					clr_country_flag = is_victim_of_russia_civil_war
 				}
 				declare_war_on = {
 					target = GER
@@ -45708,6 +45703,12 @@ SOV_restore_french_monarchy_decisions_cat = {
 		cost = 100
 
 		complete_effect = {
+			hidden_effect = {
+				FRA = {
+					activate_mission = SOV_civil_war_monarchy_incomming
+					set_country_flag = is_victim_of_russia_civil_war
+				}
+			}
 			custom_effect_tooltip = more_neutrality_and_more_power_monarchy
 			set_country_flag = is_doing_finale_france
 			randomize_variable = {
@@ -45753,6 +45754,7 @@ SOV_restore_french_monarchy_decisions_cat = {
 			set_country_flag = launched_civil_war_for_monarchist_france
 			clr_country_flag = is_doing_finale_france
 			FRA = {
+				clr_country_flag = is_victim_of_russia_civil_war
 				remove_ideas = SOV_french_monarchist_sentiment_idea
 				start_civil_war = {
 					ideology = neutrality
@@ -46238,6 +46240,51 @@ SOV_deal_with_french_monarchy_rise_cat = {
 
 		remove_effect = {
 			remove_ideas = SOV_french_stamp_down_monarchist_idea
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+}
+
+SOV_mission_civil_war_monarchy_russia = {
+
+	SOV_civil_war_monarchy_incomming = {
+
+		icon = GFX_decision_generic_ignite_civil_war
+
+		allowed = {
+			OR = {
+				original_tag = FRA
+				original_tag = GER
+			}
+		}
+
+		visible = {
+			has_country_flag = is_victim_of_russia_civil_war
+		}
+
+		activation = {
+			has_country_flag = is_victim_of_russia_civil_war
+		}
+
+		available = {
+			has_war = yes
+		}
+
+		is_good = no
+
+		fire_only_once = yes
+
+		days_mission_timeout = 70
+
+		timeout_effect = {
+			custom_effect_tooltip = civil_war_will_start_monarchy
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = civil_war_will_start_monarchy
 		}
 
 		ai_will_do = {
