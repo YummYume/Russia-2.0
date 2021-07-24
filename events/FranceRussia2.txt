@@ -651,8 +651,137 @@ country_event = {
 		name = frances.16.a
 		add_popularity = {
 			ideology = neutrality
-			popularity = 0.15
+			popularity = 0.1
 		}
 		add_ideas = SOV_french_monarchist_sentiment_idea
+	}
+}
+
+#Civil war French Monarchist
+country_event = {
+	id = frances.17
+
+	is_triggered_only = yes
+
+	hidden = yes
+
+	immediate = {
+		every_country = {
+			limit = {
+				original_tag = FRA
+				has_government = neutrality
+			}
+			every_unit_leader = {
+				set_nationality = SOV
+				set_unit_leader_flag = former_french_monarchist_fighter
+			}
+			SOV = {
+				annex_country = {
+					target = PREV
+				}
+			}
+		}
+		SOV = {
+			release = FRA
+		}
+		every_unit_leader = {
+			limit = {
+				has_unit_leader_flag = {
+					flag = former_french_monarchist_fighter
+				}
+			}
+			set_nationality = FRA
+		}
+		every_state = {
+			limit = {
+				has_state_flag = french_state_before_monarchist_war
+				NOT = {
+					is_owned_by = FRA
+				}
+			}
+			FRA = {
+				transfer_state = PREV
+			}
+		}
+		FRA = {
+			load_oob = "FRA_1939"
+			set_politics = {
+				ruling_party = neutrality
+			}
+			set_popularities = {
+				democratic = 30
+				neutrality = 50
+				fascism = 10
+				communism = 10
+			}
+			set_party_name = {
+				ideology = neutrality
+				long_name = FRA_orleanist_party_long
+				name = FRA_orleanist_party
+			}
+			set_cosmetic_tag = FRA_ORLEANS
+			if = {
+				limit = {
+					date < 1940.8.25
+				}
+				create_country_leader = {
+					name = "Jean III"
+					desc = "POLITICS_ÉDOUARD_DALADIER_DESC"
+					picture = GFX_portrait_fra_jean_duke_of_guise
+					expire = "1965.1.1"
+					ideology = moderatism
+					traits = {
+						duke_of_orleans
+					}
+				}
+			}
+			else = {
+				create_country_leader = {
+					name = "Henri VI"
+					desc = "POLITICS_ÉDOUARD_DALADIER_DESC"
+					picture = GFX_portrait_fra_henry_count_of_paris
+					expire = "1965.1.1"
+					ideology = moderatism
+					traits = {
+						count_of_paris
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					var = french_monarchist_leader_influence_var
+					value = 100
+					compare = greater_than_or_equals
+				}
+			}
+			SOV = {
+				set_autonomy = {
+					target = FRA
+					autonomy_state = autonomy_imperial_governorates
+				}
+			}
+			FRA = {
+				set_popularities = {
+					democratic = 10
+					neutrality = 70
+					fascism = 10
+					communism = 10
+				}
+			}
+		}
+		else = {
+			SOV = {
+				add_to_faction = FRA
+			}
+			FRA = {
+				add_ai_strategy = {
+					type = alliance
+					id = SOV
+					value = 100
+				}
+			}
+		}
 	}
 }

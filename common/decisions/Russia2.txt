@@ -45448,7 +45448,13 @@ SOV_restore_french_monarchy_decisions_cat = {
 			NOT = {
 				FRA = {
 					has_government = neutrality
-				}	
+				}
+			}
+			FRA = {
+				OR = {
+					has_idea = SOV_french_monarchist_sentiment_idea
+					has_idea = SOV_french_monarchist_sentiment_idea_2
+				}
 			}
 		}
 
@@ -45458,24 +45464,38 @@ SOV_restore_french_monarchy_decisions_cat = {
 					has_government = neutrality
 					is_subject = yes
 				}
+				has_war_with = FRA
 			}
 			country_exists = FRA
 		}
 
-		cost = 100
+		cost = 150
 
 		days_remove = 70
 
 		complete_effect = {
-			set_country_flag = boosting_french_monarchy_party
+
 		}
 
 		remove_effect = {
-			clr_country_flag = boosting_french_monarchy_party
 			FRA = {
 				add_popularity = {
 					ideology = neutrality
 					popularity = 0.05
+				}
+			}
+		}
+
+		cancel_trigger = {
+			FRA = {
+				custom_trigger_tooltip = {
+					tooltip = not_has_idea_french_monarchist_sentiment
+					NOT = {
+						has_idea = SOV_french_monarchist_sentiment_idea
+					}
+					NOT = {
+						has_idea = SOV_french_monarchist_sentiment_idea_2
+					}
 				}
 			}
 		}
@@ -45489,7 +45509,7 @@ SOV_restore_french_monarchy_decisions_cat = {
 
 		icon = GFX_decision_hol_attract_foreign_investors
 
-		days_re_enable = 190
+		days_re_enable = 100
 
 		allowed = {
 			original_tag = SOV
@@ -45500,8 +45520,14 @@ SOV_restore_french_monarchy_decisions_cat = {
 			NOT = {
 				FRA = {
 					has_government = neutrality
-				}	
-			}	
+				}
+			}
+			FRA = {
+				OR = {
+					has_idea = SOV_french_monarchist_sentiment_idea
+					has_idea = SOV_french_monarchist_sentiment_idea_2
+				}
+			}
 		}
 
 		available = {
@@ -45510,15 +45536,17 @@ SOV_restore_french_monarchy_decisions_cat = {
 					has_government = neutrality
 					is_subject = yes
 				}
+				has_war_with = FRA
 			}
 			country_exists = FRA
 		}
 
-		cost = 50
+		cost = 100
 
-		days_remove = 120
+		days_remove = 70
 
 		complete_effect = {
+			set_country_flag = boosting_french_monarchy_party
 			FRA = {
 				swap_ideas = {
 					remove_idea = SOV_french_monarchist_sentiment_idea
@@ -45527,7 +45555,22 @@ SOV_restore_french_monarchy_decisions_cat = {
 			}
 		}
 
+		cancel_trigger = {
+			FRA = {
+				custom_trigger_tooltip = {
+					tooltip = not_has_idea_french_monarchist_sentiment
+					NOT = {
+						has_idea = SOV_french_monarchist_sentiment_idea
+					}
+					NOT = {
+						has_idea = SOV_french_monarchist_sentiment_idea_2
+					}
+				}
+			}
+		}
+
 		remove_effect = {
+			clr_country_flag = boosting_french_monarchy_party
 			FRA = {
 				swap_ideas = {
 					remove_idea = SOV_french_monarchist_sentiment_idea_2
@@ -45545,7 +45588,7 @@ SOV_restore_french_monarchy_decisions_cat = {
 
 		icon = GFX_decision_generic_political_discourse
 
-		days_re_enable = 140
+		days_re_enable = 35
 
 		allowed = {
 			original_tag = SOV
@@ -45557,31 +45600,57 @@ SOV_restore_french_monarchy_decisions_cat = {
 				FRA = {
 					has_government = neutrality
 				}	
-			}	
+			}
+			FRA = {
+				OR = {
+					has_idea = SOV_french_monarchist_sentiment_idea
+					has_idea = SOV_french_monarchist_sentiment_idea_2
+				}
+			}
 		}
 
 		available = {
+			custom_trigger_tooltip = {
+				tooltip = not_has_over_100_influence_monarchist
+				NOT = {
+					check_variable = {
+						var = french_monarchist_leader_influence_var
+						value = 100
+						compare = greater_than_or_equals
+					}
+				}
+			}
 			NOT = {
+				has_war_with = FRA
 				FRA = {
 					has_government = neutrality
 					is_subject = yes
-				}
-				check_variable = {
-					var = french_monarchist_leader_influence_var
-					value = 100
-					compare = greater_than_or_equals
 				}
 			}
 			country_exists = FRA
 		}
 
-		cost = 75
+		cost = 50
 
 		complete_effect = {
 			
 		}
 
 		days_remove = 70
+
+		cancel_trigger = {
+			FRA = {
+				custom_trigger_tooltip = {
+					tooltip = not_has_idea_french_monarchist_sentiment
+					NOT = {
+						has_idea = SOV_french_monarchist_sentiment_idea
+					}
+					NOT = {
+						has_idea = SOV_french_monarchist_sentiment_idea_2
+					}
+				}
+			}
+		}
 
 		remove_effect = {
 			add_to_variable = {
@@ -45613,6 +45682,12 @@ SOV_restore_french_monarchy_decisions_cat = {
 					has_government = neutrality
 				}	
 			}
+			FRA = {
+				OR = {
+					has_idea = SOV_french_monarchist_sentiment_idea
+					has_idea = SOV_french_monarchist_sentiment_idea_2
+				}
+			}
 		}
 
 		available = {
@@ -45635,11 +45710,46 @@ SOV_restore_french_monarchy_decisions_cat = {
 		complete_effect = {
 			custom_effect_tooltip = more_neutrality_and_more_power_monarchy
 			set_country_flag = is_doing_finale_france
+			randomize_variable = {
+				var = randomize_french_monarchist_leader_influence_var
+				distribution = uniform
+				min = 0
+				max = 100
+			}
+			round_variable = randomize_french_monarchist_leader_influence_var
+			add_to_variable = {
+				var = french_monarchist_leader_influence_var
+				value = randomize_french_monarchist_leader_influence_var
+			}
+			round_variable = french_monarchist_leader_influence_var
 		}
 
 		days_remove = 70
 
+		cancel_trigger = {
+			FRA = {
+				has_war = yes
+				custom_trigger_tooltip = {
+					tooltip = not_has_idea_french_monarchist_sentiment
+					NOT = {
+						has_idea = SOV_french_monarchist_sentiment_idea
+					}
+					NOT = {
+						has_idea = SOV_french_monarchist_sentiment_idea_2
+					}
+				}
+			}
+		}
+
 		remove_effect = {
+			hidden_effect = {
+				every_state = {
+					limit = {
+						is_owned_by = FRA
+					}
+					set_state_flag = french_state_before_monarchist_war
+				}
+			}
 			set_country_flag = launched_civil_war_for_monarchist_france
 			clr_country_flag = is_doing_finale_france
 			FRA = {
@@ -45676,6 +45786,12 @@ SOV_restore_french_monarchy_decisions_cat = {
 					has_government = neutrality
 				}	
 			}
+			FRA = {
+				OR = {
+					has_idea = SOV_french_monarchist_sentiment_idea
+					has_idea = SOV_french_monarchist_sentiment_idea_2
+				}
+			}
 		}
 
 		available = {
@@ -45685,9 +45801,10 @@ SOV_restore_french_monarchy_decisions_cat = {
 				}
 			}
 			FRA = {
-				neutrality > 0.5
+				neutrality > 0.6
 			}
 			NOT = {
+				has_war_with = FRA
 				has_country_flag = boosting_french_monarchy_party
 				FRA = {
 					has_government = neutrality
@@ -45711,6 +45828,7 @@ SOV_restore_french_monarchy_decisions_cat = {
 					long_name = FRA_orleanist_party_long
 					name = FRA_orleanist_party
 				}
+				set_cosmetic_tag = FRA_ORLEANS
 				if = {
 					limit = {
 						date < 1940.8.25
@@ -45741,12 +45859,16 @@ SOV_restore_french_monarchy_decisions_cat = {
 			}
 			hidden_effect = {
 				randomize_variable = {
-					var = french_monarchist_leader_influence_var
+					var = randomize_french_monarchist_leader_influence_var
 					distribution = uniform
-					min = french_monarchist_leader_influence_var
-					max = 200
+					min = 0
+					max = 100
 				}
-				round_variable = french_monarchist_leader_influence_var
+				round_variable = randomize_french_monarchist_leader_influence_var
+				add_to_variable = {
+					var = french_monarchist_leader_influence_var
+			    	value = randomize_french_monarchist_leader_influence_var
+				}
 				if = {
 					limit = {
 						check_variable = {
@@ -45761,10 +45883,25 @@ SOV_restore_french_monarchy_decisions_cat = {
 							autonomy_state = autonomy_imperial_governorates
 						}
 					}
+					FRA = {
+						set_popularities = {
+							democratic = 10
+							neutrality = 70
+							fascism = 10
+							communism = 10
+						}
+					}
 				}
 				else = {
 					SOV = {
 						add_to_faction = FRA
+					}
+					FRA = {
+						add_ai_strategy = {
+							type = alliance
+							id = SOV
+							value = 100
+						}
 					}
 				}
 			}
@@ -45808,36 +45945,37 @@ SOV_restore_french_monarchy_decisions_cat = {
 				hidden_effect = {
 					if = {
 						limit = {
-							date < 1941.2.21
+							date < 1940.8.25
 						}
 						create_country_leader = {
-							name = "Alphonse I"
+							name = "Jean III"
 							desc = "POLITICS_ÉDOUARD_DALADIER_DESC"
-							picture = GFX_portrait_SPA_alfonso_xiii
+							picture = GFX_portrait_fra_jean_duke_of_guise
 							expire = "1965.1.1"
-							ideology = despotism
+							ideology = moderatism
 							traits = {
-								
+								duke_of_orleans
 							}
 						}
 					}
 					else = {
 						create_country_leader = {
-							name = "Jacques II"
+							name = "Henri VI"
 							desc = "POLITICS_ÉDOUARD_DALADIER_DESC"
-							picture = GFX_portrait_fra_infante_jaime
+							picture = GFX_portrait_fra_henry_count_of_paris
 							expire = "1965.1.1"
-							ideology = despotism
+							ideology = moderatism
 							traits = {
-								
+								count_of_paris
 							}
 						}
 					}
 					set_party_name = {
 						ideology = neutrality
-						long_name = FRA_legitimist_party_long
-						name = FRA_legitimist_party
+						long_name = FRA_orleanist_party_long
+						name = FRA_orleanist_party
 					}
+					set_cosmetic_tag = FRA_ORLEANS
 				}
 				add_popularity = {
 					ideology = neutrality
@@ -45966,6 +46104,7 @@ SOV_restore_french_monarchy_decisions_cat = {
 					long_name = FRA_bonepartist_party_long
 					name = FRA_bonepartist_party
 				}
+				set_cosmetic_tag = FRA_THIRD_EMPIRE
 			}
 		}
 
@@ -45984,23 +46123,31 @@ SOV_deal_with_french_monarchy_rise_cat = {
 		fire_only_once = yes
 
 		allowed = {
-			original_tag = SOV
+			original_tag = FRA
 		}
 
 		visible = {
-			has_idea = SOV_french_monarchist_sentiment_idea
+			OR = {
+				has_idea = SOV_french_monarchist_sentiment_idea
+				has_idea = SOV_french_monarchist_sentiment_idea_2
+			}
 		}
 
 		available = {
-			has_idea = SOV_french_monarchist_sentiment_idea
 			neutrality < 0.1
 		}
 
 		complete_effect = {
 			remove_ideas = SOV_french_monarchist_sentiment_idea
+			if = {
+				limit = {
+					has_idea = SOV_french_monarchist_sentiment_idea_2
+				}
+				remove_ideas = SOV_french_monarchist_sentiment_idea_2
+			}
 		}
 
-		cost = 50
+		cost = 25
 
 		ai_will_do = {
 			factor = 1
@@ -46011,28 +46158,29 @@ SOV_deal_with_french_monarchy_rise_cat = {
 
 		icon = GFX_decision_generic_decision
 
-		fire_only_once = yes
-
-		days_re_enable = 210
+		days_re_enable = 70
 
 		allowed = {
-			original_tag = SOV
+			original_tag = FRA
 		}
 
 		visible = {
-			has_idea = SOV_french_monarchist_sentiment_idea
+			OR = {
+				has_idea = SOV_french_monarchist_sentiment_idea
+				has_idea = SOV_french_monarchist_sentiment_idea_2
+			}
 		}
 
 		available = {
-			has_idea = SOV_french_monarchist_sentiment_idea
+			
 		}
 
-		cost = 150
+		cost = 100
 
 		complete_effect = {
 			add_popularity = {
 				ideology = neutrality
-				popularity = 0.1
+				popularity = -0.1
 			}
 		}
 
@@ -46045,28 +46193,47 @@ SOV_deal_with_french_monarchy_rise_cat = {
 
 		icon = GFX_decision_generic_decision
 
-		fire_only_once = yes
-
-		days_re_enable = 70
+		days_re_enable = 35
 
 		allowed = {
-			original_tag = SOV
+			original_tag = FRA
 		}
 
 		visible = {
-			has_idea = SOV_french_monarchist_sentiment_idea
+			OR = {
+				has_idea = SOV_french_monarchist_sentiment_idea
+				has_idea = SOV_french_monarchist_sentiment_idea_2
+			}
 		}
 
 		available = {
 			has_idea = SOV_french_monarchist_sentiment_idea
 		}
 
-		cost = 100
+		cost = 50
 
 		days_remove = 70
 
 		complete_effect = {
 			add_ideas = SOV_french_stamp_down_monarchist_idea
+		}
+
+		cancel_trigger = {
+			FRA = {
+				custom_trigger_tooltip = {
+					tooltip = not_has_idea_french_monarchist_sentiment
+					NOT = {
+						has_idea = SOV_french_monarchist_sentiment_idea
+					}
+					NOT = {
+						has_idea = SOV_french_monarchist_sentiment_idea_2
+					}
+				}
+			}
+		}
+
+		cancel_effect = {
+			remove_ideas = SOV_french_stamp_down_monarchist_idea
 		}
 
 		remove_effect = {
