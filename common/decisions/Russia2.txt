@@ -6063,45 +6063,42 @@ SOV_control_of_church = {
 		}
 
 		visible = {
-			NOT = {     
-				has_idea = SOV_Church_power_1
+			check_variable = {
+				var = reform_church_control
+				value = 1
+				compare = greater_than_or_equals
 			}
 		}
 
 		available = {
-
+			custom_trigger_tooltip = {
+				tooltip = has_reformed_church_1_times_or_more
+				check_variable = {
+					var = reform_church_control
+					value = 1
+					compare = greater_than_or_equals
+				}
+			}
 		}
 
 		complete_effect = {
+			custom_effect_tooltip = SOV_change_church_control_base_tt
+			custom_effect_tooltip = SOV_Church_power_idead_tt
 			clr_country_flag = church_last_reform
       		set_country_flag = church_last_reform
-			if = {
-				limit = {
-				has_idea = SOV_Church_power_2
-				}
-				swap_ideas = {
-				remove_idea = SOV_Church_power_2
-				add_idea = SOV_Church_power_1
-				}
-			}
-			else_if = {
-				limit = {
-				has_idea = SOV_Church_power_3
-				}
-				swap_ideas = {
-				remove_idea = SOV_Church_power_3
-				add_idea = SOV_Church_power_1
-				}
-			}
-			else_if = {
-				limit = {
-				has_idea = SOV_Church_power_4
-				}
-				swap_ideas = {
-				remove_idea = SOV_Church_power_4
-				add_idea = SOV_Church_power_1
-				}
-			}
+			set_variable = { pp_gain_church_power = 0.25 }
+			set_variable = { stability_gain_church_power = 0 }
+			set_variable = { war_support_gain_church_power = 0 }
+			set_variable = { research_gain_church_power = 0 }
+			set_variable = { resistance_gain_church_power = 0 }
+			set_variable = { army_core_attack_gain_church_power = 0 }
+			set_variable = { army_core_defense_gain_church_power = 0 }
+			set_variable = { mobilization_gain_church_power = 0 }
+			set_variable = { building_gain_church_power = 0 }
+			set_variable = { infrastructure_gain_church_power = 0 }
+			set_variable = { industrial_fac_gain_church_power = 0 }
+			set_variable = { efficiency_fac_gain_church_power = 0 }
+			set_variable = { reform_church_control = 0 }
 		}
 
 		cost = 25
@@ -6120,45 +6117,41 @@ SOV_control_of_church = {
 		}
 
 		visible = {
-			NOT = {
-				has_idea = SOV_Church_power_2
+			check_variable = {
+				var = stability_gain_church_power
+				value = 0.15
+				compare = less_than
 			}
 		}
 
 		available = {
-
+			custom_trigger_tooltip = {
+				tooltip = not_has_reformed_church_4_times
+				check_variable = {
+					var = reform_church_control
+					value = 4
+					compare = less_than
+				}
+			}
 		}
 
 		complete_effect = {
+			custom_effect_tooltip = add_15_stability_to_church_control
+			custom_effect_tooltip = remove_15_political_daily_gain_to_church_control
+			add_to_variable = {
+				var = pp_gain_church_power
+				value = -0.15
+			}
+			add_to_variable = {
+				var = reform_church_control
+				value = 1
+			}
+			add_to_variable = {
+				var = stability_gain_church_power
+				value = 0.15
+			}
 			clr_country_flag = church_last_reform
       		set_country_flag = church_last_reform
-      		if = {
-        		limit = {
-          			has_idea = SOV_Church_power_1
-        		}
-        		swap_ideas = {
-          			remove_idea = SOV_Church_power_1
-          			add_idea = SOV_Church_power_2
-        		}
-      		}
-	      	else_if = {
-		        limit = {
-		          has_idea = SOV_Church_power_3
-		        }
-		        swap_ideas = {
-		          remove_idea = SOV_Church_power_3
-		          add_idea = SOV_Church_power_2
-		        }
-	      	}
-	      	else_if = {
-		        limit = {
-		          has_idea = SOV_Church_power_4
-		        }
-		        swap_ideas = {
-		          remove_idea = SOV_Church_power_4
-		          add_idea = SOV_Church_power_2
-		        }
-	      	}
 		}
 
 		cost = 50
@@ -6177,45 +6170,147 @@ SOV_control_of_church = {
 		}
 
 		visible = {
-			NOT = {
-        		has_idea = SOV_Church_power_3
-      		}
+			check_variable = {
+				var = war_support_gain_church_power
+				value = 0.20
+				compare = less_than
+			}
 		}
 
 		available = {
-
+			custom_trigger_tooltip = {
+				tooltip = not_has_reformed_church_4_times
+				check_variable = {
+					var = reform_church_control
+					value = 4
+					compare = less_than
+				}
+			}
 		}
 
 		complete_effect = {
+			custom_effect_tooltip = add_20_war_support_to_church_control
+			custom_effect_tooltip = remove_15_political_daily_gain_to_church_control
+			add_to_variable = {
+				var = pp_gain_church_power
+				value = -0.15
+			}
+			add_to_variable = {
+				var = reform_church_control
+				value = 1
+			}
+			add_to_variable = {
+				var = war_support_gain_church_power
+				value = 0.20
+			}
 			clr_country_flag = church_last_reform
       		set_country_flag = church_last_reform
-	      	if = {
-		        limit = {
-		          has_idea = SOV_Church_power_1
-		        }
-		        swap_ideas = {
-		          remove_idea = SOV_Church_power_1
-		          add_idea = SOV_Church_power_3
-		        }
-	      	}
-	      	else_if = {
-		        limit = {
-		          has_idea = SOV_Church_power_2
-		        }
-		        swap_ideas = {
-		          remove_idea = SOV_Church_power_2
-		          add_idea = SOV_Church_power_3
-		        }
-	      	}
-	      	else_if = {
-		        limit = {
-		          has_idea = SOV_Church_power_4
-		        }
-		        swap_ideas = {
-		          remove_idea = SOV_Church_power_4
-		          add_idea = SOV_Church_power_3
-		        }
-	      	}
+		}
+
+		cost = 50
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	SOV_change_church_control_research = {
+
+		icon = GFX_decision_generic_research
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			check_variable = {
+				var = research_gain_church_power
+				value = 0.025
+				compare = less_than
+			}
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = not_has_reformed_church_4_times
+				check_variable = {
+					var = reform_church_control
+					value = 4
+					compare = less_than
+				}
+			}
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = add_025_research_speed_to_church_control
+			custom_effect_tooltip = remove_15_political_daily_gain_to_church_control
+			add_to_variable = {
+				var = pp_gain_church_power
+				value = -0.15
+			}
+			add_to_variable = {
+				var = reform_church_control
+				value = 1
+			}
+			add_to_variable = {
+				var = research_gain_church_power
+				value = 0.025
+			}
+			clr_country_flag = church_last_reform
+      		set_country_flag = church_last_reform
+		}
+
+		cost = 50
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	SOV_change_church_control_open_other_religion = {
+
+		icon = GFX_decision_generic_nationalism
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			check_variable = {
+				var = resistance_gain_church_power
+				value = -0.10
+				compare = greater_than
+			}
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = not_has_reformed_church_4_times
+				check_variable = {
+					var = reform_church_control
+					value = 4
+					compare = less_than
+				}
+			}
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = add_10_resistance_target_to_church_control
+			custom_effect_tooltip = remove_15_political_daily_gain_to_church_control
+			add_to_variable = {
+				var = pp_gain_church_power
+				value = -0.15
+			}
+			add_to_variable = {
+				var = reform_church_control
+				value = 1
+			}
+			add_to_variable = {
+				var = resistance_gain_church_power
+				value = -0.10
+			}
+			clr_country_flag = church_last_reform
+      		set_country_flag = church_last_reform
 		}
 
 		cost = 50
@@ -6234,45 +6329,186 @@ SOV_control_of_church = {
 		}
 
 		visible = {
-			NOT = {
-        		has_idea = SOV_Church_power_4
-      		}
+			check_variable = {
+				var = army_core_attack_gain_church_power
+				value = 0.10
+				compare = less_than
+			}
+			check_variable = {
+				var = army_core_defense_gain_church_power
+				value = 0.10
+				compare = less_than
+			}
+			check_variable = {
+				var = mobilization_gain_church_power
+				value = 0.10
+				compare = less_than
+			}
 		}
 
 		available = {
-
+			custom_trigger_tooltip = {
+				tooltip = not_has_reformed_church_4_times
+				check_variable = {
+					var = reform_church_control
+					value = 4
+					compare = less_than
+				}
+			}
 		}
 
 		complete_effect = {
+			custom_effect_tooltip = add_army_core_and_mobi_to_church_control
+			custom_effect_tooltip = remove_30_political_daily_gain_to_church_control
+			add_to_variable = {
+				var = pp_gain_church_power
+				value = -0.30
+			}
+			add_to_variable = {
+				var = reform_church_control
+				value = 1
+			}
+			add_to_variable = {
+				var = army_core_attack_gain_church_power
+				value = 0.10
+			}
+			add_to_variable = {
+				var = army_core_defense_gain_church_power
+				value = 0.10
+			}
+			add_to_variable = {
+				var = mobilization_gain_church_power
+				value = 0.10
+			}
 			clr_country_flag = church_last_reform
       		set_country_flag = church_last_reform
-      		if = {
-		        limit = {
-		          has_idea = SOV_Church_power_1
-		        }
-		        swap_ideas = {
-		          remove_idea = SOV_Church_power_1
-		          add_idea = SOV_Church_power_4
-		        }
-      		}
-      		else_if = {
-		        limit = {
-		          has_idea = SOV_Church_power_2
-		        }
-		        swap_ideas = {
-		          remove_idea = SOV_Church_power_2
-		          add_idea = SOV_Church_power_4
-		        }
-      		}
-	      	else_if = {
-		        limit = {
-		          has_idea = SOV_Church_power_3
-		        }
-		        swap_ideas = {
-		          remove_idea = SOV_Church_power_3
-		          add_idea = SOV_Church_power_4
-		        }
-      		}
+
+		}
+
+		cost = 75
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	SOV_change_church_control_aid_poorer_region = {
+
+		icon = GFX_decision_generic_construction
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			check_variable = {
+				var = building_gain_church_power
+				value = 0.05
+				compare = less_than
+			}
+			check_variable = {
+				var = infrastructure_gain_church_power
+				value = 0.10
+				compare = less_than
+			}
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = not_has_reformed_church_4_times
+				check_variable = {
+					var = reform_church_control
+					value = 4
+					compare = less_than
+				}
+			}
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = add_construction_speed_infra_to_church_control
+			custom_effect_tooltip = remove_30_political_daily_gain_to_church_control
+			add_to_variable = {
+				var = pp_gain_church_power
+				value = -0.30
+			}
+			add_to_variable = {
+				var = reform_church_control
+				value = 1
+			}
+			add_to_variable = {
+				var = building_gain_church_power
+				value = 0.05
+			}
+			add_to_variable = {
+				var = infrastructure_gain_church_power
+				value = 0.10
+			}
+			clr_country_flag = church_last_reform
+      		set_country_flag = church_last_reform
+
+		}
+
+		cost = 75
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	SOV_change_church_control_motivate_factory_workers = {
+
+		icon = GFX_decision_generic_industry
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			check_variable = {
+				var = industrial_fac_gain_church_power
+				value = 0.05
+				compare = less_than
+			}
+			check_variable = {
+				var = efficiency_fac_gain_church_power
+				value = 0.10
+				compare = less_than
+			}
+		}
+		
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = not_has_reformed_church_4_times
+				check_variable = {
+					var = reform_church_control
+					value = 4
+					compare = less_than
+				}
+			}
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = add_industrial_gain_to_church_control
+			custom_effect_tooltip = remove_30_political_daily_gain_to_church_control
+			add_to_variable = {
+				var = pp_gain_church_power
+				value = -0.30
+			}
+			add_to_variable = {
+				var = reform_church_control
+				value = 1
+			}
+			add_to_variable = {
+				var = industrial_fac_gain_church_power
+				value = 0.05
+			}
+			add_to_variable = {
+				var = efficiency_fac_gain_church_power
+				value = 0.10
+			}
+			clr_country_flag = church_last_reform
+      		set_country_flag = church_last_reform
+
 		}
 
 		cost = 75
