@@ -26160,3 +26160,233 @@ country_event = {
 		}
 	}
 }
+
+#Russian State Gets Event to Join Democratic Russian Faction
+country_event = {
+	id = soviets.546
+	title = soviets.546.t
+	desc = soviets.546.d
+	picture = GFX_report_event_dead_soldiers
+
+	is_triggered_only = yes
+	
+	option = { #Yes
+		name = soviets.546.a
+		ai_chance = {
+			factor = 100
+		}
+		set_country_flag = accepted_faction_join_democratic_sov
+		FROM = {
+			add_to_faction = ROOT
+			country_event = { id = soviets.547 days = 1 }
+		}
+		hidden_effect = {
+			set_temp_variable = { investment_level = SOV.russian_investment@ROOT }
+			set_temp_variable = { min_days = 182 }
+			set_temp_variable = { max_days = 365 }
+			set_temp_variable = { days_event = 60 }
+			while_loop_effect = {
+				limit = {
+					check_variable = {
+						var = investment_level
+						value = 1
+						compare = greater_than_or_equals
+					}
+				}
+				subtract_from_temp_variable = { min_days = 60 }
+				subtract_from_temp_variable = { max_days = 60 }
+				clamp_temp_variable = {
+					var = min_days
+					min = 30
+					max = 182
+				}
+				clamp_temp_variable = {
+					var = max_days
+					min = 60
+					max = 365
+				}
+				subtract_from_temp_variable = { investment_level = 1 }
+			}
+			randomize_temp_variable = {
+				var = days_event
+				distribution = uniform
+				min = var:min_days
+				max = var:max_days
+			}
+			round_temp_variable = days_event
+			country_event = { id = soviets.549 days = var:days_event }
+		}	
+	}
+
+	option = { #No
+		name = soviets.546.b
+		ai_chance = {
+			factor = 0
+		}
+		set_country_flag = refused_faction_join_democratic_sov
+		FROM = {
+			country_event = { id = soviets.548 days = 1 }
+		}
+	}
+}
+
+#FROM Accepts
+country_event = {
+	id = soviets.547
+	title = soviets.547.t
+	desc = soviets.547.d
+	picture = GFX_report_event_dead_soldiers
+
+	is_triggered_only = yes
+	
+	option = { #Nice
+		name = soviets.547.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#FROM Refuses
+country_event = {
+	id = soviets.548
+	title = soviets.548.t
+	desc = soviets.548.d
+	picture = GFX_report_event_dead_soldiers
+
+	is_triggered_only = yes
+	
+	option = { #Oof
+		name = soviets.548.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#Russian State Gets Event to get Annexed by Democratic Russia
+country_event = {
+	id = soviets.549
+	title = soviets.549.t
+	desc = soviets.549.d
+	picture = GFX_report_event_dead_soldiers
+
+	is_triggered_only = yes
+	
+	option = { #Yes
+		name = soviets.549.a
+		ai_chance = {
+			factor = 100
+		}
+		set_country_flag = accepted_annex_by_democratic_sov
+		SOV = {
+			country_event = { id = soviets.548 days = 1 }
+		}
+		custom_effect_tooltip = SOV_game_totally_over_TT
+	}
+
+	option = { #No
+		name = soviets.549.b
+		ai_chance = {
+			factor = 0
+		}
+		set_country_flag = refused_annex_by_democratic_sov
+	}
+}
+
+#Russian State Gets Annexed
+country_event = {
+	id = soviets.550
+	title = soviets.550.t
+	desc = soviets.550.d
+	picture = GFX_report_event_dead_soldiers
+
+	is_triggered_only = yes
+	
+	option = { #Yes
+		name = soviets.550.a
+		ai_chance = {
+			factor = 100
+		}
+		annex_country = {
+			target = FROM
+			transfer_troops = yes
+		}
+	}
+}
+
+#Democratic Russian Threatens Communist/Fascist Russian States
+country_event = {
+	id = soviets.551
+	title = soviets.551.t
+	desc = soviets.551.d
+	picture = GFX_report_event_dead_soldiers
+
+	is_triggered_only = yes
+	
+	option = { #Oops
+		name = soviets.551.a
+		ai_chance = {
+			factor = 100
+		}
+		if = {
+			limit = {
+				any_country = {
+					OR = {
+						has_country_flag = democratic_russia_chaos_europe
+						has_country_flag = democratic_russia_chaos_asia
+						has_country_flag = democratic_russia_chaos_caucasus
+					}
+					has_country_flag = is_russian_state_faction_leader_democratic
+					is_faction_leader = yes
+				}
+			}
+			every_country = {
+				limit = {
+					OR = {
+						has_country_flag = democratic_russia_chaos_europe
+						has_country_flag = democratic_russia_chaos_asia
+						has_country_flag = democratic_russia_chaos_caucasus
+					}
+					has_country_flag = is_russian_state_faction_leader_democratic
+					is_faction_leader = yes
+				}
+				add_to_faction = ROOT
+			}
+		}
+		else = {
+			create_faction = anti_russian_coalition
+			set_country_flag = is_russian_state_faction_leader_democratic
+		}
+		set_country_flag = russian_state_extreme_ideology
+		custom_effect_tooltip = sov_democratic_russia_will_attack_soon
+	}
+}
+
+#Democratic Russia Gets Event to Attack all Russian States
+country_event = {
+	id = soviets.552
+	title = soviets.552.t
+	desc = soviets.552.d
+	picture = GFX_report_event_dead_soldiers
+
+	is_triggered_only = yes
+	
+	option = { #Let's go
+		name = soviets.552.a
+		ai_chance = {
+			factor = 100
+		}
+		every_country = {
+			limit = {
+				has_country_flag = russian_state_extreme_ideology
+			}
+			ROOT = {
+				declare_war_on = {
+					target = PREV
+					type = annex_everything
+				}
+			}
+		}
+	}
+}
