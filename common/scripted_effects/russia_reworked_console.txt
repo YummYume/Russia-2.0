@@ -54,10 +54,11 @@ d_russia_reworked_set_revolution_scale = {
                 }
             }
         }
-        log = "Error"
+        log = "Error :"
         log = " Expected [?1|Y0] argument, got [?args^num|R0]."
     }
     else = {
+        log = "Russia Reworked debug :"
         set_variable = { SOV.revolution_count = args^0 }
         set_variable = { SOV.revolution_count_gui = SOV.revolution_count }
 		multiply_variable = { SOV.revolution_count_gui = 100 }
@@ -78,6 +79,81 @@ d_russia_reworked_set_revolution_scale = {
             min = 0
             max = 12
         }
-        log = "Set revolution scale to [?SOV.revolution_count|Y0]."
+        log = " Set revolution scale to [?SOV.revolution_count|Y0]."
+    }
+}
+
+d_russia_reworked_annex_cores = {
+    if = {
+        limit = {
+            is_debug = yes
+        }
+        log = "Russia Reworked debug :"
+        every_state = {
+            limit = {
+                is_core_of = FROM
+                NOT = {
+                    is_owned_by = FROM
+                }
+            }
+            FROM = {
+                transfer_state = PREV
+            }
+            log = " Transfered [THIS.GetName] to [FROM.GetNameDef]."
+        }
+    }
+    else = {
+        log = "Error :"
+        log = " Only allowed in debug mode!"
+    }
+}
+
+d_russia_reworked_annex_claims = {
+    if = {
+        limit = {
+            is_debug = yes
+        }
+        log = "Russia Reworked debug :"
+        every_state = {
+            limit = {
+                is_claimed_by = FROM
+                NOT = {
+                    is_owned_by = FROM
+                }
+            }
+            FROM = {
+                transfer_state = PREV
+            }
+            log = " Transfered [THIS.GetName] to [FROM.GetNameDef]."
+        }
+    }
+    else = {
+        log = "Error :"
+        log = " Only allowed in debug mode!"
+    }
+}
+
+d_russia_reworked_annex_puppets = {
+    if = {
+        limit = {
+            is_debug = yes
+        }
+        log = "Russia Reworked debug :"
+        every_other_country = {
+            limit = {
+                is_subject_of = FROM
+            }
+            FROM = {
+                annex_country = {
+                    target = PREV
+                    transfer_troops = yes
+                }
+            }
+            log = " Annexed [THIS.GetName]."
+        }
+    }
+    else = {
+        log = "Error :"
+        log = " Only allowed in debug mode!"
     }
 }

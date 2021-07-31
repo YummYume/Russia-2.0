@@ -1,3 +1,5 @@
+# Created by Yam for the Russia Reworked mod. Free to use.
+
 import os
 import json
 import sys
@@ -65,8 +67,13 @@ if __name__ == '__main__':
                     if provincefound and re.search("^.*[0-9].*$", line):
                         find = line.split(" ")
                         for province in find:
-                            if re.search("^[0-9]+$", province):
+                            if re.search("^[0-9]+$", province.strip()):
                                 provinces.append(province.strip())
+
+                            if re.search("^.*}.*$", province):
+                                break
+
+                        provincefound = False
 
                 if name + ":0" in statelocalisation:
                     nameloca = statelocalisation[statelocalisation.index(name + ":0") + 1]
