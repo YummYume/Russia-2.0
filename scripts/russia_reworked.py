@@ -1,3 +1,5 @@
+# Created by Yam for the Russia Reworked mod. Free to use.
+
 import os
 
 if __name__ == '__main__':
