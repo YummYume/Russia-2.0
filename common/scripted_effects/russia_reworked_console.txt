@@ -157,3 +157,210 @@ d_russia_reworked_annex_puppets = {
         log = " Only allowed in debug mode!"
     }
 }
+
+d_russia_reworked_battle_royale = {
+    if = {
+        limit = {
+            NOT = {
+                has_global_flag = russia_reworked_battle_royale_allowed
+            }
+        }
+        set_global_flag = russia_reworked_battle_royale_allowed
+        log = "Russia Reworked debug :"
+        log = " Are you sure? There is no going back!"
+        log = " Launch this console command again to confirm."
+        log = " Make sure to pause the game (it might lag for a moment)."
+    }
+    else_if = {
+        limit = {
+            has_global_flag = russia_reworked_battle_royale_launched
+        }
+        log = "Russia Reworked debug :"
+        log = " The battle royale has already been launched."
+    }
+    else_if = {
+        limit = {
+            NOT = {
+                any_of_scopes = {
+                    array = global.russia_reworked_russian_states
+                    
+                    exists = yes
+                }
+            }
+        }
+        log = "Russia Reworked debug :"
+        log = " Not enough countries exist to launch a battle royale."
+    }
+    else = {
+        for_each_scope_loop = {
+            array = global.russia_reworked_russian_states
+
+            if = {
+                limit = {
+                    exists = yes
+                }
+                if = {
+                    limit = {
+                        is_in_faction = yes
+                    }
+                    leave_faction = yes
+                }
+                if = {
+                    limit = {
+                        is_subject = yes
+                    }
+                    OVERLORD = {
+                        set_autonomy = {
+                            target = PREV
+                            autonomy_state = autonomy_free
+                        }
+                    }
+                }
+            }
+        }
+
+        for_each_scope_loop = {
+            array = global.russia_reworked_russian_states
+
+            if = {
+                limit = {
+                    exists = yes
+                }
+                for_each_scope_loop = {
+                    array = global.russia_reworked_russian_states
+
+                    if = {
+                        limit = {
+                            exists = yes
+                            NOT = {
+                                tag = PREV
+                                has_war_with = PREV
+                                is_subject = yes
+                                is_in_faction = yes
+                            }
+                        }
+                        PREV = {
+                            declare_war_on = {
+                                target = PREV
+                                type = annex_everything
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        set_global_flag = russia_reworked_battle_royale_launched
+        log = "Russia Reworked debug :"
+        log = " Battle Royale begins!"
+    }
+}
+
+d_russia_reworked_battle_royale_with_sov = {
+    if = {
+        limit = {
+            SOV = {
+                exists = yes
+            }
+        }
+        if = {
+            limit = {
+                NOT = {
+                    has_global_flag = russia_reworked_battle_royale_allowed
+                }
+            }
+            set_global_flag = russia_reworked_battle_royale_allowed
+            log = "Russia Reworked debug :"
+            log = " Are you sure? There is no going back!"
+            log = " Launch this console command again to confirm."
+            log = " Make sure to pause the game (it might lag for a moment)."
+        }
+        else_if = {
+            limit = {
+                has_global_flag = russia_reworked_battle_royale_launched
+            }
+            log = "Russia Reworked debug :"
+            log = " The battle royale has already been launched."
+        }
+        else_if = {
+            limit = {
+                NOT = {
+                    any_of_scopes = {
+                        array = global.russia_reworked_russian_states
+                        
+                        exists = yes
+                    }
+                }
+            }
+            log = "Russia Reworked debug :"
+            log = " Not enough countries exist to launch a battle royale."
+        }
+        else = {
+            add_to_array = { global.russia_reworked_russian_states = SOV }
+            for_each_scope_loop = {
+                array = global.russia_reworked_russian_states
+
+                if = {
+                    limit = {
+                        exists = yes
+                    }
+                    if = {
+                        limit = {
+                            is_in_faction = yes
+                        }
+                        leave_faction = yes
+                    }
+                    if = {
+                        limit = {
+                            is_subject = yes
+                        }
+                        OVERLORD = {
+                            set_autonomy = {
+                                target = PREV
+                                autonomy_state = autonomy_free
+                            }
+                        }
+                    }
+                }
+            }
+
+            for_each_scope_loop = {
+                array = global.russia_reworked_russian_states
+
+                if = {
+                    limit = {
+                        exists = yes
+                    }
+                    for_each_scope_loop = {
+                        array = global.russia_reworked_russian_states
+
+                        if = {
+                            limit = {
+                                exists = yes
+                                NOT = {
+                                    tag = PREV
+                                    has_war_with = PREV
+                                    is_subject = yes
+                                    is_in_faction = yes
+                                }
+                            }
+                            PREV = {
+                                declare_war_on = {
+                                    target = PREV
+                                    type = annex_everything
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            remove_from_array = { global.russia_reworked_russian_states = SOV }
+            set_global_flag = russia_reworked_battle_royale_launched
+            log = "Russia Reworked debug :"
+            log = " Battle Royale begins!"
+        }
+    }
+    else = {
+        log = "Russia Reworked debug :"
+        log = " [SOV.GetNameDefCap] doesn't exist!"
+    }
+}
