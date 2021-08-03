@@ -168,21 +168,44 @@ on_actions = {
 					leave_faction = yes
 				}
 				SOV = {
-					release = EFR
-					release = URA
-					release = SIB
+					if = {
+						limit = {
+							has_game_rule = {
+								rule = sov_siberia_status
+								option = SOV_SIBERIA_RELEASED
+							}
+						}
+						release = SIB
+						release = URA
+					}
+					else = {
+						release = EFR
+						release = URA
+						release = SIB
+					}
 					release = KAR
 					release = CIR
 					release = CRI
 					release = DAG
-					release = KAL
+					if = {
+						limit = {
+							has_game_rule = {
+								rule = sov_kuban_status
+								option = SOV_KUBAN_RELEASED
+							}
+						}
+						release = KUB
+					}
+					else = {
+						release = VLG
+						release = ROS
+						release = KAL
+					}
 					release = KMI
 					release = VYA
 					release = NOV
 					release = PRM
-					release = ROS
 					release = STP
-					release = VLG
 					release = TAT
 					create_country_leader = {
 						name = "Joseph Stalin"
@@ -386,6 +409,118 @@ on_actions = {
 								is_core_of = SOV
 							}
 							remove_core_of = SOV
+						}
+					}
+				}
+				for_each_scope_loop = {
+					array = global.russia_reworked_russian_states
+
+					if = {
+						limit = {
+							exists = yes
+						}
+						meta_effect = {
+							text = {
+								division_template = {
+									name = "[TEMPLATE_NAME]"
+									is_locked = no
+
+									regiments = {
+										infantry = { x = 0 y = 0 }
+										infantry = { x = 0 y = 1 }
+										infantry = { x = 0 y = 2 }
+										infantry = { x = 1 y = 0 }
+										infantry = { x = 1 y = 1 }
+										infantry = { x = 1 y = 2 }
+										infantry = { x = 2 y = 0 }
+										infantry = { x = 2 y = 1 }
+										infantry = { x = 2 y = 2 }
+									}
+									support = {
+										artillery = { x = 0 y = 0 }
+									}
+								}
+							}
+							TEMPLATE_NAME = "[THIS.GetAdjective] Military Police"
+						}
+						meta_effect = {
+							text = {
+								division_template = {
+									name = "[TEMPLATE_NAME]"
+									is_locked = no
+
+									regiments = {
+										light_armor = { x = 0 y = 0 }
+										light_armor = { x = 0 y = 1 }
+										light_armor = { x = 1 y = 0 }		
+										light_armor = { x = 1 y = 1 }		
+										light_armor = { x = 1 y = 2 }		
+										motorized = { x = 2 y = 0 }		
+										motorized = { x = 2 y = 1 }	
+										motorized = { x = 2 y = 2 }		
+										motorized = { x = 2 y = 3 }		
+									}
+								}
+							}
+							TEMPLATE_NAME = "[THIS.Capital.GetName] Tank Brigade"
+						}
+
+						set_temp_variable = { num_divisions_russian_state = THIS.owned_controlled_states }
+						set_temp_variable = { tank_division_russian_state = 0 }
+						clamp_temp_variable = {
+							var = num_divisions_russian_state
+							min = 1
+							max = 50
+						}
+
+						while_loop_effect = {
+							break = break
+							limit = {
+								check_variable = {
+									var = num_divisions_russian_state
+									value = 1
+									compare = greater_than_or_equals
+								}
+							}
+							
+							random_owned_controlled_state = {
+								meta_effect = {
+									text = {
+										create_unit = {
+											division = "name = \"[UNIT_NAME]\" division_template = \"[TEMPLATE_NAME]\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+											owner = PREV
+											allow_spawning_on_enemy_provs = yes
+										}
+									}
+									UNIT_NAME = "[PREV.GetAdjective] Military Police [?num_divisions_russian_state]"
+									TEMPLATE_NAME = "[PREV.GetAdjective] Military Police"
+								}
+							}
+							add_to_temp_variable = { tank_division_russian_state = 1 }
+							if = {
+								limit = {
+									check_variable = {
+										var = tank_division_russian_state
+										value = 10
+										compare = greater_than_or_equals
+									}
+								}
+								capital_scope = {
+									meta_effect = {
+										text = {
+											create_unit = {
+												division = "name = \"[UNIT_NAME]\" division_template = \"[TEMPLATE_NAME]\" start_experience_factor = 0.6 start_equipment_factor = 1.0"
+												owner = PREV
+												allow_spawning_on_enemy_provs = yes
+											}
+										}
+										UNIT_NAME = "[THIS.GetName] Tank Brigade"
+										TEMPLATE_NAME = "[THIS.GetName] Tank Brigade"
+									}
+								}
+								set_temp_variable = { tank_division_russian_state = 0 }
+							}
+							subtract_from_temp_variable = { num_divisions_russian_state = 1 }
 						}
 					}
 				}
