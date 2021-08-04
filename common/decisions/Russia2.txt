@@ -12909,6 +12909,53 @@ SOV_monarchy_congress = {
 			}
 		}
 	}
+
+	SOV_intervention_france = {
+
+		icon = GFX_decision_generic_tank
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		fire_only_once = yes
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = SOV_intervention_france_tt
+				check_variable = {
+					var = house_russia_support
+					value = 8
+					compare = greater_than_or_equals
+				}
+			}
+			threat > 0.25
+		}
+
+		visible = {
+			OR = {
+				FRA = {
+					has_war = yes
+				}
+				date > 1940.01.01
+			}
+			FRA = {
+				has_civil_war = no
+				is_subject = no
+				NOT = {
+					is_in_faction_with = ROOT
+					has_idea = SOV_French_monarchist_sentiment_idea
+					has_idea = SOV_French_monarchist_sentiment_idea_2
+				}
+			}
+		}
+
+		complete_effect = {
+			FRA = {
+				#TODO
+			}
+		}
+	}
 }
 
 SOV_reintegrate_lost_states_decisions = {
