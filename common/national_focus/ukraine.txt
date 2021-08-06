@@ -711,7 +711,7 @@ focus_tree = {
             add_ideas = UKR_Tank_production_effort
             add_tech_bonus = {
 				name = UKR_focus_tank_production
-				bonus = 2
+				bonus = 1
 				uses = 1
 				category = armor
 			}
@@ -789,10 +789,11 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
+            add_ideas = UKR_Artillery_rain
             add_tech_bonus = {
 				name = UKR_focus_tank_production
 				bonus = 1
-				uses = 2
+				uses = 1
 				category = artillery
 			}
         }
@@ -817,7 +818,7 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_ideas = UKR_Artillery_trainings
         }
     }
 
@@ -857,7 +858,7 @@ focus_tree = {
         y = 4
         prerequisite = { focus = UKR_planned_offensive }
         icon = GFX_
-        cost = 5
+        cost = 8
         ai_will_do = {
             factor = 2
         }
@@ -869,10 +870,11 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
+            add_ideas = UKR_Logistic_priorities
             add_tech_bonus = {
 				name = UKR_focus_tank_production
 				bonus = 1
-				uses = 2
+				uses = 1
 				category = support_tech
 			}
         }
@@ -897,7 +899,10 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_ideas = UKR_Improved_logistic
+            every_army_leader = {
+				add_logistics = 1
+			}
         }
     }
 
@@ -937,7 +942,7 @@ focus_tree = {
         y = 4
         prerequisite = { focus = UKR_scorched_earth }
         icon = GFX_
-        cost = 5
+        cost = 8
         ai_will_do = {
             factor = 2
         }
@@ -949,10 +954,11 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
+            add_ideas = UKR_Mass_gun_production
             add_tech_bonus = {
 				name = UKR_focus_tank_production
 				bonus = 1
-				uses = 2
+				uses = 1
 				category = infantry_weapons
 			}
         }
@@ -977,7 +983,7 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_ideas = UKR_Never_stop_fighting
         }
     }
 
@@ -1000,6 +1006,7 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
+            add_ideas = UKR_Elite_troops
             add_tech_bonus = {
 				name = UKR_elite_troops
 				bonus = 1
@@ -1192,7 +1199,7 @@ focus_tree = {
         prerequisite = { focus = UKR_state_navy }
         mutually_exclusive = { focus = UKR_study_old_tactics }
         icon = GFX_
-        cost = 5
+        cost = 8
         ai_will_do = {
             factor = 2
         }
@@ -1204,7 +1211,24 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_tech_bonus = {
+				name = UKR_adopt_new_tactics
+				bonus = 1
+				uses = 1
+				category = base_strike_main
+			}
+            add_tech_bonus = {
+				name = UKR_adopt_new_tactics
+				bonus = 1
+				uses = 1
+				category = cv_tech
+			}
+            add_tech_bonus = {
+				name = UKR_adopt_new_tactics
+				bonus = 0.5
+				uses = 1
+				category = naval_bomber
+			}
         }
     }
 
@@ -1215,7 +1239,7 @@ focus_tree = {
         y = 5
         prerequisite = { focus = UKR_adopt_new_tactics }
         icon = GFX_
-        cost = 5
+        cost = 8
         ai_will_do = {
             factor = 2
         }
@@ -1223,11 +1247,61 @@ focus_tree = {
 
         }
         available = {
-
+            num_of_naval_factories > 0
+            if = {
+				limit = {
+					has_dlc = "Man the Guns"
+				}
+                has_tech = basic_ship_hull_carrier
+            }
+            else = {
+                has_tech = basic_carrier
+            }
         }
         search_filters = {  }
         completion_reward = {
-
+            if = {
+				limit = {
+					has_dlc = "Man the Guns"
+				}
+				hidden_effect = {
+					create_equipment_variant = {
+						name = "Kuznetsov"
+						type = ship_hull_carrier_1
+						parent_version = 0
+						modules = {
+							fixed_ship_deck_slot_1 = ship_deck_space
+							fixed_ship_deck_slot_2 = ship_deck_space
+							fixed_ship_anti_air_slot = ship_anti_air_1
+							fixed_ship_radar_slot = empty
+							fixed_ship_engine_slot = carrier_ship_engine_2
+							fixed_ship_secondaries_slot = dp_ship_secondaries
+							front_1_custom_slot = empty
+						}
+					}
+				}
+                add_equipment_production = {
+                    equipment = {
+                        type = ship_hull_carrier_1
+                        creator = "UKR" 
+                        version_name = "Kuznetsov"
+                    }
+                    requested_factories = 1
+                    progress = 0.60
+                    amount = 1
+                }
+			}
+			else = {
+				add_equipment_production = {
+					equipment = {
+						type = carrier_2
+						creator = "UKR" 
+					}
+					requested_factories = 1
+					progress = 0.60
+					amount = 1
+				}
+			}
         }
     }
 
@@ -1239,7 +1313,7 @@ focus_tree = {
         prerequisite = { focus = UKR_state_navy }
         mutually_exclusive = { focus = UKR_adopt_new_tactics }
         icon = GFX_
-        cost = 5
+        cost = 8
         ai_will_do = {
             factor = 2
         }
@@ -1251,7 +1325,18 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_tech_bonus = {
+				name = UKR_study_old_tactics
+				bonus = 1
+				uses = 1
+				category = fleet_in_being_tree
+			}
+            add_tech_bonus = {
+				name = UKR_study_old_tactics
+				bonus = 1.5
+				uses = 1
+				category = bb_tech
+			}
         }
     }
 
@@ -1262,7 +1347,7 @@ focus_tree = {
         y = 5
         prerequisite = { focus = UKR_study_old_tactics }
         icon = GFX_
-        cost = 5
+        cost = 8
         ai_will_do = {
             factor = 2
         }
@@ -1270,11 +1355,64 @@ focus_tree = {
 
         }
         available = {
-
+            num_of_naval_factories > 0
+            if = {
+				limit = {
+					has_dlc = "Man the Guns"
+				}
+                has_tech = basic_ship_hull_heavy
+            }
+            else = {
+                has_tech = basic_battleship
+            }
         }
         search_filters = {  }
         completion_reward = {
-
+            if = {
+				limit = {
+					has_dlc = "Man the Guns"
+				}
+                hidden_effect = {
+					create_equipment_variant = {
+						name = "Kyiv"
+						type = ship_hull_heavy_2
+						parent_version = 0
+						modules = {
+                            fixed_ship_battery_slot = ship_heavy_battery_2
+                            fixed_ship_anti_air_slot = ship_anti_air_1
+                            fixed_ship_fire_control_system_slot = ship_fire_control_system_1
+                            fixed_ship_radar_slot = empty
+                            fixed_ship_engine_slot = heavy_ship_engine_2
+                            fixed_ship_secondaries_slot = ship_secondaries_2
+                            fixed_ship_armor_slot = ship_armor_bb_2
+                            front_1_custom_slot = ship_heavy_battery_2
+                            mid_1_custom_slot = empty
+                            mid_2_custom_slot = empty
+                            rear_1_custom_slot = empty
+                        }
+					}
+				}
+				add_equipment_production = {
+					equipment = {
+						type = ship_hull_heavy_2
+						creator = "UKR" 
+					}
+					requested_factories = 1
+					progress = 0.60
+					amount = 1
+				}
+			}
+			else = {
+				add_equipment_production = {
+					equipment = {
+						type = battleship_2
+						creator = "UKR" 
+					}
+					requested_factories = 1
+					progress = 0.60
+					amount = 1
+				}
+			}
         }
     }
 
@@ -1285,7 +1423,7 @@ focus_tree = {
         y = 6
         prerequisite = { focus = UKR_own_aircraft_carrier focus = UKR_new_battleship_design }
         icon = GFX_
-        cost = 5
+        cost = 10
         ai_will_do = {
             factor = 2
         }
@@ -1297,7 +1435,25 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_ideas = UKR_Modern_navy
+            add_tech_bonus = {
+				name = UKR_modernize_navy
+				bonus = 1
+				uses = 1
+				category = dd_tech
+			}
+            add_tech_bonus = {
+				name = UKR_modernize_navy
+				bonus = 1
+				uses = 1
+				category = cl_tech
+			}
+            add_tech_bonus = {
+				name = UKR_modernize_navy
+				bonus = 1
+				uses = 1
+				category = tp_tech
+			}
         }
     }
 
@@ -1785,9 +1941,9 @@ focus_tree = {
         }
     }
 
-    # Urgent Fortifications
+    # Seize Crimea
     focus = {
-        id = UKR_urgent_fortifications
+        id = UKR_seize_crimea
         x = 48
         y = 11
         prerequisite = { focus = UKR_emergency_conscription }
@@ -1859,7 +2015,7 @@ focus_tree = {
         id = UKR_motivate_troops
         x = 46
         y = 12
-        prerequisite = { focus = UKR_stateless_society focus = UKR_urgent_fortifications }
+        prerequisite = { focus = UKR_stateless_society focus = UKR_seize_crimea }
         icon = GFX_
         cost = 5
         ai_will_do = {
@@ -1882,7 +2038,7 @@ focus_tree = {
         id = UKR_temporary_administration_occupied_territories
         x = 50
         y = 12
-        prerequisite = { focus = UKR_foreign_support focus = UKR_urgent_fortifications }
+        prerequisite = { focus = UKR_foreign_support focus = UKR_seize_crimea }
         icon = GFX_
         cost = 5
         ai_will_do = {
