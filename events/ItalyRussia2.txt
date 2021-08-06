@@ -38,12 +38,25 @@ country_event = {
 			}
 		}
 		name = italys.1.a
-		SOV = {
-			add_to_faction = ITA
-			country_event = { id = italys.2 days = 1 }
-			add_opinion_modifier = {
-				target = ITA
-				modifier = russian_diplomats
+		if = {
+			limit = {
+				SOV = {
+					is_faction_leader = yes
+				}
+			}
+			SOV = {
+				add_to_faction = ITA
+				country_event = { id = italys.2 days = 1 }
+				add_opinion_modifier = {
+					target = ITA
+					modifier = russian_diplomats
+				}
+			}
+		}
+		else = {
+			SOV = {
+				create_faction = moscow_rome_alliance
+				add_to_faction = ITA
 			}
 		}
 		ITA = {
@@ -704,5 +717,360 @@ country_event = {
 			factor = 100
 		}
 		name = italys.24.a
+	}
+}
+
+#Question of the Italian Monarchy
+country_event = {
+	id = italys.25
+	title = italys.25.t
+	desc = italys.25.d
+	picture = GFX_report_event_mussolini_hotel
+	
+	is_triggered_only = yes
+
+	option = { #Put Pressure on the Italian Government
+		ai_chance = {
+			factor = 33
+		}
+		name = italys.25.a
+		custom_effect_tooltip = unlock_decision_influence_italy_tt
+		ITA = {
+			country_event = { id = italys.26 days = 1 }
+			add_ideas = SOV_Russian_influence_monarchist_italy
+			hidden_effect = {
+				add_popularity = {
+					ideology = neutrality
+					popularity = 0.11
+				}
+			}
+		}
+	}
+
+	option = { #Ask Mussolini to let the king back
+		ai_chance = {
+			factor = 33
+		}
+		name = italys.25.b
+		ITA = {
+			country_event = { id = italys.27 days = 1 }
+		}
+	}
+
+	option = { #We will restore the King Ourselves
+		ai_chance = {
+			factor = 33
+		}
+		name = italys.25.c
+		ITA = {
+			leave_faction = yes
+			add_ai_strategy = {
+				type = alliance
+				id = SOV
+				value = -500
+			}
+			add_ai_strategy = {
+				type = befriend
+				id = SOV
+				value = -250
+			}
+		}
+		SOV = {
+			create_wargoal = {
+				type = puppet_wargoal_focus
+    			target = ITA
+			}
+		}
+	}
+}
+
+#Russian Put Pressure to Restore the King to Power
+country_event = {
+	id = italys.26
+	title = italys.26.t
+	desc = italys.26.d
+	picture = GFX_report_event_royal_parade
+	
+	is_triggered_only = yes
+
+	option = { #We will Resist
+		ai_chance = {
+			factor = 100
+		}
+		name = italys.26.a
+		custom_effect_tooltip = unlock_decision_deal_russian_influence
+	}
+}
+
+#Russian Ask us to restore the king to power
+country_event = {
+	id = italys.27
+	title = italys.27.t
+	desc = italys.27.d
+	picture = GFX_report_event_generic_communist_congress
+	
+	is_triggered_only = yes
+
+	option = { #We will comply
+		ai_chance = {
+			factor = 20
+			modifier = {
+				add = 30
+				neutrality > 0.3
+			}
+		}
+		name = italys.27.a
+		SOV = {
+			country_event = { id = italys.28 days = 1 }
+		}
+		set_politics = {
+			ruling_party = neutrality
+		}
+		hidden_effect = {
+			set_popularities = {
+				democratic = 10
+				neutrality = 70
+				fascism = 10
+				communism = 10
+			}
+		}
+	}
+
+	option = { #No
+		ai_chance = {
+			factor = 80
+			modifier = {
+				add = -30
+				neutrality > 0.3
+			}
+		}
+		name = italys.27.b
+		SOV = {
+			country_event = { id = italys.29 days = 1 }
+		}
+	}
+}
+
+#Italy Accept Return King
+country_event = {
+	id = italys.28
+	title = italys.28.t
+	desc = italys.28.d
+	picture = GFX_report_event_royal_parade
+	
+	is_triggered_only = yes
+
+	option = { #Good
+		ai_chance = {
+			factor = 100
+		}
+		name = italys.28.a
+	}
+}
+
+#Italy Refuse Return King
+country_event = {
+	id = italys.29
+	title = italys.29.t
+	desc = italys.29.d
+	picture = GFX_report_event_generic_parliament
+	
+	is_triggered_only = yes
+
+	option = { #Good
+		ai_chance = {
+			factor = 100
+		}
+		name = italys.29.a
+	}
+}
+
+#Russia Put Pressure on us first time
+country_event = {
+	id = italys.30
+	title = italys.30.t
+	desc = italys.30.d
+	picture = GFX_report_event_gathering_protest
+	
+	is_triggered_only = yes
+
+	option = { #We will not bow
+		ai_chance = {
+			factor = 90
+		}
+		name = italys.30.a
+		add_stability = -0.05
+		SOV = {
+			set_country_flag = asked_italy_first_time_pression
+			country_event = { id = italys.31 days = 1 }
+		}
+	}
+
+	option = { #Accept their demand
+		ai_chance = {
+			factor = 10
+		}
+		name = italys.30.b
+		set_politics = {
+			ruling_party = neutrality
+		}
+		SOV = {
+			country_event = { id = italys.32 days = 1 }
+		}
+		if = {
+			limit = {
+				has_idea = SOV_Russian_influence_monarchist_italy
+			}
+			remove_ideas = SOV_Russian_influence_monarchist_italy
+		}
+		else = {
+			remove_ideas = SOV_Russian_influence_monarchist_italy_2
+		}
+		hidden_effect = {
+			set_popularities = {
+				democratic = 10
+				neutrality = 70
+				fascism = 10
+				communism = 10
+			}
+		}
+	}
+}
+
+#Italy Refuse to Give in
+country_event = {
+	id = italys.31
+	title = italys.31.t
+	desc = italys.31.d
+	picture = GFX_report_event_gathering_protest
+	
+	is_triggered_only = yes
+
+	option = { #Not Nice
+		ai_chance = {
+			factor = 100
+		}
+		name = italys.31.a
+	}
+}
+
+#Italy Accept to Give in
+country_event = {
+	id = italys.32
+	title = italys.32.t
+	desc = italys.32.d
+	picture = GFX_report_event_gathering_protest
+	
+	is_triggered_only = yes
+
+	option = { #Not Nice
+		ai_chance = {
+			factor = 100
+		}
+		name = italys.32.a
+	}
+}
+
+#Russia Put Pressure on us second time
+country_event = {
+	id = italys.33
+	title = italys.33.t
+	desc = italys.33.d
+	picture = GFX_report_event_gathering_protest
+	
+	is_triggered_only = yes
+
+	option = { #We will not bow
+		ai_chance = {
+			factor = 40
+		}
+		name = italys.33.a
+		add_stability = -0.15
+		SOV = {
+			set_country_flag = asked_italy_second_time_pression
+			country_event = { id = italys.31 days = 1 }
+		}
+	}
+
+	option = { #Accept their demand
+		ai_chance = {
+			factor = 60
+		}
+		name = italys.33.b
+		set_politics = {
+			ruling_party = neutrality
+		}
+		if = {
+			limit = {
+				has_idea = SOV_Russian_influence_monarchist_italy
+			}
+			remove_ideas = SOV_Russian_influence_monarchist_italy
+		}
+		else = {
+			remove_ideas = SOV_Russian_influence_monarchist_italy_2
+		}
+		SOV = {
+			country_event = { id = italys.32 days = 1 }
+		}
+		hidden_effect = {
+			set_popularities = {
+				democratic = 10
+				neutrality = 70
+				fascism = 10
+				communism = 10
+			}
+		}
+	}
+}
+
+#Russia Put Pressure on us third time
+country_event = {
+	id = italys.34
+	title = italys.34.t
+	desc = italys.34.d
+	picture = GFX_report_event_gathering_protest
+	
+	is_triggered_only = yes
+
+	option = { #We will not bow
+		ai_chance = {
+			factor = 15
+		}
+		name = italys.34.a
+		add_stability = -0.15
+		leave_faction = yes
+		SOV = {
+			country_event = { id = italys.31 days = 1 }
+		}
+	}
+
+	option = { #Accept their demand
+		ai_chance = {
+			factor = 85
+		}
+		name = italys.34.b
+		set_politics = {
+			ruling_party = neutrality
+		}
+		SOV = {
+			country_event = { id = italys.32 days = 1 }
+		}
+		if = {
+			limit = {
+				has_idea = SOV_Russian_influence_monarchist_italy
+			}
+			remove_ideas = SOV_Russian_influence_monarchist_italy
+		}
+		else = {
+			remove_ideas = SOV_Russian_influence_monarchist_italy_2
+		}
+		hidden_effect = {
+			set_popularities = {
+				democratic = 10
+				neutrality = 70
+				fascism = 10
+				communism = 10
+			}
+		}
 	}
 }

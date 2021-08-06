@@ -46799,7 +46799,7 @@ SOV_deal_with_french_monarchy_rise_cat = {
 
 	SOV_remove_monarchy_sentiment = {
 
-		icon = GFX_decision_generic_decision
+		icon = GFX_decision_generic_ignite_civil_war
 
 		fire_only_once = yes
 
@@ -46837,7 +46837,7 @@ SOV_deal_with_french_monarchy_rise_cat = {
 
 	SOV_send_police_monarchy_sentiment = {
 
-		icon = GFX_decision_generic_decision
+		icon = GFX_decision_generic_arrest
 
 		days_re_enable = 70
 
@@ -46872,7 +46872,7 @@ SOV_deal_with_french_monarchy_rise_cat = {
 
 	SOV_use_propagande_against_monarchy_sentiment = {
 
-		icon = GFX_decision_generic_decision
+		icon = GFX_decision_eng_trade_unions_demand
 
 		days_re_enable = 35
 
@@ -46964,6 +46964,343 @@ SOV_mission_civil_war_monarchy_russia = {
 
 		complete_effect = {
 			custom_effect_tooltip = civil_war_will_start_monarchy
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+}
+
+SOV_influence_italy_monarchist = {
+	
+	SOV_put_pressure_again = {
+
+		icon = GFX_decision_generic_political_discourse
+
+		days_re_enable = 100
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			
+		}
+
+		available = {
+			has_government = neutrality
+			is_subject = no
+			has_capitulated = no
+		}
+
+		cost = 100
+
+		days_remove = 30
+
+		remove_effect = {
+			ITA = {
+				add_popularity = {
+					ideology = neutrality
+					popularity = 0.05
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 30
+		}
+	}
+
+	SOV_support_italian_monarchist = {
+
+		icon = GFX_decision_hol_attract_foreign_investors
+
+		days_re_enable = 160
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			
+		}
+
+		available = {
+			ITA = {
+				has_idea = SOV_Russian_influence_monarchist_italy
+			}
+			has_government = neutrality
+			is_subject = no
+			has_capitulated = no
+		}
+
+		cost = 100
+
+		days_remove = 70
+
+		complete_effect = {
+			ITA = {
+				swap_ideas = {
+					remove_idea = SOV_Russian_influence_monarchist_italy
+					add_idea = SOV_Russian_influence_monarchist_italy_2
+				}
+			}
+		}
+
+		remove_effect = {
+			ITA = {
+				swap_ideas = {
+					remove_idea = SOV_Russian_influence_monarchist_italy_2
+					add_idea = SOV_Russian_influence_monarchist_italy
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 30
+		}
+	}
+
+	SOV_demand_italy_to_restore_king = {
+
+		icon = GFX_decision_generic_civil_support
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			
+		}
+
+		fire_only_once = yes
+
+		available = {
+			ITA = {
+				has_idea = SOV_Russian_influence_monarchist_italy
+				neutrality > 0.3
+			}
+			has_government = neutrality
+			is_subject = no
+			has_capitulated = no
+		}
+
+		cost = 50
+
+		complete_effect = {
+			ITA = {
+				country_event = { id = italys.30 days = 1 }
+			}
+		}
+
+		ai_will_do = {
+			factor = 30
+		}
+	}
+
+	SOV_demand_italy_to_restore_king_second = {
+
+		icon = GFX_decision_generic_civil_support
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			has_country_flag = asked_italy_first_time_pression
+		}
+
+		fire_only_once = yes
+
+		available = {
+			ITA = {
+				has_idea = SOV_Russian_influence_monarchist_italy
+				neutrality > 0.4
+			}
+			has_government = neutrality
+			is_subject = no
+			has_capitulated = no
+		}
+
+		cost = 50
+
+		complete_effect = {
+			clr_country_flag = asked_italy_first_time_pression
+			ITA = {
+				country_event = { id = italys.33 days = 1 }
+			}
+		}
+
+		ai_will_do = {
+			factor = 30
+		}
+	}
+
+	SOV_demand_italy_to_restore_king_last = {
+
+		icon = GFX_decision_generic_civil_support
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			has_country_flag = asked_italy_second_time_pression
+		}
+
+		fire_only_once = yes
+
+		available = {
+			ITA = {
+				has_idea = SOV_Russian_influence_monarchist_italy
+				neutrality > 0.5
+			}
+			has_government = neutrality
+			is_subject = no
+			has_capitulated = no
+		}
+
+		cost = 50
+
+		complete_effect = {
+			clr_country_flag = asked_italy_second_time_pression
+			ITA = {
+				country_event = { id = italys.34 days = 1 }
+			}
+			custom_effect_tooltip = italy_can_leave_faction_if_they_refuse
+		}
+
+		ai_will_do = {
+			factor = 30
+		}
+	}
+}
+
+SOV_deal_with_italian_monarchy_rise_cat = {
+
+	SOV_remove_russian_influence = {
+
+		icon = GFX_decision_oppression
+
+		fire_only_once = yes
+
+		allowed = {
+			original_tag = ITA
+		}
+
+		visible = {
+			OR = {
+				has_idea = SOV_Russian_influence_monarchist_italy
+				has_idea = SOV_Russian_influence_monarchist_italy_2
+			}
+		}
+
+		available = {
+			neutrality < 0.1
+		}
+
+		complete_effect = {
+			remove_ideas = SOV_Russian_influence_monarchist_italy
+			if = {
+				limit = {
+					has_idea = SOV_Russian_influence_monarchist_italy_2
+				}
+				remove_ideas = SOV_Russian_influence_monarchist_italy_2
+			}
+		}
+
+		cost = 25
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	SOV_send_police_monarchy_sentiment_italian = {
+
+		icon = GFX_decision_generic_arrest
+
+		days_re_enable = 70
+
+		allowed = {
+			original_tag = ITA
+		}
+
+		visible = {
+			OR = {
+				has_idea = SOV_Russian_influence_monarchist_italy
+				has_idea = SOV_Russian_influence_monarchist_italy_2
+			}
+		}
+
+		available = {
+			
+		}
+
+		cost = 100
+
+		complete_effect = {
+			add_popularity = {
+				ideology = neutrality
+				popularity = -0.1
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	SOV_use_propagande_against_monarchy_sentiment_italy = {
+
+		icon = GFX_decision_generic_speech
+
+		days_re_enable = 35
+
+		allowed = {
+			original_tag = ITA
+		}
+
+		visible = {
+			OR = {
+				has_idea = SOV_Russian_influence_monarchist_italy
+				has_idea = SOV_Russian_influence_monarchist_italy_2
+			}
+		}
+
+		available = {
+			has_idea = SOV_Russian_influence_monarchist_italy
+		}
+
+		cost = 50
+
+		days_remove = 70
+
+		complete_effect = {
+			add_ideas = SOV_Destroy_russian_influence
+		}
+
+		cancel_trigger = {
+			ITA = {
+				custom_trigger_tooltip = {
+					tooltip = not_has_idea_italy_monarchist_sentiment
+					NOT = {
+						has_idea = SOV_Russian_influence_monarchist_italy
+					}
+					NOT = {
+						has_idea = SOV_Russian_influence_monarchist_italy_2
+					}
+				}
+			}
+		}
+
+		cancel_effect = {
+			remove_ideas = SOV_Destroy_russian_influence
+		}
+
+		remove_effect = {
+			remove_ideas = SOV_Destroy_russian_influence
 		}
 
 		ai_will_do = {
