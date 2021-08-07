@@ -1059,7 +1059,7 @@ focus_tree = {
         prerequisite = { focus = UKR_state_air_force }
         mutually_exclusive = { focus = UKR_superiority_ground }
         icon = GFX_
-        cost = 5
+        cost = 8
         ai_will_do = {
             factor = 2
         }
@@ -1071,7 +1071,18 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_tech_bonus = {
+				name = UKR_superiority_air
+				bonus = 1
+				uses = 1
+				category = strategic_destruction_tree
+			}
+            add_tech_bonus = {
+				name = UKR_superiority_air
+				bonus = 1
+				uses = 1
+				category = light_fighter
+			}
         }
     }
 
@@ -1082,7 +1093,7 @@ focus_tree = {
         y = 5
         prerequisite = { focus = UKR_superiority_air }
         icon = GFX_
-        cost = 5
+        cost = 8
         ai_will_do = {
             factor = 2
         }
@@ -1094,7 +1105,19 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_ideas = UKR_Bombing_strategy
+            add_tech_bonus = {
+				name = UKR_bombing_strategy
+				bonus = 0.75
+				uses = 1
+				category = cat_strategic_bomber
+			}
+            add_tech_bonus = {
+				name = UKR_bombing_strategy
+				bonus = 1
+				uses = 1
+				category = tactical_bomber
+			}
         }
     }
 
@@ -1106,7 +1129,7 @@ focus_tree = {
         prerequisite = { focus = UKR_state_air_force }
         mutually_exclusive = { focus = UKR_superiority_air }
         icon = GFX_
-        cost = 5
+        cost = 8
         ai_will_do = {
             factor = 2
         }
@@ -1118,7 +1141,18 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_tech_bonus = {
+				name = UKR_superiority_air
+				bonus = 1
+				uses = 1
+				category = battlefield_support_tree
+			}
+            add_tech_bonus = {
+				name = UKR_superiority_air
+				bonus = 1
+				uses = 1
+				category = cas_bomber
+			}
         }
     }
 
@@ -1129,7 +1163,7 @@ focus_tree = {
         y = 5
         prerequisite = { focus = UKR_superiority_ground }
         icon = GFX_
-        cost = 5
+        cost = 8
         ai_will_do = {
             factor = 2
         }
@@ -1141,7 +1175,19 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_ideas = UKR_Air_counter_offensive
+            add_tech_bonus = {
+				name = UKR_air_counter_offensive
+				bonus = 0.75
+				uses = 1
+				category = light_fighter
+			}
+            add_tech_bonus = {
+				name = UKR_air_counter_offensive
+				bonus = 1
+				uses = 1
+				category = air_doctrine
+			}
         }
     }
 
@@ -1152,7 +1198,7 @@ focus_tree = {
         y = 6
         prerequisite = { focus = UKR_bombing_strategy focus = UKR_air_counter_offensive }
         icon = GFX_
-        cost = 5
+        cost = 10
         ai_will_do = {
             factor = 2
         }
@@ -1164,7 +1210,25 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_ideas = UKR_New_air_tactics
+            add_tech_bonus = {
+				name = UKR_new_air_tactics
+				bonus = 0.5
+				uses = 1
+				category = light_air
+			}
+            add_tech_bonus = {
+				name = UKR_new_air_tactics
+				bonus = 0.75
+				uses = 1
+				category = medium_air
+			}
+            add_tech_bonus = {
+				name = UKR_new_air_tactics
+				bonus = 1
+				uses = 1
+				category = heavy_air
+			}
         }
     }
 
@@ -1464,7 +1528,7 @@ focus_tree = {
         y = 8
         prerequisite = {  }
         icon = GFX_
-        cost = 5
+        cost = 4
         ai_will_do = {
             factor = 1
         }
@@ -1472,11 +1536,11 @@ focus_tree = {
 
         }
         available = {
-
+            has_war = no
         }
         search_filters = {  }
         completion_reward = {
-
+            country_event = ukrains.19
         }
     }
 
@@ -1499,7 +1563,12 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_tech_bonus = {
+				name = UKR_synthetic_resources
+				bonus = 1
+				uses = 2
+				category = synth_resources
+			}
         }
     }
 
@@ -1515,14 +1584,37 @@ focus_tree = {
             factor = 2
         }
         bypass = {
-
+            NOT = {
+                any_state = {
+                    is_fully_controlled_by = ROOT
+                }
+            }
         }
         available = {
-
+            any_state = {
+                is_fully_controlled_by = ROOT
+            }
         }
         search_filters = {  }
         completion_reward = {
-
+            random_owned_controlled_state = {
+                add_resource = {
+                    type = steel
+                    amount = 10
+                }
+            }
+            random_owned_controlled_state = {
+                add_resource = {
+                    type = tungsten
+                    amount = 8
+                }
+            }
+            add_tech_bonus = {
+				name = UKR_resources_investment
+				bonus = 1
+				uses = 1
+				category = excavation_tech
+			}
         }
     }
 
@@ -1545,7 +1637,7 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_ideas = UKR_Rewarded_workers
         }
     }
 
@@ -1568,7 +1660,26 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_timed_idea = {
+                idea = UKR_Dockyard_investment
+                days = 365
+            }
+            if = {
+                limit = {
+                    any_state = {
+                        is_fully_controlled_by = ROOT
+                        is_coastal = yes
+                    }
+                }
+                random_owned_controlled_state = {
+                    add_extra_state_shared_building_slots = 2
+                    add_building_construction = {
+                        type = dockyard
+                        level = 2
+                        instant_build = yes
+                    }
+                }
+            }
         }
     }
 
@@ -1579,7 +1690,7 @@ focus_tree = {
         y = 11
         prerequisite = { focus = UKR_resources_investment focus = UKR_dockyard_investment }
         icon = GFX_
-        cost = 5
+        cost = 8
         ai_will_do = {
             factor = 20
         }
@@ -1591,18 +1702,24 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_ideas = UKR_Nuclear_secrets
+            add_tech_bonus = {
+				name = UKR_nuclear_power
+				bonus = 1
+				uses = 1
+				category = nuclear
+			}
         }
     }
 
     # Infrastructure Project - Phase One
     focus = {
-        id = UKR_infrastructure_project_one
+        id = UKR_revival_project_one
         x = 30
         y = 9
         prerequisite = { focus = UKR_industrial_revival }
         icon = GFX_
-        cost = 5
+        cost = 8
         ai_will_do = {
             factor = 2
         }
@@ -1610,22 +1727,35 @@ focus_tree = {
 
         }
         available = {
-
+            custom_trigger_tooltip = {
+                tooltip = UKR_revival_project_one_tt
+                OR = {
+                    has_idea = UKR_Industrial_revival
+                    has_idea = UKR_Industrial_revival2
+                    has_idea = UKR_Industrial_revival3
+                    has_idea = UKR_Industrial_revival4
+                }
+            }
         }
         search_filters = {  }
         completion_reward = {
-
+            add_tech_bonus = {
+				name = UKR_revival_project_one
+				bonus = 1
+				uses = 1
+				category = industry
+			}
         }
     }
 
     # Infrastructure Project - Phase Two
     focus = {
-        id = UKR_infrastructure_project_two
+        id = UKR_revival_project_two
         x = 30
         y = 10
-        prerequisite = { focus = UKR_infrastructure_project_one }
+        prerequisite = { focus = UKR_revival_project_one }
         icon = GFX_
-        cost = 5
+        cost = 8
         ai_will_do = {
             factor = 2
         }
@@ -1633,22 +1763,36 @@ focus_tree = {
 
         }
         available = {
-
+            custom_trigger_tooltip = {
+                tooltip = UKR_revival_project_two_tt
+                OR = {
+                    has_idea = UKR_Industrial_revival
+                    has_idea = UKR_Industrial_revival2
+                    has_idea = UKR_Industrial_revival3
+                    has_idea = UKR_Industrial_revival4
+                }
+            }
+            has_country_flag = UKR_revival_project_one_finished
         }
         search_filters = {  }
         completion_reward = {
-
+            add_tech_bonus = {
+				name = UKR_revival_project_two
+				bonus = 1
+				uses = 1
+				category = electronics
+			}
         }
     }
 
     # Infrastructure Project - Phase Three
     focus = {
-        id = UKR_infrastructure_project_three
+        id = UKR_revival_project_three
         x = 30
         y = 11
-        prerequisite = { focus = UKR_infrastructure_project_two }
+        prerequisite = { focus = UKR_revival_project_two }
         icon = GFX_
-        cost = 5
+        cost = 8
         ai_will_do = {
             factor = 2
         }
@@ -1656,11 +1800,31 @@ focus_tree = {
 
         }
         available = {
-
+            custom_trigger_tooltip = {
+                tooltip = UKR_revival_project_three_tt
+                OR = {
+                    has_idea = UKR_Industrial_revival
+                    has_idea = UKR_Industrial_revival2
+                    has_idea = UKR_Industrial_revival3
+                    has_idea = UKR_Industrial_revival4
+                }
+            }
+            has_country_flag = UKR_revival_project_two_finished
         }
         search_filters = {  }
         completion_reward = {
-
+            add_tech_bonus = {
+				name = UKR_revival_project_three
+				bonus = 1
+				uses = 1
+				category = industry
+			}
+            add_tech_bonus = {
+				name = UKR_revival_project_three
+				bonus = 1
+				uses = 1
+				category = electronics
+			}
         }
     }
 
@@ -1676,14 +1840,39 @@ focus_tree = {
             factor = 1
         }
         bypass = {
-
+            NOT = {
+                any_state = {
+                    is_fully_controlled_by = ROOT
+                }
+            }
         }
         available = {
-
+            any_state = {
+                is_fully_controlled_by = ROOT
+            }
         }
         search_filters = {  }
         completion_reward = {
-
+            random_owned_state = {
+				limit = {
+					is_fully_controlled_by = ROOT
+				}
+				add_building_construction = {
+					type = air_base
+					level = 2
+					instant_build = yes
+				}
+			}
+            random_owned_state = {
+				limit = {
+					is_fully_controlled_by = ROOT
+				}
+				add_building_construction = {
+					type = air_base
+					level = 2
+					instant_build = yes
+				}
+			}
         }
     }
 
@@ -1699,14 +1888,39 @@ focus_tree = {
             factor = 2
         }
         bypass = {
-
+            NOT = {
+                any_state = {
+                    is_fully_controlled_by = ROOT
+                }
+            }
         }
         available = {
-
+            any_state = {
+                is_fully_controlled_by = ROOT
+            }
         }
         search_filters = {  }
         completion_reward = {
-
+            random_owned_state = {
+				limit = {
+					is_fully_controlled_by = ROOT
+				}
+				add_building_construction = {
+					type = anti_air_building
+					level = 2
+					instant_build = yes
+				}
+			}
+            random_owned_state = {
+				limit = {
+					is_fully_controlled_by = ROOT
+				}
+				add_building_construction = {
+					type = anti_air_building
+					level = 2
+					instant_build = yes
+				}
+			}
         }
     }
 
@@ -1722,14 +1936,153 @@ focus_tree = {
             factor = 2
         }
         bypass = {
-
+            NOT = {
+                has_full_control_of_state = 192
+                has_full_control_of_state = 197
+                has_full_control_of_state = 196
+                has_full_control_of_state = 200
+                has_full_control_of_state = 227
+                has_full_control_of_state = 137
+                has_full_control_of_state = 218
+                has_full_control_of_state = 234
+                has_full_control_of_state = 766
+            }
         }
         available = {
-
+            OR = {
+                has_full_control_of_state = 192
+                has_full_control_of_state = 197
+                has_full_control_of_state = 196
+                has_full_control_of_state = 200
+                has_full_control_of_state = 227
+                has_full_control_of_state = 137
+                has_full_control_of_state = 218
+                has_full_control_of_state = 234
+                has_full_control_of_state = 766
+            }
         }
         search_filters = {  }
         completion_reward = {
-
+            custom_effect_tooltip = UKR_naval_bases_tt
+            hidden_effect = {
+                if = {
+                    limit = {
+                        has_full_control_of_state = 192
+                    }
+                    192 = {
+                        add_building_construction = {
+                            type = naval_base
+                            level = 2
+                            province = 11670
+                            instant_build = yes
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        has_full_control_of_state = 197
+                    }
+                    197 = {
+                        add_building_construction = {
+                            type = naval_base
+                            level = 2
+                            province = 11683
+                            instant_build = yes
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        has_full_control_of_state = 196
+                    }
+                    196 = {
+                        add_building_construction = {
+                            type = naval_base
+                            level = 2
+                            province = 721
+                            instant_build = yes
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        has_full_control_of_state = 200
+                    }
+                    200 = {
+                        add_building_construction = {
+                            type = naval_base
+                            level = 2
+                            province = 9729
+                            instant_build = yes
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        has_full_control_of_state = 227
+                    }
+                    227 = {
+                        add_building_construction = {
+                            type = naval_base
+                            level = 2
+                            province = 3421
+                            instant_build = yes
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        has_full_control_of_state = 218
+                    }
+                    218 = {
+                        add_building_construction = {
+                            type = naval_base
+                            level = 2
+                            province = 9417
+                            instant_build = yes
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        has_full_control_of_state = 137
+                    }
+                    137 = {
+                        add_building_construction = {
+                            type = naval_base
+                            level = 2
+                            province = 9680
+                            instant_build = yes
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        has_full_control_of_state = 234
+                    }
+                    234 = {
+                        add_building_construction = {
+                            type = naval_base
+                            level = 2
+                            province = 6755
+                            instant_build = yes
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        has_full_control_of_state = 766
+                    }
+                    766 = {
+                        add_building_construction = {
+                            type = naval_base
+                            level = 2
+                            province = 6727
+                            instant_build = yes
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -1745,14 +2098,153 @@ focus_tree = {
             factor = 2
         }
         bypass = {
-
+            NOT = {
+                has_full_control_of_state = 192
+                has_full_control_of_state = 197
+                has_full_control_of_state = 196
+                has_full_control_of_state = 200
+                has_full_control_of_state = 227
+                has_full_control_of_state = 137
+                has_full_control_of_state = 218
+                has_full_control_of_state = 234
+                has_full_control_of_state = 766
+            }
         }
         available = {
-
+            OR = {
+                has_full_control_of_state = 192
+                has_full_control_of_state = 197
+                has_full_control_of_state = 196
+                has_full_control_of_state = 200
+                has_full_control_of_state = 227
+                has_full_control_of_state = 137
+                has_full_control_of_state = 218
+                has_full_control_of_state = 234
+                has_full_control_of_state = 766
+            }
         }
         search_filters = {  }
         completion_reward = {
-
+            custom_effect_tooltip = UKR_naval_forts_tt
+            hidden_effect = {
+                if = {
+                    limit = {
+                        has_full_control_of_state = 192
+                    }
+                    192 = {
+                        add_building_construction = {
+                            type = coastal_bunker
+                            level = 3
+                            province = 11670
+                            instant_build = yes
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        has_full_control_of_state = 197
+                    }
+                    197 = {
+                        add_building_construction = {
+                            type = coastal_bunker
+                            level = 3
+                            province = 11683
+                            instant_build = yes
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        has_full_control_of_state = 196
+                    }
+                    196 = {
+                        add_building_construction = {
+                            type = coastal_bunker
+                            level = 3
+                            province = 721
+                            instant_build = yes
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        has_full_control_of_state = 200
+                    }
+                    200 = {
+                        add_building_construction = {
+                            type = coastal_bunker
+                            level = 3
+                            province = 9729
+                            instant_build = yes
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        has_full_control_of_state = 227
+                    }
+                    227 = {
+                        add_building_construction = {
+                            type = coastal_bunker
+                            level = 3
+                            province = 3421
+                            instant_build = yes
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        has_full_control_of_state = 218
+                    }
+                    218 = {
+                        add_building_construction = {
+                            type = coastal_bunker
+                            level = 3
+                            province = 9417
+                            instant_build = yes
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        has_full_control_of_state = 137
+                    }
+                    137 = {
+                        add_building_construction = {
+                            type = coastal_bunker
+                            level = 3
+                            province = 9680
+                            instant_build = yes
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        has_full_control_of_state = 234
+                    }
+                    234 = {
+                        add_building_construction = {
+                            type = coastal_bunker
+                            level = 3
+                            province = 6755
+                            instant_build = yes
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        has_full_control_of_state = 766
+                    }
+                    766 = {
+                        add_building_construction = {
+                            type = coastal_bunker
+                            level = 3
+                            province = 6727
+                            instant_build = yes
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -1763,19 +2255,320 @@ focus_tree = {
         y = 11
         prerequisite = { focus = UKR_air_defense focus = UKR_naval_forts }
         icon = GFX_
-        cost = 5
+        cost = 8
         ai_will_do = {
             factor = 20
         }
         bypass = {
-
+            NOT = {
+                controls_state = 202
+                controls_state = 192
+                controls_state = 226
+                controls_state = 221
+                controls_state = 227
+                controls_state = 218
+                controls_state = 137
+            }
         }
         available = {
-
+            OR = {
+                controls_state = 202
+                controls_state = 192
+                controls_state = 226
+                controls_state = 221
+                controls_state = 227
+                controls_state = 218
+                controls_state = 137
+            }
         }
         search_filters = {  }
         completion_reward = {
+            custom_effect_tooltip = UKR_protect_main_cities_tt
+            hidden_effect = {
+                if = {
+                    limit = {
+                        NOT = {
+                            has_template = "Defense Brigade"
+                        }
+                    }
+                    division_template = {
+                        name = "Defense Brigade"
+                        is_locked = no
+                        division_names_group = UKR_GAR_01
 
+                        regiments = {
+                            infantry = { x = 0 y = 0 }
+                            infantry = { x = 0 y = 1 }
+                            infantry = { x = 0 y = 2 }
+                            infantry = { x = 1 y = 0 }
+                            infantry = { x = 1 y = 1 }
+                        }
+                        support = {
+                            engineer = { x = 0 y = 0 }
+                            artillery = { x = 0 y = 1 }
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        controls_state = 202
+                    }
+                    202 = {
+                        meta_effect = {
+                            text = {
+                                create_unit = {
+                                    division = "name = \"[UNIT_NAME]\" division_template = \"[TEMPLATE_NAME]\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
+                                    owner = UKR
+                                    allow_spawning_on_enemy_provs = yes
+                                    prioritize_location = 525
+                                }
+                            }
+                            UNIT_NAME = "[202.GetName] Defense Brigade"
+                            TEMPLATE_NAME = "Defense Brigade"
+                        }
+                        meta_effect = {
+                            text = {
+                                create_unit = {
+                                    division = "name = \"[UNIT_NAME]\" division_template = \"[TEMPLATE_NAME]\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
+                                    owner = UKR
+                                    allow_spawning_on_enemy_provs = yes
+                                    prioritize_location = 525
+                                }
+                            }
+                            UNIT_NAME = "[202.GetName] Defense Brigade"
+                            TEMPLATE_NAME = "Defense Brigade"
+                        }
+                        add_building_construction = {
+                            type = bunker
+                            level = 1
+                            instant_build = yes
+                            province = 525
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        controls_state = 192
+                    }
+                    192 = {
+                        meta_effect = {
+                            text = {
+                                create_unit = {
+                                    division = "name = \"[UNIT_NAME]\" division_template = \"[TEMPLATE_NAME]\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
+                                    owner = UKR
+                                    allow_spawning_on_enemy_provs = yes
+                                    prioritize_location = 11670
+                                }
+                            }
+                            UNIT_NAME = "[192.GetName] Defense Brigade"
+                            TEMPLATE_NAME = "Defense Brigade"
+                        }
+                        meta_effect = {
+                            text = {
+                                create_unit = {
+                                    division = "name = \"[UNIT_NAME]\" division_template = \"[TEMPLATE_NAME]\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
+                                    owner = UKR
+                                    allow_spawning_on_enemy_provs = yes
+                                    prioritize_location = 11670
+                                }
+                            }
+                            UNIT_NAME = "[192.GetName] Defense Brigade"
+                            TEMPLATE_NAME = "Defense Brigade"
+                        }
+                        add_building_construction = {
+                            type = bunker
+                            level = 1
+                            instant_build = yes
+                            province = 11670
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        controls_state = 226
+                    }
+                    226 = {
+                        meta_effect = {
+                            text = {
+                                create_unit = {
+                                    division = "name = \"[UNIT_NAME]\" division_template = \"[TEMPLATE_NAME]\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
+                                    owner = UKR
+                                    allow_spawning_on_enemy_provs = yes
+                                    prioritize_location = 11437
+                                }
+                            }
+                            UNIT_NAME = "[226.GetName] Defense Brigade"
+                            TEMPLATE_NAME = "Defense Brigade"
+                        }
+                        meta_effect = {
+                            text = {
+                                create_unit = {
+                                    division = "name = \"[UNIT_NAME]\" division_template = \"[TEMPLATE_NAME]\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
+                                    owner = UKR
+                                    allow_spawning_on_enemy_provs = yes
+                                    prioritize_location = 11437
+                                }
+                            }
+                            UNIT_NAME = "[226.GetName] Defense Brigade"
+                            TEMPLATE_NAME = "Defense Brigade"
+                        }
+                        add_building_construction = {
+                            type = bunker
+                            level = 1
+                            instant_build = yes
+                            province = 11437
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        controls_state = 221
+                    }
+                    221 = {
+                        meta_effect = {
+                            text = {
+                                create_unit = {
+                                    division = "name = \"[UNIT_NAME]\" division_template = \"[TEMPLATE_NAME]\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
+                                    owner = UKR
+                                    allow_spawning_on_enemy_provs = yes
+                                    prioritize_location = 418
+                                }
+                            }
+                            UNIT_NAME = "[221.GetName] Defense Brigade"
+                            TEMPLATE_NAME = "Defense Brigade"
+                        }
+                        meta_effect = {
+                            text = {
+                                create_unit = {
+                                    division = "name = \"[UNIT_NAME]\" division_template = \"[TEMPLATE_NAME]\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
+                                    owner = UKR
+                                    allow_spawning_on_enemy_provs = yes
+                                    prioritize_location = 418
+                                }
+                            }
+                            UNIT_NAME = "[221.GetName] Defense Brigade"
+                            TEMPLATE_NAME = "Defense Brigade"
+                        }
+                        add_building_construction = {
+                            type = bunker
+                            level = 1
+                            instant_build = yes
+                            province = 418
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        controls_state = 227
+                    }
+                    227 = {
+                        meta_effect = {
+                            text = {
+                                create_unit = {
+                                    division = "name = \"[UNIT_NAME]\" division_template = \"[TEMPLATE_NAME]\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
+                                    owner = UKR
+                                    allow_spawning_on_enemy_provs = yes
+                                    prioritize_location = 6474
+                                }
+                            }
+                            UNIT_NAME = "[227.GetName] Defense Brigade"
+                            TEMPLATE_NAME = "Defense Brigade"
+                        }
+                        meta_effect = {
+                            text = {
+                                create_unit = {
+                                    division = "name = \"[UNIT_NAME]\" division_template = \"[TEMPLATE_NAME]\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
+                                    owner = UKR
+                                    allow_spawning_on_enemy_provs = yes
+                                    prioritize_location = 6474
+                                }
+                            }
+                            UNIT_NAME = "[227.GetName] Defense Brigade"
+                            TEMPLATE_NAME = "Defense Brigade"
+                        }
+                        add_building_construction = {
+                            type = bunker
+                            level = 1
+                            instant_build = yes
+                            province = 6474
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        controls_state = 218
+                    }
+                    218 = {
+                        meta_effect = {
+                            text = {
+                                create_unit = {
+                                    division = "name = \"[UNIT_NAME]\" division_template = \"[TEMPLATE_NAME]\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
+                                    owner = UKR
+                                    allow_spawning_on_enemy_provs = yes
+                                    prioritize_location = 9417
+                                }
+                            }
+                            UNIT_NAME = "[218.GetName] Defense Brigade"
+                            TEMPLATE_NAME = "Defense Brigade"
+                        }
+                        meta_effect = {
+                            text = {
+                                create_unit = {
+                                    division = "name = \"[UNIT_NAME]\" division_template = \"[TEMPLATE_NAME]\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
+                                    owner = UKR
+                                    allow_spawning_on_enemy_provs = yes
+                                    prioritize_location = 9417
+                                }
+                            }
+                            UNIT_NAME = "[218.GetName] Defense Brigade"
+                            TEMPLATE_NAME = "Defense Brigade"
+                        }
+                        add_building_construction = {
+                            type = bunker
+                            level = 1
+                            instant_build = yes
+                            province = 9417
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        controls_state = 137
+                    }
+                    137 = {
+                        meta_effect = {
+                            text = {
+                                create_unit = {
+                                    division = "name = \"[UNIT_NAME]\" division_template = \"[TEMPLATE_NAME]\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
+                                    owner = UKR
+                                    allow_spawning_on_enemy_provs = yes
+                                    prioritize_location = 3686
+                                }
+                            }
+                            UNIT_NAME = "[137.GetName] Defense Brigade"
+                            TEMPLATE_NAME = "Defense Brigade"
+                        }
+                        meta_effect = {
+                            text = {
+                                create_unit = {
+                                    division = "name = \"[UNIT_NAME]\" division_template = \"[TEMPLATE_NAME]\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
+                                    owner = UKR
+                                    allow_spawning_on_enemy_provs = yes
+                                    prioritize_location = 3686
+                                }
+                            }
+                            UNIT_NAME = "[137.GetName] Defense Brigade"
+                            TEMPLATE_NAME = "Defense Brigade"
+                        }
+                        add_building_construction = {
+                            type = bunker
+                            level = 1
+                            instant_build = yes
+                            province = 3686
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -1784,10 +2577,10 @@ focus_tree = {
         id = UKR_research_funding
         x = 30
         y = 12
-        prerequisite = { focus = UKR_infrastructure_project_three }
+        prerequisite = { focus = UKR_revival_project_three }
         prerequisite = { focus = UKR_nuclear_power focus = UKR_protect_main_cities }
         icon = GFX_
-        cost = 5
+        cost = 10
         ai_will_do = {
             factor = 20
         }
@@ -1795,11 +2588,11 @@ focus_tree = {
 
         }
         available = {
-
+            has_country_flag = UKR_revival_project_three_finished
         }
         search_filters = {  }
         completion_reward = {
-
+            add_research_slot = 1
         }
     }
 
@@ -1810,7 +2603,7 @@ focus_tree = {
         y = 13
         prerequisite = { focus = UKR_research_funding }
         icon = GFX_
-        cost = 5
+        cost = 8
         ai_will_do = {
             factor = 20
         }
@@ -1822,7 +2615,13 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_tech_bonus = {
+				name = UKR_kyivan_industry
+				bonus = 0.5
+				uses = 1
+				category = industry
+			}
+            custom_effect_tooltip = UKR_kyivan_industry_tt
         }
     }
 
