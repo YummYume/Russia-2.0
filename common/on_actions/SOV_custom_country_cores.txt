@@ -531,11 +531,32 @@ on_actions = {
 							}
 							subtract_from_temp_variable = { num_divisions_russian_state = 1 }
 						}
+						delete_unit_template_and_units = {
+							division_template = "Strelkovaya Diviziya"
+						}
+						delete_unit_template_and_units = {
+							division_template = "Gornostrelkovaya Diviziya"
+						}
+						delete_unit_template_and_units = {
+							division_template = "Motostrelkovaya Diviziya"
+						}
+						delete_unit_template_and_units = {
+							division_template = "Kavaleriyskaya Diviziya"
+						}
+						delete_unit_template_and_units = {
+							division_template = "NKVD Pogranichnaya Diviziya"
+						}
+						delete_unit_template_and_units = {
+							division_template = "Mekhanizirovaniy Korpus"
+						}
 					}
 				}
 				KAR = {
 					if = {
-						limit = { has_dlc = "Man the Guns" }
+						limit = { 
+							has_dlc = "Man the Guns"
+							country_exists = KAR
+						}
 						load_oob = "KAR_naval_mtg"
 					}
 					else = {
@@ -544,7 +565,10 @@ on_actions = {
 				}
 				STP = {
 					if = {
-						limit = { has_dlc = "Man the Guns" }
+						limit = {
+							country_exists = STP 
+							has_dlc = "Man the Guns" 
+						}
 						load_oob = "STP_naval_mtg"
 					}
 					else = {
@@ -553,7 +577,10 @@ on_actions = {
 				}
 				CRI = {
 					if = {
-						limit = { has_dlc = "Man the Guns" }
+						limit = {
+							country_exists = CRI 
+							has_dlc = "Man the Guns" 
+						}
 						load_oob = "CRI_naval_mtg"
 					}
 					else = {
@@ -562,6 +589,7 @@ on_actions = {
 				}
 				if = {
 					limit = {
+						country_exists = SIB
 						408 = { is_owned_and_controlled_by = SIB }
 						has_dlc = "Man the Guns"
 					}
@@ -571,6 +599,7 @@ on_actions = {
 				}
 				else_if = {
 					limit = {
+						country_exists = SIB
 						408 = { is_owned_and_controlled_by = SIB }
 						NOT = {
 							has_dlc = "Man the Guns"
@@ -582,6 +611,7 @@ on_actions = {
 				}
 				if = {
 					limit = {
+						country_exists = EFR
 						408 = { is_owned_and_controlled_by = EFR }
 						has_dlc = "Man the Guns"
 					}
@@ -591,6 +621,7 @@ on_actions = {
 				}
 				else_if = {
 					limit = {
+						country_exists = EFR
 						408 = { is_owned_and_controlled_by = EFR }
 						NOT = {
 							has_dlc = "Man the Guns"
@@ -600,26 +631,65 @@ on_actions = {
 						load_oob = "EFR_naval_mtg"
 					}
 				}
-				SOV = {
-					destroy_ships = {
-						type = destroyer
-						count = all
+				if = {
+					limit = {
+						country_exists = SOV
 					}
-					destroy_ships = {
-						type = ship_hull_submarine_1
-						count = all
-					}
-					destroy_ships = {
-						type = ship_hull_submarine_2
-						count = all
-					}
-					destroy_ships = {
-						type = ship_hull_heavy_1
-						count = all
-					}
-					destroy_ships = {
-						type = light_cruiser
-						count = all
+					SOV = {
+						division_template = {
+							name = "Patrul'nyy Otryad Militsii"
+							is_locked = no
+							division_names_group = SOV_CAV_01
+		
+							regiments = {
+								cavalry = { x = 0 y = 0 }
+								cavalry = { x = 0 y = 1 }
+								cavalry = { x = 0 y = 2 }
+								cavalry = { x = 0 y = 3 }
+							}
+							support = 	{
+								military_police = { x = 0 y = 0 }
+							}
+						}
+						delete_unit_template_and_units = {
+							division_template = "Strelkovaya Diviziya"
+						}
+						delete_unit_template_and_units = {
+							division_template = "Gornostrelkovaya Diviziya"
+						}
+						delete_unit_template_and_units = {
+							division_template = "Motostrelkovaya Diviziya"
+						}
+						delete_unit_template_and_units = {
+							division_template = "Kavaleriyskaya Diviziya"
+						}
+						delete_unit_template_and_units = {
+							division_template = "NKVD Pogranichnaya Diviziya"
+						}
+						delete_unit_template_and_units = {
+							division_template = "Mekhanizirovaniy Korpus"
+						}
+						destroy_ships = {
+							type = destroyer
+							count = all
+						}
+						destroy_ships = {
+							type = ship_hull_submarine_1
+							count = all
+						}
+						destroy_ships = {
+							type = ship_hull_submarine_2
+							count = all
+						}
+						destroy_ships = {
+							type = ship_hull_heavy_1
+							count = all
+						}
+						destroy_ships = {
+							type = light_cruiser
+							count = all
+						}
+						#load_oob = #TODO OOB for Rusky
 					}
 				}
 			}
