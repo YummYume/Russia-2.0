@@ -357,54 +357,6 @@ country_event = {
 	}
 }
 
-# SOV becomes Far Eastern Republic
-country_event = {
-	id = soviets.16
-
-	trigger = {
-		tag = SOV
-		has_idea = SOV_Exiled_russia
-	}
-
-	mean_time_to_happen = { days = 2 }
-
-	hidden = yes
-
-	immediate = {
-		SOV = {
-			set_cosmetic_tag = FER
-		}
-		set_global_flag = SOV_became_far_eastern_republic
-	}
-}
-
-# SOV becomes SOV again
-country_event = {
-	id = soviets.17
-
-	trigger = {
-		tag = SOV
-		NOT = {
-			has_idea = SOV_Exiled_russia
-		}
-		has_global_flag = SOV_became_far_eastern_republic
-	}
-
-	mean_time_to_happen = { days = 2 }
-
-	hidden = yes
-
-	immediate = {
-		if = {
-			limit = {
-				has_cosmetic_tag = FER
-			}
-			drop_cosmetic_tag = yes
-		}
-		clr_global_flag = SOV_became_far_eastern_republic
-	}
-}
-
 # Peasants Revolt
 country_event = {
 	id = soviets.18
@@ -457,8 +409,9 @@ country_event = {
 	fire_only_once = yes
 
 	trigger = {
-		SOV = { has_government = communism }
-		TAG = SOV
+		tag = SOV
+		has_government = communism
+		is_subject = no
 		FIN = {
 			AND = {
 				surrender_progress > 0.05
@@ -531,8 +484,13 @@ country_event = {
 	fire_only_once = yes
 
 	trigger = {
-		SOV = { has_government = communism }
-		TAG = SOV
+		tag = SOV
+		has_government = communism
+		is_subject = no
+		has_country_leader = {
+			name = "Joseph Stalin"
+			ruling_only = yes
+		}
 		96 = { is_owned_and_controlled_by = SOV }
 		784 = { is_owned_and_controlled_by = SOV }
 		95 = { is_owned_and_controlled_by = SOV }
@@ -540,10 +498,6 @@ country_event = {
 		93 = { is_owned_and_controlled_by = SOV }
 		91 = { is_owned_and_controlled_by = SOV }
 		89 = { is_owned_and_controlled_by = SOV }
-		has_country_leader = {
-			name = "Joseph Stalin"
-			ruling_only = yes
-		}
 	}
 
 	mean_time_to_happen = { months = 8 }
@@ -579,15 +533,17 @@ country_event = {
 	fire_only_once = yes
 
 	trigger = {
-		TAG = GER
-		GER = {
-			has_war_with = SOV
-		}
+		tag = GER
+		has_war_with = SOV
+		controls_state = 242
 		SOV = {
 			has_country_flag = katyn_massacre
-		}
-		242 = {
-			is_controlled_by = GER
+			has_government = communism
+			is_subject = no
+			has_country_leader = {
+				name = "Joseph Stalin"
+				ruling_only = yes
+			}
 		}
 	}
 
@@ -614,51 +570,51 @@ country_event = {
 }
 
 #No purges completed - decide what to do
-country_event = {
-	id = soviets.23
-	title = soviets.23.t
-	desc = soviets.23.d
-	picture = GFX_report_event_soviet_purge_politicians
+# country_event = {
+# 	id = soviets.23
+# 	title = soviets.23.t
+# 	desc = soviets.23.d
+# 	picture = GFX_report_event_soviet_purge_politicians
 
-	trigger = {
-		has_government = communism
-		tag = SOV
-		has_global_flag = SOV_fourth_international_fired_rework
-		NOT = { has_completed_focus = SOV_great_purge }
-		NOT = { has_completed_focus = SOV_avoid_purge }
-		NOT = { has_completed_focus = SOV_great_purge2 }
-		NOT = {
-			focus_progress = {
-				focus = SOV_great_purge2
-				progress > 0.05
-			}
-		}
-		NOT = { has_country_flag = no_purgenoncivilwar }
-		NOT = { has_completed_focus = SOV_another_revolution }
-	}
+# 	trigger = {
+# 		has_government = communism
+# 		tag = SOV
+# 		has_global_flag = SOV_fourth_international_fired_rework
+# 		NOT = { has_completed_focus = SOV_great_purge }
+# 		NOT = { has_completed_focus = SOV_avoid_purge }
+# 		NOT = { has_completed_focus = SOV_great_purge2 }
+# 		NOT = {
+# 			focus_progress = {
+# 				focus = SOV_great_purge2
+# 				progress > 0.05
+# 			}
+# 		}
+# 		NOT = { has_country_flag = no_purgenoncivilwar }
+# 		NOT = { has_completed_focus = SOV_another_revolution }
+# 	}
 
-	mean_time_to_happen = {
-		days = 90
-	}
+# 	mean_time_to_happen = {
+# 		days = 90
+# 	}
 
-	fire_only_once = yes
+# 	fire_only_once = yes
 
-	#Don't invite Trotsky
-	option = {
-		name = soviets.23.a
-		custom_effect_tooltip = soviet.23.a_tt
-		set_country_flag = SOV_soviet.48_notrotsky_rework
-		add_stability = 0.05
-	}
+# 	#Don't invite Trotsky
+# 	option = {
+# 		name = soviets.23.a
+# 		custom_effect_tooltip = soviet.23.a_tt
+# 		set_country_flag = SOV_soviet.48_notrotsky_rework
+# 		add_stability = 0.05
+# 	}
 
-	#Invite back Trotsky
-	option = {
-		name = soviets.23.b
-		custom_effect_tooltip = soviets.23.b_tt
-		set_country_flag = SOV_soviet.48_notrotsky_rework
-		add_war_support = 0.05
-	}
-}
+# 	#Invite back Trotsky
+# 	option = {
+# 		name = soviets.23.b
+# 		custom_effect_tooltip = soviets.23.b_tt
+# 		set_country_flag = SOV_soviet.48_notrotsky_rework
+# 		add_war_support = 0.05
+# 	}
+# }
 
 # Great Purge - Begins
 country_event = {
@@ -671,6 +627,81 @@ country_event = {
 
 	option = {
 		name = soviets.24.a
+		custom_effect_tooltip = SOV_great_purge_begins_tt
+		hidden_effect = {
+			add_ideas = SOV_Great_purge
+			swap_ideas = {
+				remove_idea = SOV_genrikh_yagoda
+				add_idea = SOV_nikolay_yezhov
+			}
+		}
+	}
+}
+
+# Great Purge - End
+country_event = {
+	id = soviets.25
+	title = soviets.25.t
+	desc = soviets.25.d
+	picture = GFX_report_event_soviet_purge_speech
+
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			remove_ideas = SOV_Great_purge
+		}
+	}
+
+	option = {
+		name = soviets.25.a
+		if = {
+			limit = {
+				NOT = {
+					check_variable = {
+						var = sov_great_purge_status^1
+						value = 1
+						compare = equals
+					}
+				}
+			}
+			custom_effect_tooltip = SOV_great_purge_ends_tt
+			hidden_effect = {
+				remove_ideas = SOV_Great_purge
+				swap_ideas = {
+					remove_idea = SOV_nikolay_yezhov
+					add_idea = SOV_lavrentiy_beria
+				}
+			}
+		}
+		else = {
+			custom_effect_tooltip = SOV_great_purge_ends_tt2
+			hidden_effect = {
+				remove_ideas = SOV_Great_purge
+				swap_ideas = {
+					remove_idea = SOV_nikolay_yezhov
+					add_idea = SOV_genrikh_yagoda
+				}
+			}
+		}
+	}
+}
+
+# Great Purge - Cancelled
+country_event = {
+	id = soviets.26
+	title = soviets.26.t
+	desc = soviets.26.d
+	picture = GFX_report_event_soviet_purge_speech
+
+	is_triggered_only = yes
+
+	option = {
+		name = soviets.26.a
+		custom_effect_tooltip = SOV_great_purge_cancelled_tt
+		hidden_effect = {
+			
+		}
 	}
 }
 
@@ -883,7 +914,7 @@ country_event = {
 # 		set_country_flag = purge_2_group_a
 # 		set_country_flag = purge_2_group_alternative_a
 # 		custom_effect_tooltip = remove_political_advisor
-# 		show_ideas_tooltip = SOV_nikolai_yezhov
+# 		show_ideas_tooltip = SOV_nikolay_yezhov
 # 		custom_effect_tooltip = remove_chief_of_airforce
 # 		show_ideas_tooltip = yakov_smushkevich
 # 		show_ideas_tooltip = pavel_rychagov
@@ -893,7 +924,7 @@ country_event = {
 # 		remove_unit_leader = 406 #gordey_levchenko, naval commander
 # 		custom_effect_tooltip = soviets.27_tt
 # 		hidden_effect = {
-# 			remove_ideas = SOV_nikolai_yezhov
+# 			remove_ideas = SOV_nikolay_yezhov
 # 			remove_ideas = yakov_smushkevich
 # 			remove_ideas = pavel_rychagov
 # 			remove_ideas = alexander_novikov
@@ -2079,15 +2110,13 @@ country_event = {
 	fire_only_once = yes
 
 	trigger = {
-		TAG = SOV
-		SOV = {
-			has_war_with = PER
-			has_completed_focus = SOV_preemptive_strike_iran
-			has_government = communism
-			is_subject = no
-			NOT = {
-				has_war_with = ENG
-			}
+		tag = SOV
+		has_war_with = PER
+		has_completed_focus = SOV_preemptive_strike_iran
+		has_government = communism
+		is_subject = no
+		NOT = {
+			has_war_with = ENG
 		}
 		ENG = {
 			exists = yes
@@ -2139,17 +2168,17 @@ country_event = {
 	picture = GFX_military_parade_kremlin_russia2
 
 	trigger = {
-		TAG = SOV
-		SOV = {
-			has_war_with = GER
-			has_government = communism
-		}
-		219 = {
-			is_controlled_by = GER
-		}
+		tag = SOV
+		has_government = communism
 		has_country_leader = {
 			name = "Joseph Stalin"
 			ruling_only = yes
+		}
+		has_country_flag = sov_purge_over
+		any_country = {
+			is_major = yes
+			controls_state = 219
+			has_war_with = SOV
 		}
 	}
 
@@ -2157,13 +2186,12 @@ country_event = {
 
 	mean_time_to_happen = { days = 10 }
 
-	hidden = yes
-
 	option = {
 		name = soviets.57.a
 		custom_effect_tooltip = SOV_find_stalin_tt
 		hidden_effect = {
 			random_list = {
+				seed = random
 				75 = {
 					country_event = { id = soviets.58 days = 20 }
 				}
@@ -3214,7 +3242,7 @@ country_event = {
 		add_stability = -0.05
 		remove_ideas = mikhail_kalinin
 		remove_ideas = SOV_lavrentiy_beria
-		remove_ideas = SOV_nikolai_yezhov
+		remove_ideas = SOV_nikolay_yezhov
 		remove_ideas = SOV_vyacheslav_molotov
 		set_country_flag = purge_politician
 		set_country_flag = purge_politician2
@@ -18073,6 +18101,7 @@ country_event = {
 		}
 		hidden_effect = {
 			random_list = {
+				seed = random
 				40 = {
 					set_country_flag = worker_catastrophe_1
 					country_event = { id = soviets.440  days = 15 }
@@ -18147,6 +18176,7 @@ country_event = {
 					has_country_flag = has_forced_work_not_failed_1
 				}
 				random_list = {
+					seed = random
 					90 = {
 						country_event = { id = soviets.440  days = 10 }
 					}
@@ -18157,6 +18187,7 @@ country_event = {
 			}
 			else = {
 				random_list = {
+					seed = random
 					40 = {
 						country_event = { id = soviets.440  days = 10 }
 					}
@@ -18310,11 +18341,13 @@ country_event = {
 		name = soviets.426.a
 		add_stability = -0.05
 		add_political_power = 200
+		set_country_flag = sov_lavrentiy_beria_executed
 	}
 
 	option = { #Put him in prison
 		name = soviets.426.b
 		add_political_power = 50
+		set_country_flag = sov_lavrentiy_beria_prison
 	}
 
 	option = { #Let him be
@@ -19241,6 +19274,7 @@ country_event = {
 		custom_effect_tooltip = will_take_years_to_reform_black_guard
 		hidden_effect = {
 			random_list = {
+				seed = random
 				30 = {
 					country_event = { id = soviets.447 days = 365 }
 				}
@@ -24822,7 +24856,7 @@ country_event = {
 	}
 }
 
-#Lavrentiy Beria
+#Lavrentiy Beria / Genrikh Yagoda
 country_event = {
 	id = soviets.558
 	title = soviets.558.t
@@ -24836,39 +24870,58 @@ country_event = {
 		}
 	}
 	
-	option = { #Purge
+	option = { #Purge Beria
 		name = soviets.558.a
 		ai_chance = {
-			factor = 95
+			factor = 45
 		}
 		set_variable = { sov_great_purge_date^1 = global.date }
 		set_variable = { sov_great_purge_status^1 = 1 }
-		add_to_variable = { sov_great_purge_completion = 3 }
+		add_to_variable = { sov_great_purge_completion = 6 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
 			var = sov_great_purge_completion
 			min = 0
 			max = 100
 		}
-		custom_effect_tooltip = sov_add_3_purge_completion
+		custom_effect_tooltip = sov_add_6_purge_completion
 		custom_effect_tooltip = remove_political_advisor
 		show_ideas_tooltip = SOV_lavrentiy_beria
 	}
 
-	option = { #Don't purge
+	option = { #Purge Yagoda
 		name = soviets.558.b
 		ai_chance = {
-			factor = 5
+			factor = 45
 		}
-		add_political_power = -50
-		subtract_from_variable = { sov_great_purge_completion = 1 }
+		set_variable = { sov_great_purge_date^1 = global.date }
+		set_variable = { sov_great_purge_status^1 = 2 }
+		add_to_variable = { sov_great_purge_completion = 6 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
 			var = sov_great_purge_completion
 			min = 0
 			max = 100
 		}
-		custom_effect_tooltip = sov_remove_1_purge_completion
+		custom_effect_tooltip = sov_add_6_purge_completion
+		custom_effect_tooltip = remove_political_advisor
+		show_ideas_tooltip = SOV_genrikh_yagoda
+	}
+
+	option = { #Don't purge
+		name = soviets.558.c
+		ai_chance = {
+			factor = 10
+		}
+		add_political_power = -75
+		subtract_from_variable = { sov_great_purge_completion = 3 }
+		round_variable = sov_great_purge_completion
+		clamp_variable = {
+			var = sov_great_purge_completion
+			min = 0
+			max = 100
+		}
+		custom_effect_tooltip = sov_remove_3_purge_completion
 	}
 }
 
@@ -24922,7 +24975,7 @@ country_event = {
 	}
 }
 
-#Nikolai Yezhov
+#Grigory Kulik
 country_event = {
 	id = soviets.560
 	title = soviets.560.t
@@ -24951,8 +25004,7 @@ country_event = {
 			max = 100
 		}
 		custom_effect_tooltip = sov_add_3_purge_completion
-		custom_effect_tooltip = remove_political_advisor
-		show_ideas_tooltip = SOV_nikolai_yezhov
+		remove_unit_leader = 454
 	}
 
 	option = { #Don't purge
