@@ -8315,6 +8315,55 @@ ideas = {
 			}
 		}
 
+		SOV_Great_purge = {
+
+			removal_cost = -1
+
+			allowed = {
+				always = no
+			}
+
+			picture = neutrality_second
+
+			cancel = {
+				OR = {
+					NOT = {
+						has_government = communism
+					}
+					is_subject = yes
+					exists = no
+					has_civil_war = yes
+					has_country_flag = sov_purge_cancelled
+				}
+			}
+
+			on_add = {
+				add_dynamic_modifier = {
+					modifier = great_purge_modifiers
+				}
+			}
+
+			on_remove = {
+				remove_dynamic_modifier = {
+					modifier = great_purge_modifiers
+				}
+				if = {
+					limit = {
+						check_variable = {
+							var = sov_great_purge_completion
+							value = 100
+							compare = less_than
+						}
+					}
+					set_country_flag = sov_purge_cancelled
+				}
+			}
+
+			modifier = {
+				custom_modifier_tooltip = SOV_Great_purge_tt
+			}
+		}
+
 		#Ukraine
 		UKR_Military_pension_1 = {
 			allowed = {

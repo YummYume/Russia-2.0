@@ -819,4 +819,48 @@ on_actions = {
 			}
 		}
 	}
+
+	#The Great Purge
+	on_monthly_SOV = {
+		effect = {
+			if = {
+				limit = {
+					has_government = communism
+					is_subject = no
+					has_civil_war = no
+					has_idea = SOV_Great_purge
+					has_country_flag = sov_purge_ongoing
+					NOT = {
+						has_country_flag = sov_purge_cancelled
+					}
+				}
+				set_temp_variable = { random_purge_event = 0 }
+				randomize_temp_variable = {
+					var = random_purge_event
+					distribution = uniform
+					min = 0
+					max = sov_great_purge_events^num
+				}
+				round_temp_variable = random_purge_event
+				if = {
+					limit = {
+						check_variable = {
+							var = random_purge_event
+							value = sov_great_purge_events^num
+							compare = greater_than_or_equals
+						}
+					}
+					set_temp_variable = { random_purge_event = 0 }
+				}
+				set_temp_variable = { random_purge_event_id = sov_great_purge_events^var:random_purge_event }
+				meta_effect = {
+					text = {
+						country_event = [PURGE_EVENT]
+					}
+					PURGE_EVENT = "soviets.[?random_purge_event_id]"
+				}
+				remove_from_array = { sov_great_purge_events = random_purge_event }
+			}
+		}
+	}
 }

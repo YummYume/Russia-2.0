@@ -6117,7 +6117,7 @@ focus_tree = {
 		y = 1
 		mutually_exclusive = { focus = SOV_avoid_purge focus = SOV_another_revolution }
 		icon = GFX_focus_the_purge
-		cost = 30
+		cost = 18
 		ai_will_do = {
 			factor = 10
 			modifier = {
@@ -6148,6 +6148,7 @@ focus_tree = {
 		available = {
 			has_government = communism
 			is_subject = no
+			has_civil_war = no
 			NOT = {
 				has_completed_focus = SOV_terrible_fate
 			}
@@ -6161,127 +6162,135 @@ focus_tree = {
 			}
 		}
 		select_effect = {
+			add_ideas = SOV_Great_purge
 			country_event = { id = soviets.24 days = 1 }
-			set_country_flag = SOV_purge_started
+			set_country_flag = sov_purge_started
 		}
+		available_if_capitulated = no
+		cancel_if_invalid = yes
+		continue_if_invalid = no
 		search_filters = { FOCUS_FILTER_COMMUNISM_STALIN_RUSSIA }
 		completion_reward = {
 			custom_effect_tooltip = SOV_great_purge2_tt
 			custom_effect_tooltip = SOV_great_purge2_tt2
-			effect_tooltip = {
-				add_ideas = SOV_The_great_officer_purge
-			}
-
+			set_country_flag = sov_purge_ongoing
 			hidden_effect = {
-				#Full military purge. Hardest penalty
-				if = {
-					limit = {
-						OR = {
-							has_country_flag = purge_1_group_a
-							has_country_flag = purge_1_group_b
-						}
-						OR = {
-							has_country_flag = purge_2_group_a
-							has_country_flag = purge_2_group_b
-						}
-					}
-					add_ideas = SOV_The_great_officer_purge
-					hidden_effect = {
-						country_event = { id = soviet.37 days = 146 }
-						set_country_flag = no_purgenoncivilwar
-					}
-					hidden_effect = {
-						news_event = { hours = 6 id = news.219 }
-					}
-				}
-
-				#1 military purge. Lower penalty
-				if = {
-					limit = {
-						OR = {
-							AND = {
-								NOT = {
-									OR = {
-										has_country_flag = purge_1_group_a
-										has_country_flag = purge_1_group_b
-									}
-								}
-								OR = {
-									has_country_flag = purge_2_group_a
-									has_country_flag = purge_2_group_b
-								}
-							}
-							AND = {
-								OR = {
-									has_country_flag = purge_1_group_a
-									has_country_flag = purge_1_group_b
-								}
-								NOT = {
-									OR = {
-										has_country_flag = purge_2_group_a
-										has_country_flag = purge_2_group_b
-									}
-								}
-							}
-						}
-					}
-					add_ideas = SOV_The_great_officer_purge_2
-					hidden_effect = {
-						country_event = { id = soviet.40 days = 146 }
-					}
-				}
-
-				#No military purge. Lowest penalty.
-				if = {
-					limit = {
-						NOT = {
-							OR = {
-								has_country_flag = purge_1_group_a
-								has_country_flag = purge_1_group_b
-							}
-						}
-						NOT = {
-							OR = {
-								has_country_flag = purge_2_group_a
-								has_country_flag = purge_2_group_b
-							}
-						}
-					}
-					add_ideas = SOV_The_great_officer_purge_3
-					hidden_effect = {
-						country_event = { id = soviet.43 days = 146 }
-					}
-				}
+				add_ideas = SOV_Great_purge
 			}
+			# effect_tooltip = {
+			# 	add_ideas = SOV_The_great_officer_purge
+			# }
 
-			remove_ideas = SOV_Army_disorganisation
-			remove_ideas = trotskyite_plot
-			add_ideas = trotskyite_plot_purged
+			# hidden_effect = {
+			# 	#Full military purge. Hardest penalty
+			# 	if = {
+			# 		limit = {
+			# 			OR = {
+			# 				has_country_flag = purge_1_group_a
+			# 				has_country_flag = purge_1_group_b
+			# 			}
+			# 			OR = {
+			# 				has_country_flag = purge_2_group_a
+			# 				has_country_flag = purge_2_group_b
+			# 			}
+			# 		}
+			# 		add_ideas = SOV_The_great_officer_purge
+			# 		hidden_effect = {
+			# 			country_event = { id = soviet.37 days = 146 }
+			# 			set_country_flag = no_purgenoncivilwar
+			# 		}
+			# 		hidden_effect = {
+			# 			news_event = { hours = 6 id = news.219 }
+			# 		}
+			# 	}
 
-			hidden_effect = {
-				if = {
-					limit = {
-						any_other_country = {
-							is_major = yes
-							has_offensive_war_with = ROOT
-						}
-					}
-					country_event = { id = soviet.46 days = 3 }
-				}
-				country_lock_all_division_template = no
-				division_template = {
-					name = "Vozdushno-Desantnaya Brigada"
-					is_locked = no
-					division_names_group = SOV_PAR_01
+			# 	#1 military purge. Lower penalty
+			# 	if = {
+			# 		limit = {
+			# 			OR = {
+			# 				AND = {
+			# 					NOT = {
+			# 						OR = {
+			# 							has_country_flag = purge_1_group_a
+			# 							has_country_flag = purge_1_group_b
+			# 						}
+			# 					}
+			# 					OR = {
+			# 						has_country_flag = purge_2_group_a
+			# 						has_country_flag = purge_2_group_b
+			# 					}
+			# 				}
+			# 				AND = {
+			# 					OR = {
+			# 						has_country_flag = purge_1_group_a
+			# 						has_country_flag = purge_1_group_b
+			# 					}
+			# 					NOT = {
+			# 						OR = {
+			# 							has_country_flag = purge_2_group_a
+			# 							has_country_flag = purge_2_group_b
+			# 						}
+			# 					}
+			# 				}
+			# 			}
+			# 		}
+			# 		add_ideas = SOV_The_great_officer_purge_2
+			# 		hidden_effect = {
+			# 			country_event = { id = soviet.40 days = 146 }
+			# 		}
+			# 	}
 
-					regiments = {
-						paratrooper = { x = 0 y = 0 }
-						paratrooper = { x = 0 y = 1 }
-					}
-				}
-			}
-			custom_effect_tooltip = available_political_advisor
-			show_ideas_tooltip = nikita_khrushchev
+			# 	#No military purge. Lowest penalty.
+			# 	if = {
+			# 		limit = {
+			# 			NOT = {
+			# 				OR = {
+			# 					has_country_flag = purge_1_group_a
+			# 					has_country_flag = purge_1_group_b
+			# 				}
+			# 			}
+			# 			NOT = {
+			# 				OR = {
+			# 					has_country_flag = purge_2_group_a
+			# 					has_country_flag = purge_2_group_b
+			# 				}
+			# 			}
+			# 		}
+			# 		add_ideas = SOV_The_great_officer_purge_3
+			# 		hidden_effect = {
+			# 			country_event = { id = soviet.43 days = 146 }
+			# 		}
+			# 	}
+			# }
+
+			# remove_ideas = SOV_Army_disorganisation
+			# remove_ideas = trotskyite_plot
+			# add_ideas = trotskyite_plot_purged
+
+			# hidden_effect = {
+			# 	if = {
+			# 		limit = {
+			# 			any_other_country = {
+			# 				is_major = yes
+			# 				has_offensive_war_with = ROOT
+			# 			}
+			# 		}
+			# 		country_event = { id = soviet.46 days = 3 }
+			# 	}
+			# 	country_lock_all_division_template = no
+			# 	division_template = {
+			# 		name = "Vozdushno-Desantnaya Brigada"
+			# 		is_locked = no
+			# 		division_names_group = SOV_PAR_01
+
+			# 		regiments = {
+			# 			paratrooper = { x = 0 y = 0 }
+			# 			paratrooper = { x = 0 y = 1 }
+			# 		}
+			# 	}
+			# }
+			# custom_effect_tooltip = available_political_advisor
+			# show_ideas_tooltip = nikita_khrushchev
 		}
 	}
 
@@ -9243,26 +9252,7 @@ focus_tree = {
 				UKR = {
 					is_subject_of = ROOT
 				}
-				custom_trigger_tooltip = {
-					tooltip = SOV_ukrainian_gold_tt2
-					AND = {
-						192 = { is_owned_and_controlled_by = ROOT }
-						198 = { is_owned_and_controlled_by = ROOT }
-						199 = { is_owned_and_controlled_by = ROOT }
-						201 = { is_owned_and_controlled_by = ROOT }
-						202 = { is_owned_and_controlled_by = ROOT }
-						203 = { is_owned_and_controlled_by = ROOT }
-						197 = { is_owned_and_controlled_by = ROOT }
-						196 = { is_owned_and_controlled_by = ROOT }
-						200 = { is_owned_and_controlled_by = ROOT }
-						227 = { is_owned_and_controlled_by = ROOT }
-						226 = { is_owned_and_controlled_by = ROOT }
-						228 = { is_owned_and_controlled_by = ROOT }
-						221 = { is_owned_and_controlled_by = ROOT }
-						225 = { is_owned_and_controlled_by = ROOT }
-						193 = { is_owned_and_controlled_by = ROOT }
-					}
-				}
+				owns_state = 202
 			}
 			if = {
 				limit = {
