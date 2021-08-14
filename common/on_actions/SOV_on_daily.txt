@@ -832,34 +832,68 @@ on_actions = {
 					has_country_flag = sov_purge_ongoing
 					NOT = {
 						has_country_flag = sov_purge_cancelled
+						has_country_flag = sov_purge_over
 					}
 				}
-				set_temp_variable = { random_purge_event = 0 }
-				randomize_temp_variable = {
-					var = random_purge_event
-					distribution = uniform
-					min = 0
-					max = sov_great_purge_events^num
+				set_temp_variable = { purge_array_count = sov_great_purge_events^num }
+				multiply_temp_variable = { purge_array_count = 0.8 }
+				set_temp_variable = { purge_array_trigger_count = 0 }
+				for_each_loop = {
+					array = sov_great_purge_trigger
+
+					if = {
+						limit = {
+							check_variable = {
+								var = v
+								value = 1
+								compare = equals
+							}
+						}
+						add_to_temp_variable = { purge_array_trigger_count = 1 }
+					}
 				}
-				round_temp_variable = random_purge_event
 				if = {
 					limit = {
+						date > 1938.06.01
 						check_variable = {
-							var = random_purge_event
-							value = sov_great_purge_events^num
-							compare = greater_than_or_equals
+							var = purge_array_trigger_count
+							value = purge_array_count
+							compare = greater_than
 						}
 					}
+					country_event = soviets.49
+				}
+				else = {
 					set_temp_variable = { random_purge_event = 0 }
-				}
-				set_temp_variable = { random_purge_event_id = sov_great_purge_events^var:random_purge_event }
-				meta_effect = {
-					text = {
-						country_event = [PURGE_EVENT]
+					randomize_temp_variable = {
+						var = random_purge_event
+						distribution = uniform
+						min = 0
+						max = sov_great_purge_events^num
 					}
-					PURGE_EVENT = "soviets.[?random_purge_event_id]"
+					round_temp_variable = random_purge_event
+					if = {
+						limit = {
+							check_variable = {
+								var = random_purge_event
+								value = sov_great_purge_events^num
+								compare = greater_than_or_equals
+							}
+						}
+						set_temp_variable = { random_purge_event = 0 }
+					}
+					set_temp_variable = { random_purge_event_id = sov_great_purge_events^var:random_purge_event }
+					meta_effect = {
+						text = {
+							country_event = [PURGE_EVENT]
+						}
+						PURGE_EVENT = "soviets.[?random_purge_event_id]"
+					}
+					remove_from_array = {
+						array = sov_great_purge_events
+						index = random_purge_event
+					}
 				}
-				remove_from_array = { sov_great_purge_events = random_purge_event }
 			}
 		}
 	}

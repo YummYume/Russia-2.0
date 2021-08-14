@@ -472,7 +472,7 @@ sov_spawn_sou_scw = {
         }
         create_corps_commander = {
             name = "Semyon Timoshenko"
-            picture = "Portrait_Soviet_Semyon_Timoshenko.dds"
+            picture = "Portrait_Soviet_seymon_timoshenko.dds"
             traits = { cavalry_officer politically_connected career_officer }
             skill = 3
             attack_skill = 3
@@ -2885,6 +2885,69 @@ sov_spawn_english_ships_marines_scw = {
     }
 }
 #End of Second Civil War
+
+#Increase Great Purge Penalties
+sov_increase_great_purge_penalties = {
+    custom_effect_tooltip = sov_will_increase_purge_penalties_tt
+    subtract_from_variable = { army_org_factor_great_purge = 0.02 }
+    clamp_variable = {
+        var = army_org_factor_great_purge
+        min = var:army_org_factor_great_purge_max
+        max = 0
+    }
+    subtract_from_variable = { send_volunteer_factor_great_purge = 0.02 }
+    clamp_variable = {
+        var = send_volunteer_factor_great_purge
+        min = var:send_volunteer_factor_great_purge_max
+        max = 0
+    }
+    subtract_from_variable = { army_attack_factor_great_purge = 0.02 }
+    clamp_variable = {
+        var = army_attack_factor_great_purge
+        min = var:army_attack_factor_great_purge_max
+        max = 0
+    }
+    subtract_from_variable = { army_defence_factor_great_purge = 0.02 }
+    clamp_variable = {
+        var = army_defence_factor_great_purge
+        min = var:army_defence_factor_great_purge_max
+        max = 0
+    }
+    subtract_from_variable = { party_popularity_stability_factor_great_purge = 0.02 }
+    clamp_variable = {
+        var = party_popularity_stability_factor_great_purge
+        min = var:party_popularity_stability_factor_great_purge_max
+        max = 0
+    }
+    subtract_from_variable = { experience_gain_army_factor_great_purge = 0.02 }
+    clamp_variable = {
+        var = experience_gain_army_factor_great_purge
+        min = var:experience_gain_army_factor_great_purge_max
+        max = 0
+    }
+    add_to_variable = { training_time_factor_great_purge = 0.02 }
+    clamp_variable = {
+        var = training_time_factor_great_purge
+        min = 0
+        max = var:training_time_factor_great_purge_max
+    }
+    add_to_variable = { political_advisor_cost_factor_great_purge = 0.02 }
+    clamp_variable = {
+        var = political_advisor_cost_factor_great_purge
+        min = 0
+        max = var:political_advisor_cost_factor_great_purge_max
+    }
+    if = {
+        limit = {
+            check_variable = {
+                var = sov_great_purge_completion
+                value = 100
+                compare = greater_than_or_equals
+            }
+        }
+        country_event = soviets.25
+    }
+}
 
 #Calculate Democratic Custom GUI Bar Progress
 calculate_sov_gui_percentage_democratic_vote = {

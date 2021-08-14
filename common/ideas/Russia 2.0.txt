@@ -8342,7 +8342,7 @@ ideas = {
 				always = no
 			}
 
-			picture = neutrality_second
+			picture = great_purge
 
 			cancel = {
 				OR = {
@@ -8372,6 +8372,7 @@ ideas = {
 						}
 					}
 					set_country_flag = sov_purge_cancelled
+					country_event = soviets.26
 				}
 				else = {
 					set_country_flag = sov_purge_over
@@ -9070,13 +9071,13 @@ ideas = {
 				NOT = {
 					custom_trigger_tooltip = {
 						tooltip = SOV_idea_not_purged_tt
-						custom_trigger_tooltip = {
-							tooltip = SOV_idea_not_purged_tt
+						OR = {
 							check_variable = {
 								var = sov_great_purge_status^2
 								value = 1
 								compare = equals
 							}
+							has_country_flag = purge_politician
 						}
 					}
 				}
@@ -9104,13 +9105,10 @@ ideas = {
 				NOT = {
 					custom_trigger_tooltip = {
 						tooltip = SOV_idea_not_purged_tt
-						custom_trigger_tooltip = {
-							tooltip = SOV_idea_not_purged_tt
-							check_variable = {
-								var = sov_great_purge_status^0
-								value = 1
-								compare = equals
-							}
+						check_variable = {
+							var = sov_great_purge_status^0
+							value = 1
+							compare = equals
 						}
 					}
 				}
@@ -9157,7 +9155,13 @@ ideas = {
 			}
 
 			allowed_to_remove = {
-				has_country_flag = sov_purge_over
+				OR = {
+					has_country_flag = sov_purge_over
+					has_country_leader = {
+						name = "Leon Trotsky"
+						ruling_only = yes
+					}
+				}
 			}
 
 			available = {
@@ -9167,13 +9171,10 @@ ideas = {
 					has_idea = SOV_lavrentiy_beria
 					custom_trigger_tooltip = {
 						tooltip = SOV_idea_not_purged_tt
-						custom_trigger_tooltip = {
-							tooltip = SOV_idea_not_purged_tt
-							check_variable = {
-								var = sov_great_purge_status^1
-								value = 2
-								compare = equals
-							}
+						check_variable = {
+							var = sov_great_purge_status^1
+							value = 2
+							compare = equals
 						}
 					}
 				}
@@ -9195,7 +9196,13 @@ ideas = {
 			}
 
 			allowed_to_remove = {
-				has_country_flag = sov_purge_over
+				OR = {
+					has_country_flag = sov_purge_over
+					has_country_leader = {
+						name = "Leon Trotsky"
+						ruling_only = yes
+					}
+				}
 			}
 
 			available = {
@@ -9205,7 +9212,10 @@ ideas = {
 					has_idea = SOV_lavrentiy_beria
 					custom_trigger_tooltip = {
 						tooltip = SOV_idea_not_purged_tt
-						has_country_flag = SOV_nikolay_yezhov_purged
+						OR = {
+							has_country_flag = SOV_nikolay_yezhov_purged
+							has_country_flag = purge_politician
+						}
 					}
 				}
 			}
@@ -9234,6 +9244,7 @@ ideas = {
 			available = {
 				has_government = communism
 				NOT = {
+					has_completed_focus = SOV_avoid_purge
 					has_idea = SOV_nikolay_yezhov
 					has_idea = SOV_genrikh_yagoda
 					has_country_flag = sov_lavrentiy_beria_executed
@@ -9260,10 +9271,18 @@ ideas = {
 			allowed = {
 				original_tag = SOV
 			}
+
 			available = {
 				has_government = communism
-				NOT = { has_country_flag = purged_kalinin }
-				NOT = { has_country_flag = purge_politician }
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						OR = {
+							has_country_flag = mikhail_kalinin_purged
+							has_country_flag = purge_politician
+						}
+					}
+				}
 				NOT = {
 					has_country_flag = ennemy_second_civil_war
 				}
@@ -9290,11 +9309,20 @@ ideas = {
 			}
 
 			available = {
-				NOT = { has_country_flag = purged_khrushchev }
 				has_government = communism
 				has_completed_focus = SOV_great_purge2
 				NOT = {
 					has_country_flag = ennemy_second_civil_war
+				}
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^6
+							value = 1
+							compare = equals
+						}
+					}
 				}
 			}
 			
@@ -9316,15 +9344,27 @@ ideas = {
 			allowed = {
 				original_tag = SOV
 			}
-
-			cost = 100
 			
 			available = {
 				has_government = communism
-			}	
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						OR = {
+							check_variable = {
+								var = sov_great_purge_status^35
+								value = 1
+								compare = equals
+							}
+							has_country_flag = purge_politician2
+						}
+					}
+				}
+			}
+
+			cost = 100
 			
 			traits = { silent_workhorse }
-	
 			
 			ai_will_do = {
 				factor = 5
@@ -9338,11 +9378,28 @@ ideas = {
 			}
 
 			available = {
+				has_country_flag = foreign_diplomacy_set
 				NOT = {
-					has_country_flag = purged_maisky
+					has_idea = SOV_vyacheslav_molotov
+				}
+				NOT = {
 					has_country_flag = replaced_maisky
 				}
-				has_country_flag = foreign_diplomacy_set
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^5
+							value = 1
+							compare = equals
+						}
+					}
+				}
+				hidden_trigger = {
+					NOT = {
+						has_government = anarchy
+					}
+				}
 			}
 			
 			traits = { anti_fascist }
@@ -9361,14 +9418,26 @@ ideas = {
 			}
 
 			available = {
+				has_country_flag = foreign_diplomacy_set
 				NOT = {
-					has_country_flag = purge_politician2
+					has_idea = SOV_ivan_maisky
+				}
+				NOT = {
 					has_country_flag = kept_maisky
+				}
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^5
+							value = 2
+							compare = equals
+						}
+					}
 				}
 				NOT = {
 					has_country_flag = ennemy_second_civil_war
 				}
-				has_country_flag = foreign_diplomacy_set
 				hidden_trigger = {
 					NOT = {
 						has_government = anarchy
@@ -9697,6 +9766,16 @@ ideas = {
 		
 			available = {
 				has_intelligence_agency = yes
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^4
+							value = 1
+							compare = equals
+						}
+					}
+				}
 			}
 			
 			allowed = {
@@ -9709,7 +9788,6 @@ ideas = {
 			ai_will_do = {
 				factor = 3
 			}
-
 		}
 	}
 
@@ -9836,15 +9914,27 @@ ideas = {
 			}
 		}
 
-		semyon_timoshenko = {
+		seymon_timoshenko = {
 			#Also unit leader: 404
 			
 			allowed = {
 				original_tag = SOV
 			}
-			available = 
-			{
-				NOT = { has_country_flag = purge_1_group_alternative_b }
+
+			available = {
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^7
+							value = 1
+							compare = equals
+						}
+					}
+				}
+				NOT = {
+					has_country_flag = ennemy_second_civil_war
+				}
 				hidden_trigger = {
 					NOT = { 
 						any_other_country = {
@@ -9853,9 +9943,6 @@ ideas = {
 							has_unit_leader = 404
 						} 
 					}
-				}
-				NOT = {
-					has_country_flag = ennemy_second_civil_war
 				}
 				hidden_trigger = {
 					NOT = {
@@ -9877,24 +9964,33 @@ ideas = {
 			allowed = {
 				original_tag = SOV
 			}
-			available = 
-			{
-				NOT = { has_country_flag = purge_1_group_b }
+
+			available = {
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^0
+							value = 1
+							compare = equals
+						}
+					}
+				}
 				NOT = { has_country_flag = has_deserted_military }
+				NOT = {
+					has_country_flag = ennemy_second_civil_war
+				}
+				NOT = {
+					has_idea = SOV_kliment_voroshilov
+				}
 				hidden_trigger = {
 					NOT = { 
 						any_other_country = {
 							has_war_with = SOV
 							original_tag = SOV
 							has_unit_leader = 405
-						} 
+						}
 					}
-				}
-				NOT = {
-					has_country_flag = ennemy_second_civil_war
-				}
-				NOT = {
-					has_idea = SOV_kliment_voroshilov
 				}
 				hidden_trigger = {
 					NOT = {
@@ -9915,9 +10011,18 @@ ideas = {
 			allowed = {
 				original_tag = SOV
 			}
-			available = 
-			{
-				NOT = { has_country_flag = purge_1_group_alternative_a }
+
+			available = {
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^8
+							value = 1
+							compare = equals
+						}
+					}
+				}
 				NOT = {
 					has_country_flag = ennemy_second_civil_war
 				}
@@ -9940,11 +10045,19 @@ ideas = {
 			
 			allowed = {
 				original_tag = SOV
-
 			}
 
 			available = {
-				NOT = { has_country_flag = purge_1_group_a }
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^9
+							value = 1
+							compare = equals
+						}
+					}
+				}
 				NOT = {
 					has_country_flag = ennemy_second_civil_war
 				}
@@ -9999,12 +10112,18 @@ ideas = {
 			
 			allowed = {
 				original_tag = SOV
-
 			}
 
 			available = {
-				NOT = { 
-					has_country_flag = purge_1_group_a
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^10
+							value = 1
+							compare = equals
+						}
+					}
 				}
 				hidden_trigger = {
 					NOT = {
@@ -10025,11 +10144,18 @@ ideas = {
 			
 			allowed = {
 				original_tag = SOV
-
 			}
+
 			available = {
-				NOT = { 
-					has_country_flag = purge_1_group_alternative_a
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^11
+							value = 1
+							compare = equals
+						}
+					}
 				}
 				hidden_trigger = {
 					NOT = {
@@ -10054,8 +10180,15 @@ ideas = {
 			}
 
 			available = {
-				NOT = { 
-					has_country_flag = purge_2_group_b
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^12
+							value = 1
+							compare = equals
+						}
+					}
 				}
 				hidden_trigger = {
 					NOT = {
@@ -10080,8 +10213,15 @@ ideas = {
 			}
 
 			available = {
-				NOT = { 
-					has_country_flag = purge_1_group_alternative_b
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^13
+							value = 1
+							compare = equals
+						}
+					}
 				}
 				hidden_trigger = {
 					NOT = {
@@ -10224,8 +10364,15 @@ ideas = {
 			}
 
 			available = {
-				NOT = { 
-					has_country_flag = purge_2_group_a
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^14
+							value = 1
+							compare = equals
+						}
+					}
 				}
 				hidden_trigger = {
 					NOT = {
@@ -10250,8 +10397,15 @@ ideas = {
 			}
 
 			available = {
-				NOT = { 
-					has_country_flag = purge_2_group_alternative_b
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^15
+							value = 1
+							compare = equals
+						}
+					}
 				}
 				hidden_trigger = {
 					NOT = {
@@ -10275,8 +10429,15 @@ ideas = {
 			}
 
 			available = {
-				NOT = { 
-					has_country_flag = purge_2_group_a
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^16
+							value = 1
+							compare = equals
+						}
+					}
 				}
 				hidden_trigger = {
 					NOT = {
@@ -10301,8 +10462,15 @@ ideas = {
 			}
 
 			available = {
-				NOT = { 
-					has_country_flag = purge_2_group_alternative_a
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^17
+							value = 1
+							compare = equals
+						}
+					}
 				}
 				hidden_trigger = {
 					NOT = {
@@ -10512,7 +10680,6 @@ ideas = {
 		SOV_andrei_shkuro = {
 			ledger = army
 
-
 			allowed = {
 				original_tag = SOV
 			}
@@ -10695,13 +10862,28 @@ ideas = {
 			}
 
 			available = {
-				NOT = { has_country_flag = purge_military2 }
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						OR = {
+							check_variable = {
+								var = sov_great_purge_status^18
+								value = 1
+								compare = equals
+							}
+							has_country_flag = purge_military2
+						}
+					}
+				}
 				NOT = {
 					has_country_flag = has_deserted_military
 				}
+				NOT = {
+					has_country_flag = ennemy_second_civil_war_konev		
+				}
 				custom_trigger_tooltip = {
-				tooltip = SOV_konev_civil_war
-					NOT = { 
+					tooltip = SOV_konev_civil_war
+					NOT = {
 						any_other_country = {
 							has_war_with = SOV
 							original_tag = SOV
@@ -10713,9 +10895,6 @@ ideas = {
 					NOT = {
 						has_government = anarchy
 					}
-				}
-				NOT = {
-					has_country_flag = ennemy_second_civil_war_konev		
 				}
 			}
 			
@@ -10733,13 +10912,24 @@ ideas = {
 			
 			allowed = {
 				original_tag = SOV
-
 			}
 
 			available = {
-				NOT = { has_country_flag = purge_2_group_alternative_b }
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^19
+							value = 1
+							compare = equals
+						}
+					}
+				}
 				NOT = {
 					has_country_flag = has_deserted_military
+				}
+				NOT = {
+					has_country_flag = ennemy_second_civil_war_vasilevsky
 				}
 				hidden_trigger = {
 					NOT = { 
@@ -10748,11 +10938,12 @@ ideas = {
 							original_tag = SOV
 							has_unit_leader = 407
 						}
-						has_government = anarchy
 					}
 				}
-				NOT = {
-					has_country_flag = ennemy_second_civil_war_vasilevsky
+				hidden_trigger = {
+					NOT = {
+						has_government = anarchy
+					}
 				}
 			}
 			
@@ -10768,20 +10959,20 @@ ideas = {
 			#Also unit leader: 402
 			
 			allowed = {
-				original_tag = SOV # Unlocked via focus
-				hidden_trigger = {
-					NOT = {
-						any_other_country = {
-							has_war_with = SOV
-							original_tag = SOV
-							has_unit_leader = 403
-						} 
-					}
-				}
+				original_tag = SOV
 			}
 
 			available = {
-				NOT = { has_country_flag = purge_1_group_alternative_b }
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^18
+							value = 2
+							compare = equals
+						}
+					}
+				}
 				has_completed_focus = SOV_train_new_officers
 				hidden_trigger = {
 					NOT = {
@@ -10803,11 +10994,22 @@ ideas = {
 			
 			allowed = {
 				original_tag = SOV
-
 			}
 
 			available = {
-				NOT = { has_country_flag = purge_military }
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						OR = {
+							check_variable = {
+								var = sov_great_purge_status^20
+								value = 1
+								compare = equals
+							}
+							has_country_flag = purge_military
+						}
+					}
+				}
 				hidden_trigger = {
 					NOT = {
 						has_government = anarchy
@@ -10827,11 +11029,19 @@ ideas = {
 			
 			allowed = {
 				original_tag = SOV
-
 			}
 
 			available = {
-				NOT = { has_country_flag = purge_2_group_b }
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^21
+							value = 1
+							compare = equals
+						}
+					}
+				}
 				hidden_trigger = {
 					NOT = {
 						has_government = anarchy
@@ -10852,11 +11062,22 @@ ideas = {
 			
 			allowed = {
 				original_tag = SOV
-
 			}
 
 			available = {
-				NOT = { has_country_flag = purge_military }
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						OR = {
+							check_variable = {
+								var = sov_great_purge_status^22
+								value = 1
+								compare = equals
+							}
+							has_country_flag = purge_military
+						}
+					}
+				}
 				hidden_trigger = {
 					NOT = {
 						has_government = anarchy
@@ -10877,11 +11098,19 @@ ideas = {
 			
 			allowed = {
 				original_tag = SOV
-
 			}
 
 			available = {
-				NOT = { has_country_flag = purge_1_group_b }
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^23
+							value = 1
+							compare = equals
+						}
+					}
+				}
 				hidden_trigger = {
 					NOT = { 
 						any_other_country = {
@@ -10889,6 +11118,10 @@ ideas = {
 							original_tag = SOV
 							has_unit_leader = 403
 						} 
+					}
+				}
+				hidden_trigger = {
+					NOT = {
 						has_government = anarchy
 					}
 				}
@@ -10907,11 +11140,19 @@ ideas = {
 			
 			allowed = {
 				original_tag = SOV
-
 			}
 
 			available = {
-				NOT = { has_country_flag = purge_2_group_alternative_a }
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^24
+							value = 1
+							compare = equals
+						}
+					}
+				}
 				hidden_trigger = {
 					NOT = { 
 						any_other_country = {
@@ -10919,6 +11160,10 @@ ideas = {
 							original_tag = SOV
 							has_unit_leader = 406
 						}
+					}
+				}
+				hidden_trigger = {
+					NOT = {
 						has_government = anarchy
 					}
 				}
@@ -10938,11 +11183,22 @@ ideas = {
 			
 			allowed = {
 				original_tag = SOV
-
 			}
 
 			available = {
-				NOT = { has_country_flag = purge_military }
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						OR = {
+							check_variable = {
+								var = sov_great_purge_status^25
+								value = 1
+								compare = equals
+							}
+							has_country_flag = purge_military
+						}
+					}
+				}
 				hidden_trigger = {
 					NOT = { 
 						any_other_country = {
@@ -10950,7 +11206,11 @@ ideas = {
 							original_tag = SOV
 							has_unit_leader = 409
 						}
-						has_government = anarchy 
+					}
+				}
+				hidden_trigger = {
+					NOT = {
+						has_government = anarchy
 					}
 				}
 			}
@@ -10970,11 +11230,12 @@ ideas = {
 			
 			allowed = {
 				original_tag = SOV
-
 			}
 
 			available = {
-				NOT = { has_country_flag = purge_1_group_a }
+				NOT = {
+					has_country_flag = mikhail_tukhachevsky_purged
+				}
 				NOT = {
 					has_country_flag = mikhail_deserted
 				}
@@ -11011,6 +11272,16 @@ ideas = {
 			
 			available = {
 				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^26
+							value = 1
+							compare = equals
+						}
+					}
+				}
+				NOT = {
 					has_country_flag = has_deserted_military
 				}
 				NOT = {
@@ -11039,11 +11310,18 @@ ideas = {
 			
 			allowed = {
 				original_tag = SOV # Unlocked via focus
-
 			}
 
 			available = {
-				NOT = { has_country_flag = purge_military }
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						OR = {
+							has_country_flag = georgy_zhukov_purged
+							has_country_flag = purge_military
+						}
+					}
+				}
 				NOT = {
 					has_country_flag = has_deserted_military
 				}
@@ -11075,11 +11353,22 @@ ideas = {
 			
 			allowed = {
 				original_tag = SOV
-
 			}
 
 			available = {
-				NOT = { has_country_flag = purge_military }
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						OR = {
+							check_variable = {
+								var = sov_great_purge_status^26
+								value = 2
+								compare = equals
+							}
+							has_country_flag = purge_military
+						}
+					}
+				}
 			}
 			
 			cost = 150
@@ -11098,9 +11387,21 @@ ideas = {
 		vladimir_tributs = {
 			ledger = navy
 			
-			
 			allowed = {
 				original_tag = SOV
+			}
+
+			available = {
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^27
+							value = 1
+							compare = equals
+						}
+					}
+				}
 			}
 			
 			cost = 250
@@ -11119,14 +11420,24 @@ ideas = {
 		sergei_rudenko = {
 			ledger = air
 			
-			
 			allowed = {
 				original_tag = SOV
-
 			}
 
 			available = {
-				NOT = { has_country_flag = purge_military }
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						OR = {
+							check_variable = {
+								var = sov_great_purge_status^28
+								value = 1
+								compare = equals
+							}
+							has_country_flag = purge_military
+						}
+					}
+				}
 			}
 			
 			cost = 250
@@ -11148,6 +11459,19 @@ ideas = {
 			allowed = {
 				original_tag = SOV
 			}
+
+			available = {
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^29
+							value = 1
+							compare = equals
+						}
+					}
+				}
+			}
 			
 			research_bonus = {
 				air_doctrine = 0.10
@@ -11166,6 +11490,19 @@ ideas = {
 			allowed = {
 				original_tag = SOV
 			}
+
+			available = {
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^30
+							value = 1
+							compare = equals
+						}
+					}
+				}
+			}
 			
 			research_bonus = {
 				nuclear = 0.15
@@ -11183,6 +11520,19 @@ ideas = {
 			
 			allowed = {
 				original_tag = SOV
+			}
+
+			available = {
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^31
+							value = 1
+							compare = equals
+						}
+					}
+				}
 			}
 			
 			research_bonus = {

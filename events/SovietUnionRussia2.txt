@@ -649,7 +649,7 @@ country_event = {
 
 	immediate = {
 		hidden_effect = {
-			remove_ideas = SOV_Great_purge
+			set_country_flag = sov_purge_over
 		}
 	}
 
@@ -667,21 +667,21 @@ country_event = {
 			}
 			custom_effect_tooltip = SOV_great_purge_ends_tt
 			hidden_effect = {
-				remove_ideas = SOV_Great_purge
 				swap_ideas = {
 					remove_idea = SOV_nikolay_yezhov
 					add_idea = SOV_lavrentiy_beria
 				}
+				set_country_flag = SOV_nikolay_yezhov_purged
 			}
 		}
 		else = {
 			custom_effect_tooltip = SOV_great_purge_ends_tt2
 			hidden_effect = {
-				remove_ideas = SOV_Great_purge
 				swap_ideas = {
 					remove_idea = SOV_nikolay_yezhov
 					add_idea = SOV_genrikh_yagoda
 				}
+				set_country_flag = SOV_nikolay_yezhov_purged
 			}
 		}
 	}
@@ -699,9 +699,10 @@ country_event = {
 	option = {
 		name = soviets.26.a
 		custom_effect_tooltip = SOV_great_purge_cancelled_tt
-		hidden_effect = {
-			
-		}
+		custom_effect_tooltip = SOV_remove_all_head_nkvd
+		add_political_power = -200
+		add_stability = -0.15
+		add_war_support = -0.25
 	}
 }
 
@@ -849,7 +850,7 @@ country_event = {
 # 		set_country_flag = purge_1_group_b
 # 		set_country_flag = purge_1_group_alternative_b
 # 		custom_effect_tooltip = remove_chief_of_army
-# 		show_ideas_tooltip = semyon_timoshenko
+# 		show_ideas_tooltip = seymon_timoshenko
 # 		show_ideas_tooltip = kliment_voroshilov
 # 		custom_effect_tooltip = remove_chief_of_navy
 # 		show_ideas_tooltip = ivan_yumashev
@@ -858,11 +859,11 @@ country_event = {
 # 		show_ideas_tooltip = vladimir_kasatonov
 # 		remove_unit_leader = 405 #kliment_voroshilov, field marshal
 # 		remove_unit_leader = 402 #konstantin_rokossovsky, general
-# 		remove_unit_leader = 404 #semyon_timoshenko, general
+# 		remove_unit_leader = 404 #seymon_timoshenko, general
 # 		remove_unit_leader = 403 #vladimir_kasatonov, naval commander
 # 		custom_effect_tooltip = soviets.27_tt
 # 		hidden_effect = {
-# 			remove_ideas = semyon_timoshenko
+# 			remove_ideas = seymon_timoshenko
 # 			remove_ideas = kliment_voroshilov
 # 			remove_ideas = ivan_yumashev
 # 			remove_ideas = konstantin_rokossovsky
@@ -977,30 +978,51 @@ country_event = {
 
 	is_triggered_only = yes
 
-	option = {
+	option = { #Molotov
 		ai_chance = {
 			factor = 50
 		}
 		name = soviets.28.a
+		trigger = {
+			NOT = {
+				check_variable = {
+					var = sov_great_purge_status^5
+					value = 2
+					compare = equals
+				}
+			}
+		}
 		custom_effect_tooltip = available_political_advisor
 		show_ideas_tooltip = SOV_vyacheslav_molotov
 		every_other_country = {
 			limit = {
 				has_government = democratic
-				NOT = { is_in_faction_with = ROOT }
+				NOT = {
+					is_in_faction_with = ROOT
+					is_subject_of = ROOT
+					has_war_with = ROOT
+				}
 			}
 			add_opinion_modifier = { target = ROOT modifier = anti_capitalism_diplomacy }
 		}
 		every_other_country = {
 			limit = {
 				has_government = fascism
-				NOT = { is_in_faction_with = ROOT }
+				NOT = {
+					is_in_faction_with = ROOT
+					is_subject_of = ROOT
+					has_war_with = ROOT
+				}
 			}
 			add_opinion_modifier = { target = ROOT modifier = anti_capitalism_diplomacy_bonus }
 		}
 		if = {
 			limit = {
-				has_country_flag = purged_maisky
+				check_variable = {
+					var = sov_great_purge_status^5
+					value = 1
+					compare = equals
+				}
 			}
 			custom_effect_tooltip = only_molotov_available
 		}
@@ -1011,38 +1033,53 @@ country_event = {
 		}
 	}
 
-	option = {
+	option = { #Maisky
 		ai_chance = {
 			factor = 50
 		}
 		name = soviets.28.b
 		trigger = {
 			NOT = {
-				has_country_flag = purged_maisky
-			}
-		}
-		if = {
-			limit = {
-				NOT = {
-					has_country_flag = purged_maisky
+				check_variable = {
+					var = sov_great_purge_status^5
+					value = 1
+					compare = equals
 				}
 			}
-			custom_effect_tooltip = available_political_advisor
-			show_ideas_tooltip = SOV_ivan_maisky
 		}
+		custom_effect_tooltip = available_political_advisor
+		show_ideas_tooltip = SOV_ivan_maisky
 		every_other_country = {
 			limit = {
 				has_government = fascism
-				NOT = { is_in_faction_with = ROOT }
+				NOT = {
+					is_in_faction_with = ROOT
+					is_subject_of = ROOT
+					has_war_with = ROOT
+				}
 			}
 			add_opinion_modifier = { target = ROOT modifier = anti_fascist_diplomacy }
 		}
 		every_other_country = {
 			limit = {
 				has_government = democratic
-				NOT = { is_in_faction_with = ROOT }
+				NOT = {
+					is_in_faction_with = ROOT
+					is_subject_of = ROOT
+					has_war_with = ROOT
+				}
 			}
 			add_opinion_modifier = { target = ROOT modifier = anti_fascist_diplomacy_bonus }
+		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_great_purge_status^5
+					value = 2
+					compare = equals
+				}
+			}
+			custom_effect_tooltip = only_maisky_available
 		}
 		hidden_effect = {
 			news_event = { days = 1 id = newsrussia2.18 }
@@ -3240,10 +3277,10 @@ country_event = {
 	option = { #Purge the politicians
 		name = soviets.91.b
 		add_stability = -0.05
-		remove_ideas = mikhail_kalinin
-		remove_ideas = SOV_lavrentiy_beria
+		remove_ideas = SOV_nikolai_voznesensky
 		remove_ideas = SOV_nikolay_yezhov
-		remove_ideas = SOV_vyacheslav_molotov
+		remove_ideas = mikhail_kalinin
+		remove_ideas = SOV_yakov_agranov
 		set_country_flag = purge_politician
 		set_country_flag = purge_politician2
 	}
@@ -3252,7 +3289,7 @@ country_event = {
 		name = soviets.91.c
 		add_political_power = -150
 		add_stability = -0.2
-		remove_ideas = SOV_vyacheslav_molotov
+		remove_ideas = SOV_yakov_agranov
 		remove_ideas = ivan_konev
 		remove_unit_leader = 408
 		set_country_flag = purge_military2
@@ -9749,7 +9786,7 @@ country_event = {
 		}
 		create_corps_commander = {
 			name = "Semyon Timoshenko"
-			picture = "Portrait_Soviet_Semyon_Timoshenko.dds"
+			picture = "Portrait_Soviet_seymon_timoshenko.dds"
 			traits = { cavalry_officer politically_connected career_officer }
 			skill = 3
 			attack_skill = 3
@@ -10130,7 +10167,7 @@ country_event = {
 			}
 			create_corps_commander = {
 				name = "Semyon Timoshenko"
-				picture = "Portrait_Soviet_Semyon_Timoshenko.dds"
+				picture = "Portrait_Soviet_seymon_timoshenko.dds"
 				traits = { cavalry_officer politically_connected career_officer }
 				skill = 3
 				attack_skill = 3
@@ -16755,7 +16792,7 @@ country_event = {
 			}
 			create_corps_commander = {
 				name = "Semyon Timoshenko"
-				picture = "Portrait_Soviet_Semyon_Timoshenko.dds"
+				picture = "Portrait_Soviet_seymon_timoshenko.dds"
 				traits = { cavalry_officer politically_connected career_officer }
 				skill = 3
 				attack_skill = 3
@@ -19354,7 +19391,7 @@ country_event = {
 			}
 			create_corps_commander = {
 				name = "Semyon Timoshenko"
-				picture = "Portrait_Soviet_Semyon_Timoshenko.dds"
+				picture = "Portrait_Soviet_seymon_timoshenko.dds"
 				traits = { cavalry_officer politically_connected career_officer }
 				skill = 3
 				attack_skill = 3
@@ -19499,7 +19536,7 @@ country_event = {
 			}
 			create_corps_commander = {
 				name = "Semyon Timoshenko"
-				picture = "Portrait_Soviet_Semyon_Timoshenko.dds"
+				picture = "Portrait_Soviet_seymon_timoshenko.dds"
 				traits = { cavalry_officer politically_connected career_officer }
 				skill = 3
 				attack_skill = 3
@@ -24656,6 +24693,10 @@ country_event = {
 			max = 100
 		}
 		custom_effect_tooltip = sov_add_10_purge_completion
+		remove_unit_leader = 401
+		custom_effect_tooltip = remove_theorist
+		show_ideas_tooltip = mikhail_tukhachevsky
+		sov_increase_great_purge_penalties = yes
 	}
 
 	option = { #Don't purge
@@ -24719,6 +24760,10 @@ country_event = {
 			max = 100
 		}
 		custom_effect_tooltip = sov_add_10_purge_completion
+		remove_unit_leader = 410
+		custom_effect_tooltip = remove_theorist
+		show_ideas_tooltip = georgy_zhukov
+		sov_increase_great_purge_penalties = yes
 	}
 
 	option = { #Don't purge
@@ -24784,6 +24829,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_10_purge_completion
 		custom_effect_tooltip = remove_political_advisor
 		show_ideas_tooltip = mikhail_kalinin
+		sov_increase_great_purge_penalties = yes
 	}
 
 	option = { #Don't purge
@@ -24837,6 +24883,7 @@ country_event = {
 		remove_unit_leader = 405
 		custom_effect_tooltip = remove_political_advisor
 		show_ideas_tooltip = SOV_kliment_voroshilov
+		sov_increase_great_purge_penalties = yes
 	}
 
 	option = { #Don't purge
@@ -24887,6 +24934,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_6_purge_completion
 		custom_effect_tooltip = remove_political_advisor
 		show_ideas_tooltip = SOV_lavrentiy_beria
+		sov_increase_great_purge_penalties = yes
 	}
 
 	option = { #Purge Yagoda
@@ -24906,6 +24954,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_6_purge_completion
 		custom_effect_tooltip = remove_political_advisor
 		show_ideas_tooltip = SOV_genrikh_yagoda
+		sov_increase_great_purge_penalties = yes
 	}
 
 	option = { #Don't purge
@@ -24956,6 +25005,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_3_purge_completion
 		custom_effect_tooltip = remove_political_advisor
 		show_ideas_tooltip = SOV_nikolai_voznesensky
+		sov_increase_great_purge_penalties = yes
 	}
 
 	option = { #Don't purge
@@ -25005,6 +25055,7 @@ country_event = {
 		}
 		custom_effect_tooltip = sov_add_3_purge_completion
 		remove_unit_leader = 454
+		sov_increase_great_purge_penalties = yes
 	}
 
 	option = { #Don't purge
@@ -25055,6 +25106,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_3_purge_completion
 		custom_effect_tooltip = remove_political_advisor
 		show_ideas_tooltip = soviet_vsevolod_merkulov
+		sov_increase_great_purge_penalties = yes
 	}
 
 	option = { #Don't purge
@@ -25105,6 +25157,8 @@ country_event = {
 		custom_effect_tooltip = sov_add_6_purge_completion
 		custom_effect_tooltip = remove_political_advisor
 		show_ideas_tooltip = SOV_ivan_maisky
+		custom_effect_tooltip = only_molotov_will_remain
+		sov_increase_great_purge_penalties = yes
 	}
 
 	option = { #Purge Molotov
@@ -25124,6 +25178,8 @@ country_event = {
 		custom_effect_tooltip = sov_add_6_purge_completion
 		custom_effect_tooltip = remove_political_advisor
 		show_ideas_tooltip = SOV_vyacheslav_molotov
+		custom_effect_tooltip = only_maisky_will_remain
+		sov_increase_great_purge_penalties = yes
 	}
 
 	option = { #Don't purge
@@ -25174,6 +25230,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_3_purge_completion
 		custom_effect_tooltip = remove_political_advisor
 		show_ideas_tooltip = nikita_khrushchev
+		sov_increase_great_purge_penalties = yes
 		hidden_effect = {
 			UKR = {
 				retire_ideology_leader = communism
@@ -25238,7 +25295,8 @@ country_event = {
 		custom_effect_tooltip = sov_add_3_purge_completion
 		remove_unit_leader = 404
 		custom_effect_tooltip = remove_chief_of_army
-		show_ideas_tooltip = nikita_khrushchev
+		show_ideas_tooltip = seymon_timoshenko
+		sov_increase_great_purge_penalties = yes
 	}
 
 	option = { #Don't purge
@@ -25289,6 +25347,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_3_purge_completion
 		custom_effect_tooltip = remove_chief_of_army
 		show_ideas_tooltip = alexander_yegorov
+		sov_increase_great_purge_penalties = yes
 	}
 
 	option = { #Don't purge
@@ -25339,6 +25398,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_3_purge_completion
 		custom_effect_tooltip = remove_chief_of_army
 		show_ideas_tooltip = vasily_blucher
+		sov_increase_great_purge_penalties = yes
 	}
 
 	option = { #Don't purge
@@ -25389,6 +25449,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_3_purge_completion
 		custom_effect_tooltip = remove_chief_of_navy
 		show_ideas_tooltip = pyotr_smirnov
+		sov_increase_great_purge_penalties = yes
 	}
 
 	option = { #Don't purge
@@ -25439,6 +25500,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_3_purge_completion
 		custom_effect_tooltip = remove_chief_of_navy
 		show_ideas_tooltip = mikhail_frinovsky
+		sov_increase_great_purge_penalties = yes
 	}
 
 	option = { #Don't purge
@@ -25489,6 +25551,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_3_purge_completion
 		custom_effect_tooltip = remove_chief_of_navy
 		show_ideas_tooltip = nikolay_kuznetsov
+		sov_increase_great_purge_penalties = yes
 	}
 
 	option = { #Don't purge
@@ -25539,6 +25602,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_3_purge_completion
 		custom_effect_tooltip = remove_chief_of_navy
 		show_ideas_tooltip = ivan_yumashev
+		sov_increase_great_purge_penalties = yes
 	}
 
 	option = { #Don't purge
@@ -25589,6 +25653,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_3_purge_completion
 		custom_effect_tooltip = remove_chief_of_airforce
 		show_ideas_tooltip = alexander_novikov
+		sov_increase_great_purge_penalties = yes
 	}
 
 	option = { #Don't purge
@@ -25639,6 +25704,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_3_purge_completion
 		custom_effect_tooltip = remove_chief_of_airforce
 		show_ideas_tooltip = konstantin_vershinin
+		sov_increase_great_purge_penalties = yes
 	}
 
 	option = { #Don't purge
@@ -25689,6 +25755,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_3_purge_completion
 		custom_effect_tooltip = remove_chief_of_airforce
 		show_ideas_tooltip = yakov_smushkevich
+		sov_increase_great_purge_penalties = yes
 	}
 
 	option = { #Don't purge
@@ -25739,6 +25806,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_3_purge_completion
 		custom_effect_tooltip = remove_chief_of_airforce
 		show_ideas_tooltip = pavel_rychagov
+		sov_increase_great_purge_penalties = yes
 	}
 
 	option = { #Don't purge
@@ -25790,6 +25858,7 @@ country_event = {
 		remove_unit_leader = 408
 		custom_effect_tooltip = remove_military_high_command
 		show_ideas_tooltip = ivan_konev
+		sov_increase_great_purge_penalties = yes
 	}
 
 	option = { #Purge Rokossovsky
@@ -25810,6 +25879,7 @@ country_event = {
 		remove_unit_leader = 402
 		custom_effect_tooltip = remove_military_high_command
 		show_ideas_tooltip = konstantin_rokossovsky
+		sov_increase_great_purge_penalties = yes
 	}
 
 	option = { #Don't purge
@@ -25861,6 +25931,7 @@ country_event = {
 		remove_unit_leader = 407
 		custom_effect_tooltip = remove_military_high_command
 		show_ideas_tooltip = aleksandr_vasilevsky
+		sov_increase_great_purge_penalties = yes
 	}
 
 	option = { #Don't purge
@@ -25911,6 +25982,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_3_purge_completion
 		custom_effect_tooltip = remove_military_high_command
 		show_ideas_tooltip = pavel_zhigarev
+		sov_increase_great_purge_penalties = yes
 	}
 
 	option = { #Don't purge
@@ -25961,6 +26033,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_3_purge_completion
 		custom_effect_tooltip = remove_military_high_command
 		show_ideas_tooltip = sergei_khudyakov
+		sov_increase_great_purge_penalties = yes
 	}
 
 	option = { #Don't purge
@@ -26011,6 +26084,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_3_purge_completion
 		custom_effect_tooltip = remove_military_high_command
 		show_ideas_tooltip = stepan_krasovsky
+		sov_increase_great_purge_penalties = yes
 	}
 
 	option = { #Don't purge
@@ -26062,6 +26136,7 @@ country_event = {
 		remove_unit_leader = 403
 		custom_effect_tooltip = remove_military_high_command
 		show_ideas_tooltip = vladimir_kasatonov
+		sov_increase_great_purge_penalties = yes
 	}
 
 	option = { #Don't purge
@@ -26113,6 +26188,7 @@ country_event = {
 		remove_unit_leader = 406
 		custom_effect_tooltip = remove_military_high_command
 		show_ideas_tooltip = gordey_levchenko
+		sov_increase_great_purge_penalties = yes
 	}
 
 	option = { #Don't purge
@@ -26164,6 +26240,7 @@ country_event = {
 		remove_unit_leader = 409
 		custom_effect_tooltip = remove_military_high_command
 		show_ideas_tooltip = arseniy_golovko
+		sov_increase_great_purge_penalties = yes
 	}
 
 	option = { #Don't purge
@@ -26215,6 +26292,7 @@ country_event = {
 		remove_unit_leader = 510
 		custom_effect_tooltip = remove_theorist
 		show_ideas_tooltip = boris_shaposhnikov
+		sov_increase_great_purge_penalties = yes
 	}
 
 	option = { #Purge Gorshkov
@@ -26235,6 +26313,7 @@ country_event = {
 		remove_unit_leader = 411
 		custom_effect_tooltip = remove_theorist
 		show_ideas_tooltip = sergey_gorshkov
+		sov_increase_great_purge_penalties = yes
 	}
 
 	option = { #Don't purge
@@ -26285,6 +26364,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_3_purge_completion
 		custom_effect_tooltip = remove_theorist
 		show_ideas_tooltip = vladimir_tributs
+		sov_increase_great_purge_penalties = yes
 	}
 
 	option = { #Don't purge
@@ -26335,6 +26415,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_3_purge_completion
 		custom_effect_tooltip = remove_theorist
 		show_ideas_tooltip = sergei_rudenko
+		sov_increase_great_purge_penalties = yes
 	}
 
 	option = { #Don't purge
@@ -26385,6 +26466,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_3_purge_completion
 		custom_effect_tooltip = remove_theorist
 		show_ideas_tooltip = alexander_golovanov
+		sov_increase_great_purge_penalties = yes
 	}
 
 	option = { #Don't purge
@@ -26435,6 +26517,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_3_purge_completion
 		custom_effect_tooltip = remove_theorist
 		show_ideas_tooltip = igor_kurchatov
+		sov_increase_great_purge_penalties = yes
 	}
 
 	option = { #Don't purge
@@ -26485,6 +26568,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_3_purge_completion
 		custom_effect_tooltip = remove_theorist
 		show_ideas_tooltip = sergei_korolev
+		sov_increase_great_purge_penalties = yes
 	}
 
 	option = { #Don't purge
@@ -26534,6 +26618,7 @@ country_event = {
 		}
 		custom_effect_tooltip = sov_add_3_purge_completion
 		remove_unit_leader = 450
+		sov_increase_great_purge_penalties = yes
 	}
 
 	option = { #Don't purge
@@ -26583,6 +26668,7 @@ country_event = {
 		}
 		custom_effect_tooltip = sov_add_3_purge_completion
 		remove_unit_leader = 451
+		sov_increase_great_purge_penalties = yes
 	}
 
 	option = { #Don't purge
@@ -26632,6 +26718,7 @@ country_event = {
 		}
 		custom_effect_tooltip = sov_add_3_purge_completion
 		remove_unit_leader = 452
+		sov_increase_great_purge_penalties = yes
 	}
 
 	option = { #Don't purge
@@ -26682,6 +26769,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_3_purge_completion
 		custom_effect_tooltip = remove_political_advisor
 		show_ideas_tooltip = SOV_yakov_agranov
+		sov_increase_great_purge_penalties = yes
 	}
 
 	option = { #Don't purge

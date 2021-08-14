@@ -4554,7 +4554,13 @@ focus_tree = {
 			custom_effect_tooltip = SOV_train_new_officers_tt
 			if = {
 				limit = {
-					NOT = { has_country_flag = purge_1_group_b }
+					NOT = {
+						check_variable = {
+							var = sov_great_purge_status^18
+							value = 2
+							compare = equals
+						}
+					}
 				}
 				custom_effect_tooltip = available_political_advisor
 				show_ideas_tooltip = konstantin_rokossovsky
@@ -6170,8 +6176,14 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_COMMUNISM_STALIN_RUSSIA }
 		completion_reward = {
 			custom_effect_tooltip = SOV_great_purge2_tt
+			remove_ideas = SOV_Army_disorganisation
+			remove_ideas = trotskyite_plot
+			add_ideas = trotskyite_plot_purged
 			set_country_flag = sov_purge_ongoing
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = nikita_khrushchev
 			hidden_effect = {
+				country_lock_all_division_template = no
 				add_ideas = SOV_Great_purge
 			}
 			# effect_tooltip = {
@@ -6656,6 +6668,7 @@ focus_tree = {
 					}
 				}
 			}
+			has_country_flag = sov_purge_over
 			if = {
 				limit = {
 					has_idea = SOV_Exiled_russia
@@ -6670,9 +6683,7 @@ focus_tree = {
 			add_political_power = 75
 			custom_effect_tooltip = SOV_foreign_policy_tt2
 			hidden_effect = {
-				SOV = {
-					country_event = { id = soviets.28 }
-				}
+				country_event = soviets.28
 			}
 		}
 	}
@@ -7362,7 +7373,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_COMMUNISM_STALIN_RUSSIA }
 		completion_reward = {
-			add_timed_idea = { idea = SOV_Proclaimed_neutrality days = 730 }
+			add_timed_idea = { idea = SOV_Proclaimed_neutrality days = 548 }
 			hidden_effect = {
 				news_event = { days = 1 id = newsrussia2.16 }
 			}
