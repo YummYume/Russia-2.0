@@ -5,7 +5,7 @@ import os
 if __name__ == '__main__':
 
     try:
-        # Put this file in the root folder of HOI4 or the root folder of your mod
+        # Put this file in the root folder of HOI4 or the root folder of your mod inside a "script" folder
         directory = r".\history\countries"
 
         f = open("save.txt", "w")
