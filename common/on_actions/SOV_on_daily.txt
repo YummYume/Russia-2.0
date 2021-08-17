@@ -657,7 +657,7 @@ on_actions = {
 		}
 	}
 
-	on_daily_SOV = { #If One of Yalta participant is at war with SOV ande vice versa
+	on_daily_SOV = { #If One of Yalta participant is at war with SOV and vice versa
 		effect = {
 			if = {
 				limit = {
@@ -820,7 +820,7 @@ on_actions = {
 		}
 	}
 
-	#The Great Purge
+	#The Great Purge (fire a random event OR fire the revolution)
 	on_monthly_SOV = {
 		effect = {
 			if = {
@@ -835,7 +835,7 @@ on_actions = {
 						has_country_flag = sov_purge_over
 					}
 				}
-				set_temp_variable = { purge_array_count = sov_great_purge_events^num }
+				set_temp_variable = { purge_array_count = sov_great_purge_trigger^num }
 				multiply_temp_variable = { purge_array_count = 0.8 }
 				set_temp_variable = { purge_array_trigger_count = 0 }
 				for_each_loop = {
@@ -854,7 +854,7 @@ on_actions = {
 				}
 				if = {
 					limit = {
-						date > 1938.06.01
+						date > 1939.01.01
 						check_variable = {
 							var = purge_array_trigger_count
 							value = purge_array_count
@@ -863,7 +863,14 @@ on_actions = {
 					}
 					country_event = soviets.49
 				}
-				else = {
+				else_if = {
+					limit = {
+						check_variable = {
+							var = sov_great_purge_events^num
+							value = 1
+							compare = greater_than_or_equals
+						}
+					}
 					set_temp_variable = { random_purge_event = 0 }
 					randomize_temp_variable = {
 						var = random_purge_event

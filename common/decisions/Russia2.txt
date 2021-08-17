@@ -30907,7 +30907,9 @@ SOV_supreme_court_decisions = {
 
 	SOV_improve_from_conditions = {
 
-		icon = GFX_decision_generic_prepare_civil_war
+		icon = generic_police_action
+
+		on_map_mode = map_and_decisions_view
 
 		fire_only_once = yes
 
@@ -30917,6 +30919,14 @@ SOV_supreme_court_decisions = {
 
 		visible = {
 			has_war_with = FROM
+			any_state = {
+				is_owned_by = FROM
+				is_controlled_by = ROOT
+				has_resistance = yes
+				NOT = {
+					is_core_of = ROOT
+				}
+			}
 			has_completed_focus = SOV_the_supreme_court
 			has_government = democratic
 		}
@@ -30934,19 +30944,28 @@ SOV_supreme_court_decisions = {
 
 		available = {
 			has_war_with = FROM
-			any_state = {
-				is_owned_by = FROM
-				is_controlled_by = ROOT
+		}
+
+		highlight_states = {
+			is_owned_by = FROM
+			is_controlled_by = ROOT
+			has_resistance = yes
+			NOT = {
+				is_core_of = ROOT
 			}
 		}
 
-		cost = 25
+		cost = var:sov_improve_from_conditions_cost
 
 		complete_effect = {
 			every_state = {
 				limit = {
 					is_owned_by = FROM
 					is_controlled_by = ROOT
+					has_resistance = yes
+					NOT = {
+						is_core_of = ROOT
+					}
 				}
 				add_compliance = 10
 				add_resistance = -10
