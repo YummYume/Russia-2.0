@@ -2611,7 +2611,7 @@ focus_tree = {
         y = 8
         prerequisite = {  }
         icon = GFX_
-        cost = 5
+        cost = 4
         ai_will_do = {
             factor = 1
         }
@@ -2619,11 +2619,12 @@ focus_tree = {
 
         }
         available = {
-
+            has_global_flag = second_russian_civil_war_in_progress
         }
         search_filters = {  }
         completion_reward = {
-
+            add_political_power = 50
+            add_war_support = 0.1
         }
     }
 
@@ -2634,7 +2635,7 @@ focus_tree = {
         y = 9
         prerequisite = { focus = UKR_prepare_worst }
         icon = GFX_
-        cost = 5
+        cost = 4
         ai_will_do = {
             factor = 1
         }
@@ -2642,17 +2643,18 @@ focus_tree = {
 
         }
         available = {
-
+            has_global_flag = second_russian_civil_war_in_progress
         }
         search_filters = {  }
         completion_reward = {
-
+            add_political_power = 50
+            add_stability = 0.1
         }
     }
 
-    # Relocate the Industry
+    # Boost the Industry
     focus = {
-        id = UKR_relocate_industry
+        id = UKR_boost_industry
         x = 44
         y = 10
         prerequisite = { focus = UKR_hope_best }
@@ -2665,11 +2667,21 @@ focus_tree = {
 
         }
         available = {
-
+            has_global_flag = second_russian_civil_war_in_progress
         }
         search_filters = {  }
         completion_reward = {
-
+            custom_effect_tooltip = UKR_boost_industry_tt
+            hidden_effect = {
+                add_offsite_building = {
+                    type = industrial_complex
+                    level = 1
+                }
+                add_offsite_building = {
+                    type = arms_factory
+                    level = 2
+                }
+            }
         }
     }
 
@@ -2678,9 +2690,9 @@ focus_tree = {
         id = UKR_stateless_society
         x = 44
         y = 11
-        prerequisite = { focus = UKR_relocate_industry }
+        prerequisite = { focus = UKR_boost_industry }
         icon = GFX_
-        cost = 5
+        cost = 6
         ai_will_do = {
             factor = 2
         }
@@ -2688,11 +2700,12 @@ focus_tree = {
 
         }
         available = {
-
+            has_government = anarchy
+            has_global_flag = second_russian_civil_war_in_progress
         }
         search_filters = {  }
         completion_reward = {
-
+            add_ideas = UKR_Stateless_society
         }
     }
 
@@ -2711,11 +2724,54 @@ focus_tree = {
 
         }
         available = {
-
+            has_global_flag = second_russian_civil_war_in_progress
         }
         search_filters = {  }
         completion_reward = {
+            if = {
+                limit = {
+                    any_state = {
+                        is_fully_controlled_by = ROOT
+                    }
+                }
+                if = {
+                    limit = {
+                        NOT = {
+                            has_template = "Reserve Brigade"
+                        }
+                    }
+                    division_template = {
+                        name = "Reserve Brigade"
+                        is_locked = no
 
+                        regiments = {
+                            infantry = { x = 0 y = 0 }
+                            infantry = { x = 0 y = 1 }
+                            infantry = { x = 0 y = 2 }
+                            infantry = { x = 0 y = 3 }
+                        }
+                        support = {
+                            engineer = { x = 0 y = 0 }
+                        }
+                    }
+                }
+                random_controlled_state = {
+                    limit = {
+                        is_fully_controlled_by = ROOT
+                    }
+                    create_unit = {
+                        division = "name = \"1st Reserve Brigade\" division_template = \"Reserve Brigade\" start_experience_factor = 0.01 start_equipment_factor = 1.0"
+                        owner = UKR
+                        allow_spawning_on_enemy_provs = yes
+                    }
+                    create_unit = {
+                        division = "name = \"2nd Reserve Brigade\" division_template = \"Reserve Brigade\" start_experience_factor = 0.01 start_equipment_factor = 1.0"
+                        owner = UKR
+                        allow_spawning_on_enemy_provs = yes
+                    }
+                }
+            }
+            add_ideas = UKR_Emergency_conscription
         }
     }
 
@@ -2726,19 +2782,33 @@ focus_tree = {
         y = 11
         prerequisite = { focus = UKR_emergency_conscription }
         icon = GFX_
-        cost = 5
+        cost = 6
         ai_will_do = {
             factor = 2
         }
         bypass = {
-
+            CRI = {
+                OR = {
+                    exists = no
+                    NOT = {
+                        owns_state = 137
+                    }
+                }
+            }
         }
         available = {
-
+            CRI = {
+                exists = yes
+                has_war = no
+                has_full_control_of_state = 137
+                is_neighbor_of = ROOT
+            }
+            has_global_flag = second_russian_civil_war_in_progress
         }
+        will_lead_to_war_with = CRI
         search_filters = {  }
         completion_reward = {
-
+            country_event = ukrains.20
         }
     }
 
@@ -2754,14 +2824,94 @@ focus_tree = {
             factor = 2
         }
         bypass = {
-
+            NOT = {
+                controls_state = 202
+                controls_state = 221
+                controls_state = 192
+                controls_state = 226
+                controls_state = 227
+            }
         }
         available = {
-
+            OR = {
+                controls_state = 202
+                controls_state = 221
+                controls_state = 192
+                controls_state = 226
+                controls_state = 227
+            }
+            has_global_flag = second_russian_civil_war_in_progress
         }
         search_filters = {  }
         completion_reward = {
-
+            custom_effect_tooltip = UKR_fortify_key_cities_tt
+            hidden_effect = {
+                if = {
+                    limit = {
+                        controls_state = 202
+                    }
+                    202 = {
+                        add_building_construction = {
+                            type = bunker
+                            level = 3
+                            instant_build = yes
+                            province = 525
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        controls_state = 221
+                    }
+                    221 = {
+                        add_building_construction = {
+                            type = bunker
+                            level = 3
+                            instant_build = yes
+                            province = 418
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        controls_state = 192
+                    }
+                    192 = {
+                        add_building_construction = {
+                            type = bunker
+                            level = 3
+                            instant_build = yes
+                            province = 11670
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        controls_state = 226
+                    }
+                    226 = {
+                        add_building_construction = {
+                            type = bunker
+                            level = 3
+                            instant_build = yes
+                            province = 11437
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        controls_state = 227
+                    }
+                    227 = {
+                        add_building_construction = {
+                            type = bunker
+                            level = 3
+                            instant_build = yes
+                            province = 6474
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -2772,7 +2922,7 @@ focus_tree = {
         y = 11
         prerequisite = { focus = UKR_fortify_key_cities }
         icon = GFX_
-        cost = 5
+        cost = 6
         ai_will_do = {
             factor = 2
         }
@@ -2780,11 +2930,28 @@ focus_tree = {
 
         }
         available = {
-
+            NOT = {
+                has_government = anarchy
+            }
+            has_global_flag = second_russian_civil_war_in_progress
         }
         search_filters = {  }
         completion_reward = {
-
+            every_other_country = {
+                limit = {
+                    is_major = yes
+                    NOT = {
+                        is_in_faction_with = ROOT
+                        has_war_with = ROOT
+                        is_in_array = { global.russia_reworked_countries = THIS.id }
+                        any_country = {
+                            is_in_array = { global.russia_reworked_countries = THIS.id }
+                            is_in_faction_with = PREV
+                        }
+                    }
+                }
+                country_event = ukrains.28
+            }
         }
     }
 
@@ -2803,11 +2970,11 @@ focus_tree = {
 
         }
         available = {
-
+            has_global_flag = second_russian_civil_war_in_progress
         }
         search_filters = {  }
         completion_reward = {
-
+            add_ideas = UKR_Motivated_troops
         }
     }
 
@@ -2826,11 +2993,11 @@ focus_tree = {
 
         }
         available = {
-
+            has_global_flag = second_russian_civil_war_in_progress
         }
         search_filters = {  }
         completion_reward = {
-
+            country_event = ukrains.30
         }
     }
 
@@ -2842,7 +3009,7 @@ focus_tree = {
         prerequisite = { focus = UKR_motivate_troops }
         prerequisite = { focus = UKR_temporary_administration_occupied_territories }
         icon = GFX_
-        cost = 5
+        cost = 8
         ai_will_do = {
             factor = 20
         }
@@ -2850,11 +3017,11 @@ focus_tree = {
 
         }
         available = {
-
+            has_global_flag = second_russian_civil_war_in_progress
         }
         search_filters = {  }
         completion_reward = {
-
+            add_ideas = UKR_Final_push
         }
     }
 
