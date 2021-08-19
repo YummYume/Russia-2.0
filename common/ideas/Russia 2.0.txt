@@ -11,133 +11,6 @@ ideas = {
 			picture = generic_manpower_bonus
 		}
 
-		SOV_The_great_officer_purge = {
-			allowed = {
-				always = no
-			}
-
-			removal_cost = -1
-
-			picture = officers_purged
-
-			allowed_civil_war = {
-				always = yes
-			}
-
-			modifier = {
-				army_defence_factor = -0.5
-				army_attack_factor = -0.5
-				army_org_factor = -0.6
-				send_volunteer_factor = -0.8
-				training_time_factor = 0.4
-			}
-		}
-
-		SOV_The_great_officer_purge_2 = {
-			allowed = {
-				always = no
-			}
-
-			removal_cost = -1
-
-			picture = officers_purged
-
-			allowed_civil_war = {
-				always = yes
-			}
-
-			modifier = {
-				army_defence_factor = -0.40
-				army_attack_factor = -0.40
-				army_org_factor = -0.4
-				send_volunteer_factor = -0.4
-				training_time_factor = 0.3
-			}
-		}
-
-		SOV_The_great_officer_purge_3 = {
-			allowed = {
-				always = no
-			}
-
-			removal_cost = -1
-
-			picture = officers_purged
-
-			allowed_civil_war = {
-				always = yes
-			}
-
-			modifier = {
-				army_defence_factor = -0.30
-				army_attack_factor = -0.30
-				army_org_factor = -0.25
-				send_volunteer_factor = -0.2
-				training_time_factor = 0.2
-			}
-		}
-
-		SOV_The_great_officer_purge_4 = {
-			allowed = {
-				always = no
-			}
-
-			removal_cost = -1
-
-			picture = officers_purged
-
-			allowed_civil_war = {
-				always = yes
-			}
-
-			modifier = {
-				army_defence_factor = -0.25
-				army_attack_factor = -0.25
-				army_org_factor = -0.25
-				training_time_factor = 0.15
-			}
-		}
-
-		SOV_The_great_officer_purge_5 = {
-			allowed = {
-				always = no
-			}
-
-			removal_cost = -1
-
-			picture = officers_purged
-
-			allowed_civil_war = {
-				always = yes
-			}
-
-			modifier = {
-				army_defence_factor = -0.15
-				army_attack_factor = -0.15
-				army_org_factor = -0.15
-			}
-		}
-
-		SOV_The_great_officer_purge_6 = {
-			allowed = {
-				always = no
-			}
-
-			removal_cost = -1
-
-			picture = officers_purged
-
-			allowed_civil_war = {
-				always = yes
-			}
-
-			modifier = {
-				army_defence_factor = -0.05
-				army_attack_factor = -0.05
-				army_org_factor = -0.15
-			}
-		}
-
 		SOV_Infrastructure_problem = {
 			removal_cost = -1
 			allowed = {
@@ -4093,6 +3966,18 @@ ideas = {
 				}
 			}
 
+			on_add = {
+				add_dynamic_modifier = {
+					modifier = fascist_women_modifiers
+				}
+			}
+
+			on_remove = {
+				remove_dynamic_modifier = {
+					modifier = fascist_women_modifiers
+				}
+			}
+
 			modifier = {
 				custom_modifier_tooltip = fascism_anastasy_konstantin_tt
 			}
@@ -4117,6 +4002,18 @@ ideas = {
 						has_government = fascism
 					}
 					is_subject = yes
+				}
+			}
+
+			on_add = {
+				add_dynamic_modifier = {
+					modifier = fascist_security_modifiers
+				}
+			}
+
+			on_remove = {
+				remove_dynamic_modifier = {
+					modifier = fascist_security_modifiers
 				}
 			}
 
@@ -5782,6 +5679,18 @@ ideas = {
 			removal_cost = -1
 
 			picture = generic_manpower_bonus
+
+			on_add = {
+				add_dynamic_modifier = {
+					modifier = anarchist_black_guard_modifiers
+				}
+			}
+
+			on_remove = {
+				remove_dynamic_modifier = {
+					modifier = anarchist_black_guard_modifiers
+				}
+			}
 
 			modifier = {
 				custom_modifier_tooltip = black_guard_decision_buff_tt
@@ -9120,6 +9029,22 @@ ideas = {
 							var = sov_great_purge_status^0
 							value = 1
 							compare = equals
+						}
+					}
+				}
+				NOT = { has_country_flag = has_deserted_military }
+				NOT = {
+					has_country_flag = ennemy_second_civil_war
+				}
+				NOT = {
+					has_idea = kliment_voroshilov
+				}
+				hidden_trigger = {
+					NOT = { 
+						any_other_country = {
+							has_war_with = SOV
+							original_tag = SOV
+							has_unit_leader = 405
 						}
 					}
 				}
