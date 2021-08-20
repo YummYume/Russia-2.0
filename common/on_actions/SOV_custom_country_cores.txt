@@ -183,7 +183,6 @@ on_actions = {
 						release = URA
 						release = SIB
 					}
-					release = KAR
 					release = CIR
 					release = CRI
 					release = DAG
@@ -201,11 +200,27 @@ on_actions = {
 						release = ROS
 						release = KAL
 					}
-					release = KMI
-					release = VYA
-					release = NOV
+					if = {
+						limit = {
+							has_game_rule = {
+								rule = sov_novgorod_status
+								option = SOV_NOVGOROD_RELEASED
+							}
+						}
+						release = NOV
+						release = KAR
+						NOV = {
+							transfer_state = 195
+						}
+					}
+					else = {
+						release = KAR
+						release = KMI
+						release = VYA
+						release = STP
+						release = NOV
+					}
 					release = PRM
-					release = STP
 					release = TAT
 					create_country_leader = {
 						name = "Joseph Stalin"
@@ -478,7 +493,7 @@ on_actions = {
 						set_temp_variable = { tank_division_russian_state = 0 }
 						clamp_temp_variable = {
 							var = num_divisions_russian_state
-							min = 1
+							min = 3
 							max = 50
 						}
 
@@ -553,38 +568,78 @@ on_actions = {
 				}
 				KAR = {
 					if = {
-						limit = { 
-							has_dlc = "Man the Guns"
-							country_exists = KAR
-						}
-						load_oob = "KAR_naval_mtg"
-					}
-					else = {
-						set_naval_oob = "KAR_naval_legacy"
-					}
-				}
-				STP = {
-					if = {
 						limit = {
-							country_exists = STP 
-							has_dlc = "Man the Guns" 
+							exists = yes
 						}
-						load_oob = "STP_naval_mtg"
-					}
-					else = {
-						load_oob = "STP_naval_legacy"
+						if = {
+							limit = {
+								has_dlc = "Man the Guns"
+							}
+							load_oob = "KAR_naval_mtg"
+						}
+						else = {
+							set_naval_oob = "KAR_naval_legacy"
+						}
 					}
 				}
 				CRI = {
 					if = {
 						limit = {
-							country_exists = CRI 
-							has_dlc = "Man the Guns" 
+							exists = yes
 						}
-						load_oob = "CRI_naval_mtg"
+						if = {
+							limit = {
+								has_dlc = "Man the Guns"
+							}
+							load_oob = "CRI_naval_mtg"
+						}
+						else = {
+							set_naval_oob = "CRI_naval_legacy"
+						}
 					}
-					else = {
-						load_oob = "CRI_naval_legacy"
+				}
+				if = {
+					limit = {
+						country_exists = NOV
+						195 = { is_owned_and_controlled_by = NOV }
+						has_dlc = "Man the Guns"
+					}
+					NOV = {
+						load_oob = "NOV_naval_mtg"
+					}
+				}
+				else_if = {
+					limit = {
+						country_exists = NOV
+						195 = { is_owned_and_controlled_by = NOV }
+						NOT = {
+							has_dlc = "Man the Guns"
+						}
+					}
+					NOV = {
+						load_oob = "NOV_naval_legacy"
+					}
+				}
+				if = {
+					limit = {
+						country_exists = STP
+						195 = { is_owned_and_controlled_by = STP }
+						has_dlc = "Man the Guns"
+					}
+					STP = {
+						load_oob = "STP_naval_mtg"
+					}
+				}
+				else_if = {
+					limit = {
+						country_exists = STP
+						195 = { is_owned_and_controlled_by = STP }
+						NOT = {
+							has_dlc = "Man the Guns"
+						}
+					}
+					STP = {
+						load_oob = "STP_naval_legacy"
 					}
 				}
 				if = {
