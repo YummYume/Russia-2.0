@@ -45,6 +45,7 @@ SOV_great_purge_decisions = {
 		}
 
 		remove_effect = {
+			set_variable = { reform_purge = 1 }
 			custom_effect_tooltip = first_removal_of_great_purge
 			multiply_variable = { army_org_factor_great_purge = 0.667 } #-0.4
 			round_variable = army_org_factor_great_purge
@@ -81,6 +82,14 @@ SOV_great_purge_decisions = {
 		available = {
 			has_government = communism
 			has_completed_focus = SOV_train_new_officers
+			custom_trigger_tooltip = {
+				tooltip = has_completed_decision_reform
+				check_variable = {
+					var = reform_purge
+					value = 1
+					compare = equals
+				}
+			}
 		}
 
 		cost = 150
@@ -92,6 +101,10 @@ SOV_great_purge_decisions = {
 		}
 
 		remove_effect = {
+			add_to_variable = {
+				var = reform_purge
+				value = 1
+			}
 			custom_effect_tooltip = second_removal_of_great_purge
 			multiply_variable = { army_org_factor_great_purge = 0.625 } #-0.25
 			round_variable = army_org_factor_great_purge
@@ -129,6 +142,14 @@ SOV_great_purge_decisions = {
 			has_government = communism
 			has_completed_focus = SOV_new_russia_military
 			has_army_experience > 25
+			custom_trigger_tooltip = {
+				tooltip = has_completed_decision_reform_2
+				check_variable = {
+					var = reform_purge
+					value = 2
+					compare = equals
+				}
+			}
 		}
 
 		cost = 50
@@ -140,6 +161,10 @@ SOV_great_purge_decisions = {
 		}
 
 		remove_effect = {
+			add_to_variable = {
+				var = reform_purge
+				value = 1
+			}
 			army_experience = -25
 			add_tech_bonus = {
 				name = SOV_review_military_tactics
@@ -182,6 +207,14 @@ SOV_great_purge_decisions = {
 				is_major = yes
 				has_war_with = SOV
 			}
+			custom_trigger_tooltip = {
+				tooltip = has_completed_decision_reform_3
+				check_variable = {
+					var = reform_purge
+					value = 3
+					compare = equals
+				}
+			}
 		}
 
 		cost = 50
@@ -193,6 +226,10 @@ SOV_great_purge_decisions = {
 		}
 
 		remove_effect = {
+			add_to_variable = {
+				var = reform_purge
+				value = 1
+			}
 			army_experience = -100
 			add_manpower = 200000
 			custom_effect_tooltip = fourth_removal_of_great_purge
@@ -228,6 +265,14 @@ SOV_great_purge_decisions = {
 				is_major = yes
 				has_war_with = SOV
 			}
+			custom_trigger_tooltip = {
+				tooltip = has_completed_decision_reform_4
+				check_variable = {
+					var = reform_purge
+					value = 4
+					compare = equals
+				}
+			}
 		}
 
 		cost = 50
@@ -239,6 +284,10 @@ SOV_great_purge_decisions = {
 		}
 
 		remove_effect = {
+			add_to_variable = {
+				var = reform_purge
+				value = 1
+			}
 			army_experience = -100
 			custom_effect_tooltip = fifth_removal_of_great_purge
 			multiply_variable = { army_org_factor_great_purge = 0.5 } #-0.1
@@ -271,6 +320,14 @@ SOV_great_purge_decisions = {
 				is_major = yes
 				has_war_with = SOV
 			}
+			custom_trigger_tooltip = {
+				tooltip = has_completed_decision_reform_5
+				check_variable = {
+					var = reform_purge
+					value = 5
+					compare = equals
+				}
+			}
 		}
 
 		cost = 50
@@ -283,14 +340,10 @@ SOV_great_purge_decisions = {
 
 		remove_effect = {
 			army_experience = -50
-			remove_ideas = SOV_Great_purge
-			custom_effect_tooltip = we_lose_other_decision_if_we_remove_purge
 			multiply_variable = { army_org_factor_great_purge = 0 } #0
 			multiply_variable = { army_attack_factor_great_purge = 0 } #0
 			multiply_variable = { army_defence_factor_great_purge = 0 } #0
-			remove_dynamic_modifier = {
-				modifier = great_purge_modifiers
-			}
+			remove_ideas = SOV_Great_purge
 		}
 	}
 
@@ -305,14 +358,14 @@ SOV_great_purge_decisions = {
 		visible = {
 			has_idea = SOV_Great_purge
 			has_country_flag = sov_purge_over
-			any_country = {
-				is_major = yes
-				has_war_with = SOV
-			}
 		}
 
 		available = {
 			surrender_progress > 0.4
+			any_country = {
+				is_major = yes
+				has_war_with = SOV
+			}
 		}
 
 		cost = 50
@@ -322,7 +375,7 @@ SOV_great_purge_decisions = {
 		}
 
 		complete_effect = {
-			custom_effect_tooltip = we_lose_other_decision_if_we_remove_purge
+			remove_ideas = SOV_Great_purge
 		}
 	}
 
