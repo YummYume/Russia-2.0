@@ -1,99 +1,110 @@
 ideas = {
 	country = {
-		SOV_Infrastructure_problem = {
-				removal_cost = -1
-				allowed = {
-					always = yes
-				}
-				allowed_civil_war = {
-					always = yes
-				}
-				picture = infrastructure_problem
+		SOV_russia2_idea_load = {
 
-				modifier = {
-					production_speed_infrastructure_factor = -0.35
-					production_speed_buildings_factor = -0.2
-				}
+			removal_cost = -1
+			
+			allowed = {
+				always = no
 			}
+
+			picture = generic_manpower_bonus
+		}
+
+		SOV_Infrastructure_problem = {
+			removal_cost = -1
+			allowed = {
+				always = yes
+			}
+			allowed_civil_war = {
+				always = yes
+			}
+			picture = infrastructure_problem
+
+			modifier = {
+				production_speed_infrastructure_factor = -0.35
+				production_speed_buildings_factor = -0.2
+			}
+		}
 
 		SOV_Infrastructure_problem2 = {
-				removal_cost = -1
-				allowed = {
-					always = no
-				}
-				allowed_civil_war = {
-					always = yes
-				}
-				picture = infrastructure_problem
-
-				modifier = {
-						production_speed_infrastructure_factor = -0.25
-						production_speed_buildings_factor = -0.15
-				}
+			removal_cost = -1
+			allowed = {
+				always = no
 			}
+			allowed_civil_war = {
+				always = yes
+			}
+			picture = infrastructure_problem
+
+			modifier = {
+				production_speed_infrastructure_factor = -0.25
+				production_speed_buildings_factor = -0.15
+			}
+		}
 
 		SOV_Infrastructure_problem3 = {
-				removal_cost = -1
-				allowed = {
-					always = no
-				}
-				allowed_civil_war = {
-					always = yes
-				}
-				picture = infrastructure_problem
-
-				modifier = {
-						production_speed_infrastructure_factor = -0.20
-						production_speed_buildings_factor = -0.10
-				}
+			removal_cost = -1
+			allowed = {
+				always = no
 			}
+			allowed_civil_war = {
+				always = yes
+			}
+			picture = infrastructure_problem
+
+			modifier = {
+				production_speed_infrastructure_factor = -0.20
+				production_speed_buildings_factor = -0.10
+			}
+		}
 
 		SOV_Infrastructure_problem4 = {
-				removal_cost = -1
-				allowed = {
-					always = no
-				}
-				allowed_civil_war = {
-					always = yes
-				}
-				picture = infrastructure_problem
-
-				modifier = {
-						production_speed_infrastructure_factor = -0.10
-						production_speed_buildings_factor = -0.05
-				}
+			removal_cost = -1
+			allowed = {
+				always = no
 			}
+			allowed_civil_war = {
+				always = yes
+			}
+			picture = infrastructure_problem
+
+			modifier = {
+					production_speed_infrastructure_factor = -0.10
+					production_speed_buildings_factor = -0.05
+			}
+		}
 
 		SOV_Infrastructure_problem5 = {
-				removal_cost = -1
-				allowed = {
-					always = yes
-				}
-				allowed_civil_war = {
-					always = yes
-				}
-				picture = infrastructure_problem
+			removal_cost = -1
+			allowed = {
+				always = yes
+			}
+			allowed_civil_war = {
+				always = yes
+			}
+			picture = infrastructure_problem
 
-				modifier = {
-						production_speed_infrastructure_factor = -0.05
-						production_speed_buildings_factor = -0.02
-				}
+			modifier = {
+					production_speed_infrastructure_factor = -0.05
+					production_speed_buildings_factor = -0.02
+			}
 		}
 
 		SOV_Improve_russia = {
-                removal_cost = -1
-                allowed = {
-                    always = yes
-                }
-                allowed_civil_war = {
-                    always = no
-                }
-				picture = improve_the_motherland
+			removal_cost = -1
+			allowed = {
+				always = yes
+			}
+			allowed_civil_war = {
+				always = no
+			}
+			picture = improve_the_motherland
 
-                modifier = {
-                        political_power_gain = 0.25
-                }
-            }
+			modifier = {
+					political_power_gain = 0.25
+			}
+		}
 
         SOV_Extensive_fortifications = {
         	removal_cost = -1
@@ -109,7 +120,7 @@ ideas = {
         	picture = generic_wall_line
 
        		modifier = {
-       			production_speed_bunker_factor = -0.2
+       			production_speed_bunker_factor = -0.1
         	}
         }
 
@@ -378,13 +389,31 @@ ideas = {
 
 		SOV_Exiled_russia = {
 			removal_cost = -1
+
 			allowed = {
 				always = no
 			}
+
 			allowed_civil_war = {
 				always = yes
 			}
+
 			picture = exile_siberia
+
+			on_add = {
+				set_cosmetic_tag = FER
+				set_global_flag = SOV_became_far_eastern_republic
+			}
+
+			on_remove = {
+				if = {
+					limit = {
+						has_cosmetic_tag = FER
+					}
+					drop_cosmetic_tag = yes
+				}
+				clr_global_flag = SOV_became_far_eastern_republic
+			}
 
 			modifier = {
 				stability_factor = -0.10
@@ -551,17 +580,18 @@ ideas = {
 
 		SOV_White_death = {
 			removal_cost = -1
+
 			allowed = {
 				always = no
 			}
+
 			allowed_civil_war = {
 				always = no
 			}
+
 			cancel = {
-				SOV = {
-					NOT = {
-						has_war_with = FIN
-					}
+				NOT = {
+					has_war_with = FIN
 				}
 			}
 
@@ -569,7 +599,7 @@ ideas = {
 
 			modifier = {
 				army_org_factor = -0.05
-				recon_factor = -0.1
+				recon_factor = -0.05
 				defence = -0.05
 				dig_in_speed_factor = -0.05
 			}
@@ -910,6 +940,29 @@ ideas = {
 			}
 			picture = political_instability
 
+			on_add = {
+				if = {
+					limit = {
+						has_rule = can_join_factions
+					}
+					set_country_flag = SOV_Instability_join_factions
+				}
+				set_rule = {
+					can_join_factions = no
+				}
+			}
+
+			on_remove = {
+				if = {
+					limit = {
+						has_country_flag = SOV_Instability_join_factions
+					}
+					set_rule = {
+						can_join_factions = yes
+					}
+				}
+			}
+
 			rule = {
 				can_join_factions = no
 			}
@@ -934,6 +987,29 @@ ideas = {
 				always = no
 			}
 			picture = political_instability_medium
+
+			on_add = {
+				if = {
+					limit = {
+						has_rule = can_join_factions
+					}
+					set_country_flag = SOV_Instability2_join_factions
+				}
+				set_rule = {
+					can_join_factions = no
+				}
+			}
+
+			on_remove = {
+				if = {
+					limit = {
+						has_country_flag = SOV_Instability2_join_factions
+					}
+					set_rule = {
+						can_join_factions = yes
+					}
+				}
+			}
 
 			rule = {
 				can_join_factions = no
@@ -1109,9 +1185,9 @@ ideas = {
 			picture = for_the_motherland_stalin
 
 			modifier = {
-				communism_drift = 0.10
-				planning_speed = 0.15
-				max_planning = 0.30
+				dig_in_speed_factor = 0.15
+				land_night_attack = 0.05
+				no_supply_grace = 168
         	}
         }
 
@@ -1306,24 +1382,35 @@ ideas = {
 			}
 			picture = russia_home_of_the_counter_revolution #big brain
 
+			on_add = {
+				if = {
+					limit = {
+						has_rule = can_join_factions
+					}
+					set_country_flag = SOV_Home_counter_revolution_create_factions
+				}
+				set_rule = {
+					can_create_factions = no
+				}
+			}
+
+			on_remove = {
+				if = {
+					limit = {
+						has_country_flag = SOV_Home_counter_revolution_create_factions
+					}
+					set_rule = {
+						can_create_factions = yes
+					}
+				}
+			}
+
 			modifier = {
 				drift_defence_factor = 0.5
 			}
 
 			rule = {
 				can_create_factions = yes
-			}
-		}
-
-		SOV_Yalta_conference = {
-			removal_cost = -1
-			allowed = {
-				always = no
-			}
-			picture = FRA_scw_intervention_republicans_focus
-
-			modifier = {
-				surrender_limit = -1
 			}
 		}
 
@@ -1417,6 +1504,29 @@ ideas = {
 				}
 			}
 
+			on_add = {
+				if = {
+					limit = {
+						has_rule = can_join_factions
+					}
+					set_country_flag = SOV_Fight_revolution_join_factions
+				}
+				set_rule = {
+					can_join_factions = no
+				}
+			}
+
+			on_remove = {
+				if = {
+					limit = {
+						has_country_flag = SOV_Fight_revolution_join_factions
+					}
+					set_rule = {
+						can_join_factions = yes
+					}
+				}
+			}
+
 			rule = {
 				can_join_factions = no
 			}
@@ -1477,6 +1587,29 @@ ideas = {
 					has_war = no
 					NOT = {
 						has_government = communism
+					}
+				}
+			}
+
+			on_add = {
+				if = {
+					limit = {
+						has_rule = can_join_factions
+					}
+					set_country_flag = SOV_Ukrainian_revolt_join_factions
+				}
+				set_rule = {
+					can_join_factions = no
+				}
+			}
+
+			on_remove = {
+				if = {
+					limit = {
+						has_country_flag = SOV_Ukrainian_revolt_join_factions
+					}
+					set_rule = {
+						can_join_factions = yes
 					}
 				}
 			}
@@ -1618,12 +1751,22 @@ ideas = {
 		}
 
 		SOV_Army_disorganisation = {
+
 			removal_cost = -1
+
 			allowed = {
 				always = no
 			}
 
 			picture = army_disorganisation
+
+			on_add = {
+				rr_lock_all_templates = yes #doesn't work on startup
+			}
+
+			on_remove = {
+				rr_unlock_all_templates = yes
+			}
 
 			allowed_civil_war = {
 				always = yes
@@ -1731,6 +1874,29 @@ ideas = {
 			}
 			picture = generic_disjointed_gov
 
+			on_add = {
+				if = {
+					limit = {
+						has_rule = can_join_factions
+					}
+					set_country_flag = SOV_Unstable_government_join_factions
+				}
+				set_rule = {
+					can_join_factions = no
+				}
+			}
+
+			on_remove = {
+				if = {
+					limit = {
+						has_country_flag = SOV_Unstable_government_join_factions
+					}
+					set_rule = {
+						can_join_factions = yes
+					}
+				}
+			}
+
 			rule = {
 				can_join_factions = no
 			}
@@ -1742,7 +1908,7 @@ ideas = {
 			}
 		}
 
-		SOV_growing_russian_economy = {
+		SOV_Growing_russian_economy = {
 			removal_cost = -1
 			allowed = {
 				always = no
@@ -1754,7 +1920,7 @@ ideas = {
 			}
 		}
 
-		SOV_growing_russian_economy2 = {
+		SOV_Growing_russian_economy2 = {
 			removal_cost = -1
 			allowed = {
 				always = no
@@ -1762,12 +1928,15 @@ ideas = {
 			picture = Rising_Economy_Federeation
 
 			modifier = {
-				consumer_goods_factor = -0.10
-				conversion_cost_civ_to_mil_factor = -0.2
+				consumer_goods_factor = -0.05
+				conversion_cost_civ_to_mil_factor = -0.25
+				production_speed_industrial_complex_factor = 0.1
+				production_speed_arms_factory_factor = 0.05
+				production_speed_dockyard_factor = 0.05
 			}
 		}
 
-		SOV_new_civilian_rights_idea = {
+		SOV_New_civilian_rights_idea = {
 			removal_cost = -1
 			allowed = {
 				always = no
@@ -1775,8 +1944,8 @@ ideas = {
 			picture = new_civilian_rights
 
 			modifier = {
-				production_factory_max_efficiency_factor = 0.1
-				line_change_production_efficiency_factor = 0.25
+				production_factory_max_efficiency_factor = 0.05
+				line_change_production_efficiency_factor = 0.15
 			}
 		}
 
@@ -1813,7 +1982,7 @@ ideas = {
 			modifier = {
 				research_speed_factor = 0.05
 				democratic_drift = 0.10
-				surrender_limit = 0.1
+				surrender_limit = 0.05
 			}
 		}
 
@@ -2053,6 +2222,26 @@ ideas = {
 			}
 		}
 
+		SOV_We_can_strike_anywhere = {
+			removal_cost = -1
+			allowed = {
+				always = no
+			}
+			picture = worldwide_interventions
+
+			modifier = {
+				amphibious_invasion = 0.15
+				amphibious_invasion_defence = 0.15
+				naval_detection = 0.3
+				positioning = 0.3
+				transport_capacity = -0.25
+				convoy_escort_efficiency = 0.15
+				special_forces_cap = 0.10
+				special_forces_training_time_factor = -0.15
+				terrain_penalty_reduction = 0.05
+			}
+		}
+
 		SOV_Joint_military_planning = {
 			removal_cost = -1
 			allowed = {
@@ -2075,13 +2264,27 @@ ideas = {
 			}
 			picture = worldwide_interventions
 
+			on_add = {
+				set_rule = {
+					can_declare_war_on_same_ideology = yes
+					can_only_justify_war_on_threat_country = no
+				}
+			}
+
+			on_remove = {
+				set_rule = {
+					can_declare_war_on_same_ideology = no
+					can_only_justify_war_on_threat_country = yes
+				}
+			}
+
 			rule = {
 				can_declare_war_on_same_ideology = yes #Apparently this doesn't work
 				can_only_justify_war_on_threat_country = no
 			}
 
 			modifier = {
-				army_attack_factor = 0.1
+				army_attack_factor = 0.05
 				justify_war_goal_time = -0.5
 				generate_wargoal_tension = -0.5
 				lend_lease_tension = -0.5
@@ -2095,6 +2298,29 @@ ideas = {
 				always = no
 			}
 			picture = neutrality_second
+
+			on_add = {
+				if = {
+					limit = {
+						has_rule = can_join_factions
+					}
+					set_country_flag = SOV_Neutrality_second_join_factions
+				}
+				set_rule = {
+					can_join_factions = no
+				}
+			}
+
+			on_remove = {
+				if = {
+					limit = {
+						has_country_flag = SOV_Neutrality_second_join_factions
+					}
+					set_rule = {
+						can_join_factions = yes
+					}
+				}
+			}
 
 			rule = {
 				can_join_factions = no
@@ -2319,7 +2545,7 @@ ideas = {
 			}
 		}
 
-		SOV_Church_power_1 = {
+		SOV_Church_power = {
 			removal_cost = -1
 			allowed = {
 				always = no
@@ -2335,72 +2561,7 @@ ideas = {
 			picture = church_dominance
 
 			modifier = {
-				political_power_gain = 0.25
-			}
-		}
-
-		SOV_Church_power_2 = {
-			removal_cost = -1
-			allowed = {
-				always = no
-			}
-			cancel = {
-				NOT = {
-					OR = {
-						has_government = fascism
-						has_government = neutrality
-					}
-				}
-			}
-			picture = church_dominance_free
-
-			modifier = {
-				political_power_gain = -0.25
-				stability_factor = 0.1
-			}
-		}
-
-		SOV_Church_power_3 = {
-			removal_cost = -1
-			allowed = {
-				always = no
-			}
-			cancel = {
-				NOT = {
-					OR = {
-						has_government = fascism
-						has_government = neutrality
-					}
-				}
-			}
-			picture = church_dominance_propaganda
-
-			modifier = {
-				political_power_gain = -0.25
-				war_support_factor = 0.1
-			}
-		}
-
-		SOV_Church_power_4 = {
-			removal_cost = -1
-			allowed = {
-				always = no
-			}
-			cancel = {
-				NOT = {
-					OR = {
-						has_government = fascism
-						has_government = neutrality
-					}
-				}
-			}
-			picture = church_dominance_militarized
-
-			modifier = {
-				political_power_gain = -0.5
-				army_core_attack_factor = 0.1
-				army_core_defence_factor = 0.1
-				mobilization_speed = 0.1
+				custom_modifier_tooltip = SOV_Church_power_tt
 			}
 		}
 
@@ -2412,10 +2573,39 @@ ideas = {
 			picture = generic_victors_of_ww1
 
 			modifier = {
+				experience_gain_army_factor = -0.5
+				experience_gain_army_unit_factor = -0.33
 				surrender_limit = -0.2
 				stability_factor = 0.50
 				enemy_justify_war_goal_time = 3
 				ai_get_ally_desire_factor = -300
+			}
+
+			on_add = {
+				if = {
+					limit = {
+						has_rule = can_join_factions
+					}
+					set_country_flag = SOV_Second_civil_war_join_factions
+				}
+				set_rule = {
+					can_join_factions = no
+					can_create_collaboration_government = no
+				}
+			}
+
+			on_remove = {
+				if = {
+					limit = {
+						has_country_flag = SOV_Second_civil_war_join_factions
+					}
+					set_rule = {
+						can_join_factions = yes
+					}
+				}
+				set_rule = {
+					can_create_collaboration_government = yes
+				}
 			}
 
 			rule = {
@@ -2569,13 +2759,10 @@ ideas = {
 			}
 
 			modifier = {
-				industrial_capacity_factory = 0.1
+				industrial_capacity_factory = 0.05
 				local_resources_factor = 0.10
-				line_change_production_efficiency_factor = 0.1
 				production_speed_buildings_factor = 0.05
 				army_org_factor = 0.05
-				army_morale_factor = 0.05
-				political_power_gain = 0.25
 			}
 		}
 
@@ -2757,6 +2944,29 @@ ideas = {
 				always = yes
 			}
 
+			on_add = {
+				if = {
+					limit = {
+						has_rule = can_join_factions
+					}
+					set_country_flag = SOV_Isolation_join_factions
+				}
+				set_rule = {
+					can_join_factions = no
+				}
+			}
+
+			on_remove = {
+				if = {
+					limit = {
+						has_country_flag = SOV_Isolation_join_factions
+					}
+					set_rule = {
+						can_join_factions = yes
+					}
+				}
+			}
+
 			rule = {
 				can_join_factions = no
 			}
@@ -2793,6 +3003,20 @@ ideas = {
 				custom_modifier_tooltip = SOV_Tsar_we_trust_tt
 			}
 
+			on_add = {
+				set_rule = {
+					can_create_factions = yes
+					can_create_collaboration_government = no
+				}
+			}
+
+			on_remove = {
+				set_rule = {
+					can_create_factions = no
+					can_create_collaboration_government = yes
+				}
+			}
+
 			rule = {
 				can_send_volunteers = yes
 				can_create_factions = yes
@@ -2821,6 +3045,33 @@ ideas = {
 				send_volunteers_tension = -0.5
 				land_reinforce_rate = 0.1
 				air_ace_generation_chance_factor = 0.10
+			}
+
+			on_add = {
+				if = {
+					limit = {
+						has_rule = can_join_factions
+					}
+					set_country_flag = SOV_Denikin_trust_join_faction
+				}
+				set_rule = {
+					can_create_collaboration_government = yes
+					can_join_factions = no
+				}
+			}
+
+			on_remove = {
+				if = {
+					limit = {
+						has_country_flag = SOV_Denikin_trust_join_faction
+					}
+					set_rule = {
+						can_join_factions = yes
+					}
+				}
+				set_rule = {
+					can_create_collaboration_government = no
+				}
 			}
 
 			rule = {
@@ -2956,7 +3207,7 @@ ideas = {
 
 			cancel = {
 				NOT = {
-					has_country_flag = second_civil_war_in_progress
+					has_global_flag = second_russian_civil_war_in_progress
 				}
 			}
 
@@ -2982,7 +3233,7 @@ ideas = {
 
 			cancel = {
 				NOT = {
-					has_country_flag = second_civil_war_in_progress
+					has_global_flag = second_russian_civil_war_in_progress
 				}
 			}
 
@@ -3051,6 +3302,43 @@ ideas = {
 				custom_modifier_tooltip = SOV_Rule_cant_justify_war_goal_tt
 			}
 
+			on_add = {
+				if = {
+					limit = {
+						has_rule = can_join_factions
+					}
+					set_country_flag = SOV_Political_Unstability_join_factions
+				}
+				if = {
+					limit = {
+						has_rule = can_create_factions
+					}
+					set_country_flag = SOV_Political_Unstability_create_factions
+				}
+				set_rule = {
+					can_join_factions = no
+				}
+			}
+
+			on_remove = {
+				if = {
+					limit = {
+						has_country_flag = SOV_Political_Unstability_join_factions
+					}
+					set_rule = {
+						can_join_factions = yes
+					}
+				}
+				if = {
+					limit = {
+						has_country_flag = SOV_Political_Unstability_create_factions
+					}
+					set_rule = {
+						can_create_factions = yes
+					}
+				}
+			}
+
 			rule = {
 				can_create_factions = no
 				can_join_factions = no
@@ -3087,6 +3375,43 @@ ideas = {
 				war_support_factor = -0.10
 				army_org_factor = -0.1
 				custom_modifier_tooltip = SOV_Rule_cant_justify_war_goal_tt
+			}
+
+			on_add = {
+				if = {
+					limit = {
+						has_rule = can_join_factions
+					}
+					set_country_flag = SOV_Political_Unstability2_join_factions
+				}
+				if = {
+					limit = {
+						has_rule = can_create_factions
+					}
+					set_country_flag = SOV_Political_Unstability2_create_factions
+				}
+				set_rule = {
+					can_join_factions = no
+				}
+			}
+
+			on_remove = {
+				if = {
+					limit = {
+						has_country_flag = SOV_Political_Unstability2_join_factions
+					}
+					set_rule = {
+						can_join_factions = yes
+					}
+				}
+				if = {
+					limit = {
+						has_country_flag = SOV_Political_Unstability2_create_factions
+					}
+					set_rule = {
+						can_create_factions = yes
+					}
+				}
 			}
 
 			rule = {
@@ -3264,7 +3589,7 @@ ideas = {
 			modifier = {
 				winter_attrition_factor = -0.1
 				minimum_training_level = -0.1
-				army_attack_factor = 0.1
+				army_attack_factor = 0.05
 				army_speed_factor = 0.05
 			}
 		}
@@ -3321,7 +3646,7 @@ ideas = {
 			}
 
 			modifier = {
-				production_speed_arms_factory_factor = 0.1
+				production_speed_arms_factory_factor = 0.05
 				production_speed_industrial_complex_factor = 0.1
 				production_speed_infrastructure_factor = 0.1
 				production_speed_synthetic_refinery_factor = 0.1
@@ -3414,7 +3739,7 @@ ideas = {
 			}
 		}
 
-		SOV_army_not_ready_chi = {
+		SOV_Army_not_ready_chi = {
 			allowed = {
 				always = no
 			}
@@ -3613,7 +3938,7 @@ ideas = {
 			}
 
 			modifier = {
-				fascism_drift = 0.05
+				fascism_drift = 0.025
 				encryption_factor = 0.05
 				operative_slot = 1
 			}
@@ -3641,6 +3966,18 @@ ideas = {
 				}
 			}
 
+			on_add = {
+				add_dynamic_modifier = {
+					modifier = fascist_women_modifiers
+				}
+			}
+
+			on_remove = {
+				remove_dynamic_modifier = {
+					modifier = fascist_women_modifiers
+				}
+			}
+
 			modifier = {
 				custom_modifier_tooltip = fascism_anastasy_konstantin_tt
 			}
@@ -3665,6 +4002,18 @@ ideas = {
 						has_government = fascism
 					}
 					is_subject = yes
+				}
+			}
+
+			on_add = {
+				add_dynamic_modifier = {
+					modifier = fascist_security_modifiers
+				}
+			}
+
+			on_remove = {
+				remove_dynamic_modifier = {
+					modifier = fascist_security_modifiers
 				}
 			}
 
@@ -3731,9 +4080,21 @@ ideas = {
 			}
 
 			modifier = {
-				MONTHLY_POPULATION = -0.1
+				monthly_population = -0.1
 				resistance_target = -0.25
 				custom_modifier_tooltip = SOV_Impose_order_tt
+			}
+
+			on_add = {
+				set_rule = {
+					can_create_collaboration_government = no
+				}
+			}
+
+			on_remove = {
+				set_rule = {
+					can_create_collaboration_government = yes
+				}
 			}
 
 			rule = {
@@ -4012,7 +4373,7 @@ ideas = {
 			}
 		}
 
-		SOV_anti_german_sentiment = {
+		SOV_Anti_german_sentiment = {
 			allowed = {
 				always = no
 			}
@@ -4032,7 +4393,7 @@ ideas = {
 			}
 		}
 
-		SOV_anti_japanese_sentiment = {
+		SOV_Anti_japanese_sentiment = {
 			allowed = {
 				always = no
 			}
@@ -4118,6 +4479,29 @@ ideas = {
 				custom_modifier_tooltip = SOV_Alliance_with_europe_tt
 			}
 
+			on_add = {
+				if = {
+					limit = {
+						has_rule = can_join_factions
+					}
+					set_country_flag = SOV_Alliance_with_europe_join_factions
+				}
+				set_rule = {
+					can_join_factions = no
+				}
+			}
+
+			on_remove = {
+				if = {
+					limit = {
+						has_country_flag = SOV_Alliance_with_europe_join_factions
+					}
+					set_rule = {
+						can_join_factions = yes
+					}
+				}
+			}
+
 			rule = {
 				can_join_factions = no
 				can_create_factions = yes
@@ -4139,6 +4523,29 @@ ideas = {
 
 			modifier = {
 				custom_modifier_tooltip = SOV_Alliance_with_asia_tt
+			}
+
+			on_add = {
+				if = {
+					limit = {
+						has_rule = can_join_factions
+					}
+					set_country_flag = SOV_Alliance_with_asia_join_factions
+				}
+				set_rule = {
+					can_join_factions = no
+				}
+			}
+
+			on_remove = {
+				if = {
+					limit = {
+						has_country_flag = SOV_Alliance_with_asia_join_factions
+					}
+					set_rule = {
+						can_join_factions = yes
+					}
+				}
 			}
 
 			rule = {
@@ -4164,6 +4571,29 @@ ideas = {
 				custom_modifier_tooltip = SOV_Alliance_with_america_tt
 			}
 
+			on_add = {
+				if = {
+					limit = {
+						has_rule = can_join_factions
+					}
+					set_country_flag = SOV_Alliance_with_america_join_factions
+				}
+				set_rule = {
+					can_join_factions = no
+				}
+			}
+
+			on_remove = {
+				if = {
+					limit = {
+						has_country_flag = SOV_Alliance_with_america_join_factions
+					}
+					set_rule = {
+						can_join_factions = yes
+					}
+				}
+			}
+
 			rule = {
 				can_join_factions = no
 				can_create_factions = yes
@@ -4187,6 +4617,44 @@ ideas = {
 				custom_modifier_tooltip = SOV_Closed_alliance_tt
 			}
 
+			on_add = {
+				if = {
+					limit = {
+						has_rule = can_join_factions
+					}
+					set_country_flag = SOV_Closed_alliance_join_factions
+				}
+				if = {
+					limit = {
+						has_rule = can_create_factions
+					}
+					set_country_flag = SOV_Closed_alliance_create_factions
+				}
+				set_rule = {
+					can_join_factions = no
+					can_create_factions = no
+				}
+			}
+
+			on_remove = {
+				if = {
+					limit = {
+						has_country_flag = SOV_Closed_alliance_join_factions
+					}
+					set_rule = {
+						can_join_factions = yes
+					}
+				}
+				if = {
+					limit = {
+						has_country_flag = SOV_Closed_alliance_create_factions
+					}
+					set_rule = {
+						can_create_factions = yes
+					}
+				}
+			}
+
 			rule = {
 				can_join_factions = no
 				can_create_factions = no
@@ -4208,6 +4676,44 @@ ideas = {
 
 			modifier = {
 				custom_modifier_tooltip = SOV_Uncertain_fate_tt
+			}
+
+			on_add = {
+				if = {
+					limit = {
+						has_rule = can_join_factions
+					}
+					set_country_flag = SOV_Uncertain_fate_join_factions
+				}
+				if = {
+					limit = {
+						has_rule = can_create_factions
+					}
+					set_country_flag = SOV_Uncertain_fate_create_factions
+				}
+				set_rule = {
+					can_join_factions = no
+					can_create_factions = no
+				}
+			}
+
+			on_remove = {
+				if = {
+					limit = {
+						has_country_flag = SOV_Uncertain_fate_join_factions
+					}
+					set_rule = {
+						can_join_factions = yes
+					}
+				}
+				if = {
+					limit = {
+						has_country_flag = SOV_Uncertain_fate_create_factions
+					}
+					set_rule = {
+						can_create_factions = yes
+					}
+				}
 			}
 
 			rule = {
@@ -4687,7 +5193,7 @@ ideas = {
 
 			modifier = {
 				justify_war_goal_time = -0.05
-				heat_attrition_factor = -0.1
+				winter_attrition_factor = -0.1
 			}
 		}
 
@@ -5072,6 +5578,44 @@ ideas = {
 				has_civil_war = no
 			}
 
+			on_add = {
+				if = {
+					limit = {
+						has_rule = can_join_factions
+					}
+					set_country_flag = SOV_Cold_civil_war_join_factions
+				}
+				if = {
+					limit = {
+						has_rule = can_create_factions
+					}
+					set_country_flag = SOV_Cold_civil_war_create_factions
+				}
+				set_rule = {
+					can_join_factions = no
+					can_create_factions = no
+				}
+			}
+
+			on_remove = {
+				if = {
+					limit = {
+						has_country_flag = SOV_Cold_civil_war_join_factions
+					}
+					set_rule = {
+						can_join_factions = yes
+					}
+				}
+				if = {
+					limit = {
+						has_country_flag = SOV_Cold_civil_war_create_factions
+					}
+					set_rule = {
+						can_create_factions = yes
+					}
+				}
+			}
+
 			rule = {
 				can_join_factions = no
 				can_create_factions = no
@@ -5135,6 +5679,18 @@ ideas = {
 			removal_cost = -1
 
 			picture = generic_manpower_bonus
+
+			on_add = {
+				add_dynamic_modifier = {
+					modifier = anarchist_black_guard_modifiers
+				}
+			}
+
+			on_remove = {
+				remove_dynamic_modifier = {
+					modifier = anarchist_black_guard_modifiers
+				}
+			}
 
 			modifier = {
 				custom_modifier_tooltip = black_guard_decision_buff_tt
@@ -6361,23 +6917,2785 @@ ideas = {
 				experience_gain_army = 0.05
 			}
 		}
+    
+    	SOV_Russian_communist_rebels = {
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			removal_cost = -1
+
+			picture = generic_manpower_bonus
+
+			modifier = {
+				production_speed_buildings_factor = -0.1
+				conscription = -0.015
+				industrial_capacity_factory = -0.1
+				compliance_growth = -0.1
+				communism_drift = 0.05
+			}
+		}
+
+		SOV_Russian_communist_rebels2 = {
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			removal_cost = -1
+
+			picture = generic_manpower_bonus
+
+			modifier = {
+				production_speed_buildings_factor = -0.1
+				conscription = -0.015
+				industrial_capacity_factory = -0.1
+				compliance_growth = -0.1
+			}
+		}
+
+		SOV_Russian_communist_rebels3 = {
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			removal_cost = -1
+
+			picture = generic_manpower_bonus
+
+			modifier = {
+				production_speed_buildings_factor = -0.05
+				conscription = -0.015
+				compliance_growth = -0.1
+			}
+		}
+
+		SOV_Russian_communist_rebels4 = {
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			removal_cost = -1
+
+			picture = generic_manpower_bonus
+
+			modifier = {
+				production_speed_buildings_factor = -0.05
+				conscription = -0.005
+			}
+		}
+
+		SOV_Military_parade_fascist_idea = {
+			allowed = {
+				always = no
+			}
+
+			removal_cost = -1
+
+			picture = blackshirts_russia2
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			cancel = {
+				NOT = {
+					has_government = fascism
+				}
+			}
+
+			modifier = {
+				fascism_drift = 0.15
+				army_attack_factor = -0.1
+				army_defence_factor = -0.1
+				consumer_goods_factor = -0.05
+			}
+		}
+
+		SOV_Blackshirt_parade_fascist_idea = {
+			allowed = {
+				always = no
+			}
+
+			removal_cost = -1
+
+			picture = blackshirts_russia2
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			cancel = {
+				NOT = {
+					has_government = fascism
+				}
+			}
+
+			modifier = {
+				fascism_drift = 0.1
+				industrial_capacity_factory = -0.1
+			}
+		}
+
+		SOV_Young_parade_fascist_idea = {
+			allowed = {
+				always = no
+			}
+
+			removal_cost = -1
+
+			picture = blackshirts_russia2
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			cancel = {
+				NOT = {
+					has_government = fascism
+				}
+			}
+
+			modifier = {
+				fascism_drift = 0.05
+			}
+		}
+
+		SOV_Russian_special_police_force = {
+			allowed = {
+				always = no
+			}
+
+			removal_cost = -1
+
+			picture = blackshirts_russia2
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			cancel = {
+				NOT = {
+					has_government = fascism
+				}
+			}
+
+			modifier = {
+				compliance_growth = 0.1
+				resistance_activity = -0.15
+				resistance_growth = -0.05
+				command_power_gain = 0.25
+				max_command_power = 25
+				recon_factor = 0.02
+			}
+		}
+
+		SOV_Participation_russian_civil_war_foreign = {
+			allowed = {
+				always = no
+			}
+
+			removal_cost = -1
+
+			picture = blackshirts_russia2
+
+			cancel = {
+				NOT = {
+					SOV = {
+						has_global_flag = second_russian_civil_war_in_progress
+					}
+				}
+			}
+
+			modifier = {
+				send_volunteer_size = 3
+				send_volunteers_tension = -0.5
+				send_volunteer_divisions_required = -0.75
+				experience_gain_army_factor = 0.25
+			}
+
+			rule = {
+				can_send_volunteers = yes
+			}
+		}
+
+		SOV_Payment_russian_ressource_rus = {
+			allowed = {
+				always = no
+			}
+
+			removal_cost = -1
+
+			picture = blackshirts_russia2
+
+			cancel = {
+				OR = {
+					NOT = {
+						SOV = {
+							has_country_flag = receive_payment_from_ger
+						}
+					}
+					has_war_with = GER
+				}
+			}
+
+			modifier = {
+				consumer_goods_factor = -0.025
+			}
+		}
+
+		SOV_Payment_russian_ressource_ger = {
+			allowed = {
+				always = no
+			}
+
+			removal_cost = -1
+
+			picture = blackshirts_russia2
+
+			cancel = {
+				OR = {
+					NOT = {
+						GER = {
+							has_country_flag = is_paying_ressource_for_russia
+						}
+					}
+					has_war_with = SOV
+				}
+			}
+
+			modifier = {
+				consumer_goods_factor = 0.025
+			}
+		}
+
+		SOV_Definitive_payment_russian_ressource_ger = {
+			allowed = {
+				always = no
+			}
+
+			removal_cost = -1
+
+			picture = blackshirts_russia2
+
+			cancel = {
+				GER = {
+					has_war_with = SOV
+				}
+			}
+
+			modifier = {
+				consumer_goods_factor = -0.10
+			}
+		}
+		
+		SOV_Definitive_payment_russian_ressource_rus = {
+			allowed = {
+				always = no
+			}
+
+			removal_cost = -1
+
+			picture = blackshirts_russia2
+
+			cancel = {
+				GER = {
+					has_war_with = SOV
+				}
+			}
+
+			modifier = {
+				consumer_goods_factor = 0.10
+			}
+		}
+
+		SOV_Russian_concession_britain_civil_war = {
+			allowed = {
+				always = no
+			}
+
+			removal_cost = -1
+
+			picture = blackshirts_russia2
+
+			cancel = {
+				has_war_with = ENG
+				NOT = {
+					SOV = {
+						has_country_flag = deliver_english_ressources
+					}
+				}
+			}
+
+			modifier = {
+				industrial_capacity_factory = -0.1
+				local_resources_factor = -0.15
+				consumer_goods_factor = -0.03
+			}
+		}
+
+		SOV_English_concession_russia_civil_war = {
+			allowed = {
+				always = no
+			}
+
+			removal_cost = -1
+
+			picture = blackshirts_russia2
+
+			cancel = {
+				has_war_with = SOV
+			}
+
+			modifier = {
+				industrial_capacity_factory = 0.1
+				local_resources_factor = 0.15
+				consumer_goods_factor = 0.03
+			}
+		}
+
+		SOV_Russian_payment_concession_britain_civil_war = {
+			allowed = {
+				always = no
+			}
+
+			removal_cost = -1
+
+			picture = blackshirts_russia2
+
+			cancel = {
+				has_war_with = ENG
+			}
+
+			modifier = {
+				industrial_capacity_factory = -0.05
+				local_resources_factor = -0.05
+				consumer_goods_factor = 0.05
+			}
+		}
+
+		SOV_English_payment_concession_russia_civil_war = {
+			allowed = {
+				always = no
+			}
+
+			removal_cost = -1
+
+			picture = blackshirts_russia2
+
+			cancel = {
+				has_war_with = SOV
+				NOT = {
+					SOV = {
+						has_country_flag = deliver_english_ressources
+					}
+				}
+			}
+
+			modifier = {
+				industrial_capacity_factory = 0.05
+				local_resources_factor = 0.05
+				consumer_goods_factor = -0.05
+			}
+		}
+
+		SOV_Russian_payment_concession_britain_civil_war2 = {
+			allowed = {
+				always = no
+			}
+
+			removal_cost = -1
+
+			picture = blackshirts_russia2
+
+			cancel = {
+				has_war_with = ENG
+			}
+
+			modifier = {
+				industrial_capacity_factory = -0.1
+				local_resources_factor = -0.1
+				consumer_goods_factor = 0.1
+			}
+		}
+
+		SOV_English_payment_concession_russia_civil_war2 = {
+			allowed = {
+				always = no
+			}
+
+			removal_cost = -1
+
+			picture = blackshirts_russia2
+
+			cancel = {
+				has_war_with = SOV
+			}
+
+			modifier = {
+				industrial_capacity_factory = 0.1
+				local_resources_factor = 0.1
+				consumer_goods_factor = -0.1
+			}
+		}
+
+		SOV_Unstoppable_red_army1 = {
+			allowed = {
+				always = no
+			}
+
+			removal_cost = -1
+
+			picture = blackshirts_russia2
+
+			cancel = {
+				OR = {
+					NOT = {
+						has_government = communism
+					}
+					is_subject = yes
+				}
+			}
+
+			modifier = {
+				stability_factor = 0.05
+				resistance_damage_to_garrison = -0.05
+				army_morale_factor = 0.05
+				army_org_regain = 0.05
+			}
+		}
+
+		SOV_Unstoppable_red_army2 = {
+			allowed = {
+				always = no
+			}
+
+			removal_cost = -1
+
+			picture = blackshirts_russia2
+
+			cancel = {
+				OR = {
+					NOT = {
+						has_government = communism
+					}
+					is_subject = yes
+				}
+			}
+
+			modifier = {
+				stability_factor = 0.1
+				resistance_damage_to_garrison = -0.1
+				army_morale_factor = 0.1
+				army_org_regain = 0.1
+			}
+		}
+
+		SOV_Unstoppable_red_army3 = {
+			allowed = {
+				always = no
+			}
+
+			removal_cost = -1
+
+			picture = blackshirts_russia2
+
+			cancel = {
+				OR = {
+					NOT = {
+						has_government = communism
+					}
+					is_subject = yes
+				}
+			}
+
+			modifier = {
+				stability_factor = 0.15
+				resistance_damage_to_garrison = -0.15
+				army_morale_factor = 0.15
+				army_org_regain = 0.15
+			}
+		}
+
+		SOV_Unstoppable_red_army4 = {
+			allowed = {
+				always = no
+			}
+
+			removal_cost = -1
+
+			picture = blackshirts_russia2
+
+			cancel = {
+				OR = {
+					NOT = {
+						has_government = communism
+					}
+					is_subject = yes
+				}
+			}
+
+			modifier = {
+				stability_factor = 0.20
+				resistance_damage_to_garrison = -0.20
+				army_morale_factor = 0.20
+				army_org_regain = 0.20
+			}
+		}
+
+		SOV_Unstoppable_red_army5 = {
+			allowed = {
+				always = no
+			}
+
+			removal_cost = -1
+
+			picture = blackshirts_russia2
+
+			cancel = {
+				OR = {
+					NOT = {
+						has_government = communism
+					}
+					is_subject = yes
+				}
+			}
+
+			modifier = {
+				stability_factor = 0.25
+				resistance_damage_to_garrison = -0.25
+				army_morale_factor = 0.25
+				army_org_regain = 0.25
+			}
+		}
+
+		SOV_Unified_komintern_red_armies = {
+			allowed = {
+				always = no
+			}
+
+			removal_cost = -1
+
+			picture = blackshirts_russia2
+
+			cancel = {
+				OR = {
+					has_war = no
+					NOT = {
+						has_government = communism
+					}
+				}
+			}
+
+			modifier = {
+				resistance_growth_on_our_occupied_states = 0.05
+				resistance_damage_to_garrison_on_our_occupied_states = 0.05
+				army_defence_factor = 0.05
+				winter_attrition_factor = -0.25
+			}
+		}
+
+		SOV_Order_227 = {
+			allowed = {
+				always = no
+			}
+
+			removal_cost = -1
+
+			picture = blackshirts_russia2
+
+			cancel = {
+				OR = {
+					has_war = no
+					NOT = {
+						any_enemy_country = {
+							is_major = yes
+							capital_scope = {
+								is_on_continent = europe
+							}
+						}
+					}
+					has_civil_war = yes
+					surrender_progress < 0.01
+					is_subject = yes
+					NOT = {
+						has_government = communism
+					}
+				}
+			}
+
+			modifier = {
+				army_core_defence_factor = 0.25
+				mobilization_speed = 0.15
+			}
+		}
+
+		SOV_Triumph_communist_will = {
+			allowed = {
+				always = no
+			}
+
+			removal_cost = -1
+
+			picture = blackshirts_russia2
+
+			cancel = {
+				OR = {
+					is_subject = yes
+					NOT = {
+						has_government = communism
+					}
+				}
+			}
+
+			modifier = {
+				experience_loss_factor = -0.5
+				air_wing_xp_loss_when_killed_factor = -0.5
+				communism_drift = 0.1
+			}
+		}
+
+		SOV_Red_army_offensive = {
+			allowed = {
+				always = no
+			}
+
+			removal_cost = -1
+
+			picture = blackshirts_russia2
+
+			cancel = {
+				OR = {
+					has_war = no
+					NOT = {
+						any_enemy_country = {
+							is_major = yes
+							capital_scope = {
+								is_on_continent = europe
+							}
+						}
+					}
+					has_civil_war = yes
+					surrender_progress > 0.1
+					is_subject = yes
+					NOT = {
+						has_government = communism
+					}
+				}
+			}
+
+			modifier = {
+				command_power_gain_mult = 0.25
+				air_superiority_bonus_in_combat = 0.15
+				breakthrough_factor = 0.1
+			}
+		}
+
+		SOV_Joseph_stalin_exiled_idea = {
+			allowed = {
+				always = no
+			}
+
+			removal_cost = -1
+
+			picture = blackshirts_russia2
+
+			cancel = {
+				OR = {
+					NOT = {
+						has_government = communism
+					}
+					SOV = {
+						has_country_flag = sov_stalin_found_dead
+					}
+				}				
+			}
+
+			modifier = {
+				stability_factor = 0.05
+				communism_drift = 0.05
+				autonomy_gain = 0.05
+				resistance_damage_to_garrison = -0.1
+			}
+		}
+
+		SOV_Royal_orders = {
+			allowed = {
+				always = no
+			}
+
+			removal_cost = -1
+
+			picture = blackshirts_russia2
+
+			cancel = {
+				OR = {
+					is_subject = yes
+					NOT = {
+						has_government = neutrality
+					}
+				}			
+			}
+
+			modifier = {
+				compliance_growth = 0.15
+			}
+		}
+
+		SOV_Purchase_africa = {
+			allowed = {
+				always = no
+			}
+
+			removal_cost = -1
+
+			picture = blackshirts_russia2
+
+			modifier = {
+				civilian_factory_use = 2
+				consumer_goods_factor = 0.05
+				weekly_manpower = -1000
+			}
+		}
+
+		SOV_Selling_africa = {
+			allowed = {
+				always = no
+			}
+
+			removal_cost = -1
+
+			picture = blackshirts_russia2
+
+			modifier = {
+				consumer_goods_factor = -0.05
+				weekly_manpower = 1000
+			}
+		}
+
+		SOV_Anti_military_junta_protestor = {
+			allowed = {
+				always = no
+			}
+
+			removal_cost = -1
+
+			picture = blackshirts_russia2
+
+
+			modifier = {
+				war_support_factor = -0.25
+				mobilization_speed = -0.1
+				conscription_factor = -0.15
+			}
+		}
+
+		SOV_Protestors_neutrality = {
+			removal_cost = -1
+			allowed = {
+				always = no
+			}
+			picture = neutrality_second
+
+			on_add = {
+				if = {
+					limit = {
+						has_rule = can_join_factions
+					}
+					set_country_flag = SOV_Protestors_neutrality_join_factions
+				}
+				set_rule = {
+					can_join_factions = no
+				}
+			}
+
+			on_remove = {
+				if = {
+					limit = {
+						has_country_flag = SOV_Protestors_neutrality_join_factions
+					}
+					set_rule = {
+						can_join_factions = yes
+					}
+				}
+			}
+
+			rule = {
+				can_join_factions = no
+			}
+
+			modifier = {
+				hidden_modifier = {
+					generate_wargoal_tension = 1.00
+					join_faction_tension = 1.00
+					lend_lease_tension = 1.00
+					send_volunteers_tension = 1.00
+					guarantee_tension = 1.0
+					ai_badass_factor = 0.01    # Will receive 1% of the threat from others
+					ai_get_ally_desire_factor = -100	
+				}
+			}
+		}
+
+		SOV_Democracy_china = {
+
+			removal_cost = -1
+
+			allowed = {
+				always = no
+			}
+
+			picture = neutrality_second
+
+			cancel = {
+				OR = {
+					NOT = {
+						has_government = democratic
+						has_government = neutrality
+					}
+					has_war_with = SOV
+					exists = no
+				}
+			}
+
+			on_add = {
+				SOV = {
+					set_variable = { current_china_democracy_target = ROOT.id }
+				}
+			}
+
+			on_remove = {
+				if = {
+					limit = {
+						NOT = {
+							has_war_with = SOV
+							has_government = democratic
+							has_government = neutrality
+						}
+						SOV = {
+							has_government = democratic
+							is_subject = no
+						}
+						is_subject = no
+						exists = yes
+					}
+					SOV = {
+						country_event = chinas.36
+					}
+				}
+			}
+
+			modifier = {
+				democratic_acceptance = 50
+				democratic_drift = 0.1
+				political_power_gain = 0.15
+				stability_factor = 0.05
+			}
+
+			targeted_modifier = {
+        		tag = SOV
+				extra_trade_to_target_factor = 0.1
+				trade_cost_for_target_factor = -0.2
+        	}
+		}
+
+		SOV_Russianization_balkan_medium = {
+
+			removal_cost = -1
+
+			allowed = {
+				always = no
+			}
+
+			picture = neutrality_second
+
+			modifier = {
+				consumer_goods_factor = -0.05
+				industrial_capacity_factory = 0.1
+				research_speed_factor = 0.05
+			}
+		}
+
+		SOV_Russianization_balkan_large = {
+
+			removal_cost = -1
+
+			allowed = {
+				always = no
+			}
+
+			picture = neutrality_second
+
+			modifier = {
+				consumer_goods_factor = -0.15
+				industrial_capacity_factory = 0.25
+				research_speed_factor = 0.15
+			}
+		}
+
+		SOV_French_monarchist_sentiment_idea = {
+			removal_cost = -1
+			allowed = {
+				always = no
+			}
+			
+			picture = neutrality_second
+
+			cancel = {
+				SOV = {
+					has_war_with = FRA
+				}
+			}
+
+			modifier = {
+				neutrality_drift = 0.1
+			}
+		}
+
+		SOV_French_monarchist_sentiment_idea_2 = {
+			removal_cost = -1
+			allowed = {
+				always = no
+			}
+
+			picture = neutrality_second
+
+			cancel = {
+				SOV = {
+					has_war_with = FRA
+				}
+			}
+
+			modifier = {
+				neutrality_drift = 0.2
+			}
+		}
+
+		SOV_French_stamp_down_monarchist_idea = {
+			removal_cost = -1
+			allowed = {
+				always = no
+			}
+			picture = neutrality_second
+
+			modifier = {
+				neutrality_drift = -0.2
+			}
+		}
+
+		SOV_Ban_extreme_political_elements_idea = {
+
+			removal_cost = -1
+
+			allowed = {
+				always = no
+			}
+
+			cancel = {
+				OR = {
+					has_government = communism
+					has_government = fascism
+				}
+			}
+
+			picture = neutrality_second
+
+			modifier = {
+				communism_drift = -0.05
+				fascism_drift = -0.05
+			}
+		}
+
+		SOV_Russian_professionnal_army = {
+
+			removal_cost = -1
+
+			allowed = {
+				always = no
+			}
+
+			picture = neutrality_second
+
+			modifier = {
+				acclimatization_cold_climate_gain_factor = 0.5
+				army_core_attack_factor = 0.1
+				army_core_defence_factor = 0.1
+				experience_gain_army_factor = 0.15
+			}
+		}
+
+		SOV_Restrictions_democratic_russia = {
+
+			removal_cost = -1
+
+			allowed = {
+				always = no
+			}
+
+			on_add = {
+				if = {
+					limit = {
+						has_rule = can_create_factions
+					}
+					set_country_flag = SOV_Restrictions_democratic_russia_create_factions
+				}
+				if = {
+					limit = {
+						has_rule = can_join_factions
+					}
+					set_country_flag = SOV_Restrictions_democratic_russia_join_factions
+				}
+				set_rule = {
+					can_create_factions = no
+					can_join_factions = no
+				}
+			}
+
+			on_remove = {
+				if = {
+					limit = {
+						has_country_flag = SOV_Restrictions_democratic_russia_create_factions
+					}
+					set_rule = {
+						can_create_factions = yes
+					}
+				}
+				if = {
+					limit = {
+						has_country_flag = SOV_Restrictions_democratic_russia_join_factions
+					}
+					set_rule = {
+						can_join_factions = yes
+					}
+				}
+			}
+
+			picture = neutrality_second
+
+			rule = {
+				can_create_factions = no
+				can_join_factions = no
+			}
+		}
+
+		SOV_External_threats_idea = {
+
+			removal_cost = -1
+
+			allowed = {
+				always = no
+			}
+
+			cancel = {
+				OR = {
+					NOT = {
+						has_government = democratic
+					}
+					is_faction_leader = no
+					is_subject = yes
+				}
+			}
+
+			picture = neutrality_second
+
+			modifier = {
+				custom_modifier_tooltip = SOV_External_threats_idea_tt
+			}
+		}
+
+		SOV_United_russia_idea = {
+
+			removal_cost = -1
+
+			allowed = {
+				always = no
+			}
+
+			cancel = {
+				OR = {
+					NOT = {
+						has_government = democratic
+					}
+					is_faction_leader = no
+					is_subject = yes
+				}
+			}
+
+			picture = neutrality_second
+
+			modifier = {
+				war_support_factor = 0.05
+				custom_modifier_tooltip = SOV_can_attack_democracies
+			}
+
+			rule = {
+				can_declare_war_on_same_ideology = yes
+				can_only_justify_war_on_threat_country = no
+			}
+		}
+
+		SOV_New_russia_idea = {
+
+			removal_cost = -1
+
+			allowed = {
+				always = no
+			}
+
+			on_add = {
+				set_rule = {
+					can_join_opposite_factions = no
+				}
+			}
+
+			on_remove = {
+				set_rule = {
+					can_join_opposite_factions = yes
+				}
+			}
+
+			cancel = {
+				OR = {
+					NOT = {
+						has_government = democratic
+					}
+					is_faction_leader = no
+					is_subject = yes
+				}
+			}
+
+			picture = neutrality_second
+
+			modifier = {
+				stability_factor = 0.05
+			}
+
+			rule = {
+				can_join_opposite_factions = no
+			}
+		}
+
+		SOV_Russian_show_of_force = {
+
+			removal_cost = -1
+
+			allowed = {
+				always = no
+			}
+
+			cancel = {
+				OR = {
+					SOV = {
+						OR = {
+							NOT = {
+								has_government = democratic
+							}
+							is_faction_leader = no
+							is_subject = yes
+							exists = no
+						}
+					}
+					is_in_faction_with = SOV
+					has_government = neutrality
+					has_government = democratic
+				}
+			}
+
+			picture = neutrality_second
+
+			targeted_modifier = {
+        		tag = SOV
+				attack_bonus_against = -0.05
+				defense_bonus_against = -0.05
+        	}
+		}
+
+		SOV_Enforced_civilian_rights = {
+
+			removal_cost = -1
+
+			allowed = {
+				always = no
+			}
+
+			picture = neutrality_second
+
+			modifier = {
+				industrial_capacity_factory = -0.1
+				production_speed_buildings_factor = 0.05
+				industry_repair_factor = 0.15
+				monthly_population = 0.1
+			}
+		}
+
+		SOV_Progressive_reforms = {
+
+			removal_cost = -1
+
+			allowed = {
+				always = no
+			}
+
+			picture = neutrality_second
+
+			modifier = {
+				drift_defence_factor = -0.15
+				stability_factor = 0.1
+				party_popularity_stability_factor = 0.05
+				political_power_factor = -0.25
+				political_advisor_cost_factor = -0.5
+				research_speed_factor = 0.05
+			}
+		}
+
+		SOV_Bring_back_death_penalty = {
+
+			removal_cost = -1
+
+			allowed = {
+				always = no
+			}
+
+			picture = neutrality_second
+
+			modifier = {
+				stability_factor = -0.15
+				war_support_factor = 0.05
+				political_power_factor = 0.25
+				conscription_factor = 0.1
+			}
+		}
+
+		SOV_Russian_influence_monarchist_italy = {
+
+			removal_cost = -1
+
+			allowed = {
+				always = no
+			}
+
+			cancel = {
+				OR = {
+					ITA = {
+						has_government = neutrality
+					}
+					has_war_with = SOV
+					ITA = {
+						NOT = {
+							is_in_faction_with = SOV
+						}
+					}
+				}
+			}
+
+			picture = neutrality_second
+
+			modifier = {
+				neutrality_drift = 0.1
+			}
+		}
+
+		SOV_Russian_influence_monarchist_italy_2 = {
+
+			removal_cost = -1
+
+			allowed = {
+				always = no
+			}
+
+			cancel = {
+				OR = {
+					ITA = {
+						has_government = neutrality
+					}
+					has_war_with = SOV
+					ITA = {
+						NOT = {
+							is_in_faction_with = SOV
+						}
+					}
+				}
+			}
+
+			picture = neutrality_second
+
+			modifier = {
+				neutrality_drift = 0.2
+			}
+		}
+
+		SOV_Destroy_russian_influence = {
+
+			removal_cost = -1
+
+			allowed = {
+				always = no
+			}
+
+			picture = neutrality_second
+
+			modifier = {
+				neutrality_drift = -0.2
+			}
+		}
+
+		SOV_Great_purge = {
+
+			removal_cost = -1
+
+			allowed = {
+				always = no
+			}
+
+			picture = great_purge
+
+			cancel = {
+				OR = {
+					NOT = {
+						has_government = communism
+					}
+					is_subject = yes
+					exists = no
+					has_civil_war = yes
+				}
+			}
+
+			on_add = {
+				set_country_flag = sov_purge_started
+				add_dynamic_modifier = {
+					modifier = great_purge_modifiers
+				}
+			}
+
+			on_remove = {
+				if = {
+					limit = {
+						check_variable = {
+							var = sov_great_purge_completion
+							value = 100
+							compare = less_than
+						}
+					}
+					set_country_flag = sov_purge_cancelled
+					country_event = soviets.26
+				}
+				else = {
+					set_country_flag = sov_purge_over
+				}
+				remove_dynamic_modifier = {
+					modifier = great_purge_modifiers
+				}
+			}
+
+			modifier = {
+				custom_modifier_tooltip = SOV_Great_purge_tt
+			}
+		}
+
+		#Ukraine
+		UKR_Military_pension_1 = {
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			removal_cost = -1
+
+			picture = generic_manpower_bonus
+
+			modifier = {
+				war_stability_factor = 0.1
+				war_support_factor = 0.05
+				political_power_cost = 0.15
+			}
+		}
+
+		UKR_Military_pension_2 = {
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			removal_cost = -1
+
+			picture = generic_manpower_bonus
+
+			modifier = {
+				stability_factor = 0.1
+				war_support_factor = 0.1
+				consumer_goods_factor = 0.05
+			}
+		}
+
+		UKR_Military_pension_3 = {
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			removal_cost = -1
+
+			picture = generic_manpower_bonus
+
+			modifier = {
+				stability_factor = -0.05
+				war_stability_factor = -0.1
+				consumer_goods_factor = -0.05
+			}
+		}
+
+		UKR_Tank_production_effort = {
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			removal_cost = -1
+
+			picture = generic_manpower_bonus
+
+			equipment_bonus = {
+				light_tank_equipment = {
+					build_cost_ic = -0.1
+					instant = yes
+				}
+			}
+
+			equipment_bonus = {
+				medium_tank_equipment = {
+					build_cost_ic = -0.05
+					instant = yes
+				}
+			}
+
+			equipment_bonus = {
+				heavy_tank_equipment = {
+					build_cost_ic = -0.05
+					instant = yes
+				}
+			}
+		}
+
+		UKR_Better_engines = {
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			removal_cost = -1
+
+			picture = generic_manpower_bonus
+
+			modifier = {
+				army_armor_speed_factor = 0.05
+			}
+
+			equipment_bonus = {
+				armor = {
+					breakthrough = 0.05
+					reliability = 0.1
+					instant = yes
+				}
+			}
+		}
+
+		UKR_Artillery_rain = {
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			removal_cost = -1
+
+			picture = generic_manpower_bonus
+
+			equipment_bonus = {
+				artillery = {
+					soft_attack = 0.15
+					build_cost_ic = 0.05
+					instant = yes
+				}
+			}
+		}
+
+		UKR_Artillery_trainings = {
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			removal_cost = -1
+
+			picture = generic_manpower_bonus
+
+			modifier = {
+				army_artillery_defence_factor = 0.1
+				army_artillery_attack_factor = 0.05
+			}
+		}
+
+		UKR_Logistic_priorities = {
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			removal_cost = -1
+
+			picture = generic_manpower_bonus
+
+			modifier = {
+				acclimatization_cold_climate_gain_factor = 0.15
+				acclimatization_hot_climate_gain_factor = 0.15
+				out_of_supply_factor = -0.1
+				supply_consumption_factor = -0.05
+			}
+		}
+
+		UKR_Improved_logistic = {
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			removal_cost = -1
+
+			picture = generic_manpower_bonus
+
+			modifier = {
+				army_leader_start_logistics_level = 1
+			}
+		}
+
+		UKR_Mass_gun_production = {
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			removal_cost = -1
+
+			picture = generic_manpower_bonus
+
+			equipment_bonus = {
+				infantry = {
+					build_cost_ic = -0.15
+					instant = yes
+				}
+			}
+		}
+
+		UKR_Never_stop_fighting = {
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			removal_cost = -1
+
+			picture = generic_manpower_bonus
+
+			equipment_bonus = {
+				infantry = {
+					hard_attack = 0.05
+					instant = yes
+				}
+				infantry = {
+					soft_attack = 0.05
+					instant = yes
+				}
+			}
+
+			modifier = {
+				conscription_factor = 0.1
+				surrender_limit = 0.1
+			}
+		}
+
+		UKR_Elite_troops = {
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			removal_cost = -1
+
+			picture = generic_manpower_bonus
+
+			modifier = {
+				special_forces_cap = 0.05
+			}
+		}
+
+		UKR_Modern_navy = {
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			removal_cost = -1
+
+			picture = generic_manpower_bonus
+
+			modifier = {
+				experience_gain_navy = 0.15
+				critical_receive_chance = -0.15
+				naval_accidents_chance = -0.15
+			}
+
+			equipment_bonus = {
+				screen_ship = {
+					build_cost_ic = -0.25
+					naval_speed = 0.1
+					instant = yes
+				}
+
+				convoy = {
+					build_cost_ic = -0.25
+					naval_speed = 0.1
+					instant = yes
+				}
+			}
+		}
+
+		UKR_Bombing_strategy = {
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			removal_cost = -1
+
+			picture = generic_manpower_bonus
+
+			equipment_bonus = {
+				tactical_bomber = {
+					air_range = 0.1
+					air_defence = 0.1
+					instant = yes
+				}
+				strategic_bomber = {
+					air_range = 0.1
+					air_defence = 0.1
+					instant = yes
+				}
+				naval_bomber = {
+					air_range = 0.1
+					air_defence = 0.1
+					instant = yes
+				}
+			}
+		}
+
+		UKR_Air_counter_offensive = {
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			removal_cost = -1
+
+			picture = generic_manpower_bonus
+
+			equipment_bonus = {
+				anti-air = {
+					air_attack = 0.1
+					instant = yes
+				}
+				fighter = {
+					air_agility = 0.05
+					instant = yes
+				}
+				cas = {
+					air_ground_attack = 0.05
+					instant = yes
+				}
+			}
+		}
+
+		UKR_New_air_tactics = {
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			removal_cost = -1
+
+			picture = generic_manpower_bonus
+
+			modifier = {
+				experience_gain_air = 0.15
+				air_night_penalty = -0.1
+				air_bombing_targetting = 0.05
+				air_cas_present_factor = 0.05
+				air_agility_factor = 0.05
+			}
+
+			equipment_bonus = {
+				fighter = {
+					build_cost_ic = -0.05
+					instant = yes
+				}
+				cas = {
+					build_cost_ic = -0.05
+					instant = yes
+				}
+				tactical_bomber = {
+					build_cost_ic = -0.05
+					instant = yes
+				}
+				strategic_bomber = {
+					build_cost_ic = -0.05
+					instant = yes
+				}
+				naval_bomber = {
+					build_cost_ic = -0.05
+					instant = yes
+				}
+			}
+		}
+
+		UKR_Sole_proprietorships = {
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			removal_cost = -1
+
+			picture = generic_manpower_bonus
+
+			modifier = {
+				consumer_goods_factor = 0.05
+				production_speed_industrial_complex_factor = -0.25
+				production_speed_dockyard_factor = -0.25
+				production_speed_arms_factory_factor = -0.25
+				industrial_capacity_dockyard = -0.10
+				industrial_capacity_factory = -0.10
+			}
+		}
+
+		UKR_Industrial_revival = {
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			on_add = {
+				set_variable = { ukr_days_remove_phase_one = 120 }
+			}
+
+			removal_cost = -1
+
+			picture = generic_manpower_bonus
+
+			modifier = {
+				political_power_cost = 0.5
+				war_support_factor = -0.75
+				stability_factor = -0.15
+				consumer_goods_factor = -0.1
+				industrial_capacity_dockyard = -0.25
+				industrial_capacity_factory = -0.25
+				production_speed_industrial_complex_factor = 0.5
+				production_speed_dockyard_factor = 0.5
+				production_speed_arms_factory_factor = 0.5
+			}
+		}
+
+		UKR_Industrial_revival2 = {
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			on_add = {
+				set_variable = { ukr_days_remove_phase_two = 150 }
+			}
+
+			removal_cost = -1
+
+			picture = generic_manpower_bonus
+
+			modifier = {
+				political_power_cost = 0.4
+				war_support_factor = -0.5
+				stability_factor = -0.10
+				consumer_goods_factor = -0.1
+				industrial_capacity_dockyard = -0.20
+				industrial_capacity_factory = -0.20
+				production_speed_industrial_complex_factor = 0.5
+				production_speed_dockyard_factor = 0.5
+				production_speed_arms_factory_factor = 0.5
+			}
+		}
+
+		UKR_Industrial_revival3 = {
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			on_add = {
+				set_variable = { ukr_days_remove_phase_three = 180 }
+			}
+
+			removal_cost = -1
+
+			picture = generic_manpower_bonus
+
+			modifier = {
+				political_power_cost = 0.3
+				war_support_factor = -0.25
+				stability_factor = -0.05
+				consumer_goods_factor = -0.1
+				industrial_capacity_dockyard = -0.15
+				industrial_capacity_factory = -0.15
+				production_speed_industrial_complex_factor = 0.5
+				production_speed_dockyard_factor = 0.5
+				production_speed_arms_factory_factor = 0.5
+			}
+		}
+
+		UKR_Industrial_revival4 = {
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			removal_cost = -1
+
+			picture = generic_manpower_bonus
+
+			modifier = {
+				political_power_cost = 0.1
+				consumer_goods_factor = -0.05
+				production_speed_industrial_complex_factor = 0.15
+				production_speed_dockyard_factor = 0.15
+				production_speed_arms_factory_factor = 0.15
+			}
+		}
+
+		UKR_Early_payments = {
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			removal_cost = -1
+
+			picture = generic_manpower_bonus
+
+			modifier = {
+				consumer_goods_factor = 0.05
+			}
+		}
+
+		UKR_Rewarded_workers = {
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			removal_cost = -1
+
+			picture = generic_manpower_bonus
+
+			modifier = {
+				production_factory_efficiency_gain_factor = 0.05
+				production_factory_start_efficiency_factor = 0.1
+				production_factory_max_efficiency_factor = 0.1
+			}
+		}
+
+		UKR_Dockyard_investment = {
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			removal_cost = -1
+
+			picture = generic_manpower_bonus
+
+			modifier = {
+				industrial_capacity_dockyard = 0.15
+				production_speed_dockyard_factor = 0.15
+			}
+		}
+
+		UKR_Nuclear_secrets = {
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			removal_cost = -1
+
+			picture = generic_manpower_bonus
+
+			modifier = {
+				nuclear_production_factor = 0.15
+			}
+		}
+
+		UKR_Kiev_military_schools = {
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			removal_cost = -1
+
+			cancel = {
+				NOT = {
+					controls_state = 202
+				}
+			}
+
+			picture = generic_manpower_bonus
+
+			modifier = {
+				conscription = 0.01
+			}
+		}
+
+		UKR_Kiev_universities = {
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			removal_cost = -1
+
+			cancel = {
+				NOT = {
+					controls_state = 202
+				}
+			}
+
+			picture = generic_manpower_bonus
+
+			modifier = {
+				research_speed_factor = 0.05
+			}
+		}
+
+		UKR_Stateless_society = {
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			removal_cost = -1
+
+			cancel = {
+				OR = {
+					NOT = {
+						has_government = anarchy
+					}
+					NOT = {
+						has_global_flag = second_russian_civil_war_in_progress
+					}
+					is_subject = yes
+					exists = no
+				}
+			}
+
+			picture = generic_manpower_bonus
+
+			modifier = {
+				no_compliance_gain = 1
+				required_garrison_factor = -0.5
+				resistance_growth = -0.5
+			}
+		}
+
+		UKR_Emergency_conscription = {
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			removal_cost = -1
+
+			cancel = {
+				NOT = {
+					has_global_flag = second_russian_civil_war_in_progress
+				}
+			}
+
+			picture = generic_manpower_bonus
+
+			modifier = {
+				conscription = 0.01
+			}
+		}
+
+		UKR_Motivated_troops = {
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			removal_cost = -1
+
+			cancel = {
+				NOT = {
+					has_global_flag = second_russian_civil_war_in_progress
+				}
+			}
+
+			picture = generic_manpower_bonus
+
+			modifier = {
+				army_defence_factor = 0.05
+				army_org_regain = 0.15
+				cas_damage_reduction = 0.2
+			}
+		}
+
+		UKR_Final_push = {
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			removal_cost = -1
+
+			cancel = {
+				NOT = {
+					has_global_flag = second_russian_civil_war_in_progress
+				}
+			}
+
+			picture = generic_manpower_bonus
+
+			modifier = {
+				army_attack_factor = 0.1
+				breakthrough_factor = 0.1
+				terrain_penalty_reduction = 0.1
+				org_loss_when_moving = -0.1
+			}
+		}
+
+		UKR_Harsh_administration = {
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			removal_cost = -1
+
+			cancel = {
+				NOT = {
+					has_global_flag = second_russian_civil_war_in_progress
+				}
+			}
+
+			picture = generic_manpower_bonus
+
+			modifier = {
+				stability_factor = -0.05
+				local_manpower = 0.1
+				resistance_growth = -0.1
+			}
+		}
+
+		UKR_Soft_administration = {
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			removal_cost = -1
+
+			cancel = {
+				NOT = {
+					has_global_flag = second_russian_civil_war_in_progress
+				}
+			}
+
+			picture = generic_manpower_bonus
+
+			modifier = {
+				stability_factor = 0.05
+				local_non_core_manpower = 0.1
+				political_power_factor = 0.1
+			}
+		}
+
+		UKR_Provisional_government = {
+
+			removal_cost = -1
+
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = no
+			}
+
+			picture = political_instability
+
+			on_add = {
+				set_rule = {
+					can_join_factions = no
+				}
+			}
+
+			on_remove = {
+				set_rule = {
+					can_join_factions = yes
+				}
+			}
+
+			rule = {
+				can_join_factions = no
+			}
+
+			modifier = {
+
+			}
+		}
+
+		CRI_Master_black_sea = {
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			removal_cost = -1
+
+			picture = generic_manpower_bonus
+
+			modifier = {
+				convoy_raiding_efficiency_factor = 0.15
+				experience_gain_navy_factor = 0.25
+				mines_planting_by_fleets_factor = 0.25
+				naval_accidents_chance = -0.25
+				naval_attrition = -0.15
+				naval_critical_score_chance_factor = 0.2
+				naval_hit_chance = 0.25
+				ai_focus_naval_factor = 0.5
+				custom_modifier_tooltip = CRI_Master_black_sea_tt
+			}
+		}
+
+		CRI_Neutral_zone = {
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			on_add = {
+				set_rule = {
+					can_join_factions = no
+					can_create_factions = no
+					can_send_volunteers = no
+				}
+			}
+
+			on_remove = {
+				set_rule = {
+					can_join_factions = yes
+					can_send_volunteers = yes
+				}
+			}
+
+			cancel = {
+				OR = {
+					is_subject = yes
+					exists = no
+					is_in_faction = yes
+				}
+			}
+
+			removal_cost = -1
+
+			picture = generic_manpower_bonus
+
+			modifier = {
+				stability_factor = 0.1
+				political_power_gain = 0.1
+				ai_focus_defense_factor = 0.5
+			}
+
+			rule = {
+				can_join_factions = no
+				can_create_factions = no
+				can_send_volunteers = no
+			}
+		}
 	}
 
 	political_advisor = { #TODO Advisor for Anarchists
 
-		pavel_milyukov = {
+		SOV_nikolai_voznesensky = {
+			
+			picture = generic_political_advisor_europe_2
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						OR = {
+							check_variable = {
+								var = sov_great_purge_status^2
+								value = 1
+								compare = equals
+							}
+							has_country_flag = purge_politician
+						}
+					}
+				}
+				hidden_trigger = {
+					NOT = {
+						has_government = anarchy
+					}
+				}
+			}
+			
+			traits = { captain_of_industry }
+
+			ai_will_do = {
+				factor = 3
+			}
+		}
+
+		SOV_kliment_voroshilov = {
 
 			allowed = {
-				original_tag = "SOV"
+				original_tag = SOV
+			}
+			
+			available = {
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^0
+							value = 1
+							compare = equals
+						}
+					}
+				}
+				NOT = { has_country_flag = has_deserted_military }
+				NOT = {
+					has_country_flag = ennemy_second_civil_war
+				}
+				NOT = {
+					has_idea = kliment_voroshilov
+				}
+				hidden_trigger = {
+					NOT = { 
+						any_other_country = {
+							has_war_with = SOV
+							original_tag = SOV
+							has_unit_leader = 405
+						}
+					}
+				}
+				hidden_trigger = {
+					NOT = {
+						has_government = anarchy
+					}
+				}
+			}	
+			
+			traits = { war_industrialist }
+			
+			ai_will_do = {
+				factor = 5
+			}
+		}
+
+		SOV_anatoly_pepelyayev = {
+						
+			allowed = {
+				original_tag = SOV
+			}
+			
+			available = {
+				OR = {
+					has_country_flag = soviet_generals_deserted
+					has_completed_focus = SOV_second_civil_war
+				}
+			}	
+			
+			traits = { war_industrialist }
+			
+			ai_will_do = {
+				factor = 5
+			}
+		}
+
+		SOV_genrikh_yagoda = {
+
+			cost = 50
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			allowed_to_remove = {
+				OR = {
+					has_country_flag = sov_purge_over
+					has_country_leader = {
+						name = "Leon Trotsky"
+						ruling_only = yes
+					}
+				}
+			}
+
+			available = {
+				has_government = communism
+				NOT = {
+					has_idea = SOV_nikolay_yezhov
+					has_idea = SOV_lavrentiy_beria
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^1
+							value = 2
+							compare = equals
+						}
+					}
+				}
+			}
+			
+			traits = { state_security_administrator_2 russia2_head_nkvd }
+
+			ai_will_do = {
+				factor = 3
+			}
+		}
+
+		SOV_nikolay_yezhov = {
+
+			cost = 50
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			allowed_to_remove = {
+				OR = {
+					has_country_flag = sov_purge_over
+					has_country_leader = {
+						name = "Leon Trotsky"
+						ruling_only = yes
+					}
+				}
+			}
+
+			available = {
+				has_government = communism
+				NOT = {
+					has_idea = SOV_genrikh_yagoda
+					has_idea = SOV_lavrentiy_beria
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						OR = {
+							has_country_flag = SOV_nikolay_yezhov_purged
+							has_country_flag = purge_politician
+						}
+					}
+				}
+			}
+			
+			traits = { state_security_administrator_3 russia2_head_nkvd }
+
+			ai_will_do = {
+				factor = 3
+			}
+		}
+
+		SOV_lavrentiy_beria = {
+			
+			picture = generic_army_europe_4
+
+			cost = 50
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			allowed_to_remove = {
+				has_country_flag = sov_purge_over
+			}
+
+			available = {
+				has_government = communism
+				NOT = {
+					has_completed_focus = SOV_avoid_purge
+					has_idea = SOV_nikolay_yezhov
+					has_idea = SOV_genrikh_yagoda
+					has_country_flag = sov_lavrentiy_beria_executed
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^1
+							value = 1
+							compare = equals
+						}
+					}
+				}
+			}
+			
+			traits = { state_security_administrator russia2_head_nkvd }
+
+			ai_will_do = {
+				factor = 3
+			}
+		}
+
+		mikhail_kalinin = {
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+				has_government = communism
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						OR = {
+							has_country_flag = mikhail_kalinin_purged
+							has_country_flag = purge_politician
+						}
+					}
+				}
+				NOT = {
+					has_country_flag = ennemy_second_civil_war
+				}
+				hidden_trigger = {
+					NOT = {
+						has_government = anarchy
+					}
+				}
+			}
+			
+			traits = { russia2_head_state }
+
+			ai_will_do = {
+				factor = 5
+			}
+		}
+
+		nikita_khrushchev = {
+
+			picture = SOV_nikita_khrushchev
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+				has_government = communism
+				has_completed_focus = SOV_great_purge2
+				NOT = {
+					has_country_flag = ennemy_second_civil_war
+				}
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^6
+							value = 1
+							compare = equals
+						}
+					}
+				}
+			}
+			
+			traits = { communist_appeasement }
+	
+			do_effect = {
+				NOT = {
+					has_government = communism
+				}
+			}
+			
+			ai_will_do = {
+				factor = 3
+			}
+		}
+
+		SOV_yakov_agranov = {
+			
+			allowed = {
+				original_tag = SOV
+			}
+			
+			available = {
+				has_government = communism
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						OR = {
+							check_variable = {
+								var = sov_great_purge_status^35
+								value = 1
+								compare = equals
+							}
+							has_country_flag = purge_politician2
+						}
+					}
+				}
+			}
+
+			cost = 100
+			
+			traits = { silent_workhorse }
+			
+			ai_will_do = {
+				factor = 5
+			}
+		}
+
+		SOV_ivan_maisky = {
+			
+			allowed = {
+				original_tag = SOV	
+			}
+
+			available = {
+				has_country_flag = foreign_diplomacy_set
+				NOT = {
+					has_idea = SOV_vyacheslav_molotov
+				}
+				NOT = {
+					has_country_flag = replaced_maisky
+				}
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^5
+							value = 1
+							compare = equals
+						}
+					}
+				}
+				hidden_trigger = {
+					NOT = {
+						has_government = anarchy
+					}
+				}
+			}
+			
+			traits = { anti_fascist }
+
+			ai_will_do = {
+				factor = 5
+			}
+		}
+
+		SOV_vyacheslav_molotov = {
+			
+			picture = generic_political_advisor_europe_1
+			
+			allowed = {
+				original_tag = SOV	
+			}
+
+			available = {
+				has_country_flag = foreign_diplomacy_set
+				NOT = {
+					has_idea = SOV_ivan_maisky
+				}
+				NOT = {
+					has_country_flag = kept_maisky
+				}
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^5
+							value = 2
+							compare = equals
+						}
+					}
+				}
+				NOT = {
+					has_country_flag = ennemy_second_civil_war
+				}
+				hidden_trigger = {
+					NOT = {
+						has_government = anarchy
+					}
+				}
+			}
+			
+			traits = { anti_capitalist }
+
+			ai_will_do = {
+				factor = 25
+			}
+		}
+
+		SOV_Raya_dunayevskaya = {
+
+			allowed = {
+				original_tag = SOV
+			}
+
+			cost = 200
+			
+			available = {
+				has_government = communism
+				has_completed_focus = SOV_consolidate_true_communism
+			}	
+			
+			traits = { marxist_humanism }
+	
+			ai_will_do = {
+				factor = 5
+			}
+		}
+
+		alexander_kerensky = {
+
+			picture = advisors_Kerensky
+
+			allowed = {
+				original_tag = SOV
 			}
 			
 			available = {
 				has_government = democratic
-				has_completed_focus = SOV_pavel_guidance
+				has_completed_focus = SOV_trust_alexander
+				has_completed_focus = SOV_continue_investments
 			}	
 			
-			traits = { safety_homeland }
-	
+			traits = { liberal_socialist }
+
 			do_effect = {
 				NOT = {
 					has_government = democratic
@@ -6389,10 +9707,89 @@ ideas = {
 			}
 		}
 
+		pavel_milyukov = {
+
+			allowed = {
+				original_tag = SOV
+			}
+			
+			available = {
+				has_government = democratic
+				has_completed_focus = SOV_pavel_guidance
+				has_completed_focus = SOV_continue_investments
+			}	
+			
+			traits = { safety_homeland }
+			
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+		alexander_konovalov = {
+
+			allowed = {
+				original_tag = SOV
+			}
+			
+			available = {
+				has_government = democratic
+				has_completed_focus = SOV_united_russia
+				has_completed_focus = SOV_end_investments
+			}	
+			
+			traits = { conservative_trait }
+			
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+		ivan_nikolaevich = {
+
+			allowed = {
+				original_tag = SOV
+			}
+			
+			available = {
+				has_government = democratic
+				has_completed_focus = SOV_preemptive_coup
+				has_completed_focus = SOV_end_investments
+			}	
+			
+			traits = { progressive_trait }
+			
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+		SOV_joseph_stalin_democratic_priest = {
+
+			allowed = {
+				original_tag = SOV
+			}
+
+			visible = {
+				has_country_flag = sov_joseph_stalin_is_cool_now
+				has_country_flag = sov_stalin_exiled_siberia
+			}
+
+			available = {
+				has_government = democratic
+			}
+
+			traits = { joseph_stalin_priest }
+
+			ai_will_do = {
+				factor = 10000
+			}
+		}
+
 		SOV_vladimir_kirillovich = {
 
 			allowed = {
-				original_tag = "SOV"
+				original_tag = SOV
 			}
 
 			visible = {
@@ -6411,8 +9808,7 @@ ideas = {
 				}
 			}	
 			
-			traits = { popular_figurehead }
-	
+			traits = { tsar_all_russia }
 			
 			ai_will_do = {
 				factor = 10
@@ -6428,7 +9824,7 @@ ideas = {
 			picture = SOV_vladimir_kirillovich
 
 			allowed = {
-				original_tag = "SOV"
+				original_tag = SOV
 			}
 
 			visible = {
@@ -6441,7 +9837,6 @@ ideas = {
 			}
 			
 			traits = { inspirational_figure_politics }
-	
 			
 			ai_will_do = {
 				factor = 10
@@ -6452,29 +9847,10 @@ ideas = {
 			}
 		}
 
-		SOV_peter_krutitsy = {
-
-			allowed = {
-				original_tag = "SOV"
-			}
-			
-			available = {
-				has_completed_focus = SOV_restoration_orthodox_church
-				has_government = neutrality
-			}	
-			
-			traits = { patriarch_moscow_all_rus }
-	
-			
-			ai_will_do = {
-				factor = 10
-			}
-		}
-
 		SOV_andrey_vlaslov = {
 
 			allowed = {
-				original_tag = "SOV"
+				original_tag = SOV
 			}
 			
 			available = {
@@ -6483,17 +9859,34 @@ ideas = {
 			}	
 			
 			traits = { head_junta }
-	
 			
 			ai_will_do = {
 				factor = 100
 			}
 		}
 
+		SOV_peter_krutitsy = {
+
+			allowed = {
+				original_tag = SOV
+			}
+			
+			available = {
+				has_completed_focus = SOV_restoration_orthodox_church
+				has_government = neutrality
+			}	
+			
+			traits = { patriarch_moscow_all_rus }
+			
+			ai_will_do = {
+				factor = 10
+			}
+		}
+
 		SOV_vladimir_nabokov = {		
 
 			allowed = {
-				original_tag = "SOV"
+				original_tag = SOV
 			}
 			
 			available = {
@@ -6508,118 +9901,30 @@ ideas = {
 			}
 			
 			traits = { novelist_book }
-	
 			
 			ai_will_do = {
 				factor = 5
 			}
 		}
 
-		SOV_anatoly_pepelyayev = {
-						
-			allowed = {
-				original_tag = "SOV"
-			}
-			
-			available = {
-				OR = {
-					has_country_flag = soviet_generals_deserted
-					has_completed_focus = SOV_second_civil_war
-				}
-			}	
-			
-			traits = { war_industrialist }
-	
-			
-			ai_will_do = {
-				factor = 5
-			}
-		}
-
-		SOV_kliment_voroshilov = {
-
-			allowed = {
-				original_tag = "SOV"
-			}
-			
-			available = {
-				NOT = { has_country_flag = purge_1_group_b }
-				NOT = { has_country_flag = has_deserted_military }
-				NOT = { has_idea = kliment_voroshilov }
-				NOT = {
-					has_country_flag = ennemy_second_civil_war
-				}
-				hidden_trigger = {
-					NOT = {
-						has_government = anarchy
-					}
-				}
-			}	
-			
-			traits = { war_industrialist }
-	
-			
-			ai_will_do = {
-				factor = 5
-			}
-		}
-
-		SOV_ivan_maisky = {
+		konstantin_rodzaevsky = {
 			
 			allowed = {
-				original_tag = SOV	
+				original_tag = SOV
 			}
-
-			available = {
-				NOT = {
-					has_country_flag = purged_maisky
-					has_country_flag = replaced_maisky
-				}
-				has_country_flag = foreign_diplomacy_set
-			}
-			
-			traits = { anti_fascist }
-
-			ai_will_do = {
-				factor = 5
-			}
-		}
-
-		SOV_yakov_agranov = {
-			
-			allowed = {
-				original_tag = "SOV"
-			}
-
-			cost = 100
-			
-			available = {
-				has_government = communism
-			}	
-			
-			traits = { silent_workhorse }
-	
-			
-			ai_will_do = {
-				factor = 5
-			}
-		}
-
-		SOV_Viktor_baydalakov = {
-
-			allowed = {
-				original_tag = "SOV"
-			}
-
-			cost = 200
-			
 			available = {
 				has_government = fascism
-				has_completed_focus = SOV_the_tables_have_turned
-			}	
+				has_completed_focus = SOV_the_lawyer_remains			
+			}
 			
-			traits = { SOV_national_alliance }
+			traits = { application_of_law }
 	
+			do_effect = {
+				NOT = {
+					has_government = fascism
+				}
+			}
+			
 			ai_will_do = {
 				factor = 100
 			}
@@ -6628,7 +9933,7 @@ ideas = {
 		SOV_Anastasy_vonsyatsky = {
 
 			allowed = {
-				original_tag = "SOV"
+				original_tag = SOV
 			}
 
 			cost = 150
@@ -6645,23 +9950,51 @@ ideas = {
 			}
 		}
 
-		SOV_Raya_dunayevskaya = {
+		SOV_Viktor_baydalakov = {
 
 			allowed = {
-				original_tag = "SOV"
+				original_tag = SOV
 			}
 
 			cost = 200
 			
 			available = {
-				has_government = communism
-				has_completed_focus = SOV_consolidate_true_communism
+				has_government = fascism
+				has_completed_focus = SOV_the_tables_have_turned
 			}	
 			
-			traits = { marxist_humanism }
+			traits = { SOV_national_alliance }
 	
 			ai_will_do = {
-				factor = 5
+				factor = 100
+			}
+		}
+		
+		soviet_vsevolod_merkulov = {
+		
+			available = {
+				has_intelligence_agency = yes
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^4
+							value = 1
+							compare = equals
+						}
+					}
+				}
+			}
+			
+			allowed = {
+				original_tag = SOV
+				has_dlc = "La Resistance" 
+			}
+			
+			traits = { head_of_intelligence }
+
+			ai_will_do = {
+				factor = 3
 			}
 		}
 	}
@@ -6703,6 +10036,9 @@ ideas = {
 
 			available = {
 				has_completed_focus = SOV_second_civil_war
+				NOT = {
+					has_country_flag = denikin_resigned_fascist
+				}
 			}
 
 			traits = {
@@ -6767,7 +10103,7 @@ ideas = {
 			picture = SOV_vladimir_kirillovich
 
 			allowed = {
-				original_tag = "SOV"
+				original_tag = SOV
 			}
 			
 			available = {
@@ -6783,6 +10119,168 @@ ideas = {
 					factor = 100
 					has_completed_focus = SOV_secure_tsar_support
 				}
+			}
+		}
+
+		semyon_timoshenko = {
+			#Also unit leader: 404
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^7
+							value = 1
+							compare = equals
+						}
+					}
+				}
+				NOT = {
+					has_country_flag = ennemy_second_civil_war
+				}
+				hidden_trigger = {
+					NOT = { 
+						any_other_country = {
+							has_war_with = SOV
+							original_tag = SOV
+							has_unit_leader = 404
+						} 
+					}
+				}
+				hidden_trigger = {
+					NOT = {
+						has_government = anarchy
+					}
+				}
+			}
+			
+			traits = { army_chief_reform_2 }
+			
+			ai_will_do = {
+				factor = 1
+			}
+		}
+		
+		kliment_voroshilov = {
+			#Also unit leader: 405
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^0
+							value = 1
+							compare = equals
+						}
+					}
+				}
+				NOT = { has_country_flag = has_deserted_military }
+				NOT = {
+					has_country_flag = ennemy_second_civil_war
+				}
+				NOT = {
+					has_idea = SOV_kliment_voroshilov
+				}
+				hidden_trigger = {
+					NOT = { 
+						any_other_country = {
+							has_war_with = SOV
+							original_tag = SOV
+							has_unit_leader = 405
+						}
+					}
+				}
+				hidden_trigger = {
+					NOT = {
+						has_government = anarchy
+					}
+				}
+			}
+			
+			traits = { army_chief_drill_1 }
+			
+			ai_will_do = {
+				factor = 1
+			}
+		}
+		
+		alexander_yegorov = {
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^8
+							value = 1
+							compare = equals
+						}
+					}
+				}
+				NOT = {
+					has_country_flag = ennemy_second_civil_war
+				}
+				hidden_trigger = {
+					NOT = {
+						has_government = anarchy
+					}
+				}
+			}
+			
+			# PURGED
+			traits = { army_chief_defensive_2 }
+			
+			ai_will_do = {
+				factor = 1
+			}
+		}
+		
+		vasily_blucher = {
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^9
+							value = 1
+							compare = equals
+						}
+					}
+				}
+				NOT = {
+					has_country_flag = ennemy_second_civil_war
+				}
+				hidden_trigger = {
+					NOT = {
+						has_government = anarchy
+					}
+				}
+			}
+			
+			# PURGED
+			traits = { army_chief_maneuver_2 }
+			
+			ai_will_do = {
+				factor = 1
 			}
 		}
 
@@ -6817,6 +10315,135 @@ ideas = {
 	}
 
 	navy_chief = {
+
+		pyotr_smirnov = {
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^10
+							value = 1
+							compare = equals
+						}
+					}
+				}
+				hidden_trigger = {
+					NOT = {
+						has_government = anarchy
+					}
+				}
+			}
+			
+			# PURGED
+			traits = { navy_chief_naval_aviation_1 }
+			
+			ai_will_do = {
+				factor = 0.2
+			}
+		}
+		
+		mikhail_frinovsky = {
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^11
+							value = 1
+							compare = equals
+						}
+					}
+				}
+				hidden_trigger = {
+					NOT = {
+						has_government = anarchy
+					}
+				}
+			}
+			
+			# PURGED
+			traits = { navy_chief_commerce_raiding_1 }
+			
+			ai_will_do = {
+				factor = 0.2
+			}
+		}
+		
+		nikolay_kuznetsov = {
+			
+			allowed = {
+				original_tag = SOV
+
+			}
+
+			available = {
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^12
+							value = 1
+							compare = equals
+						}
+					}
+				}
+				hidden_trigger = {
+					NOT = {
+						has_government = anarchy
+					}
+				}
+			}
+			
+			# Not Purged, but eventually demoted
+			traits = { navy_chief_reform_2 }
+			
+			ai_will_do = {
+				factor = 0.2
+			}
+		}
+		
+		ivan_yumashev = {
+			
+			allowed = {
+				original_tag = SOV
+
+			}
+
+			available = {
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^13
+							value = 1
+							compare = equals
+						}
+					}
+				}
+				hidden_trigger = {
+					NOT = {
+						has_government = anarchy
+					}
+				}
+			}
+			
+			traits = { navy_chief_decisive_battle_2 }
+			
+			ai_will_do = {
+				factor = 0.2
+			}
+		}
 
 		SOV_submarine_council = {
 
@@ -6937,6 +10564,137 @@ ideas = {
 
 	air_chief = {
 
+		alexander_novikov = {
+						
+			allowed = {
+				original_tag = SOV
+
+			}
+
+			available = {
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^14
+							value = 1
+							compare = equals
+						}
+					}
+				}
+				hidden_trigger = {
+					NOT = {
+						has_government = anarchy
+					}
+				}
+			}
+			
+			# Not Purged, but imprisoned
+			traits = { air_chief_reform_3 }
+			
+			ai_will_do = {
+				factor = 1
+			}
+		}
+		
+		konstantin_vershinin = {
+			
+			allowed = {
+				original_tag = SOV
+
+			}
+
+			available = {
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^15
+							value = 1
+							compare = equals
+						}
+					}
+				}
+				hidden_trigger = {
+					NOT = {
+						has_government = anarchy
+					}
+				}
+			}
+			
+			traits = { air_chief_ground_support_2 }
+			
+			ai_will_do = {
+				factor = 1
+			}
+		}
+		
+		yakov_smushkevich = {	
+			
+			allowed = {
+				original_tag = SOV
+
+			}
+
+			available = {
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^16
+							value = 1
+							compare = equals
+						}
+					}
+				}
+				hidden_trigger = {
+					NOT = {
+						has_government = anarchy
+					}
+				}
+			}
+
+			# PURGED
+			traits = { air_chief_safety_2 } # Could also have reform
+			
+			ai_will_do = {
+				factor = 1
+			}
+		}
+		
+		pavel_rychagov = {
+			
+			allowed = {
+				original_tag = SOV
+
+			}
+
+			available = {
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^17
+							value = 1
+							compare = equals
+						}
+					}
+				}
+				hidden_trigger = {
+					NOT = {
+						has_government = anarchy
+					}
+				}
+			}
+			
+			# PURGED
+			traits = { air_chief_all_weather_2 }
+			
+			ai_will_do = {
+				factor = 1
+			}
+		}
+
 		SOV_bombardment_council = {
 
 			picture = SOV_military_council
@@ -7027,6 +10785,29 @@ ideas = {
 
 	high_command = {
 
+		SOV_joseph_stalin_democratic_army = {
+			ledger = army
+
+			allowed = {
+				original_tag = SOV
+			}
+
+			visible = {
+				has_country_flag = sov_joseph_stalin_is_cool_now
+				has_country_flag = sov_stalin_prison
+			}
+
+			available = {
+				has_government = democratic
+			}
+
+			traits = { joseph_stalin_army }
+
+			ai_will_do = {
+				factor = 10000
+			}
+		}
+
 		SOV_alexander_rodzyanko = {
 			ledger = army
 
@@ -7107,7 +10888,6 @@ ideas = {
 		SOV_andrei_shkuro = {
 			ledger = army
 
-
 			allowed = {
 				original_tag = SOV
 			}
@@ -7116,6 +10896,9 @@ ideas = {
 				OR = {
 					has_country_flag = soviet_generals_deserted
 					has_completed_focus = SOV_second_civil_war
+				}
+				NOT = {
+					has_country_flag = denikin_resigned_fascist
 				}
 			}
 
@@ -7277,9 +11060,699 @@ ideas = {
 				factor = 1
 			}
 		}
+
+		ivan_konev = {
+			ledger = army
+			#Also unit leader: 408
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						OR = {
+							check_variable = {
+								var = sov_great_purge_status^18
+								value = 1
+								compare = equals
+							}
+							has_country_flag = purge_military2
+						}
+					}
+				}
+				NOT = {
+					has_country_flag = has_deserted_military
+				}
+				NOT = {
+					has_country_flag = ennemy_second_civil_war_konev		
+				}
+				custom_trigger_tooltip = {
+					tooltip = SOV_konev_civil_war
+					NOT = {
+						any_other_country = {
+							has_war_with = SOV
+							original_tag = SOV
+							has_unit_leader = 408
+						}
+					}
+				}
+				hidden_trigger = {
+					NOT = {
+						has_government = anarchy
+					}
+				}
+			}
+			
+			traits = { army_concealment_2 }
+			# Almost certainly a psychopath
+			
+			ai_will_do = {
+				factor = 1
+			}
+		}
+		
+		aleksandr_vasilevsky = {
+			ledger = army
+			#Also unit leader: 407
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^19
+							value = 1
+							compare = equals
+						}
+					}
+				}
+				NOT = {
+					has_country_flag = has_deserted_military
+				}
+				NOT = {
+					has_country_flag = ennemy_second_civil_war_vasilevsky
+				}
+				hidden_trigger = {
+					NOT = { 
+						any_other_country = {
+							has_war_with = SOV
+							original_tag = SOV
+							has_unit_leader = 407
+						}
+					}
+				}
+				hidden_trigger = {
+					NOT = {
+						has_government = anarchy
+					}
+				}
+			}
+			
+			traits = { army_regrouping_2 }
+			
+			ai_will_do = {
+				factor = 1
+			}
+		}
+		
+		konstantin_rokossovsky = {
+			ledger = army
+			#Also unit leader: 402
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^18
+							value = 2
+							compare = equals
+						}
+					}
+				}
+				has_completed_focus = SOV_train_new_officers
+				hidden_trigger = {
+					NOT = {
+						has_government = anarchy
+					}
+				}
+			}
+			
+			# Not purged, but tried and tortured, then released
+			traits = { army_armored_3 }
+			
+			ai_will_do = {
+				factor = 1
+			}
+		}
+		
+		pavel_zhigarev = {
+			ledger = air
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						OR = {
+							check_variable = {
+								var = sov_great_purge_status^20
+								value = 1
+								compare = equals
+							}
+							has_country_flag = purge_military
+						}
+					}
+				}
+				hidden_trigger = {
+					NOT = {
+						has_government = anarchy
+					}
+				}
+			}
+			
+			traits = { air_airborne_1 }
+			
+			ai_will_do = {
+				factor = 1
+			}
+		}
+		
+		sergei_khudyakov = {
+			ledger = air
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^21
+							value = 1
+							compare = equals
+						}
+					}
+				}
+				hidden_trigger = {
+					NOT = {
+						has_government = anarchy
+					}
+				}
+			}
+			
+			# Purged, but post-war
+			traits = { air_close_air_support_2 }
+			
+			ai_will_do = {
+				factor = 1
+			}
+		}
+		
+		stepan_krasovsky = {
+			ledger = air
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						OR = {
+							check_variable = {
+								var = sov_great_purge_status^22
+								value = 1
+								compare = equals
+							}
+							has_country_flag = purge_military
+						}
+					}
+				}
+				hidden_trigger = {
+					NOT = {
+						has_government = anarchy
+					}
+				}
+			}
+			
+			traits = { air_air_combat_training_2 }
+			
+			ai_will_do = {
+				factor = 1
+			}
+		}	
+		
+		vladimir_kasatonov = {
+			ledger = navy
+			#Also unit leader: 403
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^23
+							value = 1
+							compare = equals
+						}
+					}
+				}
+				hidden_trigger = {
+					NOT = { 
+						any_other_country = {
+							has_war_with = SOV
+							original_tag = SOV
+							has_unit_leader = 403
+						} 
+					}
+				}
+				hidden_trigger = {
+					NOT = {
+						has_government = anarchy
+					}
+				}
+			}
+			
+			traits = { navy_submarine_2 }
+			
+			ai_will_do = {
+				factor = 0.2
+			}
+		}
+		
+		gordey_levchenko = {
+			ledger = navy
+			#Also unit leader: 406
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^24
+							value = 1
+							compare = equals
+						}
+					}
+				}
+				hidden_trigger = {
+					NOT = { 
+						any_other_country = {
+							has_war_with = SOV
+							original_tag = SOV
+							has_unit_leader = 406
+						}
+					}
+				}
+				hidden_trigger = {
+					NOT = {
+						has_government = anarchy
+					}
+				}
+			}
+			
+			# Not purged, but arrested and released
+			traits = { navy_capital_ship_2 }
+			
+			ai_will_do = {
+				factor = 0.2
+			}
+		}
+		
+		arseniy_golovko = {
+			ledger = army
+			#Also unit leader: 409
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						OR = {
+							check_variable = {
+								var = sov_great_purge_status^25
+								value = 1
+								compare = equals
+							}
+							has_country_flag = purge_military
+						}
+					}
+				}
+				hidden_trigger = {
+					NOT = { 
+						any_other_country = {
+							has_war_with = SOV
+							original_tag = SOV
+							has_unit_leader = 409
+						}
+					}
+				}
+				hidden_trigger = {
+					NOT = {
+						has_government = anarchy
+					}
+				}
+			}
+			
+			traits = { navy_amphibious_assault_2 }
+			
+			ai_will_do = {
+				factor = 0.2
+			}
+		}
 	}
 
 	theorist = {
+
+		mikhail_tukhachevsky = {
+			ledger = army
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+				NOT = {
+					has_country_flag = mikhail_tukhachevsky_purged
+				}
+				NOT = {
+					has_country_flag = mikhail_deserted
+				}
+				NOT = {
+					has_country_flag = ennemy_second_civil_war_mikhail
+				}
+				hidden_trigger = {
+					NOT = {
+						has_government = anarchy
+					}
+				}
+			}
+			
+			cost = 250
+			
+			research_bonus = {
+				cat_mass_assault = 0.15
+			}
+			
+			# PURGED
+			traits = { mass_assault_expert }
+
+			ai_will_do = {
+				factor = 3
+			}
+		}
+		
+		boris_shaposhnikov = {
+			ledger = army
+			
+			allowed = {
+				original_tag = SOV
+			}
+			
+			available = {
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^26
+							value = 1
+							compare = equals
+						}
+					}
+				}
+				NOT = {
+					has_country_flag = has_deserted_military
+				}
+				NOT = {
+					has_country_flag = ennemy_second_civil_war
+				}
+				hidden_trigger = {
+					NOT = {
+						has_government = anarchy
+					}
+				}
+			}
+			
+			research_bonus = {
+				land_doctrine = 0.10
+			}
+			
+			traits = { military_theorist }
+
+			ai_will_do = {
+				factor = 1
+			}
+		}
+		
+		georgy_zhukov = {
+			ledger = army
+			
+			allowed = {
+				original_tag = SOV # Unlocked via focus
+			}
+
+			available = {
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						OR = {
+							has_country_flag = georgy_zhukov_purged
+							has_country_flag = purge_military
+						}
+					}
+				}
+				NOT = {
+					has_country_flag = has_deserted_military
+				}
+				NOT = {
+					has_country_flag = ennemy_second_civil_war_georgy_zhu
+				}
+				hidden_trigger = {
+					NOT = {
+						has_government = anarchy
+					}
+				}
+			}
+			
+			cost = 250
+			
+			research_bonus = {
+				cat_mass_assault = 0.15
+			}
+			
+			traits = { mass_assault_expert }
+
+			ai_will_do = {
+				factor = 3
+			}
+		}
+		
+		sergey_gorshkov = {
+			ledger = navy
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						OR = {
+							check_variable = {
+								var = sov_great_purge_status^26
+								value = 2
+								compare = equals
+							}
+							has_country_flag = purge_military
+						}
+					}
+				}
+			}
+			
+			cost = 150
+			
+			research_bonus = {
+				naval_doctrine = 0.10
+			}
+			
+			traits = { naval_theorist }
+			
+			ai_will_do = {
+				factor = 1
+			}
+		}
+		
+		vladimir_tributs = {
+			ledger = navy
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^27
+							value = 1
+							compare = equals
+						}
+					}
+				}
+			}
+			
+			cost = 250
+			
+			research_bonus = {
+				cat_fleet_in_being = 0.15
+			}
+			
+			traits = { grand_fleet_proponent}
+
+			ai_will_do = {
+				factor = 1
+			}
+		}
+		
+		sergei_rudenko = {
+			ledger = air
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						OR = {
+							check_variable = {
+								var = sov_great_purge_status^28
+								value = 1
+								compare = equals
+							}
+							has_country_flag = purge_military
+						}
+					}
+				}
+			}
+			
+			cost = 250
+			
+			research_bonus = {
+				cat_battlefield_support = 0.15
+			}
+			
+			traits = { close_air_support_proponent }
+
+			ai_will_do = {
+				factor = 1
+			}
+		}
+		
+		alexander_golovanov = {
+			ledger = air
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^29
+							value = 1
+							compare = equals
+						}
+					}
+				}
+			}
+			
+			research_bonus = {
+				air_doctrine = 0.10
+			}
+			
+			traits = { air_warfare_theorist }
+
+			ai_will_do = {
+				factor = 1
+			}
+		}
+		
+		igor_kurchatov = {
+			ledger = army
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^30
+							value = 1
+							compare = equals
+						}
+					}
+				}
+			}
+			
+			research_bonus = {
+				nuclear = 0.15
+			}
+			
+			traits = { nuclear_scientist }
+
+			ai_will_do = {
+				factor = 1
+			}
+		}
+		
+		sergei_korolev = {
+			ledger = air
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^31
+							value = 1
+							compare = equals
+						}
+					}
+				}
+			}
+			
+			research_bonus = {
+				rocketry = 0.15
+			}
+			
+			traits = { rocket_scientist }
+
+			ai_will_do = {
+				factor = 1
+			}
+		}
 
 		SOV_yevgeny_miller = {
 			ledger = army
@@ -7303,7 +11776,6 @@ ideas = {
 			ai_will_do = {
 				factor = 1
 			}
-
 		}
 
 		SOV_viktorin_molchanov = {
@@ -7319,6 +11791,9 @@ ideas = {
 				OR = {
 					has_country_flag = soviet_generals_deserted
 					has_completed_focus = SOV_second_civil_war
+				}
+				NOT = {
+					has_country_flag = denikin_resigned_fascist
 				}
 			}
 			
@@ -7375,6 +11850,43 @@ ideas = {
 	naval_manufacturer = {
 	
 		designer = yes
+
+		nevskoye_design_bureau = {
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			cost = 200
+			
+			available = {
+				has_completed_focus = SOV_restoration_tsar
+				if = {
+					limit = {
+						NOT = {
+							has_idea = nevskoye_design_bureau
+						}
+					}
+					num_of_naval_factories > 15
+				}
+			}
+			
+			research_bonus = {
+				naval_equipment = 0.15
+			}
+			
+			traits = { imperial_naval_commission }
+			
+			modifier = {
+				naval_coordination = 0.1
+				naval_hit_chance = 0.15
+				sortie_efficiency = 0.15
+			}
+
+			ai_will_do = {
+				factor = 1
+			}
+		}
 
 		volgograd_shipyard = {
 			
@@ -7453,6 +11965,116 @@ ideas = {
 
 		designer = yes
 
+		mig_design_bureau = {
+			
+			allowed = {
+				original_tag = SOV
+			}
+			
+			available = {
+				has_completed_focus = SOV_develop_new_planes
+			}
+			
+			research_bonus = {
+				air_equipment = 0.15
+			}
+			
+			traits = { light_aircraft_manufacturer }
+			
+			modifier = {
+			}
+
+			ai_will_do = {
+				factor = 1
+			}
+		}
+		
+		ilyushin_design_bureau = {
+			
+			allowed = {
+				original_tag = SOV
+			}
+			
+			available = {
+				if = {
+					limit = {
+						NOT = {
+							has_idea = ilyushin_design_bureau
+						}
+					}
+					num_of_military_factories > 35
+				}
+			}
+			
+			research_bonus = {
+				air_equipment = 0.15
+			}
+			
+			traits = { medium_aircraft_manufacturer }
+			
+			modifier = {
+			}
+
+			ai_will_do = {
+				factor = 1
+			}
+		}
+		
+		tupolev_design_bureau = {
+			
+			allowed = {
+				original_tag = SOV
+			}
+			
+			available = {
+				if = {
+					limit = {
+						NOT = {
+							has_idea = tupolev_design_bureau
+						}
+					}
+					num_of_military_factories > 50
+				}
+			}
+			
+			research_bonus = {
+				air_equipment = 0.15
+			}
+			
+			traits = { heavy_aircraft_manufacturer }
+			
+			modifier = {
+			}
+
+			ai_will_do = {
+				factor = 1
+			}
+		}
+		
+		yakovlev_design_bureau = {
+			
+			allowed = {
+				original_tag = SOV
+			}
+			
+			available = {
+				has_completed_focus = SOV_carrier_planes
+			}
+			
+			research_bonus = {
+				air_equipment = 0.15
+			}
+			
+			traits = { naval_aircraft_manufacturer }
+			
+			modifier = {
+			}
+
+			ai_will_do = {
+				factor = 1
+			}
+		}
+
 		antonov_serial_production_plant = {
 			allowed = {
 				original_tag = SOV
@@ -7482,6 +12104,54 @@ ideas = {
 	}
 
 	industrial_concern = {
+
+		stalingrad_tractor_factory = {
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+				owns_state = 217
+			}
+			
+			research_bonus = {
+				industry = 0.15
+			}
+			
+			traits = { military_industry_manu }
+			
+			modifier = {
+			}
+
+			ai_will_do = {
+				factor = 1
+			}
+		}
+		
+		leningrad_polytechnical_institute = {
+			
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+				owns_state = 195
+			}
+			
+			research_bonus = {
+				electronics = 0.15
+			}
+			
+			traits = { civilian_industry_manu }
+			
+			modifier = {
+			}
+
+			ai_will_do = {
+				factor = 1
+			}
+		}
 
 		leningrad_metal_factory = {
 			allowed = {
@@ -7557,6 +12227,126 @@ ideas = {
 		
 		designer = yes
 
+		morozov_design_bureau = {
+			
+			allowed = {
+				OR = {
+					original_tag = SOV
+					AND = {
+						OR = {
+							is_literally_china = yes
+							tag = MAN
+						}
+						has_dlc = "Waking the Tiger"
+					}
+				}
+			}
+
+			available = {
+				if = {
+					limit = {
+						OR = {
+							is_literally_china = yes
+							tag = MAN
+						}
+					}
+					has_completed_focus = CHI_hire_soviet_designer
+					NOT = {
+						has_war_with = SOV
+					}
+				}
+				else_if = {
+					limit = {
+						original_tag = SOV
+					}
+					if = {
+						limit = {
+							NOT = {
+								has_idea = morozov_design_bureau
+							}
+						}
+						num_of_military_factories > 50
+					}
+				}
+			}
+			
+			research_bonus = {
+				armor = 0.15
+			}
+			
+			traits = { fast_tank_manufacturer }
+			
+			modifier = {
+			}
+
+			ai_will_do = {
+				factor = 1
+			}
+		}
+		
+		astrov_design_bureau = {
+			
+			allowed = {
+				original_tag = SOV
+			}
+			
+			available = {
+				if = {
+					limit = {
+						NOT = {
+							has_idea = astrov_design_bureau
+						}
+					}
+					num_of_military_factories > 50
+				}
+				has_completed_focus = SOV_t-34
+			}
+			
+			research_bonus = {
+				armor = 0.15
+			}
+			
+			traits = { medium_tank_manufacturer }
+			
+			modifier = {
+			}
+
+			ai_will_do = {
+				factor = 1
+			}
+		}
+		
+		okmo = {
+			
+			allowed = {
+				original_tag = SOV
+			}
+			
+			available = {
+				if = {
+					limit = {
+						NOT = {
+							has_idea = okmo
+						}
+					}
+					num_of_military_factories > 75
+				}
+			}
+			
+			research_bonus = {
+				armor = 0.15
+			}
+			
+			traits = { heavy_tank_manufacturer }
+			
+			modifier = {
+			}
+
+			ai_will_do = {
+				factor = 1
+			}
+		}
+
 		uralvagonzavod = {
 			picture = GFX_idea_uralvagonzavod
 
@@ -7611,6 +12401,67 @@ ideas = {
 	materiel_manufacturer = {
 			
 		designer = yes
+
+		grabin_design_bureau = {
+			
+			allowed = {
+				original_tag = SOV
+			}
+			
+			research_bonus = {
+				artillery = 0.15
+			}
+			
+			traits = { artillery_expert }
+			
+			modifier = {
+			}
+
+			ai_will_do = {
+				factor = 1
+			}
+		}
+		
+		tula_arms_plant = {
+			
+			allowed = {
+				original_tag = SOV
+			}
+			
+			research_bonus = {
+				infantry_weapons = 0.15
+			}
+			
+			traits = { infantry_quantity_quality }
+			
+			modifier = {
+			}
+
+			ai_will_do = {
+				factor = 1
+			}
+		}
+		
+		gaz = {
+			
+			allowed = {
+				original_tag = SOV
+			}
+			
+			research_bonus = {
+				motorized_equipment = 0.15
+				mot_rockets = 0.50
+			}
+			
+			traits = { motorized_specialist_designer }
+			
+			modifier = {
+			}
+
+			ai_will_do = {
+				factor = 1
+			}
+		}
 
 		belaz = {
 			allowed = {

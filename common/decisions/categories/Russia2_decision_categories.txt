@@ -1,4 +1,48 @@
 #Russia2 categories decisions
+SOV_russia_reworked_load_decision_category_russia2 = {
+	
+	allowed = {
+		original_tag = SOV
+	}
+
+	visible = {
+		has_global_flag = russia_reworked_enabled
+		NOT = {
+			has_global_flag = russia_reworked_loaded
+		}
+	}
+}
+
+SOV_great_purge_decisions = {
+
+	icon = GFX_great_purge_decision_category
+
+	picture = GFX_decision_cat_picture_fatherland_front
+
+	scripted_gui = sov_great_purge_decisions_scripted_gui
+
+	visible_when_empty = yes
+
+    allowed = {
+     	original_tag = SOV
+    }
+
+    available = {
+		has_idea = SOV_Great_purge
+    }
+
+	priority = 100
+
+    visible = {
+		has_government = communism
+		is_subject = no
+		OR = {
+			has_idea = SOV_Great_purge
+			has_completed_focus = SOV_great_purge2
+		}
+    }
+}
+
 SOV_democratic_help = {
 
 	icon = GFX_decision_category_generic_democracy
@@ -12,6 +56,8 @@ SOV_democratic_help = {
     available = {
     	
     }
+
+	priority = 30
 
     visible = {
 		has_government = democratic
@@ -32,9 +78,11 @@ SOV_move_capital_neutrality = {
     	
     }
 
+	priority = 20
+
     visible = {
 		has_government = neutrality
-		has_country_flag = second_civil_war_over
+		has_global_flag = second_russian_civil_war_over
     }
 }
 
@@ -48,14 +96,18 @@ SOV_europe_expansion = {
      	original_tag = SOV
     }
 
+	priority = 25
+
     available = {
     	has_completed_focus = SOV_russian_expansion
     }
 
-     visible = {
+    visible = {
 		has_completed_focus = SOV_russian_expansion
 		NOT = {
-			has_government = democratic
+			has_completed_focus = SOV_preemptive_coup
+			has_completed_focus = SOV_reunification
+			has_completed_focus = SOV_freedom_all
 		}
 		is_subject = no
     }
@@ -71,12 +123,23 @@ SOV_europe_expansion_democratic = {
      	original_tag = SOV
     }
 
+	priority = 15
+
     available = {
     	has_completed_focus = SOV_russian_expansion
     }
 
-     visible = {
+    visible = {
 		has_completed_focus = SOV_russian_expansion
+		OR = {
+			has_completed_focus = SOV_preemptive_coup
+			has_completed_focus = SOV_reunification
+			has_completed_focus = SOV_freedom_all
+		}
+		NOT = {
+			has_completed_focus = SOV_united_russia
+			has_completed_focus = SOV_abandon_foreign_claims
+		}
 		has_government = democratic
 		is_subject = no
     }
@@ -91,6 +154,8 @@ SOV_integrate_the_baltics = {
 	allowed = {
 		original_tag = SOV
 	}
+
+	priority = 15
 
 	available = {
 		has_completed_focus = SOV_russian_expansion
@@ -122,6 +187,8 @@ SOV_unhappy_peasants = {
 		}
 	}
 
+	priority = 20
+
 	visible = {
 		OR = {
 			has_idea = SOV_Unhappy_peasants1
@@ -148,6 +215,8 @@ SOV_chinese_war = {
 		has_completed_focus = SOV_weapons_china
 	}
 
+	priority = 10
+
 	visible = {
 		has_completed_focus = SOV_weapons_china
 		OR = {
@@ -171,6 +240,8 @@ SOV_minor_communist_countries_europe = {
 		original_tag = SOV
 	}
 
+	priority = 20
+
 	available = {
 		has_completed_focus = SOV_communist_minorities_europe
 	}
@@ -189,6 +260,8 @@ SOV_help_spain = {
 	allowed = {
 		original_tag = SOV
 	}
+
+	priority = 10
 
 	available = {
 		has_completed_focus = SOV_weapons_spain
@@ -218,6 +291,8 @@ SOV_invite_revolution = {
 		has_completed_focus = SOV_revolution_to_the_utmost
 	}
 
+	priority = 30
+
 	visible = {
 		is_faction_leader = yes
 		has_completed_focus = SOV_revolution_to_the_utmost
@@ -234,9 +309,13 @@ SOV_proclaim_revolution = {
 
 	picture = GFX_decision_cat_picture_chi_political_support
 
+	scripted_gui = sov_international_revolution_scripted_gui
+
 	allowed = {
 		original_tag = SOV
 	}
+
+	priority = 35
 
 	available = {
 		has_country_leader = {
@@ -250,10 +329,8 @@ SOV_proclaim_revolution = {
 		has_government = communism
 		is_major = yes
 		NOT = {
-			OR = {
-				has_country_flag = SOV_ended_revolution
-				has_cosmetic_tag = SOV_proletarian_union
-			}
+			has_country_flag = SOV_ended_revolution
+			has_cosmetic_tag = SOV_proletarian_union
 		}
 	}
 }
@@ -267,6 +344,8 @@ SOV_invest_russian_sphere = {
 	allowed = {
 		original_tag = SOV
 	}
+
+	priority = 40
 
 	available = {
 		has_completed_focus = SOV_investment_russian_sphere
@@ -293,6 +372,17 @@ SOV_the_second_civil_war_fn = {
 
 	picture = GFX_second_civil_war_decision_russia2
 
+	visibility_type = map_and_decisions_view
+
+	priority = 100
+
+	on_map_area = {
+		name = SOV_the_second_civil_war_fn_tt
+		zoom = 800
+
+		target_array = sov_white_guard_states
+	}
+
 	allowed = {
 		original_tag = SOV
 	}
@@ -316,6 +406,8 @@ SOV_deal_with_britain = {
 		original_tag = SOV
 	}
 
+	priority = 25
+
 	available = {
 		is_subject = no
 	}
@@ -338,6 +430,8 @@ SOV_expand_entente_decision = {
 	allowed = {
 		original_tag = SOV
 	}
+
+	priority = 20
 
 	available = {
 		is_subject = no
@@ -372,6 +466,8 @@ SOV_perpetual_defense_liberty_decisions = {
 		original_tag = SOV
 	}
 
+	priority = 26
+
 	available = {
 		
 	}
@@ -393,6 +489,8 @@ SOV_control_of_church = {
 		original_tag = SOV
 	}
 
+	priority = 25
+
 	available = {
 		if = {
 			limit = {
@@ -402,7 +500,7 @@ SOV_control_of_church = {
 				tooltip = SOV_control_of_church_tt
 				has_country_flag = {
 					flag = church_last_reform
-					days > 180
+					days > 1
 				}
 			}
 		}
@@ -414,12 +512,7 @@ SOV_control_of_church = {
 			has_government = fascism
 		}
 		has_completed_focus = SOV_control_church
-		OR = {
-			has_idea = SOV_Church_power_1
-			has_idea = SOV_Church_power_2
-			has_idea = SOV_Church_power_3
-			has_idea = SOV_Church_power_4
-		}
+		has_idea = SOV_Church_power
 	}
 }
 
@@ -428,6 +521,8 @@ SOV_destroy_communist_resistance = {
 	icon = GFX_decision_category_sov_great_patriotic_war
 
 	picture = GFX_communist_resistance_russia2
+
+	priority = 30
 
 	allowed = {
 		original_tag = SOV
@@ -448,6 +543,8 @@ SOV_buy_guns_foreign_country = {
 
 	icon = GFX_decision_category_generic_arms_trade
 
+	priority = 20
+
 	allowed = {
 		original_tag = SOV
 	}
@@ -461,11 +558,58 @@ SOV_buy_guns_foreign_country = {
 	}
 }
 
+SOV_unite_slavic_nation_ultimatum_decision = {
+
+	icon = GFX_decision_category_eng_move_to_secure_the_dominions
+
+	priority = 30
+
+	allowed = {
+		original_tag = SOV
+	}
+
+	available = {
+		has_completed_focus = SOV_unite_slavic_nations
+	}
+
+	visible = {
+		has_completed_focus = SOV_unite_slavic_nations
+		has_completed_focus = SOV_firm_hand
+		has_government = neutrality
+	}
+}
+
+SOV_defend_slavic_borders_category = {
+
+	icon = GFX_decision_category_border_war
+
+	priority = 15
+
+	allowed = {
+		original_tag = SOV
+	}
+
+	available = {
+		has_completed_focus = SOV_preemptive_strike_middle_east
+	}
+
+	visible = {
+		NOT = {
+			is_subject = yes
+		}
+		has_completed_focus = SOV_preemptive_strike_middle_east
+		has_completed_focus = SOV_slavic_empire
+		has_government = neutrality
+	}
+}
+
 SOV_appeasement_communist = {
 
 	icon = GFX_decision_category_generic_foreign_policy
 
 	picture = GFX_decision_cat_picture_government_in_exile
+
+	priority = 30
 
 	allowed = {
 		original_tag = SOV
@@ -491,6 +635,12 @@ SOV_appeasement_communist = {
 SOV_transfer_of_power = {
 
 	icon = GFX_decision_category_generic_foreign_policy
+
+	allowed = {
+		original_tag = SOV
+	}
+
+	priority = 10
 
 	visible = {
 		has_completed_focus = SOV_firm_hand
@@ -520,6 +670,8 @@ SOV_monarchy_congress = {
 		original_tag = SOV
 	}
 
+	priority = 40
+
 	available = {
 
 	}
@@ -540,6 +692,8 @@ SOV_reintegrate_lost_states_decisions = {
 	allowed = {
 		original_tag = SOV
 	}
+
+	priority = 30
 
 	available = {
 
@@ -635,6 +789,8 @@ SOV_imperial_obligations = {
 		is_subject = no
 	}
 
+	priority = 5
+
 	visible = {
 		has_idea = SOV_Tsar_we_trust
 		has_government = neutrality
@@ -654,6 +810,8 @@ SOV_second_civil_war_during_bonus = {
 
 	picture = GFX_second_civil_war_decision_russia2
 
+	priority = 30
+
 	allowed = {
 		original_tag = SOV
 	}
@@ -664,7 +822,7 @@ SOV_second_civil_war_during_bonus = {
 
 	visible = {
 		has_completed_focus = SOV_war_against_bolshevism
-		has_country_flag = second_civil_war_in_progress
+		has_global_flag = second_russian_civil_war_in_progress
 	}
 }
 
@@ -673,6 +831,8 @@ SOV_fascist_women_movement_decisions = {
 	icon = GFX_decision_category_ger_reichskommissariats
 
 	picture = GFX_Russian_womens_fascist_movement
+
+	priority = 40
 
 	allowed = {
 		original_tag = SOV
@@ -696,6 +856,8 @@ SOV_custom_formable_nations_endgame = {
 
 	icon = GFX_decision_category_eng_move_to_secure_the_dominions
 
+	priority = 15
+
 	available = {
 		has_government = fascism
 		is_subject = no
@@ -713,6 +875,8 @@ SOV_focus_fascist_russia_europe = {
 
 	picture = GFX_focus_fascist_russia2
 
+	priority = 10
+
 	allowed = {
 		original_tag = SOV
 	}
@@ -728,6 +892,8 @@ SOV_focus_fascist_russia_asia = {
 	icon = GFX_decision_category_ger_military_buildup
 
 	picture = GFX_focus_fascist_russia2
+
+	priority = 10
 
 	allowed = {
 		original_tag = SOV
@@ -745,6 +911,8 @@ SOV_focus_fascist_russia_america = {
 
 	picture = GFX_focus_fascist_russia2
 
+	priority = 10
+
 	allowed = {
 		original_tag = SOV
 	}
@@ -760,6 +928,8 @@ SOV_focus_fascist_defense = {
 	icon = GFX_decision_category_ger_military_buildup
 
 	picture = GFX_russian_plane_russia2
+
+	priority = 10
 
 	allowed = {
 		original_tag = SOV
@@ -777,6 +947,8 @@ SOV_expand_russian_dominance = {
 
 	picture = GFX_reintegrate_lost_state_russia2
 
+	priority = 10
+
 	allowed = {
 		original_tag = SOV
 	}
@@ -793,6 +965,8 @@ SOV_build_up_border_from = {
 	icon = GFX_decision_category_ger_military_buildup
 
 	picture = GFX_focus_fascist_russia2
+
+	priority = 15
 	
 	visible = {
 		OR = {
@@ -806,6 +980,8 @@ SOV_third_rome_decision_categories = {
 
 	icon = GFX_decision_category_generic_fascism
 
+	priority = 30
+
 	visible = {
 		has_completed_focus = SOV_the_third_rome
 		is_subject = no
@@ -818,6 +994,8 @@ SOV_legacy_of_byzantine = {
 
 	picture = GFX_decision_cat_generic_byzantine_empire
 
+	priority = 25
+
 	visible = {
 		has_completed_focus = SOV_the_third_rome
 		is_subject = no
@@ -829,8 +1007,22 @@ SOV_seek_greater_ambition = {
 
 	icon = GFX_decision_category_generic_fascism
 
+	priority = 30
+
 	visible = {
 		has_completed_focus = SOV_seek_greater_ambitions
+		is_subject = no
+	}
+}
+
+SOV_spread_america_anasta = {
+
+	icon = GFX_decision_category_usa_congress
+
+	priority = 25
+
+	visible = {
+		has_country_flag = has_formed_greater_russia
 		is_subject = no
 	}
 }
@@ -838,6 +1030,8 @@ SOV_seek_greater_ambition = {
 SOV_balkanize_germany = {
 
 	icon = GFX_decision_category_border_war
+
+	priority = 10
 
 	visible = {
 		has_completed_focus = SOV_order_with_discipline
@@ -849,6 +1043,8 @@ SOV_balkanize_japan = {
 
 	icon = GFX_decision_category_border_war
 
+	priority = 10
+
 	visible = {
 		has_completed_focus = SOV_the_world_anew
 		is_subject = no
@@ -858,6 +1054,8 @@ SOV_balkanize_japan = {
 SOV_invite_neighbours = {
 
 	icon = GFX_decision_category_generic_foreign_policy
+
+	priority = 25
 
 	visible = {
 		is_subject = no
@@ -872,6 +1070,8 @@ SOV_impose_order_subjects = {
 	allowed = {
 		original_tag = SOV
 	}
+
+	priority = 5
 
 	available = {
 		has_idea = SOV_Impose_order
@@ -909,7 +1109,7 @@ SOV_end_second_civil_war = {
 			has_war_with = SOU
 			country_exists = SOU
 		}
-		has_country_flag = second_civil_war_in_progress
+		has_global_flag = second_russian_civil_war_in_progress
 	}
 }
 
@@ -920,6 +1120,8 @@ SOV_help_manchuria = {
 	available = {
 		
 	}
+
+	priority = 25
 
 	visible = {
 		country_exists = MAN
@@ -941,6 +1143,8 @@ SOV_fourth_international_council = {
 	allowed = {
 		original_tag = SOV
 	}
+
+	priority = 1
 
 	available = {
 		is_faction_leader = yes
@@ -965,6 +1169,8 @@ SOV_communist_influence_international = {
 		}
 	}
 
+	priority = 50
+
 	visible = {
 		NOT = {
 			has_government = communism
@@ -987,6 +1193,8 @@ SOV_iron_curtain = {
 		original_tag = SOV
 	}
 
+	priority = 30
+
 	available = {
 		is_faction_leader = yes
 	}
@@ -1007,6 +1215,8 @@ SOV_target_iron_curtain = {
 	allowed = {
 		has_country_flag = target_civil_war_iron_curtain
 	}
+
+	priority = 30
 
 	visible = {
 		NOT = {
@@ -1051,13 +1261,14 @@ SOV_the_black_revolution = {
 }
 
 SOV_supreme_court_decisions = {
-	icon = GFX_decision_category_sov_great_patriotic_war
 
-	picture = GFX_decision_cat_picture_spr_the_inevitable_civil_war
+	icon = GFX_supreme_court_decision_category
 
 	allowed = {
 		original_tag = SOV
 	}
+
+	priority = 40
 
 	visible = {
 		has_government = democratic
@@ -1226,8 +1437,8 @@ SOV_anarchism_election = {
 	priority = 30
 
 	visible = {
-		#has_completed_focus = 
-		#has_government = anarchy
+		#has_completed_focus = SOV_proclamation_commune
+		has_government = anarchy
 	}
 }
 
@@ -1401,5 +1612,574 @@ SOV_develop_france_united_russia = {
 			is_subject_of = SOV
 		}
 		has_country_flag = france_is_puppet_united_russia
+	}
+}
+
+SOV_switch_country_soviet_fragmented = {
+
+	icon = GFX_decision_category_generic
+
+	priority = 2021 # ;)
+
+	allowed = {
+		OR = {
+			tag = SOV
+			tag = GPM
+			tag = TAN
+		}
+	}
+
+	visible = {
+		has_game_rule = {
+			rule = sov_fragmentation_status
+			option = SOV_FRAGMENTED
+		}
+		date < 1936.1.11
+		is_ai = no
+		NOT = {
+			has_war = yes
+			is_subject = yes
+		}
+	}
+}
+
+SOV_rename_soviet_cities = {
+
+	icon = GFX_decision_category_generic
+
+	priority = 1
+
+	allowed = {
+		OR = {
+			original_tag = SOV
+			original_tag = UKR
+			original_tag = ARM
+			original_tag = AZR
+			original_tag = GEO
+			original_tag = BLR
+			original_tag = KAZ
+			original_tag = TMS
+			original_tag = CIR
+			original_tag = CRI
+			original_tag = DAG
+			original_tag = EFR
+			original_tag = GPM
+			original_tag = KAL
+			original_tag = KAR
+			original_tag = KMI
+			original_tag = KUB
+			original_tag = KYR
+			original_tag = NOV
+			original_tag = PRM
+			original_tag = ROS
+			original_tag = SIB
+			original_tag = STP
+			original_tag = TAJ
+			original_tag = TAN
+			original_tag = TAT
+			original_tag = TMS
+			original_tag = URA
+			original_tag = UZB
+			original_tag = VLG
+			original_tag = VYA
+			original_tag = KUR
+		}
+	}
+
+	visible = {
+		NOT = {
+			has_civil_war = yes
+			has_global_flag = second_russian_civil_war_in_progress
+			has_country_flag = black_revolution_civil_war_in_progress
+		}
+	}
+}
+
+SOV_russianize_state = {
+
+	icon = GFX_decision_category_border_war
+
+	priority = 1
+	
+	allowed = {
+		OR = {
+			original_tag = SOV
+			original_tag = UKR
+			original_tag = ARM
+			original_tag = AZR
+			original_tag = GEO
+			original_tag = BLR
+			original_tag = KAZ
+			original_tag = TMS
+			original_tag = CIR
+			original_tag = CRI
+			original_tag = DAG
+			original_tag = EFR
+			original_tag = GPM
+			original_tag = KAL
+			original_tag = KAR
+			original_tag = KMI
+			original_tag = KUB
+			original_tag = KYR
+			original_tag = NOV
+			original_tag = PRM
+			original_tag = ROS
+			original_tag = SIB
+			original_tag = STP
+			original_tag = TAJ
+			original_tag = TAN
+			original_tag = TAT
+			original_tag = TMS
+			original_tag = URA
+			original_tag = UZB
+			original_tag = VLG
+			original_tag = VYA
+			original_tag = KUR
+		}
+	}
+
+	visible = {
+		if = {
+			limit = {
+				original_tag = SOV
+			}
+			OR = {
+				has_completed_focus = SOV_great_purge2
+				has_completed_focus = SOV_avoid_purge
+				has_completed_focus = SOV_launch_insurrection
+				has_completed_focus = SOV_bring_back_old_life
+				has_completed_focus = SOV_new_way_life
+				has_completed_focus = SOV_proclamation_commune
+				has_completed_focus = SOV_embrace_total_anarchy
+			}
+		}
+	}
+}
+
+SOV_renegotiate_deals_civil_war = {
+
+	icon = GFX_decision_category_generic
+
+	picture = GFX_move_capital_decision
+
+	allowed = {
+		original_tag = SOV
+	}
+
+	priority = 10
+
+	visible = {
+		is_subject = no
+		OR = {
+			has_completed_focus = SOV_restoration_tsar
+			has_completed_focus = SOV_firm_hand
+			has_completed_focus = SOV_the_lawyer_remains
+			has_completed_focus = SOV_the_tables_have_turned
+		}
+	}
+}
+
+SOV_alternative_flag = {
+
+	icon = GFX_decision_category_generic_formable_nations
+
+	allowed = {
+		original_tag = SOV
+	}
+
+	priority = 10
+
+	visible = {
+		is_subject = no
+		OR = {
+			has_country_flag = has_formed_third_rome
+			has_country_flag = has_formed_greater_russia
+		}
+	}
+}
+
+#Categories from base game
+
+SOV_industry_relocation_russia2 = {
+
+	allowed = {
+		original_tag = SOV
+	}
+
+	priority = 9
+
+	available = {
+		has_capitulated = no
+	}
+
+	visible = {
+		has_war = yes
+		has_completed_focus = SOV_move_industry_urals
+		NOT = {
+			has_global_flag = second_russian_civil_war_in_progress
+			has_country_flag = black_revolution_civil_war_in_progress
+		}
+	}
+}
+
+SOV_great_patriotic_war_russia2 = {
+
+	allowed = {
+		original_tag = SOV
+	}
+
+	priority = 50
+
+	icon = GFX_decision_category_sov_great_patriotic_war
+
+	picture = GFX_great_patriotic_war_decision
+
+	visible = {
+		has_government = communism
+		OR = {
+			has_country_leader = {
+				name = "Joseph Stalin"
+				ruling_only = yes
+			}
+			has_country_leader = {
+				name = "Vasily Stalin"
+				ruling_only = yes
+			}
+		}
+		has_war = yes
+		has_civil_war = no
+		is_subject = no
+		has_capitulated = no
+		any_enemy_country = {
+			is_major = yes
+			capital_scope = {
+				is_on_continent = europe
+			}
+		}
+		NOT = {
+			has_global_flag = second_russian_civil_war_in_progress
+			has_country_flag = black_revolution_civil_war_in_progress
+		}
+	}
+}
+
+SOV_greater_kurdistan = {
+
+	icon = GFX_decision_category_border_war
+
+	picture = GFX_kurdistan_ultimatum_decision
+
+	allowed = {
+		original_tag = SOV
+	}
+
+	priority = 10
+
+	available = {
+		KUR = {
+			is_subject_of = SOV
+		}
+	}
+
+	visible = {
+		has_completed_focus = SOV_fate_turkey
+		KUR = {
+			is_subject_of = SOV
+		}
+		has_country_flag = choose_kurdistan_over_other
+		is_subject = no
+	}
+}
+
+SOV_slavic_help = {
+
+	icon = GFX_decision_category_sov_great_patriotic_war
+
+	picture = GFX_decision_cat_picture_chi_political_support
+
+	allowed = {
+		original_tag = SOV
+	}
+
+	priority = 10
+
+	available = {
+		has_completed_focus = SOV_slavic_assistance
+	}
+
+	visible = {
+		has_completed_focus = SOV_slavic_assistance
+	}
+}
+
+SOV_anna_anderson_legitimacy = {
+
+	icon = GFX_decision_category_eng_appeal_to_imperial_loyalists
+
+	picture = GFX_anna_anderson_decision
+
+	allowed = {
+		original_tag = SOV
+	}
+
+	priority = 100
+
+	scripted_gui = sov_anna_anderson_decisions_scripted_gui
+
+	available = {
+		NOT = {
+			has_country_flag = sov_anna_anderson_struggle_over
+		}
+	}
+
+	visible = {
+		NOT = {
+			has_country_flag = sov_anna_anderson_struggle_over
+		}
+		has_country_flag = sov_anna_anderson_returns_russia
+		has_government = neutrality
+		is_subject = no
+		has_capitulated = no
+		has_completed_focus = SOV_restoration_tsar
+		OR = {
+			has_country_leader = {
+				name = "Kirill Vladimirovich"
+				ruling_only = yes
+			}
+			has_country_leader = {
+				name = "Vladimir Kirillovich"
+				ruling_only = yes
+			}
+		}
+		NOT = {
+			has_completed_focus = SOV_the_emperor
+			has_completed_focus = SOV_the_empress
+			has_country_leader = {
+				name = "Anastasia Nikolaevna"
+				ruling_only = yes
+			}
+		}
+	}
+}
+
+SOV_buy_african_colonies_decisions = {
+
+	icon = GFX_decision_category_eng_move_to_secure_the_dominions
+
+	picture = GFX_decision_purchase_africa
+
+	allowed = {
+		original_tag = SOV
+	}
+
+	priority = 20
+
+	visible = {
+		has_government = neutrality
+		is_subject = no
+		has_capitulated = no
+		has_completed_focus = SOV_purchase_african_colonies
+	}
+}
+
+SOV_encourage_investments_democratic_decisions = {
+
+	icon = gre_paying_ifc_debt
+
+	allowed = {
+		original_tag = SOV
+	}
+
+	priority = 20
+
+	visible = {
+		has_government = democratic
+		is_subject = no
+		has_capitulated = no
+		has_completed_focus = SOV_encourage_investments
+	}
+}
+
+SOV_external_threats_decisions = {
+
+	icon = saf_anti_colonialist_crusade
+
+	picture = GFX_decision_external_threats
+
+	scripted_gui = sov_democratic_vote_gui
+
+	allowed = {
+		original_tag = SOV
+	}
+
+	priority = 30
+
+	visible = {
+		has_government = democratic
+		is_subject = no
+		has_capitulated = no
+		has_completed_focus = SOV_external_threats
+	}
+}
+
+SOV_reinstore_german_monarchy_decisions = {
+
+	icon = GFX_decision_category_eng_appeal_to_imperial_loyalists
+
+	allowed = {
+		original_tag = SOV
+	}
+
+	priority = 25
+
+	visible = {
+		has_government = neutrality
+		is_subject = no
+		has_capitulated = no
+		has_completed_focus = SOV_contact_german_exiles
+		NOT = {
+			GER = {
+				has_completed_focus = GER_return_of_the_kaiser
+			}
+		}
+	}
+}
+
+SOV_restore_french_monarchy_decisions_cat = {
+
+	icon = GFX_decision_category_intervention_overseas
+
+	allowed = {
+		original_tag = SOV
+	}
+
+	priority = 25
+
+	visible = {
+		has_government = neutrality
+		is_subject = no
+		has_capitulated = no
+		has_completed_focus = SOV_contact_french_exiles
+		NOT = {
+			FRA = {
+				has_completed_focus = FRA_repeal_the_law_of_exile
+			}
+		}
+	}
+}
+
+SOV_deal_with_french_monarchy_rise_cat = {
+
+	icon = GFX_decision_category_intervention_overseas
+
+	allowed = {
+		original_tag = FRA
+	}
+
+	priority = 25
+
+	visible = {
+		OR = {
+			has_idea = SOV_french_monarchist_sentiment_idea
+			has_idea = SOV_french_monarchist_sentiment_idea_2
+		}
+	}
+}
+
+SOV_mission_civil_war_monarchy_russia = {
+
+	icon = GFX_decision_category_generic_crisis
+
+	allowed = {
+		OR = {
+			original_tag = FRA
+			original_tag = GER
+		}
+	}
+
+	priority = 30
+
+	visible = {
+		has_country_flag = is_victim_of_russia_civil_war
+	}
+}
+
+SOV_influence_italy_monarchist = {
+
+	icon = GFX_decision_category_generic_propaganda
+
+	allowed = {
+		original_tag = SOV
+	}
+
+	priority = 20
+
+	visible = {
+		ITA = {
+			OR = {
+				has_idea = SOV_Russian_influence_monarchist_italy
+				has_idea = SOV_Russian_influence_monarchist_italy_2
+			}
+			is_in_faction_with = SOV
+		}
+		has_government = neutrality
+		is_subject = no
+		has_capitulated = no
+	}
+}
+
+SOV_deal_with_italian_monarchy_rise_cat = {
+
+	icon = GFX_decision_category_generic_propaganda
+
+	allowed = {
+		original_tag = ITA
+	}
+
+	priority = 25
+
+	visible = {
+		OR = {
+			has_idea = SOV_Russian_influence_monarchist_italy
+			has_idea = SOV_Russian_influence_monarchist_italy_2
+		}
+	}
+}
+
+#Ukraine
+UKR_industrial_revival_project = {
+
+	icon = generic_arms_trade
+
+	allowed = {
+		original_tag = UKR
+	}
+
+	priority = 100
+
+	visible = {
+		OR = {
+			has_idea = UKR_Industrial_revival
+			has_idea = UKR_Industrial_revival2
+			has_idea = UKR_Industrial_revival3
+			has_idea = UKR_Industrial_revival4
+		}
+	}
+}
+
+UKR_kyivan_industry_decisions = {
+
+	picture = GFX_decision_kiev_building
+
+	icon = generic_industry
+
+	allowed = {
+		original_tag = UKR
+	}
+
+	priority = 100
+
+	visible = {
+		has_completed_focus = UKR_kyivan_industry
 	}
 }
