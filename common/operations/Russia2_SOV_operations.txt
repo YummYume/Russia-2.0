@@ -72,7 +72,7 @@ SOV_spy_nuclear_technology = { 	#Steal US Nuclear Tech
 		
 	}
 
-	risk_chance = 0.35 #Can be translated by 35% chance of something bad happening to at least one of your spy, which is pretty high but makes it all balanced
+	risk_chance = 0.35 #Can be translated by 40% chance of something bad happening to at least one of your spy, which is pretty high but makes it all balanced
 
 	experience = 6 #Gives a lot of exp to spies assigned to this operation (equals to ~3 normal vanilla operations)
 
@@ -150,40 +150,34 @@ SOV_worker_liberation_europe = { #Liberate the workers of Europe
 			value > 0
 		}
 
-		has_completed_focus = SOV_european_revolution
-
-		num_of_operatives > 0
-
-		any_state = {
-			is_controlled_by = FROM
-			is_on_continent = europe
-			has_resistance = yes
-			compliance < 80
-			NOT = {
-				is_core_of = FROM
-				is_core_of = SOV
-			}
-		}
-	}
-
-	available = {
 		FROM = {
+			any_owned_state = {
+			    is_on_continent = europe
+			    compliance < 80
+			    has_resistance = yes
+			    NOT = {
+					is_core_of = FROM
+				}
+			}
 			NOT = {
 				has_government = communism
 				is_in_faction_with = SOV
-				is_subject_of = SOV
 			}
 		}
+
+		has_completed_focus = SOV_european_revolution
+
+		num_of_operatives > 0
 	}
 
 	operatives = 2
 
-	network_strength = 25
+	network_strength = 40
 	
 	equipment = {
-		infantry_equipment = 5000
-		support_equipment = 250
-		artillery_equipment = 150
+		infantry_equipment = 1000
+		support_equipment = 150
+		artillery_equipment = 100
 	}
 
 	selection_target_state = {
@@ -192,18 +186,6 @@ SOV_worker_liberation_europe = { #Liberate the workers of Europe
 		has_resistance = yes
 		NOT = {
 			is_core_of = FROM
-			is_core_of = SOV
-		}
-		custom_trigger_tooltip = {
-			tooltip = any_country_has_core_and_not_exist_tt
-			any_of_scopes = {
-				array = global.countries
-
-				PREV = {
-					is_core_of = PREV
-				}
-				exists = no
-			}
 		}
 	}
 
@@ -218,51 +200,74 @@ SOV_worker_liberation_europe = { #Liberate the workers of Europe
 		FROM = {
 			activate_mission = SOV_liberation_europe
 			set_country_flag = target_europe
-		}
+		}	
 	}
 
 	risk_chance = 0.10
 	experience = 3
-	outcome_extra_chance = 0.4
+	outcome_extra_chance = 0.5
 
 	outcome_execute = {
-		custom_effect_tooltip = SOV_worker_liberation_europe_tt_normal
-		ROOT = {
-			hidden_effect = {
-				FROM.FROM = {
-					save_event_target_as = sov_target_country_revolution
-				}
-				FROM = {
-					clr_country_flag = target_europe
-					country_event = soviets.523
-				}
+		FROM = {
+			add_popularity = {
+			    ideology = communism
+			    popularity = 0.05
+			}
+			clr_country_flag = target_europe
+		}
+		if = {
+			limit = {
 				SOV = {
-					clr_country_flag = SOV_is_liberating_europe
+					has_completed_focus = SOV_liberation_of_the_workers
 				}
 			}
+			FROM.FROM = {
+				add_resistance = 100
+			}
 		}
+		SOV = {
+			clr_country_flag = SOV_is_liberating_europe
+		}	
 	}
 
 	outcome_extra_execute = {
-		custom_effect_tooltip = SOV_worker_liberation_europe_tt_extra
-		ROOT = {
-			hidden_effect = {
-				FROM.FROM = {
-					save_event_target_as = sov_target_country_revolution
-				}
-				FROM = {
-					clr_country_flag = target_europe
-					country_event = soviets.524
-				}
+		FROM = {
+			add_popularity = {
+			    ideology = communism
+			    popularity = 0.10
+			}
+			clr_country_flag = target_europe
+		}
+		if = {
+			limit = {
 				SOV = {
-					clr_country_flag = SOV_is_liberating_europe
+					has_completed_focus = SOV_liberation_of_the_workers
 				}
 			}
+			FROM.FROM = {
+				add_resistance = 100
+			}
 		}
+		SOV = {
+			clr_country_flag = SOV_is_liberating_europe
+		}	
 	}
 
 	outcome_potential = {
-		custom_effect_tooltip = SOV_worker_liberation_europe_tt
+		FROM = {
+			add_popularity = {
+			    ideology = communism
+			    popularity = 0.05
+			}
+		}
+		if = {
+			limit = {
+				SOV = {
+					has_completed_focus = SOV_liberation_of_the_workers
+				}
+			}
+			custom_effect_tooltip = SOV_worker_liberation_europe_tt
+		}
 	}
 	
 	phases = {
@@ -293,40 +298,34 @@ SOV_worker_liberation_africa = { #Liberate the workers of Africa
 			value > 0
 		}
 
-		has_completed_focus = SOV_african_revolution
-
-		num_of_operatives > 0
-
-		any_state = {
-			is_controlled_by = FROM
-			is_on_continent = africa
-			has_resistance = yes
-			compliance < 80
-			NOT = {
-				is_core_of = FROM
-				is_core_of = SOV
-			}
-		}
-	}
-
-	available = {
 		FROM = {
+			any_owned_state = {
+			    is_on_continent = africa
+			    compliance < 80
+			    has_resistance = yes
+			    NOT = {
+					is_core_of = FROM
+				}
+			}
 			NOT = {
 				has_government = communism
 				is_in_faction_with = SOV
-				is_subject_of = SOV
 			}
 		}
+
+		has_completed_focus = SOV_african_revolution
+
+		num_of_operatives > 0
 	}
 
 	operatives = 2
 
-	network_strength = 25
+	network_strength = 40
 	
 	equipment = {
-		infantry_equipment = 5000
-		support_equipment = 250
-		artillery_equipment = 150
+		infantry_equipment = 1000
+		support_equipment = 150
+		artillery_equipment = 100
 	}
 
 	selection_target_state = {
@@ -335,18 +334,6 @@ SOV_worker_liberation_africa = { #Liberate the workers of Africa
 		has_resistance = yes
 		NOT = {
 			is_core_of = FROM
-			is_core_of = SOV
-		}
-		custom_trigger_tooltip = {
-			tooltip = any_country_has_core_and_not_exist_tt
-			any_of_scopes = {
-				array = global.countries
-
-				PREV = {
-					is_core_of = PREV
-				}
-				exists = no
-			}
 		}
 	}
 
@@ -361,51 +348,74 @@ SOV_worker_liberation_africa = { #Liberate the workers of Africa
 		FROM = {
 			activate_mission = SOV_liberation_africa
 			set_country_flag = target_africa
-		}
+		}	
 	}
 
 	risk_chance = 0.10
 	experience = 3
-	outcome_extra_chance = 0.4
+	outcome_extra_chance = 0.5
 
 	outcome_execute = {
-		custom_effect_tooltip = SOV_worker_liberation_africa_tt_normal
-		ROOT = {
-			hidden_effect = {
-				FROM.FROM = {
-					save_event_target_as = sov_target_country_revolution
-				}
-				FROM = {
-					clr_country_flag = target_africa
-					country_event = soviets.523
-				}
+		FROM = {
+			add_popularity = {
+			    ideology = communism
+			    popularity = 0.05
+			}
+			clr_country_flag = target_africa
+		}
+		if = {
+			limit = {
 				SOV = {
-					clr_country_flag = SOV_is_liberating_africa
+					has_completed_focus = SOV_liberation_of_the_workers
 				}
 			}
+			FROM.FROM = {
+				add_resistance = 100
+			}
 		}
+		SOV = {
+			clr_country_flag = SOV_is_liberating_africa
+		}	
 	}
 
 	outcome_extra_execute = {
-		custom_effect_tooltip = SOV_worker_liberation_africa_tt_extra
-		ROOT = {
-			hidden_effect = {
-				FROM.FROM = {
-					save_event_target_as = sov_target_country_revolution
-				}
-				FROM = {
-					clr_country_flag = target_africa
-					country_event = soviets.524
-				}
+		FROM = {
+			add_popularity = {
+			    ideology = communism
+			    popularity = 0.10
+			}
+			clr_country_flag = target_africa
+		}
+		if = {
+			limit = {
 				SOV = {
-					clr_country_flag = SOV_is_liberating_africa
+					has_completed_focus = SOV_liberation_of_the_workers
 				}
 			}
+			FROM.FROM = {
+				add_resistance = 100
+			}
 		}
+		SOV = {
+			clr_country_flag = SOV_is_liberating_africa
+		}		
 	}
 
 	outcome_potential = {
-		custom_effect_tooltip = SOV_worker_liberation_africa_tt
+		FROM = {
+			add_popularity = {
+			    ideology = communism
+			    popularity = 0.05
+			}
+		}
+		if = {
+			limit = {
+				SOV = {
+					has_completed_focus = SOV_liberation_of_the_workers
+				}
+			}
+			custom_effect_tooltip = SOV_worker_liberation_africa_tt
+		}
 	}
 	
 	phases = {
@@ -436,40 +446,34 @@ SOV_worker_liberation_asia = { #Liberate the workers of Asia
 			value > 0
 		}
 
-		has_completed_focus = SOV_asian_revolution
-
-		num_of_operatives > 0
-
-		any_state = {
-			is_controlled_by = FROM
-			is_on_continent = asia
-			has_resistance = yes
-			compliance < 80
-			NOT = {
-				is_core_of = FROM
-				is_core_of = SOV
-			}
-		}
-	}
-
-	available = {
 		FROM = {
+			any_owned_state = {
+			    is_on_continent = asia
+			    compliance < 80
+			    has_resistance = yes
+			    NOT = {
+					is_core_of = FROM
+				}
+			}
 			NOT = {
 				has_government = communism
 				is_in_faction_with = SOV
-				is_subject_of = SOV
 			}
 		}
+
+		has_completed_focus = SOV_asian_revolution
+
+		num_of_operatives > 0
 	}
 
 	operatives = 2
 
-	network_strength = 25
+	network_strength = 40
 	
 	equipment = {
-		infantry_equipment = 5000
-		support_equipment = 250
-		artillery_equipment = 150
+		infantry_equipment = 1000
+		support_equipment = 150
+		artillery_equipment = 100
 	}
 
 	selection_target_state = {
@@ -478,18 +482,6 @@ SOV_worker_liberation_asia = { #Liberate the workers of Asia
 		has_resistance = yes
 		NOT = {
 			is_core_of = FROM
-			is_core_of = SOV
-		}
-		custom_trigger_tooltip = {
-			tooltip = any_country_has_core_and_not_exist_tt
-			any_of_scopes = {
-				array = global.countries
-
-				PREV = {
-					is_core_of = PREV
-				}
-				exists = no
-			}
 		}
 	}
 
@@ -504,51 +496,74 @@ SOV_worker_liberation_asia = { #Liberate the workers of Asia
 		FROM = {
 			activate_mission = SOV_liberation_asia
 			set_country_flag = target_asia
-		}
+		}	
 	}
 
 	risk_chance = 0.10
 	experience = 3
-	outcome_extra_chance = 0.4
+	outcome_extra_chance = 0.5
 
 	outcome_execute = {
-		custom_effect_tooltip = SOV_worker_liberation_asia_tt_normal
-		ROOT = {
-			hidden_effect = {
-				FROM.FROM = {
-					save_event_target_as = sov_target_country_revolution
-				}
-				FROM = {
-					clr_country_flag = target_asia
-					country_event = soviets.523
-				}
+		FROM = {
+			add_popularity = {
+			    ideology = communism
+			    popularity = 0.05
+			}
+			clr_country_flag = target_asia
+		}
+		if = {
+			limit = {
 				SOV = {
-					clr_country_flag = SOV_is_liberating_asia
+					has_completed_focus = SOV_liberation_of_the_workers
 				}
 			}
+			FROM.FROM = {
+				add_resistance = 100
+			}
 		}
+		SOV = {
+			clr_country_flag = SOV_is_liberating_asia
+		}	
 	}
 
 	outcome_extra_execute = {
-		custom_effect_tooltip = SOV_worker_liberation_asia_tt_extra
-		ROOT = {
-			hidden_effect = {
-				FROM.FROM = {
-					save_event_target_as = sov_target_country_revolution
-				}
-				FROM = {
-					clr_country_flag = target_asia
-					country_event = soviets.524
-				}
+		FROM = {
+			add_popularity = {
+			    ideology = communism
+			    popularity = 0.10
+			}
+			clr_country_flag = target_asia
+		}
+		if = {
+			limit = {
 				SOV = {
-					clr_country_flag = SOV_is_liberating_asia
+					has_completed_focus = SOV_liberation_of_the_workers
 				}
 			}
+			FROM.FROM = {
+				add_resistance = 100
+			}
 		}
+		SOV = {
+			clr_country_flag = SOV_is_liberating_asia
+		}	
 	}
 
 	outcome_potential = {
-		custom_effect_tooltip = SOV_worker_liberation_asia_tt
+		FROM = {
+			add_popularity = {
+			    ideology = communism
+			    popularity = 0.05
+			}
+		}
+		if = {
+			limit = {
+				SOV = {
+					has_completed_focus = SOV_liberation_of_the_workers
+				}
+			}
+			custom_effect_tooltip = SOV_worker_liberation_asia_tt
+		}
 	}
 	
 	phases = {

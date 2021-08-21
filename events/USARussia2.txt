@@ -4,19 +4,6 @@
 
 add_namespace = americas
 
-# Check if File is Loaded
-country_event = {
-	id = americas.2092066524
-
-	hidden = yes
-
-	is_triggered_only = yes
-
-	immediate = {
-		set_global_flag = russia_reworked_events_loaded_americas
-	}
-}
-
 #USA Invitation (Unholy Alliance) to the International
 country_event = {
 	id = americas.1
@@ -251,7 +238,6 @@ country_event = {
 		custom_effect_tooltip = SOV_america_release
 		custom_effect_tooltip = SOV_america_cores
 		hidden_effect = {
-			clr_country_flag = fall_of_america
 			if = {
 				limit = {
 					has_cosmetic_tag = SNAU
@@ -347,7 +333,7 @@ country_event = {
 		ai_chance = {
 			factor = 50
 			modifier = {
-				add = -30
+				factor = 20
 				463 = {
 					is_core_of = ROOT
 				}
@@ -376,7 +362,7 @@ country_event = {
 		ai_chance = {
 			factor = 50
 			modifier = {
-				add = 30
+				factor = 80
 				463 = {
 					is_core_of = ROOT
 				}
@@ -498,314 +484,6 @@ country_event = {
 			type = take_state
 			target = FROM
 			generator = { 463 }
-		}
-	}
-}
-
-#Russia Accept to Cede Siberia After CW
-country_event = {
-	id = americas.14
-	title = americas.14.t
-	desc = americas.14.d
-	picture = GFX_soldiers_handshaking_kolchak_russia2
-
-	is_triggered_only = yes
-
-	option = { #Good
-		ai_chance = {
-			factor = 100
-		}
-		name = americas.14.a
-		custom_effect_tooltip = if_we_accept_and_send_volunteers_gain_good_tt
-		custom_effect_tooltip = upon_start_civil_war_idea_tt
-		show_ideas_tooltip = SOV_Participation_russian_civil_war_foreign
-	}
-}
-
-#Treaty of Vladivostok - Siberia
-country_event = {
-	id = americas.15
-	title = americas.15.t
-	desc = americas.15.d
-	picture = GFX_ship_dockyard_russia2
-
-	is_triggered_only = yes
-
-	option = { #Good
-		ai_chance = {
-			factor = 100
-		}
-		name = americas.15.a
-		transfer_state = 562
-		transfer_state = 637
-		transfer_state = 644
-		transfer_state = 574
-		hidden_effect = {
-			562 = {
-				set_compliance = 25
-			}
-			637 = {
-				set_compliance = 25
-			}
-			644 = {
-				set_compliance = 25
-			}
-			574 = {
-				set_compliance = 25
-			}
-		}
-	}
-}
-
-#Russia Wants Siberia Back
-country_event = {
-	id = americas.16
-	title = americas.16.t
-	desc = americas.16.d
-	picture = GFX_report_event_generic_sign_treaty3
-
-	is_triggered_only = yes
-
-	option = { #Accept
-		ai_chance = {
-			factor = 80
-			modifier = {
-				add = -60
-				OR = {
-					SOV = {
-						has_country_flag = SOV_fascist_focus_on_america
-					}
-					any_country = {
-						is_major = yes
-						has_war_with = SOV
-					}
-				}
-			}
-		}
-		name = americas.16.a
-		SOV = {
-			country_event = { id = americas.17 days = 1 }
-		}
-	}
-
-	option = { #Refuse
-		ai_chance = {
-			factor = 20
-			modifier = {
-				add = 60
-				OR = {
-					SOV = {
-						has_country_flag = SOV_fascist_focus_on_america
-					}
-					any_country = {
-						is_major = yes
-						has_war_with = SOV
-					}
-				}
-			}
-		}
-		name = americas.16.b
-		SOV = {
-			country_event = { id = americas.18 days = 1 }
-		}
-	}
-}
-
-#USA Accept to Return Siberia
-country_event = {
-	id = americas.17
-	title = americas.17.t
-	desc = americas.17.d
-	picture = GFX_handshake_russia2
-
-	is_triggered_only = yes
-
-	option = { #Good
-		ai_chance = {
-			factor = 100
-		}
-		name = americas.17.a
-		transfer_state = 562
-		transfer_state = 637
-		transfer_state = 644
-		transfer_state = 574
-		clr_country_flag = america_receive_siberia_generic
-	}
-}
-
-#USA Refuse to Return Siberia
-country_event = {
-	id = americas.18
-	title = americas.18.t
-	desc = americas.18.d
-	picture = GFX_military_parade_russia2
-
-	is_triggered_only = yes
-
-	option = { #Good
-		ai_chance = {
-			factor = 100
-		}
-		name = americas.18.a
-		SOV = {
-			create_wargoal = {
-				target = USA
-				type = take_claimed_state
-			}
-		}
-	}
-}
-
-#SOV Wins Border War
-country_event = {
-	id = americas.19
-	title = americas.19.t
-	desc = americas.19.d
-	picture = GFX_cavalry_parade_russia2
-
-	is_triggered_only = yes
-
-	option = { #Good
-		ai_chance = {
-			factor = 100
-		}
-		name = americas.19.a
-		transfer_state = 562
-		transfer_state = 637
-		transfer_state = 644
-		transfer_state = 574
-		clr_country_flag = america_receive_siberia_generic
-		add_tech_bonus = {
-			name = SOV_siberia_border_conflict
-			bonus = 1
-			uses = 1
-			category = land_doctrine
-		}
-		USA = {
-			add_ai_strategy = {
-				type = prepare_for_war
-				id = SOV
-				value = -100
-			}
-		}
-	}
-}
-
-#SOV Wins Border War
-country_event = {
-	id = americas.20
-	title = americas.20.t
-	desc = americas.20.d
-	picture = GFX_broken_tank_russia2
-
-	is_triggered_only = yes
-
-	option = { #Good
-		ai_chance = {
-			factor = 100
-		}
-		name = americas.20.a
-		add_stability = -0.1
-		add_war_support = -0.1
-		USA = {
-			add_ai_strategy = {
-				type = prepare_for_war
-				id = SOV
-				value = -100
-			}
-		}
-	}
-}
-
-#USA Wins Border War
-country_event = {
-	id = americas.21
-	title = americas.21.t
-	desc = americas.21.d
-	picture = GFX_report_event_generic_train
-
-	is_triggered_only = yes
-
-	option = { #Good
-		ai_chance = {
-			factor = 100
-		}
-		name = americas.21.a
-		add_stability = 0.1
-		add_war_support = 0.15
-		add_tech_bonus = {
-			name = SOV_siberia_border_conflict
-			bonus = 1
-			uses = 1
-			category = land_doctrine
-		}
-		USA = {
-			add_ai_strategy = {
-				type = prepare_for_war
-				id = SOV
-				value = -100
-			}
-		}
-	}
-}
-
-#USA lose Border War
-country_event = {
-	id = americas.22
-	title = americas.22.t
-	desc = americas.22.d
-	picture = GFX_report_event_generic_usa_treaty
-
-	is_triggered_only = yes
-
-	option = { #Good
-		ai_chance = {
-			factor = 100
-		}
-		name = americas.22.a
-		add_stability = -0.1
-		add_war_support = -0.1
-		USA = {
-			add_ai_strategy = {
-				type = antagonize
-				id = SOV
-				value = 100
-			}
-			add_ai_strategy = {
-				type = contain
-				id = SOV
-				value = 100
-			}
-			add_ai_strategy = {
-				type = prepare_for_war
-				id = SOV
-				value = -100
-			}
-		}
-	}
-}
-
-#Russia Mobilize Troops in our Siberian Border
-country_event = {
-	id = americas.23
-	title = americas.23.t
-	desc = americas.23.d
-	picture = GFX_report_event_soldiers_marching
-
-	is_triggered_only = yes
-
-	option = { #that's worying
-		ai_chance = {
-			factor = 100
-		}
-		name = americas.23.a
-		custom_effect_tooltip = better_send_troops_siberia
-		USA = {
-			add_ai_strategy = {
-				type = prepare_for_war
-				id = SOV
-				value = 100
-			}
 		}
 	}
 }

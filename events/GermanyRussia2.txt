@@ -4,19 +4,6 @@
 
 add_namespace = germanys
 
-# Check if File is Loaded
-country_event = {
-	id = germanys.2092066524
-
-	hidden = yes
-
-	is_triggered_only = yes
-
-	immediate = {
-		set_global_flag = russia_reworked_events_loaded_germanys
-	}
-}
-
 # Exile to Siberia
 country_event = {
 	id = germanys.1
@@ -379,7 +366,7 @@ country_event = {
 		ai_chance = {
 			factor = 40
 			modifier = {
-				add = 20
+				factor = 60
 				surrender_progress > 0.10
 			}
 		}
@@ -405,7 +392,7 @@ country_event = {
 		ai_chance = {
 			factor = 60
 			modifier = {
-				add = -20
+				factor = 40
 				surrender_progress > 0.10
 			}
 		}
@@ -555,7 +542,7 @@ country_event = {
 		ai_chance = {
 			factor = 10
 			modifier = {
-				add = 30
+				factor = 40
 				surrender_progress > 0.75
 			}
 		}
@@ -570,7 +557,7 @@ country_event = {
 		ai_chance = {
 			factor = 90
 			modifier = {
-				add = -30
+				factor = 60
 				surrender_progress > 0.25
 			}
 		}
@@ -707,7 +694,6 @@ country_event = {
 		has_government = neutrality
 		has_completed_focus = SOV_german_russian_pact
 		SOV = {
-			has_country_flag = germany_accpet_german_russo_pact
 			any_owned_state = {
 				has_state_flag = german_slavic_state
 			}
@@ -755,7 +741,7 @@ country_event = {
 		ai_chance = {
 			factor = 15
 			modifier = {
-				add = 45
+				factor = 60
 				surrender_progress > 0.40
 			}
 		}
@@ -769,7 +755,7 @@ country_event = {
 		ai_chance = {
 			factor = 85
 			modifier = {
-				add = -45
+				factor = 40
 				surrender_progress > 0.40
 			}
 		}
@@ -824,390 +810,6 @@ country_event = {
 				target = GER
 				type = puppet_wargoal_focus
 			}
-		}
-	}
-}
-
-#Russia Propose Negotiation - Ressources and/or Oil
-country_event = {
-	id = germanys.24
-	title = germanys.24.t
-	desc = germanys.24.d
-	picture = GFX_report_event_finnish_letter
-
-	is_triggered_only = yes
-
-	fire_only_once = yes
-
-
-	option = { #Accept Offer
-		name = germanys.24.a
-		ai_chance = {
-			factor = 80
-		}
-		SOV = {
-			country_event = { id = germanys.25 hours = 6 }
-		}
-		custom_effect_tooltip = we_will_receive_ressource_from_russia_germany_tt
-		custom_effect_tooltip = if_we_accept_and_send_volunteers_gain_good_tt
-		custom_effect_tooltip = upon_start_civil_war_idea_tt
-		show_ideas_tooltip = SOV_Participation_russian_civil_war_foreign
-	}
-
-	option = { #Refuse Offer
-		name = germanys.24.b
-		ai_chance = {
-			factor = 20
-		}
-		SOV = {
-			country_event = { id = germanys.26 hours = 6 }
-		}
-	}
-}
-
-#Germany Accept Negotiation
-country_event = {
-	id = germanys.25
-	title = germanys.25.t
-	desc = germanys.25.d
-	picture = GFX_handshake_russia2
-
-	is_triggered_only = yes
-
-	fire_only_once = yes
-
-
-	option = { #Good
-		name = germanys.25.a
-		ai_chance = {
-			factor = 100
-		}
-		set_country_flag = can_purchase_panzer
-		set_country_flag = has_negotiated_with_germany_ressource_rights
-		custom_effect_tooltip = decision_purchase_panzer_become_available
-		custom_effect_tooltip = gains_token_to_buy_weapons
-		add_to_variable = {
-			var = token_buy_weapons
-			value = 1
-		}
-		GER = {
-			set_country_flag = help_whiteguard_during_russian_civil_war
-		}
-	}
-}
-
-#Germany Still Refuse Negotiation
-country_event = {
-	id = germanys.26
-	title = germanys.26.t
-	desc = germanys.26.d
-	picture = GFX_report_event_fascist_gathering
-
-	is_triggered_only = yes
-
-	fire_only_once = yes
-
-
-	option = { #Good
-		name = germanys.26.a
-		ai_chance = {
-			factor = 100
-		}
-	}
-}
-
-#Russia Wants to cancel our rights to their ressources
-country_event = {
-	id = germanys.27
-	title = germanys.27.t
-	desc = germanys.27.d
-	picture = GFX_ship_dockyard_russia2
-
-	is_triggered_only = yes
-
-	fire_only_once = yes
-
-
-	option = { #We will accept their payment
-		name = germanys.27.a
-		ai_chance = {
-			factor = 40
-			modifier = {
-				add = 30
-				SOV = {
-					OR = {
-						has_completed_focus = SOV_german_russian_pact
-						GER = {
-							has_government = ROOT
-						}
-						NOT = {
-							has_country_flag = SOV_fascist_focus_on_europe
-						}
-					}
-				}
-			}
-		}
-		SOV = {
-			country_event = { id = germanys.28 hours = 6 }
-		}
-		remove_ideas = SOV_Payment_russian_ressource_ger
-		add_timed_idea = {
-			idea = SOV_Definitive_payment_russian_ressource_ger
-			days = 210
-		}
-	}
-
-	option = { #We will Refuse their payment
-		name = germanys.27.b
-		ai_chance = {
-			factor = 60
-			modifier = {
-				add = -30
-				SOV = {
-					NOT = {
-						has_country_flag = SOV_fascist_focus_on_europe
-					}
-					OR = {
-						has_completed_focus = SOV_german_russian_pact
-						GER = {
-							has_government = ROOT
-						}
-					}
-				}
-			}
-		}
-		SOV = {
-			country_event = { id = germanys.29 hours = 6 }
-		}
-	}
-}
-
-#Germany Accept the New Deal
-country_event = {
-	id = germanys.28
-	title = germanys.28.t
-	desc = germanys.28.d
-	picture = GFX_soldiers_handshaking_kolchak_russia2
-
-	is_triggered_only = yes
-
-	fire_only_once = yes
-
-
-	option = { #Good
-		name = germanys.28.a
-		ai_chance = {
-			factor = 100
-		}
-		add_timed_idea = {
-			idea = SOV_Definitive_payment_russian_ressource_rus
-			days = 180
-		}
-		clr_country_flag = has_negotiated_with_germany_ressource_rights
-		clr_country_flag = receive_payment_from_ger
-		remove_ideas = SOV_Payment_russian_ressource_rus
-		GER = {
-			clr_country_flag = is_paying_ressource_for_russia
-			remove_resource_rights = 582
-			remove_resource_rights = 573
-			remove_resource_rights = 581
-			remove_resource_rights = 564
-			remove_resource_rights = 232
-			remove_resource_rights = 234
-		}
-	}
-}
-
-#Germany Refuse the New Deal
-country_event = {
-	id = germanys.29
-	title = germanys.29.t
-	desc = germanys.29.d
-	picture = GFX_report_event_fascist_gathering
-
-	is_triggered_only = yes
-
-	fire_only_once = yes
-
-
-	option = { #damn Rats
-		name = germanys.29.a
-		ai_chance = {
-			factor = 100
-		}
-	}
-}
-
-#Russia Cancel our Rights to their Ressources
-country_event = {
-	id = germanys.30
-	title = germanys.30.t
-	desc = germanys.30.d
-	picture = GFX_menacing_tanks_russia2
-
-	is_triggered_only = yes
-
-	fire_only_once = yes
-
-
-	option = { #Nothing we can do
-		name = germanys.30.a
-		ai_chance = {
-			factor = 30
-			modifier = {
-				add = 65
-				any_country = {
-					is_major = yes
-					has_war_with = GER
-				}
-			}
-		}
-		GER = {
-			add_ai_strategy = {
-				type = alliance
-				id = SOV
-				value = -100
-			}
-			add_ai_strategy = {
-				type = antagonize
-				id = SOV
-				value = 20
-			}
-			add_opinion_modifier = {
-				target = SOV
-				modifier = double_cross_ressource_rights
-			}
-		}
-		SOV = {
-			country_event = { id = germanys.31 hours = 6 }
-		}
-	}
-
-	option = { #We will destroy them !
-		name = germanys.30.b
-		ai_chance = {
-			factor = 70
-			modifier = {
-				add = -65
-				any_country = {
-					is_major = yes
-					has_war_with = GER
-				}
-			}
-		}
-		GER = {
-			add_ai_strategy = {
-				type = alliance
-				id = SOV
-				value = -100
-			}
-			add_ai_strategy = {
-				type = antagonize
-				id = SOV
-				value = 50
-			}
-			create_wargoal = {
-				target = SOV
-				type = annex_everything
-			}
-		}
-		SOV = {
-			country_event = { id = germanys.32 hours = 6 }
-		}
-	}
-}
-
-#Germany Let it slide
-country_event = {
-	id = germanys.31
-	title = germanys.31.t
-	desc = germanys.31.d
-	picture = GFX_operation_barbarossa
-
-	is_triggered_only = yes
-
-	fire_only_once = yes
-
-
-	option = { #Good
-		name = germanys.31.a
-		ai_chance = {
-			factor = 100
-		}
-	}
-}
-
-#Germany is preparing for war
-country_event = {
-	id = germanys.32
-	title = germanys.32.t
-	desc = germanys.32.d
-	picture = GFX_artillery_with_building_russia2
-
-	is_triggered_only = yes
-
-	fire_only_once = yes
-
-
-	option = { #oops
-		name = germanys.32.a
-		ai_chance = {
-			factor = 100
-		}
-	}
-}
-
-#Ressources rights from Russia
-country_event = {
-	id = germanys.33
-	title = germanys.33.t
-	desc = germanys.33.d
-	picture = GFX_report_event_generic_bombers
-
-	is_triggered_only = yes
-
-	fire_only_once = yes
-
-
-	option = { #Good
-		name = germanys.33.a
-		ai_chance = {
-			factor = 100
-		}
-		show_ideas_tooltip = SOV_Payment_russian_ressource_ger
-		custom_effect_tooltip = gain_ressources_from_russia_thanks_cw
-	}
-}
-
-#3rd Prussian state
-country_event = {
-	id = germanys.34
-
-	is_triggered_only = yes
-
-	hidden = yes
-
-	immediate = {
-		random_state = {
-			limit = {
-				NOT = {
-					state = 762
-				}
-				is_core_of = GER
-				is_owned_and_controlled_by = GER
-				any_neighbor_state = {
-					OR = {
-						is_owned_and_controlled_by = SOV
-						is_owned_and_controlled_by = POL
-					}
-					NOT = {
-						has_state_flag = random_prussian_state_1
-						has_state_flag = random_prussian_state_2
-						has_state_flag = random_prussian_state_3
-					}
-				}
-			}
-			set_state_flag = random_prussian_state_3
 		}
 	}
 }

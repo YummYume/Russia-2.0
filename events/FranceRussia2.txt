@@ -4,19 +4,6 @@
 
 add_namespace = frances
 
-# Check if File is Loaded
-country_event = {
-	id = frances.2092066524
-
-	hidden = yes
-
-	is_triggered_only = yes
-
-	immediate = {
-		set_global_flag = russia_reworked_events_loaded_frances
-	}
-}
-
 # Invite France
 country_event = {
 	id = frances.1
@@ -31,7 +18,7 @@ country_event = {
 			factor = 60
 			modifier = {
 				has_government = communism
-				add = 40
+				factor = 100
 			}
 		}
 		name = frances.1.a
@@ -89,7 +76,7 @@ country_event = {
 			factor = 75
 			modifier = {
 				has_war = yes
-				add = 25
+				factor = 100
 			}
 		}
 		name = frances.3.a
@@ -239,7 +226,7 @@ country_event = {
 		ai_chance = {
 			factor = 75
 			modifier = {
-				add = -45
+				factor = 30
 				has_idea = SOV_Allies_menace
 			}
 		}
@@ -267,7 +254,7 @@ country_event = {
 		ai_chance = {
 			factor = 25
 			modifier = {
-				add = 45
+				factor = 70
 				has_idea = SOV_Allies_menace
 			}
 		}
@@ -350,7 +337,7 @@ country_event = {
 		ai_chance = {
 			factor = 25
 			modifier = {
-				add = 65
+				factor = 90
 				has_idea = SOV_Allies_menace
 			}
 		}
@@ -364,7 +351,7 @@ country_event = {
 		ai_chance = {
 			factor = 75
 			modifier = {
-				add = -65
+				factor = 10
 				has_idea = SOV_Allies_menace
 			}
 		}
@@ -388,7 +375,7 @@ country_event = {
 		ai_chance = {
 			factor = 15
 			modifier = {
-				add = 55
+				factor = 70
 				OR = {
 					SOV = {
 						num_of_factories > 250
@@ -415,7 +402,7 @@ country_event = {
 		ai_chance = {
 			factor = 85
 			modifier = {
-				add = -60
+				factor = 25
 				OR = {
 					SOV = {
 						num_of_factories > 250
@@ -480,252 +467,6 @@ country_event = {
 			create_wargoal = {
 				target = FRA
 				type = puppet_wargoal_focus
-			}
-		}
-	}
-}
-
-#Receive Russian Factories
-country_event = {
-	id = frances.14
-	title = frances.14.t
-	desc = frances.14.d
-	picture = GFX_report_event_generic_truck
-
-	is_triggered_only = yes
-
-	option = {#Sweet Factories
-		ai_chance = {
-			factor = 100
-		}
-		name = frances.14.a
-		custom_effect_tooltip = gain_five_mil_factories
-		hidden_effect = {
-			random_owned_state = {
-				limit = {
-					is_core_of = ROOT
-				}
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
-				}
-			}
-			random_owned_state = {
-				limit = {
-					is_core_of = ROOT
-				}
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
-				}
-			}
-			random_owned_state = {
-				limit = {
-					is_core_of = ROOT
-				}
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
-				}
-			}
-			random_owned_state = {
-				limit = {
-					is_core_of = ROOT
-				}
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = industrial_complex
-					level = 1
-					instant_build = yes
-				}
-			}
-			random_owned_state = {
-				limit = {
-					is_core_of = ROOT
-				}
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = industrial_complex
-					level = 1
-					instant_build = yes
-				}
-			}
-		}
-	}
-}
-
-#White Guard Accept offer
-country_event = {
-	id = frances.15
-	title = frances.15.t
-	desc = frances.15.d
-	picture = GFX_report_event_canada_treaty
-
-	is_triggered_only = yes
-
-	option = {#Good
-		ai_chance = {
-			factor = 100
-		}
-		name = frances.15.a
-		custom_effect_tooltip = if_we_accept_and_send_volunteers_gain_good_tt
-		custom_effect_tooltip = upon_start_civil_war_idea_tt
-		show_ideas_tooltip = SOV_Participation_russian_civil_war_foreign
-	}
-}
-
-#Monarchist Sentiments are rising
-country_event = {
-	id = frances.16
-	title = frances.16.t
-	desc = frances.16.d
-	picture = GFX_report_event_canada_treaty
-
-	is_triggered_only = yes
-
-	option = {#Damn
-		ai_chance = {
-			factor = 100
-		}
-		name = frances.16.a
-		add_popularity = {
-			ideology = neutrality
-			popularity = 0.1
-		}
-		add_ideas = SOV_french_monarchist_sentiment_idea
-	}
-}
-
-#Civil war French Monarchist
-country_event = {
-	id = frances.17
-
-	is_triggered_only = yes
-
-	hidden = yes
-
-	immediate = {
-		every_country = {
-			limit = {
-				original_tag = FRA
-				has_government = neutrality
-			}
-			every_unit_leader = {
-				set_nationality = SOV
-				set_unit_leader_flag = former_french_monarchist_fighter
-			}
-			SOV = {
-				annex_country = {
-					target = PREV
-				}
-			}
-		}
-		SOV = {
-			release = FRA
-		}
-		every_unit_leader = {
-			limit = {
-				has_unit_leader_flag = {
-					flag = former_french_monarchist_fighter
-				}
-			}
-			set_nationality = FRA
-		}
-		every_state = {
-			limit = {
-				has_state_flag = french_state_before_monarchist_war
-				NOT = {
-					is_owned_by = FRA
-				}
-			}
-			FRA = {
-				transfer_state = PREV
-			}
-		}
-		FRA = {
-			load_oob = "FRA_1939"
-			set_politics = {
-				ruling_party = neutrality
-			}
-			set_popularities = {
-				democratic = 30
-				neutrality = 50
-				fascism = 10
-				communism = 10
-			}
-			set_party_name = {
-				ideology = neutrality
-				long_name = FRA_orleanist_party_long
-				name = FRA_orleanist_party
-			}
-			set_cosmetic_tag = FRA_ORLEANS
-			if = {
-				limit = {
-					date < 1940.8.25
-				}
-				create_country_leader = {
-					name = "Jean III"
-					desc = "POLITICS_ÉDOUARD_DALADIER_DESC"
-					picture = GFX_portrait_fra_jean_duke_of_guise
-					expire = "1965.1.1"
-					ideology = moderatism
-					traits = {
-						duke_of_orleans
-					}
-				}
-			}
-			else = {
-				create_country_leader = {
-					name = "Henri VI"
-					desc = "POLITICS_ÉDOUARD_DALADIER_DESC"
-					picture = GFX_portrait_fra_henry_count_of_paris
-					expire = "1965.1.1"
-					ideology = moderatism
-					traits = {
-						count_of_paris
-					}
-				}
-			}
-		}
-		if = {
-			limit = {
-				check_variable = {
-					var = french_monarchist_leader_influence_var
-					value = 100
-					compare = greater_than_or_equals
-				}
-			}
-			SOV = {
-				set_autonomy = {
-					target = FRA
-					autonomy_state = autonomy_imperial_governorates
-				}
-			}
-			FRA = {
-				set_popularities = {
-					democratic = 10
-					neutrality = 70
-					fascism = 10
-					communism = 10
-				}
-			}
-		}
-		else = {
-			SOV = {
-				add_to_faction = FRA
-			}
-			FRA = {
-				add_ai_strategy = {
-					type = alliance
-					id = SOV
-					value = 100
-				}
 			}
 		}
 	}

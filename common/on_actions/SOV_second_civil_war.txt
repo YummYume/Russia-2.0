@@ -10,7 +10,7 @@ on_actions = {
 					}
 					FROM = {
 						tag = SOV
-						has_global_flag = second_russian_civil_war_in_progress
+						has_country_flag = second_civil_war_in_progress
 					}
 				}
 				ROOT = {
@@ -49,29 +49,6 @@ on_actions = {
 					country_event = { id = soviets.190 hours = 6 }
 					news_event = { id = newsrussia2.67 days = 1 }
 				}
-				if = {
-					limit = {
-						FROM = {
-							OR = {
-								has_country_flag = japan_accept_to_help_give_russian_far_east
-								has_country_flag = has_negotiated_with_germany_ressource_rights
-								has_country_flag = accept_american_occupation_siberia_after_cw 
-								has_country_flag = accept_french_factories_after_cw 
-								has_country_flag = accept_diplomatic_relation_with_italy 
-								has_country_flag = accept_english_help_for_shipment 
-							}
-						}
-					}
-					FROM = {
-						country_event = { id = generics.34 days = 7 }
-					}
-				}
-				every_country = {
-					limit = {
-						has_country_flag = has_helped_whiteguard_by_volunteers
-					}
-					country_event = { id = generics.35 days = 1 }
-				}
 			}
 		}
 	}
@@ -83,7 +60,7 @@ on_actions = {
 				limit = {
 					ROOT = {
 						tag = SOV
-						has_global_flag = second_russian_civil_war_in_progress
+						has_country_flag = second_civil_war_in_progress
 					}
 					FROM = {
 						tag = SOU
@@ -127,44 +104,323 @@ on_actions = {
 		}
 	}
 
-	#Set a country flag for major that send volunteers to WG durinf CW
-	on_send_volunteers = {
+	#Countries with the Russian agreement will not mess with Russian affairs
+	on_declare_war = {
 		effect = {
 			if = {
 				limit = {
-					ROOT = {
-						has_country_flag = help_whiteguard_during_russian_civil_war
-						has_idea = SOV_Participation_russian_civil_war_foreign
-					}
-					FROM = {
-						TAG = SOV
-						has_global_flag = second_russian_civil_war_in_progress
+					tag = SOV
+					any_country = {
+						has_idea = SOV_Root_russian_pact
 					}
 				}
-				ROOT = {
-					set_country_flag = has_helped_whiteguard_by_volunteers
-				}	
+				hidden_effect = {
+					FROM = {
+						set_country_flag = is_target_of_russia_with_agreement
+					}
+					every_country = {
+						limit = {
+							has_idea = SOV_Root_russian_pact
+						}
+
+						add_ai_strategy = {
+							type = support
+							id = FROM
+							value = -1000
+						}
+
+						add_ai_strategy = {
+							type = alliance
+							id = FROM
+							value = -1000
+						}
+
+						add_ai_strategy = {
+							type = send_volunteers_desire
+							id = FROM
+							value = -1000
+						}
+					}
+				}
 			}
 		}
 	}
 
-	#Crimea loses all their ships on capitulation
+	#Undo the hostile behaviors towards Russian enemy
 	on_capitulation = {
 		effect = {
 			if = {
 				limit = {
+					FROM = {
+						has_country_flag = is_target_of_russia_with_agreement
+					}
+				}
+				hidden_effect = {
+					FROM = {
+						clr_country_flag = is_target_of_russia_with_agreement
+					}
+					every_country = {
+						limit = {
+							has_idea = SOV_Root_russian_pact
+						}
+
+						add_ai_strategy = {
+							type = support
+							id = FROM
+							value = 1000
+						}
+
+						add_ai_strategy = {
+							type = alliance
+							id = FROM
+							value = 1000
+						}
+
+						add_ai_strategy = {
+							type = send_volunteers_desire
+							id = FROM
+							value = 1000
+						}
+					}
+				}
+			}
+		}
+	}
+
+	on_startup = {
+		effect = {
+			SOV = {
+				if = {
+					limit = {
+						has_game_rule = {
+							rule = SOV_ai_behavior
+							option = RANDOM
+						}
+					}
+					#Undo the Paradox nonsense country flags
+					if = {
+						limit = {
+							has_country_flag = SOV_AI_RANDOM_COMMUNIST_HISTORICAL
+						}
+						clr_country_flag = SOV_AI_RANDOM_COMMUNIST_HISTORICAL
+					}
+					if = {
+						limit = {
+							has_country_flag = SOV_AI_RANDOM_COMMUNIST_ALTERNATE
+						}
+						clr_country_flag = SOV_AI_RANDOM_COMMUNIST_ALTERNATE
+					}
+					set_temp_variable = { random_sov_ai_factor = 0 }
+					randomize_temp_variable = {
+						var = random_sov_ai_factor
+						distribution = uniform
+						min = 1
+						max = 4
+					}
+					round_temp_variable = random_sov_ai_factor
+					#Communist
+					if = {
+						limit = {
+							check_variable = {
+								var = random_sov_ai_factor
+								value = 1
+								compare = equals
+							}
+						}
+						set_country_flag = SOV_AI_RANDOM_COMMUNIST_BEHAVIOR
+					}
+					#Democratic
+					else_if = {
+						limit = {
+							check_variable = {
+								var = random_sov_ai_factor
+								value = 2
+								compare = equals
+							}
+						}
+						set_country_flag = SOV_AI_RANDOM_DEMOCRATIC_BEHAVIOR
+					}
+					#Neutrality
+					else_if = {
+						limit = {
+							check_variable = {
+								var = random_sov_ai_factor
+								value = 3
+								compare = equals
+							}
+						}
+						set_country_flag = SOV_AI_RANDOM_NEUTRAL_BEHAVIOR
+					}
+					#Fascist
+					else_if = {
+						limit = {
+							check_variable = {
+								var = random_sov_ai_factor
+								value = 4
+								compare = equals
+							}
+						}
+						set_country_flag = SOV_AI_RANDOM_FASCIST_BEHAVIOR
+					}
+				}
+			}
+		}
+	}
+
+	#Revert capital to St Petersburg in case
+	on_state_control_changed = {
+		effect = {
+			if = {
+				limit = {
+					FROM.FROM = {
+						state = 195
+					}
 					ROOT = {
-						tag = CRI
-						has_idea = CRI_Master_black_sea
+						TAG = SOV
+						has_country_flag = has_choosen_st_petersburg_as_capital
+					}
+					195 = {
+						is_capital = no
 					}
 				}
 				ROOT = {
-					transfer_navy = {
-						target = FROM
+					set_capital = 195
+				}
+			}
+		}
+	}
+	
+	#Rename Stalingrad to Volgograd if SOV is not the owner
+	on_state_control_changed = {
+		effect = {
+			if = {
+				limit = {
+					FROM.FROM = {
+						state = 217
+					}
+					FROM = {
+						TAG = SOV
+					}
+					217 = {
+						NOT = {
+							is_owned_and_controlled_by = SOV
+						}
+						is_controlled_by = ROOT
+					}
+					ROOT = {
+						NOT = {
+							original_tag = SOV
+							has_government = communism
+						}
+					}
+					NOT = {
+						has_global_flag = renamed_stalingrad_sov
 					}
 				}
-				FROM = {
-					country_event = generics.43
+				set_global_flag = renamed_stalingrad_sov
+				set_province_name = { id = 3529 name = "Volgograd"}
+				217 = {
+					set_state_name = "Volgograd"
+				}
+			}
+			else_if = {
+				limit = {
+					FROM.FROM = {
+						state = 217
+					}
+					ROOT = {
+						TAG = SOV
+						has_government = communism
+					}
+					217 = {
+						NOT = {
+							is_controlled_by = FROM
+						}
+						is_owned_and_controlled_by = ROOT
+					}
+					has_global_flag = renamed_stalingrad_sov
+				}
+				clr_global_flag = renamed_stalingrad_sov
+				if = {
+					limit = {
+						has_country_leader = {
+							name = "Leon Trotsky"
+							ruling_only = yes
+						}
+					}
+					set_province_name = { id = 3529 name = "Trotskygrad"}
+					217 = {
+						set_state_name = "Trotskygrad"
+					}
+				}
+				else = {
+					set_province_name = { id = 3529 name = "Stalingrad"}
+					217 = {
+						set_state_name = "Stalingrad"
+					}
+				}
+			}
+		}
+	}
+
+	#Rename Leningrad to St Petersburg if SOV is not the owner
+	on_state_control_changed = {
+		effect = {
+			if = {
+				limit = {
+					FROM.FROM = {
+						state = 195
+					}
+					FROM = {
+						TAG = SOV
+					}
+					195 = {
+						NOT = {
+							is_owned_and_controlled_by = SOV
+						}
+						is_controlled_by = ROOT
+					}
+					ROOT = {
+						NOT = {
+							original_tag = SOV
+							has_government = communism
+						}
+					}
+					NOT = {
+						has_global_flag = renamed_leningrad_sov
+					}
+				}
+				set_global_flag = renamed_leningrad_sov
+				set_province_name = { id = 3151 name = "Saint Petersburg"}
+				hidden_effect = {
+					195 = {
+						set_state_name = "Saint Petersburg"
+					}
+				}	
+			}
+			else_if = {
+				limit = {
+					FROM.FROM = {
+						state = 195
+					}
+					ROOT = {
+						TAG = SOV
+						has_government = communism
+					}
+					195 = {
+						NOT = {
+							is_controlled_by = FROM
+						}
+						is_owned_and_controlled_by = ROOT
+					}
+					has_global_flag = renamed_leningrad_sov
+				}
+				clr_global_flag = renamed_leningrad_sov
+				set_province_name = { id = 3151 name = "Leningrad"}
+				hidden_effect = {
+					195 = {
+						set_state_name = "Leningrad"
+					}
 				}
 			}
 		}

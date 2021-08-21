@@ -374,13 +374,13 @@ ignore_turkey = {
 	ai_strategy = {
 		type = ignore
 		id = "TUR"
-		value = 1000
+		value = 350
 	}
 
 	ai_strategy = {
 		type = ignore_claim 
 		id = "TUR"
-		value = 1000
+		value = 2000
 	}
 
 	ai_strategy = {
@@ -473,7 +473,7 @@ ignore_afghanistan = {
     ai_strategy = {
         type = ignore
         id = "AFG"
-        value = 1000
+        value = 350
     }
 
     ai_strategy = {
@@ -566,7 +566,7 @@ ignore_persia = {
     ai_strategy = {
         type = ignore
         id = "PER"
-        value = 1000
+        value = 350
     }
 
     ai_strategy = {
@@ -659,7 +659,7 @@ ignore_iraq = {
 	ai_strategy = {
 		type = ignore
 		id = "IRQ"
-		value = 1000
+		value = 350
 	}
 
 	ai_strategy = {
@@ -777,7 +777,7 @@ ignore_poland = {
 	ai_strategy = {
 		type = ignore_claim 
 		id = "POL"
-		value = 100
+		value = 2000
 	}
 
 	ai_strategy = {
@@ -911,7 +911,7 @@ ignore_lithuania = {
 	ai_strategy = {
 		type = ignore_claim 
 		id = "LIT"
-		value = 1
+		value = 2000
 	}	
 }
 
@@ -1004,7 +1004,7 @@ ignore_latvia = {
 	ai_strategy = {
 		type = ignore_claim 
 		id = "LAT"
-		value = 1
+		value = 2000
 	}	
 }
 
@@ -1097,7 +1097,7 @@ ignore_estonia = {
 	ai_strategy = {
 		type = ignore_claim 
 		id = "EST"
-		value = 1
+		value = 2000
 	}	
 }
 
@@ -1215,7 +1215,7 @@ ignore_finland = {
 	ai_strategy = {
 		type = ignore_claim 
 		id = "FIN"
-		value = 1
+		value = 2000
 	}	
 }
 
@@ -1327,7 +1327,7 @@ ignore_romania = {
 	ai_strategy = {
 		type = ignore_claim 
 		id = "ROM"
-		value = 1
+		value = 2000
 	}	
 }
 
@@ -2408,32 +2408,32 @@ ignore_claims_we_have_ultimatums = {
 	ai_strategy = {
 		type = ignore_claim 
 		id = "FIN"
-		value = 1
+		value = 2000
 	}
 	ai_strategy = {
 		type = ignore_claim 
 		id = "ROM"
-		value = 1
+		value = 2000
 	}
 	ai_strategy = {
 		type = ignore_claim 
 		id = "LAT"
-		value = 1
+		value = 2000
 	}
 	ai_strategy = {
 		type = ignore_claim 
 		id = "EST"
-		value = 1
+		value = 2000
 	}
 	ai_strategy = {
 		type = ignore_claim 
 		id = "LIT"
-		value = 1
+		value = 2000
 	}
 	ai_strategy = {
 		type = ignore_claim 
 		id = "POL"
-		value = 1
+		value = 2000
 	}
 }
 
@@ -3441,12 +3441,6 @@ SOV_dont_contain_root_russian_agreement = {
 		id = "SOV"
 		value = -20
 	}
-
-	ai_strategy = {
-		type = dont_join_wars_with
-		id = "SOV"
-		value = -150
-	}
 }
 
 #SOV Will not help any country who's at war with people who signed the agreement
@@ -3604,6 +3598,38 @@ destroy_SOU_do_not_wait = {
 		type = support	
 		id = "BLR"
 		value = -100
+	}
+}
+
+help_SOV_against_SOU = {
+	enable = {
+		is_in_faction_with = SOV
+		NOT = {
+			tag = SOV
+		}
+		SOV = {
+			has_war_with = SOU
+		}
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = dont_defend_ally_borders	
+		id = "SOV"
+		value = -1000
+	}
+
+	ai_strategy = {
+		type = protect	
+		id = "SOV"
+		value = 1000
+	}
+
+	ai_strategy = {
+		type = support	
+		id = "SOV"
+		value = 1000
 	}
 }
 
@@ -3781,7 +3807,7 @@ SOV_send_volunteers_second_civil_war_white_guard = {
 			original_tag = SOV
 		}
 		SOV = {
-			has_global_flag = second_russian_civil_war_in_progress
+			has_country_flag = second_civil_war_in_progress
 		}
 		country_exists = SOU
 		date > 1938.06.01
@@ -3804,7 +3830,7 @@ SOV_send_volunteers_second_civil_war_soviet_union = {
 			original_tag = SOV
 		}
 		SOV = {
-			has_global_flag = second_russian_civil_war_in_progress
+			has_country_flag = second_civil_war_in_progress
 		}
 		country_exists = SOU
 		date > 1938.06.01
@@ -3915,28 +3941,5 @@ SOV_invite_minor_communist_boost_opinion = {
 		type = befriend
 		id = "SOV"
 		value = 100
-	}
-}
-
-#Send volunteers to White Guard if they accept to help them
-SOV_send_volunteers_second_civil_war_white_guard_accept_help_foreign = {
-	enable = {
-		has_country_flag = help_whiteguard_during_russian_civil_war
-		NOT = {
-			has_government = communism
-			original_tag = SOV
-		}
-		SOV = {
-			has_global_flag = second_russian_civil_war_in_progress
-		}
-		country_exists = SOU
-	}
-
-	abort_when_not_enabled = yes
-
-	ai_strategy = {
-		type = send_volunteers_desire
-		id = "SOV"			
-		value = 600
 	}
 }
