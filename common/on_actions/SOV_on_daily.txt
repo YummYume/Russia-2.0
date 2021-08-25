@@ -905,4 +905,43 @@ on_actions = {
 			}
 		}
 	}
+
+	on_daily = { #Dynamic modifier that will remove anarchist support from country who doesn't need it
+		effect = {
+			if = {
+				limit = {
+					FROM = {
+						anarchy > 0.01
+						NOT = {
+							has_government = anarchy
+						}
+					}
+				}
+				FROM = {
+					add_dynamic_modifier = { modifier = anti_anarchist_modifiers }
+				}
+			}
+		}
+	}
+
+	on_daily = { #Remove Dynamic modifier that remove anarchist support
+		effect = {
+			if = {
+				limit = {
+					FROM = {
+						has_dynamic_modifier = {
+							modifier = anti_anarchist_modifiers
+						}
+						OR = {
+							anarchy < 0.01
+							has_government = anarchy
+						}
+					}
+				}
+				FROM = {
+					remove_dynamic_modifier = { modifier = anti_anarchist_modifiers }
+				}
+			}
+		}
+	}	
 }

@@ -2010,7 +2010,6 @@ country_event = {
 		custom_effect_tooltip = SOV_find_stalin_tt
 		hidden_effect = {
 			random_list = {
-				seed = random
 				75 = {
 					country_event = { id = soviets.58 days = 20 }
 				}
@@ -2350,7 +2349,6 @@ country_event = {
 			}
 
 			random_list = {
-				seed = random
 			    ukrainian_revolt_factor = {
 			        country_event = { id = soviets.81 days = 50 }
 			    }
@@ -17710,7 +17708,6 @@ country_event = {
 		}
 		hidden_effect = {
 			random_list = {
-				seed = random
 				40 = {
 					set_country_flag = worker_catastrophe_1
 					country_event = { id = soviets.440  days = 15 }
@@ -17785,7 +17782,6 @@ country_event = {
 					has_country_flag = has_forced_work_not_failed_1
 				}
 				random_list = {
-					seed = random
 					90 = {
 						country_event = { id = soviets.440  days = 10 }
 					}
@@ -17796,7 +17792,6 @@ country_event = {
 			}
 			else = {
 				random_list = {
-					seed = random
 					40 = {
 						country_event = { id = soviets.440  days = 10 }
 					}
@@ -18825,7 +18820,6 @@ country_event = {
 		custom_effect_tooltip = will_take_years_to_reform_black_guard
 		hidden_effect = {
 			random_list = {
-				seed = random
 				30 = {
 					country_event = { id = soviets.447 days = 365 }
 				}
@@ -20638,6 +20632,26 @@ country_event = {
 
 	option = { #The Allies
 		name = soviets.486.a
+		trigger = {
+			OR = {
+				FRA = {
+					has_government = democratic
+				}
+				ENG = {
+					has_government = democratic
+				}
+			}
+			NOT = {
+				AND = {
+					FRA = {
+						is_in_faction_with = SOV
+					}
+					ENG = {
+						is_in_faction_with = SOV
+					}
+				}
+			}
+		}
 		ai_chance = { 
 			factor = 33
 			modifier = {
@@ -20654,26 +20668,52 @@ country_event = {
 				}
 			}
 		}
-		ENG = {
-			add_opinion_modifier = {
-				target = SOV
-				modifier = russian_hostility
+		if = {
+			limit = {
+				NOT = {
+					ENG = {
+						is_in_faction_with = SOV
+					}
+					is_subject_of = SOV
+				}
+				ENG = {
+					has_government = democratic
+				}
 			}
-			add_ai_strategy = {
-				type = alliance
-				id = SOV
-				value = -25
+			ENG = {
+				add_opinion_modifier = {
+					target = SOV
+					modifier = russian_hostility
+				}
+				add_ai_strategy = {
+					type = alliance
+					id = SOV
+					value = -25
+				}
 			}
 		}
-		FRA = {
-			add_opinion_modifier = {
-				target = SOV
-				modifier = russian_hostility
+		if = {
+			limit = {
+				NOT = {
+					FRA = {
+						is_in_faction_with = SOV
+					}
+					is_subject_of = SOV
+				}
+				FRA = {
+					has_government = democratic
+				}
 			}
-			add_ai_strategy = {
-				type = alliance
-				id = SOV
-				value = -25
+			FRA = {
+				add_opinion_modifier = {
+					target = SOV
+					modifier = russian_hostility
+				}
+				add_ai_strategy = {
+					type = alliance
+					id = SOV
+					value = -25
+				}
 			}
 		}
 		add_ideas = SOV_Allies_menace
@@ -20681,6 +20721,26 @@ country_event = {
 
 	option = { #The Fascist
 		name = soviets.486.b
+		trigger = {
+			OR = {
+				GER = {
+					has_government = fascism
+				}
+				ITA = {
+					has_government = fascism
+				}
+			}
+			NOT = {
+				AND = {
+					GER = {
+						is_in_faction_with = SOV
+					}
+					ITA = {
+						is_in_faction_with = SOV
+					}
+				}
+			}
+		}
 		ai_chance = { 
 			factor = 33
 			modifier = {
@@ -20697,26 +20757,52 @@ country_event = {
 				}
 			}
 		}
-		GER = {
-			add_opinion_modifier = {
-				target = SOV
-				modifier = russian_hostility
+		if = {
+			limit = {
+				NOT = {
+					GER = {
+						is_in_faction_with = SOV
+					}
+					is_subject_of = SOV
+				}
+				GER = {
+					has_government = fascism
+				}
 			}
-			add_ai_strategy = {
-				type = alliance
-				id = SOV
-				value = -25
+			GER = {
+				add_opinion_modifier = {
+					target = SOV
+					modifier = russian_hostility
+				}
+				add_ai_strategy = {
+					type = alliance
+					id = SOV
+					value = -25
+				}
 			}
 		}
-		ITA = {
-			add_opinion_modifier = {
-				target = SOV
-				modifier = russian_hostility
+		if = {
+			limit = {
+				NOT = {
+					ITA = {
+						is_in_faction_with = SOV
+					}
+					is_subject_of = SOV
+				}
+				ITA = {
+					has_government = fascism
+				}
 			}
-			add_ai_strategy = {
-				type = alliance
-				id = SOV
-				value = -25
+			ITA = {
+				add_opinion_modifier = {
+					target = SOV
+					modifier = russian_hostility
+				}
+				add_ai_strategy = {
+					type = alliance
+					id = SOV
+					value = -25
+				}
 			}
 		}
 		add_ideas = SOV_Axis_menace

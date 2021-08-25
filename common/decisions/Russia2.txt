@@ -27987,7 +27987,6 @@ SOV_the_black_revolution = {
 					}
 					custom_effect_tooltip = population_support_5_tt
 					random_list = {
-						seed = random
 						15 = {
 							custom_effect_tooltip = SOV_army_vigilance_0
 						}
@@ -28022,7 +28021,6 @@ SOV_the_black_revolution = {
 					}
 					custom_effect_tooltip = population_support_4_tt
 					random_list = {
-						seed = random
 						5 = {
 							custom_effect_tooltip = SOV_army_vigilance_0
 						}
@@ -28066,7 +28064,6 @@ SOV_the_black_revolution = {
 						has_country_flag = be_careful_black_revolution
 					}
 					random_list = {
-						seed = random
 						15 = {
 							custom_effect_tooltip = SOV_army_vigilance_0
 						}
@@ -28096,7 +28093,6 @@ SOV_the_black_revolution = {
 				}
 				else = {
 					random_list = {
-						seed = random
 						5 = {
 							custom_effect_tooltip = SOV_army_vigilance_0
 						}
@@ -28140,7 +28136,6 @@ SOV_the_black_revolution = {
 						has_country_flag = be_careful_black_revolution
 					}
 					random_list = {
-						seed = random
 						15 = {
 							custom_effect_tooltip = SOV_army_vigilance_0
 						}
@@ -28170,7 +28165,6 @@ SOV_the_black_revolution = {
 				}
 				else = {
 					random_list = {
-						seed = random
 						20 = {
 							add_to_variable = {
 								var = army_vigiliance_black_revolution
@@ -28211,7 +28205,6 @@ SOV_the_black_revolution = {
 						has_country_flag = be_careful_black_revolution
 					}
 					random_list = {
-						seed = random
 						20 = {
 							custom_effect_tooltip = SOV_army_vigilance_0
 						}
@@ -28241,7 +28234,6 @@ SOV_the_black_revolution = {
 				}
 				else = {
 					random_list = {
-						seed = random
 						5 = {
 							custom_effect_tooltip = SOV_army_vigilance_0
 						}
@@ -28939,7 +28931,7 @@ SOV_the_black_revolution = {
 						desc = "POLITICS_PEOPLES_COMMUNE_DESC"
 						picture = "portrait_spr_anarchist_commune.dds"
 						expire = "1965.1.1"
-						ideology = anarchisme
+						ideology = anarchist
 						traits = {
 							
 						}
@@ -29122,7 +29114,7 @@ SOV_the_black_revolution = {
 						desc = "SUPREME_MILITARY_COUNCIL_DESC"
 						picture = "Portrait_military_council.dds"
 						expire = "1965.1.1"
-						ideology = anarchisme
+						ideology = anarchist
 						traits = {
 							
 						}
@@ -29271,7 +29263,7 @@ SOV_the_black_revolution = {
 						desc = "SUPREME_MILITARY_COUNCIL_DESC"
 						picture = "Portrait_military_council.dds"
 						expire = "1965.1.1"
-						ideology = anarchisme
+						ideology = anarchist
 						traits = {
 							
 						}
@@ -31434,7 +31426,6 @@ SOV_diplomatic_plays_decisions_democratic = {
 			custom_effect_tooltip = result_of_the_coups_belarus
 			hidden_effect = {
 				random_list = {
-					seed = random
 					40 = { #Coup was Successful
 						country_event = { id = soviets.460 days = 10 }
 						every_state = {
@@ -31729,11 +31720,10 @@ SOV_diplomatic_plays_decisions_democratic = {
 			custom_effect_tooltip = create_tension_in_central_asia_war
 			hidden_effect = {
 				random_list = {
-					seed = random
-					60 = { #Tension was successful
+					85 = { #Tension was successful
 						country_event = { id = soviets.462 days = 3 }
 					}
-					40 = { #A Failure, coalition created
+					15 = { #A Failure, coalition created
 						country_event = { id = soviets.463 days = 3 }
 					}
 				}
@@ -31769,6 +31759,8 @@ SOV_diplomatic_plays_decisions_democratic = {
 		days_remove = 14
 
 		cost = 25
+
+		fixed_random_seed = no
 
 		complete_effect = {
 			set_country_flag = is_doing_diplomatic_play
@@ -31810,8 +31802,9 @@ SOV_diplomatic_plays_decisions_democratic = {
 					array = global.sov_central_asia_country
 					limit = {
 						exists = yes
+						is_subject = no
 					}
-	
+					
 					create_faction = anti_russian_coalition
 					add_to_faction = KAZ
 					add_to_faction = KYR
@@ -31892,7 +31885,6 @@ SOV_diplomatic_plays_decisions_democratic = {
 			clr_country_flag = is_doing_diplomatic_play
 			hidden_effect = {
 				random_list = {
-					seed = random
 					65 = {
 						FROM = {
 							country_event = { id = soviets.467 days = 2 }
@@ -32603,7 +32595,10 @@ SOV_middle_east_conquest = {
 				}
 			}
 			NOT = {
-				has_country_flag = middle_east_coalition_to_protect_against_sov
+				any_country = {
+					has_country_flag = leader_faction_coalition_middle_east
+					is_in_faction_with = FROM
+				}
 			}
 		}
 
@@ -32619,15 +32614,16 @@ SOV_middle_east_conquest = {
 			}
 		}
 
-		days_remove = 30
+		days_remove = 35
 
 		cost = 50
+
+		fixed_random_seed = no
 
 		fire_only_once = yes
 
 		complete_effect = {
 			set_country_flag = is_sending_ultimatum_middle_east
-			remove_from_array = { global.sov_middle_east_democratic_country = FROM }
 			randomize_variable = {
 				var = middle_east_coalition
 				distribution = uniform
@@ -32651,32 +32647,44 @@ SOV_middle_east_conquest = {
 							compare = greater_than_or_equals
 						}
 					}
+					SOV = {
+						country_event = { id = soviets.472 days = 2 }
+					}
 					random_scope_in_array = {
+						save_event_target_as = leader_of_middle_east_coalition
 						array = global.sov_middle_east_democratic_country
 						limit = {
 							exists = yes
 							is_subject = no
+							NOT = {
+								has_capitulated = yes
+								is_in_faction = yes
+							}
 						}
-		
+			
 						set_country_flag = leader_faction_coalition_middle_east
 						create_faction = middle_east_faction_dem
-						every_country = {
-							limit = {
-								OR = {
-									TAG = TUR
-									TAG = PER
-									TAG = AFG
-									TAG = IRQ
-									TAG = SAU
-									TAG = YEM
-									TAG = OMA
-								}
+					}
+					every_country = {
+						limit = {
+							NOT = {
+								has_capitulated = yes
+								is_in_faction = yes
+								is_subject = yes
 							}
+							OR = {
+								TAG = TUR
+								TAG = PER
+								TAG = AFG
+								TAG = IRQ
+								TAG = SAU
+								TAG = YEM
+								TAG = OMA
+							}
+						}
+						event_target:leader_of_middle_east_coalition = {
 							add_to_faction = PREV
 						}
-					}
-					SOV = {
-						country_event = { id = soviets.472 days = 2 }
 					}
 				}
 				else = {
@@ -32733,7 +32741,6 @@ SOV_middle_east_conquest = {
 
 		complete_effect = {
 			set_country_flag = is_sending_ultimatum_middle_east
-			remove_from_array = { global.sov_middle_east_democratic_country = FROM }
 		}
 
 		remove_effect = {
@@ -32761,7 +32768,11 @@ SOV_middle_east_conquest = {
 
 		icon = GFX_decision_generic_ignite_civil_war
 
-		target_array = global.sov_middle_east_democratic_country
+		target_trigger = {
+			FROM = {
+				has_country_flag = leader_faction_coalition_middle_east
+			}
+		}
 
 		allowed = {
 			original_tag = SOV
@@ -32787,6 +32798,9 @@ SOV_middle_east_conquest = {
 						is_subject = yes
 					}
 				}
+			}
+			NOT = {
+				has_war_with = FROM
 			}
 			NOT = {
 				has_country_flag = is_sending_ultimatum_middle_east
