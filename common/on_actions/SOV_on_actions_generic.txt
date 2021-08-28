@@ -1514,6 +1514,37 @@ on_actions = {
 		}
 	}
 
+	#Array for Russian States
+	on_startup = {
+		effect = {
+			if = {
+				limit = {
+					date < 1936.1.2
+					NOT = {
+						has_game_rule = {
+							rule = sov_fragmentation_status
+							option = SOV_FRAGMENTED
+						}
+					}
+				}
+				for_each_scope_loop = {
+					array = SOV.owned_controlled_states
+					
+					if = {
+						limit = {
+							THIS = {
+								any_state = {
+									is_owned_and_controlled_by = SOV
+								}
+							}
+						}
+						add_to_array = { SOV.sov_russian_state_start_game = THIS }
+					}
+				}
+			}
+		}
+	}
+
 	#If Any Participant of the Yalta Conference Attack Russia and etc
 	on_war_relation_added = {
 		effect = {
