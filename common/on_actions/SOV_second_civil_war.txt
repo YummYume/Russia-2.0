@@ -1,6 +1,207 @@
 on_actions = {
 
-	#SOU Gets Annexed By SOV and Receives Events
+	#A Country Dies During the SCW
+	on_capitulation = {
+		effect = {
+			if = {
+				limit = {
+					has_global_flag = second_russian_civil_war_in_progress
+				}
+				#UKR Dies
+				if = {
+					limit = {
+						ROOT = {
+							tag = UKR
+						}
+					}
+					for_each_scope_loop = {
+						array = ukr.owned_states
+
+						if = {
+							limit = {
+								CONTROLLER = {
+									tag = SOV
+								}
+							}
+							SOV = {
+								transfer_state = PREV
+							}
+						}
+						else = {
+							SOU = {
+								transfer_state = PREV
+							}
+						}
+					}
+				}
+				#SOU Dies
+				else_if = {
+					limit = {
+						ROOT = {
+							tag = SOU
+						}
+					}
+					if = {
+						limit = {
+							ukr_in_scw = yes
+							sov_in_scw = yes
+						}
+						for_each_scope_loop = {
+							array = sou.owned_states
+
+							if = {
+								limit = {
+									is_in_array = { ukr.scw_claimed_states = THIS }
+								}
+								UKR = {
+									if = {
+										limit = {
+											has_government = anarchy
+										}
+										transfer_state = THIS
+									}
+									else = {
+										if = {
+											limit = {
+												is_in_array = { global.kievan_rus_state_ukraine = THIS }
+											}
+											transfer_state = THIS
+										}
+										else_if = {
+											limit = {
+												THIS = {
+													is_core_of = SOU
+												}
+											}
+											if = {
+												limit = {
+													SOU = {
+														is_subject = no
+													}
+												}
+												set_autonomy = {
+													target = SOU
+													autonomy_state = autonomy_puppet
+												}
+											}
+											SOU = {
+												transfer_state = THIS
+											}
+										}
+									}
+								}
+							}
+							else = {
+								SOV = {
+									transfer_state = THIS
+								}
+							}
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						ROOT = {
+							tag = SOV
+						}
+					}
+					if = {
+						limit = {
+							ukr_in_scw = yes
+							sou_in_scw = yes
+						}
+						for_each_scope_loop = {
+							array = sov.owned_states
+
+							if = {
+								limit = {
+									is_in_array = { ukr.scw_claimed_states = THIS }
+								}
+								UKR = {
+									if = {
+										limit = {
+											has_government = anarchy
+										}
+										transfer_state = THIS
+									}
+									else = {
+										if = {
+											limit = {
+												is_in_array = { global.kievan_rus_state_ukraine = THIS }
+											}
+											transfer_state = THIS
+										}
+										else_if = {
+											limit = {
+												THIS = {
+													is_core_of = SOU
+												}
+											}
+											if = {
+												limit = {
+													SOU = {
+														is_subject = no
+													}
+												}
+												set_autonomy = {
+													target = SOU
+													autonomy_state = autonomy_puppet
+												}
+											}
+											SOU = {
+												transfer_state = THIS
+											}
+										}
+									}
+								}
+							}
+							else = {
+								SOV = {
+									transfer_state = THIS
+								}
+							}
+						}
+					}
+				}
+
+				#UKR Wins SCW
+				if = {
+					limit = {
+						ukr_in_scw = yes
+						NOT = {
+							sou_in_scw = yes
+							sov_in_scw = yes
+						}
+					}
+
+				}
+				#SOU Wins SCW
+				else_if = {
+					limit = {
+						sou_in_scw = yes
+						NOT = {
+							ukr_in_scw = yes
+							sov_in_scw = yes
+						}
+					}
+
+				}
+				#SOV Wins SCW
+				else_if = {
+					limit = {
+						sov_in_scw = yes
+						NOT = {
+							ukr_in_scw = yes
+							sou_in_scw = yes
+						}
+					}
+
+				}
+			}
+		}
+	}
+
+	#SOU Gets Annexed By SOV and Receives Events (MOVE ABOVE & REWORK)
 	on_capitulation = {
 		effect = {
 			if = {
@@ -76,7 +277,7 @@ on_actions = {
 		}
 	}
 
-	#SOV Gets Annexed By SOU and Receives Events
+	#SOV Gets Annexed By SOU and Receives Events (MOVE ABOVE & REWORK)
 	on_capitulation = {
 		effect = {
 			if = {
@@ -137,7 +338,7 @@ on_actions = {
 						has_idea = SOV_Participation_russian_civil_war_foreign
 					}
 					FROM = {
-						TAG = SOV
+						tag = SOV
 						has_global_flag = second_russian_civil_war_in_progress
 					}
 				}
@@ -166,6 +367,123 @@ on_actions = {
 				FROM = {
 					country_event = generics.43
 				}
+			}
+		}
+	}
+
+	#Arrays setup
+	on_war_relation_added = {
+		effect = {
+			if = {
+				limit = {
+					has_global_flag = second_russian_civil_war_in_progress
+					OR = {
+						ROOT = {
+							OR = {
+								tag = SOV
+								tag = SOU
+								tag = UKR
+							}
+						}
+						FROM = {
+							OR = {
+								tag = SOV
+								tag = SOU
+								tag = UKR
+							}
+						}
+					}
+					ROOT = {
+						has_war_with = FROM
+					}
+				}
+				if = {
+					limit = {
+						is_in_array = { global.russian_scw_participants = FROM.id }
+						NOT = {
+							is_in_array = { global.russian_scw_participants = ROOT.id }
+						}
+					}
+					add_to_array = { global.russian_scw_participants = ROOT.id }
+					ROOT = {
+						if = {
+							limit = {
+								is_in_faction_with = SOV
+							}
+							add_to_array = { global.russian_scw_participants_sov = ROOT.id }
+						}
+						else_if = {
+							limit = {
+								is_in_faction_with = SOU
+							}
+							add_to_array = { global.russian_scw_participants_sou = ROOT.id }
+						}
+						else_if = {
+							limit = {
+								is_in_faction_with = UKR
+							}
+							add_to_array = { global.russian_scw_participants_ukr = ROOT.id }
+						}
+						else = {
+							add_to_array = { global.russian_scw_participants_other = ROOT.id }
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						is_in_array = { global.russian_scw_participants = ROOT.id }
+						NOT = {
+							is_in_array = { global.russian_scw_participants = FROM.id }
+						}
+					}
+					add_to_array = { global.russian_scw_participants = FROM.id }
+					FROM = {
+						if = {
+							limit = {
+								is_in_faction_with = SOV
+							}
+							add_to_array = { global.russian_scw_participants_sov = FROM.id }
+						}
+						else_if = {
+							limit = {
+								is_in_faction_with = SOU
+							}
+							add_to_array = { global.russian_scw_participants_sou = FROM.id }
+						}
+						else_if = {
+							limit = {
+								is_in_faction_with = UKR
+							}
+							add_to_array = { global.russian_scw_participants_ukr = FROM.id }
+						}
+						else = {
+							add_to_array = { global.russian_scw_participants_other = ROOT.id }
+						}
+					}
+				}
+				sov_remove_non_existant_countries_from_scw_array = yes
+			}
+		}
+	}
+
+	on_annex = {
+		effect = {
+			if = {
+				limit = {
+					has_global_flag = second_russian_civil_war_in_progress
+				}
+				sov_remove_non_existant_countries_from_scw_array = yes
+			}
+		}
+	}
+
+	on_puppet = {
+		effect = {
+			if = {
+				limit = {
+					has_global_flag = second_russian_civil_war_in_progress
+				}
+				sov_remove_non_existant_countries_from_scw_array = yes
 			}
 		}
 	}
