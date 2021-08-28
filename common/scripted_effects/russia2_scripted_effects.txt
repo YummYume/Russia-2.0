@@ -2,6 +2,8 @@
 #Setup SOV
 sov_setup_scw = {
     SOV = {
+        add_to_array = { global.russian_scw_participants = SOV.id }
+        add_to_array = { global.russian_scw_participants_sov = SOV.id }
         country_lock_all_division_template = no
         division_template = {
             name = "Patrul'nyy Ttryad Militsii"
@@ -479,6 +481,8 @@ sov_setup_scw = {
 
 #Setup SOU
 sov_spawn_sou_scw = {
+    add_to_array = { global.russian_scw_participants = SOU.id }
+    add_to_array = { global.russian_scw_participants_sou = SOU.id }
     every_state = {
         limit = {
             is_core_of = SOV
@@ -888,6 +892,7 @@ sov_spawn_cri_scw = {
 
 #Setup UKR
 sov_spawn_ukr_scw = {
+    add_to_array = { global.russian_scw_participants_ukr = UKR.id }
     every_state = {
         limit = {
             OR = {
@@ -1191,6 +1196,12 @@ sov_liberate_caucasus_scw = {
                 has_country_flag = control_caucasus
             }
         }
+        add_to_array = { global.russian_scw_participants = GEO.id }
+        add_to_array = { global.russian_scw_participants_sov = GEO.id }
+        add_to_array = { global.russian_scw_participants = ARM.id }
+        add_to_array = { global.russian_scw_participants_sov = ARM.id }
+        add_to_array = { global.russian_scw_participants = AZR.id }
+        add_to_array = { global.russian_scw_participants_sov = AZR.id }
         SOU = {
             release = GEO
             release = AZR
@@ -1649,6 +1660,10 @@ sov_liberate_central_asia_scw = {
                 has_country_flag = control_central_asia
             }
         }
+        add_to_array = { global.russian_scw_participants = KAZ.id }
+        add_to_array = { global.russian_scw_participants_sov = KAZ.id }
+        add_to_array = { global.russian_scw_participants = TMS.id }
+        add_to_array = { global.russian_scw_participants_sov = TMS.id }
         SOU = {
             release = KAZ
             release = TMS
@@ -1892,6 +1907,8 @@ sov_liberate_belarus_scw = {
                 has_country_flag = control_belarus
             }
         }
+        add_to_array = { global.russian_scw_participants = BLR.id }
+        add_to_array = { global.russian_scw_participants_sov = BLR.id }
         SOU = {
             release = BLR
             add_state_core = 207
@@ -3010,6 +3027,52 @@ sov_spawn_english_ships_marines_scw = {
                 marines = 1
             }
             load_oob = "SOV_elite_marines_civil_war"
+        }
+    }
+}
+
+sov_remove_non_existant_countries_from_scw_array = {
+    for_each_scope_loop = {
+        array = global.russian_scw_participants
+
+        if = {
+            limit = {
+                OR = {
+                    exists = no
+                    AND = {
+                        NOT = {
+                            has_war_with = SOV
+                            has_war_with = SOU
+                            has_war_with = UKR
+                        }
+                    }
+                }
+            }
+            remove_from_array = { global.russian_scw_participants = THIS.id }
+            if = {
+                limit = {
+                    is_in_array = { global.russian_scw_participants_sov = THIS.id }
+                }
+                remove_from_array = { global.russian_scw_participants_sov = THIS.id }
+            }
+            if = {
+                limit = {
+                    is_in_array = { global.russian_scw_participants_sou = THIS.id }
+                }
+                remove_from_array = { global.russian_scw_participants_sou = THIS.id }
+            }
+            if = {
+                limit = {
+                    is_in_array = { global.russian_scw_participants_ukr = THIS.id }
+                }
+                remove_from_array = { global.russian_scw_participants_ukr = THIS.id }
+            }
+            if = {
+                limit = {
+                    is_in_array = { global.russian_scw_participants_other = THIS.id }
+                }
+                remove_from_array = { global.russian_scw_participants_other = THIS.id }
+            }
         }
     }
 }
