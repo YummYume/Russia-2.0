@@ -48905,6 +48905,67 @@ UKR_kyivan_industry_decisions = {
 	}
 }
 
+UKR_second_civil_war_category_decisions = {
+
+	UKR_claim_state_scw = {
+
+		icon = GFX_decision_generic_form_nation
+
+		state_target = yes
+
+		target_array = global.sov_russian_state_start_game
+
+		target_trigger = {
+			FROM = {
+				is_controlled_by = ROOT
+				NOT = {
+					is_owned_by = ROOT
+				}
+			}
+			sou_in_scw = yes
+			sov_in_scw = yes
+			NOT = {
+				is_in_array = { ukr.scw_claimed_states = FROM }
+			}
+		}
+
+		available = {
+			ROOT = {
+				controls_state = FROM
+			}
+		}
+
+		visible = {
+			FROM = {
+				is_controlled_by = ROOT
+				NOT = {
+					is_owned_by = ROOT
+				}
+			}
+			sou_in_scw = yes
+			sov_in_scw = yes
+			NOT = {
+				is_in_array = { ukr.scw_claimed_states = FROM }
+			}
+		}
+
+		cost = FROM.state_and_terrain_strategic_value
+
+		ai_will_do = {
+			factor = 10000
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = UKR_claim_state_scw_tt
+			hidden_effect = {
+				ROOT = {
+					add_to_array = { ukr.scw_claimed_states = FROM }
+				}
+			}
+		}
+	}
+}
+
 political_actions = {
 
 	UKR_rename_kiev = {
