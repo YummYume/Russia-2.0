@@ -943,5 +943,43 @@ on_actions = {
 				}
 			}
 		}
+	}
+
+	on_daily = { #Remove Country who doesn't belong with SOV during Civil War
+		effect = {
+			if = {
+				limit = {
+					FROM = {
+						NOT = {
+							TAG = SOV
+							TAG = UKR
+							TAG = BLR
+							TAG = KAZ
+							TAG = TMS
+							TAG = GEO
+							TAG = ARM
+							TAG = AZR
+							TAG = CRI
+							is_subject = yes
+						}
+						is_in_faction_with = SOV
+					}
+					SOV = {
+						has_global_flag = second_russian_civil_war_in_progress
+						has_war_with = SOU
+					}
+				}
+				FROM = {
+					leave_faction = yes
+					white_peace = SOU
+					if = {
+						limit = {
+							has_war_with = UKR
+						}
+						white_peace = UKR
+					}
+				}
+			}
+		}
 	}	
 }
