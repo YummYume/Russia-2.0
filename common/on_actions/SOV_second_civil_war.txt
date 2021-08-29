@@ -172,8 +172,33 @@ on_actions = {
 							sou_in_scw = yes
 							sov_in_scw = yes
 						}
+						ROOT = {
+							OR = {
+								tag = SOU
+								tag = SOU
+							}
+						}
+						FROM = {
+							tag = UKR
+						}
 					}
-
+					ROOT = {
+						transfer_navy = {
+							target = FROM
+						}
+					}	
+					every_state = {
+						limit = {
+							is_owned_by = ROOT
+						}
+						FROM = {
+							transfer_state = PREV
+						}
+					}
+					FROM = { #TODO Event For End of Civil War UKR
+						#country_event = { id =  hours = 6 }
+						#news_event = { id =  days = 1 }
+					}
 				}
 				#SOU Wins SCW
 				else_if = {
@@ -183,8 +208,48 @@ on_actions = {
 							ukr_in_scw = yes
 							sov_in_scw = yes
 						}
+						ROOT = {
+							OR = {
+								tag = SOV
+								tag = UKR
+							}
+						}
+						FROM = {
+							tag = SOU
+						}
 					}
-
+					ROOT = {
+						transfer_navy = {
+							target = FROM
+						}
+					}	
+					every_state = {
+						limit = {
+							is_owned_by = ROOT
+						}
+						FROM = {
+							transfer_state = PREV
+						}
+					}
+					if = {
+						limit = {
+							OR = {
+								TAG = GEO
+								TAG = BLR
+								TAG = AZR
+								TAG = ARM
+								TAG = KAZ
+								TAG = TMS
+							}
+						}
+						SOU = {
+							add_state_core = PREV
+						}
+					}
+					FROM = {
+						country_event = { id = soviets.238 hours = 3 }
+						news_event = { id = newsrussia2.68 days = 1 }
+					}
 				}
 				#SOV Wins SCW
 				else_if = {
@@ -194,136 +259,76 @@ on_actions = {
 							ukr_in_scw = yes
 							sou_in_scw = yes
 						}
-					}
-
-				}
-			}
-		}
-	}
-
-	#SOU Gets Annexed By SOV and Receives Events (MOVE ABOVE & REWORK)
-	on_capitulation = {
-		effect = {
-			if = {
-				limit = {
-					ROOT = {
-						tag = SOU
-					}
-					FROM = {
-						tag = SOV
-						has_global_flag = second_russian_civil_war_in_progress
-					}
-				}
-				ROOT = {
-					transfer_navy = {
-						target = FROM
-					}
-				}	
-				every_state = {
-					limit = {
-						is_owned_by = ROOT
-					}
-					FROM = {
-						transfer_state = PREV
-					}
-				}
-				if = {
-					limit = {
-						UKR = {
+						ROOT = {
 							OR = {
-								is_in_faction_with = ROOT
-								has_war_with = FROM
+								tag = SOU
+								tag = UKR
 							}
 						}
+						FROM = {
+							tag = SOV
+						}
 					}
+					ROOT = {
+						transfer_navy = {
+							target = FROM
+						}
+					}	
 					every_state = {
 						limit = {
-							is_owned_by = UKR
+							is_owned_by = ROOT
 						}
 						FROM = {
 							transfer_state = PREV
-							add_state_core = PREV
 						}
 					}
-				}
-				FROM = {
-					country_event = { id = soviets.190 hours = 6 }
-					news_event = { id = newsrussia2.67 days = 1 }
-				}
-				if = {
-					limit = {
-						FROM = {
-							OR = {
-								has_country_flag = japan_accept_to_help_give_russian_far_east
-								has_country_flag = has_negotiated_with_germany_ressource_rights
-								has_country_flag = accept_american_occupation_siberia_after_cw 
-								has_country_flag = accept_french_factories_after_cw 
-								has_country_flag = accept_diplomatic_relation_with_italy 
-								has_country_flag = accept_english_help_for_shipment 
+					if = {
+						limit = {
+							UKR = {
+								OR = {
+									is_in_faction_with = ROOT
+									has_war_with = FROM
+								}
+							}
+						}
+						every_state = {
+							limit = {
+								is_owned_by = UKR
+							}
+							FROM = {
+								transfer_state = PREV
+								add_state_core = PREV
 							}
 						}
 					}
 					FROM = {
-						country_event = { id = generics.34 days = 7 }
+						country_event = { id = soviets.190 hours = 6 }
+						news_event = { id = newsrussia2.67 days = 1 }
 					}
-				}
-				every_country = {
-					limit = {
-						has_country_flag = has_helped_whiteguard_by_volunteers
-					}
-					country_event = { id = generics.35 days = 1 }
-				}
-			}
-		}
-	}
-
-	#SOV Gets Annexed By SOU and Receives Events (MOVE ABOVE & REWORK)
-	on_capitulation = {
-		effect = {
-			if = {
-				limit = {
-					ROOT = {
-						tag = SOV
-						has_global_flag = second_russian_civil_war_in_progress
-					}
-					FROM = {
-						tag = SOU
-					}
-				}
-				ROOT = {
-					transfer_navy = {
-						target = FROM
-					}
-				}	
-				every_state = {
-					limit = {
-						is_owned_by = ROOT
-					}
-					FROM = {
-						transfer_state = PREV
-					}
-				}
-				if = {
-					limit = {
-						OR = {
-							TAG = UKR
-							TAG = GEO
-							TAG = BLR
-							TAG = AZR
-							TAG = ARM
-							TAG = KAZ
-							TAG = TMS
+					if = {
+						limit = {
+							FROM = {
+								OR = {
+									has_country_flag = japan_accept_to_help_give_russian_far_east
+									has_country_flag = has_negotiated_with_germany_ressource_rights
+									has_country_flag = accept_american_occupation_siberia_after_cw 
+									has_country_flag = accept_french_factories_after_cw 
+									has_country_flag = accept_diplomatic_relation_with_italy 
+									has_country_flag = accept_english_help_for_shipment 
+								}
+							}
+						}
+						FROM = {
+							country_event = { id = generics.34 days = 7 }
 						}
 					}
-					SOU = {
-						add_state_core = PREV
+					every_country = {
+						limit = {
+							has_country_flag = has_helped_whiteguard_by_volunteers
+						}
+						country_event = { id = generics.35 days = 1 }
 					}
 				}
-				FROM = {
-					country_event = { id = soviets.238 hours = 3 }
-					news_event = { id = newsrussia2.68 days = 1 }
-				}
-
 			}
 		}
 	}
