@@ -5041,6 +5041,11 @@ SOV_the_second_civil_war_fn = {
 			}
 		}
 
+		highlight_states = {
+			is_capital = yes
+			is_owned_by = FROM
+		}
+
 		fire_only_once = yes
 
 		ai_will_do = {
@@ -48911,6 +48916,10 @@ UKR_second_civil_war_category_decisions = {
 
 		icon = GFX_decision_generic_form_nation
 
+		allowed = {
+			original_tag = UKR
+		}
+
 		state_target = yes
 
 		target_array = global.sov_original_states
@@ -48926,6 +48935,18 @@ UKR_second_civil_war_category_decisions = {
 			sov_in_scw = yes
 			NOT = {
 				is_in_array = { ukr.scw_claimed_states = FROM }
+			}
+			OR = {
+				any_of_scopes = {
+					array = global.russian_scw_participants_sov
+
+					owns_state = FROM
+				}
+				any_of_scopes = {
+					array = global.russian_scw_participants_sou
+
+					owns_state = FROM
+				}
 			}
 		}
 
@@ -48955,9 +48976,21 @@ UKR_second_civil_war_category_decisions = {
 					}
 				}
 			}
+			OR = {
+				any_of_scopes = {
+					array = global.russian_scw_participants_sov
+
+					owns_state = FROM
+				}
+				any_of_scopes = {
+					array = global.russian_scw_participants_sou
+
+					owns_state = FROM
+				}
+			}
 		}
 
-		cost = FROM.state_and_terrain_strategic_value
+		cost = 25
 
 		ai_will_do = {
 			factor = 10000
@@ -48975,6 +49008,66 @@ UKR_second_civil_war_category_decisions = {
 
 	UKR_coup_belarus_scw = {
 
+		icon = GFX_decision_generic_speech
+
+		allowed = {
+			original_tag = UKR
+		}
+
+		fire_only_once = yes
+
+		highlight_states = {
+			is_capital = yes
+			is_owned_by = BLR
+		}
+		
+		visible = {
+			has_global_flag = second_russian_civil_war_in_progress
+			is_subject = no
+			custom_trigger_tooltip = {
+				tooltip = is_in_scw_tt
+				is_in_array = { global.russian_scw_participants = UKR.id }
+			}
+			has_war = yes
+			BLR = {
+				exists = yes
+				is_subject_of = SOV
+				custom_trigger_tooltip = {
+					tooltip = is_in_scw_tt
+					is_in_array = { global.russian_scw_participants = BLR.id }
+				}
+			}
+		}
+
+		available = {
+			surrender_progress < 0.25
+		}
+
+		cost = 100
+
+		days_remove = 60
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		cancel_if_not_visible = yes
+
+		complete_effect = {
+			set_country_flag = ukr_is_making_coup_blr
+		}
+
+		cancel_effect = {
+			clr_country_flag = ukr_is_making_coup_blr
+		}
+
+		remove_effect = {
+			clr_country_flag = ukr_is_making_coup_blr
+			BLR = {
+				country_event = ukrains.41
+			}
+			custom_effect_tooltip = UKR_coup_belarus_scw_tt
+		}
 	}
 }
 
