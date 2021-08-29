@@ -29,6 +29,20 @@ country_event = {
 	option = { #Accepts
 		name = ukrains.1.a
 		ai_chance = { factor = 20 }
+		declare_war_on = {
+			target = SOU
+			type = second_russian_civil_war
+		}
+		add_ai_strategy = {
+			type = conquer
+			id = SOU
+			value = 200
+		}
+		hidden_effect = {
+			SOU = {
+				country_event = { id = ukrains.38 days = 1 }
+			}
+		}
 		SOV = {
 			country_event = { id = ukrains.2 hours = 6 }
 		}
@@ -55,17 +69,6 @@ country_event = {
 	option = { #Good
 		name = ukrains.2.a
 		ai_chance = { factor = 100 }
-		UKR = {
-			declare_war_on = {
-				target = SOU
-				type = second_russian_civil_war
-			}
-			add_ai_strategy = {
-				type = conquer
-				id = SOU
-				value = 200
-			}
-		}
 	}
 }
 
@@ -100,7 +103,21 @@ country_event = {
 
 	option = { #Accepts
 		name = ukrains.4.a
-		ai_chance = { factor = 95 }
+		ai_chance = { factor = 75 }
+		declare_war_on = {
+			target = SOU
+			type = second_russian_civil_war
+		}
+		add_ai_strategy = {
+			type = conquer
+			id = SOU
+			value = 200
+		}
+		hidden_effect = {
+			SOU = {
+				country_event = { id = ukrains.38 days = 1 }
+			}
+		}
 		SOV = {
 			country_event = { id = ukrains.5 hours = 6 }
 		}
@@ -108,7 +125,7 @@ country_event = {
 
 	option = { #Refuse
 		name = ukrains.4.b
-		ai_chance = { factor = 5 }
+		ai_chance = { factor = 25 }
 		SOV = {
 			country_event = { id = ukrains.6 hours = 6 }
 		}
@@ -127,17 +144,6 @@ country_event = {
 	option = { #Good
 		name = ukrains.5.a
 		ai_chance = { factor = 100 }
-		UKR = {
-			declare_war_on = {
-				target = SOU
-				type = second_russian_civil_war
-			}
-			add_ai_strategy = {
-				type = conquer
-				id = SOU
-				value = 200
-			}
-		}
 	}
 }
 
@@ -284,6 +290,11 @@ country_event = {
 		declare_war_on = {
 			target = SOU
 			type = annex_everything
+		}
+		hidden_effect = {
+			SOU = {
+				country_event = { id = ukrains.38 days = 1 }
+			}
 		}
 		add_ideas = SOV_Second_civil_war
 		if = {
@@ -513,14 +524,14 @@ country_event = {
 	picture = GFX_report_event_german_inspect_troops
 
 	trigger = {
-		TAG = UKR
+		tag = UKR
+		is_subject_of = SOV
+		exists = yes
 		SOV = {
 			has_country_flag = ukr_accepted_puppet_united_russia
 			has_government = democratic
-		}
-		UKR = {
-			is_subject_of = SOV
-			country_exists = UKR
+			is_subject = no
+			exists = yes
 		}
 	}
 
@@ -1064,7 +1075,7 @@ country_event = {
 	}
 
 	option = { #Other country set in game rules
-		name = ukrains.31.b
+		name = ukrains.31.c
 		ai_chance = {
 			factor = 0
 		}
@@ -1253,6 +1264,19 @@ country_event = {
 
 	is_triggered_only = yes
 
+	timeout_days = 5
+
+	immediate = {
+		hidden_effect = {
+			if = {
+				limit = {
+					has_global_flag = second_russian_civil_war_in_progress
+				}
+				country_event = { id = ukrains.40 days = 10 }
+			}
+		}
+	}
+
 	option = { #Anarchism Fails
 		name = ukrains.36.a
 		ai_chance = {
@@ -1289,6 +1313,13 @@ country_event = {
 			elections_allowed = no
 		}
 		clr_country_flag = ukr_anarchist_rebels
+		hidden_effect = {
+			for_each_scope_loop = {
+				array = global.russian_scw_participants
+
+				country_event = ukrains.39
+			}
+		}
 	}
 
 	option = { #Both Wins (Choose Republic)
@@ -1332,6 +1363,13 @@ country_event = {
 			elections_allowed = no
 		}
 		clr_country_flag = ukr_anarchist_rebels
+		hidden_effect = {
+			for_each_scope_loop = {
+				array = global.russian_scw_participants
+
+				country_event = ukrains.39
+			}
+		}
 	}
 }
 
@@ -1349,6 +1387,15 @@ country_event = {
 		ai_chance = {
 			factor = 50
 		}
+		declare_war_on = {
+			target = SOU
+			type = second_russian_civil_war
+		}
+		add_ai_strategy = {
+			type = conquer
+			id = SOU
+			value = 200
+		}
 		add_stability = -0.05
 		add_war_support = 0.1
 	}
@@ -1362,6 +1409,238 @@ country_event = {
 		hidden_effect = {
 			country_event = { id = ukrains.32 days = 5 }
 		}
+	}
+}
+
+#UKR Joins the SCW
+country_event = {
+	id = ukrains.38
+	title = ukrains.38.t
+	desc = ukrains.38.d
+	picture = GFX_report_event_gre_allied_diplomacy
+
+	is_triggered_only = yes
+
+	option = { #Okay...
+		name = ukrains.38.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#UKR Becomes Anarchist
+country_event = {
+	id = ukrains.39
+	title = ukrains.39.t
+	desc = ukrains.39.d
+	picture = GFX_report_event_gre_allied_diplomacy
+
+	is_triggered_only = yes
+
+	option = { #Troubles are coming...
+		name = ukrains.39.a
+		ai_chance = {
+			factor = 100
+		}
+		custom_effect_tooltip = ukr_will_join_scw_soon
+	}
+}
+
+#Anarchist Ukraine Event to join the SCW
+country_event = {
+	id = ukrains.40
+	title = ukrains.40.t
+	desc = ukrains.40.d
+	picture = GFX_report_event_gre_allied_diplomacy
+
+	is_triggered_only = yes
+
+	option = { #Here we go
+		name = ukrains.40.a
+		ai_chance = {
+			factor = 100
+		}
+		custom_effect_tooltip = ukr_declares_on_all_scw_participants
+		hidden_effect = {
+			for_each_scope_loop = {
+				array = global.russian_scw_participants
+
+				if = {
+					limit = {
+						NOT = {
+							UKR = {
+								has_war_with = PREV
+							}
+						}
+					}
+					country_event = { id = ukrains.38 days = 1 }
+					UKR = {
+						declare_war_on = {
+							target = PREV
+							type = second_russian_civil_war
+						}
+						add_ai_strategy = {
+							type = conquer
+							id = PREV
+							value = 200
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+#Ukraine Tries to Coup Belarus
+country_event = {
+	id = ukrains.41
+	title = ukrains.41.t
+	desc = ukrains.41.d
+	picture = GFX_report_event_gre_allied_diplomacy
+
+	is_triggered_only = yes
+
+	option = { #Coup Succeeds
+		name = ukrains.41.a
+		ai_chance = {
+			factor = 75
+		}
+		UKR = {
+			set_autonomy = {
+				target = ROOT
+				autonomy_state = autonomy_puppet
+			}
+			country_event = { id = ukrains.42 days = 1 }
+		}
+	}
+
+	option = { #Coup Fails
+		name = ukrains.41.b
+		ai_chance = {
+			factor = 25
+		}
+		add_stability = -0.05
+		UKR = {
+			country_event = { id = ukrains.43 days = 1 }
+		}
+	}
+}
+
+#Coup Succeeds
+country_event = {
+	id = ukrains.42
+	title = ukrains.42.t
+	desc = ukrains.42.d
+	picture = GFX_report_event_gre_allied_diplomacy
+
+	is_triggered_only = yes
+
+	option = { #Yay
+		name = ukrains.42.a
+		ai_chance = {
+			factor = 100
+		}
+		set_country_flag = ukr_blr_coup_succeeds
+		hidden_effect = {
+			if = {
+				limit = {
+					NOT = {
+						has_war_with = SOV
+					}
+				}
+				SOV = {
+					country_event = { id = ukrains.44 days = 1 }
+				}
+			}
+		}
+	}
+}
+
+#Coup Fails :(
+country_event = {
+	id = ukrains.43
+	title = ukrains.43.t
+	desc = ukrains.43.d
+	picture = GFX_report_event_gre_allied_diplomacy
+
+	is_triggered_only = yes
+
+	option = { #Yay
+		name = ukrains.43.a
+		ai_chance = {
+			factor = 100
+		}
+		add_political_power = 50
+		set_country_flag = ukr_blr_coup_fails
+	}
+}
+
+#Ukraine Coups Belarus
+country_event = {
+	id = ukrains.44
+	title = ukrains.44.t
+	desc = ukrains.44.d
+	picture = GFX_report_event_gre_allied_diplomacy
+
+	is_triggered_only = yes
+
+	option = { #Fuck em up
+		name = ukrains.44.a
+		ai_chance = {
+			factor = 25
+			modifier = {
+				add = 75
+				has_country_flag = sympathize_with_ukraine
+			}
+		}
+		add_war_support = 0.05
+		if = {
+			limit = {
+				NOT = {
+					has_war_with = UKR
+				}
+			}
+			declare_war_on = {
+				target = UKR
+				type = second_russian_civil_war
+			}
+			hidden_effect = {
+				UKR = {
+					country_event = ukrains.45
+				}
+			}
+		}
+	}
+
+	option = { #Don't care
+		name = ukrains.44.b
+		ai_chance = {
+			factor = 75
+			modifier = {
+				add = -75
+				has_country_flag = sympathize_with_ukraine
+			}
+		}
+		add_political_power = 50
+	}
+}
+
+#White Guard Attacks Us
+country_event = {
+	id = ukrains.45
+	title = ukrains.45.t
+	desc = ukrains.45.d
+	picture = GFX_report_event_gre_allied_diplomacy
+
+	is_triggered_only = yes
+
+	option = { #Uh
+		name = ukrains.45.a
+		ai_chance = {
+			factor = 100
+		}
+
 	}
 }
 
