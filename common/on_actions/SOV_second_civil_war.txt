@@ -98,6 +98,25 @@ on_actions = {
 							}
 						}
 					}
+					if = {
+						limit = {
+							UKR = {
+								OR = {
+									check_variable = {
+										var = global.kievan_rus_state_ukraine^num
+										value = 5
+										compare = greater_than_or_equals
+									}
+									BLR = {
+										is_subject_of = UKR
+									}
+								}
+							}
+						}
+						SOV = {
+							country_event = { id = generics.44 days = 15 }
+						}
+					}
 				}
 				else_if = {
 					limit = {
@@ -195,8 +214,130 @@ on_actions = {
 							transfer_state = PREV
 						}
 					}
+					if = {
+						limit = {
+							UKR = {
+								NOT = {
+									has_government = anarchy
+								}
+							}
+						}		
+						for_each_scope_loop = {
+							array = sou.owned_states
+
+							if = {
+								limit = {
+									is_in_array = { ukr.scw_claimed_states = THIS }
+								}
+								UKR = {
+									if = {
+										limit = {
+											is_in_array = { global.kievan_rus_state_ukraine = THIS }
+										}
+										transfer_state = THIS
+									}
+									else_if = {
+										limit = {
+											SOU = {
+												is_subject_of = UKR
+											}
+										}
+										every_state = {
+											limit = {
+												is_core_of = SOU
+												is_core_of = SOV
+												is_owned_by = SOV
+											}
+											SOU = {
+												transfer_state = PREV
+											}
+										}
+									}
+									else_if = {
+										limit = {
+											NOT = {
+												SOU = {
+													is_subject_of = UKR
+												}
+											}
+										}
+										UKR = {
+											set_autonomy = {
+												target = SOV
+												autonomy_state = autonomy_puppet
+											}
+										}
+									}
+								}
+							}
+						}				
+						for_each_scope_loop = {
+							array = sov.owned_states
+
+							if = {
+								limit = {
+									is_in_array = { ukr.scw_claimed_states = THIS }
+								}
+								UKR = {
+									if = {
+										limit = {
+											is_in_array = { global.kievan_rus_state_ukraine = THIS }
+										}
+										transfer_state = THIS
+									}
+									else_if = {
+										limit = {
+											SOU = {
+												is_subject_of = UKR
+											}
+										}
+										every_state = {
+											limit = {
+												is_core_of = SOU
+												is_core_of = SOV
+												is_owned_by = SOV
+											}
+											SOU = {
+												transfer_state = PREV
+											}
+										}
+									}
+									else_if = {
+										limit = {
+											NOT = {
+												SOU = {
+													is_subject_of = UKR
+												}
+											}
+										}
+										UKR = {
+											set_autonomy = {
+												target = SOV
+												autonomy_state = autonomy_puppet
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+					else_if = {
+						limit = {
+							UKR = {
+								has_government = anarchy
+							}
+						}
+						every_state = {
+							limit = {
+								is_owned_by = ROOT
+							}
+							FROM = {
+								transfer_state = PREV
+							}
+						}
+					}
 					FROM = { #TODO Event For End of Civil War UKR
-						#country_event = { id =  hours = 6 }
+						country_event = { id = ukrains.47  hours = 6 }
 						#news_event = { id =  days = 1 }
 					}
 				}
