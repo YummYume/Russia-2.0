@@ -1580,16 +1580,38 @@ country_event = {
 		name = soviets.45.a
 		set_global_flag = SOV_civil_war_peace
 		set_country_flag = ENG_communist_civil_war
-		start_civil_war = {
-			ruling_party = communism
-    		ideology = communism
-    		size = 0.4
-			capital = 233
-			states = {
-				233 232 235 234 231 230 229 232 137 218 238 237 236 217 245
+		if = {
+			limit = {
+				has_game_rule = {
+					rule = sov_fragmentation_status
+					option = SOV_FRAGMENTED
+				}
 			}
-			keep_unit_leaders = {
-				401 402 407 410 406 405 403 407 404
+			start_civil_war = {
+				ruling_party = communism
+				ideology = communism
+				size = 0.4
+				capital = 260
+				states = {
+					260 240 220 224 222 258 257 239 255 250 205 223 254
+				}
+				keep_unit_leaders = {
+					401 402 407 410 405 407
+				}
+			}
+		}
+		else = {
+			start_civil_war = {
+				ruling_party = communism
+				ideology = communism
+				size = 0.4
+				capital = 233
+				states = {
+					233 232 235 234 231 230 229 232 137 218 238 237 236 217 245
+				}
+				keep_unit_leaders = {
+					401 402 407 410 406 405 403 407 404
+				}
 			}
 		}
 		set_politics = {
@@ -1713,16 +1735,38 @@ country_event = {
 	option = { #For The Motherland !
 		name = soviets.48.a
 		set_country_flag = ENG_communist_civil_war
-		start_civil_war = {
-			ruling_party = communism
-    		ideology = communism
-    		size = 0.5
-			capital = 217
-			states = {
-				217 260 265 240 401 407 402 404 732 742 405 584 585 587 406 236 237 238 234 218 228 217 245 236 237 238 234 235 232 233 231 229 230 586 589 227 221 200 226 137 196 259 203 198 192 197
+		if = {
+			limit = {
+				has_game_rule = {
+					rule = sov_fragmentation_status
+					option = SOV_FRAGMENTED
+				}
 			}
-			keep_unit_leaders = {
-				401 402 407 410 405 407
+			start_civil_war = {
+				ruling_party = communism
+				ideology = communism
+				size = 0.5
+				capital = 260
+				states = {
+					260 240 220 224 222 258 257 239 255 250 205 223 254
+				}
+				keep_unit_leaders = {
+					401 402 407 410 405 407
+				}
+			}
+		}
+		else = {
+			start_civil_war = {
+				ruling_party = communism
+				ideology = communism
+				size = 0.5
+				capital = 217
+				states = {
+					217 260 265 240 401 407 402 404 732 742 405 584 585 587 406 236 237 238 234 218 228 217 245 236 237 238 234 235 232 233 231 229 230 586 589 227 221 200 226 137 196 259 203 198 192 197
+				}
+				keep_unit_leaders = {
+					401 402 407 410 405 407
+				}
 			}
 		}
 		set_politics = {
@@ -11537,73 +11581,6 @@ country_event = {
 			add_attack = 1
 			add_logistics = 1
 			add_unit_leader_trait = yellow_jersey
-		}	
-	}
-}
-
-#Hidden Event to Kick Retarded (Communist Portugal) Countries Who Shouldn't be in faction with the Russian during the Second Civil War
-country_event = {
-	id = soviets.268
-
-	trigger = {
-		NOT = {
-			TAG = SOV
-			TAG = UKR
-			TAG = BLR
-			TAG = KAZ
-			TAG = TMS
-			TAG = GEO
-			TAG = ARM
-			TAG = AZR
-			is_subject = yes
-		}
-		SOV = {
-			has_global_flag = second_russian_civil_war_in_progress
-			has_war = yes
-		}
-		any_country = {
-			is_in_faction_with = SOV
-			NOT = {
-				TAG = UKR
-				TAG = BLR
-				TAG = KAZ
-				TAG = TMS
-				TAG = GEO
-				TAG = ARM
-				TAG = AZR
-			}
-		}
-	}
-
-	mean_time_to_happen = {
-		days = 10
-	}
-
-	hidden = yes
-
-	immediate = {
-		every_country = {
-			limit = {
-				is_in_faction_with = SOV
-				NOT = {
-					TAG = UKR
-					TAG = BLR
-					TAG = KAZ
-					TAG = TMS
-					TAG = GEO
-					TAG = ARM
-					TAG = AZR
-					TAG = SOV
-				}
-			}
-			leave_faction = yes
-			white_peace = SOU
-			if = {
-				limit = {
-					has_war_with = UKR
-				}
-				white_peace = UKR
-			}
 		}	
 	}
 }
