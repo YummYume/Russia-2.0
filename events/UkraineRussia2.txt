@@ -56,10 +56,9 @@ country_event = {
 		name = ukrains.2.a
 		ai_chance = { factor = 100 }
 		UKR = {
-			add_to_war = { 
-				targeted_alliance = ROOT 
-				enemy = SOU 
-				hostility_reason = asked_to_join
+			declare_war_on = {
+				target = SOU
+				type = second_russian_civil_war
 			}
 			add_ai_strategy = {
 				type = conquer
@@ -129,10 +128,9 @@ country_event = {
 		name = ukrains.5.a
 		ai_chance = { factor = 100 }
 		UKR = {
-			add_to_war = { 
-				targeted_alliance = ROOT 
-				enemy = SOU 
-				hostility_reason = asked_to_join
+			declare_war_on = {
+				target = SOU
+				type = second_russian_civil_war
 			}
 			add_ai_strategy = {
 				type = conquer
@@ -249,7 +247,7 @@ country_event = {
 		ai_chance = { factor = 100 }
 		hidden_effect = {
 			UKR = {
-				country_event = { id = ukrains.32 days = 5 }
+				country_event = { id = ukrains.37 days = 5 }
 			}
 		}
 	}
@@ -280,7 +278,7 @@ country_event = {
 
 	mean_time_to_happen = { days = 1 }
 
-	option = { #Help SOV
+	option = { #Attack SOU
 		name = ukrains.10.a
 		ai_chance = { factor = 25 }
 		declare_war_on = {
@@ -301,9 +299,10 @@ country_event = {
 		}
 	}
 
-	option = { #Help SOV
+	option = { #Do nothing
 		name = ukrains.10.b
 		ai_chance = { factor = 75 }
+		add_stability = 0.05
 	}
 }
 
@@ -321,7 +320,7 @@ country_event = {
 		ai_chance = { factor = 40 }
 		declare_war_on = {
 			target = UKR
-			type = annex_everything
+			type = second_russian_civil_war
 		}
 	}
 
@@ -660,7 +659,7 @@ country_event = {
 		}
 		declare_war_on = {
 			target = CRI
-			type = annex_everything
+			type = second_russian_civil_war
 		}
 		if = {
 			limit = {
@@ -794,7 +793,7 @@ country_event = {
 		}
 		declare_war_on = {
 			target = CRI
-			type = annex_everything
+			type = second_russian_civil_war
 		}
 		hidden_effect = {
 			SOV = {
@@ -920,7 +919,7 @@ country_event = {
 		}
 		declare_war_on = {
 			target = UKR
-			type = annex_everything
+			type = second_russian_civil_war
 		}
 	}
 }
@@ -1333,5 +1332,35 @@ country_event = {
 			elections_allowed = no
 		}
 		clr_country_flag = ukr_anarchist_rebels
+	}
+}
+
+#Join the War or Not
+country_event = {
+	id = ukrains.37
+	title = ukrains.37.t
+	desc = ukrains.37.d
+	picture = GFX_report_event_gre_allied_diplomacy
+
+	is_triggered_only = yes
+
+	option = { #Yes
+		name = ukrains.37.a
+		ai_chance = {
+			factor = 50
+		}
+		add_stability = -0.05
+		add_war_support = 0.1
+	}
+
+	option = { #No
+		name = ukrains.37.b
+		ai_chance = {
+			factor = 50
+		}
+		add_stability = 0.05
+		hidden_effect = {
+			country_event = { id = ukrains.32 days = 5 }
+		}
 	}
 }
