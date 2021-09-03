@@ -10,30 +10,70 @@ on_actions = {
 				#UKR Dies
 				if = {
 					limit = {
+						sou_in_scw = yes
+						sov_in_scw = yes
 						ROOT = {
 							tag = UKR
 						}
+						FROM = {
+							OR = {
+								TAG = SOV
+								TAG = SOU
+							}
+						}
 					}
 					log = "[UKR.GetNameDefCap] Capitulated"
-					for_each_scope_loop = {
-						array = ukr.owned_states
-
-						if = {
-							limit = {
-								CONTROLLER = {
-									tag = SOV
+					if = { #Add COndition for states that aren't being controlled by those two
+						limit = {
+							OR = {
+								any_state = {
+									is_owned_by = UKR
+									is_controlled_by = SOV
 								}
+								any_state = {
+									is_owned_by = UKR
+									is_controlled_by = SOU
+								}
+							}
+						}
+						every_state = {
+							limit = {
+								is_owned_by = UKR
+								is_controlled_by = SOV
 							}
 							SOV = {
 								transfer_state = PREV
 							}
 						}
-						else = {
+						every_state = {
+							limit = {
+								is_owned_by = UKR
+								is_controlled_by = SOU
+							}
 							SOU = {
 								transfer_state = PREV
 							}
 						}
 					}
+					#for_each_scope_loop = {
+					#	array = ukr.owned_states
+					#
+					#	if = {
+					#		limit = {
+					#			CONTROLLER = {
+					#				tag = SOV
+					#			}
+					#		}
+					#		SOV = {
+					#			transfer_state = FROM
+					#		}
+					#	}
+					#	else = {
+					#		SOU = {
+					#			transfer_state = FROM
+					#		}
+					#	}
+					#}
 				}
 				#SOU Dies
 				else_if = {
