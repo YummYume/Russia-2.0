@@ -558,7 +558,12 @@ on_actions = {
 			if = {
 				limit = {
 					has_global_flag = second_russian_civil_war_in_progress
-					OR = {
+				}
+				log = "Russia Reworked SCW on_war_relation_added debug :"
+				log = " ROOT : [ROOT.GetNameDefCap]"
+				log = " FROM : [FROM.GetNameDefCap]"
+				if = {
+					limit = {
 						ROOT = {
 							OR = {
 								tag = SOV
@@ -569,9 +574,124 @@ on_actions = {
 								limit = {
 									tag = UKR
 								}
-								is_in_array = { global.russian_scw_participants = UKR.id }
+								is_in_array = { global.russian_scw_participants = UKR }
 							}
 						}
+					}
+					log = " ROOT ([ROOT.GetNameDefCap]) is valid"
+					if = {
+						limit = {
+							NOT = {
+								#is_in_array = { global.russian_scw_participants = ROOT }
+								any_of = {
+									array = global.russian_scw_participants
+									value = v
+									index = i
+									
+									ROOT = {
+										tag = var:v
+									}
+								}
+							}
+						}
+						add_to_array = { global.russian_scw_participants = ROOT }
+						log = " Added to array ROOT global.russian_scw_participants : [ROOT.GetNameDefCap]"
+						if = {
+							limit = {
+								ROOT = {
+									OR = {
+										tag = SOV
+										is_in_faction_with = SOV
+									}
+								}
+							}
+							add_to_array = { global.russian_scw_participants_sov = ROOT }
+						}
+						else_if = {
+							limit = {
+								ROOT = {
+									OR = {
+										tag = SOU
+										is_in_faction_with = SOU
+									}
+								}
+							}
+							add_to_array = { global.russian_scw_participants_sou = ROOT }
+						}
+						else_if = {
+							limit = {
+								ROOT = {
+									OR = {
+										tag = UKR
+										is_in_faction_with = UKR
+									}
+								}
+								is_in_array = { global.russian_scw_participants = UKR }
+							}
+							add_to_array = { global.russian_scw_participants_ukr = ROOT }
+						}
+						else = {
+							add_to_array = { global.russian_scw_participants_other = ROOT }
+						}
+					}
+					if = {
+						limit = {
+							NOT = {
+								#is_in_array = { global.russian_scw_participants = FROM }
+								any_of = {
+									array = global.russian_scw_participants
+									value = v
+									index = i
+									
+									FROM = {
+										tag = var:v
+									}
+								}
+							}
+						}
+						add_to_array = { global.russian_scw_participants = FROM }
+						log = " Added to array FROM global.russian_scw_participants : [FROM.GetNameDefCap]"
+						if = {
+							limit = {
+								FROM = {
+									OR = {
+										tag = SOV
+										is_in_faction_with = SOV
+									}
+								}
+							}
+							add_to_array = { global.russian_scw_participants_sov = FROM }
+						}
+						else_if = {
+							limit = {
+								FROM = {
+									OR = {
+										tag = SOU
+										is_in_faction_with = SOU
+									}
+								}
+							}
+							add_to_array = { global.russian_scw_participants_sou = FROM }
+						}
+						else_if = {
+							limit = {
+								FROM = {
+									OR = {
+										tag = UKR
+										is_in_faction_with = UKR
+									}
+								}
+								is_in_array = { global.russian_scw_participants = UKR }
+							}
+							add_to_array = { global.russian_scw_participants_ukr = FROM }
+						}
+						else = {
+							add_to_array = { global.russian_scw_participants_other = FROM }
+						}
+					}
+				}
+				if = {
+					limit = {
 						FROM = {
 							OR = {
 								tag = SOV
@@ -582,98 +702,123 @@ on_actions = {
 								limit = {
 									tag = UKR
 								}
-								is_in_array = { global.russian_scw_participants = UKR.id }
+								is_in_array = { global.russian_scw_participants = UKR }
 							}
 						}
 					}
-				}
-				if = {
-					limit = {
-						ROOT = {
-							has_war_with = FROM
+					log = " FROM ([FROM.GetNameDefCap]) is valid"
+					if = {
+						limit = {
+							NOT = {
+								#is_in_array = { global.russian_scw_participants = ROOT }
+								any_of = {
+									array = global.russian_scw_participants
+									value = v
+									index = i
+									
+									ROOT = {
+										tag = var:v
+									}
+								}
+							}
 						}
-						NOT = {
-							is_in_array = { global.russian_scw_participants = ROOT.id }
-						}
-					}
-					add_to_array = { global.russian_scw_participants = ROOT.id }
-					ROOT = {
+						add_to_array = { global.russian_scw_participants = ROOT }
+						log = " Added to array ROOT global.russian_scw_participants : [ROOT.GetNameDefCap]"
 						if = {
 							limit = {
-								OR = {
-									tag = SOV
-									is_in_faction_with = SOV
+								ROOT = {
+									OR = {
+										tag = SOV
+										is_in_faction_with = SOV
+									}
 								}
 							}
-							add_to_array = { global.russian_scw_participants_sov = ROOT.id }
+							add_to_array = { global.russian_scw_participants_sov = ROOT }
 						}
 						else_if = {
 							limit = {
-								OR = {
-									tag = SOU
-									is_in_faction_with = SOU
+								ROOT = {
+									OR = {
+										tag = SOU
+										is_in_faction_with = SOU
+									}
 								}
 							}
-							add_to_array = { global.russian_scw_participants_sou = ROOT.id }
+							add_to_array = { global.russian_scw_participants_sou = ROOT }
 						}
 						else_if = {
 							limit = {
-								OR = {
-									tag = UKR
-									is_in_faction_with = UKR
+								ROOT = {
+									OR = {
+										tag = UKR
+										is_in_faction_with = UKR
+									}
 								}
+								is_in_array = { global.russian_scw_participants = UKR }
 							}
-							add_to_array = { global.russian_scw_participants_ukr = ROOT.id }
+							add_to_array = { global.russian_scw_participants_ukr = ROOT }
 						}
 						else = {
-							add_to_array = { global.russian_scw_participants_other = ROOT.id }
+							add_to_array = { global.russian_scw_participants_other = ROOT }
 						}
 					}
-				}
-				if = {
-					limit = {
-						FROM = {
-							has_war_with = ROOT
+					if = {
+						limit = {
+							NOT = {
+								#is_in_array = { global.russian_scw_participants = FROM }
+								any_of = {
+									array = global.russian_scw_participants
+									value = v
+									index = i
+									
+									FROM = {
+										tag = var:v
+									}
+								}
+							}
 						}
-						NOT = {
-							is_in_array = { global.russian_scw_participants = FROM.id }
-						}
-					}
-					add_to_array = { global.russian_scw_participants = FROM.id }
-					FROM = {
+						add_to_array = { global.russian_scw_participants = FROM }
+						log = " Added to array FROM global.russian_scw_participants : [FROM.GetNameDefCap]"
 						if = {
 							limit = {
-								OR = {
-									tag = SOV
-									is_in_faction_with = SOV
+								FROM = {
+									OR = {
+										tag = SOV
+										is_in_faction_with = SOV
+									}
 								}
 							}
-							add_to_array = { global.russian_scw_participants_sov = FROM.id }
+							add_to_array = { global.russian_scw_participants_sov = FROM }
 						}
 						else_if = {
 							limit = {
-								OR = {
-									tag = SOU
-									is_in_faction_with = SOU
+								FROM = {
+									OR = {
+										tag = SOU
+										is_in_faction_with = SOU
+									}
 								}
 							}
-							add_to_array = { global.russian_scw_participants_sou = FROM.id }
+							add_to_array = { global.russian_scw_participants_sou = FROM }
 						}
 						else_if = {
 							limit = {
-								OR = {
-									tag = UKR
-									is_in_faction_with = UKR
+								FROM = {
+									OR = {
+										tag = UKR
+										is_in_faction_with = UKR
+									}
 								}
+								is_in_array = { global.russian_scw_participants = UKR }
 							}
-							add_to_array = { global.russian_scw_participants_ukr = FROM.id }
+							add_to_array = { global.russian_scw_participants_ukr = FROM }
 						}
 						else = {
-							add_to_array = { global.russian_scw_participants_other = ROOT.id }
+							add_to_array = { global.russian_scw_participants_other = FROM }
 						}
 					}
 				}
-				sov_remove_non_existant_countries_from_scw_array = yes
+				sov_clean_scw_arrays = yes
 			}
 		}
 	}
@@ -684,7 +829,40 @@ on_actions = {
 				limit = {
 					has_global_flag = second_russian_civil_war_in_progress
 				}
-				sov_remove_non_existant_countries_from_scw_array = yes
+				sov_clean_scw_arrays = yes
+			}
+		}
+	}
+
+	on_subject_annexed = {
+		effect = {
+			if = {
+				limit = {
+					has_global_flag = second_russian_civil_war_in_progress
+				}
+				sov_clean_scw_arrays = yes
+			}
+		}
+	}
+
+	on_release_as_free = {
+		effect = {
+			if = {
+				limit = {
+					has_global_flag = second_russian_civil_war_in_progress
+				}
+				sov_clean_scw_arrays = yes
+			}
+		}
+	}
+
+	on_release_as_puppet = {
+		effect = {
+			if = {
+				limit = {
+					has_global_flag = second_russian_civil_war_in_progress
+				}
+				sov_clean_scw_arrays = yes
 			}
 		}
 	}
@@ -695,7 +873,95 @@ on_actions = {
 				limit = {
 					has_global_flag = second_russian_civil_war_in_progress
 				}
-				sov_remove_non_existant_countries_from_scw_array = yes
+				sov_clean_scw_arrays = yes
+			}
+		}
+	}
+
+	on_peace = {
+		effect = {
+			if = {
+				limit = {
+					has_global_flag = second_russian_civil_war_in_progress
+				}
+				sov_clean_scw_arrays = yes
+			}
+		}
+	}
+
+	on_create_faction = {
+		effect = {
+			if = {
+				limit = {
+					has_global_flag = second_russian_civil_war_in_progress
+				}
+				sov_clean_scw_arrays = yes
+			}
+		}
+	}
+
+	on_faction_formed = {
+		effect = {
+			if = {
+				limit = {
+					has_global_flag = second_russian_civil_war_in_progress
+				}
+				sov_clean_scw_arrays = yes
+			}
+		}
+	}
+
+	on_join_faction = {
+		effect = {
+			if = {
+				limit = {
+					has_global_flag = second_russian_civil_war_in_progress
+				}
+				sov_clean_scw_arrays = yes
+			}
+		}
+	}
+
+	on_leave_faction = {
+		effect = {
+			if = {
+				limit = {
+					has_global_flag = second_russian_civil_war_in_progress
+				}
+				sov_clean_scw_arrays = yes
+			}
+		}
+	}
+
+	on_weekly_SOV = {
+		effect = {
+			if = {
+				limit = {
+					has_global_flag = second_russian_civil_war_in_progress
+				}
+				sov_clean_scw_arrays = yes
+			}
+		}
+	}
+
+	on_weekly_SOU = {
+		effect = {
+			if = {
+				limit = {
+					has_global_flag = second_russian_civil_war_in_progress
+				}
+				sov_clean_scw_arrays = yes
+			}
+		}
+	}
+
+	on_weekly_UKR = {
+		effect = {
+			if = {
+				limit = {
+					has_global_flag = second_russian_civil_war_in_progress
+				}
+				sov_clean_scw_arrays = yes
 			}
 		}
 	}

@@ -2,7 +2,6 @@
 #Setup SOV
 sov_setup_scw = {
     SOV = {
-        add_to_array = { global.russian_scw_participants = SOV.id }
         country_lock_all_division_template = no
         division_template = {
             name = "Patrul'nyy Ttryad Militsii"
@@ -479,7 +478,6 @@ sov_setup_scw = {
 
 #Setup SOU
 sov_spawn_sou_scw = {
-    add_to_array = { global.russian_scw_participants = SOU.id }
     every_state = {
         limit = {
             is_core_of = SOV
@@ -3052,9 +3050,12 @@ sov_spawn_english_ships_marines_scw = {
     }
 }
 
-sov_remove_non_existant_countries_from_scw_array = {
+sov_clean_scw_arrays = {
+    log = "Russia Reworked sov_clean_scw_arrays debug :"
     for_each_scope_loop = {
         array = global.russian_scw_participants
+
+        log = " THIS : [THIS.GetNameDef]"
 
         if = {
             limit = {
@@ -3063,43 +3064,153 @@ sov_remove_non_existant_countries_from_scw_array = {
                     NOT = {
                         has_global_flag = second_russian_civil_war_in_progress
                     }
-                    AND = {
-                        NOT = {
-                            has_war_with = SOV
-                            has_war_with = SOU
+                    NOT = {
+                        has_war_with = SOV
+                        has_war_with = SOU
+                        if = {
+                            limit = {
+                                is_in_array = { global.russian_scw_participants = UKR }
+                            }
                             has_war_with = UKR
                         }
                     }
                 }
             }
-            log = "ROOT : [ROOT.GetNameDef]"
-            log = "THIS : [THIS.GetNameDef]"
-            log = "FROM : [FROM.GetNameDef]"
-            log = "PREV : [PREV.GetNameDef]"
-            remove_from_array = { global.russian_scw_participants = PREV.id }
+            remove_from_array = { global.russian_scw_participants = THIS }
             if = {
                 limit = {
-                    is_in_array = { global.russian_scw_participants_sov = PREV.id }
+                    is_in_array = { global.russian_scw_participants_sov = THIS }
                 }
-                remove_from_array = { global.russian_scw_participants_sov = PREV.id }
+                remove_from_array = { global.russian_scw_participants_sov = THIS }
             }
             if = {
                 limit = {
-                    is_in_array = { global.russian_scw_participants_sou = PREV.id }
+                    is_in_array = { global.russian_scw_participants_sou = THIS }
                 }
-                remove_from_array = { global.russian_scw_participants_sou = PREV.id }
+                remove_from_array = { global.russian_scw_participants_sou = THIS }
             }
             if = {
                 limit = {
-                    is_in_array = { global.russian_scw_participants_ukr = PREV.id }
+                    is_in_array = { global.russian_scw_participants_ukr = THIS }
                 }
-                remove_from_array = { global.russian_scw_participants_ukr = PREV.id }
+                remove_from_array = { global.russian_scw_participants_ukr = THIS }
             }
             if = {
                 limit = {
-                    is_in_array = { global.russian_scw_participants_other = PREV.id }
+                    is_in_array = { global.russian_scw_participants_other = THIS }
                 }
-                remove_from_array = { global.russian_scw_participants_other = PREV.id }
+                remove_from_array = { global.russian_scw_participants_other = THIS }
+            }
+        }
+        else = {
+            if = {
+                limit = {
+                    is_in_array = { global.russian_scw_participants_sov = THIS }
+                    NOT = {
+                        tag = SOV
+                        is_in_faction_with = SOV
+                    }
+                }
+                remove_from_array = { global.russian_scw_participants_sov = THIS }
+            }
+            if = {
+                limit = {
+                    is_in_array = { global.russian_scw_participants_sou = THIS }
+                    NOT = {
+                        tag = SOU
+                        is_in_faction_with = SOU
+                    }
+                }
+                remove_from_array = { global.russian_scw_participants_sou = THIS }
+            }
+            if = {
+                limit = {
+                    is_in_array = { global.russian_scw_participants_ukr = THIS }
+                    NOT = {
+                        tag = UKR
+                        is_in_faction_with = UKR
+                    }
+                    is_in_array = { global.russian_scw_participants = UKR }
+                }
+                remove_from_array = { global.russian_scw_participants_ukr = THIS }
+            }
+            if = {
+                limit = {
+                    is_in_array = { global.russian_scw_participants_other = THIS }
+                    OR = {
+                        tag = SOV
+                        tag = SOU
+                        tag = UKR
+                        is_in_faction_with = SOV
+                        is_in_faction_with = SOU
+                        is_in_faction_with = UKR
+                    }
+                }
+                remove_from_array = { global.russian_scw_participants_other = THIS }
+            }
+
+            if = {
+                limit = {
+                    NOT = {
+                        is_in_array = { global.russian_scw_participants_sov = THIS }
+                    }
+                    OR = {
+                        tag = SOV
+                        is_in_faction_with = SOV
+                    }
+                }
+                add_to_array = { global.russian_scw_participants_sov = THIS }
+            }
+            else_if = {
+                limit = {
+                    NOT = {
+                        is_in_array = { global.russian_scw_participants_sou = THIS }
+                    }
+                    OR = {
+                        tag = SOU
+                        is_in_faction_with = SOU
+                    }
+                }
+                add_to_array = { global.russian_scw_participants_sou = THIS }
+            }
+            else_if = {
+                limit = {
+                    NOT = {
+                        is_in_array = { global.russian_scw_participants_ukr = THIS }
+                    }
+                    OR = {
+                        tag = UKR
+                        is_in_faction_with = UKR
+                    }
+                    is_in_array = { global.russian_scw_participants = UKR }
+                }
+                add_to_array = { global.russian_scw_participants_ukr = THIS }
+            }
+            else_if = {
+                limit = {
+                    NOT = {
+                        is_in_array = { global.russian_scw_participants_other = THIS }
+                    }
+                    NOT = {
+                        tag = SOV
+                        tag = SOU
+                        tag = UKR
+                        is_in_faction_with = SOV
+                        is_in_faction_with = SOU
+                        is_in_faction_with = UKR
+                    }
+                    OR = {
+                        has_war_with = SOV
+                        has_war_with = SOU
+                        if = {
+                            limit = {
+                                is_in_array = { global.russian_scw_participants = UKR }
+                            }
+                            has_war_with = UKR
+                        }
+                    }
+                }
+                add_to_array = { global.russian_scw_participants_other = THIS }
             }
         }
     }
