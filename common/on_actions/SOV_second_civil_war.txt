@@ -533,6 +533,12 @@ on_actions = {
 								tag = SOU
 								tag = UKR
 							}
+							if = {
+								limit = {
+									tag = UKR
+								}
+								is_in_array = { global.russian_scw_participants = UKR.id }
+							}
 						}
 						FROM = {
 							OR = {
@@ -540,15 +546,20 @@ on_actions = {
 								tag = SOU
 								tag = UKR
 							}
+							if = {
+								limit = {
+									tag = UKR
+								}
+								is_in_array = { global.russian_scw_participants = UKR.id }
+							}
 						}
-					}
-					ROOT = {
-						has_war_with = FROM
 					}
 				}
 				if = {
 					limit = {
-						is_in_array = { global.russian_scw_participants = FROM.id }
+						ROOT = {
+							has_war_with = FROM
+						}
 						NOT = {
 							is_in_array = { global.russian_scw_participants = ROOT.id }
 						}
@@ -557,19 +568,28 @@ on_actions = {
 					ROOT = {
 						if = {
 							limit = {
-								is_in_faction_with = SOV
+								OR = {
+									tag = SOV
+									is_in_faction_with = SOV
+								}
 							}
 							add_to_array = { global.russian_scw_participants_sov = ROOT.id }
 						}
 						else_if = {
 							limit = {
-								is_in_faction_with = SOU
+								OR = {
+									tag = SOU
+									is_in_faction_with = SOU
+								}
 							}
 							add_to_array = { global.russian_scw_participants_sou = ROOT.id }
 						}
 						else_if = {
 							limit = {
-								is_in_faction_with = UKR
+								OR = {
+									tag = UKR
+									is_in_faction_with = UKR
+								}
 							}
 							add_to_array = { global.russian_scw_participants_ukr = ROOT.id }
 						}
@@ -578,9 +598,11 @@ on_actions = {
 						}
 					}
 				}
-				else_if = {
+				if = {
 					limit = {
-						is_in_array = { global.russian_scw_participants = ROOT.id }
+						FROM = {
+							has_war_with = ROOT
+						}
 						NOT = {
 							is_in_array = { global.russian_scw_participants = FROM.id }
 						}
@@ -589,19 +611,28 @@ on_actions = {
 					FROM = {
 						if = {
 							limit = {
-								is_in_faction_with = SOV
+								OR = {
+									tag = SOV
+									is_in_faction_with = SOV
+								}
 							}
 							add_to_array = { global.russian_scw_participants_sov = FROM.id }
 						}
 						else_if = {
 							limit = {
-								is_in_faction_with = SOU
+								OR = {
+									tag = SOU
+									is_in_faction_with = SOU
+								}
 							}
 							add_to_array = { global.russian_scw_participants_sou = FROM.id }
 						}
 						else_if = {
 							limit = {
-								is_in_faction_with = UKR
+								OR = {
+									tag = UKR
+									is_in_faction_with = UKR
+								}
 							}
 							add_to_array = { global.russian_scw_participants_ukr = FROM.id }
 						}
