@@ -112,6 +112,9 @@ on_actions = {
 									BLR = {
 										is_subject_of = UKR
 									}
+									SOU = {
+										is_subject_of = UKR
+									}
 								}
 							}
 						}
@@ -185,298 +188,327 @@ on_actions = {
 						}
 					}
 				}
-
-				#UKR Wins SCW
-				if = {
-					limit = {
-						ukr_in_scw = yes
-						NOT = {
-							sou_in_scw = yes
-							sov_in_scw = yes
-						}
-						ROOT = {
-							OR = {
-								tag = SOU
-								tag = SOU
-							}
-						}
-						FROM = {
-							tag = UKR
-						}
-					}
-					ROOT = {
-						transfer_navy = {
-							target = FROM
-						}
-					}	
-					every_state = {
-						limit = {
-							is_owned_by = ROOT
-						}
-						FROM = {
-							transfer_state = PREV
-						}
-					}
-					if = {
-						limit = {
-							UKR = {
-								NOT = {
-									has_government = anarchy
-								}
-							}
-						}		
-						for_each_scope_loop = {
-							array = sou.owned_states
-
-							if = {
-								limit = {
-									is_in_array = { ukr.scw_claimed_states = PREV }
-								}
-								UKR = {
-									if = {
-										limit = {
-											is_in_array = { global.kievan_rus_state_ukraine = PREV }
-										}
-										transfer_state = PREV
-									}
-									else_if = {
-										limit = {
-											SOU = {
-												is_subject_of = UKR
-											}
-										}
-										every_state = {
-											limit = {
-												is_core_of = SOU
-												is_core_of = SOV
-												is_owned_by = SOV
-											}
-											SOU = {
-												transfer_state = PREV
-											}
-										}
-									}
-									else_if = {
-										limit = {
-											NOT = {
-												SOU = {
-													is_subject_of = UKR
-												}
-											}
-										}
-										UKR = {
-											set_autonomy = {
-												target = SOV
-												autonomy_state = autonomy_puppet
-											}
-										}
-									}
-								}
-							}
-						}				
-						for_each_scope_loop = {
-							array = sov.owned_states
-
-							if = {
-								limit = {
-									is_in_array = { ukr.scw_claimed_states = PREV }
-								}
-								UKR = {
-									if = {
-										limit = {
-											is_in_array = { global.kievan_rus_state_ukraine = PREV }
-										}
-										transfer_state = PREV
-									}
-									else_if = {
-										limit = {
-											SOU = {
-												is_subject_of = UKR
-											}
-										}
-										every_state = {
-											limit = {
-												is_core_of = SOU
-												is_core_of = SOV
-												is_owned_by = SOV
-											}
-											SOU = {
-												transfer_state = PREV
-											}
-										}
-									}
-									else_if = {
-										limit = {
-											NOT = {
-												SOU = {
-													is_subject_of = UKR
-												}
-											}
-										}
-										UKR = {
-											set_autonomy = {
-												target = SOV
-												autonomy_state = autonomy_puppet
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-					else_if = {
-						limit = {
-							UKR = {
-								has_government = anarchy
-							}
-						}
-						every_state = {
-							limit = {
-								is_owned_by = ROOT
-							}
-							FROM = {
-								transfer_state = PREV
-							}
-						}
-					}
-					FROM = { #TODO Event For End of Civil War UKR
-						country_event = { id = ukrains.47  hours = 6 }
-						#news_event = { id =  days = 1 }
-					}
-				}
-				#SOU Wins SCW
-				else_if = {
-					limit = {
-						sou_in_scw = yes
-						NOT = {
-							ukr_in_scw = yes
-							sov_in_scw = yes
-						}
-						ROOT = {
-							OR = {
-								tag = SOV
-								tag = UKR
-							}
-						}
-						FROM = {
-							tag = SOU
-						}
-					}
-					ROOT = {
-						transfer_navy = {
-							target = FROM
-						}
-					}	
-					every_state = {
-						limit = {
-							is_owned_by = ROOT
-						}
-						FROM = {
-							transfer_state = PREV
-						}
-					}
-					if = {
-						limit = {
-							OR = {
-								TAG = GEO
-								TAG = BLR
-								TAG = AZR
-								TAG = ARM
-								TAG = KAZ
-								TAG = TMS
-							}
-						}
-						SOU = {
-							add_state_core = PREV
-						}
-					}
-					FROM = {
-						country_event = { id = soviets.238 hours = 3 }
-						news_event = { id = newsrussia2.68 days = 1 }
-					}
-				}
-				#SOV Wins SCW
-				else_if = {
-					limit = {
-						sov_in_scw = yes
-						NOT = {
-							ukr_in_scw = yes
-							sou_in_scw = yes
-						}
-						ROOT = {
-							OR = {
-								tag = SOU
-								tag = UKR
-							}
-						}
-						FROM = {
-							tag = SOV
-						}
-					}
-					ROOT = {
-						transfer_navy = {
-							target = FROM
-						}
-					}	
-					every_state = {
-						limit = {
-							is_owned_by = ROOT
-						}
-						FROM = {
-							transfer_state = PREV
-						}
-					}
-					if = {
-						limit = {
-							UKR = {
-								OR = {
-									is_in_faction_with = ROOT
-									has_war_with = FROM
-								}
-							}
-						}
-						every_state = {
-							limit = {
-								is_owned_by = UKR
-							}
-							FROM = {
-								transfer_state = PREV
-								add_state_core = PREV
-							}
-						}
-					}
-					FROM = {
-						country_event = { id = soviets.190 hours = 6 }
-						news_event = { id = newsrussia2.67 days = 1 }
-					}
-					if = {
-						limit = {
-							FROM = {
-								OR = {
-									has_country_flag = japan_accept_to_help_give_russian_far_east
-									has_country_flag = has_negotiated_with_germany_ressource_rights
-									has_country_flag = accept_american_occupation_siberia_after_cw 
-									has_country_flag = accept_french_factories_after_cw 
-									has_country_flag = accept_diplomatic_relation_with_italy 
-									has_country_flag = accept_english_help_for_shipment 
-								}
-							}
-						}
-						FROM = {
-							country_event = { id = generics.34 days = 7 }
-						}
-					}
-					every_country = {
-						limit = {
-							has_country_flag = has_helped_whiteguard_by_volunteers
-						}
-						country_event = { id = generics.35 days = 1 }
-					}
-				}
 			}
 		}
 	}
 
+	#Someon Wins SCW
+	on_capitulation = {
+		effect = {
+			#UKR Wins SCW
+			if = {
+				limit = {
+					ukr_in_scw = yes
+					OR = {
+						AND = {
+							ROOT = {
+								TAG = SOU
+							}
+							NOT = {
+								sov_in_scw = yes
+							}
+						}
+						AND = {
+							ROOT = {
+								TAG = SOV
+							}
+							NOT = {
+								sou_in_scw = yes
+							}
+						}
+					}
+					FROM = {
+						tag = UKR
+					}
+				}
+				ROOT = {
+					transfer_navy = {
+						target = FROM
+					}
+				}	
+				every_state = {
+					limit = {
+						is_owned_by = ROOT
+					}
+					FROM = {
+						transfer_state = PREV
+					}
+				}
+				if = {
+					limit = {
+						UKR = {
+							NOT = {
+								has_government = anarchy
+							}
+						}
+					}		
+					for_each_scope_loop = {
+						array = sou.owned_states
+
+						if = {
+							limit = {
+								is_in_array = { ukr.scw_claimed_states = PREV }
+							}
+							UKR = {
+								if = {
+									limit = {
+										is_in_array = { global.kievan_rus_state_ukraine = PREV }
+									}
+									transfer_state = PREV
+								}
+								else_if = {
+									limit = {
+										SOU = {
+											is_subject_of = UKR
+										}
+									}
+									every_state = {
+										limit = {
+											is_core_of = SOU
+											is_core_of = SOV
+											is_owned_by = SOV
+										}
+										SOU = {
+											transfer_state = PREV
+										}
+									}
+								}
+								else_if = {
+									limit = {
+										NOT = {
+											SOU = {
+												is_subject_of = UKR
+											}
+										}
+									}
+									UKR = {
+										set_autonomy = {
+											target = SOV
+											autonomy_state = autonomy_puppet
+										}
+									}
+								}
+							}
+						}
+					}				
+					for_each_scope_loop = {
+						array = sov.owned_states
+
+						if = {
+							limit = {
+								is_in_array = { ukr.scw_claimed_states = PREV }
+							}
+							UKR = {
+								if = {
+									limit = {
+										is_in_array = { global.kievan_rus_state_ukraine = PREV }
+									}
+									transfer_state = PREV
+								}
+								else_if = {
+									limit = {
+										SOU = {
+											is_subject_of = UKR
+										}
+									}
+									every_state = {
+										limit = {
+											is_core_of = SOU
+											is_core_of = SOV
+											is_owned_by = SOV
+										}
+										SOU = {
+											transfer_state = PREV
+										}
+									}
+								}
+								else_if = {
+									limit = {
+										NOT = {
+											SOU = {
+												is_subject_of = UKR
+											}
+										}
+									}
+									UKR = {
+										set_autonomy = {
+											target = SOV
+											autonomy_state = autonomy_puppet
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						UKR = {
+							has_government = anarchy
+						}
+					}
+					every_state = {
+						limit = {
+							is_owned_by = ROOT
+						}
+						FROM = {
+							transfer_state = PREV
+						}
+					}
+				}
+				FROM = { #TODO Event For End of Civil War UKR
+					country_event = { id = ukrains.47  hours = 6 }
+					#news_event = { id =  days = 1 }
+				}
+			}
+			#SOU Wins SCW
+			else_if = {
+				limit = {
+					sou_in_scw = yes
+					OR = {
+						AND = {
+							ROOT = {
+								TAG = SOV
+							}
+							NOT = {
+								ukr_in_scw = yes
+							}
+						}
+						AND = {
+							ROOT = {
+								TAG = UKR
+							}
+							NOT = {
+								sov_in_scw = yes
+							}
+						}
+					}
+					FROM = {
+						tag = SOU
+					}
+				}
+				ROOT = {
+					transfer_navy = {
+						target = FROM
+					}
+				}	
+				every_state = {
+					limit = {
+						is_owned_by = ROOT
+					}
+					FROM = {
+						transfer_state = PREV
+					}
+				}
+				if = {
+					limit = {
+						OR = {
+							TAG = GEO
+							TAG = BLR
+							TAG = AZR
+							TAG = ARM
+							TAG = KAZ
+							TAG = TMS
+						}
+					}
+					SOU = {
+						add_state_core = PREV
+					}
+				}
+				FROM = {
+					country_event = { id = soviets.238 hours = 3 }
+					news_event = { id = newsrussia2.68 days = 1 }
+				}
+			}
+			#SOV Wins SCW
+			else_if = {
+				limit = {
+					sov_in_scw = yes
+					OR = {
+						AND = {
+							ROOT = {
+								TAG = SOU
+							}
+							NOT = {
+								ukr_in_scw = yes
+							}
+						}
+						AND = {
+							ROOT = {
+								TAG = UKR
+							}
+							NOT = {
+								sou_in_scw = yes
+							}
+						}
+					}
+					FROM = {
+						tag = SOV
+					}
+				}
+				ROOT = {
+					transfer_navy = {
+						target = FROM
+					}
+				}	
+				every_state = {
+					limit = {
+						is_owned_by = ROOT
+					}
+					FROM = {
+						transfer_state = PREV
+					}
+				}
+				if = {
+					limit = {
+						UKR = {
+							OR = {
+								is_in_faction_with = ROOT
+								has_war_with = FROM
+							}
+						}
+					}
+					every_state = {
+						limit = {
+							is_owned_by = UKR
+						}
+						FROM = {
+							transfer_state = PREV
+							add_state_core = PREV
+						}
+					}
+				}
+				FROM = {
+					country_event = { id = soviets.190 hours = 6 }
+					news_event = { id = newsrussia2.67 days = 1 }
+				}
+				if = {
+					limit = {
+						FROM = {
+							OR = {
+								has_country_flag = japan_accept_to_help_give_russian_far_east
+								has_country_flag = has_negotiated_with_germany_ressource_rights
+								has_country_flag = accept_american_occupation_siberia_after_cw 
+								has_country_flag = accept_french_factories_after_cw 
+								has_country_flag = accept_diplomatic_relation_with_italy 
+								has_country_flag = accept_english_help_for_shipment 
+							}
+						}
+					}
+					FROM = {
+						country_event = { id = generics.34 days = 7 }
+					}
+				}
+				every_country = {
+					limit = {
+						has_country_flag = has_helped_whiteguard_by_volunteers
+					}
+					country_event = { id = generics.35 days = 1 }
+				}
+			}
+		}	
+	}
+	
 	#Set a country flag for major that send volunteers to WG durinf CW
 	on_send_volunteers = {
 		effect = {
