@@ -26524,18 +26524,158 @@ country_event = {
 
 #END OF THE PURGE EVENTS
 
-#Use this id for the next event - keeping 10 ids in reserve for the purges
+#Helping SOU (TAN)
 country_event = {
 	id = soviets.601
 	title = soviets.601.t
 	desc = soviets.601.d
 
-	is_triggered_only = yes
+	fire_only_once = yes
+
+	trigger = {
+		has_global_flag = second_russian_civil_war_in_progress
+		is_in_array = { global.russian_scw_participants = SOU }
+		tag = TAN
+		has_government = communism
+		has_war = no
+		any_of_scopes = {
+			array = global.russian_scw_participants
+
+			is_neighbor_of = TAN
+		}
+		SOU = {
+			exists = yes
+			has_war = yes
+			is_subject = no
+			is_faction_leader = yes
+		}
+	}
 	
 	option = {
 		name = soviets.601.a
 		ai_chance = {
+			factor = 50
+		}
+		set_country_flag = minor_helped_sou_scw
+		add_stability = 0.05
+		add_war_support = 0.1
+		add_political_power = 100
+		SOU = {
+			add_to_faction = ROOT
+		}
+		hidden_effect = {
+			for_each_scope_loop = {
+				array = global.russian_scw_participants
+
+				if = {
+					limit = {
+						NOT = {
+							has_war_with = ROOT
+						}
+					}
+					country_event = soviets.603
+				}
+			}
+		}
+	}
+
+	option = {
+		name = soviets.601.b
+		ai_chance = {
+			factor = 50
+		}
+		add_stability = 0.1
+	}
+}
+
+#Helping SOU (MON)
+country_event = {
+	id = soviets.602
+	title = soviets.602.t
+	desc = soviets.602.d
+
+	fire_only_once = yes
+
+	trigger = {
+		has_global_flag = second_russian_civil_war_in_progress
+		is_in_array = { global.russian_scw_participants = SOU }
+		tag = MON
+		has_government = communism
+		has_war = no
+		any_of_scopes = {
+			array = global.russian_scw_participants
+
+			is_neighbor_of = MON
+		}
+		SOU = {
+			exists = yes
+			has_war = yes
+			is_subject = no
+			is_faction_leader = yes
+		}
+	}
+	
+	option = {
+		name = soviets.602.a
+		ai_chance = {
+			factor = 40
+		}
+		set_country_flag = minor_helped_sou_scw
+		add_stability = 0.05
+		add_war_support = 0.1
+		add_political_power = 100
+		SOU = {
+			add_to_faction = ROOT
+		}
+		hidden_effect = {
+			for_each_scope_loop = {
+				array = global.russian_scw_participants
+
+				if = {
+					limit = {
+						NOT = {
+							is_in_array = { global.russian_scw_participants_sou = THIS }
+						}
+					}
+					country_event = soviets.603
+				}
+			}
+		}
+	}
+
+	option = {
+		name = soviets.602.b
+		ai_chance = {
+			factor = 60
+		}
+		add_stability = 0.1
+	}
+}
+
+#FROM Helps SOU
+country_event = {
+	id = soviets.603
+	title = soviets.603.t
+	desc = soviets.603.d
+
+	is_triggered_only = yes
+	
+	option = {
+		name = soviets.603.a
+		ai_chance = {
 			factor = 100
+		}
+		if = {
+			limit = {
+				NOT = {
+					is_in_array = { global.russian_scw_participants_sou = ROOT }
+					has_war_with = FROM
+				}
+			}
+			declare_war_on = {
+				target = FROM
+				type = second_russian_civil_war
+			}
 		}
 	}
 }
