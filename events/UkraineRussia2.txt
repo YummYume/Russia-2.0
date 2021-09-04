@@ -307,10 +307,11 @@ country_event = {
 		has_global_flag = second_russian_civil_war_in_progress
 		NOT = {
 			has_government = anarchy
+			has_country_flag = ukr_anarchist_rebels
 		}
 		SOU = {
 			has_war_with = SOV
-			surrender_progress > 0.7
+			surrender_progress > 0.65
 		}
 	}
 
@@ -331,7 +332,52 @@ country_event = {
 		add_ideas = SOV_Second_civil_war
 		if = {
 			limit = {
-				has_idea = SOV_Neutrality_second
+				has_country_flag = has_accepted_scw_neutrality
+			}
+			custom_effect_tooltip = sov_might_take_action_sou
+			hidden_effect = {
+				SOV = {
+					country_event = { id = ukrains.11 hours = 1 }
+				}
+			}
+		}
+	}
+
+	option = { #Alliance with Finland
+		name = ukrains.10.b
+		trigger = {
+			FIN = {
+				exists = yes
+				NOT = {
+					has_war = yes
+					is_faction_leader = yes
+					is_subject = yes
+				}
+			}
+			any_of_scopes = {
+				array = global.russian_scw_participants
+
+				is_neighbor_of = FIN
+			}
+		}
+		ai_chance = { factor = 25 }
+		declare_war_on = {
+			target = SOU
+			type = annex_everything
+		}
+		hidden_effect = {
+			SOU = {
+				country_event = { id = ukrains.38 days = 1 }
+			}
+		}
+		add_ideas = SOV_Second_civil_war
+		FIN = {
+			country_event = ukrains.50
+		}
+		custom_effect_tooltip = ukr_will_make_concessions_fin
+		if = {
+			limit = {
+				has_country_flag = has_accepted_scw_neutrality
 			}
 			custom_effect_tooltip = sov_might_take_action_sou
 			hidden_effect = {
@@ -343,8 +389,8 @@ country_event = {
 	}
 
 	option = { #Do nothing
-		name = ukrains.10.b
-		ai_chance = { factor = 75 }
+		name = ukrains.10.c
+		ai_chance = { factor = 50 }
 		add_stability = 0.05
 	}
 }
@@ -1363,6 +1409,10 @@ country_event = {
 
 				country_event = ukrains.39
 			}
+			add_popularity = {
+				ideology = anarchy
+				popularity = 0.5
+			}
 		}
 	}
 
@@ -1412,6 +1462,10 @@ country_event = {
 				array = global.russian_scw_participants
 
 				country_event = ukrains.39
+			}
+			add_popularity = {
+				ideology = anarchy
+				popularity = 0.5
 			}
 		}
 	}
@@ -1771,6 +1825,94 @@ country_event = {
 
 	option = { #Damn
 		name = ukrains.49.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#Ukraine Asks for Alliance
+country_event = {
+	id = ukrains.50
+	title = ukrains.50.t
+	desc = ukrains.50.d
+	picture = GFX_report_event_polish_army
+	is_triggered_only = yes
+
+	option = { #Sure
+		name = ukrains.50.a
+		ai_chance = {
+			factor = 75
+		}
+		set_country_flag = fin_accepted_scw_ukr_alliance
+		add_stability = 0.1
+		add_war_support = 0.1
+		add_political_power = 100
+		UKR = {
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							is_faction_leader = yes
+						}
+					}
+					create_faction = finnish_ukrainian_alliance
+				}
+			}
+			add_to_faction = ROOT
+			country_event = ukrains.51
+		}
+		declare_war_on = {
+			target = SOU
+			type = second_russian_civil_war
+		}
+		if = {
+			limit = {
+				UKR = {
+					has_country_flag = has_accepted_scw_neutrality
+				}
+			}
+			custom_effect_tooltip = sov_might_take_action_fin
+		}
+	}
+
+	option = { #No
+		name = ukrains.50.a
+		ai_chance = {
+			factor = 25
+		}
+		UKR = {
+			country_event = ukrains.52
+		}
+	}
+}
+
+#Finland Accepts
+country_event = {
+	id = ukrains.51
+	title = ukrains.51.t
+	desc = ukrains.51.d
+	picture = GFX_report_event_polish_army
+	is_triggered_only = yes
+
+	option = { #Yay
+		name = ukrains.51.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#Finland Refuses
+country_event = {
+	id = ukrains.52
+	title = ukrains.52.t
+	desc = ukrains.52.d
+	picture = GFX_report_event_polish_army
+	is_triggered_only = yes
+
+	option = { #Damn
+		name = ukrains.52.a
 		ai_chance = {
 			factor = 100
 		}
