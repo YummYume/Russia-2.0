@@ -24,35 +24,33 @@ on_actions = {
 						}
 					}
 					log = "[UKR.GetNameDefCap] Capitulated (vs SOU & SOV)"
-					if = { #Add Condition for states that aren't being controlled by those two
-						limit = {
-							OR = {
-								any_state = {
-									is_owned_by = UKR
+					for_each_loop = {
+						array = ukr.owned_states
+						value = v
+						index = i
+						break = break_array
+
+						add_to_temp_array = { ukr.owned_states_scw = var:v }
+					}
+					for_each_loop = {
+						array = ukr.owned_states_scw
+						value = v
+						index = i
+						break = break_array
+
+						if = {
+							limit = {
+								var:v = {
 									is_controlled_by = SOV
 								}
-								any_state = {
-									is_owned_by = UKR
-									is_controlled_by = SOU
-								}
-							}
-						}
-						every_state = {
-							limit = {
-								is_owned_by = UKR
-								is_controlled_by = SOV
 							}
 							SOV = {
-								transfer_state = PREV
+								transfer_state = var:v
 							}
 						}
-						every_state = {
-							limit = {
-								is_owned_by = UKR
-								is_controlled_by = SOU
-							}
+						else = {
 							SOU = {
-								transfer_state = PREV
+								transfer_state = var:v
 							}
 						}
 					}
@@ -82,6 +80,26 @@ on_actions = {
 						break = break_array
 
 						if = {
+							limit = {
+								var:v = {
+									OR = {
+										state = 195
+										state = 213
+										state = 215
+										state = 216
+									}
+								}
+								FIN = {
+									is_in_faction_with = UKR
+									has_country_flag = fin_accepted_scw_ukr_alliance
+									is_in_array = { global.russian_scw_participants = FIN }
+								}
+							}
+							FIN = {
+								transfer_state = var:v
+							}
+						}
+						else_if = {
 							limit = {
 								is_in_array = { ukr.scw_claimed_states = var:v }
 							}
@@ -174,14 +192,16 @@ on_actions = {
 								is_in_faction_with = UKR
 								has_country_flag = fin_accepted_scw_ukr_alliance
 								is_in_array = { global.russian_scw_participants = FIN }
+								OR = {
+									owns_state = 195
+									owns_state = 213
+									owns_state = 215
+									owns_state = 216
+								}
 							}
 						}
 						FIN = {
-							transfer_state = 195
-							transfer_state = 213
-							transfer_state = 215
-							transfer_state = 216
-							country_event = { id = finlands.1 days = 2 }
+							country_event = { id = finlands.33 days = 1 }
 						}
 					}
 				}
