@@ -102,17 +102,31 @@ on_actions = {
 										transfer_state = var:v
 									}
 								}
-								else_if = {
-									limit = {
-										SOU = {
-											is_subject = no
+								else = {
+									if = {
+										limit = {
+											SOU = {
+												is_subject = no
+											}
+										}
+										UKR = {
+											set_autonomy = {
+												target = SOU
+												autonomy_state = autonomy_puppet
+											}
 										}
 									}
-									UKR = {
-										set_autonomy = {
-											target = SOU
-											autonomy_state = autonomy_puppet
+									if = {
+										limit = {
+											NOT = {
+												SOU = {
+													controls_state = var:v
+												}
+											}
 										}
+										SOU = {
+											set_state_controller = var:v
+										} 
 									}
 								}
 							}
