@@ -981,5 +981,34 @@ on_actions = {
 				}
 			}
 		}
-	}	
+	}
+
+	on_daily = { #Remove National Spirits if RCW is over
+		effect = {
+			if = {
+				limit = {
+					FROM = {
+						OR = {
+							has_idea = SOV_Supply_line
+							has_idea = SOV_Second_civil_war
+							has_idea = SOV_Urals_secret
+							has_idea = SOV_Slow_industry
+							has_idea = SOV_Organize_volunteer_forces
+						}
+						has_global_flag = second_russian_civil_war_over
+						NOT = {
+							has_global_flag = second_russian_civil_war_in_progress
+						}
+					}
+				}
+				FROM = {
+					remove_ideas = SOV_Supply_line
+					remove_ideas = SOV_Second_civil_war
+					remove_ideas = SOV_Urals_secret
+					remove_ideas = SOV_Slow_industry
+					remove_ideas = SOV_Organize_volunteer_forces
+				}
+			}
+		}
+	}
 }
