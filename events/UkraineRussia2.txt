@@ -1945,6 +1945,75 @@ country_event = {
 			set_country_flag = white_guard_lost_civil_war
 		}
 		hidden_effect = {
+			if = {
+				limit = {
+					NOT = {
+						country_exists = SOU
+					}
+				}
+				every_state = {
+					limit = {
+						is_core_of = SOU
+					}
+					remove_core_of = SOU
+				}
+			}
+			if = {
+				limit = {
+					SOV = {
+						is_subject_of = UKR
+					}
+				}
+				every_state = {
+					limit = {
+						is_owned_by = SOV
+					}
+					SOV = {
+						transfer_state = PREV
+					}
+				}
+				SOV = {
+					set_province_name = { id = 3529 name = "Tsaritsyn"}
+					217 = {
+						set_state_name = "Tsaritsyn"
+					}
+					set_capital = 217
+				}
+			}
+			if = {
+				limit = {
+					SOU = {
+						is_subject_of = UKR
+					}
+				}
+				SOU = {
+					retire_ideology_leader = communism
+					every_army_leader = {
+						retire = yes
+					}
+					sou_general_end_civil_war = yes
+					sou_create_country_leader_sov = yes
+				}
+				set_province_name = { id = 3529 name = "Tsaritsyn"}
+				217 = {
+					set_state_name = "Tsaritsyn"
+				}
+				set_capital = 217
+				every_state = {
+					limit = {
+						is_core_of = SOV
+					}
+					remove_core_of = SOV
+				}
+				every_state = {
+					limit = {
+						is_owned_by = SOU
+					}
+					SOU = {
+						transfer_state = PREV
+					}
+				}
+			}
 			every_country = {
 				limit = {
 					has_idea = SOV_Second_civil_war
