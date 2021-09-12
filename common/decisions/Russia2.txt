@@ -5053,7 +5053,7 @@ SOV_the_second_civil_war_fn = {
 			factor = 150
 		}
 
-		cost = 15
+		cost = 20
 
 		days_remove = 14
 
@@ -13220,6 +13220,69 @@ SOV_reintegrate_lost_states_decisions = {
 		}
 	}
 
+	SOV_integrate_CRI = {
+
+		icon = GFX_decision_infiltrate_state
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			CRI = {
+				is_subject_of = SOV
+			}
+		}
+
+		visible = {
+			CRI = {
+				is_subject_of = SOV
+			}
+			country_exists = CRI
+		}
+
+		fire_only_once = yes
+
+		cost = 30
+
+		complete_effect = {
+			set_temp_variable = { stability_calculator_crimea = stability_hit_crimea }
+			multiply_temp_variable = { stability_calculator_crimea = 0.03 }
+			set_temp_variable = { army_transfer_calculator_crimea = army_transfer_crimea_lost }
+			multiply_temp_variable = { army_transfer_calculator_crimea = 0.20 }
+			set_temp_variable = { army_transfer_calculator_crimea_tt = army_transfer_calculator_crimea }
+			multiply_temp_variable = { army_transfer_calculator_crimea_tt = 100 }
+			custom_effect_tooltip = transfer_crimea_army_tt
+			hidden_effect = {
+				CRI = {
+					transfer_units_fraction = {
+						target = SOV
+						size = army_transfer_calculator_crimea
+						army_ratio = army_transfer_calculator_crimea
+						stockpile_ratio = army_transfer_calculator_crimea
+					}
+				}
+			}
+			SOV = {
+				annex_country = {
+					target = CRI
+				}
+				if = {
+					limit = {
+						NOT = {
+							check_variable = {
+								var = stability_calculator_crimea
+								value = 0
+								compare = equals
+							}
+						}
+					}
+					add_stability = stability_calculator_crimea
+				}
+			}
+		}
+	}
+
 	SOV_integrate_GEO = {
 
 		icon = GFX_decision_infiltrate_state
@@ -13677,6 +13740,48 @@ SOV_reintegrate_lost_states_decisions = {
 		}
 	}
 
+	SOV_reinforce_imperial_ties_crimea = {
+
+		icon = GFX_decision_eng_ally_imperialist_coup
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = reinforce_imperial_ties_crimea_tt
+				NOT = {
+					check_variable = {
+						var = stability_hit_crimea
+						value = 0
+						compare = equals
+					}
+				}
+			}
+		}
+
+		visible = {
+			CRI = {
+				is_subject_of = SOV
+			}
+		}
+
+		cost = 10
+
+		days_remove = 10
+
+		remove_effect = {
+			set_temp_variable = { stability_calculator_crimea = stability_hit_crimea }
+			multiply_temp_variable = { stability_calculator_crimea = -3 }
+			custom_effect_tooltip = stability_crimea_upgrade_tt
+			add_to_variable = {
+				var = stability_hit_crimea
+				value = 1
+			}
+		}
+	}
+
 	SOV_reinforce_imperial_ties_georgia = {
 
 		icon = GFX_decision_eng_ally_imperialist_coup
@@ -14009,6 +14114,58 @@ SOV_reintegrate_lost_states_decisions = {
 			custom_effect_tooltip = army_integration_blr_absorb_tt
 			add_to_variable = {
 				var = army_transfer_blr_lost
+				value = 1
+			}
+		}
+	}
+
+	SOV_army_integration_crimea = {
+
+		icon = GFX_decision_generic_army_support
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = army_integration_crimea_tt
+				NOT = {
+					check_variable = {
+						var = army_transfer_crimea_lost
+						value = 5
+						compare = equals
+					}
+				}
+			}
+		}
+
+		visible = {
+			CRI = {
+				is_subject_of = SOV
+			}
+		}
+
+		cost = 10
+
+		days_remove = 10
+
+		remove_effect = {
+			set_temp_variable = { army_transfer_calculator_crimea = army_transfer_crimea_lost }
+			multiply_temp_variable = { army_transfer_calculator_crimea = 20 }
+			if = {
+				limit = {
+					check_variable = {
+						var = army_transfer_crimea_lost
+						value = 100
+						compare = less_than
+					}
+				}
+				add_to_temp_variable = { army_transfer_calculator_crimea = 20 }
+			}
+			custom_effect_tooltip = army_integration_crimea_absorb_tt
+			add_to_variable = {
+				var = army_transfer_crimea_lost
 				value = 1
 			}
 		}
@@ -14372,6 +14529,52 @@ SOV_reintegrate_lost_states_decisions_ai = {
 		}
 	}
 
+	SOV_reintegrate_CRI_ai = {
+
+		icon = GFX_decision_infiltrate_state
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			CRI = {
+				is_subject_of = SOV
+			}
+			has_country_flag = preparation_done_cri
+		}
+
+		visible = {
+			CRI = {
+				is_subject_of = SOV
+			}
+			country_exists = CRI
+			is_ai = yes
+		}
+
+		fire_only_once = yes
+
+		cost = 30
+
+		complete_effect = {
+			SOV = {
+				annex_country = {
+					target = CRI
+					transfer_troops = yes
+				}
+			}
+			SOV = {
+				hidden_effect = {
+					country_event = { id = soviets.225 hours = 1 }
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 250
+		}
+	}
+
 	SOV_integrate_GEO_ai = {
 
 		icon = GFX_decision_infiltrate_state
@@ -14672,6 +14875,42 @@ SOV_reintegrate_lost_states_decisions_ai = {
 
 		remove_effect = {
 			set_country_flag = preparation_done_blr
+		}
+
+		ai_will_do = {
+			factor = 250
+		}
+	}
+
+	SOV_reinforce_imperial_ties_crimea_ai = {
+
+		icon = GFX_decision_eng_ally_imperialist_coup
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			CRI = {
+				is_subject_of = SOV
+			}
+		}
+
+		visible = {
+			CRI = {
+				is_subject_of = SOV
+			}
+			is_ai = yes
+		}
+
+		fire_only_once = yes
+
+		cost = 30
+
+		days_remove = 70
+
+		remove_effect = {
+			set_country_flag = preparation_done_cri
 		}
 
 		ai_will_do = {
