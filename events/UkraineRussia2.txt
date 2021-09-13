@@ -1508,15 +1508,40 @@ country_event = {
 			elections_allowed = no
 		}
 		clr_country_flag = ukr_anarchist_rebels
+		custom_effect_tooltip = ukr_loses_all_cores
+		custom_effect_tooltip = ukr_unlocks_anarchist_legetimacy_decisions
 		hidden_effect = {
+			add_popularity = {
+				ideology = anarchy
+				popularity = 0.5
+			}
+			set_temp_variable = { anarchy_support_divided_by_two = ukr.party_popularity@anarchy }
+			divide_temp_variable = { anarchy_support_divided_by_two = 2 }
+			for_each_loop = {
+				array = ukr.controlled_states
+				value = v
+				index = i
+				break = break_array
+
+				if = {
+					limit = {
+						var:v = {
+							is_capital = yes
+						}
+					}
+					set_variable = { ukr.anarchist_support@var:v = 100 }
+				}
+				else = {
+					set_variable = { ukr.anarchist_support@var:v = var:anarchy_support_divided_by_two }
+					var:v = {
+						remove_core_of = UKR
+					}
+				}
+			}
 			for_each_scope_loop = {
 				array = global.russian_scw_participants
 
 				country_event = ukrains.39
-			}
-			add_popularity = {
-				ideology = anarchy
-				popularity = 0.5
 			}
 		}
 	}
@@ -1562,15 +1587,40 @@ country_event = {
 			elections_allowed = no
 		}
 		clr_country_flag = ukr_anarchist_rebels
+		custom_effect_tooltip = ukr_loses_all_cores
+		custom_effect_tooltip = ukr_unlocks_anarchist_legetimacy_decisions
 		hidden_effect = {
+			add_popularity = {
+				ideology = anarchy
+				popularity = 0.5
+			}
+			set_temp_variable = { anarchy_support_divided_by_two = ukr.party_popularity@anarchy }
+			divide_temp_variable = { anarchy_support_divided_by_two = 2 }
+			for_each_loop = {
+				array = ukr.controlled_states
+				value = v
+				index = i
+				break = break_array
+
+				if = {
+					limit = {
+						var:v = {
+							is_capital = yes
+						}
+					}
+					set_variable = { ukr.anarchist_support@var:v = 100 }
+				}
+				else = {
+					set_variable = { ukr.anarchist_support@var:v = var:anarchy_support_divided_by_two }
+					var:v = {
+						remove_core_of = UKR
+					}
+				}
+			}
 			for_each_scope_loop = {
 				array = global.russian_scw_participants
 
 				country_event = ukrains.39
-			}
-			add_popularity = {
-				ideology = anarchy
-				popularity = 0.5
 			}
 		}
 	}

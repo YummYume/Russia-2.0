@@ -4093,3 +4093,412 @@ sou_create_country_leader_sov = {
         }
     }
 }
+
+#Update the state list
+ukr_update_anarchist_states = {
+    #First, update the main array ukr.controlled_states
+    resize_array = { ukr.anarchist_states = 0 }
+    for_each_loop = {
+        array = ukr.controlled_states
+        value = v
+        index = i
+        break = break_array
+
+        add_to_array = { ukr.anarchist_states = var:v }
+    }
+
+    #Update the daily gain of states
+    ukr_check_continents_triggers = yes
+    
+    for_each_loop = {
+        array = ukr.anarchist_states
+        value = v
+        index = i
+        break = break_array
+
+        if = {
+            limit = {
+                var:v = {
+                    is_controlled_by = UKR
+                }
+            }
+            #Base gain is 0.4
+            set_variable = { ukr.anarchist_support_daily@var:v = 0.4 }
+
+            #Continent popularity
+            if = {
+                limit = {
+                    var:v = {
+                        is_on_continent = europe
+                    }
+                }
+                if = {
+                    limit = {
+                        ukr_malus_europe_anarchist_states = yes
+                    }
+                    subtract_from_variable = { ukr.anarchist_support_daily@var:v = 0.02 }
+                }
+                else_if = {
+                    limit = {
+                        ukr_bonus_europe_anarchist_states = yes
+                    }
+                    add_to_variable = { ukr.anarchist_support_daily@var:v = 0.02 }
+                }
+            }
+            else_if = {
+                limit = {
+                    var:v = {
+                        is_on_continent = north_america
+                    }
+                }
+                if = {
+                    limit = {
+                        ukr_malus_north_america_anarchist_states = yes
+                    }
+                    subtract_from_variable = { ukr.anarchist_support_daily@var:v = 0.02 }
+                }
+                else_if = {
+                    limit = {
+                        ukr_bonus_north_america_anarchist_states = yes
+                    }
+                    add_to_variable = { ukr.anarchist_support_daily@var:v = 0.02 }
+                }
+            }
+            else_if = {
+                limit = {
+                    var:v = {
+                        is_on_continent = south_america
+                    }
+                }
+                if = {
+                    limit = {
+                        ukr_malus_south_america_anarchist_states = yes
+                    }
+                    subtract_from_variable = { ukr.anarchist_support_daily@var:v = 0.02 }
+                }
+                else_if = {
+                    limit = {
+                        ukr_bonus_south_america_anarchist_states = yes
+                    }
+                    add_to_variable = { ukr.anarchist_support_daily@var:v = 0.02 }
+                }
+            }
+            else_if = {
+                limit = {
+                    var:v = {
+                        is_on_continent = australia
+                    }
+                }
+                if = {
+                    limit = {
+                        ukr_malus_australia_anarchist_states = yes
+                    }
+                    subtract_from_variable = { ukr.anarchist_support_daily@var:v = 0.02 }
+                }
+                else_if = {
+                    limit = {
+                        ukr_bonus_australia_anarchist_states = yes
+                    }
+                    add_to_variable = { ukr.anarchist_support_daily@var:v = 0.02 }
+                }
+            }
+            else_if = {
+                limit = {
+                    var:v = {
+                        is_on_continent = africa
+                    }
+                }
+                if = {
+                    limit = {
+                        ukr_malus_africa_anarchist_states = yes
+                    }
+                    subtract_from_variable = { ukr.anarchist_support_daily@var:v = 0.02 }
+                }
+                else_if = {
+                    limit = {
+                        ukr_bonus_africa_anarchist_states = yes
+                    }
+                    add_to_variable = { ukr.anarchist_support_daily@var:v = 0.02 }
+                }
+            }
+            else_if = {
+                limit = {
+                    var:v = {
+                        is_on_continent = asia
+                    }
+                }
+                if = {
+                    limit = {
+                        ukr_malus_asia_anarchist_states = yes
+                    }
+                    subtract_from_variable = { ukr.anarchist_support_daily@var:v = 0.02 }
+                }
+                else_if = {
+                    limit = {
+                        ukr_bonus_asia_anarchist_states = yes
+                    }
+                    add_to_variable = { ukr.anarchist_support_daily@var:v = 0.02 }
+                }
+            }
+            else_if = {
+                limit = {
+                    var:v = {
+                        is_on_continent = middle_east
+                    }
+                }
+                if = {
+                    limit = {
+                        ukr_malus_middle_east_anarchist_states = yes
+                    }
+                    subtract_from_variable = { ukr.anarchist_support_daily@var:v = 0.02 }
+                }
+                else_if = {
+                    limit = {
+                        ukr_bonus_middle_east_anarchist_states = yes
+                    }
+                    add_to_variable = { ukr.anarchist_support_daily@var:v = 0.02 }
+                }
+            }
+
+            #Core
+            if = {
+                limit = {
+                    var:v = {
+                        is_core_of = UKR
+                    }
+                }
+                add_to_variable = { ukr.anarchist_support_daily@var:v = 0.8 }
+            }
+
+            #Boost
+            if = {
+                limit = {
+                    check_variable = {
+                        var = ukr.anarchist_support_boost@var:v
+                        value = 0
+                        compare = greater_than
+                    }
+                }
+                add_to_variable = { ukr.anarchist_support_daily@var:v = 0.5 }
+            }
+
+            clamp_variable = {
+                var = ukr.anarchist_support_boost@var:v
+                min = 0
+                max = 2
+            }
+        }
+    }
+}
+
+ukr_check_continents_triggers = {
+    set_variable = { ukr.anarchist_continent_cores@europe = 0 }
+    set_variable = { ukr.anarchist_continent_cores@north_america = 0 }
+    set_variable = { ukr.anarchist_continent_cores@south_america = 0 }
+    set_variable = { ukr.anarchist_continent_cores@australia = 0 }
+    set_variable = { ukr.anarchist_continent_cores@africa = 0 }
+    set_variable = { ukr.anarchist_continent_cores@asia = 0 }
+    set_variable = { ukr.anarchist_continent_cores@middle_east = 0 }
+
+    for_each_loop = {
+        array = ukr.anarchist_states
+        value = v
+        index = i
+        break = break_array
+
+        if = {
+            limit = {
+                var:v = {
+                    is_on_continent = europe
+                    is_core_of = UKR
+                }
+            }
+            add_to_variable = { ukr.anarchist_continent_cores@europe = 0 }
+        }
+        else_if = {
+            limit = {
+                var:v = {
+                    is_on_continent = north_america
+                    is_core_of = UKR
+                }
+            }
+            add_to_variable = { ukr.anarchist_continent_cores@north_america = 0 }
+        }
+        else_if = {
+            limit = {
+                var:v = {
+                    is_on_continent = south_america
+                    is_core_of = UKR
+                }
+            }
+            add_to_variable = { ukr.anarchist_continent_cores@south_america = 0 }
+        }
+        else_if = {
+            limit = {
+                var:v = {
+                    is_on_continent = australia
+                    is_core_of = UKR
+                }
+            }
+            add_to_variable = { ukr.anarchist_continent_cores@australia = 0 }
+        }
+        else_if = {
+            limit = {
+                var:v = {
+                    is_on_continent = africa
+                    is_core_of = UKR
+                }
+            }
+            add_to_variable = { ukr.anarchist_continent_cores@africa = 0 }
+        }
+        else_if = {
+            limit = {
+                var:v = {
+                    is_on_continent = asia
+                    is_core_of = UKR
+                }
+            }
+            add_to_variable = { ukr.anarchist_continent_cores@asia = 0 }
+        }
+        else_if = {
+            limit = {
+                var:v = {
+                    is_on_continent = middle_east
+                    is_core_of = UKR
+                }
+            }
+            add_to_variable = { ukr.anarchist_continent_cores@middle_east = 0 }
+        }
+    }
+}
+
+#Add daily gain
+ukr_add_daily_gain_anarchist_states = {
+    for_each_loop = {
+        array = ukr.anarchist_states
+        value = v
+        index = i
+        break = break_array
+
+        if = {
+            limit = {
+                check_variable = {
+                    var = ukr.anarchist_support@var:v
+                    value = 100
+                    compare = less_than
+                }
+            }
+            add_to_variable = { ukr.anarchist_support@var:v = ukr.anarchist_support_daily@var:v }
+            clamp_variable = {
+                var = ukr.anarchist_support@var:v
+                min = 0
+                max = 100
+            }
+            if = {
+                limit = {
+                    check_variable = {
+                        var = ukr.anarchist_support@var:v
+                        value = 100
+                        compare = equals
+                    }
+                }
+                add_to_variable = { ukr_anarchist_daily_gain = 0.05 }
+                force_update_dynamic_modifier = yes
+            }
+        }
+    }
+}
+
+#Update current view
+ukr_update_current_view = {
+    resize_array = { ukr.anarchist_states_current_view = 0 }
+    if = {
+        limit = {
+            check_variable = {
+                var = ukr.view_anarchist_states_can_be_cored
+                value = 1
+                compare = equals
+            }
+        }
+        for_each_loop = {
+            array = ukr.anarchist_states
+            value = v
+            index = i
+            break = break_array
+
+            if = {
+                limit = {
+                    var:v = {
+                        is_controlled_by = UKR
+                        NOT = {
+                            is_core_of = UKR
+                        }
+                        #pp
+                        any_state = {
+                            is_neighbor_of = var:v
+                            is_core_of = UKR
+                        }
+                        check_variable = {
+                            var = ukr.anarchist_support@var:v
+                            value = 50
+                            compare = greater_than_or_equals
+                        }
+                        check_variable = {
+                            var = ukr.anarchist_coring_points
+                            value = 1
+                            compare = greater_than_or_equals
+                        }
+                    }
+                }
+                add_to_array = { ukr.anarchist_states_current_view = var:v }
+            }
+        }
+    }
+    else = {
+        for_each_loop = {
+            array = ukr.anarchist_states
+            value = v
+            index = i
+            break = break_array
+
+            if = {
+                limit = {
+                    var:v = {
+                        is_controlled_by = UKR
+                        if = {
+                            limit = {
+                                NOT = {
+                                    check_variable = {
+                                        var = ukr.view_anarchist_states_core
+                                        value = 1
+                                        compare = equals
+                                    }
+                                }
+                            }
+                            NOT = {
+                                is_core_of = UKR
+                            }
+                        }
+                        if = {
+                            limit = {
+                                NOT = {
+                                    check_variable = {
+                                        var = ukr.view_anarchist_states_converted
+                                        value = 1
+                                        compare = equals
+                                    }
+                                }
+                            }
+                            check_variable = {
+                                var = ukr.anarchist_support@var:v
+                                value = 100
+                                compare = less_than
+                            }
+                        }
+                    }
+                }
+                add_to_array = { ukr.anarchist_states_current_view = var:v }
+            }
+        }
+    }
+}

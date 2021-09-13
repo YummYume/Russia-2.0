@@ -140,6 +140,40 @@ on_actions = {
 		}
 	}
 
+	#Anarchist UKR doesn't have resistance
+	on_ruling_party_change = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						tag = UKR
+						has_government = anarchy
+					}
+				}
+				every_state = {
+					force_disable_resistance = UKR
+				}
+			}
+			else_if = {
+				limit = {
+					ROOT = {
+						tag = UKR
+						NOT = {
+							has_government = anarchy
+						}
+					}
+				}
+				force_enable_resistance = UKR
+				if = {
+					limit = {
+						has_cosmetic_tag = AUKR
+					}
+					drop_cosmetic_tag = yes
+				}
+			}
+		}
+	}
+
 	#GER Surrendered at least once to SOV
 	on_capitulation = {
 		effect = {
@@ -1883,6 +1917,67 @@ on_actions = {
 						}
 					}
 				}
+			}
+		}
+	}
+
+	#Anarchist Ukraine
+	on_state_control_changed = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						tag = UKR
+						has_government = anarchy
+					}
+				}
+				if = {
+					limit = {
+						UKR = {
+							NOT = {
+								has_variable = ukr.anarchist_support@FROM.FROM
+							}
+						}
+					}
+					set_temp_variable = { anarchy_support_divided_by_two = ukr.party_popularity@anarchy }
+					divide_temp_variable = { anarchy_support_divided_by_two = 2 }
+					set_variable = { ukr.anarchist_support@FROM.FROM = var:anarchy_support_divided_by_two }
+					clamp_variable = {
+						var = ukr.anarchist_support@FROM.FROM
+						min = 0
+						max = 100
+					}
+				}
+				ukr_update_anarchist_states = yes
+				ukr_add_daily_gain_anarchist_states = yes
+				ukr_update_current_view = yes
+			}
+			else_if = {
+				limit = {
+					FROM = {
+						tag = UKR
+						has_government = anarchy
+					}
+				}
+				if = {
+					limit = {
+						has_variable = ukr.anarchist_support@FROM.FROM
+						check_variable = {
+							var = ukr.anarchist_support@FROM.FROM
+							value = 100
+							compare = less_than
+						}
+					}
+					subtract_from_variable = { ukr.anarchist_support@FROM.FROM = 10 }
+					clamp_variable = {
+						var = ukr.anarchist_support@FROM.FROM
+						min = 0
+						max = 100
+					}
+				}
+				ukr_update_anarchist_states = yes
+				ukr_add_daily_gain_anarchist_states = yes
+				ukr_update_current_view = yes
 			}
 		}
 	}
