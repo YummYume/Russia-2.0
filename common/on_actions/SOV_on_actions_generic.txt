@@ -1929,6 +1929,7 @@ on_actions = {
 					ROOT = {
 						tag = UKR
 						has_government = anarchy
+						is_subject = no
 					}
 				}
 				if = {
@@ -1940,6 +1941,7 @@ on_actions = {
 						}
 					}
 					set_temp_variable = { anarchy_support_divided_by_two = ukr.party_popularity@anarchy }
+					multiply_temp_variable = { anarchy_support_divided_by_two = 100 }
 					divide_temp_variable = { anarchy_support_divided_by_two = 2 }
 					set_variable = { ukr.anarchist_support@FROM.FROM = var:anarchy_support_divided_by_two }
 					clamp_variable = {
@@ -1951,6 +1953,50 @@ on_actions = {
 				ukr_update_anarchist_states = yes
 				ukr_add_daily_gain_anarchist_states = yes
 				ukr_update_current_view = yes
+				FROM.FROM = {
+					if = {
+						limit = {
+							NOT = {
+								has_dynamic_modifier = {
+									modifier = ukr_anarchist_state_non_converted
+								}
+								has_dynamic_modifier = {
+									modifier = ukr_anarchist_state_converted
+								}
+								is_core_of = UKR
+							}
+							check_variable = {
+								var = ukr.anarchist_support@FROM.FROM
+								value = 100
+								compare = less_than
+							}
+						}
+						add_dynamic_modifier = {
+							modifier = ukr_anarchist_state_non_converted
+						}
+					}
+					else_if = {
+						limit = {
+							NOT = {
+								has_dynamic_modifier = {
+									modifier = ukr_anarchist_state_non_converted
+								}
+								has_dynamic_modifier = {
+									modifier = ukr_anarchist_state_converted
+								}
+								is_core_of = UKR
+							}
+							check_variable = {
+								var = ukr.anarchist_support@FROM.FROM
+								value = 100
+								compare = equals
+							}
+						}
+						add_dynamic_modifier = {
+							modifier = ukr_anarchist_state_converted
+						}
+					}
+				}
 			}
 			else_if = {
 				limit = {
@@ -1978,6 +2024,28 @@ on_actions = {
 				ukr_update_anarchist_states = yes
 				ukr_add_daily_gain_anarchist_states = yes
 				ukr_update_current_view = yes
+				FROM.FROM = {
+					if = {
+						limit = {
+							has_dynamic_modifier = {
+								modifier = ukr_anarchist_state_non_converted
+							}
+						}
+						remove_dynamic_modifier = {
+							modifier = ukr_anarchist_state_non_converted
+						}
+					}
+					if = {
+						limit = {
+							has_dynamic_modifier = {
+								modifier = ukr_anarchist_state_converted
+							}
+						}
+						remove_dynamic_modifier = {
+							modifier = ukr_anarchist_state_converted
+						}
+					}
+				}
 			}
 		}
 	}
