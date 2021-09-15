@@ -14908,7 +14908,10 @@ focus_tree = {
 			}
 			if = {
 				limit = {
-					date < 1938.10.12
+					OR = {
+						has_country_flag = old_tsar_still_alive
+						date < 1938.10.12
+					}
 				}
 				create_country_leader = {
 					name = "Kirill Vladimirovich"
@@ -18457,7 +18460,7 @@ focus_tree = {
 		completion_reward = {
 			add_timed_idea = {
 				idea = SOV_New_way_of_life
-				days = 180
+				days = 240
 			}
 			custom_effect_tooltip = SOV_new_way_life_tt
 			hidden_effect = {
@@ -19219,52 +19222,12 @@ focus_tree = {
 				}
 				country_event = { id = soviets.335 hours = 12}
 			}
-			if = {
+			random_country = {
 				limit = {
-					country_exists = UKR
-					UKR = {
-						is_subject = no 
-					}
+					is_lost_state = yes
+					exists = yes
 				}
-				UKR = {
-					create_faction = anti_russian_pact
-				}
-			}
-			else_if = {
-				limit = {
-					NOT = {
-						country_exists = UKR
-					}
-					country_exists = BLR
-				}
-				BLR = {
-					create_faction = anti_russian_pact
-				}
-			}
-			else_if = {
-				limit = {
-					NOT = {
-						country_exists = UKR
-						country_exists = BLR
-					}
-					country_exists = GEO
-				}
-				GEO = {
-					create_faction = anti_russian_pact
-				}
-			}
-			else_if = {
-				limit = {
-					NOT = {
-						country_exists = UKR
-						country_exists = BLR
-						country_exists = GEO
-					}
-					country_exists = KAZ
-				}
-				KAZ = {
-					create_faction = anti_russian_pact
-				}
+				create_faction = anti_russian_pact
 			}
 			if = {
 				limit = {
@@ -20436,33 +20399,14 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY }
 		completion_reward = {
-			582 = {
-				add_province_modifier = {
-					static_modifiers = { ukr_anarchist_state_non_converted }
-					province = {
-						id = 4383
-						id = 12200
-						id = 7373
-						id = 4311
-						id = 7300
-						id = 10185
-						id = 4265
-					}
+			219 = {
+				add_dynamic_modifier = {
+					modifier = ukr_anarchist_state_non_converted
 				}
 			}
-			573 = {
-				add_province_modifier = {
-					static_modifiers = { ukr_anarchist_state_converted }
-					province = {
-						id = 12117
-						id = 10329
-						id = 11223
-						id = 7320
-						id = 4758
-						id = 237
-						id = 11307
-						id = 278
-					}
+			205 = {
+				add_dynamic_modifier = {
+					modifier = ukr_anarchist_state_converted
 				}
 			}
 			set_variable = { current_biggest_party = 0 }

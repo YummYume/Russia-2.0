@@ -1886,4 +1886,60 @@ on_actions = {
 			}
 		}
 	}
+
+	#Startup anti anarchist modifier
+	on_startup = {
+		effect = {
+			if = {
+				limit = {
+					date < 1936.1.2	
+				}
+				for_each_scope_loop = {
+					array = global.countries
+	
+					add_dynamic_modifier = { modifier = anti_anarchist_modifiers }
+				}
+			}
+		}
+	}
+
+	#remove anti anarchist modifiers
+	on_ruling_party_change = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						has_dynamic_modifier = {
+							modifier = anti_anarchist_modifiers
+						}
+						has_government = anarchy
+					}
+				}
+				ROOT = {
+					remove_dynamic_modifier = { modifier = anti_anarchist_modifiers }
+				}
+			}
+		}
+	}
+
+	#readd anti anarchist modifiers
+	on_ruling_party_change = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						NOT = {
+							has_dynamic_modifier = {
+								modifier = anti_anarchist_modifiers
+							}
+							has_government = anarchy
+						}
+					}
+				}
+				ROOT = {
+					add_dynamic_modifier = { modifier = anti_anarchist_modifiers }
+				}
+			}
+		}
+	}
 }

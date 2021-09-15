@@ -4956,7 +4956,7 @@ country_event = {
 	}
 }
 
-#Second Civil War (Improve?)
+#Second Civil War
 country_event = {
 	id = soviets.131
 	title = soviets.131.t
@@ -4998,6 +4998,7 @@ country_event = {
 					}
 				}
 				UKR = {
+					add_ideas = SOV_Second_civil_war
 					add_to_war = {
 						targeted_alliance = SOV
 						enemy = SOU
@@ -8429,6 +8430,9 @@ country_event = {
 		has_country_leader = {
 			name = "Kirill Vladimirovich"
 			ruling_only = yes
+		}
+		NOT = {
+			has_country_flag = old_tsar_still_alive
 		}
 		date > 1938.10.12
 	}
@@ -13953,12 +13957,18 @@ country_event = {
 		}
 		if = {
 			limit = {
-				country_exists = UKR
-				UKR = {
+				any_country = {
 					is_faction_leader = yes
+					is_lost_state = yes
+					exists = yes
 				}
 			}
-			UKR = {
+			random_country = {
+				limit = {
+					is_faction_leader = yes
+					is_lost_state = yes
+					exists = yes
+				}
 				add_to_faction = ROOT
 			}
 		}
@@ -26485,6 +26495,20 @@ country_event = {
 		add_stability = 0.05
 		add_war_support = 0.1
 		add_political_power = 100
+		random_owned_controlled_state = {
+            create_unit = {
+                division = "name = \"2ya Strelkovaya Polk\" division_template = \"Strelkovaya Polk\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+                owner = TAN
+            }
+			create_unit = {
+                division = "name = \"3ya Strelkovaya Polk\" division_template = \"Strelkovaya Polk\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+                owner = TAN
+            }
+			create_unit = {
+                division = "name = \"4ya Strelkovaya Polk\" division_template = \"Strelkovaya Polk\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+                owner = TAN
+            }
+		}	
 		SOU = {
 			add_to_faction = ROOT
 		}
@@ -26619,5 +26643,49 @@ country_event = {
 			factor = 100
 		}
 		custom_effect_tooltip = we_will_prepare_for_standoff
+	}
+}
+
+#Tsar's Death. His Son Takes Over
+country_event = {
+	id = soviets.605
+	title = soviets.226.t
+	desc = soviets.226.d
+	picture = GFX_report_event_generic_funeral
+
+	fire_only_once = yes
+
+	trigger = {
+		has_country_leader = {
+			name = "Kirill Vladimirovich"
+			ruling_only = yes
+		}
+		has_country_flag = old_tsar_still_alive
+		date > 1941.6.24
+	}
+
+	mean_time_to_happen = {
+		days =  10
+	}
+
+	option = {
+		name = soviets.226.a
+		ai_chance = {
+			factor = 100
+		}
+		hidden_effect = {
+			kill_country_leader = yes
+		}
+		create_country_leader = {
+			name = "Vladimir Kirillovich"
+			desc = "POLITICS_VLADIMIR_KIRILLOVICH_DESC"
+			picture = "Portrait_Vladimir_Kirillovich.dds"
+			expire = "1965.1.1"
+			ideology = despotism
+			traits = {
+				Heir_of_the_Tsar
+			}
+		}
+		add_stability = -0.05
 	}
 }
