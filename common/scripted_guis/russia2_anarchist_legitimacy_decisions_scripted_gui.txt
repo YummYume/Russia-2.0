@@ -1,0 +1,173 @@
+scripted_gui = {
+
+	ukr_anarchist_legitimacy_decisions_scripted_gui = {
+		context_type = decision_category
+		window_name = "ukr_anarchist_legitimacy_decisions_gui_main"
+
+		visible = {
+            tag = UKR
+            has_government = anarchy
+            is_subject = no
+        }
+
+        ai_enabled = {
+			#TODO
+		}
+
+        dynamic_lists = {
+			ukr_anarchist_legitimacy_grid = {
+				array = ukr.anarchist_states_current_view
+				change_scope = yes
+				entry_container = ukr_anarchist_legitimacy_entry
+			}
+        }
+
+        effects = {
+            first_option_checkbox_click = {
+                if = {
+                    limit = {
+                        check_variable = {
+                            var = ukr.view_anarchist_states_can_be_cored
+                            value = 2
+                            compare = equals
+                        }
+                    }
+                    set_variable = { ukr.view_anarchist_states_can_be_cored = 1 }
+                }
+                if = {
+                    limit = {
+                        check_variable = {
+                            var = ukr.view_anarchist_states_core
+                            value = 2
+                            compare = equals
+                        }
+                    }
+                    set_variable = { ukr.view_anarchist_states_core = 1 }
+                    ukr_update_anarchist_states = yes
+                    ukr_update_current_view = yes
+                }
+                else = {
+                    set_variable = { ukr.view_anarchist_states_core = 2 }
+                    ukr_update_anarchist_states = yes
+                    ukr_update_current_view = yes
+                }
+            }
+
+            second_option_checkbox_click = {
+                if = {
+                    limit = {
+                        check_variable = {
+                            var = ukr.view_anarchist_states_can_be_cored
+                            value = 2
+                            compare = equals
+                        }
+                    }
+                    set_variable = { ukr.view_anarchist_states_can_be_cored = 1 }
+                }
+                if = {
+                    limit = {
+                        check_variable = {
+                            var = ukr.view_anarchist_states_converted
+                            value = 2
+                            compare = equals
+                        }
+                    }
+                    set_variable = { ukr.view_anarchist_states_converted = 1 }
+                    ukr_update_anarchist_states = yes
+                    ukr_update_current_view = yes
+                }
+                else = {
+                    set_variable = { ukr.view_anarchist_states_converted = 2 }
+                    ukr_update_anarchist_states = yes
+                    ukr_update_current_view = yes
+                }
+            }
+
+            third_option_checkbox_click = {
+                if = {
+                    limit = {
+                        check_variable = {
+                            var = ukr.view_anarchist_states_core
+                            value = 2
+                            compare = equals
+                        }
+                    }
+                    set_variable = { ukr.view_anarchist_states_core = 1 }
+                }
+                if = {
+                    limit = {
+                        check_variable = {
+                            var = ukr.view_anarchist_states_converted
+                            value = 2
+                            compare = equals
+                        }
+                    }
+                    set_variable = { ukr.view_anarchist_states_converted = 1 }
+                }
+                if = {
+                    limit = {
+                        check_variable = {
+                            var = ukr.view_anarchist_states_can_be_cored
+                            value = 2
+                            compare = equals
+                        }
+                    }
+                    set_variable = { ukr.view_anarchist_states_can_be_cored = 1 }
+                    ukr_update_anarchist_states = yes
+                    ukr_update_current_view = yes
+                }
+                else = {
+                    set_variable = { ukr.view_anarchist_states_can_be_cored = 2 }
+                    ukr_update_anarchist_states = yes
+                    ukr_update_current_view = yes
+                }
+            }
+
+            ukr_anarchist_legitimacy_state_goto_click = {
+                ROOT = {
+                    goto_state = PREV
+                }
+            }
+        }
+
+        triggers = {
+            ukr_anarchist_legitimacy_visible = {
+                check_variable = {
+                    var = ukr.num_core_states
+                    value = 20
+                    compare = less_than
+                }
+            }
+
+            ukr_anarchist_legitimacy_progress_visible = {
+                check_variable = {
+                    var = ukr.num_core_states
+                    value = 20
+                    compare = less_than
+                }
+            }
+        }
+
+        properties = {
+            first_option_checkbox = {
+                frame = var:ukr.view_anarchist_states_core
+            }
+
+            second_option_checkbox = {
+                frame = var:ukr.view_anarchist_states_converted
+            }
+
+            third_option_checkbox = {
+                frame = var:ukr.view_anarchist_states_can_be_cored
+            }
+
+            ukr_anarchist_legitimacy_state_progress = {
+                frame = ukr.anarchist_support@THIS
+            }
+
+            ukr_anarchist_legitimacy_progress = {
+                frame = var:ukr.num_core_states
+            }
+        }
+	}
+}

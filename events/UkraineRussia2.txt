@@ -1519,15 +1519,60 @@ country_event = {
 			elections_allowed = no
 		}
 		clr_country_flag = ukr_anarchist_rebels
+		custom_effect_tooltip = ukr_loses_all_cores
+		custom_effect_tooltip = ukr_unlocks_anarchist_legetimacy_decisions
 		hidden_effect = {
+			add_popularity = {
+				ideology = anarchy
+				popularity = 0.5
+			}
+			set_temp_variable = { anarchy_support_divided_by_two = ukr.party_popularity@anarchy }
+			multiply_temp_variable = { anarchy_support_divided_by_two = 100 }
+			divide_temp_variable = { anarchy_support_divided_by_two = 2 }
+			for_each_loop = {
+				array = ukr.core_states
+				value = v
+				index = i
+				break = break_array
+
+				add_to_array = { ukr.temp_core_states = var:v }
+			}
+			for_each_loop = {
+				array = ukr.temp_core_states
+				value = v
+				index = i
+				break = break_array
+
+				if = {
+					limit = {
+						var:v = {
+							is_capital = yes
+							is_controlled_by = UKR
+						}
+					}
+					set_variable = { ukr.anarchist_support@var:v = 100 }
+				}
+				else = {
+					if = {
+						limit = {
+							var:v = {
+								is_controlled_by = UKR
+							}
+						}
+						set_variable = { ukr.anarchist_support@var:v = var:anarchy_support_divided_by_two }
+					}
+					var:v = {
+						remove_core_of = UKR
+					}
+				}
+			}
+			ukr_update_anarchist_states = yes
+            ukr_update_current_view = yes
+			ukr_add_daily_gain_anarchist_states = yes
 			for_each_scope_loop = {
 				array = global.russian_scw_participants
 
 				country_event = ukrains.39
-			}
-			add_popularity = {
-				ideology = anarchy
-				popularity = 0.5
 			}
 		}
 	}
@@ -1573,15 +1618,60 @@ country_event = {
 			elections_allowed = no
 		}
 		clr_country_flag = ukr_anarchist_rebels
+		custom_effect_tooltip = ukr_loses_all_cores
+		custom_effect_tooltip = ukr_unlocks_anarchist_legetimacy_decisions
 		hidden_effect = {
+			add_popularity = {
+				ideology = anarchy
+				popularity = 0.5
+			}
+			set_temp_variable = { anarchy_support_divided_by_two = ukr.party_popularity@anarchy }
+			multiply_temp_variable = { anarchy_support_divided_by_two = 100 }
+			divide_temp_variable = { anarchy_support_divided_by_two = 2 }
+			for_each_loop = {
+				array = ukr.core_states
+				value = v
+				index = i
+				break = break_array
+
+				add_to_array = { ukr.temp_core_states = var:v }
+			}
+			for_each_loop = {
+				array = ukr.temp_core_states
+				value = v
+				index = i
+				break = break_array
+
+				if = {
+					limit = {
+						var:v = {
+							is_capital = yes
+							is_controlled_by = UKR
+						}
+					}
+					set_variable = { ukr.anarchist_support@var:v = 100 }
+				}
+				else = {
+					if = {
+						limit = {
+							var:v = {
+								is_controlled_by = UKR
+							}
+						}
+						set_variable = { ukr.anarchist_support@var:v = var:anarchy_support_divided_by_two }
+					}
+					var:v = {
+						remove_core_of = UKR
+					}
+				}
+			}
+			ukr_update_anarchist_states = yes
+            ukr_update_current_view = yes
+			ukr_add_daily_gain_anarchist_states = yes
 			for_each_scope_loop = {
 				array = global.russian_scw_participants
 
 				country_event = ukrains.39
-			}
-			add_popularity = {
-				ideology = anarchy
-				popularity = 0.5
 			}
 		}
 	}
