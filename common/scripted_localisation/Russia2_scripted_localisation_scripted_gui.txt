@@ -1198,3 +1198,547 @@ defined_text = {
         localization_key = LOC_scw_one_controlled_state
     }
 }
+
+
+defined_text = {
+    name = GetAnarchistCoringPoints
+    text = {
+        trigger = {
+            check_variable = {
+                var = ukr.anarchist_coring_points
+                value = 0
+                compare = greater_than
+            }
+        }
+        localization_key = LOC_ukr_anarchist_coring_points
+    }
+    text = {
+        localization_key = LOC_ukr_anarchist_coring_points_none
+    }
+}
+
+defined_text = {
+    name = GetAnarchistStateBoostCost
+    text = {
+        trigger = {
+            check_variable = {
+                var = ukr.political_power
+                value = ukr.anarchist_state_boost_cost@THIS
+                compare = greater_than_or_equals
+            }
+            THIS = {
+                is_controlled_by = UKR
+                NOT = {
+                    is_core_of = UKR
+                }
+            }
+            check_variable = {
+                var = ukr.anarchist_support@THIS
+                value = 100
+                compare = less_than
+            }
+            check_variable = {
+                var = ukr.anarchist_support_boost@THIS
+                value = 0
+                compare = equals
+            }
+            check_variable = {
+                var = ukr.political_power
+                value = ukr.anarchist_state_boost_cost@THIS
+                compare = greater_than_or_equals
+            }
+        }
+        localization_key = LOC_ukr_anarchist_legitimacy_enough_pp_boost
+    }
+    text = {
+        trigger = {
+            check_variable = {
+                var = ukr.political_power
+                value = ukr.anarchist_state_boost_cost@THIS
+                compare = greater_than_or_equals
+            }
+        }
+        localization_key = LOC_ukr_anarchist_legitimacy_enough_pp_boost_not_met
+    }
+    text = {
+        localization_key = LOC_ukr_anarchist_legitimacy_not_enough_pp_boost
+    }
+}
+
+defined_text = {
+    name = GetAnarchistStateCoreCost
+    text = {
+        trigger = {
+            check_variable = {
+                var = ukr.political_power
+                value = ukr.anarchist_state_core_cost@THIS
+                compare = greater_than_or_equals
+            }
+            THIS = {
+                is_controlled_by = UKR
+                NOT = {
+                    is_core_of = UKR
+                }
+                any_neighbor_state = {
+                    is_core_of = UKR
+                }
+            }
+            check_variable = {
+                var = ukr.political_power
+                value = ukr.anarchist_state_core_cost@THIS
+                compare = greater_than_or_equals
+            }
+            check_variable = {
+                var = ukr.anarchist_support@THIS
+                value = 50
+                compare = greater_than_or_equals
+            }
+            check_variable = {
+                var = ukr.anarchist_coring_points
+                value = 1
+                compare = greater_than_or_equals
+            }
+        }
+        localization_key = LOC_ukr_anarchist_legitimacy_enough_pp_core
+    }
+    text = {
+        trigger = {
+            check_variable = {
+                var = ukr.political_power
+                value = ukr.anarchist_state_core_cost@THIS
+                compare = greater_than_or_equals
+            }
+        }
+        localization_key = LOC_ukr_anarchist_legitimacy_enough_pp_core_not_met
+    }
+    text = {
+        localization_key = LOC_ukr_anarchist_legitimacy_not_enough_pp_core
+    }
+}
+
+defined_text = {
+    name = GetContinentMalusBonus
+    text = {
+        trigger = {
+            if = {
+                limit = {
+                    THIS = {
+                        is_on_continent = europe
+                    }
+                }
+                ukr_malus_europe_anarchist_states = yes
+            }
+            else_if = {
+                limit = {
+                    THIS = {
+                        is_on_continent = north_america
+                    }
+                }
+                ukr_malus_north_america_anarchist_states = yes
+            }
+            else_if = {
+                limit = {
+                    THIS = {
+                        is_on_continent = south_america
+                    }
+                }
+                ukr_malus_south_america_anarchist_states = yes
+            }
+            else_if = {
+                limit = {
+                    THIS = {
+                        is_on_continent = australia
+                    }
+                }
+                ukr_malus_australia_anarchist_states = yes
+            }
+            else_if = {
+                limit = {
+                    THIS = {
+                        is_on_continent = africa
+                    }
+                }
+                ukr_malus_africa_anarchist_states = yes
+            }
+            else_if = {
+                limit = {
+                    THIS = {
+                        is_on_continent = asia
+                    }
+                }
+                ukr_malus_asia_anarchist_states = yes
+            }
+            else_if = {
+                limit = {
+                    THIS = {
+                        is_on_continent = middle_east
+                    }
+                }
+                ukr_malus_middle_east_anarchist_states = yes
+            }
+        }
+        localization_key = LOC_ukr_anarchist_continent_malus
+    }
+    text = {
+        trigger = {
+            if = {
+                limit = {
+                    THIS = {
+                        is_on_continent = europe
+                    }
+                }
+                ukr_bonus_europe_anarchist_states = yes
+            }
+            else_if = {
+                limit = {
+                    THIS = {
+                        is_on_continent = north_america
+                    }
+                }
+                ukr_bonus_north_america_anarchist_states = yes
+            }
+            else_if = {
+                limit = {
+                    THIS = {
+                        is_on_continent = south_america
+                    }
+                }
+                ukr_bonus_south_america_anarchist_states = yes
+            }
+            else_if = {
+                limit = {
+                    THIS = {
+                        is_on_continent = australia
+                    }
+                }
+                ukr_bonus_australia_anarchist_states = yes
+            }
+            else_if = {
+                limit = {
+                    THIS = {
+                        is_on_continent = africa
+                    }
+                }
+                ukr_bonus_africa_anarchist_states = yes
+            }
+            else_if = {
+                limit = {
+                    THIS = {
+                        is_on_continent = asia
+                    }
+                }
+                ukr_bonus_asia_anarchist_states = yes
+            }
+            else_if = {
+                limit = {
+                    THIS = {
+                        is_on_continent = middle_east
+                    }
+                }
+                ukr_bonus_middle_east_anarchist_states = yes
+            }
+        }
+        localization_key = LOC_ukr_anarchist_continent_bonus
+    }
+    text = {
+        localization_key = LOC_ukr_anarchist_continent_none
+    }
+}
+
+defined_text = {
+    name = GetAnarchistBoostState
+    text = {
+        trigger = {
+            UKR = {
+                check_variable = {
+                    var = ukr.anarchist_support_boost@PREV
+                    value = 0
+                    compare = greater_than
+                }
+            }
+        }
+        localization_key = LOC_ukr_anarchist_is_boost
+    }
+    text = {
+        localization_key = LOC_ukr_anarchist_is_not_boost
+    }
+}
+
+defined_text = {
+    name = GetAnarchistBoostStateControl
+    text = {
+        trigger = {
+            THIS = {
+                is_controlled_by = UKR
+            }
+        }
+        localization_key = LOC_russia2_yes_trigger
+    }
+    text = {
+        localization_key = LOC_russia2_no_trigger
+    }
+}
+
+defined_text = {
+    name = GetAnarchistBoostStateCore
+    text = {
+        trigger = {
+            THIS = {
+                NOT = {
+                    is_core_of = UKR
+                }
+            }
+        }
+        localization_key = LOC_russia2_yes_trigger
+    }
+    text = {
+        localization_key = LOC_russia2_no_trigger
+    }
+}
+
+defined_text = {
+    name = GetAnarchistBoostStateAnarchistSupport
+    text = {
+        trigger = {
+            THIS = {
+                check_variable = {
+                    var = ukr.anarchist_support@THIS
+                    value = 100
+                    compare = less_than
+                }
+            }
+        }
+        localization_key = LOC_russia2_yes_trigger
+    }
+    text = {
+        localization_key = LOC_russia2_no_trigger
+    }
+}
+
+defined_text = {
+    name = GetAnarchistBoostStateAnarchistSupportBoost
+    text = {
+        trigger = {
+            THIS = {
+                check_variable = {
+                    var = ukr.anarchist_support_boost@THIS
+                    value = 0
+                    compare = equals
+                }
+            }
+        }
+        localization_key = LOC_russia2_yes_trigger
+    }
+    text = {
+        localization_key = LOC_russia2_no_trigger
+    }
+}
+
+defined_text = {
+    name = GetAnarchistCoreState
+    text = {
+        trigger = {
+            THIS = {
+                is_core_of = UKR
+            }
+        }
+        localization_key = LOC_ukr_anarchist_is_core
+    }
+    text = {
+        localization_key = LOC_ukr_anarchist_is_not_core
+    }
+}
+
+defined_text = {
+    name = GetAnarchistCoreStateControl
+    text = {
+        trigger = {
+            THIS = {
+                is_controlled_by = UKR
+            }
+        }
+        localization_key = LOC_russia2_yes_trigger
+    }
+    text = {
+        localization_key = LOC_russia2_no_trigger
+    }
+}
+
+defined_text = {
+    name = GetAnarchistCoreStateCore
+    text = {
+        trigger = {
+            THIS = {
+                NOT = {
+                    is_core_of = UKR
+                }
+            }
+        }
+        localization_key = LOC_russia2_yes_trigger
+    }
+    text = {
+        localization_key = LOC_russia2_no_trigger
+    }
+}
+
+defined_text = {
+    name = GetAnarchistCoreStateNeighborState
+    text = {
+        trigger = {
+            THIS = {
+                any_neighbor_state = {
+                    is_core_of = UKR
+                }
+            }
+        }
+        localization_key = LOC_russia2_yes_trigger
+    }
+    text = {
+        localization_key = LOC_russia2_no_trigger
+    }
+}
+
+defined_text = {
+    name = GetAnarchistCoreStateNeighborAnarchistSupport
+    text = {
+        trigger = {
+            THIS = {
+                check_variable = {
+                    var = ukr.anarchist_support@THIS
+                    value = 50
+                    compare = greater_than_or_equals
+                }
+            }
+        }
+        localization_key = LOC_russia2_yes_trigger
+    }
+    text = {
+        localization_key = LOC_russia2_no_trigger
+    }
+}
+
+defined_text = {
+    name = GetAnarchistCoreStateNeighborCoringPoint
+    text = {
+        trigger = {
+            THIS = {
+                check_variable = {
+                    var = ukr.anarchist_coring_points
+                    value = 1
+                    compare = greater_than_or_equals
+                }
+            }
+        }
+        localization_key = LOC_russia2_yes_trigger
+    }
+    text = {
+        localization_key = LOC_russia2_no_trigger
+    }
+}
+
+defined_text = {
+    name = GetAnarchistNumberCoreStates
+    text = {
+        trigger = {
+            check_variable = {
+                var = ukr.core_states
+                value = 1
+                compare = greater_than_or_equals
+            }
+        }
+        localization_key = LOC_ukr_anarchist_cored_state_one
+    }
+    text = {
+        localization_key = LOC_ukr_anarchist_cored_state_multiple
+    }
+}
+
+defined_text = {
+    name = GetCurrentAnarchistStateStatus
+    text = {
+        trigger = {
+            THIS = {
+                is_core_of = UKR
+            }
+        }
+        localization_key = LOC_ukr_anarchist_state_is_core
+    }
+    text = {
+        trigger = {
+            THIS = {
+                check_variable = {
+                    var = ukr.anarchist_support@THIS
+                    value = 100
+                    compare = greater_than_or_equals
+                }
+                NOT = {
+                    is_core_of = UKR
+                }
+            }
+        }
+        localization_key = LOC_ukr_anarchist_state_is_converted
+    }
+    text = {
+        localization_key = LOC_ukr_anarchist_state_is_not_converted
+    }
+}
+
+defined_text = {
+    name = GetCurrentAnarchistStateStatusTitle
+    text = {
+        trigger = {
+            THIS = {
+                is_core_of = UKR
+            }
+        }
+        localization_key = LOC_ukr_anarchist_state_is_core_title
+    }
+    text = {
+        trigger = {
+            THIS = {
+                check_variable = {
+                    var = ukr.anarchist_support@THIS
+                    value = 100
+                    compare = greater_than_or_equals
+                }
+                NOT = {
+                    is_core_of = UKR
+                }
+            }
+        }
+        localization_key = LOC_ukr_anarchist_state_is_converted_title
+    }
+    text = {
+        localization_key = LOC_ukr_anarchist_state_is_not_converted_title
+    }
+}
+
+defined_text = {
+    name = GetCurrentAnarchistStateStatusDesc
+    text = {
+        trigger = {
+            THIS = {
+                is_core_of = UKR
+            }
+        }
+        localization_key = LOC_ukr_anarchist_state_is_core_desc
+    }
+    text = {
+        trigger = {
+            THIS = {
+                check_variable = {
+                    var = ukr.anarchist_support@THIS
+                    value = 100
+                    compare = greater_than_or_equals
+                }
+                NOT = {
+                    is_core_of = UKR
+                }
+            }
+        }
+        localization_key = LOC_ukr_anarchist_state_is_converted_desc
+    }
+    text = {
+        localization_key = LOC_ukr_anarchist_state_is_not_converted_desc
+    }
+}

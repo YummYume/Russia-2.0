@@ -57,15 +57,6 @@ focus_tree = {
         available = {
             is_subject = no
             has_government = anarchy
-            has_global_flag = second_russian_civil_war_over
-            custom_trigger_tooltip = {
-                tooltip = UKR_declare_free_territory_tt
-                check_variable = {
-                    var = num_core_states
-                    value = 20
-                    compare = greater_than_or_equals
-                }
-            }
         }
         search_filters = {  }
         completion_reward = {
@@ -119,7 +110,25 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
+            custom_effect_tooltip = UKR_anarchist_legitimacy_tt
 
+            for_each_loop = {
+                array = ukr.anarchist_states
+                value = v
+                index = i
+                break = break_array
+                
+                if = {
+                    limit = {
+                        check_variable = {
+                            var = ukr.anarchist_support@var:v
+                            value = 100
+                            compare = less_than
+                        }
+                    }
+                    add_to_variable = { ukr.anarchist_support@var:v = 10 }
+                }
+            }
         }
     }
 
@@ -166,10 +175,21 @@ focus_tree = {
         available = {
             is_subject = no
             has_government = anarchy
+            has_global_flag = second_russian_civil_war_over
+            custom_trigger_tooltip = {
+                tooltip = UKR_makhno_revenge_tt
+                check_variable = {
+                    var = num_core_states
+                    value = 20
+                    compare = greater_than_or_equals
+                }
+            }
         }
         search_filters = {  }
         completion_reward = {
-
+            add_political_power = 50
+            custom_effect_tooltip = UKR_makhno_revenge_tt2
+            add_to_variable = { ukr.anarchist_coring_points = 2 }
         }
     }
 

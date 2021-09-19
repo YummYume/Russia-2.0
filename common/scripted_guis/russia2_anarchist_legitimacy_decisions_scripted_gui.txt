@@ -43,11 +43,13 @@ scripted_gui = {
                         }
                     }
                     set_variable = { ukr.view_anarchist_states_core = 1 }
+                    ukr_update_state_cost = yes
                     ukr_update_anarchist_states = yes
                     ukr_update_current_view = yes
                 }
                 else = {
                     set_variable = { ukr.view_anarchist_states_core = 2 }
+                    ukr_update_state_cost = yes
                     ukr_update_anarchist_states = yes
                     ukr_update_current_view = yes
                 }
@@ -73,11 +75,13 @@ scripted_gui = {
                         }
                     }
                     set_variable = { ukr.view_anarchist_states_converted = 1 }
+                    ukr_update_state_cost = yes
                     ukr_update_anarchist_states = yes
                     ukr_update_current_view = yes
                 }
                 else = {
                     set_variable = { ukr.view_anarchist_states_converted = 2 }
+                    ukr_update_state_cost = yes
                     ukr_update_anarchist_states = yes
                     ukr_update_current_view = yes
                 }
@@ -113,11 +117,13 @@ scripted_gui = {
                         }
                     }
                     set_variable = { ukr.view_anarchist_states_can_be_cored = 1 }
+                    ukr_update_state_cost = yes
                     ukr_update_anarchist_states = yes
                     ukr_update_current_view = yes
                 }
                 else = {
                     set_variable = { ukr.view_anarchist_states_can_be_cored = 2 }
+                    ukr_update_state_cost = yes
                     ukr_update_anarchist_states = yes
                     ukr_update_current_view = yes
                 }
@@ -128,22 +134,100 @@ scripted_gui = {
                     goto_state = PREV
                 }
             }
+
+            ukr_anarchist_legitimacy_state_boost_click = {
+                set_variable = { ukr.anarchist_support_boost@THIS = 30 }
+                ukr_update_state_cost = yes
+            }
+
+            ukr_anarchist_legitimacy_state_core_click = {
+                subtract_from_variable = { ukr.anarchist_coring_points = 1 }
+                ROOT = {
+                    add_state_core = PREV
+                }
+                if = {
+                    limit = {
+                        THIS = {
+                            has_dynamic_modifier = {
+                                modifier = ukr_anarchist_state_converted
+                            }
+                        }
+                    }
+                    THIS = {
+                        remove_dynamic_modifier = {
+                            modifier = ukr_anarchist_state_converted
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        THIS = {
+                            has_dynamic_modifier = {
+                                modifier = ukr_anarchist_state_non_converted
+                            }
+                        }
+                    }
+                    THIS = {
+                        remove_dynamic_modifier = {
+                            modifier = ukr_anarchist_state_non_converted
+                        }
+                    }
+                }
+                ukr_update_state_cost = yes
+                ukr_update_anarchist_states = yes
+                ukr_update_current_view = yes
+            }
         }
 
         triggers = {
-            ukr_anarchist_legitimacy_visible = {
-                check_variable = {
-                    var = ukr.num_core_states
-                    value = 20
-                    compare = less_than
+            ukr_anarchist_legitimacy_state_boost_click_enabled = {
+                THIS = {
+                    is_controlled_by = UKR
+                    NOT = {
+                        is_core_of = UKR
+                    }
+                    check_variable = {
+                        var = ukr.anarchist_support@THIS
+                        value = 100
+                        compare = less_than
+                    }
+                    check_variable = {
+                        var = ukr.anarchist_support_boost@THIS
+                        value = 0
+                        compare = equals
+                    }
+                    check_variable = {
+                        var = ukr.political_power
+                        value = ukr.anarchist_state_boost_cost@THIS
+                        compare = greater_than_or_equals
+                    }
                 }
             }
 
-            ukr_anarchist_legitimacy_progress_visible = {
-                check_variable = {
-                    var = ukr.num_core_states
-                    value = 20
-                    compare = less_than
+            ukr_anarchist_legitimacy_state_core_click_enabled = {
+                THIS = {
+                    is_controlled_by = UKR
+                    NOT = {
+                        is_core_of = UKR
+                    }
+                    check_variable = {
+                        var = ukr.political_power
+                        value = ukr.anarchist_state_core_cost@THIS
+                        compare = greater_than_or_equals
+                    }
+                    any_neighbor_state = {
+                        is_core_of = UKR
+                    }
+                    check_variable = {
+                        var = ukr.anarchist_support@THIS
+                        value = 50
+                        compare = greater_than_or_equals
+                    }
+                    check_variable = {
+                        var = ukr.anarchist_coring_points
+                        value = 1
+                        compare = greater_than_or_equals
+                    }
                 }
             }
         }
@@ -159,6 +243,10 @@ scripted_gui = {
 
             third_option_checkbox = {
                 frame = var:ukr.view_anarchist_states_can_be_cored
+            }
+
+            ukr_anarchist_legitimacy_state_status = {
+                image = [THIS.GetCurrentAnarchistStateStatus]
             }
 
             ukr_anarchist_legitimacy_state_progress = {

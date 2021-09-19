@@ -4223,13 +4223,13 @@ ukr_update_anarchist_states = {
                     limit = {
                         ukr_malus_europe_anarchist_states = yes
                     }
-                    subtract_from_variable = { ukr.anarchist_support_daily@var:v = 0.02 }
+                    subtract_from_variable = { ukr.anarchist_support_daily@var:v = 0.2 }
                 }
                 else_if = {
                     limit = {
                         ukr_bonus_europe_anarchist_states = yes
                     }
-                    add_to_variable = { ukr.anarchist_support_daily@var:v = 0.02 }
+                    add_to_variable = { ukr.anarchist_support_daily@var:v = 0.2 }
                 }
             }
             else_if = {
@@ -4242,13 +4242,13 @@ ukr_update_anarchist_states = {
                     limit = {
                         ukr_malus_north_america_anarchist_states = yes
                     }
-                    subtract_from_variable = { ukr.anarchist_support_daily@var:v = 0.02 }
+                    subtract_from_variable = { ukr.anarchist_support_daily@var:v = 0.2 }
                 }
                 else_if = {
                     limit = {
                         ukr_bonus_north_america_anarchist_states = yes
                     }
-                    add_to_variable = { ukr.anarchist_support_daily@var:v = 0.02 }
+                    add_to_variable = { ukr.anarchist_support_daily@var:v = 0.2 }
                 }
             }
             else_if = {
@@ -4261,13 +4261,13 @@ ukr_update_anarchist_states = {
                     limit = {
                         ukr_malus_south_america_anarchist_states = yes
                     }
-                    subtract_from_variable = { ukr.anarchist_support_daily@var:v = 0.02 }
+                    subtract_from_variable = { ukr.anarchist_support_daily@var:v = 0.2 }
                 }
                 else_if = {
                     limit = {
                         ukr_bonus_south_america_anarchist_states = yes
                     }
-                    add_to_variable = { ukr.anarchist_support_daily@var:v = 0.02 }
+                    add_to_variable = { ukr.anarchist_support_daily@var:v = 0.2 }
                 }
             }
             else_if = {
@@ -4280,13 +4280,13 @@ ukr_update_anarchist_states = {
                     limit = {
                         ukr_malus_australia_anarchist_states = yes
                     }
-                    subtract_from_variable = { ukr.anarchist_support_daily@var:v = 0.02 }
+                    subtract_from_variable = { ukr.anarchist_support_daily@var:v = 0.2 }
                 }
                 else_if = {
                     limit = {
                         ukr_bonus_australia_anarchist_states = yes
                     }
-                    add_to_variable = { ukr.anarchist_support_daily@var:v = 0.02 }
+                    add_to_variable = { ukr.anarchist_support_daily@var:v = 0.2 }
                 }
             }
             else_if = {
@@ -4299,13 +4299,13 @@ ukr_update_anarchist_states = {
                     limit = {
                         ukr_malus_africa_anarchist_states = yes
                     }
-                    subtract_from_variable = { ukr.anarchist_support_daily@var:v = 0.02 }
+                    subtract_from_variable = { ukr.anarchist_support_daily@var:v = 0.2 }
                 }
                 else_if = {
                     limit = {
                         ukr_bonus_africa_anarchist_states = yes
                     }
-                    add_to_variable = { ukr.anarchist_support_daily@var:v = 0.02 }
+                    add_to_variable = { ukr.anarchist_support_daily@var:v = 0.2 }
                 }
             }
             else_if = {
@@ -4318,13 +4318,13 @@ ukr_update_anarchist_states = {
                     limit = {
                         ukr_malus_asia_anarchist_states = yes
                     }
-                    subtract_from_variable = { ukr.anarchist_support_daily@var:v = 0.02 }
+                    subtract_from_variable = { ukr.anarchist_support_daily@var:v = 0.2 }
                 }
                 else_if = {
                     limit = {
                         ukr_bonus_asia_anarchist_states = yes
                     }
-                    add_to_variable = { ukr.anarchist_support_daily@var:v = 0.02 }
+                    add_to_variable = { ukr.anarchist_support_daily@var:v = 0.2 }
                 }
             }
             else_if = {
@@ -4337,13 +4337,13 @@ ukr_update_anarchist_states = {
                     limit = {
                         ukr_malus_middle_east_anarchist_states = yes
                     }
-                    subtract_from_variable = { ukr.anarchist_support_daily@var:v = 0.02 }
+                    subtract_from_variable = { ukr.anarchist_support_daily@var:v = 0.2 }
                 }
                 else_if = {
                     limit = {
                         ukr_bonus_middle_east_anarchist_states = yes
                     }
-                    add_to_variable = { ukr.anarchist_support_daily@var:v = 0.02 }
+                    add_to_variable = { ukr.anarchist_support_daily@var:v = 0.2 }
                 }
             }
 
@@ -4399,17 +4399,6 @@ ukr_add_daily_gain_anarchist_states = {
                 var = ukr.anarchist_support@var:v
                 min = 0
                 max = 100
-            }
-            if = {
-                limit = {
-                    check_variable = {
-                        var = ukr.anarchist_support@var:v
-                        value = 100
-                        compare = equals
-                    }
-                }
-                add_to_variable = { ukr_anarchist_daily_gain = 0.05 }
-                force_update_dynamic_modifier = yes
             }
         }
         if = {
@@ -4538,6 +4527,67 @@ ukr_add_daily_gain_anarchist_states = {
             }
         }
     }
+
+    set_temp_variable = { ukr_daily_anarchy_gain_temp = 0 }
+
+    for_each_loop = {
+        array = ukr.anarchist_states
+        value = v
+        index = i
+        break = break_array
+
+
+        if = {
+            limit = {
+                check_variable = {
+                    var = ukr.anarchist_support@var:v
+                    value = 100
+                    compare = equals
+                }
+                var:v = {
+                    is_core_of = UKR
+                }
+            }
+            add_to_temp_variable = { ukr_daily_anarchy_gain_temp = 0.05 }
+        }
+    }
+
+    set_variable = { ukr_anarchist_daily_gain = var:ukr_daily_anarchy_gain_temp }
+    force_update_dynamic_modifier = yes
+}
+
+#Update the state cost
+ukr_update_state_cost = {
+    for_each_loop = {
+        array = ukr.anarchist_states
+        value = v
+        index = i
+        break = break_array
+
+        var:v = {
+            set_temp_variable = { state_boost_cost = THIS.state_and_terrain_strategic_value }
+            multiply_temp_variable = { state_boost_cost = 5 }
+            round_temp_variable = state_boost_cost
+            clamp_temp_variable = {
+                var = state_boost_cost
+                min = 25
+                max = 250
+            }
+            set_variable = { ukr.anarchist_state_boost_cost@THIS = var:state_boost_cost }
+
+            set_temp_variable = { state_core_cost = THIS.state_population_k }
+            divide_temp_variable = { state_core_cost = 10 }
+            set_temp_variable = { state_core_cost_multiplier = ukr.anarchist_support@THIS }
+            divide_temp_variable = { state_core_cost_multiplier = 100 }
+            divide_temp_variable = { state_core_cost = state_core_cost_multiplier }
+            clamp_temp_variable = {
+                var = state_core_cost
+                min = 10
+                max = 500
+            }
+            set_variable = { ukr.anarchist_state_core_cost@THIS = var:state_core_cost }
+        }
+    }
 }
 
 #Update current view
@@ -4564,7 +4614,11 @@ ukr_update_current_view = {
                         NOT = {
                             is_core_of = UKR
                         }
-                        #pp
+                        check_variable = {
+                            var = ukr.political_power
+                            value = ukr.anarchist_state_core_cost@var:v
+                            compare = greater_than_or_equals
+                        }
                         any_neighbor_state = {
                             is_core_of = UKR
                         }
