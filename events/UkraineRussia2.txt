@@ -1521,6 +1521,7 @@ country_event = {
 		clr_country_flag = ukr_anarchist_rebels
 		custom_effect_tooltip = ukr_loses_all_cores
 		custom_effect_tooltip = ukr_unlocks_anarchist_legetimacy_decisions
+		add_ideas = UKR_Free_state
 		hidden_effect = {
 			add_popularity = {
 				ideology = anarchy
@@ -1566,9 +1567,11 @@ country_event = {
 					}
 				}
 			}
+			ukr_update_state_cost = yes
 			ukr_update_anarchist_states = yes
             ukr_update_current_view = yes
 			ukr_add_daily_gain_anarchist_states = yes
+			add_ideas = UKR_Anarchist_legitimacy
 			for_each_scope_loop = {
 				array = global.russian_scw_participants
 
@@ -1620,6 +1623,7 @@ country_event = {
 		clr_country_flag = ukr_anarchist_rebels
 		custom_effect_tooltip = ukr_loses_all_cores
 		custom_effect_tooltip = ukr_unlocks_anarchist_legetimacy_decisions
+		add_ideas = UKR_Free_state
 		hidden_effect = {
 			add_popularity = {
 				ideology = anarchy
@@ -1665,9 +1669,11 @@ country_event = {
 					}
 				}
 			}
+			ukr_update_state_cost = yes
 			ukr_update_anarchist_states = yes
             ukr_update_current_view = yes
 			ukr_add_daily_gain_anarchist_states = yes
+			add_ideas = UKR_Anarchist_legitimacy
 			for_each_scope_loop = {
 				array = global.russian_scw_participants
 
@@ -2359,5 +2365,82 @@ country_event = {
 			factor = 100
 		}
 		custom_effect_tooltip = the_war_is_not_over
+	}
+}
+
+#Anarchism Fails (Timeout)
+country_event = {
+	id = ukrains.54
+	title = ukrains.54.t
+	desc = ukrains.54.d
+	picture = GFX_report_event_polish_army
+	is_triggered_only = yes
+
+	option = { #Damn
+		name = ukrains.54.a
+		ai_chance = {
+			factor = 100
+		}
+		add_political_power = -100
+		set_politics = {
+			ruling_party = neutrality
+			elections_allowed = no
+		}
+		add_timed_idea = {
+			idea = UKR_Defeatist_government
+			days = 730
+		}
+		hidden_effect = {
+			add_popularity = {
+				ideology = anarchy
+				popularity = -1
+			}
+		}
+	}
+}
+
+#Anarchism Prevails (Timeout)
+country_event = {
+	id = ukrains.55
+	title = ukrains.55.t
+	desc = ukrains.55.d
+	picture = GFX_report_event_polish_army
+	is_triggered_only = yes
+
+	option = { #Yes
+		name = ukrains.55.a
+		ai_chance = {
+			factor = 100
+		}
+		add_political_power = 100
+		add_ideas = UKR_Anarchist_ideal
+		custom_effect_tooltip = ukr_can_complete_free_territory_focus
+	}
+}
+
+#Give a few divisions to UKR during the SCW (Anarchist)
+country_event = {
+	id = ukrains.56
+	title = ukrains.56.t
+	desc = ukrains.56.d
+	picture = GFX_report_event_polish_army
+	
+	fire_only_once = yes
+
+	is_triggered_only = yes
+
+	trigger = {
+		tag = UKR
+		has_government = anarchy
+		is_subject = no
+		ukr_in_scw = yes
+	}
+
+	option = { #Amazing
+		name = ukrains.56.a
+		ai_chance = {
+			factor = 100
+		}
+		
 	}
 }

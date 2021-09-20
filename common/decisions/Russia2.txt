@@ -39016,6 +39016,8 @@ SOV_switch_country_soviet_fragmented = {
 			state = FROM.capital
 		}
 
+		highlight_color_while_active = 0
+
 		available = {
 			FROM = {
 				is_subject = no
@@ -49424,7 +49426,59 @@ UKR_second_civil_war_category_decisions = {
 UKR_anarchist_legitimacy_category_decisions = {
 
 	UKR_anarchism_timeout = {
-		
+
+		icon = generic_civil_support
+
+		allowed = {
+			original_tag = UKR
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+		    	tooltip = UKR_anarchism_timeout_tt
+				check_variable = {
+					var = ukr.num_core_states
+					value = 20
+					compare = greater_than_or_equals
+				}
+			}
+		}
+
+		activation = {
+			has_government = anarchy
+			is_subject = no
+		}
+
+		visible = {
+			has_government = anarchy
+			is_subject = no
+		}
+
+		is_good = no
+
+		fire_only_once = yes
+
+		days_mission_timeout = 365
+
+		cancel_trigger = {
+			hidden_trigger = {
+				OR = {
+					NOT = {
+						has_government = anarchy
+					}
+					is_subject = yes
+					exists = no
+				}
+			}
+		}
+
+		timeout_effect = {
+            country_event = ukrains.54
+        }
+
+		complete_effect = {
+			country_event = ukrains.55
+		}
 	}
 }
 
