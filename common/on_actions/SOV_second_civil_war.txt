@@ -690,25 +690,27 @@ on_actions = {
 					}
 					if = {
 						limit = {
-							UKR = {
-								has_global_flag = {
-									flag = second_russian_civil_war_in_progress
-									days < 365
-								}
+							has_global_flag = {
+								flag = second_russian_civil_war_in_progress
+								days < 365
 							}
 						}
-						UKR = {
-							add_to_array = { global.speedrun_urals_achievement = THIS }
-						}
-						every_country = {
+						if = {
 							limit = {
-								NOT = {
-									TAG = UKR
-								}
-								is_in_faction_with = UKR
-								is_in_array = { global.russian_scw_participants = ROOT.id }
+								ukr_in_scw = yes
 							}
+							for_each_scope_loop = {
+								array = global.russian_scw_participants_ukr
+							 
+								add_to_array = { global.speedrun_urals_achievement = THIS }
+								set_variable = { global.speedrun_urals_achievement_date@THIS = global.date }
+							}
+						}	
+						for_each_scope_loop = {
+							array = global.russian_scw_participants_other
+						 
 							add_to_array = { global.speedrun_urals_achievement = THIS }
+							set_variable = { global.speedrun_urals_achievement_date@THIS = global.date }
 						}
 					}
 					ROOT = {
@@ -1200,25 +1202,27 @@ on_actions = {
 					}
 					if = {
 						limit = {
-							SOU = {
-								has_global_flag = {
-									flag = second_russian_civil_war_in_progress
-									days < 365
-								}
+							has_global_flag = {
+								flag = second_russian_civil_war_in_progress
+								days < 365
 							}
 						}
-						SOU = {
-							add_to_array = { global.speedrun_urals_achievement = THIS }
-						}
-						every_country = {
+						if = {
 							limit = {
-								NOT = {
-									TAG = SOU
-								}
-								is_in_faction_with = SOU
-								is_in_array = { global.russian_scw_participants = ROOT.id }
+								sou_in_scw = yes
 							}
+							for_each_scope_loop = {
+								array = global.russian_scw_participants_sou
+							 
+								add_to_array = { global.speedrun_urals_achievement = THIS }
+								set_variable = { global.speedrun_urals_achievement_date@THIS = global.date }
+							}
+						}	
+						for_each_scope_loop = {
+							array = global.russian_scw_participants_other
+						 
 							add_to_array = { global.speedrun_urals_achievement = THIS }
+							set_variable = { global.speedrun_urals_achievement_date@THIS = global.date }
 						}
 					}
 					ROOT = {
@@ -1332,26 +1336,41 @@ on_actions = {
 					}
 					if = {
 						limit = {
-							SOV = {
-								has_global_flag = {
-									flag = second_russian_civil_war_in_progress
-									days < 365
-								}
+							has_global_flag = {
+								flag = second_russian_civil_war_in_progress
+								days < 365
 							}
 						}
-						SOV = {
-							add_to_array = { global.speedrun_urals_achievement = THIS }
-							set_country_flag = old_tsar_still_alive
-						}
-						every_country = {
+						if = {
 							limit = {
-								NOT = {
-									TAG = SOV
-								}
-								is_in_faction_with = SOV
-								is_in_array = { global.russian_scw_participants = ROOT.id }
+								sov_in_scw = yes
 							}
+							SOV = {
+								set_country_flag = old_tsar_still_alive
+							}
+							for_each_scope_loop = {
+								array = global.russian_scw_participants_sov
+							 
+								add_to_array = { global.speedrun_urals_achievement = THIS }
+								set_variable = { global.speedrun_urals_achievement_date@THIS = global.date }
+							}
+						}
+						if = {
+							limit = {
+								ukr_in_scw = yes
+							}
+							for_each_scope_loop = {
+								array = global.russian_scw_participants_ukr
+							 
+								add_to_array = { global.speedrun_urals_achievement = THIS }
+								set_variable = { global.speedrun_urals_achievement_date@THIS = global.date }
+							}
+						}	
+						for_each_scope_loop = {
+							array = global.russian_scw_participants_other
+						 
 							add_to_array = { global.speedrun_urals_achievement = THIS }
+							set_variable = { global.speedrun_urals_achievement_date@THIS = global.date }
 						}
 					}
 					every_state = {
