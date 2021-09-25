@@ -37,19 +37,12 @@ if __name__ == '__main__':
            tag = filename.split()
            f.write("add_to_array = { global.russia_reworked_countries_load = %s }\n" % tag[0])
 
-        # currentid = 557
-        # while currentid <= 591:
-        #     f.write(" soviets.%s.t:0 \"The Great Purge - \"\n" % currentid)
-        #     f.write(" soviets.%s.d:0 \"\"\n" % currentid)
-        #     f.write(" soviets.%s.a:0 \"He has to go.\"\n" % currentid)
-        #     f.write(" soviets.%s.b:0 \"He is not guilty.\"\n" % currentid)
-        #     currentid += 1
-
         f.close
 
         print("Success")
 
         manpower = []
+        longestName = ""
 
         with open('states_2021-07-31.json', encoding='utf-8-sig') as jsonFile:
             states = json.load(jsonFile)
@@ -58,11 +51,16 @@ if __name__ == '__main__':
                 if isinstance(state, dict) and "manpower" in state:
                     manpower.append(int(state["manpower"]))
 
+                if isinstance(state, dict) and "nameloca" in state:
+                    if len(longestName) < len(state["nameloca"]):
+                        longestName = state["nameloca"]
+
         totalManpower = addSpace(sum(manpower))
         averageManpower = addSpace(statistics.mean(manpower))
 
         print("Total manpower : %s" % totalManpower)
         print("Average manpower : %s" % averageManpower)
+        print("Longest state name : %s" % longestName)
 
     except Exception as e:
         print("Something went wrong")

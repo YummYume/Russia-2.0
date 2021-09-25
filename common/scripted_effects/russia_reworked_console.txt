@@ -467,5 +467,98 @@ d_russia_reworked_clean_scw_array = {
     else = {
         log = " Error :"
         log = " Only allowed in debug mode!"
-    } 
+    }
+}
+
+d_russia_reworked_turn_ukr_anarchist = {
+    log = "Russia Reworked debug :"
+    if = {
+        limit = {
+            is_debug = yes
+        }
+        if = {
+            limit = {
+                UKR = {
+                    exists = yes
+                    is_subject = no
+                    NOT = {
+                        has_government = anarchy
+                    }
+                }
+            }
+            UKR = {
+                set_politics = {
+                    ruling_party = anarchy
+                    elections_allowed = no
+                }
+                clr_country_flag = ukr_anarchist_rebels
+                custom_effect_tooltip = ukr_loses_all_cores
+                custom_effect_tooltip = ukr_unlocks_anarchist_legetimacy_decisions
+                add_ideas = UKR_Free_state
+                add_popularity = {
+                    ideology = anarchy
+                    popularity = 0.5
+                }
+                set_temp_variable = { anarchy_support_divided_by_two = ukr.party_popularity@anarchy }
+                multiply_temp_variable = { anarchy_support_divided_by_two = 100 }
+                divide_temp_variable = { anarchy_support_divided_by_two = 2 }
+                for_each_loop = {
+                    array = ukr.core_states
+                    value = v
+                    index = i
+                    break = break_array
+
+                    add_to_array = { ukr.temp_core_states = var:v }
+                }
+                for_each_loop = {
+                    array = ukr.temp_core_states
+                    value = v
+                    index = i
+                    break = break_array
+
+                    if = {
+                        limit = {
+                            var:v = {
+                                is_capital = yes
+                                is_controlled_by = UKR
+                            }
+                        }
+                        set_variable = { ukr.anarchist_support@var:v = 100 }
+                    }
+                    else = {
+                        if = {
+                            limit = {
+                                var:v = {
+                                    is_controlled_by = UKR
+                                }
+                            }
+                            set_variable = { ukr.anarchist_support@var:v = var:anarchy_support_divided_by_two }
+                        }
+                        var:v = {
+                            remove_core_of = UKR
+                        }
+                    }
+                }
+                ukr_update_state_cost = yes
+                ukr_update_anarchist_states = yes
+                ukr_update_current_view = yes
+                ukr_add_daily_gain_anarchist_states = yes
+                add_ideas = UKR_Anarchist_legitimacy
+                for_each_scope_loop = {
+                    array = global.russian_scw_participants
+
+                    country_event = ukrains.39
+                }
+            }
+            log = " Ukraine is now Anarchist."
+        }
+        else = {
+            log = " Error :"
+            log = " Cannot turn [UKR.GetNameDef] Anarchist at the moment."
+        }
+    }
+    else = {
+        log = " Error :"
+        log = " Only allowed in debug mode!"
+    }
 }
