@@ -11794,7 +11794,7 @@ SOV_monarchy_congress = {
 			custom_effect_tooltip = SOV_1_house_go_support
 
 			set_temp_variable = { success_count = 0 }
-			set_temp_variable = { random_count_array = 0 }
+			set_temp_variable = { random_house = 0 }
 			while_loop_effect = {
 				break = end_array
     			limit = {
@@ -11805,64 +11805,45 @@ SOV_monarchy_congress = {
 					}
 				}
 
-				for_each_loop = {
-				    array = monarchy_houses_russia
-					value = current
-	    			index = i
-				    break = end_array
-
-				    if = {
-						limit = {
-							check_variable = {
-								var = house_russia^var:current
-								value = 1
-								compare = equals
-							}
-						}
-						randomize_temp_variable = {
-							var = random_count_array
-							distribution = uniform
-							min = 1
-							max = 2
-						}
-						round_temp_variable = random_count_array
-						if = {
-							limit = {
-								check_variable = {
-									var = random_count_array
-									value = 1
-									compare = equals
-								}
-							}
-							set_variable = { house_russia_pp_cost^var:current = 10 }
-							add_to_variable = {
-								var = house_russia_support
-								value = 1
-							}
-							subtract_from_variable = {
-								var = house_russia_opposed
-								value = 1
-							}
-							add_to_variable = {
-								var = house_russia^var:current
-								value = 2
-							}
-							add_to_temp_variable = { success_count = 1 }
-							if = {
-								limit = {
-									check_variable = {
-										var = success_count
-										value = 1
-										compare = equals
-									}
-								}
-								add_to_temp_variable = { end_array = 1 }
-							}
-						}
-						else = {
-							# Nothing happens, the loop will keep going
+				randomize_temp_variable = {
+					var = random_house
+					min = 0
+					max = monarchy_houses_russia^num
+				}
+				round_temp_variable = random_house
+				if = {
+					limit = {
+						check_variable = {
+							var = random_house
+							value = monarchy_houses_russia^num
+							compare = greater_than_or_equals
 						}
 					}
+					set_temp_variable = { random_house = 0 }
+				}
+
+				if = {
+					limit = {
+						check_variable = {
+							var = house_russia^var:random_house
+							value = 1
+							compare = equals
+						}
+					}
+					set_variable = { house_russia_pp_cost^var:random_house = 10 }
+					add_to_variable = {
+						var = house_russia_support
+						value = 1
+					}
+					subtract_from_variable = {
+						var = house_russia_opposed
+						value = 1
+					}
+					add_to_variable = {
+						var = house_russia^var:random_house
+						value = 2
+					}
+					add_to_temp_variable = { success_count = 1 }
 				}
 			}
 		}
@@ -11915,7 +11896,7 @@ SOV_monarchy_congress = {
 			custom_effect_tooltip = SOV_2_houses_go_opposition
 
 			set_temp_variable = { success_count = 0 }
-			set_temp_variable = { random_count_array = 0 }
+			set_temp_variable = { random_house = 0 }
 			while_loop_effect = {
 				break = end_array
     			limit = {
@@ -11926,64 +11907,45 @@ SOV_monarchy_congress = {
 					}
 				}
 
-				for_each_loop = {
-				    array = monarchy_houses_russia
-					value = current
-	    			index = i
-				    break = end_array
-
-				    if = {
-						limit = {
-							check_variable = {
-								var = house_russia^var:current
-								value = 3
-								compare = equals
-							}
-						}
-						randomize_temp_variable = {
-							var = random_count_array
-							distribution = uniform
-							min = 1
-							max = 2
-						}
-						round_temp_variable = random_count_array
-						if = {
-							limit = {
-								check_variable = {
-									var = random_count_array
-									value = 1
-									compare = equals
-								}
-							}
-							set_variable = { house_russia_pp_cost^var:current = 30 }
-							add_to_variable = {
-								var = house_russia_opposed
-								value = 1
-							}
-							subtract_from_variable = {
-								var = house_russia_support
-								value = 1
-							}
-							subtract_from_variable = {
-								var = house_russia^var:current
-								value = 2
-							}
-							add_to_temp_variable = { success_count = 1 }
-							if = {
-								limit = {
-									check_variable = {
-										var = success_count
-										value = 2
-										compare = equals
-									}
-								}
-								add_to_temp_variable = { end_array = 1 }
-							}
-						}
-						else = {
-							# Nothing happens, the loop will keep going
+				randomize_temp_variable = {
+					var = random_house
+					min = 0
+					max = monarchy_houses_russia^num
+				}
+				round_temp_variable = random_house
+				if = {
+					limit = {
+						check_variable = {
+							var = random_house
+							value = monarchy_houses_russia^num
+							compare = greater_than_or_equals
 						}
 					}
+					set_temp_variable = { random_house = 0 }
+				}
+
+				if = {
+					limit = {
+						check_variable = {
+							var = house_russia^var:random_house
+							value = 3
+							compare = equals
+						}
+					}
+					set_variable = { house_russia_pp_cost^var:random_house = 30 }
+					add_to_variable = {
+						var = house_russia_opposed
+						value = 1
+					}
+					subtract_from_variable = {
+						var = house_russia_support
+						value = 1
+					}
+					subtract_from_variable = {
+						var = house_russia^var:random_house
+						value = 2
+					}
+					add_to_temp_variable = { success_count = 1 }
 				}
 			}
 		}
@@ -12047,8 +12009,9 @@ SOV_monarchy_congress = {
 				}
 			}
 			custom_effect_tooltip = SOV_2_houses_go_opposition
+
 			set_temp_variable = { success_count = 0 }
-			set_temp_variable = { random_count_array = 0 }
+			set_temp_variable = { random_house = 0 }
 			while_loop_effect = {
 				break = end_array
     			limit = {
@@ -12059,64 +12022,45 @@ SOV_monarchy_congress = {
 					}
 				}
 
-				for_each_loop = {
-				    array = monarchy_houses_russia
-					value = current
-	    			index = i
-				    break = end_array
-
-				    if = {
-						limit = {
-							check_variable = {
-								var = house_russia^var:current
-								value = 3
-								compare = equals
-							}
-						}
-						randomize_temp_variable = {
-							var = random_count_array
-							distribution = uniform
-							min = 1
-							max = 2
-						}
-						round_temp_variable = random_count_array
-						if = {
-							limit = {
-								check_variable = {
-									var = random_count_array
-									value = 1
-									compare = equals
-								}
-							}
-							set_variable = { house_russia_pp_cost^var:current = 30 }
-							add_to_variable = {
-								var = house_russia_opposed
-								value = 1
-							}
-							subtract_from_variable = {
-								var = house_russia_support
-								value = 1
-							}
-							subtract_from_variable = {
-								var = house_russia^var:current
-								value = 2
-							}
-							add_to_temp_variable = { success_count = 1 }
-							if = {
-								limit = {
-									check_variable = {
-										var = success_count
-										value = 2
-										compare = equals
-									}
-								}
-								add_to_temp_variable = { end_array = 1 }
-							}
-						}
-						else = {
-							# Nothing happens, the loop will keep going
+				randomize_temp_variable = {
+					var = random_house
+					min = 0
+					max = monarchy_houses_russia^num
+				}
+				round_temp_variable = random_house
+				if = {
+					limit = {
+						check_variable = {
+							var = random_house
+							value = monarchy_houses_russia^num
+							compare = greater_than_or_equals
 						}
 					}
+					set_temp_variable = { random_house = 0 }
+				}
+
+				if = {
+					limit = {
+						check_variable = {
+							var = house_russia^var:random_house
+							value = 3
+							compare = equals
+						}
+					}
+					set_variable = { house_russia_pp_cost^var:random_house = 30 }
+					add_to_variable = {
+						var = house_russia_opposed
+						value = 1
+					}
+					subtract_from_variable = {
+						var = house_russia_support
+						value = 1
+					}
+					subtract_from_variable = {
+						var = house_russia^var:random_house
+						value = 2
+					}
+					add_to_temp_variable = { success_count = 1 }
 				}
 			}
 		}
@@ -12155,8 +12099,9 @@ SOV_monarchy_congress = {
 		complete_effect = {
 			add_ideas = SOV_Tsarist_military
 			custom_effect_tooltip = SOV_2_houses_go_opposition
+
 			set_temp_variable = { success_count = 0 }
-			set_temp_variable = { random_count_array = 0 }
+			set_temp_variable = { random_house = 0 }
 			while_loop_effect = {
 				break = end_array
     			limit = {
@@ -12167,64 +12112,45 @@ SOV_monarchy_congress = {
 					}
 				}
 
-				for_each_loop = {
-				    array = monarchy_houses_russia
-					value = current
-	    			index = i
-				    break = end_array
-
-				    if = {
-						limit = {
-							check_variable = {
-								var = house_russia^var:current
-								value = 3
-								compare = equals
-							}
-						}
-						randomize_temp_variable = {
-							var = random_count_array
-							distribution = uniform
-							min = 1
-							max = 2
-						}
-						round_temp_variable = random_count_array
-						if = {
-							limit = {
-								check_variable = {
-									var = random_count_array
-									value = 1
-									compare = equals
-								}
-							}
-							set_variable = { house_russia_pp_cost^var:current = 30 }
-							add_to_variable = {
-								var = house_russia_opposed
-								value = 1
-							}
-							subtract_from_variable = {
-								var = house_russia_support
-								value = 1
-							}
-							subtract_from_variable = {
-								var = house_russia^var:current
-								value = 2
-							}
-							add_to_temp_variable = { success_count = 1 }
-							if = {
-								limit = {
-									check_variable = {
-										var = success_count
-										value = 2
-										compare = equals
-									}
-								}
-								add_to_temp_variable = { end_array = 1 }
-							}
-						}
-						else = {
-							# Nothing happens, the loop will keep going
+				randomize_temp_variable = {
+					var = random_house
+					min = 0
+					max = monarchy_houses_russia^num
+				}
+				round_temp_variable = random_house
+				if = {
+					limit = {
+						check_variable = {
+							var = random_house
+							value = monarchy_houses_russia^num
+							compare = greater_than_or_equals
 						}
 					}
+					set_temp_variable = { random_house = 0 }
+				}
+
+				if = {
+					limit = {
+						check_variable = {
+							var = house_russia^var:random_house
+							value = 3
+							compare = equals
+						}
+					}
+					set_variable = { house_russia_pp_cost^var:random_house = 30 }
+					add_to_variable = {
+						var = house_russia_opposed
+						value = 1
+					}
+					subtract_from_variable = {
+						var = house_russia_support
+						value = 1
+					}
+					subtract_from_variable = {
+						var = house_russia^var:random_house
+						value = 2
+					}
+					add_to_temp_variable = { success_count = 1 }
 				}
 			}
 		}
@@ -12253,8 +12179,10 @@ SOV_monarchy_congress = {
 		days_remove = 40
 
 		complete_effect = {
+			custom_effect_tooltip = SOV_1_random_house_go_opposition
+
 			set_temp_variable = { success_count = 0 }
-			set_temp_variable = { random_count_array = 0 }
+			set_temp_variable = { random_house = 0 }
 			while_loop_effect = {
 				break = end_array
     			limit = {
@@ -12265,102 +12193,45 @@ SOV_monarchy_congress = {
 					}
 				}
 
-				for_each_loop = {
-				    array = monarchy_houses_russia
-					value = current
-	    			index = i
-				    break = end_array
-
-				    if = {
-						limit = {
-							OR = {
-								check_variable = {
-									var = house_russia^var:current
-									value = 3
-									compare = equals
-								}
-								check_variable = {
-									var = house_russia^var:current
-									value = 2
-									compare = equals
-								}
-							}
-						}
-						randomize_temp_variable = {
-							var = random_count_array
-							distribution = uniform
-							min = 1
-							max = 2
-						}
-						round_temp_variable = random_count_array
-						if = {
-							limit = {
-								check_variable = {
-									var = random_count_array
-									value = 1
-									compare = equals
-								}
-							}
-							if = {
-								limit = {
-									check_variable = {
-										var = house_russia^var:current
-										value = 3
-										compare = equals
-									}
-								}
-								set_variable = { house_russia_pp_cost^var:current = 20 }
-								add_to_variable = {
-									var = house_russia_neutral
-									value = 1
-								}
-								subtract_from_variable = {
-									var = house_russia_support
-									value = 1
-								}
-								subtract_from_variable = {
-									var = house_russia^var:current
-									value = 1
-								}
-							}
-							else = {
-								limit = {
-									check_variable = {
-										var = house_russia^var:current
-										value = 2
-										compare = equals
-									}
-								}
-								set_variable = { house_russia_pp_cost^var:current = 30 }
-								add_to_variable = {
-									var = house_russia_opposed
-									value = 1
-								}
-								subtract_from_variable = {
-									var = house_russia_neutral
-									value = 1
-								}
-								subtract_from_variable = {
-									var = house_russia^var:current
-									value = 1
-								}
-							}
-							add_to_temp_variable = { success_count = 1 }
-							if = {
-								limit = {
-									check_variable = {
-										var = success_count
-										value = 1
-										compare = equals
-									}
-								}
-								add_to_temp_variable = { end_array = 1 }
-							}
-						}
-						else = {
-							# Nothing happens, the loop will keep going
+				randomize_temp_variable = {
+					var = random_house
+					min = 0
+					max = monarchy_houses_russia^num
+				}
+				round_temp_variable = random_house
+				if = {
+					limit = {
+						check_variable = {
+							var = random_house
+							value = monarchy_houses_russia^num
+							compare = greater_than_or_equals
 						}
 					}
+					set_temp_variable = { random_house = 0 }
+				}
+
+				if = {
+					limit = {
+						check_variable = {
+							var = house_russia^var:random_house
+							value = 3
+							compare = equals
+						}
+					}
+					set_variable = { house_russia_pp_cost^var:random_house = 30 }
+					add_to_variable = {
+						var = house_russia_opposed
+						value = 1
+					}
+					subtract_from_variable = {
+						var = house_russia_support
+						value = 1
+					}
+					subtract_from_variable = {
+						var = house_russia^var:random_house
+						value = 2
+					}
+					add_to_temp_variable = { success_count = 1 }
 				}
 			}
 		}
@@ -12374,7 +12245,6 @@ SOV_monarchy_congress = {
 					instant_build = yes
 				}
 			}
-			custom_effect_tooltip = SOV_1_random_house_go_opposition
 		}
 	}
 
@@ -12403,8 +12273,10 @@ SOV_monarchy_congress = {
 		days_remove = 40
 
 		complete_effect = {
+			custom_effect_tooltip = SOV_1_random_house_go_opposition
+
 			set_temp_variable = { success_count = 0 }
-			set_temp_variable = { random_count_array = 0 }
+			set_temp_variable = { random_house = 0 }
 			while_loop_effect = {
 				break = end_array
     			limit = {
@@ -12415,102 +12287,45 @@ SOV_monarchy_congress = {
 					}
 				}
 
-				for_each_loop = {
-				    array = monarchy_houses_russia
-					value = current
-	    			index = i
-				    break = end_array
-
-				    if = {
-						limit = {
-							OR = {
-								check_variable = {
-									var = house_russia^var:current
-									value = 3
-									compare = equals
-								}
-								check_variable = {
-									var = house_russia^var:current
-									value = 2
-									compare = equals
-								}
-							}
-						}
-						randomize_temp_variable = {
-							var = random_count_array
-							distribution = uniform
-							min = 1
-							max = 2
-						}
-						round_temp_variable = random_count_array
-						if = {
-							limit = {
-								check_variable = {
-									var = random_count_array
-									value = 1
-									compare = equals
-								}
-							}
-							if = {
-								limit = {
-									check_variable = {
-										var = house_russia^var:current
-										value = 3
-										compare = equals
-									}
-								}
-								set_variable = { house_russia_pp_cost^var:current = 20 }
-								add_to_variable = {
-									var = house_russia_neutral
-									value = 1
-								}
-								subtract_from_variable = {
-									var = house_russia_support
-									value = 1
-								}
-								subtract_from_variable = {
-									var = house_russia^var:current
-									value = 1
-								}
-							}
-							else = {
-								limit = {
-									check_variable = {
-										var = house_russia^var:current
-										value = 2
-										compare = equals
-									}
-								}
-								set_variable = { house_russia_pp_cost^var:current = 30 }
-								add_to_variable = {
-									var = house_russia_opposed
-									value = 1
-								}
-								subtract_from_variable = {
-									var = house_russia_neutral
-									value = 1
-								}
-								subtract_from_variable = {
-									var = house_russia^var:current
-									value = 1
-								}
-							}
-							add_to_temp_variable = { success_count = 1 }
-							if = {
-								limit = {
-									check_variable = {
-										var = success_count
-										value = 1
-										compare = equals
-									}
-								}
-								add_to_temp_variable = { end_array = 1 }
-							}
-						}
-						else = {
-							# Nothing happens, the loop will keep going
+				randomize_temp_variable = {
+					var = random_house
+					min = 0
+					max = monarchy_houses_russia^num
+				}
+				round_temp_variable = random_house
+				if = {
+					limit = {
+						check_variable = {
+							var = random_house
+							value = monarchy_houses_russia^num
+							compare = greater_than_or_equals
 						}
 					}
+					set_temp_variable = { random_house = 0 }
+				}
+
+				if = {
+					limit = {
+						check_variable = {
+							var = house_russia^var:random_house
+							value = 3
+							compare = equals
+						}
+					}
+					set_variable = { house_russia_pp_cost^var:random_house = 30 }
+					add_to_variable = {
+						var = house_russia_opposed
+						value = 1
+					}
+					subtract_from_variable = {
+						var = house_russia_support
+						value = 1
+					}
+					subtract_from_variable = {
+						var = house_russia^var:random_house
+						value = 2
+					}
+					add_to_temp_variable = { success_count = 1 }
 				}
 			}
 		}
@@ -12524,7 +12339,6 @@ SOV_monarchy_congress = {
 					instant_build = yes
 				}
 			}
-			custom_effect_tooltip = SOV_1_random_house_go_opposition
 		}
 	}
 
@@ -12551,8 +12365,10 @@ SOV_monarchy_congress = {
 		days_remove = 40
 
 		complete_effect = {
+			custom_effect_tooltip = SOV_1_random_house_go_opposition
+
 			set_temp_variable = { success_count = 0 }
-			set_temp_variable = { random_count_array = 0 }
+			set_temp_variable = { random_house = 0 }
 			while_loop_effect = {
 				break = end_array
     			limit = {
@@ -12563,102 +12379,45 @@ SOV_monarchy_congress = {
 					}
 				}
 
-				for_each_loop = {
-				    array = monarchy_houses_russia
-					value = current
-	    			index = i
-				    break = end_array
-
-				    if = {
-						limit = {
-							OR = {
-								check_variable = {
-									var = house_russia^var:current
-									value = 3
-									compare = equals
-								}
-								check_variable = {
-									var = house_russia^var:current
-									value = 2
-									compare = equals
-								}
-							}
-						}
-						randomize_temp_variable = {
-							var = random_count_array
-							distribution = uniform
-							min = 1
-							max = 2
-						}
-						round_temp_variable = random_count_array
-						if = {
-							limit = {
-								check_variable = {
-									var = random_count_array
-									value = 1
-									compare = equals
-								}
-							}
-							if = {
-								limit = {
-									check_variable = {
-										var = house_russia^var:current
-										value = 3
-										compare = equals
-									}
-								}
-								set_variable = { house_russia_pp_cost^var:current = 20 }
-								add_to_variable = {
-									var = house_russia_neutral
-									value = 1
-								}
-								subtract_from_variable = {
-									var = house_russia_support
-									value = 1
-								}
-								subtract_from_variable = {
-									var = house_russia^var:current
-									value = 1
-								}
-							}
-							else = {
-								limit = {
-									check_variable = {
-										var = house_russia^var:current
-										value = 2
-										compare = equals
-									}
-								}
-								set_variable = { house_russia_pp_cost^var:current = 30 }
-								add_to_variable = {
-									var = house_russia_opposed
-									value = 1
-								}
-								subtract_from_variable = {
-									var = house_russia_neutral
-									value = 1
-								}
-								subtract_from_variable = {
-									var = house_russia^var:current
-									value = 1
-								}
-							}
-							add_to_temp_variable = { success_count = 1 }
-							if = {
-								limit = {
-									check_variable = {
-										var = success_count
-										value = 1
-										compare = equals
-									}
-								}
-								add_to_temp_variable = { end_array = 1 }
-							}
-						}
-						else = {
-							# Nothing happens, the loop will keep going
+				randomize_temp_variable = {
+					var = random_house
+					min = 0
+					max = monarchy_houses_russia^num
+				}
+				round_temp_variable = random_house
+				if = {
+					limit = {
+						check_variable = {
+							var = random_house
+							value = monarchy_houses_russia^num
+							compare = greater_than_or_equals
 						}
 					}
+					set_temp_variable = { random_house = 0 }
+				}
+
+				if = {
+					limit = {
+						check_variable = {
+							var = house_russia^var:random_house
+							value = 3
+							compare = equals
+						}
+					}
+					set_variable = { house_russia_pp_cost^var:random_house = 30 }
+					add_to_variable = {
+						var = house_russia_opposed
+						value = 1
+					}
+					subtract_from_variable = {
+						var = house_russia_support
+						value = 1
+					}
+					subtract_from_variable = {
+						var = house_russia^var:random_house
+						value = 2
+					}
+					add_to_temp_variable = { success_count = 1 }
 				}
 			}
 		}
@@ -12675,7 +12434,6 @@ SOV_monarchy_congress = {
 					instant_build = yes
 				}
 			}
-			custom_effect_tooltip = SOV_1_random_house_go_opposition
 		}
 	}
 
