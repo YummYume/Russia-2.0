@@ -191,10 +191,10 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
+            add_country_leader_trait = unbreakable_will
             add_political_power = 50
             custom_effect_tooltip = UKR_makhno_revenge_tt2
             add_to_variable = { ukr.anarchist_coring_points = 2 }
-            add_country_leader_trait = unbreakable_will
         }
     }
 
@@ -290,7 +290,7 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            custom_effect_tooltip = UKR_get_back_french_revolutionaries_tt
         }
     }
 
@@ -311,10 +311,108 @@ focus_tree = {
         available = {
             is_subject = no
             has_government = anarchy
+            controls_state = 16
         }
         search_filters = {  }
         completion_reward = {
-
+            if = {
+                limit = {
+                    16 = {
+                        NOT = {
+                            is_core_of = ROOT
+                        }
+                    }
+                }
+                add_state_core = 16
+            }
+            if = {
+                limit = {
+                    NOT = {
+                        owns_state = 16
+                    }
+                }
+                transfer_state = 16
+            }
+            hidden_effect = {
+                if = {
+                    limit = {
+                        NOT = {
+                            has_template = "Paryz'kyy Anarkhist"
+                        }
+                    }
+                    division_template = {
+                        name = "Paryz'kyy Anarkhist"
+                        priority = 2
+                        regiments = {
+                            infantry = { x = 0 y = 0 }
+                            infantry = { x = 0 y = 1 }
+                            infantry = { x = 0 y = 2 }
+                            infantry = { x = 0 y = 3 }
+                            infantry = { x = 0 y = 4 }
+                            infantry = { x = 1 y = 0 }
+                            infantry = { x = 1 y = 1 }
+                            infantry = { x = 1 y = 2 }
+                            infantry = { x = 1 y = 3 }
+                            infantry = { x = 1 y = 4 }
+                        }
+                        support = {
+                            artillery = { x = 0 y = 0 }
+                            light_tank_recon = { x = 0 y = 1 }
+							engineer = { x = 0 y = 2 }
+                        }
+                    }
+                }
+            }
+            16 = {
+                add_dynamic_modifier = {
+                    modifier = ukr_harmonious_anarchy
+                }
+                custom_effect_tooltip = SOV_skip_line
+                create_unit = {
+                    division = "name = \"Paryz'kyy Anarkhist\" division_template = \"Paryz'kyy Anarkhist\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
+                    owner = ROOT
+                    allow_spawning_on_enemy_provs = yes
+                    prioritize_location = 11506
+                }
+                if = {
+                    limit = {
+                        NOT = {
+                            ROOT = {
+                                controls_state = 16
+                            }
+                        }
+                    }
+                    custom_effect_tooltip = SOV_skip_line
+                }
+                create_unit = {
+                    division = "name = \"Paryz'kyy Anarkhist\" division_template = \"Paryz'kyy Anarkhist\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
+                    owner = ROOT
+                    allow_spawning_on_enemy_provs = yes
+                    prioritize_location = 9523
+                }
+                hidden_effect = {
+                    if = {
+                        limit = {
+                            has_dynamic_modifier = {
+                                modifier = ukr_anarchist_state_converted
+                            }
+                        }
+                        remove_dynamic_modifier = {
+                            modifier = ukr_anarchist_state_converted
+                        }
+                    }
+                    if = {
+                        limit = {
+                            has_dynamic_modifier = {
+                                modifier = ukr_anarchist_state_non_converted
+                            }
+                        }
+                        remove_dynamic_modifier = {
+                            modifier = ukr_anarchist_state_non_converted
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -343,9 +441,9 @@ focus_tree = {
         }
     }
 
-    # Independant Army Corps
+    # Independent Army Corps
     focus = {
-        id = UKR_independant_army_corps
+        id = UKR_independent_army_corps
         x = 10
         y = 8
         prerequisite = { focus = UKR_liberty_over_equality }
@@ -372,7 +470,7 @@ focus_tree = {
         id = UKR_spread_revolution
         x = 10
         y = 9
-        prerequisite = { focus = UKR_independant_army_corps }
+        prerequisite = { focus = UKR_independent_army_corps }
         icon = GFX_
         cost = 5
         ai_will_do = {

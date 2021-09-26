@@ -2005,7 +2005,23 @@ on_actions = {
 					}
 					set_temp_variable = { anarchy_support_divided_by_two = ukr.party_popularity@anarchy }
 					multiply_temp_variable = { anarchy_support_divided_by_two = 100 }
-					divide_temp_variable = { anarchy_support_divided_by_two = 2 }
+					if = {
+						limit = {
+							OR = {
+								NOT = {
+									ROOT = {
+										has_completed_focus = UKR_get_back_french_revolutionaries
+									}
+								}
+								NOT = {
+									FROM.FROM = {
+										is_core_of = FRA
+									}
+								}
+							}
+						}
+						divide_temp_variable = { anarchy_support_divided_by_two = 2 }
+					}
 					set_variable = { ukr.anarchist_support@FROM.FROM = var:anarchy_support_divided_by_two }
 					clamp_variable = {
 						var = ukr.anarchist_support@FROM.FROM
@@ -2013,8 +2029,8 @@ on_actions = {
 						max = 100
 					}
 				}
-				ukr_update_state_cost = yes
 				ukr_update_anarchist_states = yes
+				ukr_update_state_cost = yes
 				ukr_add_daily_gain_anarchist_states = yes
 				ukr_update_current_view = yes
 				FROM.FROM = {
@@ -2067,6 +2083,7 @@ on_actions = {
 					FROM = {
 						tag = UKR
 						has_government = anarchy
+						is_subject = no
 					}
 				}
 				if = {
@@ -2078,15 +2095,31 @@ on_actions = {
 							compare = less_than
 						}
 					}
-					subtract_from_variable = { ukr.anarchist_support@FROM.FROM = 10 }
+					if = {
+						limit = {
+							OR = {
+								NOT = {
+									FROM = {
+										has_completed_focus = UKR_get_back_french_revolutionaries
+									}
+								}
+								NOT = {
+									FROM.FROM = {
+										is_core_of = FRA
+									}
+								}
+							}
+						}
+						subtract_from_variable = { ukr.anarchist_support@FROM.FROM = 10 }
+					}
 					clamp_variable = {
 						var = ukr.anarchist_support@FROM.FROM
 						min = 0
 						max = 100
 					}
 				}
-				ukr_update_state_cost = yes
 				ukr_update_anarchist_states = yes
+				ukr_update_state_cost = yes
 				ukr_add_daily_gain_anarchist_states = yes
 				ukr_update_current_view = yes
 				FROM.FROM = {
@@ -2108,6 +2141,62 @@ on_actions = {
 						}
 						remove_dynamic_modifier = {
 							modifier = ukr_anarchist_state_converted
+						}
+					}
+				}
+			}
+		}
+	}
+
+	#Add/Remove dynamic modifier for Paris (Anarchist Ukraine)
+	on_state_control_changed = {
+		effect = {
+			if = {
+				limit = {
+					FROM.FROM = {
+						state = 16
+					}
+					UKR = {
+						has_completed_focus = UKR_paris_old_friend
+					}
+				}
+				if = {
+					limit = {
+						FROM = {
+							tag = UKR
+							has_government = anarchy
+							is_subject = no
+						}
+						16 = {
+							has_dynamic_modifier = {
+								modifier = ukr_harmonious_anarchy
+							}
+						}
+					}
+					16 = {
+						remove_dynamic_modifier = {
+							modifier = ukr_harmonious_anarchy
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						ROOT = {
+							tag = UKR
+							has_government = anarchy
+							is_subject = no
+						}
+						16 = {
+							NOT = {
+								has_dynamic_modifier = {
+									modifier = ukr_harmonious_anarchy
+								}
+							}
+						}
+					}
+					16 = {
+						add_dynamic_modifier = {
+							modifier = ukr_harmonious_anarchy
 						}
 					}
 				}
