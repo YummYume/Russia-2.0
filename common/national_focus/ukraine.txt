@@ -18,7 +18,7 @@ focus_tree = {
         y = 1
         prerequisite = {  }
         icon = GFX_
-        cost = 5
+        cost = 4
         ai_will_do = {
             factor = 1
         }
@@ -47,7 +47,7 @@ focus_tree = {
         y = 2
         prerequisite = { focus = UKR_anarchy_reigns }
         icon = GFX_
-        cost = 5
+        cost = 6
         ai_will_do = {
             factor = 1
         }
@@ -86,7 +86,11 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_ideas = UKR_Nabat_congress
+            custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = UKR_vsevolod_mikhailovich_eikhenbaum
+            custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = UKR_vladimir_alexandrovich_antonov_ovseenko_anarchist
         }
     }
 
@@ -97,7 +101,7 @@ focus_tree = {
         y = 3
         prerequisite = { focus = UKR_declare_free_territory }
         icon = GFX_
-        cost = 5
+        cost = 6
         ai_will_do = {
             factor = 2
         }
@@ -165,7 +169,7 @@ focus_tree = {
         prerequisite = { focus = UKR_anarchist_legitimacy }
         prerequisite = { focus = UKR_rally_green_armies }
         icon = GFX_
-        cost = 5
+        cost = 8
         ai_will_do = {
             factor = 20
         }
@@ -176,6 +180,10 @@ focus_tree = {
             is_subject = no
             has_government = anarchy
             has_global_flag = second_russian_civil_war_over
+            has_country_leader = {
+                name = "Makhno Nestor"
+                ruling_only = yes
+            }
             custom_trigger_tooltip = {
                 tooltip = UKR_makhno_revenge_tt
                 check_variable = {
@@ -187,6 +195,7 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
+            add_country_leader_trait = unbreakable_will
             add_political_power = 50
             custom_effect_tooltip = UKR_makhno_revenge_tt2
             add_to_variable = { ukr.anarchist_coring_points = 2 }
@@ -213,7 +222,7 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_ideas = UKR_Social_reorganization
         }
     }
 
@@ -248,7 +257,7 @@ focus_tree = {
         y = 7
         prerequisite = { focus = UKR_execute_soviet_command }
         icon = GFX_
-        cost = 5
+        cost = 8
         ai_will_do = {
             factor = 2
         }
@@ -285,7 +294,7 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            custom_effect_tooltip = UKR_get_back_french_revolutionaries_tt
         }
     }
 
@@ -296,7 +305,7 @@ focus_tree = {
         y = 7
         prerequisite = { focus = UKR_get_back_french_revolutionaries }
         icon = GFX_
-        cost = 5
+        cost = 8
         ai_will_do = {
             factor = 2
         }
@@ -306,10 +315,108 @@ focus_tree = {
         available = {
             is_subject = no
             has_government = anarchy
+            controls_state = 16
         }
         search_filters = {  }
         completion_reward = {
-
+            if = {
+                limit = {
+                    16 = {
+                        NOT = {
+                            is_core_of = ROOT
+                        }
+                    }
+                }
+                add_state_core = 16
+            }
+            if = {
+                limit = {
+                    NOT = {
+                        owns_state = 16
+                    }
+                }
+                transfer_state = 16
+            }
+            hidden_effect = {
+                if = {
+                    limit = {
+                        NOT = {
+                            has_template = "Paryz'kyy Anarkhist"
+                        }
+                    }
+                    division_template = {
+                        name = "Paryz'kyy Anarkhist"
+                        priority = 2
+                        regiments = {
+                            infantry = { x = 0 y = 0 }
+                            infantry = { x = 0 y = 1 }
+                            infantry = { x = 0 y = 2 }
+                            infantry = { x = 0 y = 3 }
+                            infantry = { x = 0 y = 4 }
+                            infantry = { x = 1 y = 0 }
+                            infantry = { x = 1 y = 1 }
+                            infantry = { x = 1 y = 2 }
+                            infantry = { x = 1 y = 3 }
+                            infantry = { x = 1 y = 4 }
+                        }
+                        support = {
+                            artillery = { x = 0 y = 0 }
+                            light_tank_recon = { x = 0 y = 1 }
+							engineer = { x = 0 y = 2 }
+                        }
+                    }
+                }
+            }
+            16 = {
+                add_dynamic_modifier = {
+                    modifier = ukr_harmonious_anarchy
+                }
+                custom_effect_tooltip = SOV_skip_line
+                create_unit = {
+                    division = "name = \"Paryz'kyy Anarkhist\" division_template = \"Paryz'kyy Anarkhist\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
+                    owner = ROOT
+                    allow_spawning_on_enemy_provs = yes
+                    prioritize_location = 11506
+                }
+                if = {
+                    limit = {
+                        NOT = {
+                            ROOT = {
+                                controls_state = 16
+                            }
+                        }
+                    }
+                    custom_effect_tooltip = SOV_skip_line
+                }
+                create_unit = {
+                    division = "name = \"Paryz'kyy Anarkhist\" division_template = \"Paryz'kyy Anarkhist\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
+                    owner = ROOT
+                    allow_spawning_on_enemy_provs = yes
+                    prioritize_location = 9523
+                }
+                hidden_effect = {
+                    if = {
+                        limit = {
+                            has_dynamic_modifier = {
+                                modifier = ukr_anarchist_state_converted
+                            }
+                        }
+                        remove_dynamic_modifier = {
+                            modifier = ukr_anarchist_state_converted
+                        }
+                    }
+                    if = {
+                        limit = {
+                            has_dynamic_modifier = {
+                                modifier = ukr_anarchist_state_non_converted
+                            }
+                        }
+                        remove_dynamic_modifier = {
+                            modifier = ukr_anarchist_state_non_converted
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -321,7 +428,7 @@ focus_tree = {
         prerequisite = { focus = UKR_execute_soviet_command }
         prerequisite = { focus = UKR_get_back_french_revolutionaries }
         icon = GFX_
-        cost = 5
+        cost = 4
         ai_will_do = {
             factor = 2
         }
@@ -334,18 +441,19 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            custom_effect_tooltip = UKR_liberty_over_equality_tt
+            add_to_variable = { ukr.anarchist_coring_points = 6 }
         }
     }
 
-    # Independant Army Corps
+    # Independent Army Corps
     focus = {
-        id = UKR_independant_army_corps
+        id = UKR_independent_army_corps
         x = 10
         y = 8
         prerequisite = { focus = UKR_liberty_over_equality }
         icon = GFX_
-        cost = 5
+        cost = 6
         ai_will_do = {
             factor = 2
         }
@@ -358,7 +466,14 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_ideas = UKR_Independent_army_corps
+            every_army_leader = {
+                add_skill_level = 1
+				add_attack = 1
+                add_defense = 1
+				add_logistics = 1
+                add_planning = 1
+			}
         }
     }
 
@@ -367,9 +482,9 @@ focus_tree = {
         id = UKR_spread_revolution
         x = 10
         y = 9
-        prerequisite = { focus = UKR_independant_army_corps }
+        prerequisite = { focus = UKR_independent_army_corps }
         icon = GFX_
-        cost = 5
+        cost = 6
         ai_will_do = {
             factor = 2
         }
@@ -382,7 +497,7 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_ideas = UKR_Spread_revolution
         }
     }
 
@@ -441,7 +556,7 @@ focus_tree = {
         y = 11
         prerequisite = { focus = UKR_take_over_baltics focus = UKR_push_balkans }
         icon = GFX_
-        cost = 5
+        cost = 8
         ai_will_do = {
             factor = 2
         }
@@ -513,7 +628,7 @@ focus_tree = {
         y = 11
         prerequisite = { focus = UKR_invade_old_asian_territories focus = UKR_end_warlord_era }
         icon = GFX_
-        cost = 5
+        cost = 8
         ai_will_do = {
             factor = 2
         }
@@ -551,7 +666,7 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_ideas = UKR_Our_will_our_weapon
         }
     }
 
@@ -562,7 +677,7 @@ focus_tree = {
         y = 13
         prerequisite = { focus = UKR_will_weapon }
         icon = GFX_
-        cost = 5
+        cost = 8
         ai_will_do = {
             factor = 2
         }
@@ -586,7 +701,7 @@ focus_tree = {
         y = 13
         prerequisite = { focus = UKR_will_weapon }
         icon = GFX_
-        cost = 5
+        cost = 8
         ai_will_do = {
             factor = 2
         }
@@ -635,7 +750,7 @@ focus_tree = {
         y = 15
         prerequisite = { focus = UKR_last_bastion }
         icon = GFX_
-        cost = 5
+        cost = 8
         ai_will_do = {
             factor = 2
         }
@@ -659,7 +774,7 @@ focus_tree = {
         y = 16
         prerequisite = { focus = UKR_free_america }
         icon = GFX_
-        cost = 5
+        cost = 10
         ai_will_do = {
             factor = 2
         }
