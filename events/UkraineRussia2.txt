@@ -1527,8 +1527,7 @@ country_event = {
 				ideology = anarchy
 				popularity = 0.5
 			}
-			set_temp_variable = { anarchy_support_divided_by_two = ukr.party_popularity@anarchy }
-			multiply_temp_variable = { anarchy_support_divided_by_two = 100 }
+			set_temp_variable = { anarchy_support_divided_by_two = ukr.party_popularity_100@anarchy }
 			divide_temp_variable = { anarchy_support_divided_by_two = 2 }
 			for_each_loop = {
 				array = ukr.core_states
@@ -1629,8 +1628,7 @@ country_event = {
 				ideology = anarchy
 				popularity = 0.5
 			}
-			set_temp_variable = { anarchy_support_divided_by_two = ukr.party_popularity@anarchy }
-			multiply_temp_variable = { anarchy_support_divided_by_two = 100 }
+			set_temp_variable = { anarchy_support_divided_by_two = ukr.party_popularity_100@anarchy }
 			divide_temp_variable = { anarchy_support_divided_by_two = 2 }
 			for_each_loop = {
 				array = ukr.core_states
@@ -2458,6 +2456,77 @@ country_event = {
                 division = "name = \"4ya Anarkhist Dobrovolets\" division_template = \"Ukrayins'ka dyviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
                 owner = UKR
             }
+		}
+	}
+}
+
+#Execute the Soviet Command
+country_event = {
+	id = ukrains.57
+	title = ukrains.57.t
+	desc = ukrains.57.d
+	picture = GFX_report_event_polish_army
+	is_triggered_only = yes
+
+	option = { #Rip
+		name = ukrains.57.a
+		ai_chance = {
+			factor = 100
+		}
+		set_temp_variable = { pp_gain = party_popularity_100@communism }
+		multiply_temp_variable = { pp_gain = 10 }
+		set_temp_variable = { communism_loss = party_popularity@communism }
+		multiply_temp_variable = { communism_loss = -1 }
+		add_political_power = var:pp_gain
+		add_popularity = {
+			ideology = communism
+			popularity = var:communism_loss
+		}
+	}
+}
+
+#Execute the Soviet High Command
+country_event = {
+	id = ukrains.58
+	title = ukrains.58.t
+	desc = ukrains.58.d
+	picture = GFX_report_event_polish_army
+	is_triggered_only = yes
+
+	option = { #No can do
+		name = ukrains.58.a
+		ai_chance = {
+			factor = 75
+		}
+		add_political_power = 200
+	}
+
+	option = {
+		name = ukrains.58.b
+		ai_chance = {
+			factor = 25
+		}
+		hidden_effect = {
+			retire_ideology_leader = anarchy
+		}
+		create_country_leader = {
+			name = "Vladimir Antonov-Ovseyenko"
+			desc = "POLITICS_VLADIMIR_ANTONOV_DESC"
+			picture = "gfx/leaders/UKR/Vladimir_Antonov_Ovseyenko.dds"
+			ideology = anarchist
+			traits = {
+				anarchist_principles
+			}
+		}
+		create_corps_commander = {
+			name = "Makhno Nestor"
+			picture = "Makhno_Nestor.dds"
+			traits = { unbreakable_will_trait commando infantry_leader infantry_expert urban_assault_specialist trickster guerilla_fighter }
+			skill = 6
+			attack_skill = 5
+			defense_skill = 2
+			planning_skill = 2
+			logistics_skill = 5
 		}
 	}
 }
