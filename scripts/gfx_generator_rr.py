@@ -6,7 +6,7 @@ import random
 if __name__ == '__main__':
 
     try:
-        directory = r"..\gfx\interfaces\decision_scripted_gui\purge_portraits"
+        directory = r"..\gfx\interface\decision_scripted_gui\purge_portraits"
 
         f_portraits = open("save_purge_portraits.txt", "w", encoding='utf-8-sig')
         f_gui = open("save_purge_portraits_gfx.txt", "w", encoding='utf-8-sig')
@@ -25,7 +25,7 @@ if __name__ == '__main__':
 
             f_portraits.write("spriteType = {\n")
             f_portraits.write("    name = \"GFX_%s\"\n" % name[0].lower())
-            f_portraits.write("    texturefile = \"gfx/interfaces/decision_scripted_gui/purge_portraits/%s\"\n" % filename)
+            f_portraits.write("    texturefile = \"gfx/interface/decision_scripted_gui/purge_portraits/%s\"\n" % filename)
             f_portraits.write("    noOfFrames = 2\n")
             f_portraits.write("}\n\n")
 

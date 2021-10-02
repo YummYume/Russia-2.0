@@ -2439,21 +2439,48 @@ country_event = {
 		ai_chance = {
 			factor = 100
 		}
+		if = {
+			limit = {
+				NOT = {
+					has_template = "Ukrayins'ka Dyviziya"
+				}
+			}
+			division_template = {
+				name = "Ukrayins'ka Dyviziya"
+				division_names_group = UKR_INF_01
+				priority = 1
+				regiments = {
+					infantry = { x = 0 y = 0 }
+					infantry = { x = 0 y = 1 }
+					infantry = { x = 0 y = 2 }
+					infantry = { x = 0 y = 3 }
+					infantry = { x = 0 y = 4 }
+					infantry = { x = 1 y = 0 }
+					infantry = { x = 1 y = 1 }
+					infantry = { x = 1 y = 2 }
+					infantry = { x = 1 y = 3 }
+				}
+				support = {
+					engineer = { x = 0 y = 0 }
+					artillery = { x = 0 y = 1 }
+				}
+			}
+		}
 		capital_scope = {
 			create_unit = {
-                division = "name = \"1ya Anarkhist Dobrovolets\" division_template = \"Ukrayins'ka dyviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+                division = "name = \"1ya Anarkhist Dobrovolets\" division_template = \"Ukrayins'ka Dyviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
                 owner = UKR
             }
 			create_unit = {
-                division = "name = \"2ya Anarkhist Dobrovolets\" division_template = \"Ukrayins'ka dyviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+                division = "name = \"2ya Anarkhist Dobrovolets\" division_template = \"Ukrayins'ka Dyviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
                 owner = UKR
             }
 			create_unit = {
-                division = "name = \"3ya Anarkhist Dobrovolets\" division_template = \"Ukrayins'ka dyviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+                division = "name = \"3ya Anarkhist Dobrovolets\" division_template = \"Ukrayins'ka Dyviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
                 owner = UKR
             }
 			create_unit = {
-                division = "name = \"4ya Anarkhist Dobrovolets\" division_template = \"Ukrayins'ka dyviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+                division = "name = \"4ya Anarkhist Dobrovolets\" division_template = \"Ukrayins'ka Dyviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
                 owner = UKR
             }
 		}
@@ -2527,6 +2554,95 @@ country_event = {
 			defense_skill = 2
 			planning_skill = 2
 			logistics_skill = 5
+		}
+	}
+}
+
+#Anarchist Ukraine Wishes to Unify
+country_event = {
+	id = ukrains.59
+	title = ukrains.59.t
+	desc = ukrains.59.d
+	picture = GFX_report_event_polish_army
+	is_triggered_only = yes
+
+	option = { #Yes
+		name = ukrains.59.a
+		ai_chance = {
+			factor = 80
+		}
+		FROM = {
+			annex_country = {
+				target = ROOT
+				transfer_troops = no
+			}
+			country_event = ukrains.60
+		}
+	}
+
+	option = { #No
+		name = ukrains.59.b
+		ai_chance = {
+			factor = 20
+		}
+		FROM = {
+			country_event = ukrains.61
+		}
+	}
+}
+
+#Anarchist Spain Accepts
+country_event = {
+	id = ukrains.60
+	title = ukrains.60.t
+	desc = ukrains.60.d
+	picture = GFX_report_event_polish_army
+	is_triggered_only = yes
+
+	option = { #Nice
+		name = ukrains.60.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#Anarchist Spain Refuses
+country_event = {
+	id = ukrains.61
+	title = ukrains.61.t
+	desc = ukrains.61.d
+	picture = GFX_report_event_polish_army
+	is_triggered_only = yes
+
+	option = { #Die
+		name = ukrains.61.a
+		ai_chance = {
+			factor = 100
+		}
+		create_wargoal = {
+			type = annex_everything
+			target = FROM
+		}
+	}
+}
+
+#Anarchist Rebels in our Country
+country_event = {
+	id = ukrains.62
+	title = ukrains.62.t
+	desc = ukrains.62.d
+	picture = GFX_report_event_polish_army
+	is_triggered_only = yes
+
+	option = { #Uhh
+		name = ukrains.62.a
+		ai_chance = {
+			factor = 100
+		}
+		add_timed_idea = {
+			idea = UKR_Anarchist_rebels_from
+			days = 100
 		}
 	}
 }
