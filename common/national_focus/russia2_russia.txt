@@ -17182,7 +17182,7 @@ focus_tree = {
 		x = 56
 		y = 25
 		prerequisite = { focus = SOV_convince_italy }
-		icon = GFX_
+		icon = GFX_Restore_Italian_Monarchist_Tsar
 		cost = 5
 		ai_will_do = {
 			factor = 6
@@ -17643,7 +17643,7 @@ focus_tree = {
 		x = 52
 		y = 25
 		prerequisite = { focus = SOV_royal_orders }
-		icon = GFX_
+		icon = GFX_Purchase_Africa_Tsar
 		cost = 5
 		ai_will_do = {
 			factor = 6
@@ -21244,7 +21244,7 @@ focus_tree = {
 	}
 
 	#Proclamation of the Commune
-	focus = { #TODO Focus that allow to open the trade of the country for volin anarchy
+	focus = {
 		id = SOV_proclamation_commune
 		x = 116
 		y = 7
@@ -21886,7 +21886,44 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
-			
+			add_stability = -0.15
+			add_ideas = partial_economic_mobilisation
+			for_each_scope_loop = {
+				array = global.countries
+				if = {
+					limit = {
+						OR = {
+							TAG = SOV
+							TAG = EFR
+							TAG = SIB
+							TAG = URA
+							TAG = KAZ
+							TAG = TMS
+							TAG = UZB
+							TAG = TAJ
+							TAG = KYR
+							TAG = GEO
+							TAG = AZR
+							TAG = ARM
+							TAG = DAG
+							TAG = ROS
+							TAG = KAL
+							TAG = CIR
+							TAG = VLG
+							TAG = VYA
+							TAG = TAT
+							TAG = PRM
+							TAG = KMI
+							TAG = KAR
+							TAG = NOV
+							TAG = UKR
+							TAG = BLR
+							TAG = CRI
+						}
+					}
+					add_to_array = { global.sov_federation_member_starter_anarchist = THIS }	
+				}	
+			}
 		}
 	}
 
@@ -21938,6 +21975,22 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
+			create_faction = russian_league_free_nation
+			for_each_scope_loop = {
+				array = global.sov_federation_member_starter_anarchist
+				if = {
+					limit = {
+						NOT = {
+							TAG = SOV
+						}
+					}
+					SOV = {
+						add_to_faction = PREV
+						add_ideas = SOV_Head_of_the_league_idea
+					}
+					add_ideas = SOV_Member_of_the_league_idea
+				}
+			}
 			custom_effect_tooltip = sov_formation_of_the_league_and_head
 		}
 	}
@@ -21959,6 +22012,9 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
 			custom_effect_tooltip = sov_future_of_the_league_tt
+			hidden_effect = {
+				country_event = { id = russia2_russia.615 }
+			}
 		}
 	}
 
@@ -21971,16 +22027,38 @@ focus_tree = {
 		mutually_exclusive = { focus = SOV_a_tight_grip }
 		mutually_exclusive = { focus = SOV_semi_devolution }
 		icon = GFX_Embrace_total_anarchy
-		cost = 5
+		cost = 2
 		ai_will_do = {
 			factor = 7
 		}
 		available = {
 			has_government = anarchy
+			has_country_flag = has_chosen_reform_russia_anarchist
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
 			custom_effect_tooltip = sov_choosing_this_path_will_reform_russia_as_we_know_it
+			custom_effect_tooltip = every_members_league_will_lose_idea_war
+			hidden_effect = {
+				every_country = {
+					limit = {
+						OR = {
+							has_idea = SOV_Member_of_the_league_idea
+							has_idea = SOV_Member_of_the_league_idea_1
+							has_idea = SOV_Member_of_the_league_idea_2
+							has_idea = SOV_Member_of_the_league_idea_3
+						}
+					}
+					remove_ideas = SOV_Member_of_the_league_idea
+					remove_ideas = SOV_Member_of_the_league_idea_1
+					remove_ideas = SOV_Member_of_the_league_idea_2
+					remove_ideas = SOV_Member_of_the_league_idea_3
+				}
+				remove_ideas = SOV_Head_of_the_league_idea
+				remove_ideas = SOV_Head_of_the_league_idea_1
+				remove_ideas = SOV_Head_of_the_league_idea_2
+				remove_ideas = SOV_Head_of_the_league_idea_3
+			}
 		}
 	}
 
@@ -22033,12 +22111,13 @@ focus_tree = {
 		mutually_exclusive = { focus = SOV_reform_russia }
 		mutually_exclusive = { focus = SOV_semi_devolution }
 		icon = GFX_Embrace_total_anarchy
-		cost = 5
+		cost = 2
 		ai_will_do = {
 			factor = 7
 		}
 		available = {
 			has_government = anarchy
+			has_country_flag = has_chosen_a_tight_grip_anarchist
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
@@ -22102,6 +22181,7 @@ focus_tree = {
 		}
 		available = {
 			has_government = anarchy
+			has_country_flag = has_chosen_semi_devolution_anarchist
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
