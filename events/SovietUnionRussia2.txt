@@ -26872,3 +26872,234 @@ country_event = {
 		}
 	}
 }
+
+#Assassinate FROM leader
+country_event = {
+	id = russia2_russia.615
+	title = russia2_russia.615.t
+	desc = russia2_russia.615.d
+	picture = GFX_report_event_generic_ruins
+
+	is_triggered_only = yes
+
+	immediate = {
+		event_target:SOV_replace_from_leader_event_target = {
+			if = {
+				limit = {
+					check_variable = {
+						var = sov_correct_assassination_attempts^num
+						value = 0
+						compare = greater_than
+					}
+				}
+				clear_array = sov_correct_assassination_attempts
+			}
+			while_loop_effect = {
+				break = end_array
+				limit = {
+					check_variable = {
+						var = sov_correct_assassination_attempts^num
+						value = 2
+						compare = less_than
+					}
+				}
+
+				set_temp_variable = { get_random_option = 0 }
+				randomize_temp_variable = {
+					var = get_random_option
+					distribution = uniform
+					min = 1
+					max = 5
+				}
+				round_temp_variable = get_random_option
+				if = {
+					limit = {
+						check_variable = {
+							var = get_random_option
+							value = 5
+							compare = greater_than_or_equals
+						}
+					}
+					set_temp_variable = { get_random_option = 1 }
+				}
+				if = {
+					limit = {
+						NOT = {
+							is_in_array = { sov_correct_assassination_attempts = get_random_option }
+						}
+					}
+					add_to_array = { sov_correct_assassination_attempts = get_random_option }
+				}
+			}
+		}
+	}
+
+	option = { #Use poison
+		name = russia2_russia.615.a
+		ai_chance = {
+			factor = 25
+		}
+		hidden_effect = {
+			event_target:SOV_replace_from_leader_event_target = {
+				if = {
+					limit = {
+						is_in_array = { sov_correct_assassination_attempts = 1 }
+					}
+					ROOT = {
+						country_event = { id = russia2_russia.616 days = 1 }
+					}
+					country_event = { id = russia2_russia.617 days = 1 }
+				}
+				else = {
+					ROOT = {
+						country_event = { id = russia2_russia.618 days = 1 }
+					}
+				}
+			}
+		}
+	}
+
+	option = { #Hire a hitman
+		name = russia2_russia.615.b
+		ai_chance = {
+			factor = 25
+		}
+		hidden_effect = {
+			event_target:SOV_replace_from_leader_event_target = {
+				if = {
+					limit = {
+						is_in_array = { sov_correct_assassination_attempts = 2 }
+					}
+					ROOT = {
+						country_event = { id = russia2_russia.616 days = 1 }
+					}
+					country_event = { id = russia2_russia.617 days = 1 }
+				}
+				else = {
+					ROOT = {
+						country_event = { id = russia2_russia.618 days = 1 }
+					}
+				}
+			}
+		}
+	}
+
+	option = { #Plant a bomb in their car
+		name = russia2_russia.615.c
+		ai_chance = {
+			factor = 25
+		}
+		hidden_effect = {
+			event_target:SOV_replace_from_leader_event_target = {
+				if = {
+					limit = {
+						is_in_array = { sov_correct_assassination_attempts = 3 }
+					}
+					ROOT = {
+						country_event = { id = russia2_russia.616 days = 1 }
+					}
+					country_event = { id = russia2_russia.617 days = 1 }
+				}
+				else = {
+					ROOT = {
+						country_event = { id = russia2_russia.618 days = 1 }
+					}
+				}
+			}
+		}
+	}
+
+	option = { #Political scandal
+		name = russia2_russia.615.e
+		ai_chance = {
+			factor = 25
+		}
+		hidden_effect = {
+			event_target:SOV_replace_from_leader_event_target = {
+				if = {
+					limit = {
+						is_in_array = { sov_correct_assassination_attempts = 4 }
+					}
+					ROOT = {
+						country_event = { id = russia2_russia.616 days = 1 }
+					}
+					country_event = { id = russia2_russia.617 days = 1 }
+				}
+				else = {
+					ROOT = {
+						country_event = { id = russia2_russia.618 days = 1 }
+					}
+				}
+			}
+		}
+	}
+}
+
+#FROM Leader Assassinated
+country_event = {
+	id = russia2_russia.616
+	title = russia2_russia.616.t
+	desc = russia2_russia.616.d
+	picture = GFX_report_event_generic_ruins
+
+	is_triggered_only = yes
+
+	option = { #Good
+		name = russia2_russia.616.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#Leader Assassinated!
+country_event = {
+	id = russia2_russia.617
+	title = russia2_russia.617.t
+	desc = russia2_russia.617.d
+	picture = GFX_report_event_generic_ruins
+
+	is_triggered_only = yes
+
+	option = { #What?!
+		name = russia2_russia.617.a
+		ai_chance = {
+			factor = 100
+		}
+		custom_effect_tooltip = leader_dies_from_sov
+		hidden_effect = {
+			retire_country_leader = yes
+			if = {
+				limit = {
+					SOV = {
+						has_government = communism
+					}
+				}
+				add_country_leader_trait = soviet_puppet
+			}
+			else_if = {
+				limit = {
+					has_government = democratic
+				}
+				add_country_leader_trait = russian_puppet
+			}
+		}
+	}
+}
+
+#FROM Leader not Assassinated
+country_event = {
+	id = russia2_russia.618
+	title = russia2_russia.618.t
+	desc = russia2_russia.618.d
+	picture = GFX_report_event_generic_ruins
+
+	is_triggered_only = yes
+
+	option = { #Damn
+		name = russia2_russia.618.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}

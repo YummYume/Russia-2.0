@@ -47172,7 +47172,7 @@ SOV_restore_french_monarchy_decisions_cat = {
 					}
 					create_country_leader = {
 						name = "Jean III"
-						desc = "POLITICS_ÉDOUARD_DALADIER_DESC"
+						desc = "POLITICS_JEAN_III_DESC"
 						picture = GFX_portrait_fra_jean_duke_of_guise
 						expire = "1965.1.1"
 						ideology = moderatism
@@ -47184,7 +47184,7 @@ SOV_restore_french_monarchy_decisions_cat = {
 				else = {
 					create_country_leader = {
 						name = "Henri VI"
-						desc = "POLITICS_ÉDOUARD_DALADIER_DESC"
+						desc = "POLITICS_HENRI_VI_DESC"
 						picture = GFX_portrait_fra_henry_count_of_paris
 						expire = "1965.1.1"
 						ideology = moderatism
@@ -47286,7 +47286,7 @@ SOV_restore_french_monarchy_decisions_cat = {
 						}
 						create_country_leader = {
 							name = "Jean III"
-							desc = "POLITICS_ÉDOUARD_DALADIER_DESC"
+							desc = "POLITICS_JEAN_III_DESC"
 							picture = GFX_portrait_fra_jean_duke_of_guise
 							expire = "1965.1.1"
 							ideology = moderatism
@@ -47298,7 +47298,7 @@ SOV_restore_french_monarchy_decisions_cat = {
 					else = {
 						create_country_leader = {
 							name = "Henri VI"
-							desc = "POLITICS_ÉDOUARD_DALADIER_DESC"
+							desc = "POLITICS_HENRI_VI_DESC"
 							picture = GFX_portrait_fra_henry_count_of_paris
 							expire = "1965.1.1"
 							ideology = moderatism
@@ -47362,7 +47362,7 @@ SOV_restore_french_monarchy_decisions_cat = {
 					}
 					create_country_leader = {
 						name = "Alphonse I"
-						desc = "POLITICS_ÉDOUARD_DALADIER_DESC"
+						desc = "POLITICS_ALPHONSE_I_DESC"
 						picture = GFX_portrait_SPA_alfonso_xiii
 						expire = "1965.1.1"
 						ideology = despotism
@@ -47374,7 +47374,7 @@ SOV_restore_french_monarchy_decisions_cat = {
 				else = {
 					create_country_leader = {
 						name = "Jacques II"
-						desc = "POLITICS_ÉDOUARD_DALADIER_DESC"
+						desc = "POLITICS_JACQUES_II_DESC"
 						picture = GFX_portrait_fra_infante_jaime
 						expire = "1965.1.1"
 						ideology = despotism
@@ -47428,7 +47428,7 @@ SOV_restore_french_monarchy_decisions_cat = {
 			FRA = {
 				create_country_leader = {
 					name = "Napoléon VI"
-					desc = "POLITICS_ÉDOUARD_DALADIER_DESC"
+					desc = "POLITICS_NAPOLEON_VI_DESC"
 					picture = GFX_portraits_fra_napoleon_vi
 					expire = "1965.1.1"
 					ideology = despotism
@@ -47965,6 +47965,128 @@ SOV_deal_with_italian_monarchy_rise_cat = {
 
 		ai_will_do = {
 			factor = 1
+		}
+	}
+}
+
+SOV_replace_puppet_leader = {
+
+	SOV_replace_from_leader = {
+
+		icon = generic_assassination
+
+		days_re_enable = 30
+
+		days_remove = 10
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		highlight_states = {
+			state = FROM.capital
+		}
+
+		available = {
+			FROM = {
+				is_subject_of = ROOT
+				if = {
+					limit = {
+						ROOT = {
+							has_country_leader = {
+								name = "Joseph Stalin"
+								ruling_only = yes
+							}
+							has_government = communism
+						}
+					}
+					NOT = {
+						has_country_leader_with_trait = soviet_puppet
+					}
+				}
+				else = {
+					NOT = {
+						has_country_leader_with_trait = russian_puppet
+					}
+				}
+				NOT = {
+					has_country_flag = sov_plotting_again_from_leader
+				}
+			}
+		}
+
+		visible = {
+			FROM = {
+				is_subject_of = ROOT
+			}
+			OR = {
+				AND = {
+					has_country_leader = {
+						name = "Joseph Stalin"
+						ruling_only = yes
+					}
+					has_government = communism
+					num_subjects > 0
+				}
+				AND = {
+					has_country_leader = {
+						name = "Alexander Konovalov"
+						ruling_only = yes
+					}
+					has_government = democratic
+					num_subjects > 0
+				}
+			}
+		}
+
+		target_root_trigger = {
+			is_subject = no
+		}
+
+		target_trigger = {
+			FROM = {
+				is_subject_of = ROOT
+				exists = yes
+			}
+		}
+
+		cancel_trigger = {
+			OR = {
+				is_subject = yes
+				FROM = {
+					exists = no
+				}
+				FROM = {
+					NOT = {
+						is_subject_of = ROOT
+					}
+				}
+			}
+		}
+
+		cost = 25
+
+		cancel_effect = {
+			clr_country_flag = sov_plotting_again_from_leader
+		}
+
+		complete_effect = {
+			set_country_flag = sov_plotting_again_from_leader
+		}
+
+		remove_effect = {
+			custom_effect_tooltip = sov_get_assassination_event_from_leader_tt
+			hidden_effect = {
+				clr_country_flag = sov_plotting_again_from_leader
+				FROM = {
+					save_event_target_as = SOV_replace_from_leader_event_target
+				}
+				country_event = russia2_russia.615
+			}
+		}
+
+		ai_will_do = {
+			factor = 10
 		}
 	}
 }
