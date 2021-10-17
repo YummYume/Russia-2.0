@@ -27063,6 +27063,8 @@ country_event = {
 
 	is_triggered_only = yes
 
+	timeout_days = 5
+
 	option = { #What?!
 		name = russia2_russia.617.a
 		ai_chance = {
@@ -27077,11 +27079,86 @@ country_event = {
 						has_government = communism
 					}
 				}
+				if = {
+					limit = {
+						NOT = {
+							has_government = communism
+						}
+					}
+					kill_ideology_leader = communism
+					set_politics = {
+						ruling_party = communism
+						elections_allowed = no
+					}
+					if = {
+						limit = {
+							communism < 0.5
+						}
+						set_political_party = {
+							ideology = communism
+							popularity = 50
+						}
+					}
+					else = {
+						add_popularity = {
+							ideology = communism
+							popularity = 0.1
+						}
+					}
+				}
+				else = {
+					add_popularity = {
+						ideology = communism
+						popularity = 0.1
+					}
+				}
 				add_country_leader_trait = soviet_puppet
 			}
 			else_if = {
 				limit = {
 					has_government = democratic
+				}
+				if = {
+					limit = {
+						NOT = {
+							has_government = democratic
+						}
+					}
+					kill_ideology_leader = democratic
+					set_politics = {
+						ruling_party = democratic
+						elections_allowed = no
+					}
+					if = {
+						limit = {
+							democratic < 0.5
+						}
+						set_political_party = {
+							ideology = democratic
+							popularity = 50
+						}
+					}
+					else = {
+						add_popularity = {
+							ideology = democratic
+							popularity = 0.1
+						}
+					}
+				}
+				else = {
+					if = {
+						limit = {
+							has_elections = yes
+						}
+						set_politics = {
+							ruling_party = democratic
+							elections_allowed = no
+						}
+					}
+					add_popularity = {
+						ideology = democratic
+						popularity = 0.1
+					}
 				}
 				add_country_leader_trait = russian_puppet
 			}
