@@ -21949,6 +21949,14 @@ focus_tree = {
 		completion_reward = {
 			custom_effect_tooltip = sov_russia_is_collpasing_total
 			hidden_effect = {
+				if = {
+					limit = {
+						ROOT = {
+							is_faction_leader = yes
+						}
+					}
+					dismantle_faction = yes
+				}
 				set_party_name = {
 					ideology = anarchy
 					long_name = anarchy_people_council_russian_state_party
@@ -22040,49 +22048,39 @@ focus_tree = {
 			set_global_flag = reunification_war_is_ongoing_anarchist
 			custom_effect_tooltip = sov_choosing_this_path_will_reform_russia_as_we_know_it
 			custom_effect_tooltip = every_members_league_will_lose_idea_war
-			for_each_scope_loop = {
-				array = global.sov_federation_member_starter_anarchist
-				if = {
-					limit = {
-						NOT = {
-							TAG = SOV
-						}
-					}
-					random_list = {
-						45 = { #Leave the League
-							country_event = { id = russia2_russia.621 }
-							set_country_flag = is_ennemy_of_anarchist_russia_league_edition
-							add_to_array = { global.sov_ancient_federation_member_who_left_the_league = THIS }
-							leave_faction = yes
-							modifier = {
-								factor = 0.35
-								OR = {
-									TAG = NOV
-									TAG = UKR
-									TAG = SIB
-									TAG = KAZ
-								}
-							}
-						}
-						45 = { #Approve the Idea
-							set_country_flag = is_friend_of_anarchist_russia_league_edition
-							modifier = {
-								factor = 0.20
-								NOT = {
-									TAG = NOV
-									TAG = UKR
-									TAG = SIB
-									TAG = KAZ
-								}
-							}
-						}
-						10 = { #Will Stay Neutral
-							set_country_flag = is_neutral_of_anarchist_russia_league_edition
-						}
-					}
-				}
-			}
 			hidden_effect = {
+				every_country = {
+					limit = {
+						OR = {
+							TAG = EFR
+							TAG = SIB
+							TAG = URA
+							TAG = KAZ
+							TAG = TMS
+							TAG = UZB
+							TAG = TAJ
+							TAG = KYR
+							TAG = GEO
+							TAG = AZR
+							TAG = ARM
+							TAG = DAG
+							TAG = ROS
+							TAG = KAL
+							TAG = CIR
+							TAG = VLG
+							TAG = VYA
+							TAG = TAT
+							TAG = PRM
+							TAG = KMI
+							TAG = KAR
+							TAG = NOV
+							TAG = UKR
+							TAG = BLR
+							TAG = CRI
+						}
+					}	
+					country_event = { id = russia2_russia.630 }
+				}
 				every_country = {
 					limit = {
 						OR = {
@@ -22123,6 +22121,7 @@ focus_tree = {
 		completion_reward = {
 			custom_effect_tooltip = declare_war_on_members_who_left_the_league
 			hidden_effect = {
+				country_event = { id = russia2_russia.632 days = 20 }
 				for_each_scope_loop = {
 					array = global.sov_ancient_federation_member_who_left_the_league
 					if = {
@@ -22147,6 +22146,26 @@ focus_tree = {
 								target = PREV
 								type = annex_everything
 							}
+						}
+					}
+				}
+				for_each_scope_loop = {
+					array = global.sov_ancient_federation_member_who_left_the_league
+					if = {
+						limit = {
+							exists = yes
+							NOT = {
+								TAG = SOV
+							}
+						}
+						every_country = {
+							limit = {
+								NOT = {
+									is_in_faction_with = SOV
+								}
+								has_country_flag = is_ennemy_of_anarchist_russia_league_edition
+							}
+							give_military_access = PREV
 						}
 					}
 				}
@@ -22192,6 +22211,7 @@ focus_tree = {
 		completion_reward = {
 			custom_effect_tooltip = annex_members_who_were_loyal_anarchists
 			hidden_effect = {
+				set_cosmetic_tag = FTRS
 				every_country = {
 					limit = {
 						OR = {

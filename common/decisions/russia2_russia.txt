@@ -47973,7 +47973,7 @@ SOV_replace_puppet_leader = {
 
 	SOV_replace_from_leader = {
 
-		icon = generic_assassination
+		icon = GFX_generic_assassination
 
 		days_re_enable = 30
 
@@ -48087,6 +48087,116 @@ SOV_replace_puppet_leader = {
 
 		ai_will_do = {
 			factor = 10
+		}
+	}
+}
+
+SOV_reunification_war_anarchist_category_decisions = {
+
+	SOV_attack_neutral_country_anarchist = {
+
+		icon = GFX_decision_generic_intelligence_operation
+
+		days_remove = 3
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		highlight_states = {
+			state = FROM.capital
+		}
+
+		available = {
+			NOT = {
+				has_country_flag = is_launching_preemptive_strike
+			}
+			FROM = {
+				NOT = {
+					is_in_faction_with = SOV
+					has_war_with = SOV
+				}
+				has_country_flag = is_neutral_of_anarchist_russia_league_edition
+			}
+		}
+
+		visible = {
+			FROM = {
+				NOT = {
+					is_in_faction_with = SOV
+					has_war_with = SOV
+				}
+				has_country_flag = is_neutral_of_anarchist_russia_league_edition
+			}
+		}
+
+		target_root_trigger = {
+			is_subject = no
+		}
+
+		target_trigger = {
+			FROM = {
+				OR = {
+					TAG = EFR
+					TAG = SIB
+					TAG = URA
+					TAG = KAZ
+					TAG = TMS
+					TAG = UZB
+					TAG = TAJ
+					TAG = KYR
+					TAG = GEO
+					TAG = AZR
+					TAG = ARM
+					TAG = DAG
+					TAG = ROS
+					TAG = KAL
+					TAG = CIR
+					TAG = VLG
+					TAG = VYA
+					TAG = TAT
+					TAG = PRM
+					TAG = KMI
+					TAG = KAR
+					TAG = NOV
+					TAG = UKR
+					TAG = BLR
+					TAG = CRI
+				}
+			}
+		}
+
+		cancel_trigger = {
+			FROM = {
+				OR = {
+					exists = no
+					is_in_faction_with = SOV
+					has_war_with = SOV
+				}
+			}
+		}
+
+		cost = 25
+
+		cancel_effect = {
+			clr_country_flag = is_launching_preemptive_strike
+		}
+
+		complete_effect = {
+			set_country_flag = is_launching_preemptive_strike
+		}
+
+		remove_effect = {
+			clr_country_flag = is_launching_preemptive_strike
+			hidden_effect = {
+				FROM = {
+					country_event = { id = russia2_russia.631 }
+				}	
+			}
+		}
+
+		ai_will_do = {
+			factor = 0
 		}
 	}
 }
