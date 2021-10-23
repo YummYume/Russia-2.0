@@ -2202,4 +2202,80 @@ on_actions = {
 			}
 		}
 	}
+
+	#Anarchist Russian State Capitulate During the Reunification War
+	on_capitulation = {
+		effect = {
+			if = {
+				limit = {
+					has_global_flag = reunification_war_is_ongoing_anarchist
+					FROM = {
+						OR = {
+							TAG = SOV
+							any_country = {
+								is_in_faction_with = SOV
+							}
+						}
+					}
+					ROOT = {
+						sov_anarchist_russian_free_state = yes
+						has_government = anarchy
+						has_country_flag = is_ennemy_of_anarchist_russia_league_edition
+					}
+				}
+				every_state = {
+					limit = {
+						is_owned_by = ROOT
+					}
+					SOV = {
+						transfer_state = PREV
+					}
+				}
+				if = {
+					limit = {
+						NOT = {
+							any_country = {
+								exists = yes
+								has_country_flag = is_ennemy_of_anarchist_russia_league_edition
+							}
+						}
+					}
+					clr_global_flag = reunification_war_is_ongoing_anarchist
+					SOV = {
+						country_event = { id = russia2_russia.629 }
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					ROOT = {
+						TAG = SOV
+					}
+					FROM = {
+						sov_anarchist_russian_free_state = yes
+						has_government = anarchy
+						has_country_flag = is_ennemy_of_anarchist_russia_league_edition
+					}
+				}
+				every_country = {
+					limit = {
+						is_in_faction_with = SOV
+					}
+					FROM = {
+						annex_country = {
+							target = PREV
+						}
+					}
+				}
+				every_state = {
+					limit = {
+						is_owned_by = ROOT
+					}
+					FROM = {
+						transfer_state = PREV
+					}
+				}
+			}
+		}
+	}
 }

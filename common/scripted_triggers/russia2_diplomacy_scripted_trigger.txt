@@ -336,7 +336,10 @@ DIPLOMACY_GENERATE_WARGOAL_ENABLE_TRIGGER = {
 DIPLOMACY_RELEASE_NATION_ENABLE_TRIGGER = {
 	if = {
 		limit = {
-			TAG = SOV
+			OR = {
+				TAG = SOV
+				sov_anarchist_russian_free_state = yes
+			}
 			has_government = anarchy
 		}
 		custom_trigger_tooltip = {
@@ -1056,7 +1059,10 @@ DIPLOMACY_OFFER_JOIN_FACTION_ENABLE_TRIGGER = {
 DIPLOMACY_JOIN_FACTION_ENABLE_TRIGGER = {
 	if = {
 		limit = {
-			TAG = SOV
+			OR = {
+				TAG = SOV
+				sov_anarchist_russian_free_state = yes
+			}
 			has_government = anarchy
 		}
 		custom_trigger_tooltip = {
@@ -1325,7 +1331,10 @@ DIPLOMACY_JOIN_FACTION_ENABLE_TRIGGER = {
 DIPLOMACY_CREATE_FACTION_ENABLE_TRIGGER = {
 	if = {
 		limit = {
-			TAG = SOV
+			OR = {
+				TAG = SOV
+				sov_anarchist_russian_free_state = yes
+			}
 			has_government = anarchy
 		}
 		custom_trigger_tooltip = {
@@ -1643,10 +1652,41 @@ DIPLOMACY_CREATE_FACTION_ENABLE_TRIGGER = {
 	}
 }
 
+DIPLOMACY_LEAVE_FACTION_ENABLE_TRIGGER = {
+	if = {
+		limit = {
+			has_game_rule = {
+				rule = allow_leave_faction
+				option = BLOCKED
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_ALLOW_LEAVE_FACTION_BLOCKED_TOOLTIP
+			always = no
+		}
+	}
+	if = {
+		limit = {
+			OR = {
+				TAG = SOV
+				sov_anarchist_russian_free_state = yes
+			}
+			has_government = anarchy
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_CANT_LEAVE_FACTION_ANARCHY
+			always = no
+		}
+	}
+}
+
 DIPLOMACY_DISMANTLE_FACTION_ENABLE_TRIGGER = {
 	if = {
 		limit = {
-			TAG = SOV
+			OR = {
+				TAG = SOV
+				sov_anarchist_russian_free_state = yes
+			}
 			has_government = anarchy
 		}
 		custom_trigger_tooltip = {
@@ -1740,6 +1780,34 @@ DIPLOMACY_ASSUME_FACTION_LEADERSHIP_ENABLE_TRIGGER = {
 		}
 		custom_trigger_tooltip = {
 			tooltip = RULE_CANT_ASSUME_FACTION_LEADERSHIP_RUSSIA_FASCIST
+			always = no
+		}
+	}
+}
+
+DIPLOMACY_KICK_FROM_FACTION_ENABLE_TRIGGER = {
+	if = {
+		limit = {
+			has_game_rule = {
+				rule = allow_kick_faction
+				option = BLOCKED
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_KICK_FROM_FACTION_BLOCKED_TOOLTIP
+			always = no
+		}
+	}
+	if = {
+		limit = {
+			OR = {
+				TAG = SOV
+				sov_anarchist_russian_free_state = yes
+			}
+			has_government = anarchy
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_CANT_KICK_FACTION_ANARCHY
 			always = no
 		}
 	}
