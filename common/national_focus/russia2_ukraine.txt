@@ -4026,7 +4026,7 @@ focus_tree = {
         }
     }
 
-    # Hold the Elections
+    # Hold Emergency Elections
     focus = {
         id = UKR_hold_elections
         x = 62
@@ -4053,7 +4053,8 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            country_event = russia2_ukrain.63
+            set_variable = { last_election = global.date }
         }
     }
 
@@ -4078,7 +4079,19 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_stability = 0.1
+            if = {
+                limit = {
+                    has_idea = UKR_Weakened_government
+                }
+                remove_ideas = UKR_Weakened_government
+            }
+            if = {
+                limit = {
+                    has_cosmetic_tag = TUPG
+                }
+                drop_cosmetic_tag = yes
+            }
         }
     }
 
@@ -4104,7 +4117,8 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_stability = 0.05
+            add_political_power = 300
         }
     }
 
@@ -4130,7 +4144,21 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_stability = 0.05
+            custom_effect_tooltip = UKR_allow_elections_tt
+            hidden_effect = {
+                meta_effect = {
+                    text = {
+                        set_politics = {
+                            ruling_party = ROOT
+                            elections_allowed = yes
+                            last_election = [LAST_ELECTION_DATE]
+                            election_frequency = 24
+                        }
+                    }
+                    LAST_ELECTION_DATE = "[?last_election.GetDateStringNoHour]"
+                }
+            }
         }
     }
 
@@ -4155,7 +4183,7 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_ideas = UKR_New_laws
         }
     }
 
@@ -4206,7 +4234,7 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_ideas = UKR_Ukrainian_resilience
         }
     }
 
