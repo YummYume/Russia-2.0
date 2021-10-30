@@ -1,144 +1,593 @@
 scripted_gui = {
-    sov_national_obligation_scripted_gui = {
-        window_name = "sov_national_obligation_scripted_gui_window"
+    sov_national_obligations_scripted_gui = {
+        window_name = "sov_national_obligations_scripted_gui_window"
         context_type = player_context
 
         visible = {
             original_tag = SOV
-            has_country_flag = sov_debug_scripted_gui
+            OR = {
+                has_country_flag = sov_debug_national_obligations
+                AND = {
+                    has_global_flag = sov_national_obligations_allowed
+                    has_country_flag = sov_unlocked_national_obligations
+                    has_country_flag = sov_open_national_obligations
+                }
+            }
         }
 
         properties = {
+            sov_national_obligations_main_icon_left = {
+                image = [THIS.GetCurrentSelectedIndexNationalObligationsIcon]
+            }
 
-            sov_national_obligation_scripted_gui_window_bg = {
+            sov_national_obligations_main_icon_right = {
+                image = [THIS.GetCurrentSelectedIndexNationalObligationsIcon]
+            }
+
+            sov_national_obligations_scripted_gui_window_bg = {
                 image = [THIS.GetCurrentSelectedIndexNationalObligations]
             }
 
-            sov_national_obligation_scripted_gui_proletarian_union_first_option_bg = {
-                image = [THIS.GetCurrentStatusFirstOptionProletarianUnion]
+            sov_national_obligations_nav_industrial_awakening = {
+                image = [THIS.GetCurrentSelectedIndexNationalObligationsNavIndustrialAwakening]
             }
 
-            sov_national_obligation_scripted_gui_proletarian_union_second_option_bg = {
-                image = [THIS.GetCurrentStatusSecondOptionProletarianUnion]
+            sov_national_obligations_nav_tsar_bomba = {
+                image = [THIS.GetCurrentSelectedIndexNationalObligationsNavTsarBomba]
             }
 
-            sov_national_obligation_scripted_gui_proletarian_union_third_option_bg = {
-                image = [THIS.GetCurrentStatusThirdOptionProletarianUnion]
+            sov_national_obligations_nav_unfailing_army = {
+                image = [THIS.GetCurrentSelectedIndexNationalObligationsNavUnfailingArmy]
+            }
+
+            sov_national_obligations_nav_grand_fleet = {
+                image = [THIS.GetCurrentSelectedIndexNationalObligationsNavGrandFleet]
+            }
+
+            sov_national_obligations_nav_proletarian_union = {
+                image = [THIS.GetCurrentSelectedIndexNationalObligationsNavProletarianUnion]
+            }
+
+            sov_national_obligations_nav_neverending_story = {
+                image = [THIS.GetCurrentSelectedIndexNationalObligationsNavNeverendingStory]
+            }
+
+            sov_national_obligations_nav_continental_system = {
+                image = [THIS.GetCurrentSelectedIndexNationalObligationsNavContinentalSystem]
+            }
+
+            sov_national_obligations_nav_treaty_moscow = {
+                image = [THIS.GetCurrentSelectedIndexNationalObligationsNavTreatyMoscow]
+            }
+
+            sov_national_obligations_nav_golden_age = {
+                image = [THIS.GetCurrentSelectedIndexNationalObligationsNavGoldenAge]
+            }
+
+            sov_national_obligations_nav_imperial_obligations = {
+                image = [THIS.GetCurrentSelectedIndexNationalObligationsNavImperialObligations]
+            }
+
+            sov_national_obligations_nav_carry_on_legacy = {
+                image = [THIS.GetCurrentSelectedIndexNationalObligationsNavCarryOnLegacy]
+            }
+
+            sov_national_obligations_nav_russian_realm = {
+                image = [THIS.GetCurrentSelectedIndexNationalObligationsNavRussianRealm]
+            }
+
+            sov_national_obligations_nav_rebirth = {
+                image = [THIS.GetCurrentSelectedIndexNationalObligationsNavRebirth]
             }
         }
 
         effects = {
-
-            sov_national_obligation_scripted_gui_confirm_button_click {
-                clr_country_flag = sov_debug_scripted_gui
-            }
-
-            sov_national_obligation_scripted_gui_proletarian_union_first_option_button_click {
+            sov_national_obligations_close_button_click {
                 if = {
                     limit = {
-                        check_variable = {
-                            sov_national_obligations_proletarian_union_index_selected = 1
-                        }
+                        has_country_flag = sov_debug_national_obligations
                     }
-                    set_variable = {
-                        sov_national_obligations_proletarian_union_index_selected = 0
-                    }
+                    clr_country_flag = sov_debug_national_obligations
                 }
                 else = {
-                    set_variable = {
-                        sov_national_obligations_proletarian_union_index_selected = 1
-                    }
+                    clr_country_flag = sov_open_national_obligations
                 }
             }
 
-            sov_national_obligation_scripted_gui_proletarian_union_second_option_button_click {
-                if = {
+            #NAV
+            sov_national_obligation_nav_button_left_click = {
+                set_temp_variable = { old_index = var:sov_national_obligations_selected_index }
+                set_temp_variable = { new_index = var:sov_national_obligations_selected_index }
+                while_loop_effect = {
+                    break = break_loop
                     limit = {
-                        check_variable = {
-                            sov_national_obligations_proletarian_union_index_selected = 2
+                        OR = {
+                            check_variable = {
+                                var = old_index
+                                value = var:sov_national_obligations_selected_index
+                                compare = equals
+                            }
+                            check_variable = {
+                                var = new_index
+                                value = 0
+                                compare = less_than_or_equals
+                            }
                         }
                     }
-                    set_variable = {
-                        sov_national_obligations_proletarian_union_index_selected = 0
-                    }
-                }
-                else = {
-                    set_variable = {
-                        sov_national_obligations_proletarian_union_index_selected = 2
+
+                    subtract_from_temp_variable = { new_index = 1 }
+                    if = {
+                        limit = {
+                            is_in_array = { sov_national_obligations_unlocked_indexes = new_index }
+                        }
+                        set_variable = { sov_national_obligations_selected_index = var:new_index }
                     }
                 }
             }
 
-            sov_national_obligation_scripted_gui_proletarian_union_third_option_button_click {
-                if = {
+            sov_national_obligation_nav_button_right_click = {
+                set_temp_variable = { old_index = var:sov_national_obligations_selected_index }
+                set_temp_variable = { new_index = var:sov_national_obligations_selected_index }
+                while_loop_effect = {
+                    break = break_loop
                     limit = {
-                        check_variable = {
-                            sov_national_obligations_proletarian_union_index_selected = 3
+                        OR = {
+                            check_variable = {
+                                var = old_index
+                                value = var:sov_national_obligations_selected_index
+                                compare = equals
+                            }
+                            check_variable = {
+                                var = new_index
+                                value = 100
+                                compare = greater_than_or_equals
+                            }
                         }
                     }
-                    set_variable = {
-                        sov_national_obligations_proletarian_union_index_selected = 0
+
+                    add_to_temp_variable = { new_index = 1 }
+                    if = {
+                        limit = {
+                            is_in_array = { sov_national_obligations_unlocked_indexes = new_index }
+                        }
+                        set_variable = { sov_national_obligations_selected_index = var:new_index }
                     }
                 }
-                else = {
-                    set_variable = {
-                        sov_national_obligations_proletarian_union_index_selected = 3
-                    }
-                }
+            }
+
+            sov_national_obligations_nav_industrial_awakening_click = {
+                set_variable = { sov_national_obligations_selected_index = 1 }
+            }
+
+            sov_national_obligations_nav_tsar_bomba_click = {
+                set_variable = { sov_national_obligations_selected_index = 2 }
+            }
+
+            sov_national_obligations_nav_unfailing_army_click = {
+                set_variable = { sov_national_obligations_selected_index = 3 }
+            }
+
+            sov_national_obligations_nav_grand_fleet_click = {
+                set_variable = { sov_national_obligations_selected_index = 4 }
+            }
+
+            sov_national_obligations_nav_proletarian_union_click = {
+                set_variable = { sov_national_obligations_selected_index = 5 }
+            }
+
+            sov_national_obligations_nav_neverending_story_click = {
+                set_variable = { sov_national_obligations_selected_index = 6 }
+            }
+
+            sov_national_obligations_nav_continental_system_click = {
+                set_variable = { sov_national_obligations_selected_index = 7 }
+            }
+
+            sov_national_obligations_nav_treaty_moscow_click = {
+                set_variable = { sov_national_obligations_selected_index = 8 }
+            }
+
+            sov_national_obligations_nav_golden_age_click = {
+                set_variable = { sov_national_obligations_selected_index = 9 }
+            }
+
+            sov_national_obligations_nav_imperial_obligations_click = {
+                set_variable = { sov_national_obligations_selected_index = 10 }
+            }
+
+            sov_national_obligations_nav_carry_on_legacy_click = {
+                set_variable = { sov_national_obligations_selected_index = 11 }
+            }
+
+            sov_national_obligations_nav_russian_realm_click = {
+                set_variable = { sov_national_obligations_selected_index = 12 }
+            }
+
+            sov_national_obligations_nav_rebirth_click = {
+                set_variable = { sov_national_obligations_selected_index = 13 }
             }
         }
 
         #Triggers will always check for a precise number rather than "greater than" to avoid any possible bug (with a decimal variable for example)
         triggers = {
-            #NAV
-            sov_national_obligation_scripted_gui_nav_proletarian_union_click_enabled = {
-
-            }
-
-            sov_national_obligation_scripted_gui_nav_communist_safety_click_enabled = {
-                always = no
-            }
-
-            sov_national_obligation_scripted_gui_nav_third_option_click_enabled = {
-                always = no
-            }
-
-            sov_national_obligation_scripted_gui_nav_fourth_option_click_enabled = {
-                always = no
-            }
-            
-            #Proletarian Union
-            sov_national_obligation_scripted_gui_proletarian_union_confirm_button_click_enabled = {
+            sov_national_obligations_main_icon_left_glow_visible = {
                 OR = {
                     check_variable = {
-                        sov_national_obligations_proletarian_union_index_selected = 1
+                        var = sov_national_obligations_selected_index
+                        value = 1
+                        compare = equals
                     }
                     check_variable = {
-                        sov_national_obligations_proletarian_union_index_selected = 2
+                        var = sov_national_obligations_selected_index
+                        value = 2
+                        compare = equals
                     }
                     check_variable = {
-                        sov_national_obligations_proletarian_union_index_selected = 3
+                        var = sov_national_obligations_selected_index
+                        value = 3
+                        compare = equals
+                    }
+                    check_variable = {
+                        var = sov_national_obligations_selected_index
+                        value = 4
+                        compare = equals
+                    }
+                    check_variable = {
+                        var = sov_national_obligations_selected_index
+                        value = 5
+                        compare = equals
+                    }
+                    check_variable = {
+                        var = sov_national_obligations_selected_index
+                        value = 6
+                        compare = equals
+                    }
+                    check_variable = {
+                        var = sov_national_obligations_selected_index
+                        value = 7
+                        compare = equals
+                    }
+                    check_variable = {
+                        var = sov_national_obligations_selected_index
+                        value = 8
+                        compare = equals
+                    }
+                    check_variable = {
+                        var = sov_national_obligations_selected_index
+                        value = 9
+                        compare = equals
+                    }
+                    check_variable = {
+                        var = sov_national_obligations_selected_index
+                        value = 10
+                        compare = equals
+                    }
+                    check_variable = {
+                        var = sov_national_obligations_selected_index
+                        value = 11
+                        compare = equals
+                    }
+                    check_variable = {
+                        var = sov_national_obligations_selected_index
+                        value = 12
+                        compare = equals
+                    }
+                    check_variable = {
+                        var = sov_national_obligations_selected_index
+                        value = 13
+                        compare = equals
                     }
                 }
             }
 
-            sov_national_obligation_scripted_gui_proletarian_union_first_option_button_click_enabled = {
+            sov_national_obligations_main_icon_right_glow_visible = {
+                OR = {
+                    check_variable = {
+                        var = sov_national_obligations_selected_index
+                        value = 1
+                        compare = equals
+                    }
+                    check_variable = {
+                        var = sov_national_obligations_selected_index
+                        value = 2
+                        compare = equals
+                    }
+                    check_variable = {
+                        var = sov_national_obligations_selected_index
+                        value = 3
+                        compare = equals
+                    }
+                    check_variable = {
+                        var = sov_national_obligations_selected_index
+                        value = 4
+                        compare = equals
+                    }
+                    check_variable = {
+                        var = sov_national_obligations_selected_index
+                        value = 5
+                        compare = equals
+                    }
+                    check_variable = {
+                        var = sov_national_obligations_selected_index
+                        value = 6
+                        compare = equals
+                    }
+                    check_variable = {
+                        var = sov_national_obligations_selected_index
+                        value = 7
+                        compare = equals
+                    }
+                    check_variable = {
+                        var = sov_national_obligations_selected_index
+                        value = 8
+                        compare = equals
+                    }
+                    check_variable = {
+                        var = sov_national_obligations_selected_index
+                        value = 9
+                        compare = equals
+                    }
+                    check_variable = {
+                        var = sov_national_obligations_selected_index
+                        value = 10
+                        compare = equals
+                    }
+                    check_variable = {
+                        var = sov_national_obligations_selected_index
+                        value = 11
+                        compare = equals
+                    }
+                    check_variable = {
+                        var = sov_national_obligations_selected_index
+                        value = 12
+                        compare = equals
+                    }
+                    check_variable = {
+                        var = sov_national_obligations_selected_index
+                        value = 13
+                        compare = equals
+                    }
+                }
+            }
+
+            #NAV
+            sov_national_obligation_nav_button_left_click_enabled = {
+                find_lowest_in_array = {
+                    array = sov_national_obligations_unlocked_indexes 
+                    value = lowest_unlocked_index_v
+                    index = lowest_unlocked_index_i
+                }
+                check_variable = {
+                    var = lowest_unlocked_index_v
+                    value = var:sov_national_obligations_selected_index
+                    compare = less_than
+                }
+            }
+
+            sov_national_obligation_nav_button_right_click_enabled = {
+                find_highest_in_array = {
+                    array = sov_national_obligations_unlocked_indexes 
+                    value = highest_unlocked_index_v 
+                    index = highest_unlocked_index_i
+                }
+                check_variable = {
+                    var = highest_unlocked_index_v
+                    value = var:sov_national_obligations_selected_index
+                    compare = greater_than
+                }
+            }
+
+            sov_national_obligations_nav_industrial_awakening_click_enabled = {
+                is_in_array = { sov_national_obligations_unlocked_indexes = 1 }
+            }
+
+            sov_national_obligations_nav_tsar_bomba_click_enabled = {
+                is_in_array = { sov_national_obligations_unlocked_indexes = 2 }
+            }
+
+            sov_national_obligations_nav_unfailing_army_click_enabled = {
+                is_in_array = { sov_national_obligations_unlocked_indexes = 3 }
+            }
+
+            sov_national_obligations_nav_grand_fleet_click_enabled = {
+                is_in_array = { sov_national_obligations_unlocked_indexes = 4 }
+            }
+
+            sov_national_obligations_nav_proletarian_union_click_enabled = {
+                is_in_array = { sov_national_obligations_unlocked_indexes = 5 }
+            }
+
+            sov_national_obligations_nav_neverending_story_click_enabled = {
+                is_in_array = { sov_national_obligations_unlocked_indexes = 6 }
+            }
+
+            sov_national_obligations_nav_continental_system_click_enabled = {
+                is_in_array = { sov_national_obligations_unlocked_indexes = 7 }
+            }
+
+            sov_national_obligations_nav_golden_age_click_enabled = {
+                is_in_array = { sov_national_obligations_unlocked_indexes = 8 }
+            }
+
+            sov_national_obligations_nav_treaty_moscow_click_enabled = {
+                is_in_array = { sov_national_obligations_unlocked_indexes = 9 }
+            }
+
+            sov_national_obligations_nav_imperial_obligations_click_enabled = {
+                is_in_array = { sov_national_obligations_unlocked_indexes = 10 }
+            }
+
+            sov_national_obligations_nav_carry_on_legacy_click_enabled = {
+                is_in_array = { sov_national_obligations_unlocked_indexes = 11 }
+            }
+
+            sov_national_obligations_nav_russian_realm_click_enabled = {
+                is_in_array = { sov_national_obligations_unlocked_indexes = 12 }
+            }
+
+            sov_national_obligations_nav_rebirth_click_enabled = {
+                is_in_array = { sov_national_obligations_unlocked_indexes = 13 }
+            }
+        }
+    }
+
+    #Proletarian Union
+    sov_national_obligations_proletarian_union_scripted_gui = {
+        window_name = "sov_national_obligations_proletarian_union_view"
+        context_type = player_context
+        parent_window_name = "sov_national_obligations_scripted_gui_window"
+
+        visible = {
+            check_variable = {
+                var = sov_national_obligations_selected_index
+                value = 5
+                compare = equals
+            }
+        }
+
+        properties = {
+            sov_national_obligations_proletarian_union_first_option_bg = {
+                image = [THIS.GetCurrentStatusFirstOptionProletarianUnion]
+            }
+
+            sov_national_obligations_proletarian_union_second_option_bg = {
+                image = [THIS.GetCurrentStatusSecondOptionProletarianUnion]
+            }
+
+            sov_national_obligations_proletarian_union_third_option_bg = {
+                image = [THIS.GetCurrentStatusThirdOptionProletarianUnion]
+            }
+        }
+
+        effects = {
+            sov_national_obligations_proletarian_union_confirm_button_click {
+                THIS = {
+                    set_country_flag = proletarian_union_confirmed
+                    if = {
+                        limit = {
+                            has_country_flag = sov_debug_national_obligations
+                        }
+                        clr_country_flag = sov_debug_national_obligations
+                    }
+                    else = {
+                        clr_country_flag = sov_open_national_obligations
+                    }
+                }
+            }
+
+            sov_national_obligations_proletarian_union_first_option_button_click {
+                THIS = {
+                    if = {
+                        limit = {
+                            check_variable = {
+                                sov_national_obligations_proletarian_union_selected_index = 1
+                            }
+                        }
+                        set_variable = {
+                            sov_national_obligations_proletarian_union_selected_index = 0
+                        }
+                    }
+                    else = {
+                        set_variable = {
+                            sov_national_obligations_proletarian_union_selected_index = 1
+                        }
+                    }
+                }
+            }
+
+            sov_national_obligations_proletarian_union_second_option_button_click {
+                THIS = {
+                    if = {
+                        limit = {
+                            check_variable = {
+                                sov_national_obligations_proletarian_union_selected_index = 2
+                            }
+                        }
+                        set_variable = {
+                            sov_national_obligations_proletarian_union_selected_index = 0
+                        }
+                    }
+                    else = {
+                        set_variable = {
+                            sov_national_obligations_proletarian_union_selected_index = 2
+                        }
+                    }
+                }
+            }
+
+            sov_national_obligations_proletarian_union_third_option_button_click {
+                THIS = {
+                    if = {
+                        limit = {
+                            check_variable = {
+                                sov_national_obligations_proletarian_union_selected_index = 3
+                            }
+                        }
+                        set_variable = {
+                            sov_national_obligations_proletarian_union_selected_index = 0
+                        }
+                    }
+                    else = {
+                        set_variable = {
+                            sov_national_obligations_proletarian_union_selected_index = 3
+                        }
+                    }
+                }
+            }
+        }
+
+        triggers = {
+            sov_national_obligations_proletarian_union_confirm_button_click_enabled = {
+                THIS = {
+                    OR = {
+                        check_variable = {
+                            sov_national_obligations_proletarian_union_selected_index = 1
+                        }
+                        check_variable = {
+                            sov_national_obligations_proletarian_union_selected_index = 2
+                        }
+                        check_variable = {
+                            sov_national_obligations_proletarian_union_selected_index = 3
+                        }
+                    }
+                    NOT = {
+                        has_country_flag = proletarian_union_confirmed
+                    }
+                }
+            }
+
+            sov_national_obligations_proletarian_union_first_option_button_click_enabled = {
                 THIS = {
                     num_subjects > 19
+                    NOT = {
+                        has_country_flag = proletarian_union_confirmed
+                    }
                 }
             }
 
-            sov_national_obligation_scripted_gui_proletarian_union_second_option_button_click_enabled = {
+            sov_national_obligations_proletarian_union_second_option_button_click_enabled = {
                 THIS = {
                     num_faction_members > 9
+                    NOT = {
+                        has_country_flag = proletarian_union_confirmed
+                    }
                 }
             }
 
-            sov_national_obligation_scripted_gui_proletarian_union_third_option_button_click_enabled = {
+            sov_national_obligations_proletarian_union_third_option_glow_visible = {
+                check_variable = {
+                    sov_national_obligations_proletarian_union_selected_index = 3
+                }
+            }
+
+            sov_national_obligations_proletarian_union_third_option_button_click_enabled = {
                 THIS = {
                     has_country_leader = {
                         name = "Joseph Stalin"
                         ruling_only = yes
+                    }
+                    NOT = {
+                        has_country_flag = proletarian_union_confirmed
                     }
                 }
             }

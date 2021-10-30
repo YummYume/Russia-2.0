@@ -8,7 +8,7 @@
 
 #Confirm button :
 @CONFIRM_BUTTON_X = -61.5
-@CONFIRM_BUTTON_Y = 285
+@CONFIRM_BUTTON_Y = 310
 
 #Focus button :
 @FOCUS_BUTTON_X = -50
@@ -16,28 +16,89 @@
 
 #For 1 option :
 @ONE_OPTION_X = 0
-@ONE_OPTION_Y = 20
+@ONE_OPTION_Y = 50
 
 #For 3 options :
 @THREE_OPTION_FIRST_X = -350
-@THREE_OPTION_FIRST_Y = 20
+@THREE_OPTION_FIRST_Y = 50
 @THREE_OPTION_SECOND_X = 0
-@THREE_OPTION_SECOND_Y = 20
+@THREE_OPTION_SECOND_Y = 50
 @THREE_OPTION_THIRD_X = 350
-@THREE_OPTION_THIRD_Y = 20
+@THREE_OPTION_THIRD_Y = 50
 
 guiTypes = {
     containerWindowType = {
-        name = "sov_national_obligation_scripted_gui_window"
+        name = "sov_national_obligations_scripted_gui_window"
 		position = { x = 0 y = 0 }
-		size = { width = 1200 height = 800 }
+		size = { width = 1280 height = 720 }
 		orientation = center
 		origo = center
 		moveable = yes
         fade_type = linear
-        fade_time = 100
+        fade_time = 1000
         click_to_front = no
         clipping = no
+        show_animation_type = decelerated
+		hide_animation_type = accelerated
+		animation_time = 250
+
+        instantTextBoxType = {
+            name = "sov_national_obligations_main_title"
+            position = { x = 240 y = 16 }
+            orientation = upper_left
+            text = LOC_sov_national_obligations_main_title
+            font = hoi_30header
+            format = centre
+            maxWidth = 800
+            maxHeight = 25
+            fixedsize = yes
+            borderSize = {x = 0 y = 0}
+            alwaystransparent = yes
+        }
+
+        iconType = {
+            name = "sov_national_obligations_main_icon_left_glow"
+            position = { x = 70 y = -55 }
+            orientation = upper_left
+            quadTextureSprite = "GFX_national_obligations_top_icons_glow"
+            alwaystransparent = yes
+            scale = 1.2
+        }
+
+        iconType = {
+            name = "sov_national_obligations_main_icon_left"
+            position = { x = 150 y = 15 }
+            orientation = upper_left
+            alwaystransparent = yes
+            centerposition = yes
+        }
+
+        iconType = {
+            name = "sov_national_obligations_main_icon_right_glow"
+            position = { x = -230 y = -55 }
+            orientation = upper_right
+            quadTextureSprite = "GFX_national_obligations_top_icons_glow"
+            alwaystransparent = yes
+            scale = 1.2
+        }
+
+        iconType = {
+            name = "sov_national_obligations_main_icon_right"
+            position = { x = -150 y = 15 }
+            orientation = upper_right
+            alwaystransparent = yes
+            centerposition = yes
+        }
+
+        buttonType = {
+            name = "sov_national_obligations_close_button"
+            position = { x = -55 y = 15 }
+            orientation = "UPPER_RIGHT"
+            spriteType = "GFX_national_obligations_close_button_gui"
+            alwaystransparent = no
+            shortcut = "ESCAPE"
+            pdx_tooltip = LOC_sov_national_obligations_close_button_tt
+        }
 
         #Texture of the whole GUI with empty background
         background = {
@@ -47,7 +108,7 @@ guiTypes = {
 
         #Actual background
         iconType = {
-            name = "sov_national_obligation_scripted_gui_window_bg"
+            name = "sov_national_obligations_scripted_gui_window_bg"
             position = { x = 0 y = 0 }
             orientation = center
             alwaystransparent = yes
@@ -55,275 +116,373 @@ guiTypes = {
         }
 
         containerWindowType = {
-            name = "sov_national_obligation_scripted_gui_nav"
-            position = { x = 0 y = -310 }
-            size = { width = 1150 height = 100 }
+            name = "sov_national_obligations_scripted_gui_nav"
+            position = { x = 0 y = -265 }
+            size = { width = 1100 height = 60 }
             orientation = center
             origo = center
-            moveable = yes
-            fade_type = linear
-            fade_time = 100
-            click_to_front = no
-            clipping = no
+            horizontalScrollbar = "bottom_horizontal_slider"
 
-            buttonType = {
-                name = "sov_national_obligation_scripted_gui_nav_button_left"
-                position = { x = -542 y = 0 }
-                orientation = "CENTER"
-                spriteType = "GFX_national_obligations_button_left_gui"
-                buttonText = ""
-                buttonFont = cg_18b
-                alwaystransparent = no
+            background = {
+                name = "Background"
+                quadTextureSprite = "GFX_national_obligations_nav_bg"
             }
 
             buttonType = {
-                name = "sov_national_obligation_scripted_gui_nav_button_right"
-                position = { x = 523 y = 0 }
-                orientation = "CENTER"
-                spriteType = "GFX_national_obligations_button_right_gui"
-                buttonText = ""
-                buttonFont = cg_18b
-                alwaystransparent = no
-            }
-
-            buttonType = {
-                name = "sov_national_obligation_scripted_gui_nav_proletarian_union"
-                position = { x = -489 y = -5 }
-                orientation = "CENTER"
-                spriteType = "GFX_national_obligations_index_selected_gui"
-                buttonText = "Proletarian Union"
-                buttonFont = cg_18b
-                alwaystransparent = no
-            }
-
-            buttonType = {
-                name = "sov_national_obligation_scripted_gui_nav_communist_safety"
-                position = { x = -236 y = -5 }
-                orientation = "CENTER"
+                name = "sov_national_obligations_nav_industrial_awakening"
+                position = { x = 0 y = 0 }
                 spriteType = "GFX_national_obligations_index_gui"
-                buttonText = "???"
+                buttonText = LOC_sov_national_obligations_nav_industrial_awakening
                 buttonFont = cg_18b
                 alwaystransparent = no
             }
 
             buttonType = {
-                name = "sov_national_obligation_scripted_gui_nav_third_option"
-                position = { x = 17 y = -5 }
-                orientation = "CENTER"
+                name = "sov_national_obligations_nav_tsar_bomba"
+                position = { x = 293 y = 0 }
                 spriteType = "GFX_national_obligations_index_gui"
-                buttonText = "???"
+                buttonText = LOC_sov_national_obligations_nav_tsar_bomba
                 buttonFont = cg_18b
                 alwaystransparent = no
             }
 
             buttonType = {
-                name = "sov_national_obligation_scripted_gui_nav_fourth_option"
-                position = { x = 270 y = -5 }
-                orientation = "CENTER"
+                name = "sov_national_obligations_nav_unfailing_army"
+                position = { x = 586 y = 0 }
                 spriteType = "GFX_national_obligations_index_gui"
-                buttonText = "???"
+                buttonText = LOC_sov_national_obligations_nav_unfailing_army
+                buttonFont = cg_18b
+                alwaystransparent = no
+            }
+
+            buttonType = {
+                name = "sov_national_obligations_nav_grand_fleet"
+                position = { x = 879 y = 0 }
+                spriteType = "GFX_national_obligations_index_gui"
+                buttonText = LOC_sov_national_obligations_nav_grand_fleet
+                buttonFont = cg_18b
+                alwaystransparent = no
+            }
+
+            buttonType = {
+                name = "sov_national_obligations_nav_proletarian_union"
+                position = { x = 1172 y = 0 }
+                spriteType = "GFX_national_obligations_index_gui"
+                buttonText = LOC_sov_national_obligations_nav_proletarian_union
+                buttonFont = cg_18b
+                alwaystransparent = no
+            }
+
+            buttonType = {
+                name = "sov_national_obligations_nav_neverending_story"
+                position = { x = 1465 y = 0 }
+                spriteType = "GFX_national_obligations_index_gui"
+                buttonText = LOC_sov_national_obligations_nav_neverending_story
+                buttonFont = cg_18b
+                alwaystransparent = no
+            }
+
+            buttonType = {
+                name = "sov_national_obligations_nav_continental_system"
+                position = { x = 1758 y = 0 }
+                spriteType = "GFX_national_obligations_index_gui"
+                buttonText = LOC_sov_national_obligations_nav_continental_system
+                buttonFont = cg_18b
+                alwaystransparent = no
+            }
+
+            buttonType = {
+                name = "sov_national_obligations_nav_treaty_moscow"
+                position = { x = 2051 y = 0 }
+                spriteType = "GFX_national_obligations_index_gui"
+                buttonText = LOC_sov_national_obligations_nav_treaty_moscow
+                buttonFont = cg_18b
+                alwaystransparent = no
+            }
+
+            buttonType = {
+                name = "sov_national_obligations_nav_golden_age"
+                position = { x = 2344 y = 0 }
+                spriteType = "GFX_national_obligations_index_gui"
+                buttonText = LOC_sov_national_obligations_nav_golden_age
+                buttonFont = cg_18b
+                alwaystransparent = no
+            }
+
+            buttonType = {
+                name = "sov_national_obligations_nav_imperial_obligations"
+                position = { x = 2637 y = 0 }
+                spriteType = "GFX_national_obligations_index_gui"
+                buttonText = LOC_sov_national_obligations_nav_imperial_obligations
+                buttonFont = cg_18b
+                alwaystransparent = no
+            }
+
+            buttonType = {
+                name = "sov_national_obligations_nav_carry_on_legacy"
+                position = { x = 2930 y = 0 }
+                spriteType = "GFX_national_obligations_index_gui"
+                buttonText = LOC_sov_national_obligations_nav_carry_on_legacy
+                buttonFont = cg_18b
+                alwaystransparent = no
+            }
+
+            buttonType = {
+                name = "sov_national_obligations_nav_russian_realm"
+                position = { x = 3223 y = 0 }
+                spriteType = "GFX_national_obligations_index_gui"
+                buttonText = LOC_sov_national_obligations_nav_russian_realm
+                buttonFont = cg_18b
+                alwaystransparent = no
+            }
+
+            buttonType = {
+                name = "sov_national_obligations_nav_rebirth"
+                position = { x = 3516 y = 0 }
+                spriteType = "GFX_national_obligations_index_gui"
+                buttonText = LOC_sov_national_obligations_nav_rebirth
                 buttonFont = cg_18b
                 alwaystransparent = no
             }
         }
 
-        #Proletarian Union
+        buttonType = {
+            name = "sov_national_obligation_nav_button_left"
+            position = { x = 50 y = 70 }
+            orientation = "UPPER_LEFT"
+            spriteType = "GFX_national_obligations_button_left_gui"
+            buttonText = ""
+            buttonFont = cg_18b
+            alwaystransparent = no
+            shortcut = "ctrl+PAGE_DOWN"
+            pdx_tooltip = LOC_sov_national_obligation_nav_button_left_tt
+            pdx_tooltip_delayed = LOC_sov_national_obligation_nav_button_left_tt_desc
+        }
+
+        buttonType = {
+            name = "sov_national_obligation_nav_button_right"
+            position = { x = -70 y = 70 }
+            orientation = "UPPER_RIGHT"
+            spriteType = "GFX_national_obligations_button_right_gui"
+            buttonText = ""
+            buttonFont = cg_18b
+            alwaystransparent = no
+            shortcut = "ctrl+PAGE_UP"
+            pdx_tooltip = sov_national_obligation_nav_button_right_tt
+            pdx_tooltip_delayed = sov_national_obligation_nav_button_right_tt_desc
+        }
+    }
+
+    #Proletarian Union
+    containerWindowType = {
+        name = "sov_national_obligations_proletarian_union_view"
+        position = { x = 0 y = 0 }
+        size = { width = 1000 height = 800 }
+        orientation = center
+        origo = center
+        moveable = no
+        click_to_front = no
+        clipping = no
+        fade_type = linear
+        fade_time = 500
+
+        buttonType = {
+            name = "sov_national_obligations_proletarian_union_confirm_button"
+            position = { x = @CONFIRM_BUTTON_X y = @CONFIRM_BUTTON_Y }
+            orientation = "CENTER"
+            spriteType = "GFX_national_obligations_confirm_button_gui"
+            shortcut = "RETURN"
+            buttonText = LOC_sov_national_obligations_proletarian_union_confirm_button
+            buttonFont = cg_18b
+            alwaystransparent = no
+        }
+
+        #Option 1
         containerWindowType = {
-            name = "sov_national_obligation_scripted_gui_proletarian_union"
-            position = { x = 0 y = 0 }
-            size = { width = 1000 height = 800 }
+            name = "sov_national_obligations_proletarian_union_first_option"
+            position = { x = @THREE_OPTION_FIRST_X y = @THREE_OPTION_FIRST_Y }
+            size = { width = 250 height = 600 }
             orientation = center
             origo = center
             moveable = no
             click_to_front = no
-            clipping = no
+            clipping = yes
+
+            iconType = {
+                name = "sov_national_obligations_proletarian_union_first_option_bg"
+                position = { x = 0 y = -20 }
+                orientation = center
+                alwaystransparent = yes
+                centerposition = yes
+            }
+
+            instantTextBoxType = {
+                name = "sov_national_obligations_proletarian_union_first_option_quote"
+                position = { x = @QUOTE_OPTION_X y = @QUOTE_OPTION_Y }
+                orientation = center
+                text = LOC_sov_national_obligations_proletarian_union_first_option_quote
+                font = hoi4_typewriter22
+                format = centre
+                borderSize = {x = 0 y = 0}
+                alwaystransparent = yes
+            }
+
+            instantTextBoxType = {
+                name = "sov_national_obligations_proletarian_union_first_option_text"
+                position = { x = @TOOLTIP_OPTION_X y = @TOOLTIP_OPTION_Y }
+                orientation = center
+                text = LOC_sov_national_obligations_proletarian_union_first_option_text
+                font = hoi_16mbs
+                format = centre
+                alwaystransparent = yes
+            }
+
+            instantTextBoxType = {
+                name = "sov_national_obligations_proletarian_union_first_option_trigger"
+                position = { x = @TRIGGER_OPTION_X y = @TRIGGER_OPTION_Y }
+                orientation = center
+                text = LOC_sov_national_obligations_proletarian_union_first_option_trigger
+                font = hoi_16mbs
+                format = centre
+                alwaystransparent = yes
+            }
 
             buttonType = {
-                name = "sov_national_obligation_scripted_gui_proletarian_union_confirm_button"
-                position = { x = @CONFIRM_BUTTON_X y = @CONFIRM_BUTTON_Y }
-                orientation = "CENTER"
-                spriteType = "GFX_national_obligations_confirm_button_gui"
-                buttonText = LOC_sov_national_obligation_scripted_gui_proletarian_union_confirm_button
+                name = "sov_national_obligations_proletarian_union_first_option_button"
+                position = { x = @FOCUS_BUTTON_X y = @FOCUS_BUTTON_Y }
+                orientation = center
+                spriteType = "GFX_proletarian_union_option_first_button_gui"
+                shortcut = "1"
+                buttonText = ""
                 buttonFont = cg_18b
-                alwaystransparent = no
+            }
+        }
+
+        #Option 2
+        containerWindowType = {
+            name = "sov_national_obligations_proletarian_union_second_option"
+            position = { x = @THREE_OPTION_SECOND_X y = @THREE_OPTION_SECOND_Y }
+            size = { width = 250 height = 600 }
+            orientation = center
+            origo = center
+            moveable = no
+            click_to_front = no
+            clipping = yes
+
+            iconType = {
+                name = "sov_national_obligations_proletarian_union_second_option_bg"
+                position = { x = 0 y = -20 }
+                orientation = center
+                alwaystransparent = yes
+                centerposition = yes
             }
 
-            #Option 1
-            containerWindowType = {
-                name = "sov_national_obligation_scripted_gui_proletarian_union_first_option"
-                position = { x = @THREE_OPTION_FIRST_X y = @THREE_OPTION_FIRST_Y }
-                size = { width = 250 height = 600 }
+            instantTextBoxType = {
+                name = "sov_national_obligations_proletarian_union_second_option_quote"
+                position = { x = @QUOTE_OPTION_X y = @QUOTE_OPTION_Y }
                 orientation = center
-                origo = center
-                moveable = no
-                click_to_front = no
-                clipping = yes
-
-                iconType = {
-                    name = "sov_national_obligation_scripted_gui_proletarian_union_first_option_bg"
-                    position = { x = 0 y = -20 }
-                    orientation = center
-                    alwaystransparent = yes
-                    centerposition = yes
-                }
-
-                instantTextBoxType = {
-                    name = "sov_national_obligation_scripted_gui_proletarian_union_first_option_quote"
-                    position = { x = @QUOTE_OPTION_X y = @QUOTE_OPTION_Y }
-                    orientation = center
-                    text = LOC_sov_national_obligation_scripted_gui_proletarian_union_first_option_quote
-                    font = hoi4_typewriter22
-                    format = centre
-                    borderSize = {x = 0 y = 0}
-                    alwaystransparent = yes
-                }
-
-                instantTextBoxType = {
-                    name = "sov_national_obligation_scripted_gui_proletarian_union_first_option_text"
-                    position = { x = @TOOLTIP_OPTION_X y = @TOOLTIP_OPTION_Y }
-                    orientation = center
-                    text = LOC_sov_national_obligation_scripted_gui_proletarian_union_first_option_text
-                    font = hoi_16mbs
-                    format = centre
-                    alwaystransparent = yes
-                }
-
-                instantTextBoxType = {
-                    name = "sov_national_obligation_scripted_gui_proletarian_union_first_option_trigger"
-                    position = { x = @TRIGGER_OPTION_X y = @TRIGGER_OPTION_Y }
-                    orientation = center
-                    text = LOC_sov_national_obligation_scripted_gui_proletarian_union_first_option_trigger
-                    font = hoi_16mbs
-                    format = centre
-                    alwaystransparent = yes
-                }
-
-                buttonType = {
-                    name = "sov_national_obligation_scripted_gui_proletarian_union_first_option_button"
-                    position = { x = @FOCUS_BUTTON_X y = @FOCUS_BUTTON_Y }
-                    orientation = center
-                    spriteType = "GFX_proletarian_union_option_first_button_gui"
-                    buttonText = ""
-                    buttonFont = cg_18b
-                }
+                text = LOC_sov_national_obligations_proletarian_union_second_option_quote
+                font = hoi4_typewriter22
+                format = centre
+                alwaystransparent = yes
             }
 
-            #Option 2
-            containerWindowType = {
-                name = "sov_national_obligation_scripted_gui_proletarian_union_second_option"
-                position = { x = @THREE_OPTION_SECOND_X y = @THREE_OPTION_SECOND_Y }
-                size = { width = 250 height = 600 }
+            instantTextBoxType = {
+                name = "sov_national_obligations_proletarian_union_second_option_text"
+                position = { x = @TOOLTIP_OPTION_X y = @TOOLTIP_OPTION_Y }
                 orientation = center
-                origo = center
-                moveable = no
-                click_to_front = no
-                clipping = yes
-
-                iconType = {
-                    name = "sov_national_obligation_scripted_gui_proletarian_union_second_option_bg"
-                    position = { x = 0 y = -20 }
-                    orientation = center
-                    alwaystransparent = yes
-                    centerposition = yes
-                }
-
-                instantTextBoxType = {
-                    name = "sov_national_obligation_scripted_gui_proletarian_union_second_option_quote"
-                    position = { x = @QUOTE_OPTION_X y = @QUOTE_OPTION_Y }
-                    orientation = center
-                    text = LOC_sov_national_obligation_scripted_gui_proletarian_union_second_option_quote
-                    font = hoi4_typewriter22
-                    format = centre
-                    alwaystransparent = yes
-                }
-
-                instantTextBoxType = {
-                    name = "sov_national_obligation_scripted_gui_proletarian_union_second_option_text"
-                    position = { x = @TOOLTIP_OPTION_X y = @TOOLTIP_OPTION_Y }
-                    orientation = center
-                    text = LOC_sov_national_obligation_scripted_gui_proletarian_union_second_option_text
-                    font = hoi_16mbs
-                    format = centre
-                    alwaystransparent = yes
-                }
-
-                instantTextBoxType = {
-                    name = "sov_national_obligation_scripted_gui_proletarian_union_second_option_trigger"
-                    position = { x = @TRIGGER_OPTION_X y = @TRIGGER_OPTION_Y }
-                    orientation = center
-                    text = LOC_sov_national_obligation_scripted_gui_proletarian_union_second_option_trigger
-                    font = hoi_16mbs
-                    format = centre
-                    alwaystransparent = yes
-                }
-
-                buttonType = {
-                    name = "sov_national_obligation_scripted_gui_proletarian_union_second_option_button"
-                    position = { x = @FOCUS_BUTTON_X y = @FOCUS_BUTTON_Y }
-                    orientation = center
-                    spriteType = "GFX_proletarian_union_option_second_button_gui"
-                    buttonText = ""
-                    buttonFont = cg_18b
-                }
+                text = LOC_sov_national_obligations_proletarian_union_second_option_text
+                font = hoi_16mbs
+                format = centre
+                alwaystransparent = yes
             }
 
-            #Option 3
-            containerWindowType = {
-                name = "sov_national_obligation_scripted_gui_proletarian_union_third_option"
-                position = { x = @THREE_OPTION_THIRD_X y = @THREE_OPTION_THIRD_Y }
-                size = { width = 250 height = 600 }
+            instantTextBoxType = {
+                name = "sov_national_obligations_proletarian_union_second_option_trigger"
+                position = { x = @TRIGGER_OPTION_X y = @TRIGGER_OPTION_Y }
                 orientation = center
-                origo = center
-                moveable = no
-                click_to_front = no
-                clipping = yes
+                text = LOC_sov_national_obligations_proletarian_union_second_option_trigger
+                font = hoi_16mbs
+                format = centre
+                alwaystransparent = yes
+            }
 
-                iconType = {
-                    name = "sov_national_obligation_scripted_gui_proletarian_union_third_option_bg"
-                    position = { x = 0 y = -20 }
-                    orientation = center
-                    alwaystransparent = yes
-                    centerposition = yes
-                }
+            buttonType = {
+                name = "sov_national_obligations_proletarian_union_second_option_button"
+                position = { x = @FOCUS_BUTTON_X y = @FOCUS_BUTTON_Y }
+                orientation = center
+                spriteType = "GFX_proletarian_union_option_second_button_gui"
+                shortcut = "2"
+                buttonText = ""
+                buttonFont = cg_18b
+            }
+        }
 
-                instantTextBoxType = {
-                    name = "sov_national_obligation_scripted_gui_proletarian_union_third_option_quote"
-                    position = { x = @QUOTE_OPTION_X y = @QUOTE_OPTION_Y }
-                    orientation = center
-                    text = LOC_sov_national_obligation_scripted_gui_proletarian_union_third_option_quote
-                    font = hoi4_typewriter22
-                    format = centre
-                    alwaystransparent = yes
-                }
+        #Option 3
+        containerWindowType = {
+            name = "sov_national_obligations_proletarian_union_third_option"
+            position = { x = @THREE_OPTION_THIRD_X y = @THREE_OPTION_THIRD_Y }
+            size = { width = 250 height = 600 }
+            orientation = center
+            origo = center
+            moveable = no
+            click_to_front = no
+            clipping = yes
 
-                instantTextBoxType = {
-                    name = "sov_national_obligation_scripted_gui_proletarian_union_third_option_text"
-                    position = { x = @TOOLTIP_OPTION_X y = @TOOLTIP_OPTION_Y }
-                    orientation = center
-                    text = LOC_sov_national_obligation_scripted_gui_proletarian_union_third_option_text
-                    font = hoi_16mbs
-                    format = centre
-                    alwaystransparent = yes
-                }
+            iconType = {
+                name = "sov_national_obligations_proletarian_union_third_option_bg"
+                position = { x = 0 y = -20 }
+                orientation = center
+                alwaystransparent = yes
+                centerposition = yes
+            }
 
-                instantTextBoxType = {
-                    name = "sov_national_obligation_scripted_gui_proletarian_union_third_option_trigger"
-                    position = { x = @TRIGGER_OPTION_X y = @TRIGGER_OPTION_Y }
-                    orientation = center
-                    text = LOC_sov_national_obligation_scripted_gui_proletarian_union_third_option_trigger
-                    font = hoi_16mbs
-                    format = centre
-                    alwaystransparent = yes
-                }
+            instantTextBoxType = {
+                name = "sov_national_obligations_proletarian_union_third_option_quote"
+                position = { x = @QUOTE_OPTION_X y = @QUOTE_OPTION_Y }
+                orientation = center
+                text = LOC_sov_national_obligations_proletarian_union_third_option_quote
+                font = hoi4_typewriter22
+                format = centre
+                alwaystransparent = yes
+            }
 
-                buttonType = {
-                    name = "sov_national_obligation_scripted_gui_proletarian_union_third_option_button"
-                    position = { x = @FOCUS_BUTTON_X y = @FOCUS_BUTTON_Y }
-                    orientation = center
-                    spriteType = "GFX_proletarian_union_option_third_button_gui"
-                    buttonText = ""
-                    buttonFont = cg_18b
-                }
+            instantTextBoxType = {
+                name = "sov_national_obligations_proletarian_union_third_option_text"
+                position = { x = @TOOLTIP_OPTION_X y = @TOOLTIP_OPTION_Y }
+                orientation = center
+                text = LOC_sov_national_obligations_proletarian_union_third_option_text
+                font = hoi_16mbs
+                format = centre
+                alwaystransparent = yes
+            }
+
+            instantTextBoxType = {
+                name = "sov_national_obligations_proletarian_union_third_option_trigger"
+                position = { x = @TRIGGER_OPTION_X y = @TRIGGER_OPTION_Y }
+                orientation = center
+                text = LOC_sov_national_obligations_proletarian_union_third_option_trigger
+                font = hoi_16mbs
+                format = centre
+                alwaystransparent = yes
+            }
+
+            iconType = {
+                name = "sov_national_obligations_proletarian_union_third_option_glow"
+                position = { x = -85 y = 140 }
+                orientation = center
+                quadTextureSprite = "GFX_national_obligations_option_icons_glow"
+                scale = 1.2
+            }
+
+            buttonType = {
+                name = "sov_national_obligations_proletarian_union_third_option_button"
+                position = { x = @FOCUS_BUTTON_X y = @FOCUS_BUTTON_Y }
+                orientation = center
+                spriteType = "GFX_proletarian_union_option_third_button_gui"
+                shortcut = "3"
+                buttonText = ""
+                buttonFont = cg_18b
             }
         }
     }
