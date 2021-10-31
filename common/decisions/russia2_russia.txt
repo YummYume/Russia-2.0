@@ -47973,7 +47973,7 @@ SOV_replace_puppet_leader = {
 
 	SOV_replace_from_leader = {
 
-		icon = GFX_generic_assassination
+		icon = GFX_decision_generic_assassination
 
 		days_re_enable = 30
 
@@ -48009,9 +48009,9 @@ SOV_replace_puppet_leader = {
 						has_country_leader_with_trait = russian_puppet
 					}
 				}
-				NOT = {
-					has_country_flag = sov_plotting_again_from_leader
-				}
+			}
+			NOT = {
+				has_country_flag = sov_plotting_against_from_leader
 			}
 		}
 
@@ -48067,17 +48067,17 @@ SOV_replace_puppet_leader = {
 		cost = 25
 
 		cancel_effect = {
-			clr_country_flag = sov_plotting_again_from_leader
+			clr_country_flag = sov_plotting_against_from_leader
 		}
 
 		complete_effect = {
-			set_country_flag = sov_plotting_again_from_leader
+			set_country_flag = sov_plotting_against_from_leader
 		}
 
 		remove_effect = {
 			custom_effect_tooltip = sov_get_assassination_event_from_leader_tt
 			hidden_effect = {
-				clr_country_flag = sov_plotting_again_from_leader
+				clr_country_flag = sov_plotting_against_from_leader
 				FROM = {
 					save_event_target_as = SOV_replace_from_leader_event_target
 				}
@@ -48199,4 +48199,36 @@ SOV_reunification_war_anarchist_category_decisions = {
 			factor = 0
 		}
 	}
+}
+
+SOV_national_obligations_category_decisions = {
+	
+	SOV_show_national_obligations = {
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			NOT = {
+                has_country_flag = sov_open_national_obligations
+            }
+		}
+
+		visible = {
+            is_subject = no
+			has_global_flag = sov_national_obligations_allowed
+			has_country_flag = sov_unlocked_national_obligations
+			check_variable = {
+				var = sov_national_obligations_unlocked_indexes^num
+				value = 1
+				compare = greater_than_or_equals
+			}
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = SOV_show_national_obligations_tt
+            set_country_flag = sov_open_national_obligations
+        }
+    }
 }
