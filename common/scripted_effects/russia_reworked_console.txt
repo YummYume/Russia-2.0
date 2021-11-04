@@ -57,6 +57,8 @@ d_russia_reworked_set_revolution_scale = {
         }
         log = " Error :"
         log = " Expected [?1|Y0] argument, got [?args^num|R0]."
+        log = " Usage : russia_reworked_set_revolution_scale {SCALE}"
+        log = " SCALE : required, min:0, max:12"
     }
     else = {
         set_variable = { SOV.revolution_count = args^0 }
@@ -563,12 +565,99 @@ d_russia_reworked_turn_ukr_anarchist = {
 }
 
 d_russia_reworked_display_debug_variable = {
-    log = "[USA.GetNameDefCap] : [?USA.max_available_manpower_k|0]"
-    log = "[SOV.GetNameDefCap] : [?SOV.max_available_manpower_k]"
-    log = "[FRA.GetNameDefCap] : [?FRA.max_available_manpower_k]"
-    log = "[GER.GetNameDefCap] : [?GER.max_available_manpower_k]"
-    log = "[ITA.GetNameDefCap] : [?ITA.max_available_manpower_k|0]"
-    log = "[JAP.GetNameDefCap] : [?JAP.max_available_manpower_k]"
-    log = "[ENG.GetNameDefCap] : [?ENG.max_available_manpower_k]"
-    log = "[ROOT.GetNameDefCap] : [?max_available_manpower_k]"
+    log = "Russia Reworked debug :"
+    log = " [USA.GetNameDefCap] : [?USA.max_available_manpower_k|0]"
+    log = " [SOV.GetNameDefCap] : [?SOV.max_available_manpower_k]"
+    log = " [FRA.GetNameDefCap] : [?FRA.max_available_manpower_k]"
+    log = " [GER.GetNameDefCap] : [?GER.max_available_manpower_k]"
+    log = " [ITA.GetNameDefCap] : [?ITA.max_available_manpower_k|0]"
+    log = " [JAP.GetNameDefCap] : [?JAP.max_available_manpower_k]"
+    log = " [ENG.GetNameDefCap] : [?ENG.max_available_manpower_k]"
+    log = " [ROOT.GetNameDefCap] : [?max_available_manpower_k]"
+}
+
+d_russia_reworked_tsar_bomba_nuke_debug = {
+    log = "Russia Reworked debug :"
+    if = {
+        limit = {
+            OR = {
+                check_variable = {
+                    var = args^num
+                    value = 1
+                    compare = less_than
+                }
+                check_variable = {
+                    var = args^num
+                    value = 2
+                    compare = greater_than
+                }
+            }
+        }
+        log = " Error :"
+        log = " Expected [?1|Y0] or [?2|Y0] arguments, got [?args^num|R0]."
+        log = " Usage : russia_reworked_tsar_bomba_nuke_debug {STATE_ID} {NUMBER_OF_NUKES}"
+        log = " STATE_ID : required"
+        log = " NUMBER_OF_NUKES : optional, default:3, min:1, max:100"
+    }
+    else = {
+        if = {
+            limit = {
+                any_state = {
+                    state = var:args^0
+                }
+            }
+            log = " Beginning total annihilation of [?args^0.GetName]..."
+            FROM = {
+                set_temp_variable = { nuke_drop = 3 }
+                if = {
+                    limit = {
+                        check_variable = {
+                            var = args^1
+                            value = 0
+                            compare = greater_than
+                        }
+                    }
+                    set_temp_variable = { nuke_drop = args^1 }
+                    clamp_temp_variable = {
+                        var = nuke_drop
+                        min = 1
+                        max = 100
+                    }
+                    round_temp_variable = nuke_drop
+                }
+                set_temp_variable = { nuke_count = 0 }
+
+                while_loop_effect = {
+                    break = break_loop
+                    limit = {
+                        check_variable = {
+                            var = nuke_count
+                            value = var:nuke_drop
+                            compare = less_than
+                        }
+                    }
+
+                    launch_nuke = {
+                        state = var:args^0
+                        use_nuke = no
+                    }
+                    add_to_temp_variable = { nuke_count = 1 }
+                }
+                log = " Done! Unpause the game."
+            }
+            if = {
+                limit = {
+                    is_debug = no
+                }
+                log = " Messing around with console commands, uh? :)"
+            }
+        }
+        else = {
+            log = " Error :"
+            log = " Argument given ([?args^0]) is not a valid state ID."
+            log = " Usage : russia_reworked_tsar_bomba_nuke_debug {STATE_ID} {NUMBER_OF_NUKES}"
+            log = " STATE_ID : required"
+            log = " NUMBER_OF_NUKES : optional, default:3, min:1, max:100"
+        }
+    }
 }

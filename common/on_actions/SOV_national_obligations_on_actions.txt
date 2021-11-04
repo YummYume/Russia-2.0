@@ -1,0 +1,37 @@
+on_actions = {
+
+    on_nuke_drop = {
+        effect = {
+            THIS = {
+                if = {
+                    limit = {
+                        tag = SOV
+                        has_idea = SOV_Tsar_bomba
+                        NOT = {
+                            has_country_flag = sov_cancel_on_nuke_drop
+                        }
+                    }
+                    set_temp_variable = { nuke_count = 0 }
+                    set_country_flag = sov_cancel_on_nuke_drop
+                    while_loop_effect = {
+                        break = break_loop
+                        limit = {
+                            check_variable = {
+                                var = nuke_count
+                                value = 3 #Change this for more chaos
+                                compare = less_than
+                            }
+                        }
+
+                        launch_nuke = {
+                            state = FROM
+                            use_nuke = no
+                        }
+                        add_to_temp_variable = { nuke_count = 1 }
+                    }
+                    clr_country_flag = sov_cancel_on_nuke_drop
+                }
+            }
+        }
+    }
+}
