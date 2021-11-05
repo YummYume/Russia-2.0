@@ -641,6 +641,25 @@ d_russia_reworked_tsar_bomba_nuke_debug = {
                         state = var:args^0
                         use_nuke = no
                     }
+                    var:args^0 = {
+                        set_temp_variable = { population_loss_count = state_population_k@var:args^0 }
+                        multiply_temp_variable = { population_loss_count = 0.01 }
+                        if = {
+                            limit = {
+                                # Avoid integer overflow
+                                check_variable = {
+                                    var = population_loss_count
+                                    value = 2140
+                                    compare = greater_than_or_equals
+                                }
+                            }
+                            set_temp_variable = { population_loss_count = 2140000 }
+                        }
+                        else = {
+                            multiply_temp_variable = { population_loss_count = -1000 }
+                        }
+                        add_manpower = var:population_loss_count
+                    }
                     add_to_temp_variable = { nuke_count = 1 }
                 }
                 log = " Done! Unpause the game."

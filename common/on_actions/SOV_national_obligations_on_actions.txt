@@ -1,5 +1,6 @@
 on_actions = {
 
+    #Tsar Bomba
     on_nuke_drop = {
         effect = {
             THIS = {
@@ -7,18 +8,49 @@ on_actions = {
                     limit = {
                         tag = SOV
                         has_idea = SOV_Tsar_bomba
-                        NOT = {
-                            has_country_flag = sov_cancel_on_nuke_drop
+                    }
+                    FROM = {
+                        set_temp_variable = { population_loss_count = state_population_k@FROM }
+                        multiply_temp_variable = { population_loss_count = 0.01 }
+                        if = {
+                            limit = {
+                                # Avoid integer overflow
+                                check_variable = {
+                                    var = population_loss_count
+                                    value = 2140
+                                    compare = greater_than_or_equals
+                                }
+                            }
+                            set_temp_variable = { population_loss_count = 2140000 }
+                        }
+                        else = {
+                            multiply_temp_variable = { population_loss_count = -1000 }
+                        }
+                        add_manpower = var:population_loss_count
+                    }
+                }
+                if = {
+                    limit = {
+                        tag = SOV
+                        has_idea = SOV_Tsar_bomba
+                        check_variable = {
+                            var = FROM.tsar_bomba_nuke_count
+                            value = 4
+                            compare = less_than
                         }
                     }
                     set_temp_variable = { nuke_count = 0 }
-                    set_country_flag = sov_cancel_on_nuke_drop
                     while_loop_effect = {
                         break = break_loop
                         limit = {
                             check_variable = {
                                 var = nuke_count
-                                value = 3 #Change this for more chaos
+                                value = 4
+                                compare = less_than
+                            }
+                            check_variable = {
+                                var = FROM.tsar_bomba_nuke_count
+                                value = 4
                                 compare = less_than
                             }
                         }
@@ -27,9 +59,51 @@ on_actions = {
                             state = FROM
                             use_nuke = no
                         }
+
+                        FROM = {
+                            set_temp_variable = { population_loss_count = state_population_k@FROM }
+                            multiply_temp_variable = { population_loss_count = 0.01 }
+                            if = {
+                                limit = {
+                                    # Avoid integer overflow
+                                    check_variable = {
+                                        var = population_loss_count
+                                        value = 2140
+                                        compare = greater_than_or_equals
+                                    }
+                                }
+                                set_temp_variable = { population_loss_count = 2140000 }
+                            }
+                            else = {
+                                multiply_temp_variable = { population_loss_count = -1000 }
+                            }
+                            add_manpower = var:population_loss_count
+                        }
+                        
                         add_to_temp_variable = { nuke_count = 1 }
+                        add_to_variable = { FROM.tsar_bomba_nuke_count = 1 }
                     }
-                    clr_country_flag = sov_cancel_on_nuke_drop
+                }
+            }
+        }
+    }
+
+    #"Cooldown" for Tsar Bomba
+    on_weekly_SOV = {
+        effect = {
+            if = {
+                limit = {
+                    has_idea = SOV_Tsar_bomba
+                }
+                every_state = {
+                    limit = {
+                        check_variable = {
+                            var = tsar_bomba_nuke_count
+                            value = 4
+                            compare = greater_than_or_equals
+                        }
+                    }
+                    set_variable = { tsar_bomba_nuke_count = 0 }
                 }
             }
         }
