@@ -675,7 +675,35 @@ scripted_gui = {
         effects = {
             sov_national_obligations_tsar_bomba_confirm_button_click {
                 THIS = {
-                    #TODO
+                    if = {
+                        limit = {
+                            check_variable = {
+                                sov_national_obligations_tsar_bomba_selected_index = 1
+                            }
+                        }
+                        add_ideas = SOV_Major_nuclear_power
+                    }
+                    else_if = {
+                        limit = {
+                            check_variable = {
+                                sov_national_obligations_tsar_bomba_selected_index = 2
+                            }
+                        }
+                        goto_state = 262
+                        launch_nuke = {
+                            province = 11047
+                            use_nuke = yes
+                        }
+                        launch_nuke = {
+                            province = 6192
+                            use_nuke = yes
+                        }
+                        launch_nuke = {
+                            province = 12530
+                            use_nuke = yes
+                        }
+                        country_event = { id = russia2_russia.633 days = 2 }
+                    }
                     set_country_flag = tsar_bomba_confirmed
                     if = {
                         limit = {
@@ -753,6 +781,23 @@ scripted_gui = {
                     NOT = {
                         has_country_flag = tsar_bomba_confirmed
                     }
+                    if = {
+                        limit = {
+                            check_variable = {
+                                sov_national_obligations_tsar_bomba_selected_index = 1
+                            }
+                        }
+                        has_tech = nuclear_reactor
+                    }
+                    else_if = {
+                        limit = {
+                            check_variable = {
+                                sov_national_obligations_tsar_bomba_selected_index = 2
+                            }
+                        }
+                        has_full_control_of_state = 262
+                        num_of_nukes > 2
+                    }
                 }
             }
 
@@ -764,7 +809,7 @@ scripted_gui = {
 
             sov_national_obligations_tsar_bomba_first_option_button_click_enabled = {
                 THIS = {
-                    #TODO
+                    has_tech = nuclear_reactor
                     NOT = {
                         has_country_flag = tsar_bomba_confirmed
                     }
@@ -779,7 +824,8 @@ scripted_gui = {
 
             sov_national_obligations_tsar_bomba_second_option_button_click_enabled = {
                 THIS = {
-                    #TODO
+                    has_full_control_of_state = 262
+                    num_of_nukes > 2
                     NOT = {
                         has_country_flag = tsar_bomba_confirmed
                     }

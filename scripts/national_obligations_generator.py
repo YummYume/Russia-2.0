@@ -254,6 +254,7 @@ if __name__ == "__main__":
             shortcut = "RETURN"
             buttonText = LOC_sov_national_obligations_{ national_obligation }_confirm_button
             buttonFont = cg_18b
+            pdx_tooltip = LOC_sov_national_obligations_{ national_obligation }_confirm_button_tt
             alwaystransparent = no
         }}
 
@@ -283,7 +284,8 @@ if __name__ == "__main__":
                 text = LOC_sov_national_obligations_{ national_obligation }_first_option_quote
                 font = hoi4_typewriter22
                 format = centre
-                borderSize = {{x = 0 y = 0}}
+                maxHeight = 160
+                fixedsize = yes
                 alwaystransparent = yes
             }}
 
@@ -294,6 +296,8 @@ if __name__ == "__main__":
                 text = LOC_sov_national_obligations_{ national_obligation }_first_option_text
                 font = hoi_16mbs
                 format = centre
+                maxHeight = 170
+                fixedsize = yes
                 alwaystransparent = yes
             }}
 
@@ -304,6 +308,8 @@ if __name__ == "__main__":
                 text = LOC_sov_national_obligations_{ national_obligation }_first_option_trigger
                 font = hoi_16mbs
                 format = centre
+                maxHeight = 65
+                fixedsize = yes
                 alwaystransparent = yes
             }}
 
@@ -350,6 +356,7 @@ if __name__ == "__main__":
             shortcut = "RETURN"
             buttonText = LOC_sov_national_obligations_{ national_obligation }_confirm_button
             buttonFont = cg_18b
+            pdx_tooltip = LOC_sov_national_obligations_{ national_obligation }_confirm_button_tt
             alwaystransparent = no
         }}
 
@@ -379,7 +386,8 @@ if __name__ == "__main__":
                 text = LOC_sov_national_obligations_{ national_obligation }_first_option_quote
                 font = hoi4_typewriter22
                 format = centre
-                borderSize = {{x = 0 y = 0}}
+                maxHeight = 160
+                fixedsize = yes
                 alwaystransparent = yes
             }}
 
@@ -390,6 +398,8 @@ if __name__ == "__main__":
                 text = LOC_sov_national_obligations_{ national_obligation }_first_option_text
                 font = hoi_16mbs
                 format = centre
+                maxHeight = 170
+                fixedsize = yes
                 alwaystransparent = yes
             }}
 
@@ -400,6 +410,8 @@ if __name__ == "__main__":
                 text = LOC_sov_national_obligations_{ national_obligation }_first_option_trigger
                 font = hoi_16mbs
                 format = centre
+                maxHeight = 65
+                fixedsize = yes
                 alwaystransparent = yes
             }}
 
@@ -448,6 +460,8 @@ if __name__ == "__main__":
                 text = LOC_sov_national_obligations_{ national_obligation }_second_option_quote
                 font = hoi4_typewriter22
                 format = centre
+                maxHeight = 160
+                fixedsize = yes
                 alwaystransparent = yes
             }}
 
@@ -458,6 +472,8 @@ if __name__ == "__main__":
                 text = LOC_sov_national_obligations_{ national_obligation }_second_option_text
                 font = hoi_16mbs
                 format = centre
+                maxHeight = 170
+                fixedsize = yes
                 alwaystransparent = yes
             }}
 
@@ -468,6 +484,8 @@ if __name__ == "__main__":
                 text = LOC_sov_national_obligations_{ national_obligation }_second_option_trigger
                 font = hoi_16mbs
                 format = centre
+                maxHeight = 65
+                fixedsize = yes
                 alwaystransparent = yes
             }}
 
@@ -514,6 +532,7 @@ if __name__ == "__main__":
             shortcut = "RETURN"
             buttonText = LOC_sov_national_obligations_{ national_obligation }_confirm_button
             buttonFont = cg_18b
+            pdx_tooltip = LOC_sov_national_obligations_{ national_obligation }_confirm_button_tt
             alwaystransparent = no
         }}
 
@@ -543,7 +562,8 @@ if __name__ == "__main__":
                 text = LOC_sov_national_obligations_{ national_obligation }_first_option_quote
                 font = hoi4_typewriter22
                 format = centre
-                borderSize = {{x = 0 y = 0}}
+                maxHeight = 160
+                fixedsize = yes
                 alwaystransparent = yes
             }}
 
@@ -554,6 +574,8 @@ if __name__ == "__main__":
                 text = LOC_sov_national_obligations_{ national_obligation }_first_option_text
                 font = hoi_16mbs
                 format = centre
+                maxHeight = 170
+                fixedsize = yes
                 alwaystransparent = yes
             }}
 
@@ -564,6 +586,8 @@ if __name__ == "__main__":
                 text = LOC_sov_national_obligations_{ national_obligation }_first_option_trigger
                 font = hoi_16mbs
                 format = centre
+                maxHeight = 65
+                fixedsize = yes
                 alwaystransparent = yes
             }}
 
@@ -612,6 +636,8 @@ if __name__ == "__main__":
                 text = LOC_sov_national_obligations_{ national_obligation }_second_option_quote
                 font = hoi4_typewriter22
                 format = centre
+                maxHeight = 160
+                fixedsize = yes
                 alwaystransparent = yes
             }}
 
@@ -622,6 +648,8 @@ if __name__ == "__main__":
                 text = LOC_sov_national_obligations_{ national_obligation }_second_option_text
                 font = hoi_16mbs
                 format = centre
+                maxHeight = 170
+                fixedsize = yes
                 alwaystransparent = yes
             }}
 
@@ -632,6 +660,8 @@ if __name__ == "__main__":
                 text = LOC_sov_national_obligations_{ national_obligation }_second_option_trigger
                 font = hoi_16mbs
                 format = centre
+                maxHeight = 65
+                fixedsize = yes
                 alwaystransparent = yes
             }}
 
@@ -680,6 +710,8 @@ if __name__ == "__main__":
                 text = LOC_sov_national_obligations_{ national_obligation }_third_option_quote
                 font = hoi4_typewriter22
                 format = centre
+                maxHeight = 160
+                fixedsize = yes
                 alwaystransparent = yes
             }}
 
@@ -690,6 +722,8 @@ if __name__ == "__main__":
                 text = LOC_sov_national_obligations_{ national_obligation }_third_option_text
                 font = hoi_16mbs
                 format = centre
+                maxHeight = 170
+                fixedsize = yes
                 alwaystransparent = yes
             }}
 
@@ -700,6 +734,8 @@ if __name__ == "__main__":
                 text = LOC_sov_national_obligations_{ national_obligation }_third_option_trigger
                 font = hoi_16mbs
                 format = centre
+                maxHeight = 65
+                fixedsize = yes
                 alwaystransparent = yes
             }}
 
