@@ -224,6 +224,20 @@ on_actions = {
 						}
 					}
 					log = "[SOU.GetNameDefCap] Capitulated (vs SOV & UKR)"
+					for_each_scope_loop = {
+						array = SOU.enemies
+						break = break_array
+
+						add_to_array = { global.cleaning_red_carpet_achievement = THIS }
+						set_variable = { global.cleaning_red_carpet_achievement_date@THIS = global.date }
+						set_country_flag = russia_reworked_new_achievement
+						if = {
+							limit = {
+								has_global_flag = russia_reworked_achievements_enabled
+							}
+							scoped_sound_effect = "russia_reworked_unlock_achievement"
+						}
+					}
 					for_each_loop = {
 						array = global.countries
 						value = v
@@ -235,7 +249,7 @@ on_actions = {
 								any_country = {
 									is_in_faction_with = SOU
 									NOT = {
-										TAG = SOU
+										tag = SOU
 									}
 								}
 							}
@@ -243,7 +257,7 @@ on_actions = {
 								limit = {
 									is_in_faction_with = SOU
 									NOT = {
-										TAG = SOU
+										tag = SOU
 									}
 								}
 								add_to_temp_array = { global.sou_allies_russian_cw = var:v }
