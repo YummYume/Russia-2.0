@@ -83,14 +83,48 @@ scripted_gui = {
         }
 
         effects = {
+            sov_national_obligations_help_button_click = {
+                if = {
+                    limit = {
+                        check_variable = {
+                            var = national_obligations_help_open_count
+                            value = 0
+                            compare = equals
+                        }
+                    }
+                    add_to_array = { global.click_me_achievement = THIS }
+                    add_to_array = { global.click_me_achievement_date@THIS = global.date }
+                    set_country_flag = russia_reworked_new_achievement
+                    scoped_sound_effect = "russia_reworked_unlock_achievement"
+                }
+                if = {
+                    limit = {
+                        NOT = {
+                            has_country_flag = sov_open_national_obligations_help
+                        }
+                    }
+                    set_country_flag = sov_open_national_obligations_help
+                    add_to_variable = { national_obligations_help_open_count = 1 }
+                }
+            }
+
             sov_national_obligations_close_button_click {
+                if = {
+                    limit = {
+                        has_country_flag = sov_open_national_obligations_help
+                    }
+                    clr_country_flag = sov_open_national_obligations_help
+                }
                 if = {
                     limit = {
                         has_country_flag = sov_debug_national_obligations
                     }
                     clr_country_flag = sov_debug_national_obligations
                 }
-                else = {
+                if = {
+                    limit = {
+                        has_country_flag = sov_open_national_obligations
+                    }
                     clr_country_flag = sov_open_national_obligations
                 }
             }
@@ -432,6 +466,654 @@ scripted_gui = {
         }
     }
 
+    #Industrial Awakening
+    sov_national_obligations_industrial_awakening_scripted_gui = {
+        window_name = "sov_national_obligations_industrial_awakening_view"
+        context_type = player_context
+        parent_window_name = "sov_national_obligations_scripted_gui_window"
+
+        visible = {
+            check_variable = {
+                var = sov_national_obligations_selected_index
+                value = 1
+                compare = equals
+            }
+        }
+
+        properties = {
+            sov_national_obligations_industrial_awakening_first_option_bg = {
+                image = [THIS.GetCurrentStatusFirstOptionIndustrialAwakening]
+            }
+
+            sov_national_obligations_industrial_awakening_second_option_bg = {
+                image = [THIS.GetCurrentStatusSecondOptionIndustrialAwakening]
+            }
+
+            sov_national_obligations_industrial_awakening_third_option_bg = {
+                image = [THIS.GetCurrentStatusThirdOptionIndustrialAwakening]
+            }
+        }
+
+        effects = {
+            sov_national_obligations_industrial_awakening_confirm_button_click {
+                THIS = {
+                    #TODO
+                    set_country_flag = industrial_awakening_confirmed
+                    if = {
+                        limit = {
+                            has_country_flag = sov_open_national_obligations_help
+                        }
+                        clr_country_flag = sov_open_national_obligations_help
+                    }
+                    if = {
+                        limit = {
+                            has_country_flag = sov_debug_national_obligations
+                        }
+                        clr_country_flag = sov_debug_national_obligations
+                    }
+                    if = {
+                        limit = {
+                            has_country_flag = sov_open_national_obligations
+                        }
+                        clr_country_flag = sov_open_national_obligations
+                    }
+                }
+            }
+
+            sov_national_obligations_industrial_awakening_first_option_button_click {
+                THIS = {
+                    if = {
+                        limit = {
+                            check_variable = {
+                                sov_national_obligations_industrial_awakening_selected_index = 1
+                            }
+                        }
+                        set_variable = {
+                            sov_national_obligations_industrial_awakening_selected_index = 0
+                        }
+                    }
+                    else = {
+                        set_variable = {
+                            sov_national_obligations_industrial_awakening_selected_index = 1
+                        }
+                    }
+                }
+            }
+
+            sov_national_obligations_industrial_awakening_second_option_button_click {
+                THIS = {
+                    if = {
+                        limit = {
+                            check_variable = {
+                                sov_national_obligations_industrial_awakening_selected_index = 2
+                            }
+                        }
+                        set_variable = {
+                            sov_national_obligations_industrial_awakening_selected_index = 0
+                        }
+                    }
+                    else = {
+                        set_variable = {
+                            sov_national_obligations_industrial_awakening_selected_index = 2
+                        }
+                    }
+                }
+            }
+
+            sov_national_obligations_industrial_awakening_third_option_button_click {
+                THIS = {
+                    if = {
+                        limit = {
+                            check_variable = {
+                                sov_national_obligations_industrial_awakening_selected_index = 3
+                            }
+                        }
+                        set_variable = {
+                            sov_national_obligations_industrial_awakening_selected_index = 0
+                        }
+                    }
+                    else = {
+                        set_variable = {
+                            sov_national_obligations_industrial_awakening_selected_index = 3
+                        }
+                    }
+                }
+            }
+        }
+
+        triggers = {
+            sov_national_obligations_industrial_awakening_confirm_button_click_enabled = {
+                THIS = {
+                    OR = {
+                        check_variable = {
+                            sov_national_obligations_industrial_awakening_selected_index = 1
+                        }
+                        check_variable = {
+                            sov_national_obligations_industrial_awakening_selected_index = 2
+                        }
+                        check_variable = {
+                            sov_national_obligations_industrial_awakening_selected_index = 3
+                        }
+                    }
+                    NOT = {
+                        has_country_flag = industrial_awakening_confirmed
+                    }
+                }
+            }
+
+            sov_national_obligations_industrial_awakening_first_option_glow_visible = {
+                check_variable = {
+                    sov_national_obligations_industrial_awakening_selected_index = 1
+                }
+            }
+
+            sov_national_obligations_industrial_awakening_first_option_button_click_enabled = {
+                THIS = {
+                    #TODO
+                    NOT = {
+                        has_country_flag = industrial_awakening_confirmed
+                    }
+                }
+            }
+
+            sov_national_obligations_industrial_awakening_second_option_glow_visible = {
+                check_variable = {
+                    sov_national_obligations_industrial_awakening_selected_index = 2
+                }
+            }
+
+            sov_national_obligations_industrial_awakening_second_option_button_click_enabled = {
+                THIS = {
+                    #TODO
+                    NOT = {
+                        has_country_flag = industrial_awakening_confirmed
+                    }
+                }
+            }
+
+            sov_national_obligations_industrial_awakening_third_option_glow_visible = {
+                check_variable = {
+                    sov_national_obligations_industrial_awakening_selected_index = 3
+                }
+            }
+
+            sov_national_obligations_industrial_awakening_third_option_button_click_enabled = {
+                THIS = {
+                    #TODO
+                    NOT = {
+                        has_country_flag = industrial_awakening_confirmed
+                    }
+                }
+            }
+        }
+    }
+                    
+    #Tsar Bomba
+    sov_national_obligations_tsar_bomba_scripted_gui = {
+        window_name = "sov_national_obligations_tsar_bomba_view"
+        context_type = player_context
+        parent_window_name = "sov_national_obligations_scripted_gui_window"
+
+        visible = {
+            check_variable = {
+                var = sov_national_obligations_selected_index
+                value = 2
+                compare = equals
+            }
+        }
+
+        properties = {
+            sov_national_obligations_tsar_bomba_first_option_bg = {
+                image = [THIS.GetCurrentStatusFirstOptionTsarBomba]
+            }
+
+            sov_national_obligations_tsar_bomba_second_option_bg = {
+                image = [THIS.GetCurrentStatusSecondOptionTsarBomba]
+            }
+        }
+
+        effects = {
+            sov_national_obligations_tsar_bomba_confirm_button_click {
+                THIS = {
+                    if = {
+                        limit = {
+                            check_variable = {
+                                sov_national_obligations_tsar_bomba_selected_index = 1
+                            }
+                        }
+                        add_ideas = SOV_Major_nuclear_power
+                    }
+                    else_if = {
+                        limit = {
+                            check_variable = {
+                                sov_national_obligations_tsar_bomba_selected_index = 2
+                            }
+                        }
+                        goto_state = 262
+                        launch_nuke = {
+                            province = 11047
+                            use_nuke = yes
+                        }
+                        launch_nuke = {
+                            province = 6192
+                            use_nuke = yes
+                        }
+                        launch_nuke = {
+                            province = 12530
+                            use_nuke = yes
+                        }
+                        country_event = { id = russia2_russia.633 days = 2 }
+                    }
+                    set_country_flag = tsar_bomba_confirmed
+                    if = {
+                        limit = {
+                            has_country_flag = sov_open_national_obligations_help
+                        }
+                        clr_country_flag = sov_open_national_obligations_help
+                    }
+                    if = {
+                        limit = {
+                            has_country_flag = sov_debug_national_obligations
+                        }
+                        clr_country_flag = sov_debug_national_obligations
+                    }
+                    if = {
+                        limit = {
+                            has_country_flag = sov_open_national_obligations
+                        }
+                        clr_country_flag = sov_open_national_obligations
+                    }
+                }
+            }
+
+            sov_national_obligations_tsar_bomba_first_option_button_click {
+                THIS = {
+                    if = {
+                        limit = {
+                            check_variable = {
+                                sov_national_obligations_tsar_bomba_selected_index = 1
+                            }
+                        }
+                        set_variable = {
+                            sov_national_obligations_tsar_bomba_selected_index = 0
+                        }
+                    }
+                    else = {
+                        set_variable = {
+                            sov_national_obligations_tsar_bomba_selected_index = 1
+                        }
+                    }
+                }
+            }
+
+            sov_national_obligations_tsar_bomba_second_option_button_click {
+                THIS = {
+                    if = {
+                        limit = {
+                            check_variable = {
+                                sov_national_obligations_tsar_bomba_selected_index = 2
+                            }
+                        }
+                        set_variable = {
+                            sov_national_obligations_tsar_bomba_selected_index = 0
+                        }
+                    }
+                    else = {
+                        set_variable = {
+                            sov_national_obligations_tsar_bomba_selected_index = 2
+                        }
+                    }
+                }
+            }
+        }
+
+        triggers = {
+            sov_national_obligations_tsar_bomba_confirm_button_click_enabled = {
+                THIS = {
+                    OR = {
+                        check_variable = {
+                            sov_national_obligations_tsar_bomba_selected_index = 1
+                        }
+                        check_variable = {
+                            sov_national_obligations_tsar_bomba_selected_index = 2
+                        }
+                    }
+                    NOT = {
+                        has_country_flag = tsar_bomba_confirmed
+                    }
+                    if = {
+                        limit = {
+                            check_variable = {
+                                sov_national_obligations_tsar_bomba_selected_index = 1
+                            }
+                        }
+                        has_tech = nuclear_reactor
+                    }
+                    else_if = {
+                        limit = {
+                            check_variable = {
+                                sov_national_obligations_tsar_bomba_selected_index = 2
+                            }
+                        }
+                        has_full_control_of_state = 262
+                        num_of_nukes > 2
+                    }
+                }
+            }
+
+            sov_national_obligations_tsar_bomba_first_option_glow_visible = {
+                check_variable = {
+                    sov_national_obligations_tsar_bomba_selected_index = 1
+                }
+            }
+
+            sov_national_obligations_tsar_bomba_first_option_button_click_enabled = {
+                THIS = {
+                    has_tech = nuclear_reactor
+                    NOT = {
+                        has_country_flag = tsar_bomba_confirmed
+                    }
+                }
+            }
+
+            sov_national_obligations_tsar_bomba_second_option_glow_visible = {
+                check_variable = {
+                    sov_national_obligations_tsar_bomba_selected_index = 2
+                }
+            }
+
+            sov_national_obligations_tsar_bomba_second_option_button_click_enabled = {
+                THIS = {
+                    has_full_control_of_state = 262
+                    num_of_nukes > 2
+                    NOT = {
+                        has_country_flag = tsar_bomba_confirmed
+                    }
+                }
+            }
+        }
+    }
+                    
+    #Unfailing Army
+    sov_national_obligations_unfailing_army_scripted_gui = {
+        window_name = "sov_national_obligations_unfailing_army_view"
+        context_type = player_context
+        parent_window_name = "sov_national_obligations_scripted_gui_window"
+
+        visible = {
+            check_variable = {
+                var = sov_national_obligations_selected_index
+                value = 3
+                compare = equals
+            }
+        }
+
+        properties = {
+            sov_national_obligations_unfailing_army_first_option_bg = {
+                image = [THIS.GetCurrentStatusFirstOptionUnfailingArmy]
+            }
+
+            sov_national_obligations_unfailing_army_second_option_bg = {
+                image = [THIS.GetCurrentStatusSecondOptionUnfailingArmy]
+            }
+        }
+
+        effects = {
+            sov_national_obligations_unfailing_army_confirm_button_click {
+                THIS = {
+                    #TODO
+                    set_country_flag = unfailing_army_confirmed
+                    if = {
+                        limit = {
+                            has_country_flag = sov_open_national_obligations_help
+                        }
+                        clr_country_flag = sov_open_national_obligations_help
+                    }
+                    if = {
+                        limit = {
+                            has_country_flag = sov_debug_national_obligations
+                        }
+                        clr_country_flag = sov_debug_national_obligations
+                    }
+                    if = {
+                        limit = {
+                            has_country_flag = sov_open_national_obligations
+                        }
+                        clr_country_flag = sov_open_national_obligations
+                    }
+                }
+            }
+
+            sov_national_obligations_unfailing_army_first_option_button_click {
+                THIS = {
+                    if = {
+                        limit = {
+                            check_variable = {
+                                sov_national_obligations_unfailing_army_selected_index = 1
+                            }
+                        }
+                        set_variable = {
+                            sov_national_obligations_unfailing_army_selected_index = 0
+                        }
+                    }
+                    else = {
+                        set_variable = {
+                            sov_national_obligations_unfailing_army_selected_index = 1
+                        }
+                    }
+                }
+            }
+
+            sov_national_obligations_unfailing_army_second_option_button_click {
+                THIS = {
+                    if = {
+                        limit = {
+                            check_variable = {
+                                sov_national_obligations_unfailing_army_selected_index = 2
+                            }
+                        }
+                        set_variable = {
+                            sov_national_obligations_unfailing_army_selected_index = 0
+                        }
+                    }
+                    else = {
+                        set_variable = {
+                            sov_national_obligations_unfailing_army_selected_index = 2
+                        }
+                    }
+                }
+            }
+        }
+
+        triggers = {
+            sov_national_obligations_unfailing_army_confirm_button_click_enabled = {
+                THIS = {
+                    OR = {
+                        check_variable = {
+                            sov_national_obligations_unfailing_army_selected_index = 1
+                        }
+                        check_variable = {
+                            sov_national_obligations_unfailing_army_selected_index = 2
+                        }
+                    }
+                    NOT = {
+                        has_country_flag = unfailing_army_confirmed
+                    }
+                }
+            }
+
+            sov_national_obligations_unfailing_army_first_option_glow_visible = {
+                check_variable = {
+                    sov_national_obligations_unfailing_army_selected_index = 1
+                }
+            }
+
+            sov_national_obligations_unfailing_army_first_option_button_click_enabled = {
+                THIS = {
+                    #TODO
+                    NOT = {
+                        has_country_flag = unfailing_army_confirmed
+                    }
+                }
+            }
+
+            sov_national_obligations_unfailing_army_second_option_glow_visible = {
+                check_variable = {
+                    sov_national_obligations_unfailing_army_selected_index = 2
+                }
+            }
+
+            sov_national_obligations_unfailing_army_second_option_button_click_enabled = {
+                THIS = {
+                    #TODO
+                    NOT = {
+                        has_country_flag = unfailing_army_confirmed
+                    }
+                }
+            }
+        }
+    }
+                    
+    #Grand Fleet
+    sov_national_obligations_grand_fleet_scripted_gui = {
+        window_name = "sov_national_obligations_grand_fleet_view"
+        context_type = player_context
+        parent_window_name = "sov_national_obligations_scripted_gui_window"
+
+        visible = {
+            check_variable = {
+                var = sov_national_obligations_selected_index
+                value = 4
+                compare = equals
+            }
+        }
+
+        properties = {
+            sov_national_obligations_grand_fleet_first_option_bg = {
+                image = [THIS.GetCurrentStatusFirstOptionGrandFleet]
+            }
+
+            sov_national_obligations_grand_fleet_second_option_bg = {
+                image = [THIS.GetCurrentStatusSecondOptionGrandFleet]
+            }
+        }
+
+        effects = {
+            sov_national_obligations_grand_fleet_confirm_button_click {
+                THIS = {
+                    #TODO
+                    set_country_flag = grand_fleet_confirmed
+                    if = {
+                        limit = {
+                            has_country_flag = sov_open_national_obligations_help
+                        }
+                        clr_country_flag = sov_open_national_obligations_help
+                    }
+                    if = {
+                        limit = {
+                            has_country_flag = sov_debug_national_obligations
+                        }
+                        clr_country_flag = sov_debug_national_obligations
+                    }
+                    if = {
+                        limit = {
+                            has_country_flag = sov_open_national_obligations
+                        }
+                        clr_country_flag = sov_open_national_obligations
+                    }
+                }
+            }
+
+            sov_national_obligations_grand_fleet_first_option_button_click {
+                THIS = {
+                    if = {
+                        limit = {
+                            check_variable = {
+                                sov_national_obligations_grand_fleet_selected_index = 1
+                            }
+                        }
+                        set_variable = {
+                            sov_national_obligations_grand_fleet_selected_index = 0
+                        }
+                    }
+                    else = {
+                        set_variable = {
+                            sov_national_obligations_grand_fleet_selected_index = 1
+                        }
+                    }
+                }
+            }
+
+            sov_national_obligations_grand_fleet_second_option_button_click {
+                THIS = {
+                    if = {
+                        limit = {
+                            check_variable = {
+                                sov_national_obligations_grand_fleet_selected_index = 2
+                            }
+                        }
+                        set_variable = {
+                            sov_national_obligations_grand_fleet_selected_index = 0
+                        }
+                    }
+                    else = {
+                        set_variable = {
+                            sov_national_obligations_grand_fleet_selected_index = 2
+                        }
+                    }
+                }
+            }
+        }
+
+        triggers = {
+            sov_national_obligations_grand_fleet_confirm_button_click_enabled = {
+                THIS = {
+                    OR = {
+                        check_variable = {
+                            sov_national_obligations_grand_fleet_selected_index = 1
+                        }
+                        check_variable = {
+                            sov_national_obligations_grand_fleet_selected_index = 2
+                        }
+                    }
+                    NOT = {
+                        has_country_flag = grand_fleet_confirmed
+                    }
+                }
+            }
+
+            sov_national_obligations_grand_fleet_first_option_glow_visible = {
+                check_variable = {
+                    sov_national_obligations_grand_fleet_selected_index = 1
+                }
+            }
+
+            sov_national_obligations_grand_fleet_first_option_button_click_enabled = {
+                THIS = {
+                    #TODO
+                    NOT = {
+                        has_country_flag = grand_fleet_confirmed
+                    }
+                }
+            }
+
+            sov_national_obligations_grand_fleet_second_option_glow_visible = {
+                check_variable = {
+                    sov_national_obligations_grand_fleet_selected_index = 2
+                }
+            }
+
+            sov_national_obligations_grand_fleet_second_option_button_click_enabled = {
+                THIS = {
+                    #TODO
+                    NOT = {
+                        has_country_flag = grand_fleet_confirmed
+                    }
+                }
+            }
+        }
+    }
+
     #Proletarian Union
     sov_national_obligations_proletarian_union_scripted_gui = {
         window_name = "sov_national_obligations_proletarian_union_view"
@@ -466,11 +1148,20 @@ scripted_gui = {
                     set_country_flag = proletarian_union_confirmed
                     if = {
                         limit = {
+                            has_country_flag = sov_open_national_obligations_help
+                        }
+                        clr_country_flag = sov_open_national_obligations_help
+                    }
+                    if = {
+                        limit = {
                             has_country_flag = sov_debug_national_obligations
                         }
                         clr_country_flag = sov_debug_national_obligations
                     }
-                    else = {
+                    if = {
+                        limit = {
+                            has_country_flag = sov_open_national_obligations
+                        }
                         clr_country_flag = sov_open_national_obligations
                     }
                 }
@@ -557,12 +1248,24 @@ scripted_gui = {
                 }
             }
 
+            sov_national_obligations_proletarian_union_first_option_glow_visible = {
+                check_variable = {
+                    sov_national_obligations_proletarian_union_selected_index = 1
+                }
+            }
+
             sov_national_obligations_proletarian_union_first_option_button_click_enabled = {
                 THIS = {
                     num_subjects > 19
                     NOT = {
                         has_country_flag = proletarian_union_confirmed
                     }
+                }
+            }
+
+            sov_national_obligations_proletarian_union_second_option_glow_visible = {
+                check_variable = {
+                    sov_national_obligations_proletarian_union_selected_index = 2
                 }
             }
 
@@ -589,6 +1292,1294 @@ scripted_gui = {
                     }
                     NOT = {
                         has_country_flag = proletarian_union_confirmed
+                    }
+                }
+            }
+        }
+    }
+
+    #Neverending Story
+    sov_national_obligations_neverending_story_scripted_gui = {
+        window_name = "sov_national_obligations_neverending_story_view"
+        context_type = player_context
+        parent_window_name = "sov_national_obligations_scripted_gui_window"
+
+        visible = {
+            check_variable = {
+                var = sov_national_obligations_selected_index
+                value = 6
+                compare = equals
+            }
+        }
+
+        properties = {
+            sov_national_obligations_neverending_story_first_option_bg = {
+                image = [THIS.GetCurrentStatusFirstOptionNeverendingStory]
+            }
+
+            sov_national_obligations_neverending_story_second_option_bg = {
+                image = [THIS.GetCurrentStatusSecondOptionNeverendingStory]
+            }
+
+            sov_national_obligations_neverending_story_third_option_bg = {
+                image = [THIS.GetCurrentStatusThirdOptionNeverendingStory]
+            }
+        }
+
+        effects = {
+            sov_national_obligations_neverending_story_confirm_button_click {
+                THIS = {
+                    #TODO
+                    set_country_flag = neverending_story_confirmed
+                    if = {
+                        limit = {
+                            has_country_flag = sov_open_national_obligations_help
+                        }
+                        clr_country_flag = sov_open_national_obligations_help
+                    }
+                    if = {
+                        limit = {
+                            has_country_flag = sov_debug_national_obligations
+                        }
+                        clr_country_flag = sov_debug_national_obligations
+                    }
+                    if = {
+                        limit = {
+                            has_country_flag = sov_open_national_obligations
+                        }
+                        clr_country_flag = sov_open_national_obligations
+                    }
+                }
+            }
+
+            sov_national_obligations_neverending_story_first_option_button_click {
+                THIS = {
+                    if = {
+                        limit = {
+                            check_variable = {
+                                sov_national_obligations_neverending_story_selected_index = 1
+                            }
+                        }
+                        set_variable = {
+                            sov_national_obligations_neverending_story_selected_index = 0
+                        }
+                    }
+                    else = {
+                        set_variable = {
+                            sov_national_obligations_neverending_story_selected_index = 1
+                        }
+                    }
+                }
+            }
+
+            sov_national_obligations_neverending_story_second_option_button_click {
+                THIS = {
+                    if = {
+                        limit = {
+                            check_variable = {
+                                sov_national_obligations_neverending_story_selected_index = 2
+                            }
+                        }
+                        set_variable = {
+                            sov_national_obligations_neverending_story_selected_index = 0
+                        }
+                    }
+                    else = {
+                        set_variable = {
+                            sov_national_obligations_neverending_story_selected_index = 2
+                        }
+                    }
+                }
+            }
+
+            sov_national_obligations_neverending_story_third_option_button_click {
+                THIS = {
+                    if = {
+                        limit = {
+                            check_variable = {
+                                sov_national_obligations_neverending_story_selected_index = 3
+                            }
+                        }
+                        set_variable = {
+                            sov_national_obligations_neverending_story_selected_index = 0
+                        }
+                    }
+                    else = {
+                        set_variable = {
+                            sov_national_obligations_neverending_story_selected_index = 3
+                        }
+                    }
+                }
+            }
+        }
+
+        triggers = {
+            sov_national_obligations_neverending_story_confirm_button_click_enabled = {
+                THIS = {
+                    OR = {
+                        check_variable = {
+                            sov_national_obligations_neverending_story_selected_index = 1
+                        }
+                        check_variable = {
+                            sov_national_obligations_neverending_story_selected_index = 2
+                        }
+                        check_variable = {
+                            sov_national_obligations_neverending_story_selected_index = 3
+                        }
+                    }
+                    NOT = {
+                        has_country_flag = neverending_story_confirmed
+                    }
+                }
+            }
+
+            sov_national_obligations_neverending_story_first_option_glow_visible = {
+                check_variable = {
+                    sov_national_obligations_neverending_story_selected_index = 1
+                }
+            }
+
+            sov_national_obligations_neverending_story_first_option_button_click_enabled = {
+                THIS = {
+                    #TODO
+                    NOT = {
+                        has_country_flag = neverending_story_confirmed
+                    }
+                }
+            }
+
+            sov_national_obligations_neverending_story_second_option_glow_visible = {
+                check_variable = {
+                    sov_national_obligations_neverending_story_selected_index = 2
+                }
+            }
+
+            sov_national_obligations_neverending_story_second_option_button_click_enabled = {
+                THIS = {
+                    #TODO
+                    NOT = {
+                        has_country_flag = neverending_story_confirmed
+                    }
+                }
+            }
+
+            sov_national_obligations_neverending_story_third_option_glow_visible = {
+                check_variable = {
+                    sov_national_obligations_neverending_story_selected_index = 3
+                }
+            }
+
+            sov_national_obligations_neverending_story_third_option_button_click_enabled = {
+                THIS = {
+                    #TODO
+                    NOT = {
+                        has_country_flag = neverending_story_confirmed
+                    }
+                }
+            }
+        }
+    }
+                    
+    #Continental System
+    sov_national_obligations_continental_system_scripted_gui = {
+        window_name = "sov_national_obligations_continental_system_view"
+        context_type = player_context
+        parent_window_name = "sov_national_obligations_scripted_gui_window"
+
+        visible = {
+            check_variable = {
+                var = sov_national_obligations_selected_index
+                value = 7
+                compare = equals
+            }
+        }
+
+        properties = {
+            sov_national_obligations_continental_system_first_option_bg = {
+                image = [THIS.GetCurrentStatusFirstOptionContinentalSystem]
+            }
+
+            sov_national_obligations_continental_system_second_option_bg = {
+                image = [THIS.GetCurrentStatusSecondOptionContinentalSystem]
+            }
+        }
+
+        effects = {
+            sov_national_obligations_continental_system_confirm_button_click {
+                THIS = {
+                    #TODO
+                    set_country_flag = continental_system_confirmed
+                    if = {
+                        limit = {
+                            has_country_flag = sov_open_national_obligations_help
+                        }
+                        clr_country_flag = sov_open_national_obligations_help
+                    }
+                    if = {
+                        limit = {
+                            has_country_flag = sov_debug_national_obligations
+                        }
+                        clr_country_flag = sov_debug_national_obligations
+                    }
+                    if = {
+                        limit = {
+                            has_country_flag = sov_open_national_obligations
+                        }
+                        clr_country_flag = sov_open_national_obligations
+                    }
+                }
+            }
+
+            sov_national_obligations_continental_system_first_option_button_click {
+                THIS = {
+                    if = {
+                        limit = {
+                            check_variable = {
+                                sov_national_obligations_continental_system_selected_index = 1
+                            }
+                        }
+                        set_variable = {
+                            sov_national_obligations_continental_system_selected_index = 0
+                        }
+                    }
+                    else = {
+                        set_variable = {
+                            sov_national_obligations_continental_system_selected_index = 1
+                        }
+                    }
+                }
+            }
+
+            sov_national_obligations_continental_system_second_option_button_click {
+                THIS = {
+                    if = {
+                        limit = {
+                            check_variable = {
+                                sov_national_obligations_continental_system_selected_index = 2
+                            }
+                        }
+                        set_variable = {
+                            sov_national_obligations_continental_system_selected_index = 0
+                        }
+                    }
+                    else = {
+                        set_variable = {
+                            sov_national_obligations_continental_system_selected_index = 2
+                        }
+                    }
+                }
+            }
+        }
+
+        triggers = {
+            sov_national_obligations_continental_system_confirm_button_click_enabled = {
+                THIS = {
+                    OR = {
+                        check_variable = {
+                            sov_national_obligations_continental_system_selected_index = 1
+                        }
+                        check_variable = {
+                            sov_national_obligations_continental_system_selected_index = 2
+                        }
+                    }
+                    NOT = {
+                        has_country_flag = continental_system_confirmed
+                    }
+                }
+            }
+
+            sov_national_obligations_continental_system_first_option_glow_visible = {
+                check_variable = {
+                    sov_national_obligations_continental_system_selected_index = 1
+                }
+            }
+
+            sov_national_obligations_continental_system_first_option_button_click_enabled = {
+                THIS = {
+                    #TODO
+                    NOT = {
+                        has_country_flag = continental_system_confirmed
+                    }
+                }
+            }
+
+            sov_national_obligations_continental_system_second_option_glow_visible = {
+                check_variable = {
+                    sov_national_obligations_continental_system_selected_index = 2
+                }
+            }
+
+            sov_national_obligations_continental_system_second_option_button_click_enabled = {
+                THIS = {
+                    #TODO
+                    NOT = {
+                        has_country_flag = continental_system_confirmed
+                    }
+                }
+            }
+        }
+    }
+                    
+    #Treaty Moscow
+    sov_national_obligations_treaty_moscow_scripted_gui = {
+        window_name = "sov_national_obligations_treaty_moscow_view"
+        context_type = player_context
+        parent_window_name = "sov_national_obligations_scripted_gui_window"
+
+        visible = {
+            check_variable = {
+                var = sov_national_obligations_selected_index
+                value = 8
+                compare = equals
+            }
+        }
+
+        properties = {
+            sov_national_obligations_treaty_moscow_first_option_bg = {
+                image = [THIS.GetCurrentStatusFirstOptionTreatyMoscow]
+            }
+
+            sov_national_obligations_treaty_moscow_second_option_bg = {
+                image = [THIS.GetCurrentStatusSecondOptionTreatyMoscow]
+            }
+        }
+
+        effects = {
+            sov_national_obligations_treaty_moscow_confirm_button_click {
+                THIS = {
+                    #TODO
+                    set_country_flag = treaty_moscow_confirmed
+                    if = {
+                        limit = {
+                            has_country_flag = sov_open_national_obligations_help
+                        }
+                        clr_country_flag = sov_open_national_obligations_help
+                    }
+                    if = {
+                        limit = {
+                            has_country_flag = sov_debug_national_obligations
+                        }
+                        clr_country_flag = sov_debug_national_obligations
+                    }
+                    if = {
+                        limit = {
+                            has_country_flag = sov_open_national_obligations
+                        }
+                        clr_country_flag = sov_open_national_obligations
+                    }
+                }
+            }
+
+            sov_national_obligations_treaty_moscow_first_option_button_click {
+                THIS = {
+                    if = {
+                        limit = {
+                            check_variable = {
+                                sov_national_obligations_treaty_moscow_selected_index = 1
+                            }
+                        }
+                        set_variable = {
+                            sov_national_obligations_treaty_moscow_selected_index = 0
+                        }
+                    }
+                    else = {
+                        set_variable = {
+                            sov_national_obligations_treaty_moscow_selected_index = 1
+                        }
+                    }
+                }
+            }
+
+            sov_national_obligations_treaty_moscow_second_option_button_click {
+                THIS = {
+                    if = {
+                        limit = {
+                            check_variable = {
+                                sov_national_obligations_treaty_moscow_selected_index = 2
+                            }
+                        }
+                        set_variable = {
+                            sov_national_obligations_treaty_moscow_selected_index = 0
+                        }
+                    }
+                    else = {
+                        set_variable = {
+                            sov_national_obligations_treaty_moscow_selected_index = 2
+                        }
+                    }
+                }
+            }
+        }
+
+        triggers = {
+            sov_national_obligations_treaty_moscow_confirm_button_click_enabled = {
+                THIS = {
+                    OR = {
+                        check_variable = {
+                            sov_national_obligations_treaty_moscow_selected_index = 1
+                        }
+                        check_variable = {
+                            sov_national_obligations_treaty_moscow_selected_index = 2
+                        }
+                    }
+                    NOT = {
+                        has_country_flag = treaty_moscow_confirmed
+                    }
+                }
+            }
+
+            sov_national_obligations_treaty_moscow_first_option_glow_visible = {
+                check_variable = {
+                    sov_national_obligations_treaty_moscow_selected_index = 1
+                }
+            }
+
+            sov_national_obligations_treaty_moscow_first_option_button_click_enabled = {
+                THIS = {
+                    #TODO
+                    NOT = {
+                        has_country_flag = treaty_moscow_confirmed
+                    }
+                }
+            }
+
+            sov_national_obligations_treaty_moscow_second_option_glow_visible = {
+                check_variable = {
+                    sov_national_obligations_treaty_moscow_selected_index = 2
+                }
+            }
+
+            sov_national_obligations_treaty_moscow_second_option_button_click_enabled = {
+                THIS = {
+                    #TODO
+                    NOT = {
+                        has_country_flag = treaty_moscow_confirmed
+                    }
+                }
+            }
+        }
+    }
+                    
+    #Golden Age
+    sov_national_obligations_golden_age_scripted_gui = {
+        window_name = "sov_national_obligations_golden_age_view"
+        context_type = player_context
+        parent_window_name = "sov_national_obligations_scripted_gui_window"
+
+        visible = {
+            check_variable = {
+                var = sov_national_obligations_selected_index
+                value = 9
+                compare = equals
+            }
+        }
+
+        properties = {
+            sov_national_obligations_golden_age_first_option_bg = {
+                image = [THIS.GetCurrentStatusFirstOptionGoldenAge]
+            }
+
+            sov_national_obligations_golden_age_second_option_bg = {
+                image = [THIS.GetCurrentStatusSecondOptionGoldenAge]
+            }
+        }
+
+        effects = {
+            sov_national_obligations_golden_age_confirm_button_click {
+                THIS = {
+                    #TODO
+                    set_country_flag = golden_age_confirmed
+                    if = {
+                        limit = {
+                            has_country_flag = sov_open_national_obligations_help
+                        }
+                        clr_country_flag = sov_open_national_obligations_help
+                    }
+                    if = {
+                        limit = {
+                            has_country_flag = sov_debug_national_obligations
+                        }
+                        clr_country_flag = sov_debug_national_obligations
+                    }
+                    if = {
+                        limit = {
+                            has_country_flag = sov_open_national_obligations
+                        }
+                        clr_country_flag = sov_open_national_obligations
+                    }
+                }
+            }
+
+            sov_national_obligations_golden_age_first_option_button_click {
+                THIS = {
+                    if = {
+                        limit = {
+                            check_variable = {
+                                sov_national_obligations_golden_age_selected_index = 1
+                            }
+                        }
+                        set_variable = {
+                            sov_national_obligations_golden_age_selected_index = 0
+                        }
+                    }
+                    else = {
+                        set_variable = {
+                            sov_national_obligations_golden_age_selected_index = 1
+                        }
+                    }
+                }
+            }
+
+            sov_national_obligations_golden_age_second_option_button_click {
+                THIS = {
+                    if = {
+                        limit = {
+                            check_variable = {
+                                sov_national_obligations_golden_age_selected_index = 2
+                            }
+                        }
+                        set_variable = {
+                            sov_national_obligations_golden_age_selected_index = 0
+                        }
+                    }
+                    else = {
+                        set_variable = {
+                            sov_national_obligations_golden_age_selected_index = 2
+                        }
+                    }
+                }
+            }
+        }
+
+        triggers = {
+            sov_national_obligations_golden_age_confirm_button_click_enabled = {
+                THIS = {
+                    OR = {
+                        check_variable = {
+                            sov_national_obligations_golden_age_selected_index = 1
+                        }
+                        check_variable = {
+                            sov_national_obligations_golden_age_selected_index = 2
+                        }
+                    }
+                    NOT = {
+                        has_country_flag = golden_age_confirmed
+                    }
+                }
+            }
+
+            sov_national_obligations_golden_age_first_option_glow_visible = {
+                check_variable = {
+                    sov_national_obligations_golden_age_selected_index = 1
+                }
+            }
+
+            sov_national_obligations_golden_age_first_option_button_click_enabled = {
+                THIS = {
+                    #TODO
+                    NOT = {
+                        has_country_flag = golden_age_confirmed
+                    }
+                }
+            }
+
+            sov_national_obligations_golden_age_second_option_glow_visible = {
+                check_variable = {
+                    sov_national_obligations_golden_age_selected_index = 2
+                }
+            }
+
+            sov_national_obligations_golden_age_second_option_button_click_enabled = {
+                THIS = {
+                    #TODO
+                    NOT = {
+                        has_country_flag = golden_age_confirmed
+                    }
+                }
+            }
+        }
+    }
+                    
+    #Imperial Obligations
+    sov_national_obligations_imperial_obligations_scripted_gui = {
+        window_name = "sov_national_obligations_imperial_obligations_view"
+        context_type = player_context
+        parent_window_name = "sov_national_obligations_scripted_gui_window"
+
+        visible = {
+            check_variable = {
+                var = sov_national_obligations_selected_index
+                value = 10
+                compare = equals
+            }
+        }
+
+        properties = {
+            sov_national_obligations_imperial_obligations_first_option_bg = {
+                image = [THIS.GetCurrentStatusFirstOptionImperialObligations]
+            }
+
+            sov_national_obligations_imperial_obligations_second_option_bg = {
+                image = [THIS.GetCurrentStatusSecondOptionImperialObligations]
+            }
+
+            sov_national_obligations_imperial_obligations_third_option_bg = {
+                image = [THIS.GetCurrentStatusThirdOptionImperialObligations]
+            }
+        }
+
+        effects = {
+            sov_national_obligations_imperial_obligations_confirm_button_click {
+                THIS = {
+                    #TODO
+                    set_country_flag = imperial_obligations_confirmed
+                    if = {
+                        limit = {
+                            has_country_flag = sov_open_national_obligations_help
+                        }
+                        clr_country_flag = sov_open_national_obligations_help
+                    }
+                    if = {
+                        limit = {
+                            has_country_flag = sov_debug_national_obligations
+                        }
+                        clr_country_flag = sov_debug_national_obligations
+                    }
+                    if = {
+                        limit = {
+                            has_country_flag = sov_open_national_obligations
+                        }
+                        clr_country_flag = sov_open_national_obligations
+                    }
+                }
+            }
+
+            sov_national_obligations_imperial_obligations_first_option_button_click {
+                THIS = {
+                    if = {
+                        limit = {
+                            check_variable = {
+                                sov_national_obligations_imperial_obligations_selected_index = 1
+                            }
+                        }
+                        set_variable = {
+                            sov_national_obligations_imperial_obligations_selected_index = 0
+                        }
+                    }
+                    else = {
+                        set_variable = {
+                            sov_national_obligations_imperial_obligations_selected_index = 1
+                        }
+                    }
+                }
+            }
+
+            sov_national_obligations_imperial_obligations_second_option_button_click {
+                THIS = {
+                    if = {
+                        limit = {
+                            check_variable = {
+                                sov_national_obligations_imperial_obligations_selected_index = 2
+                            }
+                        }
+                        set_variable = {
+                            sov_national_obligations_imperial_obligations_selected_index = 0
+                        }
+                    }
+                    else = {
+                        set_variable = {
+                            sov_national_obligations_imperial_obligations_selected_index = 2
+                        }
+                    }
+                }
+            }
+
+            sov_national_obligations_imperial_obligations_third_option_button_click {
+                THIS = {
+                    if = {
+                        limit = {
+                            check_variable = {
+                                sov_national_obligations_imperial_obligations_selected_index = 3
+                            }
+                        }
+                        set_variable = {
+                            sov_national_obligations_imperial_obligations_selected_index = 0
+                        }
+                    }
+                    else = {
+                        set_variable = {
+                            sov_national_obligations_imperial_obligations_selected_index = 3
+                        }
+                    }
+                }
+            }
+        }
+
+        triggers = {
+            sov_national_obligations_imperial_obligations_confirm_button_click_enabled = {
+                THIS = {
+                    OR = {
+                        check_variable = {
+                            sov_national_obligations_imperial_obligations_selected_index = 1
+                        }
+                        check_variable = {
+                            sov_national_obligations_imperial_obligations_selected_index = 2
+                        }
+                        check_variable = {
+                            sov_national_obligations_imperial_obligations_selected_index = 3
+                        }
+                    }
+                    NOT = {
+                        has_country_flag = imperial_obligations_confirmed
+                    }
+                }
+            }
+
+            sov_national_obligations_imperial_obligations_first_option_glow_visible = {
+                check_variable = {
+                    sov_national_obligations_imperial_obligations_selected_index = 1
+                }
+            }
+
+            sov_national_obligations_imperial_obligations_first_option_button_click_enabled = {
+                THIS = {
+                    #TODO
+                    NOT = {
+                        has_country_flag = imperial_obligations_confirmed
+                    }
+                }
+            }
+
+            sov_national_obligations_imperial_obligations_second_option_glow_visible = {
+                check_variable = {
+                    sov_national_obligations_imperial_obligations_selected_index = 2
+                }
+            }
+
+            sov_national_obligations_imperial_obligations_second_option_button_click_enabled = {
+                THIS = {
+                    #TODO
+                    NOT = {
+                        has_country_flag = imperial_obligations_confirmed
+                    }
+                }
+            }
+
+            sov_national_obligations_imperial_obligations_third_option_glow_visible = {
+                check_variable = {
+                    sov_national_obligations_imperial_obligations_selected_index = 3
+                }
+            }
+
+            sov_national_obligations_imperial_obligations_third_option_button_click_enabled = {
+                THIS = {
+                    #TODO
+                    NOT = {
+                        has_country_flag = imperial_obligations_confirmed
+                    }
+                }
+            }
+        }
+    }
+                    
+    #Carry On Legacy
+    sov_national_obligations_carry_on_legacy_scripted_gui = {
+        window_name = "sov_national_obligations_carry_on_legacy_view"
+        context_type = player_context
+        parent_window_name = "sov_national_obligations_scripted_gui_window"
+
+        visible = {
+            check_variable = {
+                var = sov_national_obligations_selected_index
+                value = 11
+                compare = equals
+            }
+        }
+
+        properties = {
+            sov_national_obligations_carry_on_legacy_first_option_bg = {
+                image = [THIS.GetCurrentStatusFirstOptionCarryOnLegacy]
+            }
+
+            sov_national_obligations_carry_on_legacy_second_option_bg = {
+                image = [THIS.GetCurrentStatusSecondOptionCarryOnLegacy]
+            }
+        }
+
+        effects = {
+            sov_national_obligations_carry_on_legacy_confirm_button_click {
+                THIS = {
+                    #TODO
+                    set_country_flag = carry_on_legacy_confirmed
+                    if = {
+                        limit = {
+                            has_country_flag = sov_open_national_obligations_help
+                        }
+                        clr_country_flag = sov_open_national_obligations_help
+                    }
+                    if = {
+                        limit = {
+                            has_country_flag = sov_debug_national_obligations
+                        }
+                        clr_country_flag = sov_debug_national_obligations
+                    }
+                    if = {
+                        limit = {
+                            has_country_flag = sov_open_national_obligations
+                        }
+                        clr_country_flag = sov_open_national_obligations
+                    }
+                }
+            }
+
+            sov_national_obligations_carry_on_legacy_first_option_button_click {
+                THIS = {
+                    if = {
+                        limit = {
+                            check_variable = {
+                                sov_national_obligations_carry_on_legacy_selected_index = 1
+                            }
+                        }
+                        set_variable = {
+                            sov_national_obligations_carry_on_legacy_selected_index = 0
+                        }
+                    }
+                    else = {
+                        set_variable = {
+                            sov_national_obligations_carry_on_legacy_selected_index = 1
+                        }
+                    }
+                }
+            }
+
+            sov_national_obligations_carry_on_legacy_second_option_button_click {
+                THIS = {
+                    if = {
+                        limit = {
+                            check_variable = {
+                                sov_national_obligations_carry_on_legacy_selected_index = 2
+                            }
+                        }
+                        set_variable = {
+                            sov_national_obligations_carry_on_legacy_selected_index = 0
+                        }
+                    }
+                    else = {
+                        set_variable = {
+                            sov_national_obligations_carry_on_legacy_selected_index = 2
+                        }
+                    }
+                }
+            }
+        }
+
+        triggers = {
+            sov_national_obligations_carry_on_legacy_confirm_button_click_enabled = {
+                THIS = {
+                    OR = {
+                        check_variable = {
+                            sov_national_obligations_carry_on_legacy_selected_index = 1
+                        }
+                        check_variable = {
+                            sov_national_obligations_carry_on_legacy_selected_index = 2
+                        }
+                    }
+                    NOT = {
+                        has_country_flag = carry_on_legacy_confirmed
+                    }
+                }
+            }
+
+            sov_national_obligations_carry_on_legacy_first_option_glow_visible = {
+                check_variable = {
+                    sov_national_obligations_carry_on_legacy_selected_index = 1
+                }
+            }
+
+            sov_national_obligations_carry_on_legacy_first_option_button_click_enabled = {
+                THIS = {
+                    #TODO
+                    NOT = {
+                        has_country_flag = carry_on_legacy_confirmed
+                    }
+                }
+            }
+
+            sov_national_obligations_carry_on_legacy_second_option_glow_visible = {
+                check_variable = {
+                    sov_national_obligations_carry_on_legacy_selected_index = 2
+                }
+            }
+
+            sov_national_obligations_carry_on_legacy_second_option_button_click_enabled = {
+                THIS = {
+                    #TODO
+                    NOT = {
+                        has_country_flag = carry_on_legacy_confirmed
+                    }
+                }
+            }
+        }
+    }
+                    
+    #Russian Realm
+    sov_national_obligations_russian_realm_scripted_gui = {
+        window_name = "sov_national_obligations_russian_realm_view"
+        context_type = player_context
+        parent_window_name = "sov_national_obligations_scripted_gui_window"
+
+        visible = {
+            check_variable = {
+                var = sov_national_obligations_selected_index
+                value = 12
+                compare = equals
+            }
+        }
+
+        properties = {
+            sov_national_obligations_russian_realm_first_option_bg = {
+                image = [THIS.GetCurrentStatusFirstOptionRussianRealm]
+            }
+
+            sov_national_obligations_russian_realm_second_option_bg = {
+                image = [THIS.GetCurrentStatusSecondOptionRussianRealm]
+            }
+
+            sov_national_obligations_russian_realm_third_option_bg = {
+                image = [THIS.GetCurrentStatusThirdOptionRussianRealm]
+            }
+        }
+
+        effects = {
+            sov_national_obligations_russian_realm_confirm_button_click {
+                THIS = {
+                    #TODO
+                    set_country_flag = russian_realm_confirmed
+                    if = {
+                        limit = {
+                            has_country_flag = sov_open_national_obligations_help
+                        }
+                        clr_country_flag = sov_open_national_obligations_help
+                    }
+                    if = {
+                        limit = {
+                            has_country_flag = sov_debug_national_obligations
+                        }
+                        clr_country_flag = sov_debug_national_obligations
+                    }
+                    if = {
+                        limit = {
+                            has_country_flag = sov_open_national_obligations
+                        }
+                        clr_country_flag = sov_open_national_obligations
+                    }
+                }
+            }
+
+            sov_national_obligations_russian_realm_first_option_button_click {
+                THIS = {
+                    if = {
+                        limit = {
+                            check_variable = {
+                                sov_national_obligations_russian_realm_selected_index = 1
+                            }
+                        }
+                        set_variable = {
+                            sov_national_obligations_russian_realm_selected_index = 0
+                        }
+                    }
+                    else = {
+                        set_variable = {
+                            sov_national_obligations_russian_realm_selected_index = 1
+                        }
+                    }
+                }
+            }
+
+            sov_national_obligations_russian_realm_second_option_button_click {
+                THIS = {
+                    if = {
+                        limit = {
+                            check_variable = {
+                                sov_national_obligations_russian_realm_selected_index = 2
+                            }
+                        }
+                        set_variable = {
+                            sov_national_obligations_russian_realm_selected_index = 0
+                        }
+                    }
+                    else = {
+                        set_variable = {
+                            sov_national_obligations_russian_realm_selected_index = 2
+                        }
+                    }
+                }
+            }
+
+            sov_national_obligations_russian_realm_third_option_button_click {
+                THIS = {
+                    if = {
+                        limit = {
+                            check_variable = {
+                                sov_national_obligations_russian_realm_selected_index = 3
+                            }
+                        }
+                        set_variable = {
+                            sov_national_obligations_russian_realm_selected_index = 0
+                        }
+                    }
+                    else = {
+                        set_variable = {
+                            sov_national_obligations_russian_realm_selected_index = 3
+                        }
+                    }
+                }
+            }
+        }
+
+        triggers = {
+            sov_national_obligations_russian_realm_confirm_button_click_enabled = {
+                THIS = {
+                    OR = {
+                        check_variable = {
+                            sov_national_obligations_russian_realm_selected_index = 1
+                        }
+                        check_variable = {
+                            sov_national_obligations_russian_realm_selected_index = 2
+                        }
+                        check_variable = {
+                            sov_national_obligations_russian_realm_selected_index = 3
+                        }
+                    }
+                    NOT = {
+                        has_country_flag = russian_realm_confirmed
+                    }
+                }
+            }
+
+            sov_national_obligations_russian_realm_first_option_glow_visible = {
+                check_variable = {
+                    sov_national_obligations_russian_realm_selected_index = 1
+                }
+            }
+
+            sov_national_obligations_russian_realm_first_option_button_click_enabled = {
+                THIS = {
+                    #TODO
+                    NOT = {
+                        has_country_flag = russian_realm_confirmed
+                    }
+                }
+            }
+
+            sov_national_obligations_russian_realm_second_option_glow_visible = {
+                check_variable = {
+                    sov_national_obligations_russian_realm_selected_index = 2
+                }
+            }
+
+            sov_national_obligations_russian_realm_second_option_button_click_enabled = {
+                THIS = {
+                    #TODO
+                    NOT = {
+                        has_country_flag = russian_realm_confirmed
+                    }
+                }
+            }
+
+            sov_national_obligations_russian_realm_third_option_glow_visible = {
+                check_variable = {
+                    sov_national_obligations_russian_realm_selected_index = 3
+                }
+            }
+
+            sov_national_obligations_russian_realm_third_option_button_click_enabled = {
+                THIS = {
+                    #TODO
+                    NOT = {
+                        has_country_flag = russian_realm_confirmed
+                    }
+                }
+            }
+        }
+    }
+                    
+    #Rebirth
+    sov_national_obligations_rebirth_scripted_gui = {
+        window_name = "sov_national_obligations_rebirth_view"
+        context_type = player_context
+        parent_window_name = "sov_national_obligations_scripted_gui_window"
+
+        visible = {
+            check_variable = {
+                var = sov_national_obligations_selected_index
+                value = 13
+                compare = equals
+            }
+        }
+
+        properties = {
+            sov_national_obligations_rebirth_first_option_bg = {
+                image = [THIS.GetCurrentStatusFirstOptionRebirth]
+            }
+
+            sov_national_obligations_rebirth_second_option_bg = {
+                image = [THIS.GetCurrentStatusSecondOptionRebirth]
+            }
+
+            sov_national_obligations_rebirth_third_option_bg = {
+                image = [THIS.GetCurrentStatusThirdOptionRebirth]
+            }
+        }
+
+        effects = {
+            sov_national_obligations_rebirth_confirm_button_click {
+                THIS = {
+                    #TODO
+                    set_country_flag = rebirth_confirmed
+                    if = {
+                        limit = {
+                            has_country_flag = sov_open_national_obligations_help
+                        }
+                        clr_country_flag = sov_open_national_obligations_help
+                    }
+                    if = {
+                        limit = {
+                            has_country_flag = sov_debug_national_obligations
+                        }
+                        clr_country_flag = sov_debug_national_obligations
+                    }
+                    if = {
+                        limit = {
+                            has_country_flag = sov_open_national_obligations
+                        }
+                        clr_country_flag = sov_open_national_obligations
+                    }
+                }
+            }
+
+            sov_national_obligations_rebirth_first_option_button_click {
+                THIS = {
+                    if = {
+                        limit = {
+                            check_variable = {
+                                sov_national_obligations_rebirth_selected_index = 1
+                            }
+                        }
+                        set_variable = {
+                            sov_national_obligations_rebirth_selected_index = 0
+                        }
+                    }
+                    else = {
+                        set_variable = {
+                            sov_national_obligations_rebirth_selected_index = 1
+                        }
+                    }
+                }
+            }
+
+            sov_national_obligations_rebirth_second_option_button_click {
+                THIS = {
+                    if = {
+                        limit = {
+                            check_variable = {
+                                sov_national_obligations_rebirth_selected_index = 2
+                            }
+                        }
+                        set_variable = {
+                            sov_national_obligations_rebirth_selected_index = 0
+                        }
+                    }
+                    else = {
+                        set_variable = {
+                            sov_national_obligations_rebirth_selected_index = 2
+                        }
+                    }
+                }
+            }
+
+            sov_national_obligations_rebirth_third_option_button_click {
+                THIS = {
+                    if = {
+                        limit = {
+                            check_variable = {
+                                sov_national_obligations_rebirth_selected_index = 3
+                            }
+                        }
+                        set_variable = {
+                            sov_national_obligations_rebirth_selected_index = 0
+                        }
+                    }
+                    else = {
+                        set_variable = {
+                            sov_national_obligations_rebirth_selected_index = 3
+                        }
+                    }
+                }
+            }
+        }
+
+        triggers = {
+            sov_national_obligations_rebirth_confirm_button_click_enabled = {
+                THIS = {
+                    OR = {
+                        check_variable = {
+                            sov_national_obligations_rebirth_selected_index = 1
+                        }
+                        check_variable = {
+                            sov_national_obligations_rebirth_selected_index = 2
+                        }
+                        check_variable = {
+                            sov_national_obligations_rebirth_selected_index = 3
+                        }
+                    }
+                    NOT = {
+                        has_country_flag = rebirth_confirmed
+                    }
+                }
+            }
+
+            sov_national_obligations_rebirth_first_option_glow_visible = {
+                check_variable = {
+                    sov_national_obligations_rebirth_selected_index = 1
+                }
+            }
+
+            sov_national_obligations_rebirth_first_option_button_click_enabled = {
+                THIS = {
+                    #TODO
+                    NOT = {
+                        has_country_flag = rebirth_confirmed
+                    }
+                }
+            }
+
+            sov_national_obligations_rebirth_second_option_glow_visible = {
+                check_variable = {
+                    sov_national_obligations_rebirth_selected_index = 2
+                }
+            }
+
+            sov_national_obligations_rebirth_second_option_button_click_enabled = {
+                THIS = {
+                    #TODO
+                    NOT = {
+                        has_country_flag = rebirth_confirmed
+                    }
+                }
+            }
+
+            sov_national_obligations_rebirth_third_option_glow_visible = {
+                check_variable = {
+                    sov_national_obligations_rebirth_selected_index = 3
+                }
+            }
+
+            sov_national_obligations_rebirth_third_option_button_click_enabled = {
+                THIS = {
+                    #TODO
+                    NOT = {
+                        has_country_flag = rebirth_confirmed
                     }
                 }
             }
