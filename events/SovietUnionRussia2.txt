@@ -2090,122 +2090,156 @@ country_event = {
 
 	option = {
 		name = russia2_russia.59.a
-		if = {
-			limit = {
-				NOT = { has_country_flag = purged_khrushchev }
-			}
-			kill_country_leader = yes
-			create_country_leader = {
-				name = "Nikita Khrushchev"
-				desc = "POLITICS_NIKITA_KHRUSHCHEV_DESC"
-				picture = "gfx/leaders/SOV/Nikita_Khrushchev.dds"
-				ideology = leninism
-				traits = {
-					secret_speech
+		ai_chance = {
+			factor = 60
+		}
+		trigger = {
+			NOT = {
+				check_variable = {
+					var = sov_great_purge_status^6
+					value = 1
+					compare = equals
 				}
 			}
-			hidden_effect = {
-				UKR = {
-					retire_ideology_leader = communism
-					create_country_leader = {
-						name = "Vladimir Antonov-Ovseyenko"
-						desc = "POLITICS_VLADIMIR_ANTONOV_DESC"
-						picture = "gfx/leaders/UKR/Vladimir_Antonov_Ovseyenko.dds"
-						ideology = leninism
-						traits = {
-							
-						}
+		}
+		kill_country_leader = yes
+		create_country_leader = {
+			name = "Nikita Khrushchev"
+			desc = "POLITICS_NIKITA_KHRUSHCHEV_DESC"
+			picture = "gfx/leaders/SOV/Nikita_Khrushchev.dds"
+			ideology = leninism
+			traits = {
+				secret_speech
+			}
+		}
+		hidden_effect = {
+			UKR = {
+				retire_ideology_leader = communism
+				create_country_leader = {
+					name = "Vladimir Antonov-Ovseyenko"
+					desc = "POLITICS_VLADIMIR_ANTONOV_DESC"
+					picture = "gfx/leaders/UKR/Vladimir_Antonov_Ovseyenko.dds"
+					ideology = leninism
+					traits = {
+						
 					}
 				}
 			}
+			news_event = { id = newsrussia2.32 days = 1 }
 		}
+	}
 
-		else_if = {
-			limit = {
-				has_country_flag = purged_khrushchev
-			}
-			kill_country_leader = yes
-			create_country_leader = {
-				name = "Vasily Stalin"
-				desc = "POLITICS_VASILY_STALIN_DESC"
-				picture = "gfx/leaders/SOV/Vasily_Stalin.dds"
-				ideology = stalinism
-			}
-			hidden_effect = {
-				add_country_leader_trait = unplanned_sortie
-				add_country_leader_trait = new_hope
+	option = {
+		name = russia2_russia.59.b
+		ai_chance = {
+			factor = 40
+		}
+		kill_country_leader = yes
+		create_country_leader = {
+			name = "Vasily Stalin"
+			desc = "POLITICS_VASILY_STALIN_DESC"
+			picture = "gfx/leaders/SOV/Vasily_Stalin.dds"
+			ideology = stalinism
+			traits = {
+				unplanned_sortie
+				new_hope
 			}
 		}
-		news_event = { id = newsrussia2.32 days = 1 }
+		hidden_effect = {
+			add_to_array = { global.drunkard_wheel_achievement = THIS }
+			set_variable = { global.drunkard_wheel_achievement_date@THIS = global.date }
+			set_country_flag = russia_reworked_new_achievement
+			if = {
+				limit = {
+					has_global_flag = russia_reworked_achievements_enabled
+				}
+				scoped_sound_effect = "russia_reworked_unlock_achievement"
+			}
+			news_event = { id = newsrussia2.32 days = 1 }
+		}
 	}
 }
 
-#Stalin's Death - 1953
+#Stalin's Death - 1945+
 country_event = {
 	id = russia2_russia.60
 	title = russia2_russia.60.t
 	desc = russia2_russia.60.d
 	picture = GFX_report_event_generic_funeral
 
-	fire_only_once = yes
+	is_triggered_only = yes
 
-	trigger = {
-		has_country_leader = {
-			name = "Joseph Stalin"
-			ruling_only = yes
-		}
-		date > 1953.02.05
+	immediate = {
+		set_country_flag = sov_stalin_dies_1945_event
 	}
 
-	mean_time_to_happen = { days = 2 }
-
-	option = { #new Leader
+	option = {
 		name = russia2_russia.60.a
-		if = {
-			limit = {
-				NOT = { has_country_flag = purged_khrushchev }
-			}
-			kill_country_leader = yes
-			create_country_leader = {
-				name = "Nikita Khrushchev"
-				desc = "POLITICS_NIKITA_KHRUSHCHEV_DESC"
-				picture = "gfx/leaders/SOV/Nikita_Khrushchev.dds"
-				expire = "1965.1.1"
-				ideology = leninism
-				traits = {
-					secret_speech
-				}
-			}
-			hidden_effect = {
-				UKR = {
-					retire_ideology_leader = communism
-					create_country_leader = {
-						name = "Vladimir Antonov-Ovseyenko"
-						desc = "POLITICS_VLADIMIR_ANTONOV_DESC"
-						picture = "gfx/leaders/UKR/Vladimir_Antonov_Ovseyenko.dds"
-						ideology = leninism
-						traits = {
-							
-						}
-					}
+		ai_chance = {
+			factor = 60
+		}
+		trigger = {
+			NOT = {
+				check_variable = {
+					var = sov_great_purge_status^6
+					value = 1
+					compare = equals
 				}
 			}
 		}
-
-		else_if = {
-			limit = {
-				has_country_flag = purged_khrushchev
-			}
-			kill_country_leader = yes
-			create_country_leader = {
-				name = "Vasily Stalin"
-				desc = "POLITICS_VASILY_STALIN_DESC"
-				picture = "gfx/leaders/SOV/Vasily_Stalin.dds"
-				expire = "1965.1.1"
-				ideology = stalinism
+		kill_country_leader = yes
+		create_country_leader = {
+			name = "Nikita Khrushchev"
+			desc = "POLITICS_NIKITA_KHRUSHCHEV_DESC"
+			picture = "gfx/leaders/SOV/Nikita_Khrushchev.dds"
+			ideology = leninism
+			traits = {
+				secret_speech
 			}
 		}
 		hidden_effect = {
+			UKR = {
+				retire_ideology_leader = communism
+				create_country_leader = {
+					name = "Vladimir Antonov-Ovseyenko"
+					desc = "POLITICS_VLADIMIR_ANTONOV_DESC"
+					picture = "gfx/leaders/UKR/Vladimir_Antonov_Ovseyenko.dds"
+					ideology = leninism
+					traits = {
+						
+					}
+				}
+			}
+			news_event = { id = newsrussia2.33 days = 1 }
+		}
+	}
+
+	option = {
+		name = russia2_russia.60.b
+		ai_chance = {
+			factor = 40
+		}
+		kill_country_leader = yes
+		create_country_leader = {
+			name = "Vasily Stalin"
+			desc = "POLITICS_VASILY_STALIN_DESC"
+			picture = "gfx/leaders/SOV/Vasily_Stalin.dds"
+			ideology = stalinism
+			traits = {
+				unplanned_sortie
+				new_hope
+			}
+		}
+		hidden_effect = {
+			add_to_array = { global.drunkard_wheel_achievement = THIS }
+			set_variable = { global.drunkard_wheel_achievement_date@THIS = global.date }
+			set_country_flag = russia_reworked_new_achievement
+			if = {
+				limit = {
+					has_global_flag = russia_reworked_achievements_enabled
+				}
+				scoped_sound_effect = "russia_reworked_unlock_achievement"
+			}
 			news_event = { id = newsrussia2.33 days = 1 }
 		}
 	}
@@ -3128,22 +3162,29 @@ country_event = {
 
 	option = {
 		name = russia2_russia.92.a
-		SOV = {
-			set_cosmetic_tag = SUW
-			add_stability = 0.1
-			every_state = {
-				limit = {
-					is_controlled_by = ROOT
-					NOT = {
-						is_core_of = ROOT
-					}
+		set_cosmetic_tag = SUW
+		add_stability = 0.1
+		every_state = {
+			limit = {
+				is_controlled_by = ROOT
+				NOT = {
+					is_core_of = ROOT
 				}
-				add_compliance = 10
-				set_resistance = 0
 			}
-			set_country_flag = socialist_union_worker_formed
+			add_compliance = 10
+			set_resistance = 0
 		}
+		set_country_flag = socialist_union_worker_formed
 		hidden_effect = {
+			add_to_array = { global.revolution_completed_achievement = THIS }
+			set_variable = { global.revolution_completed_achievement_date@THIS = global.date }
+			set_country_flag = russia_reworked_new_achievement
+			if = {
+				limit = {
+					has_global_flag = russia_reworked_achievements_enabled
+				}
+				scoped_sound_effect = "russia_reworked_unlock_achievement"
+			}
 			news_event = { id = newsrussia2.43 days = 1 }
 		}
 	}
@@ -21620,6 +21661,17 @@ country_event = {
 			ideology = despotism
 			traits = {
 				saint_grand_duchess_and_passion_bearer
+			}
+		}
+		hidden_effect = {
+			add_to_array = { global.not_sus_achievement = THIS }
+			set_variable = { global.not_sus_achievement_date@THIS = global.date }
+			set_country_flag = russia_reworked_new_achievement
+			if = {
+				limit = {
+					has_global_flag = russia_reworked_achievements_enabled
+				}
+				scoped_sound_effect = "russia_reworked_unlock_achievement"
 			}
 		}
 	}

@@ -40156,6 +40156,65 @@ SOV_russianize_state = { #TODO Change state id when the Russian update is live
 			}
 		}
 	}
+
+	SOV_rename_istanbul = {
+		icon = GFX_decision_generic_decision
+
+		visible = {
+			OR = {
+				owns_state = 797
+				controls_state = 797
+			}
+		}
+
+		highlight_states = {
+			state = 797
+		}
+
+		fire_only_once = yes
+
+		available = {
+			has_full_control_of_state = 797
+		}
+
+		complete_effect = {
+			if = {
+				limit = {
+					has_government = neutrality
+					OR = {
+						has_country_leader = {
+							name = "Kirill Vladimirovich"
+							ruling_only = yes
+						}
+						has_country_leader = {
+							name = "Vladimir Kirillovich"
+							ruling_only = yes
+						}
+						has_country_leader = {
+							name = "Anastasia Nikolaevna"
+							ruling_only = yes
+						}
+					}
+				}
+				set_province_name = { id = 9833 name = "Tsarigrad" }
+				hidden_effect = {
+					set_global_flag = SOV_istanbul_renamed
+					797 = {
+						set_state_name = "Tsarigrad"
+					}
+				}
+			}
+			else = {
+				set_province_name = { id = 9833 name = "Konstantinopol" }
+				hidden_effect = {
+					set_global_flag = SOV_istanbul_renamed
+					797 = {
+						set_state_name = "Konstantinopol"
+					}
+				}
+			}
+		}
+	}
 }
 
 SOV_renegotiate_deals_civil_war = {
