@@ -59,14 +59,14 @@ if __name__ == "__main__":
                 
                 iconType = {{
                     name = "russia_reworked_{ achievement }_achievement_icon_unlocked"
-                    spriteType = "GFX_idea_unknown"
+                    spriteType = "GFX_{ achievement }_unlocked"
                     position = {{ x = 17 y = 12 }}
                     Orientation = "UPPER_LEFT"
                 }}
 
                 iconType = {{
                     name = "russia_reworked_{ achievement }_achievement_icon_locked"
-                    spriteType = "GFX_idea_unknown"
+                    spriteType = "GFX_{ achievement }_locked"
                     position = {{ x = 17 y = 12 }}
                     Orientation = "UPPER_LEFT"
                 }}

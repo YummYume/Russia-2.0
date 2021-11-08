@@ -2,6 +2,7 @@
 import traceback
 import shutil
 import os.path
+import sys
 
 if __name__ == "__main__":
 
@@ -35,6 +36,30 @@ if __name__ == "__main__":
             2,
             3,
             3,
+        ]
+        achievements = [
+            "cleaning_red_carpet",
+            "revolution_completed",
+            "speedrun_urals",
+            "not_sus",
+            "new_world_order",
+            "red_army",
+            "world_without_borders",
+            "rush_b",
+            "fourth_rome",
+            "gotcha",
+            "drunkard_wheel",
+            "copyright",
+            "running_90",
+            "quick_revolution",
+            "great_deeds",
+            "rome_tsarigrad_moscow",
+            "1905_avenged",
+            "lacplesis",
+            "third_friend",
+            "national_priority",
+            "click_me",
+            "big_tower"
         ]
 
         print("Creating GFX...")
@@ -82,10 +107,34 @@ if __name__ == "__main__":
                     case _:
                         print("Error for national obligation %s" % title)
 
-            print("Success")
         else:
             print("Warning : file GFX_national_obligations_golden.dds cannot be found")
             print("Cancelling...")
+            sys.exit()
+
+        if os.path.isfile("GFX_achievement_unknown_locked.dds"):
+            if os.path.isfile("GFX_achievement_unknown_unlocked.dds"):
+                for achievement in achievements:
+                    if not os.path.isfile(f"GFX_{ achievement }_locked.dds"):
+                        shutil.copy(f"GFX_achievement_unknown_locked.dds", f"GFX_{ achievement }_locked.dds")
+                    else:
+                        print("Warning : file GFX_%_locked.dds already exists, skipping..." % national_obligation)
+
+                    if not os.path.isfile(f"GFX_{ achievement }_unlocked.dds"):
+                        shutil.copy(f"GFX_achievement_unknown_unlocked.dds", f"GFX_{ achievement }_unlocked.dds")
+                    else:
+                        print("Warning : file GFX_%_unlocked.dds already exists, skipping..." % national_obligation)
+
+            else:
+                print("Warning : file GFX_achievement_unknown_unlocked.dds cannot be found")
+                print("Cancelling...")
+                sys.exit()
+        else:
+            print("Warning : file GFX_achievement_unknown_locked.dds cannot be found")
+            print("Cancelling...")
+            sys.exit()
+
+        print("Success")
 
     except Exception:
         print("Something went wrong...")
