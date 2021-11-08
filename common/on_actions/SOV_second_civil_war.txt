@@ -196,22 +196,6 @@ on_actions = {
 								set_state_controller = var:v
 							} 
 						}
-						#if = {
-						#	limit = {
-						#		var:v = {
-						#			is_controlled_by = SOV
-						#			state = var:v
-						#		}
-						#	}
-						#	SOV = {
-						#		transfer_state = var:v
-						#	}
-						#}
-						#else = {
-						#	SOU = {
-						#		transfer_state = var:v
-						#	}
-						#}
 					}
 				}
 				#SOU Dies
@@ -228,14 +212,21 @@ on_actions = {
 						array = SOU.enemies
 						break = break_array
 
-						add_to_array = { global.cleaning_red_carpet_achievement = THIS }
-						set_variable = { global.cleaning_red_carpet_achievement_date@THIS = global.date }
-						set_country_flag = russia_reworked_new_achievement
 						if = {
 							limit = {
-								has_global_flag = russia_reworked_achievements_enabled
+								NOT = {
+									is_in_array = { global.cleaning_red_carpet_achievement = THIS }
+								}
 							}
-							scoped_sound_effect = "russia_reworked_unlock_achievement"
+							add_to_array = { global.cleaning_red_carpet_achievement = THIS }
+							set_variable = { global.cleaning_red_carpet_achievement_date@THIS = global.date }
+							set_country_flag = russia_reworked_new_achievement
+							if = {
+								limit = {
+									has_global_flag = russia_reworked_achievements_enabled
+								}
+								scoped_sound_effect = "russia_reworked_unlock_achievement"
+							}
 						}
 					}
 					for_each_loop = {
@@ -715,7 +706,36 @@ on_actions = {
 							}
 							for_each_scope_loop = {
 								array = global.russian_scw_participants_ukr
+								break = break_array
 							 
+							 	if = {
+									limit = {
+										NOT = {
+											is_in_array = { global.speedrun_urals_achievement = THIS }
+										}
+									}
+									add_to_array = { global.speedrun_urals_achievement = THIS }
+									set_variable = { global.speedrun_urals_achievement_date@THIS = global.date }
+									set_country_flag = russia_reworked_new_achievement
+									if = {
+										limit = {
+											has_global_flag = russia_reworked_achievements_enabled
+										}
+										scoped_sound_effect = "russia_reworked_unlock_achievement"
+									}
+								 }
+							}
+						}	
+						for_each_scope_loop = {
+							array = global.russian_scw_participants_other
+							break = break_array
+						 
+							if = {
+								limit = {
+									NOT = {
+										is_in_array = { global.speedrun_urals_achievement = THIS }
+									}
+								}
 								add_to_array = { global.speedrun_urals_achievement = THIS }
 								set_variable = { global.speedrun_urals_achievement_date@THIS = global.date }
 								set_country_flag = russia_reworked_new_achievement
@@ -725,19 +745,6 @@ on_actions = {
 									}
 									scoped_sound_effect = "russia_reworked_unlock_achievement"
 								}
-							}
-						}	
-						for_each_scope_loop = {
-							array = global.russian_scw_participants_other
-						 
-							add_to_array = { global.speedrun_urals_achievement = THIS }
-							set_variable = { global.speedrun_urals_achievement_date@THIS = global.date }
-							set_country_flag = russia_reworked_new_achievement
-							if = {
-								limit = {
-									has_global_flag = russia_reworked_achievements_enabled
-								}
-								scoped_sound_effect = "russia_reworked_unlock_achievement"
 							}
 						}
 					}
@@ -1241,30 +1248,46 @@ on_actions = {
 							}
 							for_each_scope_loop = {
 								array = global.russian_scw_participants_sou
+								break = break_array
 							 
-								add_to_array = { global.speedrun_urals_achievement = THIS }
-								set_variable = { global.speedrun_urals_achievement_date@THIS = global.date }
-								set_country_flag = russia_reworked_new_achievement
-								if = {
+							 	if = {
 									limit = {
-										has_global_flag = russia_reworked_achievements_enabled
+                                        NOT = {
+										    is_in_array = { global.speedrun_urals_achievement = THIS }
+                                        }
 									}
-									scoped_sound_effect = "russia_reworked_unlock_achievement"
+									add_to_array = { global.speedrun_urals_achievement = THIS }
+									set_variable = { global.speedrun_urals_achievement_date@THIS = global.date }
+									set_country_flag = russia_reworked_new_achievement
+									if = {
+										limit = {
+											has_global_flag = russia_reworked_achievements_enabled
+										}
+										scoped_sound_effect = "russia_reworked_unlock_achievement"
+									}
 								}
 							}
 						}	
 						for_each_scope_loop = {
 							array = global.russian_scw_participants_other
-						 
-							add_to_array = { global.speedrun_urals_achievement = THIS }
-							set_variable = { global.speedrun_urals_achievement_date@THIS = global.date }
-							set_country_flag = russia_reworked_new_achievement
-							if = {
-								limit = {
-									has_global_flag = russia_reworked_achievements_enabled
-								}
-								scoped_sound_effect = "russia_reworked_unlock_achievement"
-							}
+                            break = break_array
+						
+                            if = {
+                                limit = {
+                                    NOT = {
+                                        is_in_array = { global.speedrun_urals_achievement = THIS }
+                                    }
+                                }
+                                add_to_array = { global.speedrun_urals_achievement = THIS }
+                                set_variable = { global.speedrun_urals_achievement_date@THIS = global.date }
+                                set_country_flag = russia_reworked_new_achievement
+                                if = {
+                                    limit = {
+                                        has_global_flag = russia_reworked_achievements_enabled
+                                    }
+                                    scoped_sound_effect = "russia_reworked_unlock_achievement"
+                                }
+                            }
 						}
 					}
 					ROOT = {
@@ -1392,16 +1415,24 @@ on_actions = {
 							}
 							for_each_scope_loop = {
 								array = global.russian_scw_participants_sov
+                                break = break_array
 							 
-								add_to_array = { global.speedrun_urals_achievement = THIS }
-								set_variable = { global.speedrun_urals_achievement_date@THIS = global.date }
-								set_country_flag = russia_reworked_new_achievement
-								if = {
-									limit = {
-										has_global_flag = russia_reworked_achievements_enabled
-									}
-									scoped_sound_effect = "russia_reworked_unlock_achievement"
-								}
+                                if = {
+                                    limit = {
+                                        NOT = {
+                                            is_in_array = { global.speedrun_urals_achievement = THIS }
+                                        }
+                                    }
+                                    add_to_array = { global.speedrun_urals_achievement = THIS }
+                                    set_variable = { global.speedrun_urals_achievement_date@THIS = global.date }
+                                    set_country_flag = russia_reworked_new_achievement
+                                    if = {
+                                        limit = {
+                                            has_global_flag = russia_reworked_achievements_enabled
+                                        }
+                                        scoped_sound_effect = "russia_reworked_unlock_achievement"
+                                    }
+                                }
 							}
 						}
 						if = {
@@ -1410,30 +1441,46 @@ on_actions = {
 							}
 							for_each_scope_loop = {
 								array = global.russian_scw_participants_ukr
+                                break = break_array
 							 
-								add_to_array = { global.speedrun_urals_achievement = THIS }
-								set_variable = { global.speedrun_urals_achievement_date@THIS = global.date }
-								set_country_flag = russia_reworked_new_achievement
-								if = {
-									limit = {
-										has_global_flag = russia_reworked_achievements_enabled
-									}
-									scoped_sound_effect = "russia_reworked_unlock_achievement"
-								}
+                                if = {
+                                    limit = {
+                                        NOT = {
+                                            is_in_array = { global.speedrun_urals_achievement = THIS }
+                                        }
+                                    }
+                                    add_to_array = { global.speedrun_urals_achievement = THIS }
+                                    set_variable = { global.speedrun_urals_achievement_date@THIS = global.date }
+                                    set_country_flag = russia_reworked_new_achievement
+                                    if = {
+                                        limit = {
+                                            has_global_flag = russia_reworked_achievements_enabled
+                                        }
+                                        scoped_sound_effect = "russia_reworked_unlock_achievement"
+                                    }
+                                }
 							}
 						}	
 						for_each_scope_loop = {
 							array = global.russian_scw_participants_other
+                            break = break_array
 						 
-							add_to_array = { global.speedrun_urals_achievement = THIS }
-							set_variable = { global.speedrun_urals_achievement_date@THIS = global.date }
-							set_country_flag = russia_reworked_new_achievement
-							if = {
-								limit = {
-									has_global_flag = russia_reworked_achievements_enabled
-								}
-								scoped_sound_effect = "russia_reworked_unlock_achievement"
-							}
+                            if = {
+                                limit = {
+                                    NOT = {
+                                        is_in_array = { global.speedrun_urals_achievement = THIS }
+                                    }
+                                }
+                                add_to_array = { global.speedrun_urals_achievement = THIS }
+                                set_variable = { global.speedrun_urals_achievement_date@THIS = global.date }
+                                set_country_flag = russia_reworked_new_achievement
+                                if = {
+                                    limit = {
+                                        has_global_flag = russia_reworked_achievements_enabled
+                                    }
+                                    scoped_sound_effect = "russia_reworked_unlock_achievement"
+                                }
+                            }
 						}
 					}
 					every_state = {
