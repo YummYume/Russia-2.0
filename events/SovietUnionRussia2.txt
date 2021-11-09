@@ -2910,118 +2910,45 @@ country_event = {
 	desc = russia2_russia.86.d
 	picture = GFX_report_event_german_reichstag_gathering
 
-	fire_only_once = yes
-
-	trigger = {
-		tag = SOV
-		SOV = {
-			has_government = communism
-			num_subjects > 19
-			NOT = {
-				has_idea = SOV_Exiled_russia
-				has_idea = trotskyite_plot
-				has_cosmetic_tag = SUW
-				has_cosmetic_tag = SOV_proletarian_union
-				is_subject = yes
-			}
-			is_major = yes
-			arms_factory > 149
-			industrial_complex > 149
-			is_faction_leader = yes
-			OR = {
-				has_completed_focus = SOV_komintern_unite
-				has_completed_focus = SOV_workers_world_unite
-			}
-			OR = {
-				OR = {
-					16 = {
-						is_owned_and_controlled_by = SOV
-					}
-					any_allied_country = {
-						has_government = communism
-						has_full_control_of_state = 16
-					}
-				}
-				OR = {
-					64 = {
-						is_owned_and_controlled_by = SOV
-					}
-					any_allied_country = {
-						has_government = communism
-						has_full_control_of_state = 64
-					}
-				}
-				OR = {
-					2 = {
-						is_owned_and_controlled_by = SOV
-					}
-					any_allied_country = {
-						has_government = communism
-						has_full_control_of_state = 2
-					}
-				}
-				OR = {
-					126 = {
-						is_owned_and_controlled_by = SOV
-					}
-					any_allied_country = {
-						has_government = communism
-						has_full_control_of_state = 126
-					}
-				}
-				OR = {
-					361 = {
-						is_owned_and_controlled_by = SOV
-					}
-					any_allied_country = {
-						has_government = communism
-						has_full_control_of_state = 361
-					}
-				}
-				OR = {
-					282 = {
-						is_owned_and_controlled_by = SOV
-					}
-					any_allied_country = {
-						has_government = communism
-						has_full_control_of_state = 282
-					}
-				}
-			}
-		}
-	}
+	is_triggered_only = yes
 
 	option = { #Yes!
 		name = russia2_russia.86.a
 		ai_chance = {
 			base = 100
 		}
+		add_country_leader_trait = proletarian
+		set_cosmetic_tag = SOV_proletarian_union
+		set_country_flag = has_formed_proletarian_union
 		every_other_country = {
 			limit = {
 				is_subject_of = SOV
 			}
 			country_event = { id = russia2_generic.4 days = 1 }
 		}
-		if = {
-			limit = {
-				has_global_flag = Trotsky_return
-				NOT = {
-					has_cosmetic_tag = SUW
-				}
-			}
-			custom_effect_tooltip = SOV_socialist_meeting_cancel_tt
-		}
-
 		hidden_effect = {
-			country_event = { id = russia2_russia.89 days = 10 }
-		}
-		set_country_flag = has_formed_proletarian_union
-	}
-
-	option = { #No
-		name = russia2_russia.86.b
-		ai_chance = {
-			base = 0
+			news_event = { id = newsrussia2.42 days = 1 }
+			if = {
+				limit = {
+					has_full_control_of_state = 42
+				}
+				set_capital = 42
+			}
+			else_if = {
+				limit = {
+					has_full_control_of_state = 16
+				}
+				set_capital = 16
+			}
+			add_to_array = { global.revolution_completed_achievement = THIS }
+			set_variable = { global.revolution_completed_achievement_date@THIS = global.date }
+			set_country_flag = russia_reworked_new_achievement
+			if = {
+				limit = {
+					has_global_flag = russia_reworked_achievements_enabled
+				}
+				scoped_sound_effect = "russia_reworked_unlock_achievement"
+			}
 		}
 	}
 }
@@ -3064,7 +2991,7 @@ country_event = {
 	}
 }
 
-#Proletarian Union!
+#Proletarian Union! (not used anymore)
 country_event = {
 	id = russia2_russia.89
 
