@@ -189,6 +189,28 @@ on_actions = {
 					scoped_sound_effect = "russia_reworked_unlock_achievement"
 				}
             }
+
+            #Rome, Tsarigrad, Moscow
+            if = {
+                limit = {
+                    is_subject = no
+                    has_government = neutrality
+                    has_cosmetic_tag = RUS
+                    has_full_control_of_state = 219
+                    has_full_control_of_state = 2
+                    has_full_control_of_state = 797
+                    has_global_flag = SOV_istanbul_renamed_tsarigrad
+                }
+                add_to_array = { global.rome_tsarigrad_moscow_achievement = THIS }
+				set_variable = { global.rome_tsarigrad_moscow_achievement_date@THIS = global.date }
+				set_country_flag = russia_reworked_new_achievement
+				if = {
+					limit = {
+					    has_global_flag = russia_reworked_achievements_enabled
+					}
+					scoped_sound_effect = "russia_reworked_unlock_achievement"
+				}
+            }
         }
     }
 
@@ -391,6 +413,134 @@ on_actions = {
 					}
 					scoped_sound_effect = "russia_reworked_unlock_achievement"
 				}
+            }
+        }
+    }
+
+    #on_actions for specific achievements (put them here to spare space for other on_actions)
+    on_state_control_changed = {
+        effect = {
+            ROOT = {
+                #World Without Borders
+                if = {
+                    limit = {
+                        has_government = anarchy
+                        is_subject = no
+                        any_state = {
+                            is_owned_by = ROOT
+                            is_on_continent = europe
+                        }
+                        any_state = {
+                            is_owned_by = ROOT
+                            is_on_continent = north_america
+                        }
+                        any_state = {
+                            is_owned_by = ROOT
+                            is_on_continent = south_america
+                        }
+                        any_state = {
+                            is_owned_by = ROOT
+                            is_on_continent = middle_east
+                        }
+                        any_state = {
+                            is_owned_by = ROOT
+                            is_on_continent = africa
+                        }
+                        any_state = {
+                            is_owned_by = ROOT
+                            OR = {
+                                is_on_continent = asia
+                                is_on_continent = australia
+                            }
+                        }
+                        NOT = {
+                            is_in_array = { global.world_without_borders_achievement = THIS }
+                        }
+                    }
+                    add_to_array = { global.world_without_borders_achievement = THIS }
+                    set_variable = { global.world_without_borders_achievement_date@THIS = global.date }
+                    set_country_flag = russia_reworked_new_achievement
+                    if = {
+                        limit = {
+                            has_global_flag = russia_reworked_achievements_enabled
+                        }
+                        scoped_sound_effect = "russia_reworked_unlock_achievement"
+                    }
+                }
+                #Rush B
+                else_if = {
+                    limit = {
+                        is_subject = no
+                        has_country_leader = {
+                            name = "Joseph Stalin"
+                            ruling_only = yes
+                        }
+                        controls_state = 64
+                        NOT = {
+                            is_in_array = { global.rush_b_achievement = THIS }
+                        }
+                    }
+                    add_to_array = { global.rush_b_achievement = THIS }
+                    set_variable = { global.rush_b_achievement_date@THIS = global.date }
+                    set_country_flag = russia_reworked_new_achievement
+                    if = {
+                        limit = {
+                            has_global_flag = russia_reworked_achievements_enabled
+                        }
+                        scoped_sound_effect = "russia_reworked_unlock_achievement"
+                    }
+                }
+
+                #Rome, Tsarigrad, Moscow
+                else_if = {
+                    limit = {
+                        tag = SOV
+                        is_subject = no
+                        has_government = neutrality
+                        has_cosmetic_tag = RUS
+                        has_full_control_of_state = 219
+                        has_full_control_of_state = 2
+                        has_full_control_of_state = 797
+                        has_global_flag = SOV_istanbul_renamed_tsarigrad
+                    }
+                    add_to_array = { global.rome_tsarigrad_moscow_achievement = THIS }
+                    set_variable = { global.rome_tsarigrad_moscow_achievement_date@THIS = global.date }
+                    set_country_flag = russia_reworked_new_achievement
+                    if = {
+                        limit = {
+                            has_global_flag = russia_reworked_achievements_enabled
+                        }
+                        scoped_sound_effect = "russia_reworked_unlock_achievement"
+                    }
+                }
+            }
+        }
+    }
+
+    on_capitulation = {
+        effect = {
+            FROM = {
+                #Lacplesis
+                if = {
+                    limit = {
+                        is_major = no
+                        ROOT = {
+                            tag = SOV
+                        }
+                        NOT = {
+                            is_in_array = { global.lacplesis_achievement = THIS }
+                        }
+                    }
+                    add_to_array = { global.lacplesis_achievement = THIS }
+                    set_variable = { global.lacplesis_achievement_date@THIS = global.date }
+                    set_country_flag = russia_reworked_new_achievement
+                    if = {
+                        limit = {
+                            has_global_flag = russia_reworked_achievements_enabled
+                        }
+                        scoped_sound_effect = "russia_reworked_unlock_achievement"
+                    }
+                }
             }
         }
     }

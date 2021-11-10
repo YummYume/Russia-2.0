@@ -22012,12 +22012,6 @@ SOV_third_rome_decision_categories = {
 			    var = reformation_third_rome
 			    value = 1
 			}
-			set_province_name = { id = 9833 name = "Konstantinopol"}
-			hidden_effect = {
-				797 = {
-					set_state_name = "Konstantinopol"
-				}
-			}
 		}
 	}
 
@@ -31456,6 +31450,7 @@ SOV_track_stalin_decision = {
 
 		complete_effect = {
 			set_country_flag = is_searching_for_stalin
+			add_to_variable = { sov_stalin_track_tries = 1 }
 		}
 
 		remove_effect = {
@@ -40451,9 +40446,31 @@ SOV_russianize_state = { #TODO Change state id when the Russian update is live
 				}
 				set_province_name = { id = 9833 name = "Tsarigrad" }
 				hidden_effect = {
-					set_global_flag = SOV_istanbul_renamed
+					set_global_flag = SOV_istanbul_renamed_tsarigrad
 					797 = {
 						set_state_name = "Tsarigrad"
+					}
+					SOV = {
+						if = {
+							limit = {
+								is_subject = no
+								has_government = neutrality
+								has_cosmetic_tag = RUS
+								has_full_control_of_state = 219
+								has_full_control_of_state = 2
+								has_full_control_of_state = 797
+								has_global_flag = SOV_istanbul_renamed_tsarigrad
+							}
+							add_to_array = { global.rome_tsarigrad_moscow_achievement = THIS }
+							set_variable = { global.rome_tsarigrad_moscow_achievement_date@THIS = global.date }
+							set_country_flag = russia_reworked_new_achievement
+							if = {
+								limit = {
+									has_global_flag = russia_reworked_achievements_enabled
+								}
+								scoped_sound_effect = "russia_reworked_unlock_achievement"
+							}
+						}
 					}
 				}
 			}
