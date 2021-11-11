@@ -25,6 +25,8 @@ if __name__ == "__main__":
             "lacplesis",
             "third_friend",
             "national_priority",
+            "tour_de_france",
+            "making_fun_of_me_uh",
             "click_me",
             "big_tower"
         ]
@@ -100,7 +102,7 @@ if __name__ == "__main__":
                 
                 instantTextBoxType = {{
                     name = "achievement_desc"
-                    position = {{ x = 112 y = 30 }}
+                    position = {{ x = @ACHIEVEMENT_DESC_POSITION_X y = @ACHIEVEMENT_DESC_POSITION_Y }}
                     font = "hoi_18mbs"
                     borderSize = {{ x = 0 y = 0 }}
                     text = russia_reworked_{ achievement }_achievement_desc

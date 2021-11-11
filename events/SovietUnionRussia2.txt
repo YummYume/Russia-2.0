@@ -2940,14 +2940,21 @@ country_event = {
 				}
 				set_capital = 16
 			}
-			add_to_array = { global.revolution_completed_achievement = THIS }
-			set_variable = { global.revolution_completed_achievement_date@THIS = global.date }
-			set_country_flag = russia_reworked_new_achievement
 			if = {
 				limit = {
-					has_global_flag = russia_reworked_achievements_enabled
+					NOT = {
+						is_in_array = { global.revolution_completed_achievement = THIS }
+					}
 				}
-				scoped_sound_effect = "russia_reworked_unlock_achievement"
+				add_to_array = { global.revolution_completed_achievement = THIS }
+				set_variable = { global.revolution_completed_achievement_date@THIS = global.date }
+				set_country_flag = russia_reworked_new_achievement
+				if = {
+					limit = {
+						has_global_flag = russia_reworked_achievements_enabled
+					}
+					scoped_sound_effect = "russia_reworked_unlock_achievement"
+				}
 			}
 		}
 	}
@@ -11448,6 +11455,27 @@ country_event = {
 
 	fire_only_once = yes
 
+	immediate = {
+		hidden_effect = {
+			if = {
+				limit = {
+					NOT = {
+						is_in_array = { global.tour_de_france_achievement = THIS }
+					}
+				}
+				add_to_array = { global.tour_de_france_achievement = THIS }
+				set_variable = { global.tour_de_france_achievement_date@THIS = global.date }
+				set_country_flag = russia_reworked_new_achievement
+				if = {
+					limit = {
+						has_global_flag = russia_reworked_achievements_enabled
+					}
+					scoped_sound_effect = "russia_reworked_unlock_achievement"
+				}
+			}
+		}
+	}
+
 	mean_time_to_happen = {
 		days = 30
 	}
@@ -18173,6 +18201,9 @@ country_event = {
 							var = sov_stalin_track_tries
 							value = 1
 							compare = equals
+						}
+						NOT = {
+							is_in_array = { global.gotcha_achievement = THIS }
 						}
 					}
 					add_to_array = { global.gotcha_achievement = THIS }
@@ -27259,8 +27290,28 @@ country_event = {
 							tag = GXC
 							is_literally_china = yes
 						}
+						NOT = {
+							has_country_leader_with_trait = making_fun_of_me_uh
+						}
 					}
 					add_country_leader_trait = making_fun_of_me_uh
+					every_country = {
+						limit = {
+							is_ai = no
+							NOT = {
+								is_in_array = { global.making_fun_of_me_uh_achievement = THIS }
+							}
+						}
+						add_to_array = { global.making_fun_of_me_uh_achievement = THIS }
+						set_variable = { global.making_fun_of_me_uh_achievement_date@THIS = global.date }
+						set_country_flag = russia_reworked_new_achievement
+						if = {
+							limit = {
+								has_global_flag = russia_reworked_achievements_enabled
+							}
+							scoped_sound_effect = "russia_reworked_unlock_achievement"
+						}
+					}
 				}
 			}
 			else_if = {
