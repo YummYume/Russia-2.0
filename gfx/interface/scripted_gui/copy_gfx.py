@@ -58,6 +58,8 @@ if __name__ == "__main__":
             "lacplesis",
             "third_friend",
             "national_priority",
+            "tour_de_france",
+            "making_fun_of_me_uh",
             "click_me",
             "big_tower"
         ]
@@ -118,12 +120,12 @@ if __name__ == "__main__":
                     if not os.path.isfile(f"GFX_{ achievement }_locked.dds"):
                         shutil.copy(f"GFX_achievement_unknown_locked.dds", f"GFX_{ achievement }_locked.dds")
                     else:
-                        print("Warning : file GFX_%_locked.dds already exists, skipping..." % national_obligation)
+                        print("Warning : file GFX_%s_locked.dds already exists, skipping..." % national_obligation)
 
                     if not os.path.isfile(f"GFX_{ achievement }_unlocked.dds"):
                         shutil.copy(f"GFX_achievement_unknown_unlocked.dds", f"GFX_{ achievement }_unlocked.dds")
                     else:
-                        print("Warning : file GFX_%_unlocked.dds already exists, skipping..." % national_obligation)
+                        print("Warning : file GFX_%s_unlocked.dds already exists, skipping..." % national_obligation)
 
             else:
                 print("Warning : file GFX_achievement_unknown_unlocked.dds cannot be found")

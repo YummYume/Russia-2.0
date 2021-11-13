@@ -312,7 +312,7 @@ country_event = {
 	}
 }
 
-#Mongolia refuse
+#Mongolia Refuses
 country_event = {
 	id = russia2_russia.13
 	title = russia2_russia.13.t
@@ -321,7 +321,7 @@ country_event = {
 
 	is_triggered_only = yes
 
-	option = { #damn
+	option = { #Damn
 		name = russia2_russia.13.a
 	}
 }
@@ -2146,14 +2146,21 @@ country_event = {
 			}
 		}
 		hidden_effect = {
-			add_to_array = { global.drunkard_wheel_achievement = THIS }
-			set_variable = { global.drunkard_wheel_achievement_date@THIS = global.date }
-			set_country_flag = russia_reworked_new_achievement
 			if = {
 				limit = {
-					has_global_flag = russia_reworked_achievements_enabled
+					NOT = {
+						is_in_array = { global.drunkard_wheel_achievement = THIS }
+					}
 				}
-				scoped_sound_effect = "russia_reworked_unlock_achievement"
+				add_to_array = { global.drunkard_wheel_achievement = THIS }
+				set_variable = { global.drunkard_wheel_achievement_date@THIS = global.date }
+				set_country_flag = russia_reworked_new_achievement
+				if = {
+					limit = {
+						has_global_flag = russia_reworked_achievements_enabled
+					}
+					scoped_sound_effect = "russia_reworked_unlock_achievement"
+				}
 			}
 			news_event = { id = newsrussia2.32 days = 1 }
 		}
@@ -2231,14 +2238,21 @@ country_event = {
 			}
 		}
 		hidden_effect = {
-			add_to_array = { global.drunkard_wheel_achievement = THIS }
-			set_variable = { global.drunkard_wheel_achievement_date@THIS = global.date }
-			set_country_flag = russia_reworked_new_achievement
 			if = {
 				limit = {
-					has_global_flag = russia_reworked_achievements_enabled
+					NOT = {
+						is_in_array = { global.drunkard_wheel_achievement = THIS }
+					}
 				}
-				scoped_sound_effect = "russia_reworked_unlock_achievement"
+				add_to_array = { global.drunkard_wheel_achievement = THIS }
+				set_variable = { global.drunkard_wheel_achievement_date@THIS = global.date }
+				set_country_flag = russia_reworked_new_achievement
+				if = {
+					limit = {
+						has_global_flag = russia_reworked_achievements_enabled
+					}
+					scoped_sound_effect = "russia_reworked_unlock_achievement"
+				}
 			}
 			news_event = { id = newsrussia2.33 days = 1 }
 		}
@@ -2896,118 +2910,52 @@ country_event = {
 	desc = russia2_russia.86.d
 	picture = GFX_report_event_german_reichstag_gathering
 
-	fire_only_once = yes
-
-	trigger = {
-		tag = SOV
-		SOV = {
-			has_government = communism
-			num_subjects > 19
-			NOT = {
-				has_idea = SOV_Exiled_russia
-				has_idea = trotskyite_plot
-				has_cosmetic_tag = SUW
-				has_cosmetic_tag = SOV_proletarian_union
-				is_subject = yes
-			}
-			is_major = yes
-			arms_factory > 149
-			industrial_complex > 149
-			is_faction_leader = yes
-			OR = {
-				has_completed_focus = SOV_komintern_unite
-				has_completed_focus = SOV_workers_world_unite
-			}
-			OR = {
-				OR = {
-					16 = {
-						is_owned_and_controlled_by = SOV
-					}
-					any_allied_country = {
-						has_government = communism
-						has_full_control_of_state = 16
-					}
-				}
-				OR = {
-					64 = {
-						is_owned_and_controlled_by = SOV
-					}
-					any_allied_country = {
-						has_government = communism
-						has_full_control_of_state = 64
-					}
-				}
-				OR = {
-					2 = {
-						is_owned_and_controlled_by = SOV
-					}
-					any_allied_country = {
-						has_government = communism
-						has_full_control_of_state = 2
-					}
-				}
-				OR = {
-					126 = {
-						is_owned_and_controlled_by = SOV
-					}
-					any_allied_country = {
-						has_government = communism
-						has_full_control_of_state = 126
-					}
-				}
-				OR = {
-					361 = {
-						is_owned_and_controlled_by = SOV
-					}
-					any_allied_country = {
-						has_government = communism
-						has_full_control_of_state = 361
-					}
-				}
-				OR = {
-					282 = {
-						is_owned_and_controlled_by = SOV
-					}
-					any_allied_country = {
-						has_government = communism
-						has_full_control_of_state = 282
-					}
-				}
-			}
-		}
-	}
+	is_triggered_only = yes
 
 	option = { #Yes!
 		name = russia2_russia.86.a
 		ai_chance = {
 			base = 100
 		}
+		add_country_leader_trait = proletarian
+		set_cosmetic_tag = SOV_proletarian_union
+		set_country_flag = has_formed_proletarian_union
 		every_other_country = {
 			limit = {
 				is_subject_of = SOV
 			}
 			country_event = { id = russia2_generic.4 days = 1 }
 		}
-		if = {
-			limit = {
-				has_global_flag = Trotsky_return
-				NOT = {
-					has_cosmetic_tag = SUW
+		hidden_effect = {
+			news_event = { id = newsrussia2.42 days = 1 }
+			if = {
+				limit = {
+					has_full_control_of_state = 42
+				}
+				set_capital = 42
+			}
+			else_if = {
+				limit = {
+					has_full_control_of_state = 16
+				}
+				set_capital = 16
+			}
+			if = {
+				limit = {
+					NOT = {
+						is_in_array = { global.revolution_completed_achievement = THIS }
+					}
+				}
+				add_to_array = { global.revolution_completed_achievement = THIS }
+				set_variable = { global.revolution_completed_achievement_date@THIS = global.date }
+				set_country_flag = russia_reworked_new_achievement
+				if = {
+					limit = {
+						has_global_flag = russia_reworked_achievements_enabled
+					}
+					scoped_sound_effect = "russia_reworked_unlock_achievement"
 				}
 			}
-			custom_effect_tooltip = SOV_socialist_meeting_cancel_tt
-		}
-
-		hidden_effect = {
-			country_event = { id = russia2_russia.89 days = 10 }
-		}
-		set_country_flag = has_formed_proletarian_union
-	}
-
-	option = { #No
-		name = russia2_russia.86.b
-		ai_chance = {
-			base = 0
 		}
 	}
 }
@@ -3050,7 +2998,7 @@ country_event = {
 	}
 }
 
-#Proletarian Union!
+#Proletarian Union! (not used anymore)
 country_event = {
 	id = russia2_russia.89
 
@@ -3176,14 +3124,21 @@ country_event = {
 		}
 		set_country_flag = socialist_union_worker_formed
 		hidden_effect = {
-			add_to_array = { global.revolution_completed_achievement = THIS }
-			set_variable = { global.revolution_completed_achievement_date@THIS = global.date }
-			set_country_flag = russia_reworked_new_achievement
 			if = {
 				limit = {
-					has_global_flag = russia_reworked_achievements_enabled
+					NOT = {
+						is_in_array = { global.revolution_completed_achievement = THIS }
+					}
 				}
-				scoped_sound_effect = "russia_reworked_unlock_achievement"
+				add_to_array = { global.revolution_completed_achievement = THIS }
+				set_variable = { global.revolution_completed_achievement_date@THIS = global.date }
+				set_country_flag = russia_reworked_new_achievement
+				if = {
+					limit = {
+						has_global_flag = russia_reworked_achievements_enabled
+					}
+					scoped_sound_effect = "russia_reworked_unlock_achievement"
+				}
 			}
 			news_event = { id = newsrussia2.43 days = 1 }
 		}
@@ -11560,6 +11515,27 @@ country_event = {
 
 	fire_only_once = yes
 
+	immediate = {
+		hidden_effect = {
+			if = {
+				limit = {
+					NOT = {
+						is_in_array = { global.tour_de_france_achievement = THIS }
+					}
+				}
+				add_to_array = { global.tour_de_france_achievement = THIS }
+				set_variable = { global.tour_de_france_achievement_date@THIS = global.date }
+				set_country_flag = russia_reworked_new_achievement
+				if = {
+					limit = {
+						has_global_flag = russia_reworked_achievements_enabled
+					}
+					scoped_sound_effect = "russia_reworked_unlock_achievement"
+				}
+			}
+		}
+	}
+
 	mean_time_to_happen = {
 		days = 30
 	}
@@ -15246,6 +15222,32 @@ country_event = {
 			factor = 100
 		}
 		custom_effect_tooltip = unlock_decision_can_puppet_communist_uprising
+		hidden_effect = {
+			SOV = {
+				add_to_variable = { sov_trotsky_successful_revolution_count = 1 }
+				if = {
+					limit = {
+						check_variable = {
+							var = sov_trotsky_successful_revolution_count
+							value = 5
+							compare = greater_than_or_equals
+						}
+						NOT = {
+							is_in_array = { global.quick_revolution_achievement = THIS }
+						}
+					}
+					add_to_array = { global.quick_revolution_achievement = THIS }
+					set_variable = { global.quick_revolution_achievement_date@THIS = global.date }
+					set_country_flag = russia_reworked_new_achievement
+					if = {
+						limit = {
+							has_global_flag = russia_reworked_achievements_enabled
+						}
+						scoped_sound_effect = "russia_reworked_unlock_achievement"
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -15264,6 +15266,32 @@ country_event = {
 			factor = 100
 		}
 		custom_effect_tooltip = unlock_decision_can_invite_communist_submit
+		hidden_effect = {
+			SOV = {
+				add_to_variable = { sov_trotsky_successful_revolution_count = 1 }
+				if = {
+					limit = {
+						check_variable = {
+							var = sov_trotsky_successful_revolution_count
+							value = 5
+							compare = greater_than_or_equals
+						}
+						NOT = {
+							is_in_array = { global.quick_revolution_achievement = THIS }
+						}
+					}
+					add_to_array = { global.quick_revolution_achievement = THIS }
+					set_variable = { global.quick_revolution_achievement_date@THIS = global.date }
+					set_country_flag = russia_reworked_new_achievement
+					if = {
+						limit = {
+							has_global_flag = russia_reworked_achievements_enabled
+						}
+						scoped_sound_effect = "russia_reworked_unlock_achievement"
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -18223,6 +18251,34 @@ country_event = {
 	picture = GFX_report_event_soviet_soldiers_tank
 
 	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			SOV = {
+				if = {
+					limit = {
+						check_variable = {
+							var = sov_stalin_track_tries
+							value = 1
+							compare = equals
+						}
+						NOT = {
+							is_in_array = { global.gotcha_achievement = THIS }
+						}
+					}
+					add_to_array = { global.gotcha_achievement = THIS }
+					set_variable = { global.gotcha_achievement_date@THIS = global.date }
+					set_country_flag = russia_reworked_new_achievement
+					if = {
+						limit = {
+							has_global_flag = russia_reworked_achievements_enabled
+						}
+						scoped_sound_effect = "russia_reworked_unlock_achievement"
+					}
+				}
+			}
+		}
+	}
 
 	option = { #Execute him
 		name = russia2_russia.434.a
@@ -21724,14 +21780,21 @@ country_event = {
 			}
 		}
 		hidden_effect = {
-			add_to_array = { global.not_sus_achievement = THIS }
-			set_variable = { global.not_sus_achievement_date@THIS = global.date }
-			set_country_flag = russia_reworked_new_achievement
 			if = {
 				limit = {
-					has_global_flag = russia_reworked_achievements_enabled
+					NOT = {
+						is_in_array = { global.not_sus_achievement = THIS }
+					}
 				}
-				scoped_sound_effect = "russia_reworked_unlock_achievement"
+				add_to_array = { global.not_sus_achievement = THIS }
+				set_variable = { global.not_sus_achievement_date@THIS = global.date }
+				set_country_flag = russia_reworked_new_achievement
+				if = {
+					limit = {
+						has_global_flag = russia_reworked_achievements_enabled
+					}
+					scoped_sound_effect = "russia_reworked_unlock_achievement"
+				}
 			}
 		}
 	}
@@ -22796,6 +22859,30 @@ country_event = {
 					}
 				}
 			}
+			SOV = {
+				add_to_variable = { sov_trotsky_successful_revolution_count = 1 }
+				if = {
+					limit = {
+						check_variable = {
+							var = sov_trotsky_successful_revolution_count
+							value = 5
+							compare = greater_than_or_equals
+						}
+						NOT = {
+							is_in_array = { global.quick_revolution_achievement = THIS }
+						}
+					}
+					add_to_array = { global.quick_revolution_achievement = THIS }
+					set_variable = { global.quick_revolution_achievement_date@THIS = global.date }
+					set_country_flag = russia_reworked_new_achievement
+					if = {
+						limit = {
+							has_global_flag = russia_reworked_achievements_enabled
+						}
+						scoped_sound_effect = "russia_reworked_unlock_achievement"
+					}
+				}
+			}
 		}
 		else = {
 			if = {
@@ -23071,6 +23158,30 @@ country_event = {
 							target = PREV
 							type = annex_everything
 						}
+					}
+				}
+			}
+			SOV = {
+				add_to_variable = { sov_trotsky_successful_revolution_count = 1 }
+				if = {
+					limit = {
+						check_variable = {
+							var = sov_trotsky_successful_revolution_count
+							value = 5
+							compare = greater_than_or_equals
+						}
+						NOT = {
+							is_in_array = { global.quick_revolution_achievement = THIS }
+						}
+					}
+					add_to_array = { global.quick_revolution_achievement = THIS }
+					set_variable = { global.quick_revolution_achievement_date@THIS = global.date }
+					set_country_flag = russia_reworked_new_achievement
+					if = {
+						limit = {
+							has_global_flag = russia_reworked_achievements_enabled
+						}
+						scoped_sound_effect = "russia_reworked_unlock_achievement"
 					}
 				}
 			}
@@ -27239,8 +27350,28 @@ country_event = {
 							tag = GXC
 							is_literally_china = yes
 						}
+						NOT = {
+							has_country_leader_with_trait = making_fun_of_me_uh
+						}
 					}
 					add_country_leader_trait = making_fun_of_me_uh
+					every_country = {
+						limit = {
+							is_ai = no
+							NOT = {
+								is_in_array = { global.making_fun_of_me_uh_achievement = THIS }
+							}
+						}
+						add_to_array = { global.making_fun_of_me_uh_achievement = THIS }
+						set_variable = { global.making_fun_of_me_uh_achievement_date@THIS = global.date }
+						set_country_flag = russia_reworked_new_achievement
+						if = {
+							limit = {
+								has_global_flag = russia_reworked_achievements_enabled
+							}
+							scoped_sound_effect = "russia_reworked_unlock_achievement"
+						}
+					}
 				}
 			}
 			else_if = {

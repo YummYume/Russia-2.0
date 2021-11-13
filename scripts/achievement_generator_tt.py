@@ -25,6 +25,8 @@ if __name__ == "__main__":
             "lacplesis",
             "third_friend",
             "national_priority",
+            "tour_de_france",
+            "making_fun_of_me_uh",
             "click_me",
             "big_tower"
         ]
@@ -34,6 +36,7 @@ if __name__ == "__main__":
         scripted_gui_dynamic_list = ""
         scripted_gui_trigger = ""
         localisation = ""
+        gfx = ""
         y = 5
 
         print("Generating %s achievement..." % (len(achievements)))
@@ -99,7 +102,7 @@ if __name__ == "__main__":
                 
                 instantTextBoxType = {{
                     name = "achievement_desc"
-                    position = {{ x = 112 y = 30 }}
+                    position = {{ x = @ACHIEVEMENT_DESC_POSITION_X y = @ACHIEVEMENT_DESC_POSITION_Y }}
                     font = "hoi_18mbs"
                     borderSize = {{ x = 0 y = 0 }}
                     text = russia_reworked_{ achievement }_achievement_desc
@@ -206,12 +209,35 @@ if __name__ == "__main__":
  LOC_russia_reworked_{ achievement }_entry_tt_desc:0 "§Y[THIS.GetNameDefCap]§! obtained this achievement at§Y[?global.{ achievement }_achievement_date@THIS.GetDateString]§!."
             """
 
+            gfx += f"""
+    spriteType = {{
+        name = "GFX_{ achievement }_locked"
+        texturefile = "gfx/interface/scripted_gui/GFX_{ achievement }_locked.dds"
+    }}
+
+    spriteType = {{
+        name = "GFX_{ achievement }_unlocked"
+        texturefile = "gfx/interface/scripted_gui/GFX_{ achievement }_unlocked.dds"
+    }}
+            """
+
+        gui += f"""
+            #Don't touch that
+            containerWindowType = {{
+                name = "russia_reworked_bottom_space_achievement"
+                position = {{ x = 15 y = { y } }}
+                size = {{ width = 600 height = 0 }}
+            }}
+        """
+
         f = open("achievements_save.txt", "w", encoding='utf-8-sig')
         f.write(gui)
         f.write(sub_gui)
         f.write(scripted_gui_dynamic_list)
         f.write(scripted_gui_trigger)
         f.write(localisation)
+        f.write(gfx)
+        f.close()
         print("Success")
 
     except Exception:

@@ -4194,7 +4194,7 @@ focus_tree = {
         y = 7
         prerequisite = { focus = UKR_new_laws }
         icon = GFX_focus_Reign_of_Terror
-        cost = 5
+        cost = 6
         ai_will_do = {
             factor = 1
         }
@@ -4208,7 +4208,8 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_stability = 0.1
+            add_war_support = 0.1
         }
     }
 
@@ -4219,7 +4220,7 @@ focus_tree = {
         y = 7
         prerequisite = { focus = UKR_new_laws }
         icon = GFX_focus_generic_home_defense
-        cost = 5
+        cost = 4
         ai_will_do = {
             factor = 1
         }
@@ -4259,7 +4260,7 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_ideas = UKR_Past_glory
         }
     }
 
@@ -4284,7 +4285,23 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_timed_idea = {
+                idea = UKR_Golden_age
+                days = 365
+            }
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 2
+                add_building_construction = {
+                    type = arms_factory
+                    level = 1
+                    instant_build = yes
+                }
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 1
+                    instant_build = yes
+                }
+            }
         }
     }
 
@@ -4295,7 +4312,7 @@ focus_tree = {
         y = 9
         prerequisite = { focus = UKR_ukrainian_golden_age }
         icon = GFX_goal_generic_construct_civilian
-        cost = 5
+        cost = 6
         ai_will_do = {
             factor = 1
         }
@@ -4309,7 +4326,7 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            custom_effect_tooltip = UKR_develop_rural_regions_tt
         }
     }
 
@@ -4320,7 +4337,7 @@ focus_tree = {
         y = 10
         prerequisite = { focus = UKR_develop_rural_regions }
         icon = GFX_goal_generic_dangerous_deal
-        cost = 5
+        cost = 8
         ai_will_do = {
             factor = 1
         }
@@ -4334,7 +4351,7 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            country_event = russia2_ukrain.68
         }
     }
 
@@ -4361,7 +4378,10 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_timed_idea = {
+                idea = UKR_Share_goods
+                days = 365
+            }
         }
     }
 
@@ -4388,7 +4408,10 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_timed_idea = {
+                idea = UKR_Empower_upper_class
+                days = 365
+            }
         }
     }
 
@@ -4424,7 +4447,8 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_political_power = 150
+            add_ideas = UKR_Proud_state
         }
     }
 
@@ -4460,7 +4484,8 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_political_power = 150
+            add_ideas = UKR_Stable_state
         }
     }
 
@@ -4471,7 +4496,7 @@ focus_tree = {
         y = 8
         prerequisite = { focus = UKR_past_glory }
         icon = GFX_goal_generic_military_sphere
-        cost = 5
+        cost = 4
         ai_will_do = {
             factor = 1
         }
@@ -4485,7 +4510,10 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_timed_idea = {
+                idea = UKR_Prepare_army
+                days = 365
+            }
         }
     }
 
@@ -4525,17 +4553,111 @@ focus_tree = {
         ai_will_do = {
             factor = 1
         }
+        will_lead_to_war_with = ROM
+		will_lead_to_war_with = MOL
         bypass = {
-
+            AND = {
+                OR = {
+                    has_full_control_of_state = 78
+                    any_country = {
+                        has_full_control_of_state = 78
+                        OR = {
+                            has_war_with = ROOT
+                            is_subject_of = ROOT
+                            is_in_faction_with = ROOT
+                        }
+                    }
+                }
+                OR = {
+                    has_full_control_of_state = 766
+                    any_country = {
+                        has_full_control_of_state = 766
+                        OR = {
+                            has_war_with = ROOT
+                            is_subject_of = ROOT
+                            is_in_faction_with = ROOT
+                        }
+                    }
+                }
+            }
         }
         available = {
+            has_army_manpower = {
+                size > 250000
+            }
+            78 = {
+				OWNER = {
+					has_full_control_of_state = 78
+					NOT = {
+                        tag = ROOT
+						has_war_with = ROOT
+						is_subject_of = ROOT
+						is_in_faction_with = ROOT
+					}
+					is_neighbor_of = ROOT
+				}
+			}
+            766 = {
+				OWNER = {
+					has_full_control_of_state = 766
+					NOT = {
+                        tag = ROOT
+						has_war_with = ROOT
+						is_subject_of = ROOT
+						is_in_faction_with = ROOT
+					}
+					is_neighbor_of = ROOT
+				}
+			}
             NOT = {
                 has_government = anarchy
             }
         }
         search_filters = {  }
         completion_reward = {
-
+            if = {
+				limit = {
+					any_country = {
+						is_subject = yes
+						owns_state = 78
+					}
+				}
+				78 = {
+					OWNER = {
+						OVERLORD = {
+							country_event = { hours = 6 id = russia2_romania.17 }
+							custom_effect_tooltip = UKR_demand_bessarabia_tt
+						}
+					}
+				}
+			}
+            if = {
+				limit = {
+					any_country = {
+						is_subject = yes
+						owns_state = 766
+					}
+				}
+				766 = {
+					OWNER = {
+						OVERLORD = {
+							country_event = { hours = 6 id = russia2_romania.17 }
+							custom_effect_tooltip = UKR_demand_bessarabia_tt2
+						}
+					}
+				}
+			}
+			else = {
+				every_country = {
+					limit = {
+                        OR = {
+                            owns_state = 78
+                            owns_state = 766
+                        }
+					}
+					country_event = { hours = 6 id = russia2_romania.17 }
+				}
+			}
         }
     }
 
@@ -4579,13 +4701,23 @@ focus_tree = {
 
         }
         available = {
+            is_subject = no
             NOT = {
                 has_government = anarchy
             }
         }
         search_filters = {  }
         completion_reward = {
-
+            if = {
+                limit = {
+                    is_faction_leader = yes
+                }
+                set_faction_name = ukrainian_sphere
+            }
+            else = {
+                create_faction = ukrainian_sphere
+            }
+            add_ideas = UKR_Ukrainian_sphere
         }
     }
 
@@ -4604,13 +4736,15 @@ focus_tree = {
 
         }
         available = {
+            is_subject = no
+            is_faction_leader = yes
             NOT = {
                 has_government = anarchy
             }
         }
         search_filters = {  }
         completion_reward = {
-
+            custom_effect_tooltip = UKR_ukrainian_friendship_tt
         }
     }
 
@@ -4629,6 +4763,7 @@ focus_tree = {
 
         }
         available = {
+            is_subject = no
             NOT = {
                 has_government = anarchy
             }
@@ -4675,7 +4810,7 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_ideas = UKR_United_ukraine
         }
     }
 
@@ -4705,7 +4840,7 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_ideas = UKR_Ukrainian_dominance
         }
     }
 

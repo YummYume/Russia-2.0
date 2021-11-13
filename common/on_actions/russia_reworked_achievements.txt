@@ -1,7 +1,671 @@
 # Most achievements will be checked weekly (apart from certain ones, such as winning the SCW)
 # Some achievements will be checked only here, while some will be checked both here and somewhere else in the code
-on_weekly_SOV = {
-    effect = {
+on_actions = {
+    on_weekly_SOV = {
+        effect = {
+            #Revolution Completed
+            if = {
+                limit = {
+                    has_government = communism
+                    is_subject = no
+                    has_country_leader = {
+                        name = "Leon Trotsky"
+                        ruling_only = yes
+                    }
+                    has_cosmetic_tag = SUW
+                    NOT = {
+                        is_in_array = { global.revolution_completed_achievement = THIS }
+                    }
+                }
+                add_to_array = { global.revolution_completed_achievement = THIS }
+				set_variable = { global.revolution_completed_achievement_date@THIS = global.date }
+				set_country_flag = russia_reworked_new_achievement
+				if = {
+					limit = {
+					    has_global_flag = russia_reworked_achievements_enabled
+					}
+					scoped_sound_effect = "russia_reworked_unlock_achievement"
+				}
+            }
 
+            #Not Sus Afterall
+            if = {
+                limit = {
+                    has_government = neutrality
+                    has_country_leader = {
+                        name = "Anastasia Nikolaevna"
+                        ruling_only = yes
+                    }
+                    NOT = {
+                        is_in_array = { global.not_sus_achievement = THIS }
+                    }
+                }
+                add_to_array = { global.not_sus_achievement = THIS }
+				set_variable = { global.not_sus_achievement_date@THIS = global.date }
+				set_country_flag = russia_reworked_new_achievement
+				if = {
+					limit = {
+					    has_global_flag = russia_reworked_achievements_enabled
+					}
+					scoped_sound_effect = "russia_reworked_unlock_achievement"
+				}
+            }
+
+            #New World Order
+            if = {
+                limit = {
+                    has_government = fascism
+                    is_subject = no
+                    all_of_scopes = {
+                        array = global.russia_reworked_continents
+                        
+                        is_subject_of = SOV
+                    }
+                    NOT = {
+                        is_in_array = { global.new_world_order_achievement = THIS }
+                    }
+                }
+                add_to_array = { global.new_world_order_achievement = THIS }
+				set_variable = { global.new_world_order_achievement_date@THIS = global.date }
+				set_country_flag = russia_reworked_new_achievement
+				if = {
+					limit = {
+					    has_global_flag = russia_reworked_achievements_enabled
+					}
+					scoped_sound_effect = "russia_reworked_unlock_achievement"
+				}
+            }
+
+            #Red Army
+            if = {
+                limit = {
+                    has_government = communism
+                    is_subject = no
+                    has_army_manpower = {
+                        size > 5000000
+                    }
+                    NOT = {
+                        is_in_array = { global.red_army_achievement = THIS }
+                    }
+                }
+                add_to_array = { global.red_army_achievement = THIS }
+				set_variable = { global._date@THIS = global.date }
+				set_country_flag = russia_reworked_new_achievement
+				if = {
+					limit = {
+					    has_global_flag = russia_reworked_achievements_enabled
+					}
+					scoped_sound_effect = "russia_reworked_unlock_achievement"
+				}
+            }
+
+            #Drunkard at the Wheel
+            if = {
+                limit = {
+                    has_government = communism
+                    is_subject = no
+                    has_country_leader = {
+                        name = "Vasily Stalin"
+                        ruling_only = yes
+                    }
+                    NOT = {
+                        is_in_array = { global.drunkard_wheel_achievement = THIS }
+                    }
+                }
+                add_to_array = { global.drunkard_wheel_achievement = THIS }
+				set_variable = { global.drunkard_wheel_achievement_date@THIS = global.date }
+				set_country_flag = russia_reworked_new_achievement
+				if = {
+					limit = {
+					    has_global_flag = russia_reworked_achievements_enabled
+					}
+					scoped_sound_effect = "russia_reworked_unlock_achievement"
+				}
+            }
+
+            #Quick Revolution
+            if = {
+                limit = {
+                    has_government = communism
+                    is_subject = no
+                    has_country_leader = {
+                        name = "Leon Trotsky"
+                        ruling_only = yes
+                    }
+                    check_variable = {
+                        var = sov_trotsky_successful_revolution_count
+                        value = 5
+                        compare = greater_than_or_equals
+                    }
+                    NOT = {
+                        is_in_array = { global.quick_revolution_achievement = THIS }
+                    }
+                }
+                add_to_array = { global.quick_revolution_achievement = THIS }
+				set_variable = { global.quick_revolution_achievement_date@THIS = global.date }
+				set_country_flag = russia_reworked_new_achievement
+				if = {
+					limit = {
+					    has_global_flag = russia_reworked_achievements_enabled
+					}
+					scoped_sound_effect = "russia_reworked_unlock_achievement"
+				}
+            }
+
+            #The Third Friend
+            if = {
+                limit = {
+                    has_tech = early_fighter
+                    has_tech = fighter1
+                    has_tech = fighter2
+                    has_tech = fighter3
+                    has_tech = CAS1
+                    has_tech = CAS2
+                    has_tech = CAS3
+                    has_tech = naval_bomber1
+                    has_tech = naval_bomber2
+                    has_tech = naval_bomber3
+                    has_tech = early_bomber
+                    has_tech = heavy_fighter1
+                    has_tech = heavy_fighter2
+                    has_tech = heavy_fighter3
+                    has_tech = tactical_bomber1
+                    has_tech = tactical_bomber2
+                    has_tech = tactical_bomber3
+                    has_tech = strategic_bomber1
+                    has_tech = strategic_bomber2
+                    has_tech = strategic_bomber3
+                    NOT = {
+                        is_in_array = { global.third_friend_achievement = THIS }
+                    }
+                }
+                add_to_array = { global.third_friend_achievement = THIS }
+				set_variable = { global.third_friend_achievement_date@THIS = global.date }
+				set_country_flag = russia_reworked_new_achievement
+				if = {
+					limit = {
+					    has_global_flag = russia_reworked_achievements_enabled
+					}
+					scoped_sound_effect = "russia_reworked_unlock_achievement"
+				}
+            }
+
+            #Rome, Tsarigrad, Moscow
+            if = {
+                limit = {
+                    is_subject = no
+                    has_government = neutrality
+                    has_cosmetic_tag = RUS
+                    has_full_control_of_state = 219
+                    has_full_control_of_state = 2
+                    has_full_control_of_state = 797
+                    has_global_flag = SOV_istanbul_renamed_tsarigrad
+                    NOT = {
+                        is_in_array = { global.rome_tsarigrad_moscow_achievement = THIS }
+                    }
+                }
+                add_to_array = { global.rome_tsarigrad_moscow_achievement = THIS }
+				set_variable = { global.rome_tsarigrad_moscow_achievement_date@THIS = global.date }
+				set_country_flag = russia_reworked_new_achievement
+				if = {
+					limit = {
+					    has_global_flag = russia_reworked_achievements_enabled
+					}
+					scoped_sound_effect = "russia_reworked_unlock_achievement"
+				}
+            }
+
+            #Running in the 90's
+            if = {
+                limit = {
+                    is_subject = no
+                    has_government = democratic
+                    controls_state = 763
+                    country_exists = UKR
+                    country_exists = BLR
+                    country_exists = MOL
+                    country_exists = GEO
+                    country_exists = AZR
+                    country_exists = ARM
+                    country_exists = KAZ
+                    country_exists = KYR
+                    country_exists = TAJ
+                    country_exists = UZB
+                    country_exists = TMS
+                    country_exists = LIT
+                    country_exists = LAT
+                    country_exists = EST
+                    NOT = {
+                        is_in_array = { global.running_90_achievement = THIS }
+                    }
+                }
+                add_to_array = { global.running_90_achievement = THIS }
+				set_variable = { global.running_90_achievement_date@THIS = global.date }
+				set_country_flag = russia_reworked_new_achievement
+				if = {
+					limit = {
+					    has_global_flag = russia_reworked_achievements_enabled
+					}
+					scoped_sound_effect = "russia_reworked_unlock_achievement"
+				}
+            }
+
+            #Tour de France
+            if = {
+                limit = {
+                    has_unit_leader = 512
+                    any_unit_leader = {
+                        has_id = 512
+                        has_trait = yellow_jersey
+                    }
+                    NOT = {
+                        is_in_array = { global.tour_de_france_achievement = THIS }
+                    }
+                }
+                add_to_array = { global.tour_de_france_achievement = THIS }
+				set_variable = { global.tour_de_france_achievement_date@THIS = global.date }
+				set_country_flag = russia_reworked_new_achievement
+				if = {
+					limit = {
+					    has_global_flag = russia_reworked_achievements_enabled
+					}
+					scoped_sound_effect = "russia_reworked_unlock_achievement"
+				}
+            }
+        }
+    }
+
+    on_weekly = {
+        effect = {
+            #World Without Borders
+            if = {
+                limit = {
+                    has_government = anarchy
+                    is_subject = no
+                    any_state = {
+                        is_owned_by = ROOT
+                        is_on_continent = europe
+                    }
+                    any_state = {
+                        is_owned_by = ROOT
+                        is_on_continent = north_america
+                    }
+                    any_state = {
+                        is_owned_by = ROOT
+                        is_on_continent = south_america
+                    }
+                    any_state = {
+                        is_owned_by = ROOT
+                        is_on_continent = middle_east
+                    }
+                    any_state = {
+                        is_owned_by = ROOT
+                        is_on_continent = africa
+                    }
+                    any_state = {
+                        is_owned_by = ROOT
+                        OR = {
+                            is_on_continent = asia
+                            is_on_continent = australia
+                        }
+                    }
+                    NOT = {
+                        is_in_array = { global.world_without_borders_achievement = THIS }
+                    }
+                }
+                add_to_array = { global.world_without_borders_achievement = THIS }
+				set_variable = { global.world_without_borders_achievement_date@THIS = global.date }
+				set_country_flag = russia_reworked_new_achievement
+				if = {
+					limit = {
+					    has_global_flag = russia_reworked_achievements_enabled
+					}
+					scoped_sound_effect = "russia_reworked_unlock_achievement"
+				}
+            }
+
+            #Rush B
+            if = {
+                limit = {
+                    is_subject = no
+                    has_country_leader = {
+                        name = "Joseph Stalin"
+                        ruling_only = yes
+                    }
+                    controls_state = 64
+                    NOT = {
+                        is_in_array = { global.rush_b_achievement = THIS }
+                    }
+                }
+                add_to_array = { global.rush_b_achievement = THIS }
+				set_variable = { global.rush_b_achievement_date@THIS = global.date }
+				set_country_flag = russia_reworked_new_achievement
+				if = {
+					limit = {
+					    has_global_flag = russia_reworked_achievements_enabled
+					}
+					scoped_sound_effect = "russia_reworked_unlock_achievement"
+				}
+            }
+
+            #Plan of Great Deeds
+            if = {
+                limit = {
+                    has_country_leader = {
+                        name = "Joseph Stalin"
+                        ruling_only = yes
+                    }
+                    num_of_factories > 500
+                    date < 1941.1.1
+                    NOT = {
+                        is_in_array = { global.great_deeds_achievement = THIS }
+                    }
+                }
+                add_to_array = { global.great_deeds_achievement = THIS }
+				set_variable = { global.great_deeds_achievement_date@THIS = global.date }
+				set_country_flag = russia_reworked_new_achievement
+				if = {
+					limit = {
+					    has_global_flag = russia_reworked_achievements_enabled
+					}
+					scoped_sound_effect = "russia_reworked_unlock_achievement"
+				}
+            }
+
+            #1905 Avenged
+            if = {
+                limit = {
+                    OR = {
+                        tag = SOV
+                        tag = SOU
+                        is_in_array = { global.russia_reworked_russian_states = THIS }
+                    }
+                    has_war_with = JAP
+                    JAP = {
+                        has_navy_size = {
+                            size < 1
+                            type = capital_ship
+                        }
+                    }
+                    NOT = {
+                        is_in_array = { global.1905_avenged_achievement = THIS }
+                    }
+                }
+                add_to_array = { global.1905_avenged_achievement = THIS }
+				set_variable = { global.1905_avenged_achievement_date@THIS = global.date }
+				set_country_flag = russia_reworked_new_achievement
+				if = {
+					limit = {
+					    has_global_flag = russia_reworked_achievements_enabled
+					}
+					scoped_sound_effect = "russia_reworked_unlock_achievement"
+				}
+            }
+
+            #Lacplesis
+            if = {
+                limit = {
+                    is_major = no
+                    has_war_with = SOV
+                    SOV = {
+                        has_capitulated = yes
+                    }
+                    NOT = {
+                        is_in_array = { global.lacplesis_achievement = THIS }
+                    }
+                }
+                add_to_array = { global.lacplesis_achievement = THIS }
+				set_variable = { global.lacplesis_achievement_date@THIS = global.date }
+				set_country_flag = russia_reworked_new_achievement
+				if = {
+					limit = {
+					    has_global_flag = russia_reworked_achievements_enabled
+					}
+					scoped_sound_effect = "russia_reworked_unlock_achievement"
+				}
+            }
+
+            #Big Tower
+            if = {
+                limit = {
+                    has_global_flag = hearts_of_malta_enabled
+                    NOT = {
+                        is_in_array = { global.big_tower_achievement = THIS }
+                    }
+                }
+                add_to_array = { global.big_tower_achievement = THIS }
+				set_variable = { global.big_tower_achievement_date@THIS = global.date }
+				set_country_flag = russia_reworked_new_achievement
+				if = {
+					limit = {
+					    has_global_flag = russia_reworked_achievements_enabled
+					}
+					scoped_sound_effect = "russia_reworked_unlock_achievement"
+				}
+            }
+
+            #So you're making fun of me, uh?
+            if = {
+                limit = {
+                    is_ai = no
+                    any_country = {
+                        is_subject_of = SOV
+                        has_country_leader_with_trait = making_fun_of_me_uh
+                    }
+                    NOT = {
+                        is_in_array = { global.making_fun_of_me_uh_achievement = THIS }
+                    }
+                }
+                add_to_array = { global.making_fun_of_me_uh_achievement = THIS }
+				set_variable = { global.making_fun_of_me_uh_achievement_date@THIS = global.date }
+				set_country_flag = russia_reworked_new_achievement
+				if = {
+					limit = {
+					    has_global_flag = russia_reworked_achievements_enabled
+					}
+					scoped_sound_effect = "russia_reworked_unlock_achievement"
+				}
+            }
+        }
+    }
+
+    #Only use on_daily for achievements that really need it
+    on_daily = {
+        effect = {
+            #Copyright
+            if = {
+                limit = {
+                    NOT = {
+                        tag = USA
+                    }
+                    NOT = {
+                        USA = {
+                            has_tech = strategic_bomber3
+                        }
+                    }
+                    has_tech = strategic_bomber3
+                    NOT = {
+                        is_in_array = { global.copyright_achievement = THIS }
+                    }
+                }
+                add_to_array = { global.copyright_achievement = THIS }
+				set_variable = { global.copyright_achievement_date@THIS = global.date }
+				set_country_flag = russia_reworked_new_achievement
+				if = {
+					limit = {
+					    has_global_flag = russia_reworked_achievements_enabled
+					}
+					scoped_sound_effect = "russia_reworked_unlock_achievement"
+				}
+            }
+        }
+    }
+
+    #on_actions for specific achievements (put them here to spare space for other on_actions)
+    on_state_control_changed = {
+        effect = {
+            ROOT = {
+                #World Without Borders
+                if = {
+                    limit = {
+                        has_government = anarchy
+                        is_subject = no
+                        any_state = {
+                            is_owned_by = ROOT
+                            is_on_continent = europe
+                        }
+                        any_state = {
+                            is_owned_by = ROOT
+                            is_on_continent = north_america
+                        }
+                        any_state = {
+                            is_owned_by = ROOT
+                            is_on_continent = south_america
+                        }
+                        any_state = {
+                            is_owned_by = ROOT
+                            is_on_continent = middle_east
+                        }
+                        any_state = {
+                            is_owned_by = ROOT
+                            is_on_continent = africa
+                        }
+                        any_state = {
+                            is_owned_by = ROOT
+                            OR = {
+                                is_on_continent = asia
+                                is_on_continent = australia
+                            }
+                        }
+                        NOT = {
+                            is_in_array = { global.world_without_borders_achievement = THIS }
+                        }
+                    }
+                    add_to_array = { global.world_without_borders_achievement = THIS }
+                    set_variable = { global.world_without_borders_achievement_date@THIS = global.date }
+                    set_country_flag = russia_reworked_new_achievement
+                    if = {
+                        limit = {
+                            has_global_flag = russia_reworked_achievements_enabled
+                        }
+                        scoped_sound_effect = "russia_reworked_unlock_achievement"
+                    }
+                }
+
+                #Rush B
+                if = {
+                    limit = {
+                        is_subject = no
+                        has_country_leader = {
+                            name = "Joseph Stalin"
+                            ruling_only = yes
+                        }
+                        controls_state = 64
+                        NOT = {
+                            is_in_array = { global.rush_b_achievement = THIS }
+                        }
+                    }
+                    add_to_array = { global.rush_b_achievement = THIS }
+                    set_variable = { global.rush_b_achievement_date@THIS = global.date }
+                    set_country_flag = russia_reworked_new_achievement
+                    if = {
+                        limit = {
+                            has_global_flag = russia_reworked_achievements_enabled
+                        }
+                        scoped_sound_effect = "russia_reworked_unlock_achievement"
+                    }
+                }
+
+                #Rome, Tsarigrad, Moscow
+                if = {
+                    limit = {
+                        tag = SOV
+                        is_subject = no
+                        has_government = neutrality
+                        has_cosmetic_tag = RUS
+                        has_full_control_of_state = 219
+                        has_full_control_of_state = 2
+                        has_full_control_of_state = 797
+                        has_global_flag = SOV_istanbul_renamed_tsarigrad
+                        NOT = {
+                            is_in_array = { global.rome_tsarigrad_moscow_achievement = THIS }
+                        }
+                    }
+                    add_to_array = { global.rome_tsarigrad_moscow_achievement = THIS }
+                    set_variable = { global.rome_tsarigrad_moscow_achievement_date@THIS = global.date }
+                    set_country_flag = russia_reworked_new_achievement
+                    if = {
+                        limit = {
+                            has_global_flag = russia_reworked_achievements_enabled
+                        }
+                        scoped_sound_effect = "russia_reworked_unlock_achievement"
+                    }
+                }
+
+                #Running in the 90's
+                if = {
+                    limit = {
+                        tag = SOV
+                        is_subject = no
+                        has_government = democratic
+                        controls_state = 763
+                        country_exists = UKR
+                        country_exists = BLR
+                        country_exists = MOL
+                        country_exists = GEO
+                        country_exists = AZR
+                        country_exists = ARM
+                        country_exists = KAZ
+                        country_exists = KYR
+                        country_exists = TAJ
+                        country_exists = UZB
+                        country_exists = TMS
+                        country_exists = LIT
+                        country_exists = LAT
+                        country_exists = EST
+                        NOT = {
+                            is_in_array = { global.running_90_achievement = THIS }
+                        }
+                    }
+                    add_to_array = { global.running_90_achievement = THIS }
+                    set_variable = { global.running_90_achievement_date@THIS = global.date }
+                    set_country_flag = russia_reworked_new_achievement
+                    if = {
+                        limit = {
+                            has_global_flag = russia_reworked_achievements_enabled
+                        }
+                        scoped_sound_effect = "russia_reworked_unlock_achievement"
+                    }
+                }
+            }
+        }
+    }
+
+    on_capitulation = {
+        effect = {
+            FROM = {
+                #Lacplesis
+                if = {
+                    limit = {
+                        is_major = no
+                        ROOT = {
+                            tag = SOV
+                        }
+                        NOT = {
+                            is_in_array = { global.lacplesis_achievement = THIS }
+                        }
+                    }
+                    add_to_array = { global.lacplesis_achievement = THIS }
+                    set_variable = { global.lacplesis_achievement_date@THIS = global.date }
+                    set_country_flag = russia_reworked_new_achievement
+                    if = {
+                        limit = {
+                            has_global_flag = russia_reworked_achievements_enabled
+                        }
+                        scoped_sound_effect = "russia_reworked_unlock_achievement"
+                    }
+                }
+            }
+        }
     }
 }
