@@ -1234,7 +1234,7 @@ country_event = {
 	}
 }
 
-#Japan Accept to return
+#Japan Accepts to return
 country_event = {
 	id = russia2_japan.34
 	title = russia2_japan.34.t
@@ -1301,7 +1301,7 @@ country_event = {
 	}
 }
 
-#Japan Refuse to return
+#Japan Refuses to return
 country_event = {
 	id = russia2_japan.35
 	title = russia2_japan.35.t
@@ -1369,10 +1369,7 @@ country_event = {
 				OR = {
 					is_owned_by = JAP
 					any_country = {
-						OR = {
-							is_subject_of = JAP
-							is_in_faction_with = JAP
-						}
+						is_subject_of = JAP
 						owns_state = PREV
 					}
 				}
@@ -1464,6 +1461,36 @@ country_event = {
 		add_opinion_modifier = {
 			target = FROM
 			modifier = russian_sent_delegation
+		}
+	}
+
+	option = { #Okay, ask for Sakhalin and the Islands
+		name = russia2_japan.38.b
+		trigger = {
+			any_state = {
+				OR = {
+					state = 537
+					state = 655
+					state = 555
+				}
+				OR = {
+					is_owned_by = JAP
+					any_country = {
+						is_subject_of = JAP
+						owns_state = PREV
+					}
+				}
+			}
+		}
+		ai_chance = {
+			factor = 100
+		}
+		add_opinion_modifier = {
+			target = FROM
+			modifier = russian_sent_delegation
+		}
+		JAP = {
+			country_event = russia2_japan.49
 		}
 	}
 }
@@ -2103,5 +2130,157 @@ country_event = {
 				}
 			}
 		}
+	}
+}
+
+#Russia Demands Sakhalin and the Islands
+country_event = {
+	id = russia2_japan.49
+	title = russia2_japan.49.t
+	desc = russia2_japan.49.d
+	picture = GFX_menacing_tanks_russia2
+
+	is_triggered_only = yes
+
+	option = { #Yes okay
+		name = russia2_japan.49.a
+		ai_chance = {
+			factor = 60
+			modifier = {
+				add = 40
+				strength_ratio = {
+					tag = SOV
+					ratio < 0.8
+				}
+				NOT = {
+					has_war_with = event_target:WTT_current_china_leader
+				}
+			}
+			modifier = {
+				add = -30
+				has_war_with = event_target:WTT_current_china_leader
+			}
+		}
+		every_state = {
+			limit = {
+				OR = {
+					state = 537
+					state = 655
+					state = 555
+				}
+				OR = {
+					is_owned_by = ROOT
+					any_country = {
+						owns_state = PREV
+						is_subject_of = ROOT
+					}
+				}
+			}
+			FROM = {
+				transfer_state = PREV
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						has_resistance = no
+						NOT = {
+							is_core_of = SOV
+						}
+					}
+					start_resistance = yes
+				}
+			}
+		}
+		diplomatic_relation = {
+			country = FROM
+			relation = non_aggression_pact
+			active = yes
+		}
+		FROM = {
+			country_event = russia2_japan.50
+		}
+	}
+
+	option = { #No
+		name = russia2_japan.49.b
+		ai_chance = {
+			factor = 40
+			modifier = {
+				add = -40
+				strength_ratio = {
+					tag = SOV
+					ratio < 0.8
+				}
+				NOT = {
+					has_war_with = event_target:WTT_current_china_leader
+				}
+			}
+			modifier = {
+				add = 30
+				has_war_with = event_target:WTT_current_china_leader
+			}
+		}
+		custom_effect_tooltip = jap_might_lead_to_war_with_sov
+		FROM = {
+			country_event = russia2_japan.51
+		}
+	}
+}
+
+#Japan Accepts
+country_event = {
+	id = russia2_japan.50
+	title = russia2_japan.50.t
+	desc = russia2_japan.50.d
+	picture = GFX_menacing_tanks_russia2
+
+	is_triggered_only = yes
+
+	option = { #Yay
+		name = russia2_japan.50.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#Japan Refuses
+country_event = {
+	id = russia2_japan.51
+	title = russia2_japan.51.t
+	desc = russia2_japan.51.d
+	picture = GFX_menacing_tanks_russia2
+
+	is_triggered_only = yes
+
+	option = { #War It Is
+		name = russia2_japan.51.a
+		ai_chance = {
+			factor = 40
+		}
+		FROM = {
+			remove_opinion_modifier = {
+				target = ROOT
+				modifier = russian_sent_delegation
+			}
+		}
+		remove_opinion_modifier = {
+			target = FROM
+			modifier = russian_sent_delegation
+		}
+		create_wargoal = {
+			type = take_state_focus
+			target = JAP
+			expire = 0
+			generator = { 537 655 555 }
+		}
+	}
+
+	option = { #We already fucked up our relations, let's not go to war
+		name = russia2_japan.51.b
+		ai_chance = {
+			factor = 60
+		}
+		add_political_power = -10
 	}
 }
