@@ -4005,7 +4005,7 @@ focus_tree = {
         y = 2
         prerequisite = { focus = UKR_provisional_government }
         icon = GFX_goal_demand_sudetenland
-        cost = 5
+        cost = 4
         ai_will_do = {
             factor = 1
         }
@@ -4033,7 +4033,7 @@ focus_tree = {
         y = 3
         prerequisite = { focus = UKR_ukraine_not_yet_lost }
         icon = GFX_focus_generic_diplomatic_treaty
-        cost = 5
+        cost = 4
         ai_will_do = {
             factor = 1
         }
@@ -4065,7 +4065,7 @@ focus_tree = {
         y = 4
         prerequisite = { focus = UKR_hold_elections }
         icon = GFX_focus_hol_the_foundations_of_defense
-        cost = 5
+        cost = 6
         ai_will_do = {
             factor = 1
         }
@@ -4246,7 +4246,7 @@ focus_tree = {
         y = 7
         prerequisite = { focus = UKR_new_laws }
         icon = GFX_focus_generic_diplomatic_treaty
-        cost = 5
+        cost = 6
         ai_will_do = {
             factor = 1
         }
@@ -4271,7 +4271,7 @@ focus_tree = {
         y = 8
         prerequisite = { focus = UKR_internal_matters }
         icon = GFX_focus_generic_support_the_left_right
-        cost = 5
+        cost = 8
         ai_will_do = {
             factor = 1
         }
@@ -4423,7 +4423,7 @@ focus_tree = {
         prerequisite = { focus = UKR_share_goods focus = UKR_empower_upper_class }
         mutually_exclusive = { focus = UKR_stable_state }
         icon = GFX_goal_generic_political_pressure
-        cost = 5
+        cost = 6
         ai_will_do = {
             factor = 1
         }
@@ -4460,7 +4460,7 @@ focus_tree = {
         prerequisite = { focus = UKR_share_goods focus = UKR_empower_upper_class }
         mutually_exclusive = { focus = UKR_proud_state }
         icon = GFX_goal_generic_national_unity
-        cost = 5
+        cost = 6
         ai_will_do = {
             factor = 1
         }
@@ -4524,10 +4524,11 @@ focus_tree = {
         y = 9
         prerequisite = { focus = UKR_prepare_army }
         icon = GFX_goal_generic_more_territorial_claims
-        cost = 5
+        cost = 6
         ai_will_do = {
             factor = 1
         }
+        will_lead_to_war_with = POL
         bypass = {
             AND = {
                 OR = {
@@ -4681,7 +4682,7 @@ focus_tree = {
         y = 9
         prerequisite = { focus = UKR_prepare_army }
         icon = GFX_goal_generic_more_territorial_claims
-        cost = 5
+        cost = 6
         ai_will_do = {
             factor = 1
         }
@@ -4840,7 +4841,7 @@ focus_tree = {
         y = 9
         prerequisite = { focus = UKR_prepare_army }
         icon = GFX_goal_generic_more_territorial_claims
-        cost = 5
+        cost = 6
         ai_will_do = {
             factor = 1
         }
@@ -4919,7 +4920,7 @@ focus_tree = {
         y = 9
         prerequisite = { focus = UKR_ukrainian_sphere }
         icon = GFX_goal_generic_improve_relations
-        cost = 5
+        cost = 6
         ai_will_do = {
             factor = 1
         }
@@ -4946,7 +4947,7 @@ focus_tree = {
         y = 9
         prerequisite = { focus = UKR_ukrainian_sphere }
         icon = GFX_goal_generic_forceful_treaty
-        cost = 5
+        cost = 8
         ai_will_do = {
             factor = 1
         }
@@ -4980,15 +4981,21 @@ focus_tree = {
                         is_subject_of = UKR
                     }
                 }
-                set_autonomy = {
-                    target = SOU
-                    autonomy_state = autonomy_integrated_country
+                custom_effect_tooltip = sou_becomes_integrated_country
+                hidden_effect = {
+                    set_autonomy = {
+                        target = SOU
+                        autonomy_state = autonomy_integrated_country
+                    }
                 }
             }
             else = {
-                set_autonomy = {
-                    target = SOV
-                    autonomy_state = autonomy_integrated_country
+                custom_effect_tooltip = sov_becomes_integrated_country
+                hidden_effect = {
+                    set_autonomy = {
+                        target = SOV
+                        autonomy_state = autonomy_integrated_country
+                    }
                 }
             }
         }
@@ -5002,7 +5009,7 @@ focus_tree = {
         prerequisite = { focus = UKR_demand_bessarabia focus = UKR_demand_eastern_poland focus = UKR_crimean_situation }
         mutually_exclusive = { focus = UKR_ukrainian_dominance }
         icon = GFX_goal_generic_major_alliance
-        cost = 5
+        cost = 6
         ai_will_do = {
             factor = 1
         }
@@ -5042,7 +5049,7 @@ focus_tree = {
         prerequisite = { focus = UKR_demand_bessarabia focus = UKR_demand_eastern_poland focus = UKR_crimean_situation }
         mutually_exclusive = { focus = UKR_united_ukraine }
         icon = GFX_goal_generic_demand_territory
-        cost = 5
+        cost = 6
         ai_will_do = {
             factor = 1
         }
@@ -5080,6 +5087,7 @@ focus_tree = {
 
         }
         cancel = {
+            is_subject = yes
             has_country_flag = overlord_refused_kievan_rus
         }
         available = {
@@ -5089,9 +5097,7 @@ focus_tree = {
             }
             if = {
                 limit = {
-                    NOT = {
-                        is_subject = yes
-                    }
+                    is_subject = no
                 }
                 137 = {
                     is_owned_and_controlled_by = ROOT
@@ -5161,17 +5167,6 @@ focus_tree = {
             }
 		}
         completion_reward = {
-            every_state = {
-                limit = {
-                    ukr_is_kievan_rus_state = yes
-                    NOT = {
-                        is_core_of = ROOT
-                    }
-                }
-                ROOT = {
-                    add_state_core = PREV
-                }
-            }
             if = {
                 limit = {
                     is_subject = yes
@@ -5180,11 +5175,25 @@ focus_tree = {
                 add_stability = 0.1
             }
             else = {
+                custom_effect_tooltip = ukr_will_be_know_as_kiev_rus
                 add_war_support = 0.15
                 add_stability = 0.1
-                custom_effect_tooltip = ukr_will_be_know_as_kiev_rus
                 hidden_effect = {
                     set_cosmetic_tag = KIER
+                }
+            }
+            every_state = {
+                limit = {
+                    ukr_is_kievan_rus_state = yes
+                    NOT = {
+                        is_core_of = ROOT
+                    }
+                }
+                custom_effect_tooltip = UKR_reform_kievan_rus_tt
+                hidden_effect = {
+                    ROOT = {
+                        add_state_core = PREV
+                    }
                 }
             }
         }
