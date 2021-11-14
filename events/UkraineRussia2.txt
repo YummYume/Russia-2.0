@@ -2278,6 +2278,11 @@ country_event = {
 		add_stability = 0.1
 		add_war_support = 0.1
 		add_political_power = 100
+		add_ai_strategy = {
+			type = alliance
+			id = UKR
+			value = 500
+		}
 		UKR = {
 			hidden_effect = {
 				if = {
@@ -2288,6 +2293,11 @@ country_event = {
 					}
 					create_faction = finnish_ukrainian_alliance
 				}
+			}
+			add_ai_strategy = {
+				type = alliance
+				id = ROOT
+				value = 500
 			}
 			add_to_faction = ROOT
 			country_event = russia2_ukrain.51
@@ -3030,8 +3040,18 @@ country_event = {
 				is_major = yes
 			}
 		}
+		add_ai_strategy = {
+			type = alliance
+			id = UKR
+			value = 500
+		}
 		UKR = {
 			add_to_faction = ROOT
+			add_ai_strategy = {
+				type = alliance
+				id = ROOT
+				value = 500
+			}
 			country_event = russia2_ukrain.66
 		}
 	}
@@ -3128,6 +3148,437 @@ country_event = {
 			bonus = 1
 			uses = 1
 			category = cat_strategic_bomber
+		}
+	}
+}
+
+#The Crimean Situation
+country_event = {
+	id = russia2_ukrain.69
+	title = russia2_ukrain.69.t
+	desc = russia2_ukrain.69.d
+	picture = GFX_report_event_polish_army
+
+	is_triggered_only = yes
+
+	option = { #Ask for the state
+		name = russia2_ukrain.69.a
+		ai_chance = {
+			factor = 35
+		}
+		137 = {
+			OWNER = {
+				country_event = { id = russia2_ukrain.70 days = 1 }
+			}
+		}
+	}
+
+	option = { #Ask for puppet
+		name = russia2_ukrain.69.b
+		trigger = {
+			CRI = {
+				exists = yes
+				is_subject = no
+				is_in_faction = no
+				has_full_control_of_state = 137
+				NOT = {
+					has_war_with = ROOT
+				}
+			}
+		}
+		ai_chance = {
+			factor = 35
+		}
+		CRI = {
+			country_event = { id = russia2_ukrain.70 days = 1 }
+		}
+	}
+
+	option = { #Ask for alliance
+		name = russia2_ukrain.69.c
+		trigger = {
+			is_faction_leader = yes
+			CRI = {
+				exists = yes
+				is_subject = no
+				is_in_faction = no
+				has_full_control_of_state = 137
+				NOT = {
+					has_war_with = ROOT
+				}
+			}
+		}
+		ai_chance = {
+			factor = 15
+		}
+		CRI = {
+			country_event = { id = russia2_ukrain.70 days = 1 }
+		}
+	}
+
+	option = { #Ask for non aggression pact
+		name = russia2_ukrain.69.e
+		trigger = {
+			CRI = {
+				exists = yes
+				is_subject = no
+				is_in_faction = no
+				has_full_control_of_state = 137
+				NOT = {
+					has_war_with = ROOT
+				}
+			}
+		}
+		ai_chance = {
+			factor = 15
+		}
+		CRI = {
+			country_event = { id = russia2_ukrain.70 days = 1 }
+		}
+	}
+}
+
+#Ukraine asks for Crimea
+country_event = {
+	id = russia2_ukrain.70
+	title = russia2_ukrain.70.t
+	desc = russia2_ukrain.70.d
+	picture = GFX_report_event_polish_army
+
+	is_triggered_only = yes
+
+	option = { #Ok
+		name = russia2_ukrain.70.a
+		ai_chance = {
+			factor = 40
+			modifier = {
+				add = 40
+				is_in_faction_with = FROM
+			}
+			modifier = {
+				add = -20
+				strength_ratio = {
+					tag = FROM
+					ratio > 1
+				}
+			}
+		}
+		FROM = {
+			transfer_state = 137
+			country_event = { id = russia2_ukrain.71 days = 1 }
+		}
+		if = {
+			limit = {
+				all_owned_state = {
+					state = 137
+				}
+			}
+			custom_effect_tooltip = SOV_game_totally_over_TT
+		}
+	}
+
+	option = { #No noob
+		name = russia2_ukrain.70.b
+		ai_chance = {
+			factor = 40
+			modifier = {
+				add = -40
+				is_in_faction_with = FROM
+			}
+			modifier = {
+				add = 20
+				strength_ratio = {
+					tag = FROM
+					ratio > 1
+				}
+			}
+		}
+		FROM = {
+			country_event = { id = russia2_ukrain.72 days = 1 }
+		}
+	}
+}
+
+#FROM Accepts
+country_event = {
+	id = russia2_ukrain.71
+	title = russia2_ukrain.71.t
+	desc = russia2_ukrain.71.d
+	picture = GFX_report_event_polish_army
+
+	is_triggered_only = yes
+
+	option = { #Perfect
+		name = russia2_ukrain.71.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#FROM Refuses
+country_event = {
+	id = russia2_ukrain.72
+	title = russia2_ukrain.72.t
+	desc = russia2_ukrain.72.d
+	picture = GFX_report_event_polish_army
+
+	is_triggered_only = yes
+
+	option = { #Die (if not allied)
+		name = russia2_ukrain.72.a
+		ai_chance = {
+			factor = 100
+		}
+		if = {
+			limit = {
+				FROM = {
+					NOT = {
+						is_in_faction_with = ROOT
+						is_subject_of = ROOT
+					}
+				}
+			}
+			create_wargoal = {
+				type = take_state
+				target = FROM
+				generator = { 137 }
+			}
+		}
+	}
+}
+
+#Ukraine asks for Puppet
+country_event = {
+	id = russia2_ukrain.73
+	title = russia2_ukrain.73.t
+	desc = russia2_ukrain.73.d
+	picture = GFX_report_event_polish_army
+
+	is_triggered_only = yes
+
+	option = { #Ok
+		name = russia2_ukrain.73.a
+		ai_chance = {
+			factor = 40
+			modifier = {
+				add = 40
+				is_in_faction_with = FROM
+			}
+			modifier = {
+				add = -20
+				strength_ratio = {
+					tag = FROM
+					ratio > 1
+				}
+			}
+		}
+		FROM = {
+			puppet = ROOT
+			country_event = { id = russia2_ukrain.74 days = 1 }
+		}
+	}
+
+	option = { #No noob
+		name = russia2_ukrain.73.b
+		ai_chance = {
+			factor = 40
+			modifier = {
+				add = -40
+				is_in_faction_with = FROM
+			}
+			modifier = {
+				add = 20
+				strength_ratio = {
+					tag = FROM
+					ratio > 1
+				}
+			}
+		}
+		FROM = {
+			country_event = { id = russia2_ukrain.75 days = 1 }
+		}
+	}
+}
+
+#FROM Accepts
+country_event = {
+	id = russia2_ukrain.74
+	title = russia2_ukrain.74.t
+	desc = russia2_ukrain.74.d
+	picture = GFX_report_event_polish_army
+
+	is_triggered_only = yes
+
+	option = { #Perfect
+		name = russia2_ukrain.74.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#FROM Refuses
+country_event = {
+	id = russia2_ukrain.75
+	title = russia2_ukrain.75.t
+	desc = russia2_ukrain.75.d
+	picture = GFX_report_event_polish_army
+
+	is_triggered_only = yes
+
+	option = { #Die (if not allied)
+		name = russia2_ukrain.75.a
+		ai_chance = {
+			factor = 100
+		}
+		create_wargoal = {
+			type = puppet_wargoal_focus
+			target = FROM
+		}
+	}
+}
+
+#Ukraine asks for Alliance
+country_event = {
+	id = russia2_ukrain.76
+	title = russia2_ukrain.76.t
+	desc = russia2_ukrain.76.d
+	picture = GFX_report_event_polish_army
+
+	is_triggered_only = yes
+
+	option = { #Ok
+		name = russia2_ukrain.76.a
+		ai_chance = {
+			factor = 100
+		}
+		add_ai_strategy = {
+			type = alliance
+			id = FROM
+			value = 500
+		}
+		FROM = {
+			add_to_faction = ROOT
+			add_ai_strategy = {
+				type = alliance
+				id = ROOT
+				value = 500
+			}
+			country_event = { id = russia2_ukrain.77 days = 1 }
+		}
+	}
+
+	option = { #No noob
+		name = russia2_ukrain.76.b
+		ai_chance = {
+			factor = 0
+		}
+		FROM = {
+			country_event = { id = russia2_ukrain.78 days = 1 }
+		}
+	}
+}
+
+#FROM Accepts
+country_event = {
+	id = russia2_ukrain.77
+	title = russia2_ukrain.77.t
+	desc = russia2_ukrain.77.d
+	picture = GFX_report_event_polish_army
+
+	is_triggered_only = yes
+
+	option = { #Perfect
+		name = russia2_ukrain.77.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#FROM Refuses
+country_event = {
+	id = russia2_ukrain.78
+	title = russia2_ukrain.78.t
+	desc = russia2_ukrain.78.d
+	picture = GFX_report_event_polish_army
+
+	is_triggered_only = yes
+
+	option = { #Sad
+		name = russia2_ukrain.78.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#Ukraine asks for Non Aggression Pact
+country_event = {
+	id = russia2_ukrain.79
+	title = russia2_ukrain.79.t
+	desc = russia2_ukrain.79.d
+	picture = GFX_report_event_polish_army
+
+	is_triggered_only = yes
+
+	option = { #Ok
+		name = russia2_ukrain.79.a
+		ai_chance = {
+			factor = 100
+		}
+		FROM = {
+			diplomatic_relation = {
+				country = ROOT
+				relation = non_aggression_pact
+				active = yes
+			}
+			country_event = { id = russia2_ukrain.80 days = 1 }
+		}
+	}
+
+	option = { #No noob
+		name = russia2_ukrain.79.b
+		ai_chance = {
+			factor = 0
+		}
+		FROM = {
+			country_event = { id = russia2_ukrain.81 days = 1 }
+		}
+	}
+}
+
+#FROM Accepts
+country_event = {
+	id = russia2_ukrain.80
+	title = russia2_ukrain.80.t
+	desc = russia2_ukrain.80.d
+	picture = GFX_report_event_polish_army
+
+	is_triggered_only = yes
+
+	option = { #Perfect
+		name = russia2_ukrain.80.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#FROM Refuses
+country_event = {
+	id = russia2_ukrain.81
+	title = russia2_ukrain.81.t
+	desc = russia2_ukrain.81.d
+	picture = GFX_report_event_polish_army
+
+	is_triggered_only = yes
+
+	option = { #Sad
+		name = russia2_ukrain.81.a
+		ai_chance = {
+			factor = 100
 		}
 	}
 }
