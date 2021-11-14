@@ -1523,6 +1523,8 @@ country_event = {
 		custom_effect_tooltip = ukr_unlocks_anarchist_legetimacy_decisions
 		add_ideas = UKR_Free_state
 		hidden_effect = {
+			add_ideas = closed_economy
+			add_ideas = low_economic_mobilisation 
 			add_popularity = {
 				ideology = anarchy
 				popularity = 0.5
@@ -1624,6 +1626,8 @@ country_event = {
 		custom_effect_tooltip = ukr_unlocks_anarchist_legetimacy_decisions
 		add_ideas = UKR_Free_state
 		hidden_effect = {
+			add_ideas = closed_economy
+			add_ideas = low_economic_mobilisation 
 			add_popularity = {
 				ideology = anarchy
 				popularity = 0.5
@@ -3125,5 +3129,135 @@ country_event = {
 			uses = 1
 			category = cat_strategic_bomber
 		}
+	}
+}
+
+#Ukraine Ask Kievan Rus State Puppet
+country_event = {
+	id = russia2_ukrain.82
+	title = russia2_ukrain.82.t
+	desc = russia2_ukrain.82.d
+	picture = GFX_report_event_chamberlain_announce
+
+	is_triggered_only = yes
+
+	option = { #Give everything we own
+		name = russia2_ukrain.82.a
+		ai_chance = {
+			factor = 10
+		}
+		UKR = {
+			country_event = { id = russia2_ukrain.83 days = 7 }
+		}
+		custom_effect_tooltip = we_will_lose_every_state_kievan_rus
+	}
+
+	option = { #Give only enough for them
+		name = russia2_ukrain.82.b
+		ai_chance = {
+			factor = 45
+		}
+		UKR = {
+			country_event = { id = russia2_ukrain.84 days = 7 }
+		}
+		custom_effect_tooltip = we_will_lose_some_state_kievan_rus
+	}
+
+	option = { #Give nothing
+		name = russia2_ukrain.82.c
+		ai_chance = {
+			factor = 45
+		}
+		UKR = {
+			country_event = { id = russia2_ukrain.85 days = 7 }
+		}
+	}
+}
+
+#OVERLORD Accept to Give everything
+country_event = {
+	id = russia2_ukrain.83
+	title = russia2_ukrain.83.t
+	desc = russia2_ukrain.83.d
+	picture = GFX_handshake_russia2
+
+	is_triggered_only = yes
+
+	option = { #Let's go
+		name = russia2_ukrain.83.a
+		ai_chance = {
+			factor = 100
+		}
+		every_state = {
+			limit = {
+				is_owned_by = FROM
+				ukr_is_kievan_rus_state = yes
+			}
+			UKR = {
+				transfer_state = PREV
+			}
+		}
+	}
+}
+
+#OVERLORD Accept to Give small bits
+country_event = {
+	id = russia2_ukrain.84
+	title = russia2_ukrain.84.t
+	desc = russia2_ukrain.84.d
+	picture = GFX_report_event_soviet_german_soldier_handshake
+
+	is_triggered_only = yes
+
+	option = { #Let's go
+		name = russia2_ukrain.84.a
+		ai_chance = {
+			factor = 100
+		}
+		every_state = {
+			limit = {
+				is_owned_by = FROM
+				OR = {
+					AND = {
+						NOT = {
+							is_core_of = FROM
+						}
+						ukr_is_kievan_rus_state = yes
+					}
+					state = 218
+					state = 137
+					state = 240
+					state = 220
+					state = 222
+					state = 224
+					state = 234
+					state = 241
+					state = 194
+					state = 204
+					state = 206
+				}
+			}
+			UKR = {
+				transfer_state = PREV
+			}
+		}
+	}
+}
+
+#OVERLORD Refuse
+country_event = {
+	id = russia2_ukrain.85
+	title = russia2_ukrain.85.t
+	desc = russia2_ukrain.85.d
+	picture = GFX_report_event_soviet_german_soldier_handshake
+
+	is_triggered_only = yes
+
+	option = { #Let's go
+		name = russia2_ukrain.85.a
+		ai_chance = {
+			factor = 100
+		}
+		set_country_flag = overlord_refused_kievan_rus
 	}
 }

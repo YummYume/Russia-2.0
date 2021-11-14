@@ -4767,10 +4767,39 @@ focus_tree = {
             NOT = {
                 has_government = anarchy
             }
+            if = {
+                limit = {
+                    country_exists = SOU
+                }
+                SOU = {
+                    is_subject_of = UKR
+                }
+            }
+            else = {
+                SOV = {
+                    is_subject_of = UKR
+                }
+            }
         }
         search_filters = {  }
         completion_reward = {
-
+            if = {
+                limit = {
+                    SOU = {
+                        is_subject_of = UKR
+                    }
+                }
+                set_autonomy = {
+                    target = SOU
+                    autonomy_state = autonomy_integrated_country
+                }
+            }
+            else = {
+                set_autonomy = {
+                    target = SOV
+                    autonomy_state = autonomy_integrated_country
+                }
+            }
         }
     }
 
@@ -4852,21 +4881,121 @@ focus_tree = {
         prerequisite = { focus = UKR_proud_state focus = UKR_stable_state }
         prerequisite = { focus = UKR_united_ukraine focus = UKR_ukrainian_dominance }
         icon = GFX_goal_generic_political_pressure
-        cost = 5
+        cost = 10
         ai_will_do = {
             factor = 1
         }
         bypass = {
 
         }
+        cancel = {
+            has_country_flag = overlord_refused_kievan_rus
+        }
         available = {
             NOT = {
                 has_government = anarchy
+                has_country_flag = overlord_refused_kievan_rus
+            }
+            if = {
+                limit = {
+                    NOT = {
+                        is_subject = yes
+                    }
+                }
+                137 = {
+                    is_owned_and_controlled_by = ROOT
+                }
+                234 = {
+                    is_owned_and_controlled_by = ROOT
+                }
+                218 = {
+                    is_owned_and_controlled_by = ROOT
+                }
+                766 = {
+                    is_owned_and_controlled_by = ROOT
+                }
+                79 = {
+                    is_owned_and_controlled_by = ROOT
+                }
+                78 = {
+                    is_owned_and_controlled_by = ROOT
+                }
+                80 = {
+                    is_owned_and_controlled_by = ROOT
+                }
+                89 = {
+                    is_owned_and_controlled_by = ROOT
+                }
+                91 = {
+                    is_owned_and_controlled_by = ROOT
+                }
+                93 = {
+                    is_owned_and_controlled_by = ROOT
+                }
+                194 = {
+                    is_owned_and_controlled_by = ROOT
+                }
+                204 = {
+                    is_owned_and_controlled_by = ROOT
+                }
+                206 = {
+                    is_owned_and_controlled_by = ROOT
+                }
+                241 = {
+                    is_owned_and_controlled_by = ROOT
+                }
+                224 = {
+                    is_owned_and_controlled_by = ROOT
+                }
+                222 = {
+                    is_owned_and_controlled_by = ROOT
+                }
+                240 = {
+                    is_owned_and_controlled_by = ROOT
+                }
+                243 = {
+                    is_owned_and_controlled_by = ROOT
+                }
             }
         }
         search_filters = {  }
+        select_effect = {
+            if = {
+                limit = {
+                    is_subject = yes
+                }
+                OVERLORD = {
+                    country_event = { id = russia2_ukrain.82 days = 7 }
+                }
+            }
+		}
         completion_reward = {
-            set_cosmetic_tag = KIER
+            every_state = {
+                limit = {
+                    ukr_is_kievan_rus_state = yes
+                    NOT = {
+                        is_core_of = ROOT
+                    }
+                }
+                ROOT = {
+                    add_state_core = PREV
+                }
+            }
+            if = {
+                limit = {
+                    is_subject = yes
+                }
+                custom_effect_tooltip = choosing_focus_selec_will_send_event_overlord
+                add_stability = 0.1
+            }
+            else = {
+                add_war_support = 0.15
+                add_stability = 0.1
+                custom_effect_tooltip = ukr_will_be_know_as_kiev_rus
+                hidden_effect = {
+                    set_cosmetic_tag = KIER
+                }
+            }
         }
     }
 }
