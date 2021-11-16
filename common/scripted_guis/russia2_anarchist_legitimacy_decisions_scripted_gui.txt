@@ -362,20 +362,44 @@ scripted_gui = {
                     base = 0
                     modifier = {
                         add = 1000
+                        check_variable = {
+                            var = ukr.anarchist_support_daily@THIS
+                            value = 1
+                            compare = less_than
+                        }
                         OR = {
                             AND = {
                                 UKR = {
                                     has_active_mission = UKR_anarchism_timeout
                                 }
-                                check_variable = {
-                                    var = ukr.anarchist_support@THIS
-                                    value = 50
-                                    compare = less_than
+                                if = {
+                                    limit = {
+                                        UKR = {
+                                            has_political_power > 200
+                                        }
+                                    }
+                                    check_variable = {
+                                        var = ukr.anarchist_support@THIS
+                                        value = 75
+                                        compare = less_than
+                                    }
+                                    check_variable = {
+                                        var = ukr.anarchist_state_boost_cost@THIS
+                                        value = 125
+                                        compare = less_than
+                                    }
                                 }
-                                check_variable = {
-                                    var = ukr.anarchist_state_core_cost@THIS
-                                    value = 100
-                                    compare = less_than
+                                else = {
+                                    check_variable = {
+                                        var = ukr.anarchist_support@THIS
+                                        value = 50
+                                        compare = less_than
+                                    }
+                                    check_variable = {
+                                        var = ukr.anarchist_state_boost_cost@THIS
+                                        value = 75
+                                        compare = less_than
+                                    }
                                 }
                             }
                             AND = {
@@ -390,7 +414,7 @@ scripted_gui = {
                                     compare = less_than
                                 }
                                 check_variable = {
-                                    var = ukr.anarchist_state_core_cost@THIS
+                                    var = ukr.anarchist_state_boost_cost@THIS
                                     value = 200
                                     compare = less_than
                                 }
