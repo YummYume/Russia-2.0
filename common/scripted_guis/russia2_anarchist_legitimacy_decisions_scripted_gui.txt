@@ -293,18 +293,15 @@ scripted_gui = {
 
         ai_enabled = {
 			tag = UKR
-            has_government = anarchy
-            is_subject = no
 		}
 
         ai_test_interval = 24
         ai_test_variance = 0.25
+        ai_test_scopes = test_self_controlled_states
 
-        ai_test_interval = {
+        ai_check = {
             always = yes
         }
-
-        ai_test_scopes = test_self_controlled_states
 
         ai_check_scope = {
             NOT = {
@@ -367,7 +364,9 @@ scripted_gui = {
                         add = 1000
                         OR = {
                             AND = {
-                                has_active_mission = UKR_anarchism_timeout
+                                UKR = {
+                                    has_active_mission = UKR_anarchism_timeout
+                                }
                                 check_variable = {
                                     var = ukr.anarchist_support@THIS
                                     value = 50
@@ -381,7 +380,9 @@ scripted_gui = {
                             }
                             AND = {
                                 NOT = {
-                                    has_active_mission = UKR_anarchism_timeout
+                                    UKR = {
+                                        has_active_mission = UKR_anarchism_timeout
+                                    }
                                 }
                                 check_variable = {
                                     var = ukr.anarchist_support@THIS
@@ -406,7 +407,9 @@ scripted_gui = {
                         add = 1000
                         OR = {
                             AND = {
-                                has_active_mission = UKR_anarchism_timeout
+                                UKR = {
+                                    has_active_mission = UKR_anarchism_timeout
+                                }
                                 if = {
                                     limit = {
                                         NOT = {
@@ -420,20 +423,25 @@ scripted_gui = {
                                     OR = {
                                         check_variable = {
                                             var = ukr.anarchist_state_core_cost@THIS
-                                            value = 250
+                                            value = 300
                                             compare = less_than
                                         }
                                         check_variable = {
                                             var = ukr.anarchist_support@THIS
-                                            value = 100
+                                            value = 85
                                             compare = greater_than_or_equals
+                                        }
+                                        UKR = {
+                                            has_manpower < 50000
                                         }
                                     }
                                 }
                             }
                             AND = {
                                 NOT = {
-                                    has_active_mission = UKR_anarchism_timeout
+                                    UKR = {
+                                        has_active_mission = UKR_anarchism_timeout
+                                    }
                                 }
                                 OR = {
                                     check_variable = {
@@ -445,6 +453,9 @@ scripted_gui = {
                                         var = ukr.anarchist_support@THIS
                                         value = 100
                                         compare = greater_than_or_equals
+                                    }
+                                    UKR = {
+                                        has_manpower < 50000
                                     }
                                 }
                             }
