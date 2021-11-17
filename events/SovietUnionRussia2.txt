@@ -28104,3 +28104,1137 @@ country_event = {
 		}
 	}
 }
+
+#Randomise Opinion of Russian Reunification
+country_event = {
+	id = russia2_russia.638
+	title = russia2_russia.630.t
+	desc = russia2_russia.630.d
+	picture = GFX_report_event_generic_sign_treaty3
+
+	is_triggered_only = yes
+
+	immediate = {
+		set_variable = { opinion_russian_anarchist_puppet_reform_plan = 0 }
+		randomize_temp_variable = {
+			var = opinion_russian_anarchist_puppet_reform_plan
+			distribution = uniform
+			min = 0
+			max = 1
+		}
+		multiply_temp_variable = { opinion_russian_anarchist_puppet_reform_plan = 100 }
+		round_temp_variable = opinion_russian_anarchist_puppet_reform_plan
+		set_variable = { personality_russian_anarchist_indicator = 0 }
+		randomize_temp_variable = { #1 is militaristic(like 2, hate 4), 2 is economic(like 1, hate 3), 3 is social(like 4, hate 2), last is peaceful (like 3, hate 1)
+			var = personality_russian_anarchist_indicator
+			distribution = uniform
+			min = 0
+			max = 4
+		}
+		round_temp_variable = personality_russian_anarchist_indicator
+	}
+
+	option = { #Results
+		name = russia2_russia.630.a
+		ai_chance = {
+			factor = 100
+		}
+		if = {
+			limit = {
+				check_variable = {
+					var = personality_russian_anarchist_indicator
+					value = 1
+					compare = less_than_or_equals
+				}
+			}
+			set_variable = { militaristic_personality_type_anarchist = 0 }
+		}
+		else_if = {
+			limit = {
+				check_variable = {
+					var = personality_russian_anarchist_indicator
+					value = 1
+					compare = greater_than_or_equals
+				}
+				check_variable = {
+					var = personality_russian_anarchist_indicator
+					value = 2
+					compare = less_than_or_equals
+				}
+			}
+			set_variable = { economic_personality_type_anarchist = 0 }
+		}
+		else_if = {
+			limit = {
+				check_variable = {
+					var = personality_russian_anarchist_indicator
+					value = 2
+					compare = greater_than_or_equals
+				}
+				check_variable = {
+					var = personality_russian_anarchist_indicator
+					value = 3
+					compare = less_than_or_equals
+				}
+			}
+			set_variable = { social_personality_type_anarchist = 0 }
+		}
+		else_if = {
+			limit = {
+				check_variable = {
+					var = personality_russian_anarchist_indicator
+					value = 3
+					compare = greater_than_or_equals
+				}
+				check_variable = {
+					var = personality_russian_anarchist_indicator
+					value = 4
+					compare = less_than_or_equals
+				}
+			}
+			set_variable = { peaceful_personality_type_anarchist = 0 }
+		}
+	}
+}
+
+#Meeting with FROM Leader
+country_event = {
+	id = russia2_russia.639
+	title = russia2_russia.639.t
+	desc = russia2_russia.639.d
+	picture = GFX_report_event_generic_parliament
+
+	is_triggered_only = yes
+
+	option = { #Peaceful
+		name = russia2_russia.639.a
+		ai_chance = {
+			factor = 25
+		}
+		if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = militaristic_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.646 days = 4 }
+			}
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = economic_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.645 days = 4 }
+			}
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = social_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.644 days = 4 }
+			}
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = peaceful_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.643 days = 4 }
+			}
+		}
+		else = {
+			custom_effect_tooltip = debug_tooltip_problem_not_working_as_intended
+		}
+	}
+
+	option = { #Economic
+		name = russia2_russia.639.b
+		ai_chance = {
+			factor = 25
+		}
+		if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = militaristic_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.644 days = 4 }
+			}
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = economic_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.643 days = 4 }
+			}
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = social_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.646 days = 4 }
+			}
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = peaceful_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.645 days = 4 }
+			}
+		}
+		else = {
+			custom_effect_tooltip = debug_tooltip_problem_not_working_as_intended
+		}
+	}
+
+	option = { #Militaristic
+		name = russia2_russia.639.c
+		ai_chance = {
+			factor = 25
+		}
+		if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = militaristic_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.643 days = 4 }
+			}
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = economic_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.644 days = 4 }
+			}
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = social_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.645 days = 4 }
+			}
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = peaceful_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.646 days = 4 }
+			}
+		}
+		else = {
+			custom_effect_tooltip = debug_tooltip_problem_not_working_as_intended
+		}
+	}
+
+	option = { #Social
+		name = russia2_russia.639.e
+		ai_chance = {
+			factor = 25
+		}
+		if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = militaristic_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.645 days = 4 }
+			}
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = economic_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.646 days = 4 }
+			}
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = social_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.643 days = 4 }
+			}
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = peaceful_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.644 days = 4 }
+			}
+		}
+		else = {
+			custom_effect_tooltip = debug_tooltip_problem_not_working_as_intended
+		}
+	}
+}
+
+#Trying to create a Manifestation in favour of the project in FROM
+country_event = {
+	id = russia2_russia.640
+	title = russia2_russia.640.t
+	desc = russia2_russia.640.d
+	picture = GFX_report_event_gathering_protest
+
+	is_triggered_only = yes
+
+	option = { #Social
+		name = russia2_russia.640.a
+		ai_chance = {
+			factor = 25
+		}
+		if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = militaristic_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.645 days = 4 }
+			}
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = economic_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.646 days = 4 }
+			}
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = social_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.643 days = 4 }
+			}
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = peaceful_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.644 days = 4 }
+			}
+		}
+		else = {
+			custom_effect_tooltip = debug_tooltip_problem_not_working_as_intended
+		}
+	}
+
+	option = { #Peaceful
+		name = russia2_russia.640.b
+		ai_chance = {
+			factor = 25
+		}
+		if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = militaristic_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.646 days = 4 }
+			}
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = economic_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.645 days = 4 }
+			}
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = social_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.644 days = 4 }
+			}
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = peaceful_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.643 days = 4 }
+			}
+		}
+		else = {
+			custom_effect_tooltip = debug_tooltip_problem_not_working_as_intended
+		}
+	}
+
+	option = { #Economic
+		name = russia2_russia.640.c
+		ai_chance = {
+			factor = 25
+		}
+		if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = militaristic_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.644 days = 4 }
+			}
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = economic_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.643 days = 4 }
+			}
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = social_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.646 days = 4 }
+			}
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = peaceful_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.645 days = 4 }
+			}
+		}
+		else = {
+			custom_effect_tooltip = debug_tooltip_problem_not_working_as_intended
+		}
+	}
+
+	option = { #Militaristic
+		name = russia2_russia.640.e
+		ai_chance = {
+			factor = 25
+		}
+		if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = militaristic_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.643 days = 4 }
+			}
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = economic_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.644 days = 4 }
+			}
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = social_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.645 days = 4 }
+			}
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = peaceful_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.646 days = 4 }
+			}
+		}
+		else = {
+			custom_effect_tooltip = debug_tooltip_problem_not_working_as_intended
+		}
+	}
+}
+
+#Speech for FROM Workers
+country_event = {
+	id = russia2_russia.641
+	title = russia2_russia.641.t
+	desc = russia2_russia.641.d
+	picture = GFX_report_event_generic_factory
+
+	is_triggered_only = yes
+
+	option = { #Social
+		name = russia2_russia.641.a
+		ai_chance = {
+			factor = 25
+		}
+		if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = militaristic_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.645 days = 4 }
+			}
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = economic_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.646 days = 4 }
+			}
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = social_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.643 days = 4 }
+			}
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = peaceful_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.644 days = 4 }
+			}
+		}
+		else = {
+			custom_effect_tooltip = debug_tooltip_problem_not_working_as_intended
+		}
+	}
+
+	option = { #Militaristic
+		name = russia2_russia.641.b
+		ai_chance = {
+			factor = 25
+		}
+		if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = militaristic_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.643 days = 4 }
+			}
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = economic_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.644 days = 4 }
+			}
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = social_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.645 days = 4 }
+			}
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = peaceful_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.646 days = 4 }
+			}
+		}
+		else = {
+			custom_effect_tooltip = debug_tooltip_problem_not_working_as_intended
+		}
+	}
+
+	option = { #Peaceful
+		name = russia2_russia.641.c
+		ai_chance = {
+			factor = 25
+		}
+		if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = militaristic_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.646 days = 4 }
+			}
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = economic_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.645 days = 4 }
+			}
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = social_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.644 days = 4 }
+			}
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = peaceful_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.643 days = 4 }
+			}
+		}
+		else = {
+			custom_effect_tooltip = debug_tooltip_problem_not_working_as_intended
+		}
+	}
+
+	option = { #Economic
+		name = russia2_russia.641.e
+		ai_chance = {
+			factor = 25
+		}
+		if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = militaristic_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.644 days = 4 }
+			}
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = economic_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.643 days = 4 }
+			}
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = social_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.646 days = 4 }
+			}
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					check_variable = {
+						var = peaceful_personality_type_anarchist
+						value = 0
+						compare = greater_than_or_equals
+					}
+				}
+			}
+			SOV = {
+				country_event = { id = russia2_russia.645 days = 4 }
+			}
+		}
+		else = {
+			custom_effect_tooltip = debug_tooltip_problem_not_working_as_intended
+		}
+	}
+}
+
+#Hidden Event For Event Generator
+country_event = {
+	id = russia2_russia.642
+
+	is_triggered_only = yes
+
+	hidden = yes
+
+	immediate = {
+		random_list = {
+			33 = {
+				SOV = {
+					country_event = { id = russia2_russia.639 }
+					set_country_flag = meeting_with_from_leader_loc
+				}
+			}
+			33 = {
+				SOV = {
+					country_event = { id = russia2_russia.640 }
+					set_country_flag = public_speech_citizens_loc
+				}
+			}
+			33 = {
+				SOV = {
+					country_event = { id = russia2_russia.641 }
+					set_country_flag = public_speech_workers_loc
+				}
+			}
+		}
+	}
+}
+
+#Choice was Excelent
+country_event = {
+	id = russia2_russia.643
+	title = russia2_russia.643.t
+	desc = {
+		text = russia2_russia.643.d_1
+		trigger = {
+			SOV = {
+				has_country_flag = meeting_with_from_leader_loc
+			}
+		}
+	}
+	desc = {
+		text = russia2_russia.643.d_2
+		trigger = {
+			SOV = {
+				has_country_flag = public_speech_citizens_loc
+			}
+		}
+	}
+	desc = {
+		text = russia2_russia.643.d_3
+		trigger = {
+			SOV = {
+				has_country_flag = public_speech_workers_loc
+			}
+		}
+	}
+	picture = GFX_handshake_russia2
+	
+	is_triggered_only = yes
+
+	option = { #Excelent
+		name = russia2_russia.643.a
+		ai_chance = {
+			factor = 100
+		}
+		custom_effect_tooltip = from_will_receiv_20_points_project_anarchist
+		FROM = {
+			add_to_variable = { opinion_russian_anarchist_puppet_reform_plan = 20 }
+		}
+		clr_country_flag = meeting_with_from_leader_loc
+		clr_country_flag = public_speech_citizens_loc
+		clr_country_flag = public_speech_workers_loc
+	}
+}
+
+#Choice was Good
+country_event = {
+	id = russia2_russia.644
+	title = russia2_russia.644.t
+	desc = {
+		text = russia2_russia.644.d_1
+		trigger = {
+			SOV = {
+				has_country_flag = meeting_with_from_leader_loc
+			}
+		}
+	}
+	desc = {
+		text = russia2_russia.644.d_2
+		trigger = {
+			SOV = {
+				has_country_flag = public_speech_citizens_loc
+			}
+		}
+	}
+	desc = {
+		text = russia2_russia.644.d_3
+		trigger = {
+			SOV = {
+				has_country_flag = public_speech_workers_loc
+			}
+		}
+	}
+	picture = GFX_report_event_generic_rally
+	
+	is_triggered_only = yes
+
+	option = { #Good
+		name = russia2_russia.644.a
+		ai_chance = {
+			factor = 100
+		}
+		custom_effect_tooltip = from_will_receiv_10_points_project_anarchist
+		FROM = {
+			add_to_variable = { opinion_russian_anarchist_puppet_reform_plan = 10 }
+		}
+		clr_country_flag = meeting_with_from_leader_loc
+		clr_country_flag = public_speech_citizens_loc
+		clr_country_flag = public_speech_workers_loc
+	}
+}
+
+#Choice was meh
+country_event = {
+	id = russia2_russia.645
+	title = russia2_russia.645.t
+	desc = {
+		text = russia2_russia.645.d_1
+		trigger = {
+			SOV = {
+				has_country_flag = meeting_with_from_leader_loc
+			}
+		}
+	}
+	desc = {
+		text = russia2_russia.645.d_2
+		trigger = {
+			SOV = {
+				has_country_flag = public_speech_citizens_loc
+			}
+		}
+	}
+	desc = {
+		text = russia2_russia.645.d_3
+		trigger = {
+			SOV = {
+				has_country_flag = public_speech_workers_loc
+			}
+		}
+	}
+	picture = GFX_report_event_gre_trial
+	
+	is_triggered_only = yes
+
+	option = { #Good
+		name = russia2_russia.645.a
+		ai_chance = {
+			factor = 100
+		}
+		custom_effect_tooltip = from_will_receiv_5_points_project_anarchist
+		FROM = {
+			add_to_variable = { opinion_russian_anarchist_puppet_reform_plan = 5 }
+		}
+		clr_country_flag = meeting_with_from_leader_loc
+		clr_country_flag = public_speech_citizens_loc
+		clr_country_flag = public_speech_workers_loc
+	}
+}
+
+#Choice was Horrible
+country_event = {
+	id = russia2_russia.646
+	title = russia2_russia.646.t
+	desc = {
+		text = russia2_russia.646.d_1
+		trigger = {
+			SOV = {
+				has_country_flag = meeting_with_from_leader_loc
+			}
+		}
+	}
+	desc = {
+		text = russia2_russia.646.d_2
+		trigger = {
+			SOV = {
+				has_country_flag = public_speech_citizens_loc
+			}
+		}
+	}
+	desc = {
+		text = russia2_russia.646.d_3
+		trigger = {
+			SOV = {
+				has_country_flag = public_speech_workers_loc
+			}
+		}
+	}
+	picture = GFX_report_event_generic_riot
+	
+	is_triggered_only = yes
+
+	option = { #Rip
+		name = russia2_russia.646.a
+		ai_chance = {
+			factor = 100
+		}
+		custom_effect_tooltip = from_will_receiv_minus_10_points_project_anarchist
+		FROM = {
+			add_to_variable = { opinion_russian_anarchist_puppet_reform_plan = -10 }
+		}
+		clr_country_flag = meeting_with_from_leader_loc
+		clr_country_flag = public_speech_citizens_loc
+		clr_country_flag = public_speech_workers_loc
+	}
+}
