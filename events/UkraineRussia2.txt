@@ -2,33 +2,48 @@
 # Ukrainian Events
 ###########################
 
-add_namespace = russia2_ukrain
+add_namespace = russia2_ukraine
 
 # Check if File is Loaded
 country_event = {
-	id = russia2_ukrain.2092066524
+	id = russia2_ukraine.2092066524
 
 	hidden = yes
 
 	is_triggered_only = yes
 
 	immediate = {
-		set_global_flag = russia_reworked_events_loaded_ukrains
+		set_global_flag = russia_reworked_events_loaded_ukraine
 	}
 }
 
 #White Guard Ask Us to Join Them in Their Fight - No Country Flag
 country_event = {
-	id = russia2_ukrain.1
-	title = russia2_ukrain.1.t
-	desc = russia2_ukrain.1.d
+	id = russia2_ukraine.1
+	title = russia2_ukraine.1.t
+	desc = russia2_ukraine.1.d
 	picture = GFX_report_event_british_inspect_troops
 
 	is_triggered_only = yes
 
 	option = { #Accepts
-		name = russia2_ukrain.1.a
-		ai_chance = { factor = 20 }
+		name = russia2_ukraine.1.a
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 0
+				OR = {
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = ANARCHISM
+					}
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = ISOLATED
+					}
+				}
+			}
+		}
 		set_country_flag = accept_to_help_whiteguard
 		add_ai_strategy = {
 			type = conquer
@@ -37,34 +52,49 @@ country_event = {
 		}
 		hidden_effect = {
 			SOU = {
-				country_event = { id = russia2_ukrain.38 days = 1 }
+				country_event = { id = russia2_ukraine.38 days = 1 }
 			}
 		}
 		SOV = {
-			country_event = { id = russia2_ukrain.2 hours = 6 }
+			country_event = { id = russia2_ukraine.2 hours = 6 }
 		}
 	}
 
 	option = { #Refuse
-		name = russia2_ukrain.1.b
-		ai_chance = { factor = 80 }
+		name = russia2_ukraine.1.b
+		ai_chance = {
+			factor = 80
+			modifier = {
+				add = 20
+				OR = {
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = ANARCHISM
+					}
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = ISOLATED
+					}
+				}
+			}
+		}
 		SOV = {
-			country_event = { id = russia2_ukrain.3 hours = 6 }
+			country_event = { id = russia2_ukraine.3 hours = 6 }
 		}
 	}
 }
 
 #Ukraine Has Accepted
 country_event = {
-	id = russia2_ukrain.2
-	title = russia2_ukrain.2.t
-	desc = russia2_ukrain.2.d
+	id = russia2_ukraine.2
+	title = russia2_ukraine.2.t
+	desc = russia2_ukraine.2.d
 	picture = GFX_soldiers_handshaking_kolchak_russia2
 
 	is_triggered_only = yes
 
 	option = { #Good
-		name = russia2_ukrain.2.a
+		name = russia2_ukraine.2.a
 		ai_chance = { factor = 100 }
 		if = {
 			limit = {
@@ -91,19 +121,19 @@ country_event = {
 
 #Ukraine Has Refused
 country_event = {
-	id = russia2_ukrain.3
-	title = russia2_ukrain.3.t
-	desc = russia2_ukrain.3.d
+	id = russia2_ukraine.3
+	title = russia2_ukraine.3.t
+	desc = russia2_ukraine.3.d
 	picture = GFX_report_event_ger_civil_war
 
 	is_triggered_only = yes
 
 	option = { #Damn
-		name = russia2_ukrain.3.a
+		name = russia2_ukraine.3.a
 		ai_chance = { factor = 100 }
 		UKR = {
 			hidden_effect = {
-				country_event = { id = russia2_ukrain.32 days = 5 }
+				country_event = { id = russia2_ukraine.32 days = 5 }
 			}
 		}
 	}
@@ -111,16 +141,31 @@ country_event = {
 
 #White Guard Ask Us to Join Them in Their Fight - Country Flag
 country_event = {
-	id = russia2_ukrain.4
-	title = russia2_ukrain.4.t
-	desc = russia2_ukrain.4.d
+	id = russia2_ukraine.4
+	title = russia2_ukraine.4.t
+	desc = russia2_ukraine.4.d
 	picture = GFX_report_event_british_inspect_troops
 
 	is_triggered_only = yes
 
 	option = { #Accepts
-		name = russia2_ukrain.4.a
-		ai_chance = { factor = 75 }
+		name = russia2_ukraine.4.a
+		ai_chance = {
+			factor = 75
+			modifier = {
+				factor = 0
+				OR = {
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = ANARCHISM
+					}
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = ISOLATED
+					}
+				}
+			}
+		}
 		set_country_flag = accept_to_help_whiteguard
 		add_ai_strategy = {
 			type = conquer
@@ -129,35 +174,52 @@ country_event = {
 		}
 		hidden_effect = {
 			SOU = {
-				country_event = { id = russia2_ukrain.38 days = 1 }
+				country_event = { id = russia2_ukraine.38 days = 1 }
 			}
 		}
 		SOV = {
-			country_event = { id = russia2_ukrain.5 hours = 6 }
+			country_event = { id = russia2_ukraine.5 hours = 6 }
 		}
 	}
 
 	option = { #Refuse
-		name = russia2_ukrain.4.b
-		ai_chance = { factor = 25 }
+		name = russia2_ukraine.4.b
+		ai_chance = {
+			factor = 25
+			modifier = {
+				add = 75
+				OR = {
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = ANARCHISM
+					}
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = ISOLATED
+					}
+				}
+			}
+		}
 		SOV = {
-			country_event = { id = russia2_ukrain.6 hours = 6 }
+			country_event = { id = russia2_ukraine.6 hours = 6 }
 		}
 	}
 }
 
 #Ukraine Has Accepted
 country_event = {
-	id = russia2_ukrain.5
-	title = russia2_ukrain.5.t
-	desc = russia2_ukrain.5.d
+	id = russia2_ukraine.5
+	title = russia2_ukraine.5.t
+	desc = russia2_ukraine.5.d
 	picture = GFX_soldiers_handshaking_kolchak_russia2
 
 	is_triggered_only = yes
 
 	option = { #Good
-		name = russia2_ukrain.5.a
-		ai_chance = { factor = 100 }
+		name = russia2_ukraine.5.a
+		ai_chance = {
+			factor = 100
+		}
 		if = {
 			limit = {
 				SOV = {
@@ -183,19 +245,19 @@ country_event = {
 
 #Ukraine Has Refused
 country_event = {
-	id = russia2_ukrain.6
-	title = russia2_ukrain.6.t
-	desc = russia2_ukrain.6.d
+	id = russia2_ukraine.6
+	title = russia2_ukraine.6.t
+	desc = russia2_ukraine.6.d
 	picture = GFX_report_event_ger_civil_war
 
 	is_triggered_only = yes
 
 	option = { #Damn
-		name = russia2_ukrain.6.a
+		name = russia2_ukraine.6.a
 		ai_chance = { factor = 100 }
 		UKR = {
 			hidden_effect = {
-				country_event = { id = russia2_ukrain.32 days = 5 }
+				country_event = { id = russia2_ukraine.32 days = 5 }
 			}
 		}
 	}
@@ -203,42 +265,62 @@ country_event = {
 
 #White Guard Asks Us to stay neutral
 country_event = {
-	id = russia2_ukrain.7
-	title = russia2_ukrain.7.t
-	desc = russia2_ukrain.7.d
+	id = russia2_ukraine.7
+	title = russia2_ukraine.7.t
+	desc = russia2_ukraine.7.d
 	picture = GFX_report_event_british_inspect_troops
 
 	is_triggered_only = yes
 
 	option = { #Accept
-		name = russia2_ukrain.7.a
+		name = russia2_ukraine.7.a
 		ai_chance = {
 			factor = 50
 			modifier = {
 				add = 50
-				SOV = {
-					has_country_flag = sympathize_with_ukraine
+				OR = {
+					SOV = {
+						has_country_flag = sympathize_with_ukraine
+					}
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = ANARCHISM
+					}
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = ISOLATED
+					}
 				}
 			}
 		}
 		SOV = {
-			country_event = { id = russia2_ukrain.8 hours = 6 }
+			country_event = { id = russia2_ukraine.8 hours = 6 }
 		}
 	}
 
 	option = { #Refuse
-		name = russia2_ukrain.7.b
+		name = russia2_ukraine.7.b
 		ai_chance = {
 			factor = 50
 			modifier = {
 				factor = 0
-				SOV = {
-					has_country_flag = sympathize_with_ukraine
+				OR = {
+					SOV = {
+						has_country_flag = sympathize_with_ukraine
+					}
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = ANARCHISM
+					}
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = ISOLATED
+					}
 				}
 			}
 		}
 		SOV = {
-			country_event = { id = russia2_ukrain.9 hours = 6 }
+			country_event = { id = russia2_ukraine.9 hours = 6 }
 		}
 		set_country_flag = refused_neutrality
 	}
@@ -246,15 +328,15 @@ country_event = {
 
 #Ukraine Has Accepted
 country_event = {
-	id = russia2_ukrain.8
-	title = russia2_ukrain.8.t
-	desc = russia2_ukrain.8.d
+	id = russia2_ukraine.8
+	title = russia2_ukraine.8.t
+	desc = russia2_ukraine.8.d
 	picture = GFX_soldiers_handshaking_kolchak_russia2
 
 	is_triggered_only = yes
 
 	option = { #Good
-		name = russia2_ukrain.8.a
+		name = russia2_ukraine.8.a
 		ai_chance = { factor = 100 }
 		UKR = {
 			add_ideas = SOV_Neutrality_second
@@ -267,7 +349,7 @@ country_event = {
 				modifier = neutral_second_war
 			}
 			hidden_effect = {
-				country_event = { id = russia2_ukrain.32 days = 5 }
+				country_event = { id = russia2_ukraine.32 days = 5 }
 			}
 		}
 	}
@@ -275,19 +357,19 @@ country_event = {
 
 #Ukraine Has Refused
 country_event = {
-	id = russia2_ukrain.9
-	title = russia2_ukrain.9.t
-	desc = russia2_ukrain.9.d
+	id = russia2_ukraine.9
+	title = russia2_ukraine.9.t
+	desc = russia2_ukraine.9.d
 	picture = GFX_report_event_ger_civil_war
 
 	is_triggered_only = yes
 
 	option = { #Damn
-		name = russia2_ukrain.9.a
+		name = russia2_ukraine.9.a
 		ai_chance = { factor = 100 }
 		hidden_effect = {
 			UKR = {
-				country_event = { id = russia2_ukrain.37 days = 5 }
+				country_event = { id = russia2_ukraine.37 days = 5 }
 			}
 		}
 	}
@@ -295,9 +377,9 @@ country_event = {
 
 #Ukraine Gets Event to Intervene in the Second Civil War
 country_event = {
-	id = russia2_ukrain.10
-	title = russia2_ukrain.10.t
-	desc = russia2_ukrain.10.d
+	id = russia2_ukraine.10
+	title = russia2_ukraine.10.t
+	desc = russia2_ukraine.10.d
 	picture = GFX_battkle_kursk_russia2
 
 	fire_only_once = yes
@@ -320,15 +402,30 @@ country_event = {
 	mean_time_to_happen = { days = 1 }
 
 	option = { #Attack SOU
-		name = russia2_ukrain.10.a
-		ai_chance = { factor = 25 }
+		name = russia2_ukraine.10.a
+		ai_chance = {
+			factor = 25
+			modifier = {
+				factor = 0
+				OR = {
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = ANARCHISM
+					}
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = ISOLATED
+					}
+				}
+			}
+		}
 		declare_war_on = {
 			target = SOU
 			type = annex_everything
 		}
 		hidden_effect = {
 			SOU = {
-				country_event = { id = russia2_ukrain.38 days = 1 }
+				country_event = { id = russia2_ukraine.38 days = 1 }
 			}
 			for_each_scope_loop = {
 				array = global.russian_scw_participants_sou
@@ -363,14 +460,14 @@ country_event = {
 			custom_effect_tooltip = sov_might_take_action_sou
 			hidden_effect = {
 				SOV = {
-					country_event = { id = russia2_ukrain.11 hours = 1 }
+					country_event = { id = russia2_ukraine.11 hours = 1 }
 				}
 			}
 		}
 	}
 
 	option = { #Alliance with Finland
-		name = russia2_ukrain.10.b
+		name = russia2_ukraine.10.b
 		trigger = {
 			FIN = {
 				exists = yes
@@ -386,14 +483,29 @@ country_event = {
 				is_neighbor_of = FIN
 			}
 		}
-		ai_chance = { factor = 25 }
+		ai_chance = {
+			factor = 25
+			modifier = {
+				factor = 0
+				OR = {
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = ANARCHISM
+					}
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = ISOLATED
+					}
+				}
+			}
+		}
 		declare_war_on = {
 			target = SOU
 			type = annex_everything
 		}
 		hidden_effect = {
 			SOU = {
-				country_event = { id = russia2_ukrain.38 days = 1 }
+				country_event = { id = russia2_ukraine.38 days = 1 }
 			}
 			for_each_scope_loop = {
 				array = global.russian_scw_participants_sou
@@ -422,7 +534,7 @@ country_event = {
 		}
 		add_ideas = SOV_Second_civil_war
 		FIN = {
-			country_event = russia2_ukrain.50
+			country_event = { id = russia2_ukraine.50 days = 3 }
 		}
 		custom_effect_tooltip = ukr_will_make_concessions_fin
 		if = {
@@ -432,31 +544,46 @@ country_event = {
 			custom_effect_tooltip = sov_might_take_action_sou
 			hidden_effect = {
 				SOV = {
-					country_event = { id = russia2_ukrain.11 hours = 1 }
+					country_event = { id = russia2_ukraine.11 hours = 1 }
 				}
 			}
 		}
 	}
 
 	option = { #Do nothing
-		name = russia2_ukrain.10.c
-		ai_chance = { factor = 50 }
+		name = russia2_ukraine.10.c
+		ai_chance = {
+			factor = 50
+			modifier = {
+				add = 50
+				OR = {
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = ANARCHISM
+					}
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = ISOLATED
+					}
+				}
+			}
+		}
 		add_stability = 0.05
 	}
 }
 
 #UKR Betrays Neutrality
 country_event = {
-	id = russia2_ukrain.11
-	title = russia2_ukrain.11.t
-	desc = russia2_ukrain.11.d
+	id = russia2_ukraine.11
+	title = russia2_ukraine.11.t
+	desc = russia2_ukraine.11.d
 	picture = GFX_report_event_ger_civil_war
 
 	is_triggered_only = yes
 
 	option = { #Kill them
-		name = russia2_ukrain.11.a
-		ai_chance = { factor = 40 }
+		name = russia2_ukraine.11.a
+		ai_chance = { factor = 35 }
 		declare_war_on = {
 			target = UKR
 			type = second_russian_civil_war
@@ -490,22 +617,22 @@ country_event = {
 	}
 
 	option = { #Nvm
-		name = russia2_ukrain.11.b
-		ai_chance = { factor = 60 }
+		name = russia2_ukraine.11.b
+		ai_chance = { factor = 65 }
 	}
 }
 
-#SOV DEM Send Ultimatum for Reintegration
+#SOV DEM Sends Ultimatum for Reintegration
 country_event = {
-	id = russia2_ukrain.12
-	title = russia2_ukrain.12.t
-	desc = russia2_ukrain.12.d
+	id = russia2_ukraine.12
+	title = russia2_ukraine.12.t
+	desc = russia2_ukraine.12.d
 	picture = GFX_report_event_german_troops
 
 	is_triggered_only = yes
 
 	option = { #Accept
-		name = russia2_ukrain.12.a
+		name = russia2_ukraine.12.a
 		ai_chance = { factor = 40 }
 		SOV = {
 			country_event = { id = russia2_russia.451 days = 1 }
@@ -513,7 +640,7 @@ country_event = {
 	}
 
 	option = { #Refuse
-		name = russia2_ukrain.12.b
+		name = russia2_ukraine.12.b
 		ai_chance = { factor = 60 }
 		SOV = {
 			country_event = { id = russia2_russia.452 days = 1 }
@@ -641,17 +768,17 @@ country_event = {
 	}
 }
 
-#SOV DEM Send Ultimatum for Puppet
+#SOV DEM Sends Ultimatum for Puppet
 country_event = {
-	id = russia2_ukrain.13
-	title = russia2_ukrain.13.t
-	desc = russia2_ukrain.13.d
+	id = russia2_ukraine.13
+	title = russia2_ukraine.13.t
+	desc = russia2_ukraine.13.d
 	picture = GFX_report_event_gre_allied_diplomacy
 
 	is_triggered_only = yes
 
 	option = { #Accept
-		name = russia2_ukrain.13.a
+		name = russia2_ukraine.13.a
 		ai_chance = { factor = 60 }
 		SOV = {
 			country_event = { id = russia2_russia.453 days = 1 }
@@ -659,7 +786,7 @@ country_event = {
 	}
 
 	option = { #Refuse
-		name = russia2_ukrain.13.b
+		name = russia2_ukraine.13.b
 		ai_chance = { factor = 40 }
 		SOV = {
 			country_event = { id = russia2_russia.454 days = 1 }
@@ -672,9 +799,9 @@ country_event = {
 
 #Ukraine Future if they have Accepted Puppet
 country_event = {
-	id = russia2_ukrain.14
-	title = russia2_ukrain.14.t
-	desc = russia2_ukrain.14.d
+	id = russia2_ukraine.14
+	title = russia2_ukraine.14.t
+	desc = russia2_ukraine.14.d
 	picture = GFX_report_event_german_inspect_troops
 
 	trigger = {
@@ -694,7 +821,7 @@ country_event = {
 	mean_time_to_happen = { days = 360 }
 
 	option = { #Reintegrate With Russia
-		name = russia2_ukrain.14.a
+		name = russia2_ukraine.14.a
 		ai_chance = { factor = 40 }
 		SOV = {
 			country_event = { id = russia2_russia.455 days = 1 }
@@ -702,7 +829,7 @@ country_event = {
 	}
 
 	option = { #Ask for Expansion
-		name = russia2_ukrain.14.b
+		name = russia2_ukraine.14.b
 		ai_chance = { factor = 60 }
 		SOV = {
 			country_event = { id = russia2_russia.456 days = 1 }
@@ -712,14 +839,14 @@ country_event = {
 
 # State of the Army
 country_event = {
-	id = russia2_ukrain.15
-	title = russia2_ukrain.15.t
-	desc = russia2_ukrain.15.d
+	id = russia2_ukraine.15
+	title = russia2_ukraine.15.t
+	desc = russia2_ukraine.15.d
 	picture = GFX_report_event_por_president_military_inspection
 	is_triggered_only = yes
 
 	option = { # Ok
-		name = russia2_ukrain.15.a
+		name = russia2_ukraine.15.a
 		ai_chance = { factor = 100 }
 		army_experience = 25
 	}
@@ -727,15 +854,15 @@ country_event = {
 
 # State of the Air Force
 country_event = {
-	id = russia2_ukrain.16
-	title = russia2_ukrain.16.t
-	desc = russia2_ukrain.16.d
+	id = russia2_ukraine.16
+	title = russia2_ukraine.16.t
+	desc = russia2_ukraine.16.d
 	picture = GFX_soviet_plane_russia2
 
 	is_triggered_only = yes
 
 	option = { # Ok
-		name = russia2_ukrain.16.a
+		name = russia2_ukraine.16.a
 		ai_chance = { factor = 100 }
 		air_experience = 25
 	}
@@ -743,15 +870,15 @@ country_event = {
 
 # State of the Navy
 country_event = {
-	id = russia2_ukrain.17
-	title = russia2_ukrain.17.t
-	desc = russia2_ukrain.17.d
+	id = russia2_ukraine.17
+	title = russia2_ukraine.17.t
+	desc = russia2_ukraine.17.d
 	picture = GFX_ship_dockyard_russia2
 
 	is_triggered_only = yes
 
 	option = { # Ok
-		name = russia2_ukrain.17.a
+		name = russia2_ukraine.17.a
 		ai_chance = { factor = 100 }
 		navy_experience = 25
 	}
@@ -759,43 +886,70 @@ country_event = {
 
 # Military Pensions
 country_event = {
-	id = russia2_ukrain.18
-	title = russia2_ukrain.18.t
-	desc = russia2_ukrain.18.d
+	id = russia2_ukraine.18
+	title = russia2_ukraine.18.t
+	desc = russia2_ukraine.18.d
 	picture = GFX_report_event_german_inspect_troops
 
 	is_triggered_only = yes
 
 	option = { # Moderate Pensions
-		name = russia2_ukrain.18.a
-		ai_chance = { factor = 50 }
+		name = russia2_ukraine.18.a
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 0
+				has_game_rule = {
+					rule = UKR_ai_behavior
+					option = ANARCHISM
+				}
+			}
+		}
 		add_ideas = UKR_Military_pension_1
 	}
 
 	option = { # Heavy Pensions
-		name = russia2_ukrain.18.b
-		ai_chance = { factor = 25 }
+		name = russia2_ukraine.18.b
+		ai_chance = {
+			factor = 25
+			modifier = {
+				factor = 0
+				has_game_rule = {
+					rule = UKR_ai_behavior
+					option = ANARCHISM
+				}
+			}
+		}
 		add_ideas = UKR_Military_pension_2
 	}
 
 	option = { # No Pensions
-		name = russia2_ukrain.18.c
-		ai_chance = { factor = 25 }
+		name = russia2_ukraine.18.c
+		ai_chance = {
+			factor = 25
+			modifier = {
+				add = 75
+				has_game_rule = {
+					rule = UKR_ai_behavior
+					option = ANARCHISM
+				}
+			}
+		}
 		add_ideas = UKR_Military_pension_3
 	}
 }
 
 # Industrial Revival
 country_event = {
-	id = russia2_ukrain.19
-	title = russia2_ukrain.19.t
-	desc = russia2_ukrain.19.d
+	id = russia2_ukraine.19
+	title = russia2_ukraine.19.t
+	desc = russia2_ukraine.19.d
 	picture = GFX_report_event_generic_lend_lease
 
 	is_triggered_only = yes
 
 	option = { # Big debts
-		name = russia2_ukrain.19.a
+		name = russia2_ukraine.19.a
 		ai_chance = { factor = 100 }
 		remove_ideas = UKR_Sole_proprietorships
 		add_ideas = UKR_Industrial_revival
@@ -805,22 +959,26 @@ country_event = {
 
 # Seize Crimea
 country_event = {
-	id = russia2_ukrain.20
-	title = russia2_ukrain.20.t
-	desc = russia2_ukrain.20.d
+	id = russia2_ukraine.20
+	title = russia2_ukraine.20.t
+	desc = russia2_ukraine.20.d
 	picture = GFX_report_event_generic_panzer_attack
 
 	is_triggered_only = yes
 
 	option = { #Seize it! We need to use their territory
-		name = russia2_ukrain.20.a
+		name = russia2_ukraine.20.a
 		ai_chance = {
 			factor = 40
 			modifier = {
-				add = -40
+				factor = 0
 				OR = {
 					surrender_progress > 0.4
 					has_country_flag = accept_to_help_whiteguard
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = ISOLATED
+					}
 				}
 			}
 		}
@@ -843,26 +1001,30 @@ country_event = {
 			custom_effect_tooltip = sov_might_take_action_crimea
 			hidden_effect = {
 				SOV = {
-					country_event = russia2_ukrain.24
+					country_event = russia2_ukraine.24
 				}
 			}
 		}
 	}
 
 	option = { #Ask for their ships and military access
-		name = russia2_ukrain.20.b
+		name = russia2_ukraine.20.b
 		ai_chance = {
 			factor = 40
 			modifier = {
-				add = -40
+				factor = 0
 				OR = {
 					surrender_progress > 0.4
 					has_country_flag = accept_to_help_whiteguard
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = ISOLATED
+					}
 				}
 			}
 		}
 		CRI = {
-			country_event = russia2_ukrain.21
+			country_event = russia2_ukraine.21
 		}
 		if = {
 			limit = {
@@ -881,7 +1043,7 @@ country_event = {
 	}
 
 	option = { #We don't want troubles
-		name = russia2_ukrain.20.c
+		name = russia2_ukraine.20.c
 		ai_chance = {
 			factor = 20
 			modifier = {
@@ -889,6 +1051,10 @@ country_event = {
 				OR = {
 					surrender_progress > 0.4
 					has_country_flag = accept_to_help_whiteguard
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = ISOLATED
+					}
 				}
 			}
 		}
@@ -898,46 +1064,46 @@ country_event = {
 
 # UKR Asks for Navy
 country_event = {
-	id = russia2_ukrain.21
-	title = russia2_ukrain.21.t
-	desc = russia2_ukrain.21.d
+	id = russia2_ukraine.21
+	title = russia2_ukraine.21.t
+	desc = russia2_ukraine.21.d
 	picture = GFX_report_event_ast_navy
 
 	is_triggered_only = yes
 
 	option = { #Give in to their demands
-		name = russia2_ukrain.20.a
+		name = russia2_ukraine.20.a
 		ai_chance = {
 			factor = 75
 		}
 		UKR = {
-			country_event = russia2_ukrain.22
+			country_event = russia2_ukraine.22
 		}
 	}
 
 	option = { #Refuse...
-		name = russia2_ukrain.20.b
+		name = russia2_ukraine.20.b
 		ai_chance = {
 			factor = 25
 		}
 		custom_effect_tooltip = cri_will_lead_to_war_with_ukr
 		UKR = {
-			country_event = russia2_ukrain.23
+			country_event = russia2_ukraine.23
 		}
 	}
 }
 
 # Crimea Accepts
 country_event = {
-	id = russia2_ukrain.22
-	title = russia2_ukrain.22.t
-	desc = russia2_ukrain.22.d
+	id = russia2_ukraine.22
+	title = russia2_ukraine.22.t
+	desc = russia2_ukraine.22.d
 	picture = GFX_handshake_russia2
 
 	is_triggered_only = yes
 
 	option = { #Wonderful
-		name = russia2_ukrain.22.a
+		name = russia2_ukraine.22.a
 		ai_chance = {
 			factor = 100
 		}
@@ -952,15 +1118,15 @@ country_event = {
 
 # Crimea Refuses
 country_event = {
-	id = russia2_ukrain.23
-	title = russia2_ukrain.23.t
-	desc = russia2_ukrain.23.d
+	id = russia2_ukraine.23
+	title = russia2_ukraine.23.t
+	desc = russia2_ukraine.23.d
 	picture = GFX_menacing_tanks_russia2
 
 	is_triggered_only = yes
 
 	option = { #Die
-		name = russia2_ukrain.23.a
+		name = russia2_ukraine.23.a
 		ai_chance = {
 			factor = 100
 		}
@@ -980,7 +1146,7 @@ country_event = {
 							has_war_with = ROOT
 						}
 					}
-					country_event = russia2_ukrain.24
+					country_event = russia2_ukraine.24
 				}
 			}
 		}
@@ -989,15 +1155,15 @@ country_event = {
 
 # Ukraine Attacks Crimea
 country_event = {
-	id = russia2_ukrain.24
-	title = russia2_ukrain.24.t
-	desc = russia2_ukrain.24.d
+	id = russia2_ukraine.24
+	title = russia2_ukraine.24.t
+	desc = russia2_ukraine.24.d
 	picture = GFX_menacing_tanks_russia2
 
 	is_triggered_only = yes
 
 	option = { #Ur ded son
-		name = russia2_ukrain.24.a
+		name = russia2_ukraine.24.a
 		ai_chance = {
 			factor = 15
 			modifier = {
@@ -1006,13 +1172,13 @@ country_event = {
 			}
 		}
 		UKR = {
-			country_event = russia2_ukrain.25
+			country_event = russia2_ukraine.25
 		}
 		custom_effect_tooltip = sov_will_declare_war_on_ukr_if_refuse
 	}
 
 	option = { #Not our business
-		name = russia2_ukrain.24.a
+		name = russia2_ukraine.24.a
 		ai_chance = {
 			factor = 85
 			modifier = {
@@ -1026,50 +1192,58 @@ country_event = {
 
 # White Guard (SOV) Asks for Withdrawal from Crimea
 country_event = {
-	id = russia2_ukrain.25
-	title = russia2_ukrain.25.t
-	desc = russia2_ukrain.25.d
+	id = russia2_ukraine.25
+	title = russia2_ukraine.25.t
+	desc = russia2_ukraine.25.d
 	picture = GFX_cavalry_parade_russia2
 
 	is_triggered_only = yes
 
 	option = { #Ok
-		name = russia2_ukrain.25.a
+		name = russia2_ukraine.25.a
 		ai_chance = {
 			factor = 75
+			modifier = {
+				add = 25
+				surrender_progress > 0.20
+			}
 		}
 		white_peace = {
 			tag = CRI
 			message = WHITE_GUARD_INTERVENTION_CRIMEA
 		}
 		SOV = {
-			country_event = russia2_ukrain.26
+			country_event = russia2_ukraine.26
 		}
 	}
 
 	option = { #No
-		name = russia2_ukrain.25.b
+		name = russia2_ukraine.25.b
 		ai_chance = {
 			factor = 25
+			modifier = {
+				factor = 0
+				surrender_progress > 0.20
+			}
 		}
 		custom_effect_tooltip = ukr_will_lead_to_war_with_sov
 		SOV = {
-			country_event = russia2_ukrain.27
+			country_event = russia2_ukraine.27
 		}
 	}
 }
 
 # UKR Accepts
 country_event = {
-	id = russia2_ukrain.26
-	title = russia2_ukrain.26.t
-	desc = russia2_ukrain.26.d
+	id = russia2_ukraine.26
+	title = russia2_ukraine.26.t
+	desc = russia2_ukraine.26.d
 	picture = GFX_soldiers_handshaking_kolchak_russia2
 
 	is_triggered_only = yes
 
 	option = { #Good
-		name = russia2_ukrain.22.a
+		name = russia2_ukraine.22.a
 		ai_chance = {
 			factor = 100
 		}
@@ -1078,15 +1252,15 @@ country_event = {
 
 # UKR Refuses
 country_event = {
-	id = russia2_ukrain.27
-	title = russia2_ukrain.27.t
-	desc = russia2_ukrain.27.d
+	id = russia2_ukraine.27
+	title = russia2_ukraine.27.t
+	desc = russia2_ukraine.27.d
 	picture = GFX_operation_barbarossa
 
 	is_triggered_only = yes
 
 	option = { #Let's kill them
-		name = russia2_ukrain.27.a
+		name = russia2_ukraine.27.a
 		ai_chance = {
 			factor = 100
 		}
@@ -1130,15 +1304,15 @@ country_event = {
 
 # UKR Seeks Help
 country_event = {
-	id = russia2_ukrain.28
-	title = russia2_ukrain.28.t
-	desc = russia2_ukrain.28.d
+	id = russia2_ukraine.28
+	title = russia2_ukraine.28.t
+	desc = russia2_ukraine.28.d
 	picture = GFX_soldiers_parade_russia2
 
 	is_triggered_only = yes
 
 	option = { #Sure!
-		name = russia2_ukrain.28.a
+		name = russia2_ukraine.28.a
 		ai_chance = {
 			factor = 50
 			modifier = {
@@ -1158,12 +1332,12 @@ country_event = {
 			target = UKR
 		}
 		UKR = {
-			country_event = russia2_ukrain.29
+			country_event = russia2_ukraine.29
 		}
 	}
 
 	option = { #Nah
-		name = russia2_ukrain.28.b
+		name = russia2_ukraine.28.b
 		ai_chance = {
 			factor = 50
 			modifier = {
@@ -1182,15 +1356,15 @@ country_event = {
 
 # FROM Sends Help
 country_event = {
-	id = russia2_ukrain.29
-	title = russia2_ukrain.29.t
-	desc = russia2_ukrain.29.d
+	id = russia2_ukraine.29
+	title = russia2_ukraine.29.t
+	desc = russia2_ukraine.29.d
 	picture = GFX_report_event_czech_soldiers_02
 
 	is_triggered_only = yes
 
 	option = { #Yay!
-		name = russia2_ukrain.29.a
+		name = russia2_ukraine.29.a
 		ai_chance = {
 			factor = 100
 		}
@@ -1212,24 +1386,64 @@ country_event = {
 
 # Administration of Occupied Territories
 country_event = {
-	id = russia2_ukrain.30
-	title = russia2_ukrain.30.t
-	desc = russia2_ukrain.30.d
+	id = russia2_ukraine.30
+	title = russia2_ukraine.30.t
+	desc = russia2_ukraine.30.d
 	picture = GFX_report_event_generic_sign_treaty3
 	is_triggered_only = yes
 
 	option = { #Harsh Administration
-		name = russia2_ukrain.30.a
+		name = russia2_ukraine.30.a
 		ai_chance = {
 			factor = 50
+			modifier = {
+				add = 25
+				NOT = {
+					has_government = anarchy
+				}
+				OR = {
+					has_government = communism
+					has_government = fascism
+				}
+			}
+			modifier = {
+				add = -25
+				NOT = {
+					has_government = anarchy
+				}
+				OR = {
+					has_government = democratic
+					has_government = neutrality
+				}
+			}
 		}
 		add_ideas = UKR_Harsh_administration
 	}
 
 	option = { #Soft Administration
-		name = russia2_ukrain.30.b
+		name = russia2_ukraine.30.b
 		ai_chance = {
 			factor = 50
+			modifier = {
+				add = -25
+				NOT = {
+					has_government = anarchy
+				}
+				OR = {
+					has_government = communism
+					has_government = fascism
+				}
+			}
+			modifier = {
+				add = 25
+				NOT = {
+					has_government = anarchy
+				}
+				OR = {
+					has_government = democratic
+					has_government = neutrality
+				}
+			}
 		}
 		add_ideas = UKR_Soft_administration
 	}
@@ -1237,9 +1451,9 @@ country_event = {
 
 #You can play as Ukraine or another country
 country_event = {
-	id = russia2_ukrain.31
-	title = russia2_ukrain.31.t
-	desc = russia2_ukrain.31.d
+	id = russia2_ukraine.31
+	title = russia2_ukraine.31.t
+	desc = russia2_ukraine.31.d
 	picture = GFX_report_event_gre_allied_diplomacy
 
 	is_triggered_only = yes
@@ -1247,7 +1461,7 @@ country_event = {
 	timeout_days = 5
 
 	option = { #No
-		name = russia2_ukrain.31.a
+		name = russia2_ukraine.31.a
 		ai_chance = {
 			factor = 100
 		}
@@ -1259,7 +1473,7 @@ country_event = {
 	}
 
 	option = { #Yes
-		name = russia2_ukrain.31.b
+		name = russia2_ukraine.31.b
 		ai_chance = {
 			factor = 0
 		}
@@ -1277,7 +1491,7 @@ country_event = {
 	}
 
 	option = { #Other country set in game rules
-		name = russia2_ukrain.31.c
+		name = russia2_ukraine.31.c
 		ai_chance = {
 			factor = 0
 		}
@@ -1304,32 +1518,88 @@ country_event = {
 
 #Anarchist Rebels
 country_event = {
-	id = russia2_ukrain.32
-	title = russia2_ukrain.32.t
-	desc = russia2_ukrain.32.d
+	id = russia2_ukraine.32
+	title = russia2_ukraine.32.t
+	desc = russia2_ukraine.32.d
 	picture = GFX_report_event_gre_militaristic_march
 
 	is_triggered_only = yes
 
 	immediate = {
 		hidden_effect = {
-			country_event = { id = russia2_ukrain.33 days = 15 }
+			country_event = { id = russia2_ukraine.33 days = 15 }
 		}
 	}
 
 	option = { #Noobs
-		name = russia2_ukrain.32.a
+		name = russia2_ukraine.32.a
 		ai_chance = {
 			factor = 50
+			modifier = {
+				add = 50
+				NOT = {
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = ANARCHISM
+					}
+				}
+				NOT = {
+					OR = {
+						has_game_rule = {
+							rule = UKR_ai_behavior
+							option = DEFAULT
+						}
+						has_game_rule = {
+							rule = UKR_ai_behavior
+							option = RANDOM
+						}
+					}
+				}
+			}
+			modifier = {
+				factor = 0
+				has_game_rule = {
+					rule = UKR_ai_behavior
+					option = ANARCHISM
+				}
+			}
 		}
 		add_political_power = -50
 		add_to_variable = { ukr_current_non_anarchist_support = 1 }
 	}
 
 	option = { #Let them be
-		name = russia2_ukrain.32.b
+		name = russia2_ukraine.32.b
 		ai_chance = {
 			factor = 50
+			modifier = {
+				factor = 0
+				NOT = {
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = ANARCHISM
+					}
+				}
+				NOT = {
+					OR = {
+						has_game_rule = {
+							rule = UKR_ai_behavior
+							option = DEFAULT
+						}
+						has_game_rule = {
+							rule = UKR_ai_behavior
+							option = RANDOM
+						}
+					}
+				}
+			}
+			modifier = {
+				add = 50
+				has_game_rule = {
+					rule = UKR_ai_behavior
+					option = ANARCHISM
+				}
+			}
 		}
 		trigger = {
 			has_war = no
@@ -1341,32 +1611,88 @@ country_event = {
 
 #Anarchist Rebels 2
 country_event = {
-	id = russia2_ukrain.33
-	title = russia2_ukrain.33.t
-	desc = russia2_ukrain.33.d
+	id = russia2_ukraine.33
+	title = russia2_ukraine.33.t
+	desc = russia2_ukraine.33.d
 	picture = GFX_report_event_gre_militaristic_march
 
 	is_triggered_only = yes
 
 	immediate = {
 		hidden_effect = {
-			country_event = { id = russia2_ukrain.34 days = 15 }
+			country_event = { id = russia2_ukraine.34 days = 15 }
 		}
 	}
 
 	option = { #Noobs
-		name = russia2_ukrain.33.a
+		name = russia2_ukraine.33.a
 		ai_chance = {
 			factor = 50
+			modifier = {
+				add = 50
+				NOT = {
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = ANARCHISM
+					}
+				}
+				NOT = {
+					OR = {
+						has_game_rule = {
+							rule = UKR_ai_behavior
+							option = DEFAULT
+						}
+						has_game_rule = {
+							rule = UKR_ai_behavior
+							option = RANDOM
+						}
+					}
+				}
+			}
+			modifier = {
+				factor = 0
+				has_game_rule = {
+					rule = UKR_ai_behavior
+					option = ANARCHISM
+				}
+			}
 		}
 		add_manpower = -5000
 		add_to_variable = { ukr_current_non_anarchist_support = 1 }
 	}
 
 	option = { #Let them be
-		name = russia2_ukrain.33.b
+		name = russia2_ukraine.33.b
 		ai_chance = {
 			factor = 50
+			modifier = {
+				factor = 0
+				NOT = {
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = ANARCHISM
+					}
+				}
+				NOT = {
+					OR = {
+						has_game_rule = {
+							rule = UKR_ai_behavior
+							option = DEFAULT
+						}
+						has_game_rule = {
+							rule = UKR_ai_behavior
+							option = RANDOM
+						}
+					}
+				}
+			}
+			modifier = {
+				add = 50
+				has_game_rule = {
+					rule = UKR_ai_behavior
+					option = ANARCHISM
+				}
+			}
 		}
 		trigger = {
 			has_war = no
@@ -1378,22 +1704,50 @@ country_event = {
 
 #Anarchist Rebels 3
 country_event = {
-	id = russia2_ukrain.34
-	title = russia2_ukrain.34.t
-	desc = russia2_ukrain.34.d
+	id = russia2_ukraine.34
+	title = russia2_ukraine.34.t
+	desc = russia2_ukraine.34.d
 	picture = GFX_report_event_gre_militaristic_march
 	is_triggered_only = yes
 
 	immediate = {
 		hidden_effect = {
-			country_event = { id = russia2_ukrain.35 days = 15 }
+			country_event = { id = russia2_ukraine.35 days = 15 }
 		}
 	}
 
 	option = { #Noobs
-		name = russia2_ukrain.34.a
+		name = russia2_ukraine.34.a
 		ai_chance = {
 			factor = 50
+			modifier = {
+				add = 50
+				NOT = {
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = ANARCHISM
+					}
+				}
+				NOT = {
+					OR = {
+						has_game_rule = {
+							rule = UKR_ai_behavior
+							option = DEFAULT
+						}
+						has_game_rule = {
+							rule = UKR_ai_behavior
+							option = RANDOM
+						}
+					}
+				}
+			}
+			modifier = {
+				factor = 0
+				has_game_rule = {
+					rule = UKR_ai_behavior
+					option = ANARCHISM
+				}
+			}
 		}
 		add_equipment_to_stockpile = {
 			type = infantry_equipment
@@ -1403,9 +1757,37 @@ country_event = {
 	}
 
 	option = { #Let them be
-		name = russia2_ukrain.34.b
+		name = russia2_ukraine.34.b
 		ai_chance = {
 			factor = 50
+			modifier = {
+				factor = 0
+				NOT = {
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = ANARCHISM
+					}
+				}
+				NOT = {
+					OR = {
+						has_game_rule = {
+							rule = UKR_ai_behavior
+							option = DEFAULT
+						}
+						has_game_rule = {
+							rule = UKR_ai_behavior
+							option = RANDOM
+						}
+					}
+				}
+			}
+			modifier = {
+				add = 50
+				has_game_rule = {
+					rule = UKR_ai_behavior
+					option = ANARCHISM
+				}
+			}
 		}
 		trigger = {
 			has_war = no
@@ -1417,23 +1799,51 @@ country_event = {
 
 #Anarchist Rebels 4
 country_event = {
-	id = russia2_ukrain.35
-	title = russia2_ukrain.35.t
-	desc = russia2_ukrain.35.d
+	id = russia2_ukraine.35
+	title = russia2_ukraine.35.t
+	desc = russia2_ukraine.35.d
 	picture = GFX_report_event_gre_militaristic_march
 
 	is_triggered_only = yes
 
 	immediate = {
 		hidden_effect = {
-			country_event = { id = russia2_ukrain.36 days = 15 }
+			country_event = { id = russia2_ukraine.36 days = 15 }
 		}
 	}
 
 	option = { #Noobs
-		name = russia2_ukrain.35.a
+		name = russia2_ukraine.35.a
 		ai_chance = {
 			factor = 50
+			modifier = {
+				add = 50
+				NOT = {
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = ANARCHISM
+					}
+				}
+				NOT = {
+					OR = {
+						has_game_rule = {
+							rule = UKR_ai_behavior
+							option = DEFAULT
+						}
+						has_game_rule = {
+							rule = UKR_ai_behavior
+							option = RANDOM
+						}
+					}
+				}
+			}
+			modifier = {
+				factor = 0
+				has_game_rule = {
+					rule = UKR_ai_behavior
+					option = ANARCHISM
+				}
+			}
 		}
 		add_political_power = 50
 		random_owned_controlled_state = {
@@ -1449,9 +1859,37 @@ country_event = {
 	}
 
 	option = { #Let them be
-		name = russia2_ukrain.35.b
+		name = russia2_ukraine.35.b
 		ai_chance = {
 			factor = 50
+			modifier = {
+				factor = 0
+				NOT = {
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = ANARCHISM
+					}
+				}
+				NOT = {
+					OR = {
+						has_game_rule = {
+							rule = UKR_ai_behavior
+							option = DEFAULT
+						}
+						has_game_rule = {
+							rule = UKR_ai_behavior
+							option = RANDOM
+						}
+					}
+				}
+			}
+			modifier = {
+				add = 50
+				has_game_rule = {
+					rule = UKR_ai_behavior
+					option = ANARCHISM
+				}
+			}
 		}
 		trigger = {
 			has_war = no
@@ -1463,9 +1901,9 @@ country_event = {
 
 #Results
 country_event = {
-	id = russia2_ukrain.36
-	title = russia2_ukrain.36.t
-	desc = russia2_ukrain.36.d
+	id = russia2_ukraine.36
+	title = russia2_ukraine.36.t
+	desc = russia2_ukraine.36.d
 	picture = GFX_report_event_hungary_parliament
 
 	is_triggered_only = yes
@@ -1478,13 +1916,13 @@ country_event = {
 				limit = {
 					has_global_flag = second_russian_civil_war_in_progress
 				}
-				country_event = { id = russia2_ukrain.40 days = 10 }
+				country_event = { id = russia2_ukraine.40 days = 10 }
 			}
 		}
 	}
 
 	option = { #Anarchism Fails
-		name = russia2_ukrain.36.a
+		name = russia2_ukraine.36.a
 		ai_chance = {
 			factor = 100
 		}
@@ -1501,7 +1939,7 @@ country_event = {
 	}
 
 	option = { #Anarchism Wins
-		name = russia2_ukrain.36.b
+		name = russia2_ukraine.36.b
 		ai_chance = {
 			factor = 100
 		}
@@ -1576,15 +2014,43 @@ country_event = {
 			for_each_scope_loop = {
 				array = global.russian_scw_participants
 
-				country_event = russia2_ukrain.39
+				country_event = russia2_ukraine.39
 			}
 		}
 	}
 
-	option = { #Both Wins (Choose Republic)
-		name = russia2_ukrain.36.c
+	option = { #Both Win (Choose Republic)
+		name = russia2_ukraine.36.c
 		ai_chance = {
 			factor = 50
+			modifier = {
+				add = 50
+				NOT = {
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = ANARCHISM
+					}
+				}
+				NOT = {
+					OR = {
+						has_game_rule = {
+							rule = UKR_ai_behavior
+							option = DEFAULT
+						}
+						has_game_rule = {
+							rule = UKR_ai_behavior
+							option = RANDOM
+						}
+					}
+				}
+			}
+			modifier = {
+				factor = 0
+				has_game_rule = {
+					rule = UKR_ai_behavior
+					option = ANARCHISM
+				}
+			}
 		}
 		trigger = {
 			check_variable = {
@@ -1604,9 +2070,37 @@ country_event = {
 	}
 
 	option = { #Both Wins (Choose Anarchism)
-		name = russia2_ukrain.36.e
+		name = russia2_ukraine.36.e
 		ai_chance = {
 			factor = 50
+			modifier = {
+				factor = 0
+				NOT = {
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = ANARCHISM
+					}
+				}
+				NOT = {
+					OR = {
+						has_game_rule = {
+							rule = UKR_ai_behavior
+							option = DEFAULT
+						}
+						has_game_rule = {
+							rule = UKR_ai_behavior
+							option = RANDOM
+						}
+					}
+				}
+			}
+			modifier = {
+				add = 50
+				has_game_rule = {
+					rule = UKR_ai_behavior
+					option = ANARCHISM
+				}
+			}
 		}
 		trigger = {
 			check_variable = {
@@ -1679,7 +2173,7 @@ country_event = {
 			for_each_scope_loop = {
 				array = global.russian_scw_participants
 
-				country_event = russia2_ukrain.39
+				country_event = russia2_ukraine.39
 			}
 		}
 	}
@@ -1687,17 +2181,30 @@ country_event = {
 
 #Join the War or Not
 country_event = {
-	id = russia2_ukrain.37
-	title = russia2_ukrain.37.t
-	desc = russia2_ukrain.37.d
+	id = russia2_ukraine.37
+	title = russia2_ukraine.37.t
+	desc = russia2_ukraine.37.d
 	picture = GFX_battkle_kursk_russia2
 
 	is_triggered_only = yes
 
 	option = { #Yes
-		name = russia2_ukrain.37.a
+		name = russia2_ukraine.37.a
 		ai_chance = {
 			factor = 50
+			modifier = {
+				factor = 0
+				OR = {
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = ANARCHISM
+					}
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = ISOLATED
+					}
+				}
+			}
 		}
 		declare_war_on = {
 			target = SOU
@@ -1705,7 +2212,7 @@ country_event = {
 		}
 		hidden_effect = {
 			SOU = {
-				country_event = { id = russia2_ukrain.38 days = 1 }
+				country_event = { id = russia2_ukraine.38 days = 1 }
 			}
 			for_each_scope_loop = {
 				array = global.russian_scw_participants_sou
@@ -1741,33 +2248,46 @@ country_event = {
 		add_war_support = 0.1
 		hidden_effect = {
 			add_ideas = SOV_Second_civil_war
-			country_event = { id = russia2_ukrain.48 days = 7 }
+			country_event = { id = russia2_ukraine.48 days = 7 }
 		}
 	}
 
 	option = { #No
-		name = russia2_ukrain.37.b
+		name = russia2_ukraine.37.b
 		ai_chance = {
 			factor = 50
+			modifier = {
+				add = 50
+				OR = {
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = ANARCHISM
+					}
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = ISOLATED
+					}
+				}
+			}
 		}
 		add_stability = 0.05
 		hidden_effect = {
-			country_event = { id = russia2_ukrain.32 days = 5 }
+			country_event = { id = russia2_ukraine.32 days = 5 }
 		}
 	}
 }
 
 #UKR Joins the SCW
 country_event = {
-	id = russia2_ukrain.38
-	title = russia2_ukrain.38.t
-	desc = russia2_ukrain.38.d
+	id = russia2_ukraine.38
+	title = russia2_ukraine.38.t
+	desc = russia2_ukraine.38.d
 	picture = GFX_menacing_tanks_russia2
 
 	is_triggered_only = yes
 
 	option = { #Okay...
-		name = russia2_ukrain.38.a
+		name = russia2_ukraine.38.a
 		ai_chance = {
 			factor = 100
 		}
@@ -1776,15 +2296,15 @@ country_event = {
 
 #UKR Becomes Anarchist
 country_event = {
-	id = russia2_ukrain.39
-	title = russia2_ukrain.39.t
-	desc = russia2_ukrain.39.d
+	id = russia2_ukraine.39
+	title = russia2_ukraine.39.t
+	desc = russia2_ukraine.39.d
 	picture = GFX_artillery_with_building_russia2
 
 	is_triggered_only = yes
 
 	option = { #Troubles are coming...
-		name = russia2_ukrain.39.a
+		name = russia2_ukraine.39.a
 		ai_chance = {
 			factor = 100
 		}
@@ -1794,19 +2314,33 @@ country_event = {
 
 #Anarchist Ukraine Event to join the SCW
 country_event = {
-	id = russia2_ukrain.40
-	title = russia2_ukrain.40.t
-	desc = russia2_ukrain.40.d
+	id = russia2_ukraine.40
+	title = russia2_ukraine.40.t
+	desc = russia2_ukraine.40.d
 	picture = GFX_soldiers_with_guns_russia2
 
 	is_triggered_only = yes
 
 	option = { #Here we go
-		name = russia2_ukrain.40.a
+		name = russia2_ukraine.40.a
 		ai_chance = {
 			factor = 100
 		}
 		custom_effect_tooltip = ukr_declares_on_all_scw_participants
+		add_political_power = 100
+		capital_scope = {
+			add_extra_state_shared_building_slots = 4
+			add_building_construction = {
+				type = industrial_complex
+				level = 2
+				instant_build = yes
+			}
+			add_building_construction = {
+				type = arms_factory
+				level = 2
+				instant_build = yes
+			}
+		}
 		hidden_effect = {
 			add_ideas = SOV_Second_civil_war
 			for_each_scope_loop = {
@@ -1824,7 +2358,7 @@ country_event = {
 							}
 						}
 					}
-					country_event = { id = russia2_ukrain.38 days = 1 }
+					country_event = { id = russia2_ukraine.38 days = 1 }
 					ROOT = {
 						declare_war_on = {
 							target = PREV
@@ -1838,22 +2372,22 @@ country_event = {
 					}
 				}
 			}
-			country_event = { id = russia2_ukrain.48 days = 7 }
+			country_event = { id = russia2_ukraine.48 days = 7 }
 		}
 	}
 }
 
 #Ukraine Tries to Coup Belarus
 country_event = {
-	id = russia2_ukrain.41
-	title = russia2_ukrain.41.t
-	desc = russia2_ukrain.41.d
+	id = russia2_ukraine.41
+	title = russia2_ukraine.41.t
+	desc = russia2_ukraine.41.d
 	picture = GFX_soldiers_parade_russia2
 
 	is_triggered_only = yes
 
 	option = { #Coup Succeeds
-		name = russia2_ukrain.41.a
+		name = russia2_ukraine.41.a
 		ai_chance = {
 			factor = 75
 		}
@@ -1862,7 +2396,7 @@ country_event = {
 				target = ROOT
 				autonomy_state = autonomy_puppet
 			}
-			country_event = { id = russia2_ukrain.42 days = 1 }
+			country_event = { id = russia2_ukraine.42 days = 1 }
 		}
 		hidden_effect = {
 			every_owned_state = {
@@ -1881,28 +2415,28 @@ country_event = {
 	}
 
 	option = { #Coup Fails
-		name = russia2_ukrain.41.b
+		name = russia2_ukraine.41.b
 		ai_chance = {
 			factor = 25
 		}
 		add_stability = -0.05
 		UKR = {
-			country_event = { id = russia2_ukrain.43 days = 1 }
+			country_event = { id = russia2_ukraine.43 days = 1 }
 		}
 	}
 }
 
 #Coup Succeeds
 country_event = {
-	id = russia2_ukrain.42
-	title = russia2_ukrain.42.t
-	desc = russia2_ukrain.42.d
+	id = russia2_ukraine.42
+	title = russia2_ukraine.42.t
+	desc = russia2_ukraine.42.d
 	picture = GFX_soldiers_with_guns_russia2
 
 	is_triggered_only = yes
 
 	option = { #Yay
-		name = russia2_ukrain.42.a
+		name = russia2_ukraine.42.a
 		ai_chance = {
 			factor = 100
 		}
@@ -1915,7 +2449,7 @@ country_event = {
 					}
 				}
 				SOV = {
-					country_event = { id = russia2_ukrain.44 days = 1 }
+					country_event = { id = russia2_ukraine.44 days = 1 }
 				}
 			}
 		}
@@ -1924,15 +2458,15 @@ country_event = {
 
 #Coup Fails :(
 country_event = {
-	id = russia2_ukrain.43
-	title = russia2_ukrain.43.t
-	desc = russia2_ukrain.43.d
+	id = russia2_ukraine.43
+	title = russia2_ukraine.43.t
+	desc = russia2_ukraine.43.d
 	picture = GFX_artillery_with_building_russia2
 
 	is_triggered_only = yes
 
 	option = { #Yay
-		name = russia2_ukrain.43.a
+		name = russia2_ukraine.43.a
 		ai_chance = {
 			factor = 100
 		}
@@ -1943,20 +2477,24 @@ country_event = {
 
 #Ukraine Coups Belarus
 country_event = {
-	id = russia2_ukrain.44
-	title = russia2_ukrain.44.t
-	desc = russia2_ukrain.44.d
+	id = russia2_ukraine.44
+	title = russia2_ukraine.44.t
+	desc = russia2_ukraine.44.d
 	picture = GFX_soldiers_with_guns_russia2
 
 	is_triggered_only = yes
 
 	option = { #Fuck em up
-		name = russia2_ukrain.44.a
+		name = russia2_ukraine.44.a
 		ai_chance = {
 			factor = 25
 			modifier = {
 				add = 75
 				has_country_flag = sympathize_with_ukraine
+			}
+			modifier = {
+				add = -25
+				surrender_progress > 0.1
 			}
 		}
 		add_war_support = 0.05
@@ -1996,7 +2534,7 @@ country_event = {
 					}
 				}
 				UKR = {
-					country_event = russia2_ukrain.45
+					country_event = russia2_ukraine.45
 					add_ideas = SOV_Second_civil_war
 				}
 			}
@@ -2004,12 +2542,16 @@ country_event = {
 	}
 
 	option = { #Don't care
-		name = russia2_ukrain.44.b
+		name = russia2_ukraine.44.b
 		ai_chance = {
 			factor = 75
 			modifier = {
 				add = -75
 				has_country_flag = sympathize_with_ukraine
+			}
+			modifier = {
+				add = 25
+				surrender_progress > 0.1
 			}
 		}
 		add_political_power = 50
@@ -2018,15 +2560,15 @@ country_event = {
 
 #White Guard Attacks Us
 country_event = {
-	id = russia2_ukrain.45
-	title = russia2_ukrain.45.t
-	desc = russia2_ukrain.45.d
+	id = russia2_ukraine.45
+	title = russia2_ukraine.45.t
+	desc = russia2_ukraine.45.d
 	picture = GFX_russian_civil_war_russia2
 
 	is_triggered_only = yes
 
 	option = { #Uh
-		name = russia2_ukrain.45.a
+		name = russia2_ukraine.45.a
 		ai_chance = {
 			factor = 100
 		}
@@ -2035,15 +2577,15 @@ country_event = {
 
 #End of the Russian Civil War
 country_event = {
-	id = russia2_ukrain.47
-	title = russia2_ukrain.47.t
-	desc = russia2_ukrain.47.d
+	id = russia2_ukraine.47
+	title = russia2_ukraine.47.t
+	desc = russia2_ukraine.47.d
 	picture = GFX_report_event_generic_ruins
 
 	is_triggered_only = yes
 
-	option = { #nice
-		name = russia2_ukrain.47.a
+	option = { #Nice
+		name = russia2_ukraine.47.a
 		ai_chance = {
 			factor = 100
 		}
@@ -2102,10 +2644,6 @@ country_event = {
 					}
 				}
 				SOV = {
-					set_province_name = { id = 3529 name = "Tsaritsyn"}
-					217 = {
-						set_state_name = "Tsaritsyn"
-					}
 					set_capital = 217
 				}
 			}
@@ -2122,10 +2660,6 @@ country_event = {
 					}
 					sou_general_end_civil_war = yes
 					sou_create_country_leader_sov = yes
-				}
-				set_province_name = { id = 3529 name = "Tsaritsyn"}
-				217 = {
-					set_state_name = "Tsaritsyn"
 				}
 				set_capital = 217
 				every_state = {
@@ -2194,9 +2728,9 @@ country_event = {
 
 #Deserting White Generals are granting us help 
 country_event = {
-	id = russia2_ukrain.48
-	title = russia2_ukrain.48.t
-	desc = russia2_ukrain.48.d
+	id = russia2_ukraine.48
+	title = russia2_ukraine.48.t
+	desc = russia2_ukraine.48.d
 	picture = GFX_soldiers_handshaking_kolchak_russia2
 
 	is_triggered_only = yes
@@ -2204,16 +2738,16 @@ country_event = {
 	immediate = {
 		hidden_effect = {
 			SOV = {
-				country_event = { id = russia2_ukrain.49 }
+				country_event = { id = russia2_ukraine.49 }
 			}
 			SOU = {
-				country_event = { id = russia2_ukrain.49 }
+				country_event = { id = russia2_ukraine.49 }
 			}
 		}
 	}
 
-	option = { #nice
-		name = russia2_ukrain.48.a
+	option = { #Nice
+		name = russia2_ukraine.48.a
 		ai_chance = {
 			factor = 100
 		}
@@ -2245,15 +2779,15 @@ country_event = {
 
 #General Deserting to Ukraine
 country_event = {
-	id = russia2_ukrain.49
-	title = russia2_ukrain.49.t
-	desc = russia2_ukrain.49.d
+	id = russia2_ukraine.49
+	title = russia2_ukraine.49.t
+	desc = russia2_ukraine.49.d
 	picture = GFX_report_event_polish_army
 
 	is_triggered_only = yes
 
 	option = { #Damn
-		name = russia2_ukrain.49.a
+		name = russia2_ukraine.49.a
 		ai_chance = {
 			factor = 100
 		}
@@ -2262,17 +2796,29 @@ country_event = {
 
 #Ukraine Asks for Alliance
 country_event = {
-	id = russia2_ukrain.50
-	title = russia2_ukrain.50.t
-	desc = russia2_ukrain.50.d
+	id = russia2_ukraine.50
+	title = russia2_ukraine.50.t
+	desc = russia2_ukraine.50.d
 	picture = GFX_report_event_polish_army
 
 	is_triggered_only = yes
 
 	option = { #Sure
-		name = russia2_ukrain.50.a
+		name = russia2_ukraine.50.a
 		ai_chance = {
 			factor = 75
+			modifier = {
+				add = 25
+				UKR = {
+					surrender_progress < 0.05
+				}
+			}
+			modifier = {
+				add = -50
+				UKR = {
+					surrender_progress > 0.25
+				}
+			}
 		}
 		set_country_flag = fin_accepted_scw_ukr_alliance
 		add_stability = 0.1
@@ -2300,7 +2846,7 @@ country_event = {
 				value = 500
 			}
 			add_to_faction = ROOT
-			country_event = russia2_ukrain.51
+			country_event = russia2_ukraine.51
 		}
 		declare_war_on = {
 			target = SOU
@@ -2343,27 +2889,39 @@ country_event = {
 	}
 
 	option = { #No
-		name = russia2_ukrain.50.b
+		name = russia2_ukraine.50.b
 		ai_chance = {
 			factor = 25
+			modifier = {
+				add = -25
+				UKR = {
+					surrender_progress < 0.05
+				}
+			}
+			modifier = {
+				add = 50
+				UKR = {
+					surrender_progress > 0.25
+				}
+			}
 		}
 		UKR = {
-			country_event = russia2_ukrain.52
+			country_event = russia2_ukraine.52
 		}
 	}
 }
 
 #Finland Accepts
 country_event = {
-	id = russia2_ukrain.51
-	title = russia2_ukrain.51.t
-	desc = russia2_ukrain.51.d
+	id = russia2_ukraine.51
+	title = russia2_ukraine.51.t
+	desc = russia2_ukraine.51.d
 	picture = GFX_report_event_polish_army
 
 	is_triggered_only = yes
 
 	option = { #Yay
-		name = russia2_ukrain.51.a
+		name = russia2_ukraine.51.a
 		ai_chance = {
 			factor = 100
 		}
@@ -2372,15 +2930,15 @@ country_event = {
 
 #Finland Refuses
 country_event = {
-	id = russia2_ukrain.52
-	title = russia2_ukrain.52.t
-	desc = russia2_ukrain.52.d
+	id = russia2_ukraine.52
+	title = russia2_ukraine.52.t
+	desc = russia2_ukraine.52.d
 	picture = GFX_report_event_polish_army
 
 	is_triggered_only = yes
 
 	option = { #Damn
-		name = russia2_ukrain.52.a
+		name = russia2_ukraine.52.a
 		ai_chance = {
 			factor = 100
 		}
@@ -2389,33 +2947,33 @@ country_event = {
 
 #Claim Too Many States so Standoff
 country_event = {
-	id = russia2_ukrain.53
-	title = russia2_ukrain.53.t
-	desc = russia2_ukrain.53.d
+	id = russia2_ukraine.53
+	title = russia2_ukraine.53.t
+	desc = russia2_ukraine.53.d
 	picture = GFX_report_event_polish_army
 
 	is_triggered_only = yes
 
 	option = { #Damn
-		name = russia2_ukrain.53.a
+		name = russia2_ukraine.53.a
 		ai_chance = {
 			factor = 100
 		}
-		custom_effect_tooltip = the_war_is_not_over
+		custom_effect_tooltip = ukr_the_war_is_not_over
 	}
 }
 
 #Anarchism Fails (Timeout)
 country_event = {
-	id = russia2_ukrain.54
-	title = russia2_ukrain.54.t
-	desc = russia2_ukrain.54.d
+	id = russia2_ukraine.54
+	title = russia2_ukraine.54.t
+	desc = russia2_ukraine.54.d
 	picture = GFX_report_event_polish_army
 
 	is_triggered_only = yes
 
 	option = { #Damn
-		name = russia2_ukrain.54.a
+		name = russia2_ukraine.54.a
 		ai_chance = {
 			factor = 100
 		}
@@ -2439,15 +2997,15 @@ country_event = {
 
 #Anarchism Prevails (Timeout)
 country_event = {
-	id = russia2_ukrain.55
-	title = russia2_ukrain.55.t
-	desc = russia2_ukrain.55.d
+	id = russia2_ukraine.55
+	title = russia2_ukraine.55.t
+	desc = russia2_ukraine.55.d
 	picture = GFX_report_event_polish_army
 
 	is_triggered_only = yes
 
 	option = { #Yes
-		name = russia2_ukrain.55.a
+		name = russia2_ukraine.55.a
 		ai_chance = {
 			factor = 100
 		}
@@ -2459,9 +3017,9 @@ country_event = {
 
 #Give a few divisions to UKR during the SCW (Anarchist)
 country_event = {
-	id = russia2_ukrain.56
-	title = russia2_ukrain.56.t
-	desc = russia2_ukrain.56.d
+	id = russia2_ukraine.56
+	title = russia2_ukraine.56.t
+	desc = russia2_ukraine.56.d
 	picture = GFX_report_event_polish_army
 	
 	fire_only_once = yes
@@ -2476,7 +3034,7 @@ country_event = {
 	}
 
 	option = { #Amazing
-		name = russia2_ukrain.56.a
+		name = russia2_ukraine.56.a
 		ai_chance = {
 			factor = 100
 		}
@@ -2530,15 +3088,15 @@ country_event = {
 
 #Execute the Soviet Command
 country_event = {
-	id = russia2_ukrain.57
-	title = russia2_ukrain.57.t
-	desc = russia2_ukrain.57.d
+	id = russia2_ukraine.57
+	title = russia2_ukraine.57.t
+	desc = russia2_ukraine.57.d
 	picture = GFX_report_event_polish_army
 
 	is_triggered_only = yes
 
 	option = { #Rip
-		name = russia2_ukrain.57.a
+		name = russia2_ukraine.57.a
 		ai_chance = {
 			factor = 100
 		}
@@ -2554,17 +3112,17 @@ country_event = {
 	}
 }
 
-#Execute the Soviet High Command
+#Vladimir Antonov Takes Over?
 country_event = {
-	id = russia2_ukrain.58
-	title = russia2_ukrain.58.t
-	desc = russia2_ukrain.58.d
+	id = russia2_ukraine.58
+	title = russia2_ukraine.58.t
+	desc = russia2_ukraine.58.d
 	picture = GFX_report_event_polish_army
 
 	is_triggered_only = yes
 
 	option = { #No can do
-		name = russia2_ukrain.58.a
+		name = russia2_ukraine.58.a
 		ai_chance = {
 			factor = 75
 		}
@@ -2572,7 +3130,7 @@ country_event = {
 	}
 
 	option = {
-		name = russia2_ukrain.58.b
+		name = russia2_ukraine.58.b
 		ai_chance = {
 			factor = 25
 		}
@@ -2603,49 +3161,63 @@ country_event = {
 
 #Anarchist Ukraine Wishes to Unify
 country_event = {
-	id = russia2_ukrain.59
-	title = russia2_ukrain.59.t
-	desc = russia2_ukrain.59.d
+	id = russia2_ukraine.59
+	title = russia2_ukraine.59.t
+	desc = russia2_ukraine.59.d
 	picture = GFX_report_event_polish_army
 
 	is_triggered_only = yes
 
 	option = { #Yes
-		name = russia2_ukrain.59.a
+		name = russia2_ukraine.59.a
 		ai_chance = {
 			factor = 80
+			modifier = {
+				add = -45
+				strength_ratio = {
+					tag = FROM
+					ratio > 1
+				}
+			}
 		}
 		FROM = {
 			annex_country = {
 				target = ROOT
 				transfer_troops = no
 			}
-			country_event = russia2_ukrain.60
+			country_event = russia2_ukraine.60
 		}
 	}
 
 	option = { #No
-		name = russia2_ukrain.59.b
+		name = russia2_ukraine.59.b
 		ai_chance = {
 			factor = 20
+			modifier = {
+				add = 45
+				strength_ratio = {
+					tag = FROM
+					ratio > 1
+				}
+			}
 		}
 		FROM = {
-			country_event = russia2_ukrain.61
+			country_event = russia2_ukraine.61
 		}
 	}
 }
 
 #Anarchist Spain Accepts
 country_event = {
-	id = russia2_ukrain.60
-	title = russia2_ukrain.60.t
-	desc = russia2_ukrain.60.d
+	id = russia2_ukraine.60
+	title = russia2_ukraine.60.t
+	desc = russia2_ukraine.60.d
 	picture = GFX_report_event_polish_army
 
 	is_triggered_only = yes
 
 	option = { #Nice
-		name = russia2_ukrain.60.a
+		name = russia2_ukraine.60.a
 		ai_chance = {
 			factor = 100
 		}
@@ -2654,15 +3226,15 @@ country_event = {
 
 #Anarchist Spain Refuses
 country_event = {
-	id = russia2_ukrain.61
-	title = russia2_ukrain.61.t
-	desc = russia2_ukrain.61.d
+	id = russia2_ukraine.61
+	title = russia2_ukraine.61.t
+	desc = russia2_ukraine.61.d
 	picture = GFX_report_event_polish_army
 
 	is_triggered_only = yes
 
 	option = { #Die
-		name = russia2_ukrain.61.a
+		name = russia2_ukraine.61.a
 		ai_chance = {
 			factor = 100
 		}
@@ -2675,15 +3247,15 @@ country_event = {
 
 #Anarchist Rebels in our Country
 country_event = {
-	id = russia2_ukrain.62
-	title = russia2_ukrain.62.t
-	desc = russia2_ukrain.62.d
+	id = russia2_ukraine.62
+	title = russia2_ukraine.62.t
+	desc = russia2_ukraine.62.d
 	picture = GFX_report_event_polish_army
 
 	is_triggered_only = yes
 
 	option = { #Uhh
-		name = russia2_ukrain.62.a
+		name = russia2_ukraine.62.a
 		ai_chance = {
 			factor = 100
 		}
@@ -2709,17 +3281,41 @@ country_event = {
 
 #Emergency Elections
 country_event = {
-	id = russia2_ukrain.63
-	title = russia2_ukrain.63.t
-	desc = russia2_ukrain.63.d
+	id = russia2_ukraine.63
+	title = russia2_ukraine.63.t
+	desc = russia2_ukraine.63.d
 	picture = GFX_report_event_polish_army
 
 	is_triggered_only = yes
 
 	option = { #Democratic
-		name = russia2_ukrain.63.a
+		name = russia2_ukraine.63.a
 		ai_chance = {
-			factor = 100
+			factor = 25
+			modifier = {
+				add = 75
+				has_game_rule = {
+					rule = UKR_ai_behavior
+					option = DEMOCRATIC
+				}
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = NEUTRALITY
+					}
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = COMMUNISM
+					}
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = FASCISM
+					}
+				}
+			}
 		}
 		if = {
 			limit = {
@@ -2752,9 +3348,33 @@ country_event = {
 	}
 
 	option = { #Non-aligned
-		name = russia2_ukrain.63.b
+		name = russia2_ukraine.63.b
 		ai_chance = {
-			factor = 100
+			factor = 25
+			modifier = {
+				add = 75
+				has_game_rule = {
+					rule = UKR_ai_behavior
+					option = NEUTRALITY
+				}
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = DEMOCRATIC
+					}
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = COMMUNISM
+					}
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = FASCISM
+					}
+				}
+			}
 		}
 		if = {
 			limit = {
@@ -2787,9 +3407,33 @@ country_event = {
 	}
 
 	option = { #Communist
-		name = russia2_ukrain.63.c
+		name = russia2_ukraine.63.c
 		ai_chance = {
-			factor = 100
+			factor = 25
+			modifier = {
+				add = 75
+				has_game_rule = {
+					rule = UKR_ai_behavior
+					option = COMMUNISM
+				}
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = NEUTRALITY
+					}
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = DEMOCRATIC
+					}
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = FASCISM
+					}
+				}
+			}
 		}
 		if = {
 			limit = {
@@ -2822,9 +3466,33 @@ country_event = {
 	}
 
 	option = { #Fascist
-		name = russia2_ukrain.63.e
+		name = russia2_ukraine.63.e
 		ai_chance = {
-			factor = 100
+			factor = 25
+			modifier = {
+				add = 75
+				has_game_rule = {
+					rule = UKR_ai_behavior
+					option = FASCISM
+				}
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = NEUTRALITY
+					}
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = COMMUNISM
+					}
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = DEMOCRATIC
+					}
+				}
+			}
 		}
 		if = {
 			limit = {
@@ -2859,17 +3527,41 @@ country_event = {
 
 #Classic Election
 country_event = {
-	id = russia2_ukrain.64
-	title = russia2_ukrain.64.t
-	desc = russia2_ukrain.64.d
+	id = russia2_ukraine.64
+	title = russia2_ukraine.64.t
+	desc = russia2_ukraine.64.d
 	picture = GFX_report_event_polish_army
 
 	is_triggered_only = yes
 
 	option = { #Democratic
-		name = russia2_ukrain.64.a
+		name = russia2_ukraine.64.a
 		ai_chance = {
-			factor = 100
+			factor = 25
+			modifier = {
+				add = 75
+				has_game_rule = {
+					rule = UKR_ai_behavior
+					option = DEMOCRATIC
+				}
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = NEUTRALITY
+					}
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = COMMUNISM
+					}
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = FASCISM
+					}
+				}
+			}
 		}
 		if = {
 			limit = {
@@ -2887,6 +3579,39 @@ country_event = {
 				elections_allowed = no
 			}
 			add_stability = 0.1
+			if = {
+				limit = {
+					has_idea = UKR_share_goods
+				}
+				remove_ideas = UKR_share_goods
+			}
+			if = {
+				limit = {
+					has_idea = UKR_danilo_skoropadskiy_neutrality
+				}
+				swap_ideas = {
+					add_idea = UKR_danilo_skoropadskiy_democratic
+					remove_idea = UKR_danilo_skoropadskiy_neutrality
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = UKR_stepan_bandera
+				}
+				swap_ideas = {
+					add_idea = UKR_danilo_skoropadskiy_democratic
+					remove_idea = UKR_stepan_bandera
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = UKR_vladimir_alexandrovich_antonov_ovseenko_communism
+				}
+				swap_ideas = {
+					add_idea = UKR_danilo_skoropadskiy_democratic
+					remove_idea = UKR_vladimir_alexandrovich_antonov_ovseenko_communism
+				}
+			}
 			hidden_effect = {
 				if = {
 					limit = {
@@ -2902,9 +3627,33 @@ country_event = {
 	}
 
 	option = { #Non-aligned
-		name = russia2_ukrain.64.b
+		name = russia2_ukraine.64.b
 		ai_chance = {
-			factor = 100
+			factor = 25
+			modifier = {
+				add = 75
+				has_game_rule = {
+					rule = UKR_ai_behavior
+					option = NEUTRALITY
+				}
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = DEMOCRATIC
+					}
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = COMMUNISM
+					}
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = FASCISM
+					}
+				}
+			}
 		}
 		if = {
 			limit = {
@@ -2922,6 +3671,33 @@ country_event = {
 				elections_allowed = no
 			}
 			add_stability = 0.1
+			if = {
+				limit = {
+					has_idea = UKR_danilo_skoropadskiy_democratic
+				}
+				swap_ideas = {
+					add_idea = UKR_danilo_skoropadskiy_neutrality
+					remove_idea = UKR_danilo_skoropadskiy_democratic
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = UKR_stepan_bandera
+				}
+				swap_ideas = {
+					add_idea = UKR_danilo_skoropadskiy_neutrality
+					remove_idea = UKR_stepan_bandera
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = UKR_vladimir_alexandrovich_antonov_ovseenko_communism
+				}
+				swap_ideas = {
+					add_idea = UKR_danilo_skoropadskiy_neutrality
+					remove_idea = UKR_vladimir_alexandrovich_antonov_ovseenko_communism
+				}
+			}
 			hidden_effect = {
 				if = {
 					limit = {
@@ -2937,9 +3713,33 @@ country_event = {
 	}
 
 	option = { #Communist
-		name = russia2_ukrain.64.c
+		name = russia2_ukraine.64.c
 		ai_chance = {
-			factor = 100
+			factor = 25
+			modifier = {
+				add = 75
+				has_game_rule = {
+					rule = UKR_ai_behavior
+					option = COMMUNISM
+				}
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = NEUTRALITY
+					}
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = DEMOCRATIC
+					}
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = FASCISM
+					}
+				}
+			}
 		}
 		if = {
 			limit = {
@@ -2957,6 +3757,39 @@ country_event = {
 				elections_allowed = no
 			}
 			add_stability = 0.1
+			if = {
+				limit = {
+					has_idea = UKR_Empower_upper_class
+				}
+				remove_ideas = UKR_Empower_upper_class
+			}
+			if = {
+				limit = {
+					has_idea = UKR_danilo_skoropadskiy_democratic
+				}
+				swap_ideas = {
+					add_idea = UKR_vladimir_alexandrovich_antonov_ovseenko_communism
+					remove_idea = UKR_danilo_skoropadskiy_democratic
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = UKR_stepan_bandera
+				}
+				swap_ideas = {
+					add_idea = UKR_vladimir_alexandrovich_antonov_ovseenko_communism
+					remove_idea = UKR_stepan_bandera
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = UKR_danilo_skoropadskiy_neutrality
+				}
+				swap_ideas = {
+					add_idea = UKR_vladimir_alexandrovich_antonov_ovseenko_communism
+					remove_idea = UKR_danilo_skoropadskiy_neutrality
+				}
+			}
 			hidden_effect = {
 				if = {
 					limit = {
@@ -2972,9 +3805,33 @@ country_event = {
 	}
 
 	option = { #Fascist
-		name = russia2_ukrain.64.e
+		name = russia2_ukraine.64.e
 		ai_chance = {
-			factor = 100
+			factor = 25
+			modifier = {
+				add = 75
+				has_game_rule = {
+					rule = UKR_ai_behavior
+					option = FASCISM
+				}
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = NEUTRALITY
+					}
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = COMMUNISM
+					}
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = DEMOCRATIC
+					}
+				}
+			}
 		}
 		if = {
 			limit = {
@@ -2992,6 +3849,33 @@ country_event = {
 				elections_allowed = no
 			}
 			add_stability = 0.1
+			if = {
+				limit = {
+					has_idea = UKR_danilo_skoropadskiy_democratic
+				}
+				swap_ideas = {
+					add_idea = UKR_stepan_bandera
+					remove_idea = UKR_danilo_skoropadskiy_democratic
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = UKR_vladimir_alexandrovich_antonov_ovseenko_communism
+				}
+				swap_ideas = {
+					add_idea = UKR_stepan_bandera
+					remove_idea = UKR_vladimir_alexandrovich_antonov_ovseenko_communism
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = UKR_danilo_skoropadskiy_neutrality
+				}
+				swap_ideas = {
+					add_idea = UKR_stepan_bandera
+					remove_idea = UKR_danilo_skoropadskiy_neutrality
+				}
+			}
 			hidden_effect = {
 				if = {
 					limit = {
@@ -3009,15 +3893,15 @@ country_event = {
 
 #Ukraine Invites FROM to Faction
 country_event = {
-	id = russia2_ukrain.65
-	title = russia2_ukrain.65.t
-	desc = russia2_ukrain.65.d
+	id = russia2_ukraine.65
+	title = russia2_ukraine.65.t
+	desc = russia2_ukraine.65.d
 	picture = GFX_report_event_polish_army
 
 	is_triggered_only = yes
 
 	option = { #Sure
-		name = russia2_ukrain.65.a
+		name = russia2_ukraine.65.a
 		ai_chance = {
 			factor = 65
 			modifier = {
@@ -3052,12 +3936,12 @@ country_event = {
 				id = ROOT
 				value = 500
 			}
-			country_event = russia2_ukrain.66
+			country_event = russia2_ukraine.66
 		}
 	}
 
 	option = { #No
-		name = russia2_ukrain.65.b
+		name = russia2_ukraine.65.b
 		ai_chance = {
 			factor = 35
 			modifier = {
@@ -3081,22 +3965,22 @@ country_event = {
 			}
 		}
 		UKR = {
-			country_event = russia2_ukrain.67
+			country_event = russia2_ukraine.67
 		}
 	}
 }
 
 #FROM Accepts
 country_event = {
-	id = russia2_ukrain.66
-	title = russia2_ukrain.66.t
-	desc = russia2_ukrain.66.d
+	id = russia2_ukraine.66
+	title = russia2_ukraine.66.t
+	desc = russia2_ukraine.66.d
 	picture = GFX_report_event_polish_army
 
 	is_triggered_only = yes
 
 	option = { #Yay
-		name = russia2_ukrain.66.a
+		name = russia2_ukraine.66.a
 		ai_chance = {
 			factor = 100
 		}
@@ -3105,15 +3989,15 @@ country_event = {
 
 #FROM Refuses
 country_event = {
-	id = russia2_ukrain.67
-	title = russia2_ukrain.67.t
-	desc = russia2_ukrain.67.d
+	id = russia2_ukraine.67
+	title = russia2_ukraine.67.t
+	desc = russia2_ukraine.67.d
 	picture = GFX_report_event_polish_army
 
 	is_triggered_only = yes
 
 	option = { #Uh
-		name = russia2_ukrain.67.a
+		name = russia2_ukraine.67.a
 		ai_chance = {
 			factor = 100
 		}
@@ -3122,15 +4006,15 @@ country_event = {
 
 #The Secret Project
 country_event = {
-	id = russia2_ukrain.68
-	title = russia2_ukrain.68.t
-	desc = russia2_ukrain.68.d
+	id = russia2_ukraine.68
+	title = russia2_ukraine.68.t
+	desc = russia2_ukraine.68.d
 	picture = GFX_report_event_polish_army
 
 	is_triggered_only = yes
 
 	option = { #Let's go
-		name = russia2_ukrain.68.a
+		name = russia2_ukraine.68.a
 		ai_chance = {
 			factor = 100
 		}
@@ -3154,27 +4038,27 @@ country_event = {
 
 #The Crimean Situation
 country_event = {
-	id = russia2_ukrain.69
-	title = russia2_ukrain.69.t
-	desc = russia2_ukrain.69.d
+	id = russia2_ukraine.69
+	title = russia2_ukraine.69.t
+	desc = russia2_ukraine.69.d
 	picture = GFX_report_event_polish_army
 
 	is_triggered_only = yes
 
 	option = { #Ask for the state
-		name = russia2_ukrain.69.a
+		name = russia2_ukraine.69.a
 		ai_chance = {
 			factor = 35
 		}
 		137 = {
 			OWNER = {
-				country_event = { id = russia2_ukrain.70 days = 1 }
+				country_event = { id = russia2_ukraine.70 days = 1 }
 			}
 		}
 	}
 
 	option = { #Ask for puppet
-		name = russia2_ukrain.69.b
+		name = russia2_ukraine.69.b
 		trigger = {
 			CRI = {
 				exists = yes
@@ -3190,12 +4074,12 @@ country_event = {
 			factor = 35
 		}
 		CRI = {
-			country_event = { id = russia2_ukrain.70 days = 1 }
+			country_event = { id = russia2_ukraine.70 days = 1 }
 		}
 	}
 
 	option = { #Ask for alliance
-		name = russia2_ukrain.69.c
+		name = russia2_ukraine.69.c
 		trigger = {
 			is_faction_leader = yes
 			CRI = {
@@ -3212,12 +4096,12 @@ country_event = {
 			factor = 15
 		}
 		CRI = {
-			country_event = { id = russia2_ukrain.70 days = 1 }
+			country_event = { id = russia2_ukraine.70 days = 1 }
 		}
 	}
 
 	option = { #Ask for non aggression pact
-		name = russia2_ukrain.69.e
+		name = russia2_ukraine.69.e
 		trigger = {
 			CRI = {
 				exists = yes
@@ -3233,22 +4117,22 @@ country_event = {
 			factor = 15
 		}
 		CRI = {
-			country_event = { id = russia2_ukrain.70 days = 1 }
+			country_event = { id = russia2_ukraine.70 days = 1 }
 		}
 	}
 }
 
 #Ukraine asks for Crimea
 country_event = {
-	id = russia2_ukrain.70
-	title = russia2_ukrain.70.t
-	desc = russia2_ukrain.70.d
+	id = russia2_ukraine.70
+	title = russia2_ukraine.70.t
+	desc = russia2_ukraine.70.d
 	picture = GFX_report_event_polish_army
 
 	is_triggered_only = yes
 
 	option = { #Ok
-		name = russia2_ukrain.70.a
+		name = russia2_ukraine.70.a
 		ai_chance = {
 			factor = 40
 			modifier = {
@@ -3265,7 +4149,7 @@ country_event = {
 		}
 		FROM = {
 			transfer_state = 137
-			country_event = { id = russia2_ukrain.71 days = 1 }
+			country_event = { id = russia2_ukraine.71 days = 1 }
 		}
 		if = {
 			limit = {
@@ -3278,7 +4162,7 @@ country_event = {
 	}
 
 	option = { #No noob
-		name = russia2_ukrain.70.b
+		name = russia2_ukraine.70.b
 		ai_chance = {
 			factor = 40
 			modifier = {
@@ -3294,22 +4178,22 @@ country_event = {
 			}
 		}
 		FROM = {
-			country_event = { id = russia2_ukrain.72 days = 1 }
+			country_event = { id = russia2_ukraine.72 days = 1 }
 		}
 	}
 }
 
 #FROM Accepts
 country_event = {
-	id = russia2_ukrain.71
-	title = russia2_ukrain.71.t
-	desc = russia2_ukrain.71.d
+	id = russia2_ukraine.71
+	title = russia2_ukraine.71.t
+	desc = russia2_ukraine.71.d
 	picture = GFX_report_event_polish_army
 
 	is_triggered_only = yes
 
 	option = { #Perfect
-		name = russia2_ukrain.71.a
+		name = russia2_ukraine.71.a
 		ai_chance = {
 			factor = 100
 		}
@@ -3318,15 +4202,15 @@ country_event = {
 
 #FROM Refuses
 country_event = {
-	id = russia2_ukrain.72
-	title = russia2_ukrain.72.t
-	desc = russia2_ukrain.72.d
+	id = russia2_ukraine.72
+	title = russia2_ukraine.72.t
+	desc = russia2_ukraine.72.d
 	picture = GFX_report_event_polish_army
 
 	is_triggered_only = yes
 
 	option = { #Die (if not allied)
-		name = russia2_ukrain.72.a
+		name = russia2_ukraine.72.a
 		ai_chance = {
 			factor = 100
 		}
@@ -3350,15 +4234,15 @@ country_event = {
 
 #Ukraine asks for Puppet
 country_event = {
-	id = russia2_ukrain.73
-	title = russia2_ukrain.73.t
-	desc = russia2_ukrain.73.d
+	id = russia2_ukraine.73
+	title = russia2_ukraine.73.t
+	desc = russia2_ukraine.73.d
 	picture = GFX_report_event_polish_army
 
 	is_triggered_only = yes
 
 	option = { #Ok
-		name = russia2_ukrain.73.a
+		name = russia2_ukraine.73.a
 		ai_chance = {
 			factor = 40
 			modifier = {
@@ -3375,12 +4259,12 @@ country_event = {
 		}
 		FROM = {
 			puppet = ROOT
-			country_event = { id = russia2_ukrain.74 days = 1 }
+			country_event = { id = russia2_ukraine.74 days = 1 }
 		}
 	}
 
 	option = { #No noob
-		name = russia2_ukrain.73.b
+		name = russia2_ukraine.73.b
 		ai_chance = {
 			factor = 40
 			modifier = {
@@ -3396,22 +4280,22 @@ country_event = {
 			}
 		}
 		FROM = {
-			country_event = { id = russia2_ukrain.75 days = 1 }
+			country_event = { id = russia2_ukraine.75 days = 1 }
 		}
 	}
 }
 
 #FROM Accepts
 country_event = {
-	id = russia2_ukrain.74
-	title = russia2_ukrain.74.t
-	desc = russia2_ukrain.74.d
+	id = russia2_ukraine.74
+	title = russia2_ukraine.74.t
+	desc = russia2_ukraine.74.d
 	picture = GFX_report_event_polish_army
 
 	is_triggered_only = yes
 
 	option = { #Perfect
-		name = russia2_ukrain.74.a
+		name = russia2_ukraine.74.a
 		ai_chance = {
 			factor = 100
 		}
@@ -3420,15 +4304,15 @@ country_event = {
 
 #FROM Refuses
 country_event = {
-	id = russia2_ukrain.75
-	title = russia2_ukrain.75.t
-	desc = russia2_ukrain.75.d
+	id = russia2_ukraine.75
+	title = russia2_ukraine.75.t
+	desc = russia2_ukraine.75.d
 	picture = GFX_report_event_polish_army
 
 	is_triggered_only = yes
 
 	option = { #Die (if not allied)
-		name = russia2_ukrain.75.a
+		name = russia2_ukraine.75.a
 		ai_chance = {
 			factor = 100
 		}
@@ -3441,15 +4325,15 @@ country_event = {
 
 #Ukraine asks for Alliance
 country_event = {
-	id = russia2_ukrain.76
-	title = russia2_ukrain.76.t
-	desc = russia2_ukrain.76.d
+	id = russia2_ukraine.76
+	title = russia2_ukraine.76.t
+	desc = russia2_ukraine.76.d
 	picture = GFX_report_event_polish_army
 
 	is_triggered_only = yes
 
 	option = { #Ok
-		name = russia2_ukrain.76.a
+		name = russia2_ukraine.76.a
 		ai_chance = {
 			factor = 100
 		}
@@ -3465,32 +4349,32 @@ country_event = {
 				id = ROOT
 				value = 500
 			}
-			country_event = { id = russia2_ukrain.77 days = 1 }
+			country_event = { id = russia2_ukraine.77 days = 1 }
 		}
 	}
 
 	option = { #No noob
-		name = russia2_ukrain.76.b
+		name = russia2_ukraine.76.b
 		ai_chance = {
 			factor = 0
 		}
 		FROM = {
-			country_event = { id = russia2_ukrain.78 days = 1 }
+			country_event = { id = russia2_ukraine.78 days = 1 }
 		}
 	}
 }
 
 #FROM Accepts
 country_event = {
-	id = russia2_ukrain.77
-	title = russia2_ukrain.77.t
-	desc = russia2_ukrain.77.d
+	id = russia2_ukraine.77
+	title = russia2_ukraine.77.t
+	desc = russia2_ukraine.77.d
 	picture = GFX_report_event_polish_army
 
 	is_triggered_only = yes
 
 	option = { #Perfect
-		name = russia2_ukrain.77.a
+		name = russia2_ukraine.77.a
 		ai_chance = {
 			factor = 100
 		}
@@ -3499,15 +4383,15 @@ country_event = {
 
 #FROM Refuses
 country_event = {
-	id = russia2_ukrain.78
-	title = russia2_ukrain.78.t
-	desc = russia2_ukrain.78.d
+	id = russia2_ukraine.78
+	title = russia2_ukraine.78.t
+	desc = russia2_ukraine.78.d
 	picture = GFX_report_event_polish_army
 
 	is_triggered_only = yes
 
 	option = { #Sad
-		name = russia2_ukrain.78.a
+		name = russia2_ukraine.78.a
 		ai_chance = {
 			factor = 100
 		}
@@ -3516,15 +4400,15 @@ country_event = {
 
 #Ukraine asks for Non Aggression Pact
 country_event = {
-	id = russia2_ukrain.79
-	title = russia2_ukrain.79.t
-	desc = russia2_ukrain.79.d
+	id = russia2_ukraine.79
+	title = russia2_ukraine.79.t
+	desc = russia2_ukraine.79.d
 	picture = GFX_report_event_polish_army
 
 	is_triggered_only = yes
 
 	option = { #Ok
-		name = russia2_ukrain.79.a
+		name = russia2_ukraine.79.a
 		ai_chance = {
 			factor = 100
 		}
@@ -3534,32 +4418,32 @@ country_event = {
 				relation = non_aggression_pact
 				active = yes
 			}
-			country_event = { id = russia2_ukrain.80 days = 1 }
+			country_event = { id = russia2_ukraine.80 days = 1 }
 		}
 	}
 
 	option = { #No noob
-		name = russia2_ukrain.79.b
+		name = russia2_ukraine.79.b
 		ai_chance = {
 			factor = 0
 		}
 		FROM = {
-			country_event = { id = russia2_ukrain.81 days = 1 }
+			country_event = { id = russia2_ukraine.81 days = 1 }
 		}
 	}
 }
 
 #FROM Accepts
 country_event = {
-	id = russia2_ukrain.80
-	title = russia2_ukrain.80.t
-	desc = russia2_ukrain.80.d
+	id = russia2_ukraine.80
+	title = russia2_ukraine.80.t
+	desc = russia2_ukraine.80.d
 	picture = GFX_report_event_polish_army
 
 	is_triggered_only = yes
 
 	option = { #Perfect
-		name = russia2_ukrain.80.a
+		name = russia2_ukraine.80.a
 		ai_chance = {
 			factor = 100
 		}
@@ -3568,15 +4452,15 @@ country_event = {
 
 #FROM Refuses
 country_event = {
-	id = russia2_ukrain.81
-	title = russia2_ukrain.81.t
-	desc = russia2_ukrain.81.d
+	id = russia2_ukraine.81
+	title = russia2_ukraine.81.t
+	desc = russia2_ukraine.81.d
 	picture = GFX_report_event_polish_army
 
 	is_triggered_only = yes
 
 	option = { #Sad
-		name = russia2_ukrain.81.a
+		name = russia2_ukraine.81.a
 		ai_chance = {
 			factor = 100
 		}
@@ -3585,57 +4469,75 @@ country_event = {
 
 #Ukraine Ask Kievan Rus State Puppet
 country_event = {
-	id = russia2_ukrain.82
-	title = russia2_ukrain.82.t
-	desc = russia2_ukrain.82.d
+	id = russia2_ukraine.82
+	title = russia2_ukraine.82.t
+	desc = russia2_ukraine.82.d
 	picture = GFX_report_event_chamberlain_announce
 
 	is_triggered_only = yes
 
 	option = { #Give everything we own
-		name = russia2_ukrain.82.a
+		name = russia2_ukraine.82.a
 		ai_chance = {
 			factor = 10
+			modifier = {
+				add = 40
+				UKR = {
+					is_ai = no
+				}
+			}
 		}
 		UKR = {
-			country_event = { id = russia2_ukrain.83 days = 7 }
+			country_event = { id = russia2_ukraine.83 days = 7 }
 		}
 		custom_effect_tooltip = we_will_lose_every_state_kievan_rus
 	}
 
-	option = { #Give only enough for them
-		name = russia2_ukrain.82.b
+	option = { #Give only what's enough for them
+		name = russia2_ukraine.82.b
 		ai_chance = {
 			factor = 45
+			modifier = {
+				add = -20
+				UKR = {
+					is_ai = no
+				}
+			}
 		}
 		UKR = {
-			country_event = { id = russia2_ukrain.84 days = 7 }
+			country_event = { id = russia2_ukraine.84 days = 7 }
 		}
 		custom_effect_tooltip = we_will_lose_some_state_kievan_rus
 	}
 
 	option = { #Give nothing
-		name = russia2_ukrain.82.c
+		name = russia2_ukraine.82.c
 		ai_chance = {
 			factor = 45
+			modifier = {
+				add = -20
+				UKR = {
+					is_ai = no
+				}
+			}
 		}
 		UKR = {
-			country_event = { id = russia2_ukrain.85 days = 7 }
+			country_event = { id = russia2_ukraine.85 days = 7 }
 		}
 	}
 }
 
-#OVERLORD Accept to Give everything
+#OVERLORD Accepts to Give everything
 country_event = {
-	id = russia2_ukrain.83
-	title = russia2_ukrain.83.t
-	desc = russia2_ukrain.83.d
+	id = russia2_ukraine.83
+	title = russia2_ukraine.83.t
+	desc = russia2_ukraine.83.d
 	picture = GFX_handshake_russia2
 
 	is_triggered_only = yes
 
 	option = { #Let's go
-		name = russia2_ukrain.83.a
+		name = russia2_ukraine.83.a
 		ai_chance = {
 			factor = 100
 		}
@@ -3651,17 +4553,17 @@ country_event = {
 	}
 }
 
-#OVERLORD Accept to Give small bits
+#OVERLORD Accepts to Give small bits
 country_event = {
-	id = russia2_ukrain.84
-	title = russia2_ukrain.84.t
-	desc = russia2_ukrain.84.d
+	id = russia2_ukraine.84
+	title = russia2_ukraine.84.t
+	desc = russia2_ukraine.84.d
 	picture = GFX_report_event_soviet_german_soldier_handshake
 
 	is_triggered_only = yes
 
 	option = { #Let's go
-		name = russia2_ukrain.84.a
+		name = russia2_ukraine.84.a
 		ai_chance = {
 			factor = 100
 		}
@@ -3695,17 +4597,17 @@ country_event = {
 	}
 }
 
-#OVERLORD Refuse
+#OVERLORD Refuses
 country_event = {
-	id = russia2_ukrain.85
-	title = russia2_ukrain.85.t
-	desc = russia2_ukrain.85.d
+	id = russia2_ukraine.85
+	title = russia2_ukraine.85.t
+	desc = russia2_ukraine.85.d
 	picture = GFX_report_event_soviet_german_soldier_handshake
 
 	is_triggered_only = yes
 
 	option = { #Let's go
-		name = russia2_ukrain.85.a
+		name = russia2_ukraine.85.a
 		ai_chance = {
 			factor = 100
 		}

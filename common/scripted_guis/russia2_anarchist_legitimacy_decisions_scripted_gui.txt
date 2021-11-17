@@ -11,8 +11,8 @@ scripted_gui = {
         }
 
         ai_enabled = {
-			#TODO
-		}
+            always = no #The AI will only use the click on state GUI
+        }
 
         dynamic_lists = {
 			ukr_anarchist_legitimacy_grid = {
@@ -278,7 +278,12 @@ scripted_gui = {
                 tag = UKR
                 has_government = anarchy
                 is_subject = no
-                has_country_flag = ukr_view_on_map_anarchist_states
+                if = {
+                    limit = {
+                        is_ai = no
+                    }
+                    has_country_flag = ukr_view_on_map_anarchist_states
+                }
             }
             THIS = {
                 is_controlled_by = UKR
@@ -287,8 +292,202 @@ scripted_gui = {
         }
 
         ai_enabled = {
-			always = no
+			tag = UKR
 		}
+
+        ai_test_interval = 24
+        ai_test_variance = 0.25
+        ai_test_scopes = test_self_controlled_states
+
+        ai_check = {
+            always = yes
+        }
+
+        ai_check_scope = {
+            NOT = {
+                is_core_of = ROOT
+            }
+            OR = {
+                AND = {
+                    check_variable = {
+                        var = ukr.anarchist_support@THIS
+                        value = 100
+                        compare = less_than
+                    }
+                    check_variable = {
+                        var = ukr.anarchist_support_boost@THIS
+                        value = 0
+                        compare = equals
+                    }
+                    check_variable = {
+                        var = ukr.political_power
+                        value = ukr.anarchist_state_boost_cost@THIS
+                        compare = greater_than_or_equals
+                    }
+                }
+                AND = {
+                    check_variable = {
+                        var = ukr.political_power
+                        value = ukr.anarchist_state_core_cost@THIS
+                        compare = greater_than_or_equals
+                    }
+                    any_neighbor_state = {
+                        is_core_of = UKR
+                    }
+                    check_variable = {
+                        var = ukr.anarchist_support@THIS
+                        value = 50
+                        compare = greater_than_or_equals
+                    }
+                    check_variable = {
+                        var = ukr.anarchist_coring_points
+                        value = 1
+                        compare = greater_than_or_equals
+                    }
+                }
+            }
+        }
+
+        ai_max_weight_taken_per_test = 50
+
+        ai_weights = {
+            ukr_anarchist_legitimacy_state_goto_click = {
+                ai_will_do = {
+                    base = 0
+                }
+            }
+
+            ukr_anarchist_legitimacy_state_boost_click = {
+                ai_will_do = {
+                    base = 0
+                    modifier = {
+                        add = 1000
+                        check_variable = {
+                            var = ukr.anarchist_support_daily@THIS
+                            value = 1
+                            compare = less_than
+                        }
+                        OR = {
+                            AND = {
+                                UKR = {
+                                    has_active_mission = UKR_anarchism_timeout
+                                }
+                                if = {
+                                    limit = {
+                                        UKR = {
+                                            has_political_power > 200
+                                        }
+                                    }
+                                    check_variable = {
+                                        var = ukr.anarchist_support@THIS
+                                        value = 75
+                                        compare = less_than
+                                    }
+                                    check_variable = {
+                                        var = ukr.anarchist_state_boost_cost@THIS
+                                        value = 125
+                                        compare = less_than
+                                    }
+                                }
+                                else = {
+                                    check_variable = {
+                                        var = ukr.anarchist_support@THIS
+                                        value = 50
+                                        compare = less_than
+                                    }
+                                    check_variable = {
+                                        var = ukr.anarchist_state_boost_cost@THIS
+                                        value = 75
+                                        compare = less_than
+                                    }
+                                }
+                            }
+                            AND = {
+                                NOT = {
+                                    UKR = {
+                                        has_active_mission = UKR_anarchism_timeout
+                                    }
+                                }
+                                check_variable = {
+                                    var = ukr.anarchist_support@THIS
+                                    value = 80
+                                    compare = less_than
+                                }
+                                check_variable = {
+                                    var = ukr.anarchist_state_boost_cost@THIS
+                                    value = 200
+                                    compare = less_than
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            ukr_anarchist_legitimacy_state_core_click = {
+                ai_will_do = {
+                    base = 0
+                    modifier = {
+                        add = 1000
+                        OR = {
+                            AND = {
+                                UKR = {
+                                    has_active_mission = UKR_anarchism_timeout
+                                }
+                                if = {
+                                    limit = {
+                                        NOT = {
+                                            check_variable = {
+                                                var = ukr.num_core_states
+                                                value = 19
+                                                compare = equals
+                                            }
+                                        }
+                                    }
+                                    OR = {
+                                        check_variable = {
+                                            var = ukr.anarchist_state_core_cost@THIS
+                                            value = 300
+                                            compare = less_than
+                                        }
+                                        check_variable = {
+                                            var = ukr.anarchist_support@THIS
+                                            value = 85
+                                            compare = greater_than_or_equals
+                                        }
+                                        UKR = {
+                                            has_manpower < 50000
+                                        }
+                                    }
+                                }
+                            }
+                            AND = {
+                                NOT = {
+                                    UKR = {
+                                        has_active_mission = UKR_anarchism_timeout
+                                    }
+                                }
+                                OR = {
+                                    check_variable = {
+                                        var = ukr.anarchist_state_core_cost@THIS
+                                        value = 150
+                                        compare = less_than
+                                    }
+                                    check_variable = {
+                                        var = ukr.anarchist_support@THIS
+                                        value = 100
+                                        compare = greater_than_or_equals
+                                    }
+                                    UKR = {
+                                        has_manpower < 50000
+                                    }
+                                }
+                            }
+                        } 
+                    }
+                }
+            }
+        }
 
         effects = {
             ukr_anarchist_legitimacy_state_goto_click = {
