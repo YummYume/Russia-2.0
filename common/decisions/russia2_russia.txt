@@ -8902,7 +8902,7 @@ SOV_unite_slavic_nation_ultimatum_decision = {
 		}
 	}
 
-	SOV_integrate_yugoslavia_slavic = {
+	SOV_integrate_yugoslavia_slavic = { #Change that
 
 		icon = GFX_decision_generic_decision
 
@@ -48564,4 +48564,200 @@ SOV_national_obligations_category_decisions = {
             set_country_flag = sov_open_national_obligations
         }
     }
+}
+
+SOV_negotiation_disputants_category_decisions = {
+
+	SOV_demand_from_acceptance_puppet_plan = {
+
+		icon = GFX_decision_eng_trade_unions_support
+
+		fire_only_once = yes
+
+		days_remove = 10
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			FROM = {
+				exists = yes
+				has_government = anarchy
+				is_in_faction_with = SOV
+				NOT = {
+					has_country_flag = is_already_agreing_anarchist_russia_puppet_plan	
+				}
+			}
+		}
+
+		target_root_trigger = {
+			has_completed_focus = SOV_a_tight_grip
+		}
+
+		target_trigger = {
+			FROM = {
+				NOT = {
+					has_country_flag = is_already_agreing_anarchist_russia_puppet_plan	
+				}
+				exists = yes
+				has_government = anarchy
+				is_in_faction_with = SOV
+				OR = {
+					TAG = EFR
+					TAG = SIB
+					TAG = URA
+					TAG = KAZ
+					TAG = TMS
+					TAG = UZB
+					TAG = TAJ
+					TAG = KYR
+					TAG = GEO
+					TAG = AZR
+					TAG = ARM
+					TAG = DAG
+					TAG = ROS
+					TAG = KAL
+					TAG = CIR
+					TAG = VLG
+					TAG = VYA
+					TAG = TAT
+					TAG = PRM
+					TAG = KMI
+					TAG = KAR
+					TAG = NOV
+					TAG = UKR
+					TAG = BLR
+					TAG = CRI
+				}
+			}
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = from_support_85_percent_our_project
+				FROM = {
+					check_variable = {
+						var = opinion_russian_anarchist_puppet_reform_plan
+						value = 85
+						compare = greater_than_or_equals
+					}
+				}
+			}
+		}
+
+		remove_effect = {
+			custom_effect_tooltip = from_will_now_support_project_puppet
+			FROM = {
+				set_country_flag = is_already_agreing_anarchist_russia_puppet_plan
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	SOV_sway_dissidant_puppet_plan = {
+
+		icon = GFX_decision_eng_propaganda_campaigns
+
+		days_remove = 35
+
+		on_map_mode = map_and_decisions_view
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			FROM = {
+				exists = yes
+				has_government = anarchy
+				is_in_faction_with = SOV
+				NOT = {
+					has_country_flag = is_already_agreing_anarchist_russia_puppet_plan	
+				}
+			}
+		}
+
+		target_root_trigger = {
+			has_completed_focus = SOV_a_tight_grip
+		}
+
+		target_trigger = {
+			FROM = {
+				NOT = {
+					has_country_flag = is_already_agreing_anarchist_russia_puppet_plan	
+				}
+				exists = yes
+				has_government = anarchy
+				is_in_faction_with = SOV
+				OR = {
+					TAG = EFR
+					TAG = SIB
+					TAG = URA
+					TAG = KAZ
+					TAG = TMS
+					TAG = UZB
+					TAG = TAJ
+					TAG = KYR
+					TAG = GEO
+					TAG = AZR
+					TAG = ARM
+					TAG = DAG
+					TAG = ROS
+					TAG = KAL
+					TAG = CIR
+					TAG = VLG
+					TAG = VYA
+					TAG = TAT
+					TAG = PRM
+					TAG = KMI
+					TAG = KAR
+					TAG = NOV
+					TAG = UKR
+					TAG = BLR
+					TAG = CRI
+				}
+			}
+		}
+
+		cost = 50
+
+		available = {
+			NOT = {
+				has_country_flag = is_swaying_political_anarchist_oppenent
+			}
+			has_completed_focus = SOV_convince_disputants
+			custom_trigger_tooltip = {
+				tooltip = from_support_85_percent_our_project
+				FROM = {
+					check_variable = {
+						var = opinion_russian_anarchist_puppet_reform_plan
+						value = 85
+						compare = greater_than_or_equals
+					}
+				}
+			}
+		}
+
+		complete_effect = {
+			set_country_flag = is_swaying_political_anarchist_oppenent
+		}
+
+		remove_effect = {
+			clr_country_flag = is_swaying_political_anarchist_oppenent
+			custom_effect_tooltip = will_receive_random_event_choose_option_anarchists
+			hidden_effect = {
+				FROM = {
+					country_event = { id = russia2_russia.642 }
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
 }
