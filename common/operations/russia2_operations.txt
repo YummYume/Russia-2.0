@@ -1,0 +1,7003 @@
+#First operation is for any Russia, available in the industrial part of the focus tree (a basic operation to get nuclear bonuses).
+#Liberate the workers of Europe, Africa, and Asia are common operations that can be repeated over and over, similar to "make resistance contact" in the base game. It is only available for Trotsky's path and everything is explained with comments on the liberation of European Workers.
+#Lastly, the operations starting from "Uprising in Indochina" are targetted operations, only available once each and for Trotsky's path as well, they are a little more complex. See the Egyptian one for comments. Note that Dissolve Yugoslavia required a lot of code for all the Balkan countries, but also because of some bugs concerning Yugoslavia.
+#Since all of the espionage stuff is new and is subject to change by Paradox, feel free to comment on the Steam page of the mod if anything is wrong/not working, I'll look it up as soon as I can.
+
+
+SOV_spy_nuclear_technology = { 	#Steal US Nuclear Tech
+	icon = GFX_operations_capture_ciphers 						#The icon in the operation tab
+	map_icon = GFX_operations_operations_capture_ciphers_map 	#The icon that appears on the espionage map
+	name = SOV_spy_nuclear_technology 							#Name for localization
+	desc = SOV_spy_nuclear_technology_desc 						#Desc for localization
+	days = 100 													#How long the operation takes to complete
+
+	#Only allowed for SOV tag
+	allowed = {
+		original_tag = SOV
+	}
+
+	#Only the US can be targetted
+	operation_target = {
+		targets = { USA }
+	}
+
+	#The US needs to have nuclear reactors researched or else the player won't be able to click the operation
+	available = {
+		USA = {
+			has_tech = nuclear_reactor
+		}
+	}
+
+	#When will the operation be visible to the player? All the conditions have to return true
+	visible = {
+
+		#You have a spy network of at least 1% in the target (here the US)
+		network_national_coverage = {
+			target = FROM
+			value > 0
+		}
+
+		#You completed the focus in the industrial part "Nuclear Spies"
+		has_completed_focus = SOV_spying_on_the_american
+
+		#FROM (the targetted country) has to be the US, not sure if this is necessary here but let's leave it anyways
+		FROM = {
+			tag = USA
+		}
+
+		#You have more than 0 spy (at least one)
+		num_of_operatives > 0
+
+		#You didn't already do this operation
+		NOT = {
+			has_country_flag = SOV_stole_us_nuclear
+		}
+	}
+
+	#You need 3 spies to start the operation
+	operatives = 3
+
+	#Your network strenght in the US is at least 80%
+	network_strength = 60
+
+	requirements = { #None
+
+	}
+	
+	equipment = { #None, operation is already pretty risky
+
+	}
+
+	on_start = { #None
+		
+	}
+
+	risk_chance = 0.35 #Can be translated by 35% chance of something bad happening to at least one of your spy, which is pretty high but makes it all balanced
+
+	experience = 6 #Gives a lot of exp to spies assigned to this operation (equals to ~3 normal vanilla operations)
+
+	outcome_extra_chance = 0.6 #The chances of getting an extra reward, here it's 60%, which is pretty high and balances out the risk chance. (Success of an operation is calculated with risk_chance and outcome_extra_chance, both do not have to be equal to 100%)
+
+	#What you normally get from the operation (no extra)
+	outcome_execute = {
+
+		SOV = {
+			#Setting a country flag so the operation can't be done twice
+			set_country_flag = SOV_stole_us_nuclear
+
+			#Double bonus for nuclear tech (200% each)
+			add_tech_bonus = {
+				name = SOV_spy_nuclear_technology
+	    		bonus = 2
+	    		uses = 2
+	    		category = nuclear
+			}
+		}
+	}
+
+	#What you get if you are lucky (outcome_extra_chance)
+	outcome_extra_execute = {
+
+		#The same as before, but the bonus for nuclear tech is 300% instead of 200%
+		SOV = {
+			set_country_flag = SOV_stole_us_nuclear
+			add_tech_bonus = {
+				name = SOV_spy_nuclear_technology
+	    		bonus = 3
+	    		uses = 2
+	    		category = nuclear
+			}
+		}
+	}
+
+	#This is just a tooltip you show to the player if the operation didn't start/is ongoing, it doesn't actually matter, here we are just telling what is the minimum the player can get
+	outcome_potential = {
+		SOV = {
+			add_tech_bonus = {
+	    		bonus = 2
+	    		uses = 2
+	    		category = nuclear
+			}
+		}
+	}
+	
+	#Phases are also useless for the operation, they are just here to display localization (with pictures) to the player showing how the operation will go down (so the operation doesn't feel empty). You can put less than 3 phases but it is recommended to stick to 3. The first phase will complete at 33%, second phase at 66%, and the third when the operation ends. Note that base does not matter here as we are only using one method per phase. Phases are located in common/operation_phases.
+	phases = {
+		SOV_spy_nuclear_technology_infiltration = { base = 30 } #Infiltration
+	}
+	phases = {
+		SOV_spy_nuclear_technology_intels = { base = 30 } #Intels
+	}
+	phases = {
+		SOV_spy_nuclear_technology_escape = { base = 30 } #Escape
+	}
+}
+
+SOV_worker_liberation_europe = { #Liberate the workers of Europe
+	icon = GFX_operations_coup_government
+	map_icon = GFX_operations_operations_coup_government_map
+	name = SOV_worker_liberation_europe
+	desc = SOV_worker_liberation_europe_desc
+	days = 25
+
+	allowed = {
+		original_tag = SOV
+	}
+
+	visible = {
+		network_national_coverage = {
+			target = FROM
+			value > 0
+		}
+
+		has_completed_focus = SOV_european_revolution
+
+		num_of_operatives > 0
+
+		any_state = {
+			is_controlled_by = FROM
+			is_on_continent = europe
+			has_resistance = yes
+			compliance < 80
+			NOT = {
+				is_core_of = FROM
+				is_core_of = SOV
+			}
+		}
+	}
+
+	available = {
+		FROM = {
+			NOT = {
+				has_government = communism
+				is_in_faction_with = SOV
+				is_subject_of = SOV
+			}
+		}
+	}
+
+	operatives = 2
+
+	network_strength = 25
+	
+	equipment = {
+		infantry_equipment = 5000
+		support_equipment = 250
+		artillery_equipment = 150
+	}
+
+	selection_target_state = {
+		is_on_continent = europe
+		compliance < 80
+		has_resistance = yes
+		NOT = {
+			is_core_of = FROM
+			is_core_of = SOV
+		}
+		custom_trigger_tooltip = {
+			tooltip = any_country_has_core_and_not_exist_tt
+			any_of_scopes = {
+				array = global.countries
+
+				PREV = {
+					is_core_of = PREV
+				}
+				exists = no
+			}
+		}
+	}
+
+	selection_target = {
+		targets = { FROM }
+	}
+
+	on_start = {
+		SOV = {
+			set_country_flag = SOV_is_liberating_europe
+		}
+		FROM = {
+			activate_mission = SOV_liberation_europe
+			set_country_flag = target_europe
+		}
+	}
+
+	risk_chance = 0.10
+	experience = 3
+	outcome_extra_chance = 0.4
+
+	outcome_execute = {
+		custom_effect_tooltip = SOV_worker_liberation_europe_tt_normal
+		ROOT = {
+			hidden_effect = {
+				FROM.FROM = {
+					save_event_target_as = sov_target_country_revolution
+				}
+				FROM = {
+					clr_country_flag = target_europe
+					country_event = russia2_russia.523
+				}
+				SOV = {
+					clr_country_flag = SOV_is_liberating_europe
+				}
+			}
+		}
+	}
+
+	outcome_extra_execute = {
+		custom_effect_tooltip = SOV_worker_liberation_europe_tt_extra
+		ROOT = {
+			hidden_effect = {
+				FROM.FROM = {
+					save_event_target_as = sov_target_country_revolution
+				}
+				FROM = {
+					clr_country_flag = target_europe
+					country_event = russia2_russia.524
+				}
+				SOV = {
+					clr_country_flag = SOV_is_liberating_europe
+				}
+			}
+		}
+	}
+
+	outcome_potential = {
+		custom_effect_tooltip = SOV_worker_liberation_europe_tt
+	}
+	
+	phases = {
+		SOV_worker_liberation_infiltration = { base = 30 } 
+	}
+	phases = { 
+		SOV_worker_liberation_intels = { base = 30 }
+	}
+	phases = { 
+		SOV_worker_liberation_escape = { base = 30 }
+	}
+}
+
+SOV_worker_liberation_africa = { #Liberate the workers of Africa
+	icon = GFX_operations_coup_government
+	map_icon = GFX_operations_operations_coup_government_map
+	name = SOV_worker_liberation_africa
+	desc = SOV_worker_liberation_africa_desc
+	days = 25
+
+	allowed = {
+		original_tag = SOV
+	}
+
+	visible = {
+		network_national_coverage = {
+			target = FROM
+			value > 0
+		}
+
+		has_completed_focus = SOV_african_revolution
+
+		num_of_operatives > 0
+
+		any_state = {
+			is_controlled_by = FROM
+			is_on_continent = africa
+			has_resistance = yes
+			compliance < 80
+			NOT = {
+				is_core_of = FROM
+				is_core_of = SOV
+			}
+		}
+	}
+
+	available = {
+		FROM = {
+			NOT = {
+				has_government = communism
+				is_in_faction_with = SOV
+				is_subject_of = SOV
+			}
+		}
+	}
+
+	operatives = 2
+
+	network_strength = 25
+	
+	equipment = {
+		infantry_equipment = 5000
+		support_equipment = 250
+		artillery_equipment = 150
+	}
+
+	selection_target_state = {
+		is_on_continent = africa
+		compliance < 80
+		has_resistance = yes
+		NOT = {
+			is_core_of = FROM
+			is_core_of = SOV
+		}
+		custom_trigger_tooltip = {
+			tooltip = any_country_has_core_and_not_exist_tt
+			any_of_scopes = {
+				array = global.countries
+
+				PREV = {
+					is_core_of = PREV
+				}
+				exists = no
+			}
+		}
+	}
+
+	selection_target = {
+		targets = { FROM }
+	}
+
+	on_start = {
+		SOV = {
+			set_country_flag = SOV_is_liberating_africa
+		}
+		FROM = {
+			activate_mission = SOV_liberation_africa
+			set_country_flag = target_africa
+		}
+	}
+
+	risk_chance = 0.10
+	experience = 3
+	outcome_extra_chance = 0.4
+
+	outcome_execute = {
+		custom_effect_tooltip = SOV_worker_liberation_africa_tt_normal
+		ROOT = {
+			hidden_effect = {
+				FROM.FROM = {
+					save_event_target_as = sov_target_country_revolution
+				}
+				FROM = {
+					clr_country_flag = target_africa
+					country_event = russia2_russia.523
+				}
+				SOV = {
+					clr_country_flag = SOV_is_liberating_africa
+				}
+			}
+		}
+	}
+
+	outcome_extra_execute = {
+		custom_effect_tooltip = SOV_worker_liberation_africa_tt_extra
+		ROOT = {
+			hidden_effect = {
+				FROM.FROM = {
+					save_event_target_as = sov_target_country_revolution
+				}
+				FROM = {
+					clr_country_flag = target_africa
+					country_event = russia2_russia.524
+				}
+				SOV = {
+					clr_country_flag = SOV_is_liberating_africa
+				}
+			}
+		}
+	}
+
+	outcome_potential = {
+		custom_effect_tooltip = SOV_worker_liberation_africa_tt
+	}
+	
+	phases = {
+		SOV_worker_liberation_infiltration = { base = 30 } 
+	}
+	phases = { 
+		SOV_worker_liberation_intels = { base = 30 }
+	}
+	phases = { 
+		SOV_worker_liberation_escape = { base = 30 }
+	}
+}
+
+SOV_worker_liberation_asia = { #Liberate the workers of Asia
+	icon = GFX_operations_coup_government
+	map_icon = GFX_operations_operations_coup_government_map
+	name = SOV_worker_liberation_asia
+	desc = SOV_worker_liberation_asia_desc
+	days = 25
+
+	allowed = {
+		original_tag = SOV
+	}
+
+	visible = {
+		network_national_coverage = {
+			target = FROM
+			value > 0
+		}
+
+		has_completed_focus = SOV_asian_revolution
+
+		num_of_operatives > 0
+
+		any_state = {
+			is_controlled_by = FROM
+			is_on_continent = asia
+			has_resistance = yes
+			compliance < 80
+			NOT = {
+				is_core_of = FROM
+				is_core_of = SOV
+			}
+		}
+	}
+
+	available = {
+		FROM = {
+			NOT = {
+				has_government = communism
+				is_in_faction_with = SOV
+				is_subject_of = SOV
+			}
+		}
+	}
+
+	operatives = 2
+
+	network_strength = 25
+	
+	equipment = {
+		infantry_equipment = 5000
+		support_equipment = 250
+		artillery_equipment = 150
+	}
+
+	selection_target_state = {
+		is_on_continent = asia
+		compliance < 80
+		has_resistance = yes
+		NOT = {
+			is_core_of = FROM
+			is_core_of = SOV
+		}
+		custom_trigger_tooltip = {
+			tooltip = any_country_has_core_and_not_exist_tt
+			any_of_scopes = {
+				array = global.countries
+
+				PREV = {
+					is_core_of = PREV
+				}
+				exists = no
+			}
+		}
+	}
+
+	selection_target = {
+		targets = { FROM }
+	}
+
+	on_start = {
+		SOV = {
+			set_country_flag = SOV_is_liberating_asia
+		}
+		FROM = {
+			activate_mission = SOV_liberation_asia
+			set_country_flag = target_asia
+		}
+	}
+
+	risk_chance = 0.10
+	experience = 3
+	outcome_extra_chance = 0.4
+
+	outcome_execute = {
+		custom_effect_tooltip = SOV_worker_liberation_asia_tt_normal
+		ROOT = {
+			hidden_effect = {
+				FROM.FROM = {
+					save_event_target_as = sov_target_country_revolution
+				}
+				FROM = {
+					clr_country_flag = target_asia
+					country_event = russia2_russia.523
+				}
+				SOV = {
+					clr_country_flag = SOV_is_liberating_asia
+				}
+			}
+		}
+	}
+
+	outcome_extra_execute = {
+		custom_effect_tooltip = SOV_worker_liberation_asia_tt_extra
+		ROOT = {
+			hidden_effect = {
+				FROM.FROM = {
+					save_event_target_as = sov_target_country_revolution
+				}
+				FROM = {
+					clr_country_flag = target_asia
+					country_event = russia2_russia.524
+				}
+				SOV = {
+					clr_country_flag = SOV_is_liberating_asia
+				}
+			}
+		}
+	}
+
+	outcome_potential = {
+		custom_effect_tooltip = SOV_worker_liberation_asia_tt
+	}
+	
+	phases = {
+		SOV_worker_liberation_infiltration = { base = 30 } 
+	}
+	phases = { 
+		SOV_worker_liberation_intels = { base = 30 }
+	}
+	phases = { 
+		SOV_worker_liberation_escape = { base = 30 }
+	}
+}
+
+SOV_liberate_korea = { #Liberate Korea
+	icon = GFX_operations_coup_government
+	map_icon = GFX_operations_operations_coup_government_map
+	name = SOV_liberate_korea
+	desc = SOV_liberate_korea_desc
+	days = 50
+
+	allowed = {
+		original_tag = SOV
+	}
+
+	visible = {
+		network_national_coverage = {
+			target = FROM
+			value > 0
+		}
+
+		527 = { is_core_of = KOR }
+		525 = { is_core_of = KOR }
+
+		FROM = {
+			has_full_control_of_state = 525
+			NOT = {
+				OR = {
+					has_government = communism
+					is_in_faction_with = SOV
+				}
+			}
+		}
+
+		has_completed_focus = SOV_asian_revolution
+
+		num_of_operatives > 0
+
+		KOR = {
+			exists = no
+		}
+
+		NOT = {
+			OR = {
+				has_country_flag = SOV_is_liberating_korea
+				has_country_flag = SOV_liberated_korea
+			}
+		}
+	}
+
+	operatives = 2
+
+	network_strength = 40
+
+	available = {
+		has_completed_focus = SOV_liberation_of_the_workers
+	}
+	
+	equipment = {
+		infantry_equipment = 4000
+		support_equipment = 400
+		artillery_equipment = 200
+	}
+
+	selection_target_state = {
+		state = 525
+		is_core_of = KOR
+	}
+
+	selection_target = {
+		targets = { FROM }
+	}
+
+	on_start = {
+		SOV = {
+			set_country_flag = SOV_is_liberating_korea
+		}
+		FROM = {
+			activate_mission = SOV_mission_korea
+			set_country_flag = SOV_is_liberation_target_korea
+			country_event = { days = 1 id = russia2_revolutions.1 }
+		}
+		every_country = {
+			limit = {
+				NOT = {
+					tag = FROM
+				}
+				is_in_faction_with = FROM
+				owns_state = 527
+			}
+			activate_mission = SOV_mission_korea
+			set_country_flag = SOV_is_liberation_target_korea
+			country_event = { days = 1 id = russia2_revolutions.1 }
+		}
+	}
+
+	risk_chance = 0.2
+	experience = 5
+	outcome_extra_chance = 0
+
+	outcome_execute = {
+		SOV = {
+			army_experience = 50
+			air_experience = 50
+			navy_experience = 50
+			add_opinion_modifier = { target = KOR modifier = member_permanent_revolution }
+			hidden_effect = {
+				clr_country_flag = SOV_is_liberating_korea
+				set_country_flag = SOV_liberated_korea
+			}
+		}
+
+		every_country = {
+			limit = {
+				525 = { is_core_of = PREV }
+			}
+			set_country_flag = give_core_back_kor_525
+		}
+
+		every_country = {
+			limit = {
+				527 = { is_core_of = PREV }
+			}
+			set_country_flag = give_core_back_kor_527
+		}
+
+		FROM = {
+			hidden_effect = {
+				country_event = { days = 1 id = russia2_generic.6 }
+			}
+			add_political_power = -50
+			hidden_effect = {
+				clr_country_flag = SOV_is_liberation_target_korea
+				if = {
+					limit = {
+						KOR = {
+							exists = no
+						}
+					}
+					release = KOR
+				}
+				else_if = {
+					limit = {
+						KOR = {
+							is_subject = yes
+						}
+					}
+					set_autonomy = {
+					    target = KOR
+					    autonomy_state = autonomy_free
+					}
+				}
+			}
+			clr_country_flag = SOV_is_liberation_target_indochina
+		}
+
+		every_country = {
+			limit = {
+				has_country_flag = give_core_back_kor_525
+			}
+			add_state_core = 525
+		}
+
+		every_country = {
+			limit = {
+				has_country_flag = give_core_back_kor_527
+			}
+			add_state_core = 527
+		}
+
+		if = {
+			limit = {
+				any_country = {
+					is_in_faction_with = FROM
+					owns_state = 527
+				}
+			}
+			KOR = {
+				transfer_state = 527
+			}
+		}
+
+
+
+		KOR = {
+			set_country_flag = liberated_by_sov
+			leave_faction = yes
+			army_experience = 25
+			add_political_power = 150
+			add_opinion_modifier = { target = SOV modifier = liberator_workers }
+			hidden_effect = {
+				set_popularities = {
+					democratic = 0
+					neutrality = 0
+					fascism = 0
+					communism = 100
+				}
+				set_politics = {
+					ruling_party = communism
+				}
+				add_timed_idea = {
+				    idea = SOV_Fight_revolution
+				    days = 182
+				}
+				set_technology = {
+				    gw_artillery = 1
+				    tech_recon = 1
+					tech_support = 1		
+					tech_engineers = 1
+				}
+				division_template = {
+					name = "Hyeogmyeong-ui Nodongja"
+					priority = 1
+					regiments = {
+						infantry = { x = 0 y = 0 }
+						infantry = { x = 0 y = 1 }
+						infantry = { x = 0 y = 2 }
+						infantry = { x = 0 y = 3 }
+						infantry = { x = 0 y = 4 }					
+					}
+					support = {
+						artillery = { x = 0 y = 0 }
+						recon = { x = 0 y = 1 }
+					}
+				}
+				set_division_template_lock = {
+				    division_template = "Hyeogmyeong-ui Nodongja"
+				    is_locked = yes
+				}
+				division_template = {
+					name = "Soviet Volunteers"
+					priority = 2
+					regiments = {
+						infantry = { x = 0 y = 0 }
+						infantry = { x = 0 y = 1 }
+						infantry = { x = 0 y = 2 }
+						infantry = { x = 0 y = 3 }
+						infantry = { x = 0 y = 4 }
+						artillery_brigade = { x = 1 y = 0 }
+						artillery_brigade = { x = 1 y = 1 }
+					}
+					support = {
+						artillery = { x = 0 y = 0 }
+						recon = { x = 0 y = 1 }
+						engineer = { x = 0 y = 2 }
+					}
+				}
+				set_division_template_lock = {
+				    division_template = "Soviet Volunteers"
+				    is_locked = yes
+				}
+				capital_scope = {
+					create_unit = {
+						division = "name = \"Hyeogmyeong-ui Nodongja\" division_template = \"Hyeogmyeong-ui Nodongja\" start_experience_factor = 0.3"
+						owner = KOR
+					}
+					create_unit = {
+						division = "name = \"Hyeogmyeong-ui Nodongja\" division_template = \"Hyeogmyeong-ui Nodongja\" start_experience_factor = 0.3"
+						owner = KOR
+					}
+					create_unit = {
+						division = "name = \"Hyeogmyeong-ui Nodongja\" division_template = \"Hyeogmyeong-ui Nodongja\" start_experience_factor = 0.3"
+						owner = KOR
+					}
+					create_unit = {
+						division = "name = \"Hyeogmyeong-ui Nodongja\" division_template = \"Hyeogmyeong-ui Nodongja\" start_experience_factor = 0.3"
+						owner = KOR
+					}
+					create_unit = {
+						division = "name = \"Hyeogmyeong-ui Nodongja\" division_template = \"Hyeogmyeong-ui Nodongja\" start_experience_factor = 0.3"
+						owner = KOR
+					}
+					create_unit = {
+						division = "name = \"Soviet Volunteers\" division_template = \"Soviet Volunteers\" start_experience_factor = 1"
+						owner = KOR
+					}
+					create_unit = {
+						division = "name = \"Soviet Volunteers\" division_template = \"Soviet Volunteers\" start_experience_factor = 1"
+						owner = KOR
+					}
+				}
+				random_owned_controlled_state = {
+					create_unit = {
+						division = "name = \"Hyeogmyeong-ui Nodongja\" division_template = \"Hyeogmyeong-ui Nodongja\" start_experience_factor = 0.3"
+						owner = KOR
+					}
+				}
+				random_owned_controlled_state = {
+					create_unit = {
+						division = "name = \"Hyeogmyeong-ui Nodongja\" division_template = \"Hyeogmyeong-ui Nodongja\" start_experience_factor = 0.3"
+						owner = KOR
+					}
+				}
+				random_owned_controlled_state = {
+					create_unit = {
+						division = "name = \"Hyeogmyeong-ui Nodongja\" division_template = \"Hyeogmyeong-ui Nodongja\" start_experience_factor = 0.3"
+						owner = KOR
+					}
+				}
+				random_owned_controlled_state = {
+					create_unit = {
+						division = "name = \"Hyeogmyeong-ui Nodongja\" division_template = \"Hyeogmyeong-ui Nodongja\" start_experience_factor = 0.3"
+						owner = KOR
+					}
+				}
+				random_owned_controlled_state = {
+					create_unit = {
+						division = "name = \"Hyeogmyeong-ui Nodongja\" division_template = \"Hyeogmyeong-ui Nodongja\" start_experience_factor = 0.3"
+						owner = KOR
+					}
+				}
+			}
+		}
+
+		FROM = {
+			declare_war_on = {
+			    target = KOR
+			    type = annex_everything
+			}
+		}
+	}
+
+	outcome_potential = {
+		custom_effect_tooltip = SOV_liberate_korea_tt
+		SOV = {
+			army_experience = 50
+			air_experience = 50
+			navy_experience = 50
+		}
+	}
+	
+	phases = {
+		SOV_liberate_korea_infiltration = { base = 30 } 
+	}
+	phases = { 
+		SOV_liberate_korea_intels = { base = 30 }
+	}
+	phases = { 
+		SOV_liberate_korea_escape = { base = 30 }
+	}
+}
+
+SOV_uprising_indochina = { #Uprising in Indochina
+	icon = GFX_operations_coup_government
+	map_icon = GFX_operations_operations_coup_government_map
+	name = SOV_uprising_indochina
+	desc = SOV_uprising_indochina_desc
+	days = 50
+
+	allowed = {
+		original_tag = SOV
+	}
+
+	visible = {
+		network_national_coverage = {
+			target = FROM
+			value > 0
+		}
+
+		286 = { is_core_of = VIN }
+		671 = { is_core_of = VIN }
+		741 = { is_core_of = CAM }
+		670 = { is_core_of = LAO }
+
+		FROM = {
+			has_full_control_of_state = 671
+			NOT = {
+				OR = {
+					has_government = communism
+					is_in_faction_with = SOV
+				}
+			}
+		}
+
+		has_completed_focus = SOV_asian_revolution
+
+		num_of_operatives > 0
+
+		VIN = {
+			exists = no
+		}
+
+		NOT = {
+			OR = {
+				has_country_flag = SOV_is_liberating_indochina
+				has_country_flag = SOV_liberated_indochina
+			}
+		}
+	}
+
+	operatives = 2
+
+	network_strength = 40
+
+	available = {
+		has_completed_focus = SOV_liberation_of_the_workers
+	}
+	
+	equipment = {
+		infantry_equipment = 4000
+		support_equipment = 400
+		artillery_equipment = 200
+	}
+
+	selection_target_state = {
+		state = 671
+		is_core_of = VIN
+	}
+
+	selection_target = {
+		targets = { FROM }
+	}
+
+	on_start = {
+		SOV = {
+			set_country_flag = SOV_is_liberating_indochina
+		}
+		FROM = {
+			activate_mission = SOV_mission_indochina
+			set_country_flag = SOV_is_liberation_target_indochina
+			country_event = { days = 1 id = russia2_revolutions.1 }
+		}
+		every_country = {
+			limit = {
+				NOT = {
+					tag = FROM
+				}
+				is_in_faction_with = FROM
+				OR = {
+					owns_state = 286
+					owns_state = 741
+					owns_state = 670
+				}
+			}
+			activate_mission = SOV_mission_indochina
+			set_country_flag = SOV_is_liberation_target_indochina
+			country_event = { days = 1 id = russia2_revolutions.1 }
+		}
+	}
+
+	risk_chance = 0.2
+	experience = 5
+	outcome_extra_chance = 0
+
+	outcome_execute = {
+		SOV = {
+			army_experience = 50
+			air_experience = 50
+			navy_experience = 50
+			add_opinion_modifier = { target = VIN modifier = member_permanent_revolution }
+			hidden_effect = {
+				clr_country_flag = SOV_is_liberating_indochina
+				set_country_flag = SOV_liberated_indochina
+			}
+		}
+
+		every_country = {
+			limit = {
+				671 = { is_core_of = PREV }
+			}
+			set_country_flag = give_core_back_vin_671
+		}
+
+		every_country = {
+			limit = {
+				527 = { is_core_of = PREV }
+			}
+			set_country_flag = give_core_back_vin_527
+		}
+
+		FROM = {
+			hidden_effect = {
+				country_event = { days = 1 id = russia2_generic.7 }
+			}
+			add_political_power = -50
+			hidden_effect = {
+				if = {
+					limit = {
+						VIN = {
+							exists = no
+						}
+					}
+					release = VIN
+				}
+				else_if = {
+					limit = {
+						VIN = {
+							is_subject = yes
+						}
+					}
+					set_autonomy = {
+					    target = VIN
+					    autonomy_state = autonomy_free
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				any_country = {
+					is_in_faction_with = FROM
+					owns_state = 527
+				}
+			}
+			VIN = {
+				transfer_state = 527
+			}
+		}
+
+		every_country = {
+			limit = {
+				has_country_flag = give_core_back_vin_671
+			}
+			add_state_core = 671
+		}
+
+		every_country = {
+			limit = {
+				has_country_flag = give_core_back_vin_527
+			}
+			add_state_core = 527
+		}
+
+		VIN = {
+			set_country_flag = liberated_by_sov
+			leave_faction = yes
+			army_experience = 25
+			add_political_power = 150
+			add_opinion_modifier = { target = SOV modifier = liberator_workers }
+			hidden_effect = {
+				set_popularities = {
+					democratic = 0
+					neutrality = 0
+					fascism = 0
+					communism = 100
+				}
+				set_politics = {
+					ruling_party = communism
+				}
+				add_timed_idea = {
+				    idea = SOV_Fight_revolution
+				    days = 182
+				}
+				create_faction = indochinese_union
+				set_technology = {
+				    gw_artillery = 1
+				    tech_recon = 1
+					tech_support = 1		
+					tech_engineers = 1
+				}
+				division_template = {
+					name = "Công nhân cách mang"
+					priority = 1
+					regiments = {
+						infantry = { x = 0 y = 0 }
+						infantry = { x = 0 y = 1 }
+						infantry = { x = 0 y = 2 }
+						infantry = { x = 0 y = 3 }
+						infantry = { x = 0 y = 4 }					
+					}
+					support = {
+						artillery = { x = 0 y = 0 }
+						recon = { x = 0 y = 1 }
+					}
+				}
+				set_division_template_lock = {
+					division_template = "Công nhân cách mang"
+					is_locked = yes
+				}
+				division_template = {
+					name = "Soviet Volunteers"
+					priority = 2
+					regiments = {
+						infantry = { x = 0 y = 0 }
+						infantry = { x = 0 y = 1 }
+						infantry = { x = 0 y = 2 }
+						infantry = { x = 0 y = 3 }
+						infantry = { x = 0 y = 4 }
+						artillery_brigade = { x = 1 y = 0 }
+						artillery_brigade = { x = 1 y = 1 }
+					}
+					support = {
+						artillery = { x = 0 y = 0 }
+						recon = { x = 0 y = 1 }
+						engineer = { x = 0 y = 2 }
+					}
+				}
+				set_division_template_lock = {
+				    division_template = "Soviet Volunteers"
+				    is_locked = yes
+				}
+				capital_scope = {
+					create_unit = {
+						division = "name = \"Công nhân cách mang\" division_template = \"Công nhân cách mang\" start_experience_factor = 0.3"
+						owner = VIN
+					}
+					create_unit = {
+						division = "name = \"Công nhân cách mang\" division_template = \"Công nhân cách mang\" start_experience_factor = 0.3"
+						owner = VIN
+					}
+					create_unit = {
+						division = "name = \"Công nhân cách mang\" division_template = \"Công nhân cách mang\" start_experience_factor = 0.3"
+						owner = VIN
+					}
+					create_unit = {
+						division = "name = \"Công nhân cách mang\" division_template = \"Công nhân cách mang\" start_experience_factor = 0.3"
+						owner = VIN
+					}
+					create_unit = {
+						division = "name = \"Soviet Volunteers\" division_template = \"Soviet Volunteers\" start_experience_factor = 1"
+						owner = VIN
+					}
+				}
+				random_owned_controlled_state = {
+					create_unit = {
+						division = "name = \"Công nhân cách mang\" division_template = \"Công nhân cách mang\" start_experience_factor = 0.3"
+						owner = VIN
+					}
+				}
+				random_owned_controlled_state = {
+					create_unit = {
+						division = "name = \"Công nhân cách mang\" division_template = \"Công nhân cách mang\" start_experience_factor = 0.3"
+						owner = VIN
+					}
+				}
+				random_owned_controlled_state = {
+					create_unit = {
+						division = "name = \"Công nhân cách mang\" division_template = \"Công nhân cách mang\" start_experience_factor = 0.3"
+						owner = VIN
+					}
+				}
+			}
+		}
+		
+		FROM = {
+			declare_war_on = {
+			    target = VIN
+			    type = annex_everything
+			}
+		}
+
+		if = {
+			limit = {
+				OR = {
+					FROM = {
+						owns_state = 741
+					}
+					any_country = {
+						is_in_faction_with = FROM
+						owns_state = 741
+					}
+					CAM = {
+						exists = yes
+						OR = {
+							is_in_faction_with = FROM
+							is_in_faction = no
+						}
+					}
+				}
+			}
+			SOV = {
+				add_opinion_modifier = { target = CAM modifier = member_permanent_revolution }
+			}
+			if = {
+				limit = {
+					CAM = {
+						OR = {
+							exists = no
+							is_subject = yes
+						}
+					}
+				}
+				every_country = {
+					limit = {
+						NOT = {
+							OR = {
+								is_in_faction_with = SOV
+								TAG = SOV
+							}
+						}
+						OR = {
+							is_in_faction_with = FROM
+							TAG = FROM
+						}
+					}
+					every_country = {
+						limit = {
+							741 = { is_core_of = PREV }
+						}
+						set_country_flag = give_core_back_cam_741
+					}
+					if = {
+						limit = {
+							CAM = {
+								exists = no
+							}
+						}
+						release = CAM
+						declare_war_on = {
+						    target = CAM
+						    type = annex_everything
+						}
+					}
+					else_if = {
+						limit = {
+							CAM = {
+								is_subject = yes
+							}
+						}
+						set_autonomy = {
+						    target = CAM
+						    autonomy_state = autonomy_free
+						}
+						declare_war_on = {
+						    target = CAM
+						    type = annex_everything
+						}
+					}
+				}
+			}
+
+			every_country = {
+				limit = {
+					has_country_flag = give_core_back_cam_741
+				}
+				add_state_core = 741
+			}
+
+			CAM = {
+				set_country_flag = liberated_by_sov
+				leave_faction = yes
+				army_experience = 25
+				add_political_power = 150
+				add_opinion_modifier = { target = SOV modifier = liberator_workers }
+				hidden_effect = {
+					set_popularities = {
+						democratic = 0
+						neutrality = 0
+						fascism = 0
+						communism = 100
+					}
+					set_politics = {
+						ruling_party = communism
+					}
+					add_timed_idea = {
+					    idea = SOV_Fight_revolution
+					    days = 182
+					}
+					VIN = {
+						add_to_faction = CAM
+					}
+					set_technology = {
+					    gw_artillery = 1
+					    tech_recon = 1
+						tech_support = 1		
+						tech_engineers = 1
+					}
+					division_template = {
+						name = "Kammokr Bdevot"
+						priority = 1
+						regiments = {
+							infantry = { x = 0 y = 0 }
+							infantry = { x = 0 y = 1 }
+							infantry = { x = 0 y = 2 }
+							infantry = { x = 0 y = 3 }
+							infantry = { x = 0 y = 4 }					
+						}
+						support = {
+							artillery = { x = 0 y = 0 }
+							recon = { x = 0 y = 1 }
+						}
+					}
+					set_division_template_lock = {
+					    division_template = "Kammokr Bdevot"
+					    is_locked = yes
+					}
+					division_template = {
+						name = "Soviet Volunteers"
+						priority = 2
+						regiments = {
+							infantry = { x = 0 y = 0 }
+							infantry = { x = 0 y = 1 }
+							infantry = { x = 0 y = 2 }
+							infantry = { x = 0 y = 3 }
+							infantry = { x = 0 y = 4 }
+							artillery_brigade = { x = 1 y = 0 }
+							artillery_brigade = { x = 1 y = 1 }
+						}
+						support = {
+							artillery = { x = 0 y = 0 }
+							recon = { x = 0 y = 1 }
+							engineer = { x = 0 y = 2 }
+						}
+					}
+					set_division_template_lock = {
+					    division_template = "Soviet Volunteers"
+					    is_locked = yes
+					}
+					capital_scope = {
+						create_unit = {
+							division = "name = \"Kammokr Bdevot\" division_template = \"Kammokr Bdevot\" start_experience_factor = 0.3"
+							owner = CAM
+						}
+						create_unit = {
+							division = "name = \"Kammokr Bdevot\" division_template = \"Kammokr Bdevot\" start_experience_factor = 0.3"
+							owner = CAM
+						}
+						create_unit = {
+							division = "name = \"Kammokr Bdevot\" division_template = \"Kammokr Bdevot\" start_experience_factor = 0.3"
+							owner = CAM
+						}
+						create_unit = {
+							division = "name = \"Kammokr Bdevot\" division_template = \"Kammokr Bdevot\" start_experience_factor = 0.3"
+							owner = CAM
+						}
+						create_unit = {
+							division = "name = \"Soviet Volunteers\" division_template = \"Soviet Volunteers\" start_experience_factor = 1"
+							owner = CAM
+						}
+					}
+				}
+			}
+		}
+
+		if = {
+			limit = {
+				OR = {
+					FROM = {
+						owns_state = 670
+					}
+					any_country = {
+						is_in_faction_with = FROM
+						owns_state = 670
+					}
+					LAO = {
+						exists = yes
+						OR = {
+							is_in_faction_with = FROM
+							is_in_faction = no
+						}
+					}
+				}
+			}
+			SOV = {
+				add_opinion_modifier = { target = LAO modifier = member_permanent_revolution }
+			}
+			if = {
+				limit = {
+					LAO = {
+						OR = {
+							exists = no
+							is_subject = yes
+						}
+					}
+				}
+				every_country = {
+					limit = {
+						NOT = {
+							OR = {
+								is_in_faction_with = SOV
+								TAG = SOV
+							}
+						}
+						OR = {
+							is_in_faction_with = FROM
+							TAG = FROM
+						}
+					}
+					every_country = {
+						limit = {
+							670 = { is_core_of = PREV }
+						}
+						set_country_flag = give_core_back_lao_670
+					}
+					if = {
+						limit = {
+							LAO = {
+								exists = no
+							}
+						}
+						release = LAO
+						declare_war_on = {
+						    target = LAO
+						    type = annex_everything
+						}
+					}
+					else_if = {
+						limit = {
+							LAO = {
+								is_subject = yes
+							}
+						}
+						set_autonomy = {
+						    target = LAO
+						    autonomy_state = autonomy_free
+						}
+						declare_war_on = {
+						    target = LAO
+						    type = annex_everything
+						}
+					}
+				}
+			}
+
+			every_country = {
+				limit = {
+					has_country_flag = give_core_back_lao_670
+				}
+				add_state_core = 670
+			}
+
+			LAO = {
+				set_country_flag = liberated_by_sov
+				leave_faction = yes
+				army_experience = 25
+				add_political_power = 150
+				add_opinion_modifier = { target = SOV modifier = liberator_workers }
+				hidden_effect = {
+					set_popularities = {
+						democratic = 0
+						neutrality = 0
+						fascism = 0
+						communism = 100
+					}
+					set_politics = {
+						ruling_party = communism
+					}
+					add_timed_idea = {
+					    idea = SOV_Fight_revolution
+					    days = 182
+					}
+					VIN = {
+						add_to_faction = LAO
+					}
+					set_technology = {
+					    gw_artillery = 1
+					    tech_recon = 1
+						tech_support = 1		
+						tech_engineers = 1
+					}
+					division_template = {
+						name = "Phanakngan Pativad"
+						priority = 1
+						regiments = {
+							infantry = { x = 0 y = 0 }
+							infantry = { x = 0 y = 1 }
+							infantry = { x = 0 y = 2 }
+							infantry = { x = 0 y = 3 }
+							infantry = { x = 0 y = 4 }					
+						}
+						support = {
+							artillery = { x = 0 y = 0 }
+							recon = { x = 0 y = 1 }
+						}
+					}
+					set_division_template_lock = {
+					    division_template = "Phanakngan Pativad"
+					    is_locked = yes
+					}
+					division_template = {
+						name = "Soviet Volunteers"
+						priority = 2
+						regiments = {
+							infantry = { x = 0 y = 0 }
+							infantry = { x = 0 y = 1 }
+							infantry = { x = 0 y = 2 }
+							infantry = { x = 0 y = 3 }
+							infantry = { x = 0 y = 4 }
+							artillery_brigade = { x = 1 y = 0 }
+							artillery_brigade = { x = 1 y = 1 }
+						}
+						support = {
+							artillery = { x = 0 y = 0 }
+							recon = { x = 0 y = 1 }
+							engineer = { x = 0 y = 2 }
+						}
+					}
+					set_division_template_lock = {
+					    division_template = "Soviet Volunteers"
+					    is_locked = yes
+					}
+					capital_scope = {
+						create_unit = {
+							division = "name = \"Phanakngan Pativad\" division_template = \"Phanakngan Pativad\" start_experience_factor = 0.3"
+							owner = LAO
+						}
+						create_unit = {
+							division = "name = \"Phanakngan Pativad\" division_template = \"Phanakngan Pativad\" start_experience_factor = 0.3"
+							owner = LAO
+						}
+						create_unit = {
+							division = "name = \"Phanakngan Pativad\" division_template = \"Phanakngan Pativad\" start_experience_factor = 0.3"
+							owner = LAO
+						}
+						create_unit = {
+							division = "name = \"Phanakngan Pativad\" division_template = \"Phanakngan Pativad\" start_experience_factor = 0.3"
+							owner = LAO
+						}
+						create_unit = {
+							division = "name = \"Soviet Volunteers\" division_template = \"Soviet Volunteers\" start_experience_factor = 1"
+							owner = LAO
+						}
+					}
+				}
+			}
+		}
+	}
+
+	outcome_potential = {
+		custom_effect_tooltip = SOV_uprising_indochina_tt
+		SOV = {
+			army_experience = 50
+			air_experience = 50
+			navy_experience = 50
+		}
+	}
+	
+	phases = {
+		SOV_uprising_indochina_infiltration = { base = 30 } 
+	}
+	phases = { 
+		SOV_uprising_indochina_intels = { base = 30 }
+	}
+	phases = { 
+		SOV_uprising_indochina_escape = { base = 30 }
+	}
+}
+
+SOV_free_tibet = { #Free Tibet
+	icon = GFX_operations_coup_government
+	map_icon = GFX_operations_operations_coup_government_map
+	name = SOV_free_tibet
+	desc = SOV_free_tibet_desc
+	days = 50
+
+	allowed = {
+		original_tag = SOV
+	}
+
+	visible = {
+		network_national_coverage = {
+			target = FROM
+			value > 0
+		}
+
+		322 = { is_core_of = TIB }
+		757 = { is_core_of = TIB }
+		758 = { is_core_of = TIB }
+
+		FROM = {
+			has_full_control_of_state = 757
+			NOT = {
+				OR = {
+					has_government = communism
+					is_in_faction_with = SOV
+				}
+			}
+		}
+
+		has_completed_focus = SOV_asian_revolution
+
+		num_of_operatives > 0
+
+		TIB = {
+			exists = no
+		}
+
+		NOT = {
+			OR = {
+				has_country_flag = SOV_is_liberating_tibet
+				has_country_flag = SOV_liberated_tibet
+			}
+		}
+	}
+
+	operatives = 2
+
+	network_strength = 40
+
+	available = {
+		has_completed_focus = SOV_liberation_of_the_workers
+	}
+	
+	equipment = {
+		infantry_equipment = 4000
+		support_equipment = 400
+		artillery_equipment = 200
+	}
+
+	selection_target_state = {
+		state = 757
+		is_core_of = TIB
+	}
+
+	selection_target = {
+		targets = { FROM }
+	}
+
+	on_start = {
+		SOV = {
+			set_country_flag = SOV_is_liberating_tibet
+		}
+		FROM = {
+			activate_mission = SOV_mission_tibet
+			set_country_flag = SOV_is_liberation_target_tibet
+			country_event = { days = 1 id = russia2_revolutions.1 }
+		}
+		every_country = {
+			limit = {
+				NOT = {
+					tag = FROM
+				}
+				is_in_faction_with = FROM
+				OR = {
+					owns_state = 322
+					owns_state = 758
+				}
+			}
+			activate_mission = SOV_mission_tibet
+			set_country_flag = SOV_is_liberation_target_tibet
+			country_event = { days = 1 id = russia2_revolutions.1 }
+		}
+	}
+
+	risk_chance = 0.2
+	experience = 5
+	outcome_extra_chance = 0
+
+	outcome_execute = {
+		SOV = {
+			army_experience = 50
+			air_experience = 50
+			navy_experience = 50
+			add_opinion_modifier = { target = TIB modifier = member_permanent_revolution }
+			hidden_effect = {
+				clr_country_flag = SOV_is_liberating_tibet
+				set_country_flag = SOV_liberated_tibet
+			}
+		}
+
+		every_country = {
+			limit = {
+				757 = { is_core_of = PREV }
+			}
+			set_country_flag = give_core_back_tib_757
+		}
+		every_country = {
+			limit = {
+				322 = { is_core_of = PREV }
+			}
+			set_country_flag = give_core_back_tib_322
+		}
+		every_country = {
+			limit = {
+				758 = { is_core_of = PREV }
+			}
+			set_country_flag = give_core_back_tib_758
+		}
+		every_country = {
+			limit = {
+				601 = { is_core_of = PREV }
+			}
+			set_country_flag = give_core_back_tib_601
+		}
+
+		FROM = {
+			hidden_effect = {
+				country_event = { days = 1 id = russia2_generic.8 }
+			}
+			add_political_power = -50
+			hidden_effect = {
+				if = {
+					limit = {
+						TIB = {
+							exists = no
+						}
+					}
+					release = TIB
+				}
+				else_if = {
+					limit = {
+						TIB = {
+							is_subject = yes
+						}
+					}
+					set_autonomy = {
+					    target = TIB
+					    autonomy_state = autonomy_free
+					}
+				}
+			}
+			clr_country_flag = SOV_is_liberation_target_tibet
+		}
+		if = {
+			limit = {
+				any_country = {
+					is_in_faction_with = FROM
+					owns_state = 322
+				}
+			}
+			TIB = {
+				transfer_state = 322
+			}
+		}
+		if = {
+			limit = {
+				any_country = {
+					is_in_faction_with = FROM
+					owns_state = 758
+				}
+			}
+			TIB = {
+				transfer_state = 758
+			}
+		}
+		if = {
+			limit = {
+				601 = { is_core_of = TIB }
+				any_country = {
+					is_in_faction_with = FROM
+					owns_state = 601
+				}
+			}
+			TIB = {
+				transfer_state = 601
+			}
+		}
+		every_country = {
+			limit = {
+				has_country_flag = give_core_back_tib_757
+			}
+			add_state_core = 757
+		}
+		every_country = {
+			limit = {
+				has_country_flag = give_core_back_tib_322
+			}
+			add_state_core = 322
+		}
+		every_country = {
+			limit = {
+				has_country_flag = give_core_back_tib_758
+			}
+			add_state_core = 758
+		}
+		every_country = {
+			limit = {
+				has_country_flag = give_core_back_tib_601
+			}
+			add_state_core = 601
+		}
+
+		TIB = {
+			set_country_flag = liberated_by_sov
+			leave_faction = yes
+			army_experience = 25
+			add_political_power = 150
+			add_opinion_modifier = { target = SOV modifier = liberator_workers }
+			hidden_effect = {
+				set_popularities = {
+					democratic = 0
+					neutrality = 0
+					fascism = 0
+					communism = 100
+				}
+				set_politics = {
+					ruling_party = communism
+				}
+				add_timed_idea = {
+				    idea = SOV_Fight_revolution
+				    days = 182
+				}
+				set_technology = {
+				    gw_artillery = 1
+				    tech_recon = 1
+					tech_support = 1		
+					tech_engineers = 1
+				}
+				division_template = {
+					name = "Tibetan Revolutionary Workers"
+					priority = 1
+					regiments = {
+						infantry = { x = 0 y = 0 }
+						infantry = { x = 0 y = 1 }
+						infantry = { x = 0 y = 2 }
+						infantry = { x = 0 y = 3 }
+						infantry = { x = 0 y = 4 }
+					}
+					support = {
+						artillery = { x = 0 y = 0 }
+						recon = { x = 0 y = 1 }
+					}
+				}
+				set_division_template_lock = {
+				    division_template = "Tibetan Revolutionary Workers"
+				    is_locked = yes
+				}
+				division_template = {
+					name = "Xikang Volunteers"
+					priority = 1
+					regiments = {
+						mountaineers = { x = 0 y = 0 }
+						mountaineers = { x = 0 y = 1 }
+						mountaineers = { x = 0 y = 2 }
+						mountaineers = { x = 0 y = 3 }
+						mountaineers = { x = 0 y = 4 }
+						mountaineers = { x = 1 y = 0 }
+						mountaineers = { x = 1 y = 1 }
+						mountaineers = { x = 1 y = 2 }
+						mountaineers = { x = 1 y = 3 }
+						mountaineers = { x = 1 y = 4 }
+					}
+					support = {
+						recon = { x = 0 y = 0 }
+					}
+				}
+				set_division_template_lock = {
+				    division_template = "Xikang Volunteers"
+				    is_locked = yes
+				}
+				division_template = {
+					name = "Soviet Volunteers"
+					priority = 2
+					regiments = {
+						infantry = { x = 0 y = 0 }
+						infantry = { x = 0 y = 1 }
+						infantry = { x = 0 y = 2 }
+						infantry = { x = 0 y = 3 }
+						infantry = { x = 0 y = 4 }
+						artillery_brigade = { x = 1 y = 0 }
+						artillery_brigade = { x = 1 y = 1 }
+					}
+					support = {
+						artillery = { x = 0 y = 0 }
+						recon = { x = 0 y = 1 }
+						engineer = { x = 0 y = 2 }
+					}
+				}
+				set_division_template_lock = {
+				    division_template = "Soviet Volunteers"
+				    is_locked = yes
+				}
+				capital_scope = {
+					create_unit = {
+						division = "name = \"Xikang Volunteers\" division_template = \"Xikang Volunteers\" start_experience_factor = 0.3"
+						owner = TIB
+					}
+					create_unit = {
+						division = "name = \"Tibetan Revolutionary Workers\" division_template = \"Tibetan Revolutionary Workers\" start_experience_factor = 0.3"
+						owner = TIB
+					}
+					create_unit = {
+						division = "name = \"Tibetan Revolutionary Workers\" division_template = \"Tibetan Revolutionary Workers\" start_experience_factor = 0.3"
+						owner = TIB
+					}
+					create_unit = {
+						division = "name = \"Soviet Volunteers\" division_template = \"Soviet Volunteers\" start_experience_factor = 1"
+						owner = TIB
+					}
+					create_unit = {
+						division = "name = \"Soviet Volunteers\" division_template = \"Soviet Volunteers\" start_experience_factor = 1"
+						owner = TIB
+					}
+				}
+				random_owned_controlled_state = {
+					create_unit = {
+						division = "name = \"Tibetan Revolutionary Workers\" division_template = \"Tibetan Revolutionary Workers\" start_experience_factor = 0.3"
+						owner = TIB
+					}
+				}
+				random_owned_controlled_state = {
+					create_unit = {
+						division = "name = \"Tibetan Revolutionary Workers\" division_template = \"Tibetan Revolutionary Workers\" start_experience_factor = 0.3"
+						owner = TIB
+					}
+				}
+				random_owned_controlled_state = {
+					create_unit = {
+						division = "name = \"Tibetan Revolutionary Workers\" division_template = \"Tibetan Revolutionary Workers\" start_experience_factor = 0.3"
+						owner = TIB
+					}
+				}
+				random_owned_controlled_state = {
+					create_unit = {
+						division = "name = \"Tibetan Revolutionary Workers\" division_template = \"Tibetan Revolutionary Workers\" start_experience_factor = 0.3"
+						owner = TIB
+					}
+				}
+				random_owned_controlled_state = {
+					create_unit = {
+						division = "name = \"Tibetan Revolutionary Workers\" division_template = \"Tibetan Revolutionary Workers\" start_experience_factor = 0.3"
+						owner = TIB
+					}
+				}
+			}
+		}
+
+		FROM = {
+			declare_war_on = {
+			    target = TIB
+			    type = annex_everything
+			}
+		}
+	}
+
+	outcome_potential = {
+		custom_effect_tooltip = SOV_free_tibet_tt
+		SOV = {
+			army_experience = 50
+			air_experience = 50
+			navy_experience = 50
+		}
+	}
+	
+	phases = {
+		SOV_free_tibet_infiltration = { base = 30 } 
+	}
+	phases = { 
+		SOV_free_tibet_intels = { base = 30 }
+	}
+	phases = { 
+		SOV_free_tibet_escape = { base = 30 }
+	}
+}
+
+SOV_free_ethiopia = { #Free the Ethiopian Workers
+	icon = GFX_operations_coup_government
+	map_icon = GFX_operations_operations_coup_government_map
+	name = SOV_free_ethiopia
+	desc = SOV_free_ethiopia_desc
+	days = 50
+
+	allowed = {
+		original_tag = SOV
+	}
+
+	visible = {
+		network_national_coverage = {
+			target = FROM
+			value > 0
+		}
+
+		271 = { is_core_of = ETH }
+
+		FROM = {
+			has_full_control_of_state = 271
+			NOT = {
+				OR = {
+					has_government = communism
+					is_in_faction_with = SOV
+				}
+			}
+		}
+
+		has_completed_focus = SOV_african_revolution
+
+		num_of_operatives > 0
+
+		ETH = {
+			exists = no
+		}
+
+		NOT = {
+			OR = {
+				has_country_flag = SOV_is_liberating_ethiopia
+				has_country_flag = SOV_liberated_ethiopia
+			}
+		}
+	}
+
+	operatives = 2
+
+	network_strength = 40
+
+	available = {
+		has_completed_focus = SOV_liberation_of_the_workers
+	}
+	
+	equipment = {
+		infantry_equipment = 2000
+		support_equipment = 300
+		artillery_equipment = 150
+	}
+
+	selection_target_state = {
+		state = 271
+		is_core_of = ETH
+	}
+
+	selection_target = {
+		targets = { FROM }
+	}
+
+	on_start = {
+		SOV = {
+			set_country_flag = SOV_is_liberating_tibet
+		}
+		FROM = {
+			activate_mission = SOV_mission_ethiopia
+			set_country_flag = SOV_is_liberation_target_ethiopia
+			country_event = { days = 1 id = russia2_revolutions.1 }
+		}	
+	}
+
+	risk_chance = 0.2
+	experience = 5
+	outcome_extra_chance = 0
+
+	outcome_execute = {
+		SOV = {
+			army_experience = 50
+			air_experience = 50
+			navy_experience = 50
+			add_opinion_modifier = { target = ETH modifier = member_permanent_revolution }
+			hidden_effect = {
+				clr_country_flag = SOV_is_liberating_ethiopia
+				set_country_flag = SOV_liberated_ethiopia
+			}
+		}
+
+		every_country = {
+			limit = {
+				271 = { is_core_of = PREV }
+			}
+			set_country_flag = give_core_back_eth_271
+		}
+
+		FROM = {
+			hidden_effect = {
+				country_event = { days = 1 id = russia2_generic.9 }
+			}
+			add_political_power = -50
+			hidden_effect = {
+				if = {
+					limit = {
+						ETH = {
+							exists = no
+						}
+					}
+					release = ETH
+				}
+				else_if = {
+					limit = {
+						ETH = {
+							is_subject = yes
+						}
+					}
+					set_autonomy = {
+					    target = ETH
+					    autonomy_state = autonomy_free
+					}
+				}
+			}
+		}
+
+		every_country = {
+			limit = {
+				has_country_flag = give_core_back_eth_271
+			}
+			add_state_core = 271
+		}
+
+		ETH = {
+			set_country_flag = liberated_by_sov
+			leave_faction = yes
+			army_experience = 25
+			add_political_power = 150
+			add_opinion_modifier = { target = SOV modifier = liberator_workers }
+			hidden_effect = {
+				set_popularities = {
+					democratic = 0
+					neutrality = 0
+					fascism = 0
+					communism = 100
+				}
+				set_politics = {
+					ruling_party = communism
+				}
+				add_timed_idea = {
+				    idea = SOV_Fight_revolution
+				    days = 182
+				}
+				set_technology = {
+				    gw_artillery = 1
+				    tech_recon = 1
+					tech_support = 1		
+					tech_engineers = 1
+				}
+				division_template = {
+					name = "Abiyotawī Seratenyochi"
+					priority = 1
+					regiments = {
+						infantry = { x = 0 y = 0 }
+						infantry = { x = 0 y = 1 }
+						infantry = { x = 0 y = 2 }
+						infantry = { x = 0 y = 3 }
+						infantry = { x = 0 y = 4 }
+					}
+					support = {
+						artillery = { x = 0 y = 0 }
+						recon = { x = 0 y = 1 }
+					}
+				}
+				set_division_template_lock = {
+				    division_template = "Abiyotawī Seratenyochi"
+				    is_locked = yes
+				}
+				division_template = {
+					name = "Eritrean Volunteers"
+					priority = 1
+					regiments = {
+						mountaineers = { x = 0 y = 0 }
+						mountaineers = { x = 0 y = 1 }
+						mountaineers = { x = 0 y = 2 }
+						mountaineers = { x = 0 y = 3 }
+						mountaineers = { x = 0 y = 4 }
+						mountaineers = { x = 1 y = 0 }
+						mountaineers = { x = 1 y = 1 }
+						mountaineers = { x = 1 y = 2 }
+						mountaineers = { x = 1 y = 3 }
+						mountaineers = { x = 1 y = 4 }
+					}
+					support = {
+						recon = { x = 0 y = 0 }
+					}
+				}
+				set_division_template_lock = {
+				    division_template = "Eritrean Volunteers"
+				    is_locked = yes
+				}
+				division_template = {
+					name = "Soviet Volunteers"
+					priority = 2
+					regiments = {
+						infantry = { x = 0 y = 0 }
+						infantry = { x = 0 y = 1 }
+						infantry = { x = 0 y = 2 }
+						infantry = { x = 0 y = 3 }
+						infantry = { x = 0 y = 4 }
+						artillery_brigade = { x = 1 y = 0 }
+						artillery_brigade = { x = 1 y = 1 }
+					}
+					support = {
+						artillery = { x = 0 y = 0 }
+						recon = { x = 0 y = 1 }
+						engineer = { x = 0 y = 2 }
+					}
+				}
+				set_division_template_lock = {
+				    division_template = "Soviet Volunteers"
+				    is_locked = yes
+				}
+				capital_scope = {
+					create_unit = {
+						division = "name = \"Eritrean Volunteers\" division_template = \"Eritrean Volunteers\" start_experience_factor = 0.3"
+						owner = ETH
+					}
+					create_unit = {
+						division = "name = \"Abiyotawī Seratenyochi\" division_template = \"Abiyotawī Seratenyochi\" start_experience_factor = 0.3"
+						owner = ETH
+					}
+					create_unit = {
+						division = "name = \"Abiyotawī Seratenyochi\" division_template = \"Abiyotawī Seratenyochi\" start_experience_factor = 0.3"
+						owner = ETH
+					}
+					create_unit = {
+						division = "name = \"Abiyotawī Seratenyochi\" division_template = \"Abiyotawī Seratenyochi\" start_experience_factor = 0.3"
+						owner = ETH
+					}
+					create_unit = {
+						division = "name = \"Abiyotawī Seratenyochi\" division_template = \"Abiyotawī Seratenyochi\" start_experience_factor = 0.3"
+						owner = ETH
+					}
+					create_unit = {
+						division = "name = \"Abiyotawī Seratenyochi\" division_template = \"Abiyotawī Seratenyochi\" start_experience_factor = 0.3"
+						owner = ETH
+					}
+					create_unit = {
+						division = "name = \"Soviet Volunteers\" division_template = \"Soviet Volunteers\" start_experience_factor = 1"
+						owner = ETH
+					}
+					create_unit = {
+						division = "name = \"Soviet Volunteers\" division_template = \"Soviet Volunteers\" start_experience_factor = 1"
+						owner = ETH
+					}
+				}
+			}
+		}
+
+		FROM = {
+			declare_war_on = {
+			    target = ETH
+			    type = annex_everything
+			}
+		}
+	}
+
+	outcome_potential = {
+		custom_effect_tooltip = SOV_free_ethiopia_tt
+		SOV = {
+			army_experience = 50
+			air_experience = 50
+			navy_experience = 50
+		}
+	}
+	
+	phases = {
+		SOV_free_ethiopia_infiltration = { base = 30 } 
+	}
+	phases = { 
+		SOV_free_ethiopia_intels = { base = 30 }
+	}
+	phases = { 
+		SOV_free_ethiopia_escape = { base = 30 }
+	}
+}
+
+SOV_uprising_morroco = { #Uprising in Morroco
+	icon = GFX_operations_coup_government
+	map_icon = GFX_operations_operations_coup_government_map
+	name = SOV_uprising_morroco
+	desc = SOV_uprising_morroco_desc
+	days = 50
+
+	allowed = {
+		original_tag = SOV
+	}
+
+	visible = {
+		network_national_coverage = {
+			target = FROM
+			value > 0
+		}
+
+		461 = { is_core_of = MOR }
+		462 = { is_core_of = MOR }
+		290 = { is_core_of = MOR }
+		783 = { is_core_of = MOR }
+
+		FROM = {
+			has_full_control_of_state = 461
+			NOT = {
+				OR = {
+					has_government = communism
+					is_in_faction_with = SOV
+				}
+			}
+		}
+
+		has_completed_focus = SOV_african_revolution
+
+		num_of_operatives > 0
+
+		MOR = {
+			exists = no
+		}
+
+		NOT = {
+			OR = {
+				has_country_flag = SOV_is_liberating_morocco
+				has_country_flag = SOV_liberated_morocco
+			}
+		}
+	}
+
+	operatives = 2
+
+	network_strength = 40
+
+	available = {
+		has_completed_focus = SOV_liberation_of_the_workers
+	}
+	
+	equipment = {
+		infantry_equipment = 2000
+		support_equipment = 300
+		artillery_equipment = 150
+	}
+
+	selection_target_state = {
+		state = 461
+		is_core_of = MOR
+	}
+
+	selection_target = {
+		targets = { FROM }
+	}
+
+	on_start = {
+		SOV = {
+			set_country_flag = SOV_is_liberating_morocco
+		}
+		FROM = {
+			activate_mission = SOV_mission_morocco
+			set_country_flag = SOV_is_liberation_target_morocco
+			country_event = { days = 1 id = russia2_revolutions.1 }
+		}
+		every_country = {
+			limit = {
+				NOT = {
+					tag = FROM
+				}
+				is_in_faction_with = FROM
+				OR = {
+					owns_state = 462
+					owns_state = 290
+					owns_state = 783
+					owns_state = 699
+				}
+			}
+			activate_mission = SOV_mission_morocco
+			set_country_flag = SOV_is_liberation_target_morocco
+			country_event = { days = 1 id = russia2_revolutions.1 }
+		}
+	}
+
+	risk_chance = 0.2
+	experience = 5
+	outcome_extra_chance = 0
+
+	outcome_execute = {
+		SOV = {
+			army_experience = 50
+			air_experience = 50
+			navy_experience = 50
+			add_opinion_modifier = { target = MOR modifier = member_permanent_revolution }
+			hidden_effect = {
+				clr_country_flag = SOV_is_liberating_morocco
+				set_country_flag = SOV_liberated_morocco
+			}
+		}
+
+		every_country = {
+			limit = {
+				461 = { is_core_of = PREV }
+			}
+			set_country_flag = give_core_back_mor_461
+		}
+		every_country = {
+			limit = {
+				462 = { is_core_of = PREV }
+			}
+			set_country_flag = give_core_back_mor_462
+		}
+		every_country = {
+			limit = {
+				290 = { is_core_of = PREV }
+			}
+			set_country_flag = give_core_back_mor_290
+		}
+		every_country = {
+			limit = {
+				783 = { is_core_of = PREV }
+			}
+			set_country_flag = give_core_back_mor_783
+		}
+		every_country = {
+			limit = {
+				699 = { is_core_of = PREV }
+			}
+			set_country_flag = give_core_back_mor_699
+		}
+
+		FROM = {
+			hidden_effect = {
+				country_event = { days = 1 id = russia2_generic.11 }
+			}
+			add_political_power = -50
+			hidden_effect = {
+				if = {
+					limit = {
+						MOR = {
+							exists = no
+						}
+					}
+					release = MOR
+				}
+				else_if = {
+					limit = {
+						MOR = {
+							is_subject = yes
+						}
+					}
+					set_autonomy = {
+					    target = MOR
+					    autonomy_state = autonomy_free
+					}
+				}
+			}
+		}
+
+		if = {
+			limit = {
+				any_country = {
+					is_in_faction_with = FROM
+					owns_state = 462
+				}
+			}
+			MOR = {
+				transfer_state = 462
+			}
+		}
+		if = {
+			limit = {
+				any_country = {
+					is_in_faction_with = FROM
+					owns_state = 290
+				}
+			}
+			MOR = {
+				transfer_state = 290
+			}
+		}
+		if = {
+			limit = {
+				any_country = {
+					is_in_faction_with = FROM
+					owns_state = 783
+				}
+			}
+			MOR = {
+				transfer_state = 783
+			}
+		}
+		if = {
+			limit = {
+				any_country = {
+					is_in_faction_with = FROM
+					owns_state = 699
+				}
+			}
+			MOR = {
+				transfer_state = 699
+			}
+		}
+
+		every_country = {
+			limit = {
+				has_country_flag = give_core_back_mor_461
+			}
+			add_state_core = 461
+		}
+		every_country = {
+			limit = {
+				has_country_flag = give_core_back_mor_462
+			}
+			add_state_core = 462
+		}
+		every_country = {
+			limit = {
+				has_country_flag = give_core_back_mor_290
+			}
+			add_state_core = 290
+		}
+		every_country = {
+			limit = {
+				has_country_flag = give_core_back_mor_783
+			}
+			add_state_core = 783
+		}
+		every_country = {
+			limit = {
+				has_country_flag = give_core_back_mor_699
+			}
+			add_state_core = 699
+		}
+
+		MOR = {
+			set_country_flag = liberated_by_sov
+			leave_faction = yes
+			army_experience = 25
+			add_political_power = 150
+			add_opinion_modifier = { target = SOV modifier = liberator_workers }
+			hidden_effect = {
+				set_popularities = {
+					democratic = 0
+					neutrality = 0
+					fascism = 0
+					communism = 100
+				}
+				set_politics = {
+					ruling_party = communism
+				}
+				add_timed_idea = {
+				    idea = SOV_Fight_revolution
+				    days = 182
+				}
+				set_technology = {
+				    gw_artillery = 1
+				    tech_recon = 1
+					tech_support = 1		
+					tech_engineers = 1
+				}
+				division_template = {
+					name = "Aleummal Althuwriuwn"
+					priority = 1
+					regiments = {
+						infantry = { x = 0 y = 0 }
+						infantry = { x = 0 y = 1 }
+						infantry = { x = 0 y = 2 }
+						infantry = { x = 0 y = 3 }
+						infantry = { x = 0 y = 4 }
+					}
+					support = {
+						artillery = { x = 0 y = 0 }
+						recon = { x = 0 y = 1 }
+					}
+				}
+				set_division_template_lock = {
+				    division_template = "Aleummal Althuwriuwn"
+				    is_locked = yes
+				}
+				division_template = {
+					name = "Soviet Volunteers"
+					priority = 2
+					regiments = {
+						infantry = { x = 0 y = 0 }
+						infantry = { x = 0 y = 1 }
+						infantry = { x = 0 y = 2 }
+						infantry = { x = 0 y = 3 }
+						infantry = { x = 0 y = 4 }
+						artillery_brigade = { x = 1 y = 0 }
+						artillery_brigade = { x = 1 y = 1 }
+					}
+					support = {
+						artillery = { x = 0 y = 0 }
+						recon = { x = 0 y = 1 }
+						engineer = { x = 0 y = 2 }
+					}
+				}
+				set_division_template_lock = {
+				    division_template = "Soviet Volunteers"
+				    is_locked = yes
+				}
+				capital_scope = {
+					create_unit = {
+						division = "name = \"Aleummal Althuwriuwn\" division_template = \"Aleummal Althuwriuwn\" start_experience_factor = 0.3"
+						owner = MOR
+					}
+					create_unit = {
+						division = "name = \"Aleummal Althuwriuwn\" division_template = \"Aleummal Althuwriuwn\" start_experience_factor = 0.3"
+						owner = MOR
+					}
+					create_unit = {
+						division = "name = \"Aleummal Althuwriuwn\" division_template = \"Aleummal Althuwriuwn\" start_experience_factor = 0.3"
+						owner = MOR
+					}
+					create_unit = {
+						division = "name = \"Aleummal Althuwriuwn\" division_template = \"Aleummal Althuwriuwn\" start_experience_factor = 0.3"
+						owner = MOR
+					}
+					create_unit = {
+						division = "name = \"Aleummal Althuwriuwn\" division_template = \"Aleummal Althuwriuwn\" start_experience_factor = 0.3"
+						owner = MOR
+					}
+				}
+				random_owned_controlled_state = {
+				create_unit = {
+						division = "name = \"Aleummal Althuwriuwn\" division_template = \"Aleummal Althuwriuwn\" start_experience_factor = 0.3"
+						owner = MOR
+					}
+				}
+				random_owned_controlled_state = {
+				create_unit = {
+						division = "name = \"Aleummal Althuwriuwn\" division_template = \"Aleummal Althuwriuwn\" start_experience_factor = 0.3"
+						owner = MOR
+					}
+				}
+				random_owned_controlled_state = {
+				create_unit = {
+						division = "name = \"Aleummal Althuwriuwn\" division_template = \"Aleummal Althuwriuwn\" start_experience_factor = 0.3"
+						owner = MOR
+					}
+				}
+				random_owned_controlled_state = {
+					create_unit = {
+						division = "name = \"Soviet Volunteers\" division_template = \"Soviet Volunteers\" start_experience_factor = 1"
+						owner = MOR
+					}
+				}
+				random_owned_controlled_state = {
+					create_unit = {
+						division = "name = \"Soviet Volunteers\" division_template = \"Soviet Volunteers\" start_experience_factor = 1"
+						owner = MOR
+					}
+				}
+			}
+		}
+
+		FROM = {
+			declare_war_on = {
+			    target = MOR
+			    type = annex_everything
+			}
+		}
+	}
+
+	outcome_potential = {
+		custom_effect_tooltip = SOV_uprising_morroco_tt
+		SOV = {
+			army_experience = 50
+			air_experience = 50
+			navy_experience = 50
+		}
+	}
+	
+	phases = {
+		SOV_uprising_morroco_infiltration = { base = 30 } 
+	}
+	phases = { 
+		SOV_uprising_morroco_intels = { base = 30 }
+	}
+	phases = { 
+		SOV_uprising_morroco_escape = { base = 30 }
+	}
+}
+
+SOV_liberate_cairo = { #Liberation of Cairo (the tooltip of all these operations are kinda weird, but there's no way around it, hidden_effect does not work in outcome_execute or outcome_extra_execute... It's not a big deal anyways but the player might get confused, which is why using a world event/custom tooltips is very useful here)
+	icon = GFX_operations_coup_government
+	map_icon = GFX_operations_operations_coup_government_map
+	name = SOV_liberate_cairo
+	desc = SOV_liberate_cairo_desc
+	days = 50
+
+	allowed = {
+		original_tag = SOV
+	}
+
+	visible = {
+
+		#At least 1% network in FROM (country controlling state 446)
+		network_national_coverage = {
+			target = FROM
+			value > 0
+		}
+
+		#Making sure Egypt has all its cores still here
+		446 = { is_core_of = EGY }
+		453 = { is_core_of = EGY }
+		447 = { is_core_of = EGY }
+		452 = { is_core_of = EGY }
+		457 = { is_core_of = EGY }
+		456 = { is_core_of = EGY }
+
+		#You can't target someone communist or in faction with SOV (you can't target your faction members anyways), the target also needs full control of state 446 (own + control)
+		FROM = {
+			has_full_control_of_state = 446
+			NOT = {
+				OR = {
+					has_government = communism
+					is_in_faction_with = SOV
+				}
+			}
+		}
+
+		#Completed "African Revolution" focus
+		has_completed_focus = SOV_african_revolution
+
+		#More than 0 spy (at least one)
+		num_of_operatives > 0
+
+		#Egypt doesn't exist
+		EGY = {
+			exists = no
+		}
+
+		#You are not liberating or already liberated Egypt
+		NOT = {
+			OR = {
+				has_country_flag = SOV_is_liberating_egypt
+				has_country_flag = SOV_liberated_egypt
+			}
+		}
+	}
+
+	operatives = 2
+
+	network_strength = 40
+
+	available = {
+		has_completed_focus = SOV_liberation_of_the_workers
+	}
+	
+	#The equipment needed before the operation starts (you can prepare it until you have all the equipment needed)
+	equipment = {
+		infantry_equipment = 2000
+		support_equipment = 300
+		artillery_equipment = 150
+	}
+
+	#You have to target a state, and this state can only be the core capital of Egypt (446, Cairo)
+	selection_target_state = {
+		state = 446
+		is_core_of = EGY
+	}
+
+	#Has to target FROM
+	selection_target = {
+		targets = { FROM }
+	}
+
+	#Setting a country flag when the operation starts
+	on_start = {
+		SOV = {
+			set_country_flag = SOV_is_liberating_egypt
+		}
+		FROM = {
+			activate_mission = SOV_mission_egypt
+			set_country_flag = SOV_is_liberation_target_egypt
+			country_event = { days = 1 id = russia2_revolutions.1 }
+		}
+		every_country = {
+			limit = {
+				NOT = {
+					tag = FROM
+				}
+				is_in_faction_with = FROM
+				OR = {
+					owns_state = 453
+					owns_state = 447
+					owns_state = 452
+					owns_state = 457
+					owns_state = 456
+				}
+			}
+			activate_mission = SOV_mission_egypt
+			set_country_flag = SOV_is_liberation_target_egypt
+			country_event = { days = 1 id = russia2_revolutions.1 }
+		}		
+	}
+
+	risk_chance = 0.2
+	experience = 5
+	outcome_extra_chance = 0
+
+	outcome_execute = { #No extra needed, the operation will always do the same thing, which is why we only use outcome_extra_execute and not outcome_execute
+
+		#SOV gets army, air and navy exp, gets a +100 opinion of EGY. We also clear the previous country_flag set in the on_start scope and put another one to tell the operation has been completed
+		SOV = {
+			army_experience = 50
+			air_experience = 50
+			navy_experience = 50
+			add_opinion_modifier = { target = EGY modifier = member_permanent_revolution }
+			hidden_effect = {
+				clr_country_flag = SOV_is_liberating_egypt
+				set_country_flag = SOV_liberated_egypt
+			}
+		}
+
+		#Setting country flags to give back cores later on (after releasing the countries)
+		every_country = {
+			limit = {
+				446 = { is_core_of = PREV }
+			}
+			set_country_flag = give_core_back_egy_446
+		}
+		every_country = {
+			limit = {
+				453 = { is_core_of = PREV }
+			}
+			set_country_flag = give_core_back_egy_453
+		}
+		every_country = {
+			limit = {
+				447 = { is_core_of = PREV }
+			}
+			set_country_flag = give_core_back_egy_447
+		}
+		every_country = {
+			limit = {
+				452 = { is_core_of = PREV }
+			}
+			set_country_flag = give_core_back_egy_452
+		}
+		every_country = {
+			limit = {
+				457 = { is_core_of = PREV }
+			}
+			set_country_flag = give_core_back_egy_457
+		}
+		every_country = {
+			limit = {
+				456 = { is_core_of = PREV }
+			}
+			set_country_flag = give_core_back_egy_456
+		}
+
+		#FROM is the targetted country. FROM get -50 political power and has to release Egypt if they do not exist. If a player (or the AI) released Egypt as a puppet, they will be set free. Once the operation starts, there is no way to avoid the revolution.
+		FROM = {
+			hidden_effect = {
+				country_event = { days = 1 id = russia2_generic.10 }
+			}
+			add_political_power = -50
+			hidden_effect = {
+				if = {
+					limit = {
+						EGY = {
+							exists = no
+						}
+					}
+					release = EGY
+				}
+				else_if = {
+					limit = {
+						EGY = {
+							is_subject = yes
+						}
+					}
+					set_autonomy = {
+					    target = EGY
+					    autonomy_state = autonomy_free
+					}
+				}
+			}
+		}
+
+		#All the if below are checking if someone in FROM's faction holds a core of Egypt (or at least Egypt's original states), if so, it is given back to Egypt
+		if = {
+			limit = {
+				any_country = {
+					is_in_faction_with = FROM
+					owns_state = 453
+				}
+			}
+			EGY = {
+				transfer_state = 453
+			}
+		}
+		if = {
+			limit = {
+				any_country = {
+					is_in_faction_with = FROM
+					owns_state = 447
+				}
+			}
+			EGY = {
+				transfer_state = 447
+			}
+		}
+		if = {
+			limit = {
+				any_country = {
+					is_in_faction_with = FROM
+					owns_state = 452
+				}
+			}
+			EGY = {
+				transfer_state = 452
+			}
+		}
+		if = {
+			limit = {
+				any_country = {
+					is_in_faction_with = FROM
+					owns_state = 457
+				}
+			}
+			EGY = {
+				transfer_state = 457
+			}
+		}
+		if = {
+			limit = {
+				any_country = {
+					is_in_faction_with = FROM
+					owns_state = 456
+				}
+			}
+			EGY = {
+				transfer_state = 456
+			}
+		}
+
+		#Giving back the cores with the country flags set previously
+		every_country = {
+			limit = {
+				has_country_flag = give_core_back_egy_446
+			}
+			add_state_core = 446
+		}
+		every_country = {
+			limit = {
+				has_country_flag = give_core_back_egy_453
+			}
+			add_state_core = 453
+		}
+		every_country = {
+			limit = {
+				has_country_flag = give_core_back_egy_447
+			}
+			add_state_core = 447
+		}
+		every_country = {
+			limit = {
+				has_country_flag = give_core_back_egy_452
+			}
+			add_state_core = 452
+		}
+		every_country = {
+			limit = {
+				has_country_flag = give_core_back_egy_457
+			}
+			add_state_core = 457
+		}
+		every_country = {
+			limit = {
+				has_country_flag = give_core_back_egy_456
+			}
+			add_state_core = 456
+		}
+
+		#Egypt leaves any faction it is currently in (needed if they are released as a subject when the operation already started and FROM has a faction). Egypt gets army exp, political power, +100 opinion of SOV, becomes Communist (100% popularity), gets a national spirit for 182 days (half a year, mostly to prevent the country from joining a faction too fast, and also giving them some buffs)
+		EGY = {
+			set_country_flag = liberated_by_sov
+			leave_faction = yes
+			army_experience = 25
+			add_political_power = 150
+			add_opinion_modifier = { target = SOV modifier = liberator_workers }
+			hidden_effect = {
+				set_popularities = {
+					democratic = 0
+					neutrality = 0
+					fascism = 0
+					communism = 100
+				}
+				set_politics = {
+					ruling_party = communism
+				}
+				add_timed_idea = {
+				    idea = SOV_Fight_revolution
+				    days = 182
+				}
+
+				#Here we give Egypt basic techs such as artillery 1, recon support equipment and engineers support equipment (This is NEEDED because if the country does not have a tech we use in a division template, the division will spawn without its full equipment)
+				set_technology = {
+				    gw_artillery = 1
+				    tech_recon = 1
+					tech_support = 1		
+					tech_engineers = 1
+				}
+
+				#Here we set up a template for Egypt to use, a base 10 combat width infantry template with recon and artillery support, priority 1 which is normal priority (you NEED to be in EGY scope, the country you want to spawn divisions in need the division's template)
+				division_template = {
+					name = "Aleummal Althuwriuwn"
+					priority = 1
+					regiments = {
+						infantry = { x = 0 y = 0 }
+						infantry = { x = 0 y = 1 }
+						infantry = { x = 0 y = 2 }
+						infantry = { x = 0 y = 3 }
+						infantry = { x = 0 y = 4 }
+					}
+					support = {
+						artillery = { x = 0 y = 0 }
+						recon = { x = 0 y = 1 }
+					}
+				}
+
+				#We lock the template so it cannot be modified
+				set_division_template_lock = {
+				    division_template = "Aleummal Althuwriuwn"
+				    is_locked = yes
+				}
+
+				#Another template, 16 combat width, 5/2 infantry/artillery, with recon, engineer and artillery support (these are Soviet Volunteers and Egypt will only get 2, which is why it is more powerful than the first template)
+				division_template = {
+					name = "Soviet Volunteers"
+					priority = 2
+					regiments = {
+						infantry = { x = 0 y = 0 }
+						infantry = { x = 0 y = 1 }
+						infantry = { x = 0 y = 2 }
+						infantry = { x = 0 y = 3 }
+						infantry = { x = 0 y = 4 }
+						artillery_brigade = { x = 1 y = 0 }
+						artillery_brigade = { x = 1 y = 1 }
+					}
+					support = {
+						artillery = { x = 0 y = 0 }
+						recon = { x = 0 y = 1 }
+						engineer = { x = 0 y = 2 }
+					}
+				}
+
+				#Locking the template again
+				set_division_template_lock = {
+				    division_template = "Soviet Volunteers"
+				    is_locked = yes
+				}
+
+				#We will spawn 5 divisions using the first template in Egypt's capital state (each unit starts with 0.3 exp which is regular, 0.9 ~ 1 being veteran)
+				capital_scope = {
+					create_unit = {
+						division = "name = \"Aleummal Althuwriuwn\" division_template = \"Aleummal Althuwriuwn\" start_experience_factor = 0.3"
+						owner = EGY
+					}
+					create_unit = {
+						division = "name = \"Aleummal Althuwriuwn\" division_template = \"Aleummal Althuwriuwn\" start_experience_factor = 0.3"
+						owner = EGY
+					}
+					create_unit = {
+						division = "name = \"Aleummal Althuwriuwn\" division_template = \"Aleummal Althuwriuwn\" start_experience_factor = 0.3"
+						owner = EGY
+					}
+					create_unit = {
+						division = "name = \"Aleummal Althuwriuwn\" division_template = \"Aleummal Althuwriuwn\" start_experience_factor = 0.3"
+						owner = EGY
+					}
+					create_unit = {
+						division = "name = \"Aleummal Althuwriuwn\" division_template = \"Aleummal Althuwriuwn\" start_experience_factor = 0.3"
+						owner = EGY
+					}
+				}
+
+				#Here the remaining 5 divisions below (including Soviet Volunteers template) will spawn in a random state owned and controlled by Egypt
+				random_owned_controlled_state = {
+					create_unit = {
+						division = "name = \"Aleummal Althuwriuwn\" division_template = \"Aleummal Althuwriuwn\" start_experience_factor = 0.3"
+						owner = EGY
+					}
+				}
+				random_owned_controlled_state = {
+					create_unit = {
+						division = "name = \"Aleummal Althuwriuwn\" division_template = \"Aleummal Althuwriuwn\" start_experience_factor = 0.3"
+						owner = EGY
+					}
+				}
+				random_owned_controlled_state = {
+					create_unit = {
+						division = "name = \"Aleummal Althuwriuwn\" division_template = \"Aleummal Althuwriuwn\" start_experience_factor = 0.3"
+						owner = EGY
+					}
+				}
+				random_owned_controlled_state = {
+					create_unit = {
+						division = "name = \"Soviet Volunteers\" division_template = \"Soviet Volunteers\" start_experience_factor = 1"
+						owner = EGY
+					}
+				}
+				random_owned_controlled_state = {
+					create_unit = {
+						division = "name = \"Soviet Volunteers\" division_template = \"Soviet Volunteers\" start_experience_factor = 1"
+						owner = EGY
+					}
+				}
+			}
+		}
+
+		#FROM declares war on Egypt
+		FROM = {
+			declare_war_on = {
+			    target = EGY
+			    type = annex_everything
+			}
+		}
+	}
+
+	#Tooltip displayed to the player
+	outcome_potential = {
+		custom_effect_tooltip = SOV_liberate_cairo_tt
+		SOV = {
+			army_experience = 50
+			air_experience = 50
+			navy_experience = 50
+		}
+	}
+	
+	#Phases
+	phases = {
+		SOV_liberate_cairo_infiltration = { base = 30 } 
+	}
+	phases = { 
+		SOV_liberate_cairo_intels = { base = 30 }
+	}
+	phases = { 
+		SOV_liberate_cairo_escape = { base = 30 }
+	}
+}
+
+SOV_disolve_yugoslavia = { #Disolve Yugoslavia
+	icon = GFX_operations_coup_government
+	map_icon = GFX_operations_operations_coup_government_map
+	name = SOV_disolve_yugoslavia
+	desc = SOV_disolve_yugoslavia_desc
+	days = 50
+
+	allowed = {
+		original_tag = SOV
+	}
+
+	visible = {
+		network_national_coverage = {
+			target = FROM
+			value > 0
+		}
+
+		107 = { is_core_of = SER }
+		764 = { is_core_of = SER }
+		45 = { is_core_of = SER }
+		108 = { is_core_of = SER }
+		803 = { is_core_of = SER }
+		802 = { is_core_of = SER }
+		#106 = { is_core_of = MAC }
+		105 = { is_core_of = MNT }
+		104 = { is_core_of = BOS }
+		804 = { is_core_of = BOS }
+		109 = { is_core_of = CRO }
+		103 = { is_core_of = CRO }
+		102 = { is_core_of = SLV }
+
+		if = { #For Yugoslavia to be dismantled peacefully, it needs to be controlled by an AI (killing a player's country is pretty rude and should be forbidden)
+			limit = {
+				FROM = {
+					all_owned_state = {
+						OR = {
+							is_core_of = SER
+							#is_core_of = MAC
+							is_core_of = MNT
+							is_core_of = BOS
+							is_core_of = CRO
+							is_core_of = SLV
+						}
+					}
+				}
+			}
+			FROM = {
+				is_ai = yes
+			}
+		}
+
+		FROM = {
+			has_full_control_of_state = 107
+			NOT = {
+				has_government = communism
+				is_in_faction_with = SOV
+			}
+		}
+
+		has_completed_focus = SOV_european_revolution
+
+		num_of_operatives > 0
+
+		SER = {
+			exists = no
+		}
+
+		NOT = {
+			OR = {
+				has_country_flag = SOV_is_liberating_balkan
+				has_country_flag = SOV_liberated_balkan
+			}
+		}
+	}
+
+	operatives = 2
+
+	network_strength = 40
+
+	available = {
+		has_completed_focus = SOV_liberation_of_the_workers
+	}
+	
+	equipment = {
+		infantry_equipment = 4000
+		support_equipment = 400
+		artillery_equipment = 200
+	}
+
+	selection_target_state = {
+		state = 107
+		is_core_of = SER
+	}
+
+	selection_target = {
+		targets = { FROM }
+	}
+
+	on_start = {
+		SOV = {
+			set_country_flag = SOV_is_liberating_balkan
+		}
+		FROM = {
+			activate_mission = SOV_mission_balkan
+			set_country_flag = SOV_is_liberation_target_balkan
+			country_event = { days = 1 id = russia2_revolutions.1 }
+		}
+		if = {
+			limit = {
+				NOT = {
+					FROM = {
+						all_owned_state = {
+							OR = {
+								is_core_of = SER
+								is_core_of = MAC
+								is_core_of = MNT
+								is_core_of = BOS
+								is_core_of = CRO
+								is_core_of = SLV
+							}
+						}
+					}
+				}
+			}
+			every_country = {
+				limit = {
+					NOT = {
+						tag = FROM
+					}
+					is_in_faction_with = FROM
+					OR = {
+						owns_state = 764
+						owns_state = 45
+						owns_state = 108
+						if = {
+							limit = {
+								106 = { is_core_of = MAC }
+							}
+							owns_state = 106
+						}
+						owns_state = 105
+						owns_state = 104
+						owns_state = 109
+						owns_state = 103
+						owns_state = 102
+						owns_state = 802
+						owns_state = 803
+						owns_state = 804
+					}
+				}
+				activate_mission = SOV_mission_balkan
+				set_country_flag = SOV_is_liberation_target_balkan
+				country_event = { days = 1 id = russia2_revolutions.1 }
+			}
+		}
+	}
+
+	risk_chance = 0.2
+	experience = 5
+	outcome_extra_chance = 0
+
+	outcome_execute = {
+		every_country = {
+			limit = {
+				107 = { is_core_of = PREV }
+			}
+			set_country_flag = give_core_back_ser_107
+		}
+		every_country = {
+			limit = {
+				764 = { is_core_of = PREV }
+			}
+			set_country_flag = give_core_back_ser_764
+		}
+		every_country = {
+			limit = {
+				45 = { is_core_of = PREV }
+			}
+			set_country_flag = give_core_back_ser_45
+		}
+		every_country = {
+			limit = {
+				108 = { is_core_of = PREV }
+			}
+			set_country_flag = give_core_back_ser_108
+		}
+		if = {
+			limit = {
+				106 = { is_core_of = MAC }
+			}
+			every_country = {
+				limit = {
+					106 = { is_core_of = PREV }
+				}
+				set_country_flag = give_core_back_mac_106
+			}
+		}
+		every_country = {
+			limit = {
+				105 = { is_core_of = PREV }
+			}
+			set_country_flag = give_core_back_mnt_105
+		}
+		every_country = {
+			limit = {
+				104 = { is_core_of = PREV }
+			}
+			set_country_flag = give_core_back_bos_104
+		}
+		every_country = {
+			limit = {
+				109 = { is_core_of = PREV }
+			}
+			set_country_flag = give_core_back_cro_109
+		}
+		every_country = {
+			limit = {
+				103 = { is_core_of = PREV }
+			}
+			set_country_flag = give_core_back_cro_103
+		}
+		every_country = {
+			limit = {
+				102 = { is_core_of = PREV }
+			}
+			set_country_flag = give_core_back_slv_102
+		}
+		every_country = {
+			limit = {
+				802 = { is_core_of = PREV }
+			}
+			set_country_flag = give_core_back_ser_802
+		}
+		every_country = {
+			limit = {
+				803 = { is_core_of = PREV }
+			}
+			set_country_flag = give_core_back_ser_803
+		}
+		every_country = {
+			limit = {
+				804 = { is_core_of = PREV }
+			}
+			set_country_flag = give_core_back_bos_804
+		}
+
+		if = { #If Yugoslavia only owns its starting cores, they have to be dismantled peacefully, for some reasons the game does not delete their division even when they do no exist anymore
+			limit = {
+				FROM = {
+					all_owned_state = {
+						OR = {
+							is_core_of = SER
+							is_core_of = MAC
+							is_core_of = MNT
+							is_core_of = BOS
+							is_core_of = CRO
+							is_core_of = SLV
+						}
+					}
+				}
+			}
+			SOV = {
+				army_experience = 50
+				air_experience = 50
+				navy_experience = 50
+				add_opinion_modifier = { target = SER modifier = member_permanent_revolution }
+				hidden_effect = {
+					clr_country_flag = SOV_is_liberating_balkan
+					set_country_flag = SOV_liberated_balkan
+				}
+			}
+			if = {
+				limit = {
+					FROM = {
+						has_army_size = {
+						    size > 0
+						}
+					}
+				}
+				SER = {
+					hidden_effect = {
+						country_event = { days = 1 id = russia2_generic.12 }
+					}
+					annex_country = {
+					    target = FROM
+					    transfer_troops = no
+					}
+					release = FROM
+					add_state_core = 107
+					add_state_core = 108
+					add_state_core = 764
+					add_state_core = 45
+					add_state_core = 802
+					add_state_core = 803
+				}
+			}
+			FROM = {
+				add_political_power = -50
+				hidden_effect = {
+					if = {
+						limit = {
+							SER = {
+								exists = no
+							}
+						}
+						release = SER
+					}
+					else_if = {
+						limit = {
+							SER = {
+								is_subject = yes
+							}
+						}
+						set_autonomy = {
+						    target = SER
+						    autonomy_state = autonomy_free
+						}
+					}
+					if = {
+						limit = {
+							any_country = {
+								is_in_faction_with = FROM
+								owns_state = 764
+							}
+						}
+						SER = {
+							transfer_state = 764
+						}
+					}
+					if = {
+						limit = {
+							any_country = {
+								is_in_faction_with = FROM
+								owns_state = 45
+							}
+						}
+						SER = {
+							transfer_state = 45
+						}
+					}
+					if = {
+						limit = {
+							any_country = {
+								is_in_faction_with = FROM
+								owns_state = 108
+							}
+						}
+						SER = {
+							transfer_state = 108
+						}
+					}
+					if = {
+						limit = {
+							any_country = {
+								is_in_faction_with = FROM
+								owns_state = 802
+							}
+						}
+						SER = {
+							transfer_state = 802
+						}
+					}
+					if = {
+						limit = {
+							any_country = {
+								is_in_faction_with = FROM
+								owns_state = 803
+							}
+						}
+						SER = {
+							transfer_state = 803
+						}
+					}
+				}
+			}
+			SER = {
+				set_country_flag = liberated_by_sov
+				leave_faction = yes
+				army_experience = 25
+				add_political_power = 150
+				add_opinion_modifier = { target = SOV modifier = liberator_workers }
+				hidden_effect = {
+					set_popularities = {
+						democratic = 0
+						neutrality = 0
+						fascism = 0
+						communism = 100
+					}
+					set_politics = {
+						ruling_party = communism
+					}
+					add_timed_idea = {
+					    idea = SOV_Fight_revolution
+					    days = 182
+					}
+					create_faction = balkan_union
+					set_technology = {
+					    gw_artillery = 1
+					    tech_recon = 1
+						tech_support = 1		
+						tech_engineers = 1
+					}
+					division_template = {
+						name = "Revolucionarni Radnici"
+						priority = 1
+						regiments = {
+							infantry = { x = 0 y = 0 }
+							infantry = { x = 0 y = 1 }
+							infantry = { x = 0 y = 2 }
+							infantry = { x = 0 y = 3 }
+							infantry = { x = 0 y = 4 }
+						}
+						support = {
+							artillery = { x = 0 y = 0 }
+							recon = { x = 0 y = 1 }
+						}
+					}
+					set_division_template_lock = {
+					    division_template = "Revolucionarni Radnici"
+					    is_locked = yes
+					}
+					division_template = {
+						name = "Soviet Volunteers"
+						priority = 2
+						regiments = {
+							infantry = { x = 0 y = 0 }
+							infantry = { x = 0 y = 1 }
+							infantry = { x = 0 y = 2 }
+							infantry = { x = 0 y = 3 }
+							infantry = { x = 0 y = 4 }
+							artillery_brigade = { x = 1 y = 0 }
+							artillery_brigade = { x = 1 y = 1 }
+						}
+						support = {
+							artillery = { x = 0 y = 0 }
+							recon = { x = 0 y = 1 }
+							engineer = { x = 0 y = 2 }
+						}
+					}
+					set_division_template_lock = {
+					    division_template = "Soviet Volunteers"
+					    is_locked = yes
+					}
+					capital_scope = {
+						create_unit = {
+							division = "name = \"Revolucionarni Radnici\" division_template = \"Revolucionarni Radnici\" start_experience_factor = 0.3"
+							owner = SER
+						}
+						create_unit = {
+							division = "name = \"Revolucionarni Radnici\" division_template = \"Revolucionarni Radnici\" start_experience_factor = 0.3"
+							owner = SER
+						}
+						create_unit = {
+							division = "name = \"Revolucionarni Radnici\" division_template = \"Revolucionarni Radnici\" start_experience_factor = 0.3"
+							owner = SER
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"Revolucionarni Radnici\" division_template = \"Revolucionarni Radnici\" start_experience_factor = 0.3"
+							owner = SER
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"Soviet Volunteers\" division_template = \"Soviet Volunteers\" start_experience_factor = 1"
+							owner = SER
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"Soviet Volunteers\" division_template = \"Soviet Volunteers\" start_experience_factor = 1"
+							owner = SER
+						}
+					}
+				}
+			}
+
+			if = {
+				limit = {
+					106 = { is_core_of = MAC }
+					OR = {
+						FROM = {
+							owns_state = 106
+						}
+						any_country = {
+							is_in_faction_with = FROM
+							owns_state = 106
+						}
+						MAC = {
+							exists = yes
+							OR = {
+								is_in_faction_with = FROM
+								is_in_faction = no
+							}
+						}
+					}
+				}
+				SOV = {
+					add_opinion_modifier = { target = MAC modifier = member_permanent_revolution }
+				}
+				if = {
+					limit = {
+						MAC = {
+							OR = {
+								exists = no
+								is_subject = yes
+							}
+						}
+					}
+					every_country = {
+						limit = {
+							NOT = {
+								OR = {
+									is_in_faction_with = SOV
+									TAG = SOV
+								}
+							}
+							OR = {
+								is_in_faction_with = FROM
+								TAG = FROM
+							}
+						}
+						if = {
+							limit = {
+								MAC = {
+									exists = no
+								}
+							}
+							release = MAC
+						}
+						else_if = {
+							limit = {
+								MAC = {
+									is_subject = yes
+								}
+							}
+							set_autonomy = {
+							    target = MAC
+							    autonomy_state = autonomy_free
+							}
+						}
+					}
+				}
+				MAC = {
+					set_country_flag = liberated_by_sov
+					leave_faction = yes
+					army_experience = 25
+					add_political_power = 150
+					add_opinion_modifier = { target = SOV modifier = liberator_workers }
+					hidden_effect = {
+						set_popularities = {
+							democratic = 0
+							neutrality = 0
+							fascism = 0
+							communism = 100
+						}
+						set_politics = {
+							ruling_party = communism
+						}
+						add_timed_idea = {
+						    idea = SOV_Fight_revolution
+						    days = 182
+						}
+						SER = {
+							add_to_faction = MAC
+						}
+						set_technology = {
+						    gw_artillery = 1
+						    tech_recon = 1
+							tech_support = 1
+							tech_engineers = 1
+						}
+						division_template = {
+							name = "Revolucionerni Rabotnici"
+							priority = 1
+							regiments = {
+								infantry = { x = 0 y = 0 }
+								infantry = { x = 0 y = 1 }
+								infantry = { x = 0 y = 2 }
+								infantry = { x = 0 y = 3 }
+								infantry = { x = 0 y = 4 }					
+							}
+							support = {
+								artillery = { x = 0 y = 0 }
+								recon = { x = 0 y = 1 }
+							}
+						}
+						set_division_template_lock = {
+						    division_template = "Revolucionerni Rabotnici"
+						    is_locked = yes
+						}
+						division_template = {
+							name = "Soviet Volunteers"
+							priority = 2
+							regiments = {
+								infantry = { x = 0 y = 0 }
+								infantry = { x = 0 y = 1 }
+								infantry = { x = 0 y = 2 }
+								infantry = { x = 0 y = 3 }
+								infantry = { x = 0 y = 4 }
+								artillery_brigade = { x = 1 y = 0 }
+								artillery_brigade = { x = 1 y = 1 }
+							}
+							support = {
+								artillery = { x = 0 y = 0 }
+								recon = { x = 0 y = 1 }
+								engineer = { x = 0 y = 2 }
+							}
+						}
+						set_division_template_lock = {
+						    division_template = "Soviet Volunteers"
+						    is_locked = yes
+						}
+						capital_scope = {
+							create_unit = {
+								division = "name = \"Revolucionerni Rabotnici\" division_template = \"Revolucionerni Rabotnici\" start_experience_factor = 0.3"
+								owner = MAC
+							}
+							create_unit = {
+								division = "name = \"Revolucionerni Rabotnici\" division_template = \"Revolucionerni Rabotnici\" start_experience_factor = 0.3"
+								owner = MAC
+							}
+							create_unit = {
+								division = "name = \"Revolucionerni Rabotnici\" division_template = \"Revolucionerni Rabotnici\" start_experience_factor = 0.3"
+								owner = MAC
+							}
+							create_unit = {
+								division = "name = \"Soviet Volunteers\" division_template = \"Soviet Volunteers\" start_experience_factor = 1"
+								owner = MAC
+							}
+						}
+					}
+				}
+			}
+
+			if = {
+				limit = {
+					OR = {
+						FROM = {
+							owns_state = 105
+						}
+						any_country = {
+							is_in_faction_with = FROM
+							owns_state = 105
+						}
+						MNT = {
+							exists = yes
+							OR = {
+								is_in_faction_with = FROM
+								is_in_faction = no
+							}
+						}
+					}
+				}
+				SOV = {
+					add_opinion_modifier = { target = MNT modifier = member_permanent_revolution }
+				}
+				if = {
+					limit = {
+						MNT = {
+							OR = {
+								exists = no
+								is_subject = yes
+							}
+						}
+					}
+					every_country = {
+						limit = {
+							NOT = {
+								OR = {
+									is_in_faction_with = SOV
+									TAG = SOV
+								}
+							}
+							OR = {
+								is_in_faction_with = FROM
+								TAG = FROM
+							}
+						}
+						if = {
+							limit = {
+								MNT = {
+									exists = no
+								}
+							}
+							release = MNT
+						}
+						else_if = {
+							limit = {
+								MNT = {
+									is_subject = yes
+								}
+							}
+							set_autonomy = {
+							    target = MNT
+							    autonomy_state = autonomy_free
+							}
+						}
+					}
+				}
+				MNT = {
+					set_country_flag = liberated_by_sov
+					leave_faction = yes
+					army_experience = 25
+					add_political_power = 150
+					add_opinion_modifier = { target = SOV modifier = liberator_workers }
+					hidden_effect = {
+						set_popularities = {
+							democratic = 0
+							neutrality = 0
+							fascism = 0
+							communism = 100
+						}
+						set_politics = {
+							ruling_party = communism
+						}
+						add_timed_idea = {
+						    idea = SOV_Fight_revolution
+						    days = 182
+						}
+						SER = {
+							add_to_faction = MNT
+						}
+						set_technology = {
+						    gw_artillery = 1
+						    tech_recon = 1
+							tech_support = 1
+							tech_engineers = 1
+						}
+						division_template = {
+							name = "Revolutionary Workers"
+							priority = 1
+							regiments = {
+								infantry = { x = 0 y = 0 }
+								infantry = { x = 0 y = 1 }
+								infantry = { x = 0 y = 2 }
+								infantry = { x = 0 y = 3 }
+								infantry = { x = 0 y = 4 }					
+							}
+							support = {
+								artillery = { x = 0 y = 0 }
+								recon = { x = 0 y = 1 }
+							}
+						}
+						set_division_template_lock = {
+						    division_template = "Revolutionary Workers"
+						    is_locked = yes
+						}
+						division_template = {
+							name = "Soviet Volunteers"
+							priority = 2
+							regiments = {
+								infantry = { x = 0 y = 0 }
+								infantry = { x = 0 y = 1 }
+								infantry = { x = 0 y = 2 }
+								infantry = { x = 0 y = 3 }
+								infantry = { x = 0 y = 4 }
+								artillery_brigade = { x = 1 y = 0 }
+								artillery_brigade = { x = 1 y = 1 }
+							}
+							support = {
+								artillery = { x = 0 y = 0 }
+								recon = { x = 0 y = 1 }
+								engineer = { x = 0 y = 2 }
+							}
+						}
+						set_division_template_lock = {
+						    division_template = "Soviet Volunteers"
+						    is_locked = yes
+						}
+						capital_scope = {
+							create_unit = {
+								division = "name = \"Revolutionary Workers\" division_template = \"Revolutionary Workers\" start_experience_factor = 0.3"
+								owner = MNT
+							}
+							create_unit = {
+								division = "name = \"Revolutionary Workers\" division_template = \"Revolutionary Workers\" start_experience_factor = 0.3"
+								owner = MNT
+							}
+							create_unit = {
+								division = "name = \"Revolutionary Workers\" division_template = \"Revolutionary Workers\" start_experience_factor = 0.3"
+								owner = MNT
+							}
+							create_unit = {
+								division = "name = \"Soviet Volunteers\" division_template = \"Soviet Volunteers\" start_experience_factor = 1"
+								owner = MNT
+							}
+						}
+					}
+				}
+			}
+
+			if = {
+				limit = {
+					OR = {
+						FROM = {
+							owns_state = 104
+						}
+						any_country = {
+							is_in_faction_with = FROM
+							owns_state = 104
+						}
+						BOS = {
+							exists = yes
+							OR = {
+								is_in_faction_with = FROM
+								is_in_faction = no
+							}
+						}
+					}
+				}
+				SOV = {
+					add_opinion_modifier = { target = BOS modifier = member_permanent_revolution }
+				}
+				if = {
+					limit = {
+						BOS = {
+							OR = {
+								exists = no
+								is_subject = yes
+							}
+						}
+					}
+					every_country = {
+						limit = {
+							NOT = {
+								OR = {
+									is_in_faction_with = SOV
+									TAG = SOV
+								}
+							}
+							OR = {
+								is_in_faction_with = FROM
+								TAG = FROM
+							}
+						}
+						if = {
+							limit = {
+								BOS = {
+									exists = no
+								}
+							}
+							release = BOS
+						}
+						else_if = {
+							limit = {
+								BOS = {
+									is_subject = yes
+								}
+							}
+							set_autonomy = {
+							    target = BOS
+							    autonomy_state = autonomy_free
+							}
+						}
+					}
+				}
+				if = {
+					limit = {
+						any_country = {
+							is_in_faction_with = FROM
+							owns_state = 804
+						}
+					}
+					CRO = {
+						transfer_state = 804
+					}
+				}
+				BOS = {
+					set_country_flag = liberated_by_sov
+					leave_faction = yes
+					army_experience = 25
+					add_political_power = 150
+					add_opinion_modifier = { target = SOV modifier = liberator_workers }
+					hidden_effect = {
+						set_popularities = {
+							democratic = 0
+							neutrality = 0
+							fascism = 0
+							communism = 100
+						}
+						set_politics = {
+							ruling_party = communism
+						}
+						add_timed_idea = {
+						    idea = SOV_Fight_revolution
+						    days = 182
+						}
+						SER = {
+							add_to_faction = BOS
+						}
+						set_technology = {
+						    gw_artillery = 1
+						    tech_recon = 1
+							tech_support = 1
+							tech_engineers = 1
+						}
+						division_template = {
+							name = "Revolucionarni Radnici"
+							priority = 1
+							regiments = {
+								infantry = { x = 0 y = 0 }
+								infantry = { x = 0 y = 1 }
+								infantry = { x = 0 y = 2 }
+								infantry = { x = 0 y = 3 }
+								infantry = { x = 0 y = 4 }					
+							}
+							support = {
+								artillery = { x = 0 y = 0 }
+								recon = { x = 0 y = 1 }
+							}
+						}
+						set_division_template_lock = {
+						    division_template = "Revolucionarni Radnici"
+						    is_locked = yes
+						}
+						division_template = {
+							name = "Soviet Volunteers"
+							priority = 2
+							regiments = {
+								infantry = { x = 0 y = 0 }
+								infantry = { x = 0 y = 1 }
+								infantry = { x = 0 y = 2 }
+								infantry = { x = 0 y = 3 }
+								infantry = { x = 0 y = 4 }
+								artillery_brigade = { x = 1 y = 0 }
+								artillery_brigade = { x = 1 y = 1 }
+							}
+							support = {
+								artillery = { x = 0 y = 0 }
+								recon = { x = 0 y = 1 }
+								engineer = { x = 0 y = 2 }
+							}
+						}
+						set_division_template_lock = {
+						    division_template = "Soviet Volunteers"
+						    is_locked = yes
+						}
+						capital_scope = {
+							create_unit = {
+								division = "name = \"Revolucionarni Radnici\" division_template = \"Revolucionarni Radnici\" start_experience_factor = 0.3"
+								owner = BOS
+							}
+							create_unit = {
+								division = "name = \"Revolucionarni Radnici\" division_template = \"Revolucionarni Radnici\" start_experience_factor = 0.3"
+								owner = BOS
+							}
+							create_unit = {
+								division = "name = \"Revolucionarni Radnici\" division_template = \"Revolucionarni Radnici\" start_experience_factor = 0.3"
+								owner = BOS
+							}
+							create_unit = {
+								division = "name = \"Soviet Volunteers\" division_template = \"Soviet Volunteers\" start_experience_factor = 1"
+								owner = BOS
+							}
+						}
+					}
+				}
+			}
+
+			if = {
+				limit = {
+					OR = {
+						FROM = {
+							owns_state = 102
+						}
+						any_country = {
+							is_in_faction_with = FROM
+							owns_state = 102
+						}
+						SLV = {
+							exists = yes
+							OR = {
+								is_in_faction_with = FROM
+								is_in_faction = no
+							}
+						}
+					}
+				}
+				SOV = {
+					add_opinion_modifier = { target = SLV modifier = member_permanent_revolution }
+				}
+				if = {
+					limit = {
+						SLV = {
+							OR = {
+								exists = no
+								is_subject = yes
+							}
+						}
+					}
+					every_country = {
+						limit = {
+							NOT = {
+								OR = {
+									is_in_faction_with = SOV
+									TAG = SOV
+								}
+							}
+							OR = {
+								is_in_faction_with = FROM
+								TAG = FROM
+							}
+						}
+						if = {
+							limit = {
+								SLV = {
+									exists = no
+								}
+							}
+							release = SLV
+						}
+						else_if = {
+							limit = {
+								SLV = {
+									is_subject = yes
+								}
+							}
+							set_autonomy = {
+							    target = SLV
+							    autonomy_state = autonomy_free
+							}
+						}
+					}
+				}
+				SLV = {
+					set_country_flag = liberated_by_sov
+					leave_faction = yes
+					army_experience = 25
+					add_political_power = 150
+					add_opinion_modifier = { target = SOV modifier = liberator_workers }
+					hidden_effect = {
+						set_popularities = {
+							democratic = 0
+							neutrality = 0
+							fascism = 0
+							communism = 100
+						}
+						set_politics = {
+							ruling_party = communism
+						}
+						SER = {
+							add_to_faction = SLV
+						}
+						set_technology = {
+						    gw_artillery = 1
+						    tech_recon = 1
+							tech_support = 1
+							tech_engineers = 1
+						}
+						division_template = {
+							name = "Revolucionarni Delavci"
+							priority = 1
+							regiments = {
+								infantry = { x = 0 y = 0 }
+								infantry = { x = 0 y = 1 }
+								infantry = { x = 0 y = 2 }
+								infantry = { x = 0 y = 3 }
+								infantry = { x = 0 y = 4 }					
+							}
+							support = {
+								artillery = { x = 0 y = 0 }
+								recon = { x = 0 y = 1 }
+							}
+						}
+						set_division_template_lock = {
+						    division_template = "Revolucionarni Delavci"
+						    is_locked = yes
+						}
+						division_template = {
+							name = "Soviet Volunteers"
+							priority = 2
+							regiments = {
+								infantry = { x = 0 y = 0 }
+								infantry = { x = 0 y = 1 }
+								infantry = { x = 0 y = 2 }
+								infantry = { x = 0 y = 3 }
+								infantry = { x = 0 y = 4 }
+								artillery_brigade = { x = 1 y = 0 }
+								artillery_brigade = { x = 1 y = 1 }
+							}
+							support = {
+								artillery = { x = 0 y = 0 }
+								recon = { x = 0 y = 1 }
+								engineer = { x = 0 y = 2 }
+							}
+						}
+						set_division_template_lock = {
+						    division_template = "Soviet Volunteers"
+						    is_locked = yes
+						}
+						capital_scope = {
+							create_unit = {
+								division = "name = \"Revolucionarni Delavci\" division_template = \"Revolucionarni Delavci\" start_experience_factor = 0.3"
+								owner = SLV
+							}
+							create_unit = {
+								division = "name = \"Revolucionarni Delavci\" division_template = \"Revolucionarni Delavci\" start_experience_factor = 0.3"
+								owner = SLV
+							}
+							create_unit = {
+								division = "name = \"Revolucionarni Delavci\" division_template = \"Revolucionarni Delavci\" start_experience_factor = 0.3"
+								owner = SLV
+							}
+							create_unit = {
+								division = "name = \"Soviet Volunteers\" division_template = \"Soviet Volunteers\" start_experience_factor = 1"
+								owner = SLV
+							}
+						}
+					}
+				}
+			}
+
+			if = {
+				limit = {
+					OR = {
+						FROM = {
+							owns_state = 109
+						}
+						any_country = {
+							is_in_faction_with = FROM
+							owns_state = 109
+						}
+						CRO = {
+							exists = yes
+							OR = {
+								is_in_faction_with = FROM
+								is_in_faction = no
+							}
+						}
+					}
+				}
+				SOV = {
+					add_opinion_modifier = { target = CRO modifier = member_permanent_revolution }
+				}
+				if = {
+					limit = {
+						CRO = {
+							OR = {
+								exists = no
+								is_subject = yes
+							}
+						}
+					}
+					every_country = {
+						limit = {
+							NOT = {
+								OR = {
+									is_in_faction_with = SOV
+									TAG = SOV
+								}
+							}
+							OR = {
+								is_in_faction_with = FROM
+								TAG = FROM
+							}
+						}
+						if = {
+							limit = {
+								CRO = {
+									exists = no
+								}
+							}
+							release = CRO
+						}
+						else_if = {
+							limit = {
+								CRO = {
+									is_subject = yes
+								}
+							}
+							set_autonomy = {
+							    target = CRO
+							    autonomy_state = autonomy_free
+							}
+						}
+					}
+				}
+				if = {
+					limit = {
+						any_country = {
+							is_in_faction_with = FROM
+							owns_state = 103
+						}
+					}
+					CRO = {
+						transfer_state = 103
+					}
+				}
+				CRO = {
+					set_country_flag = liberated_by_sov
+					leave_faction = yes
+					army_experience = 25
+					add_political_power = 150
+					add_opinion_modifier = { target = SOV modifier = liberator_workers }
+					hidden_effect = {
+						set_popularities = {
+							democratic = 0
+							neutrality = 0
+							fascism = 0
+							communism = 100
+						}
+						set_politics = {
+							ruling_party = communism
+						}
+						SER = {
+							add_to_faction = CRO
+						}
+						set_technology = {
+						    gw_artillery = 1
+						    tech_recon = 1
+							tech_support = 1
+							tech_engineers = 1
+						}
+						division_template = {
+							name = "Revolucionarni Radnici"
+							priority = 1
+							regiments = {
+								infantry = { x = 0 y = 0 }
+								infantry = { x = 0 y = 1 }
+								infantry = { x = 0 y = 2 }
+								infantry = { x = 0 y = 3 }
+								infantry = { x = 0 y = 4 }					
+							}
+							support = {
+								artillery = { x = 0 y = 0 }
+								recon = { x = 0 y = 1 }
+							}
+						}
+						set_division_template_lock = {
+						    division_template = "Revolucionarni Radnici"
+						    is_locked = yes
+						}
+						division_template = {
+							name = "Soviet Volunteers"
+							priority = 2
+							regiments = {
+								infantry = { x = 0 y = 0 }
+								infantry = { x = 0 y = 1 }
+								infantry = { x = 0 y = 2 }
+								infantry = { x = 0 y = 3 }
+								infantry = { x = 0 y = 4 }
+								artillery_brigade = { x = 1 y = 0 }
+								artillery_brigade = { x = 1 y = 1 }
+							}
+							support = {
+								artillery = { x = 0 y = 0 }
+								recon = { x = 0 y = 1 }
+								engineer = { x = 0 y = 2 }
+							}
+						}
+						set_division_template_lock = {
+						    division_template = "Soviet Volunteers"
+						    is_locked = yes
+						}
+						capital_scope = {
+							create_unit = {
+								division = "name = \"Revolucionarni Radnici\" division_template = \"Revolucionarni Radnici\" start_experience_factor = 0.3"
+								owner = CRO
+							}
+							create_unit = {
+								division = "name = \"Revolucionarni Radnici\" division_template = \"Revolucionarni Radnici\" start_experience_factor = 0.3"
+								owner = CRO
+							}
+							create_unit = {
+								division = "name = \"Revolucionarni Radnici\" division_template = \"Revolucionarni Radnici\" start_experience_factor = 0.3"
+								owner = CRO
+							}
+						}
+						random_owned_controlled_state = {
+							create_unit = {
+								division = "name = \"Revolucionarni Radnici\" division_template = \"Revolucionarni Radnici\" start_experience_factor = 0.3"
+								owner = CRO
+							}
+						}
+						random_owned_controlled_state = {
+							create_unit = {
+								division = "name = \"Soviet Volunteers\" division_template = \"Soviet Volunteers\" start_experience_factor = 1"
+								owner = CRO
+							}
+						}
+					}
+				}
+			}
+		}
+		else = {
+			SOV = {
+				army_experience = 50
+				air_experience = 50
+				navy_experience = 50
+				add_opinion_modifier = { target = SER modifier = member_permanent_revolution }
+				hidden_effect = {
+					clr_country_flag = SOV_is_liberating_balkan
+					set_country_flag = SOV_liberated_balkan
+				}
+			}
+			FROM = {
+				hidden_effect = {
+					country_event = { days = 1 id = russia2_generic.12 }
+				}
+				add_political_power = -50
+				hidden_effect = {
+					if = {
+						limit = {
+							SER = {
+								exists = no
+							}
+						}
+						release = SER
+					}
+					else_if = {
+						limit = {
+							SER = {
+								is_subject = yes
+							}
+						}
+						set_autonomy = {
+						    target = SER
+						    autonomy_state = autonomy_free
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					any_country = {
+						is_in_faction_with = FROM
+						owns_state = 764
+					}
+				}
+				SER = {
+					transfer_state = 764
+				}
+			}
+			if = {
+				limit = {
+					any_country = {
+						is_in_faction_with = FROM
+						owns_state = 45
+					}
+				}
+				SER = {
+					transfer_state = 45
+				}
+			}
+			if = {
+				limit = {
+					any_country = {
+						is_in_faction_with = FROM
+						owns_state = 108
+					}
+				}
+				SER = {
+					transfer_state = 108
+				}
+			}
+			if = {
+				limit = {
+					any_country = {
+						is_in_faction_with = FROM
+						owns_state = 802
+					}
+				}
+				SER = {
+					transfer_state = 802
+				}
+			}
+			if = {
+				limit = {
+					any_country = {
+						is_in_faction_with = FROM
+						owns_state = 803
+					}
+				}
+				SER = {
+					transfer_state = 803
+				}
+			}
+			SER = {
+				set_country_flag = liberated_by_sov
+				leave_faction = yes
+				army_experience = 25
+				add_political_power = 150
+				add_opinion_modifier = { target = SOV modifier = liberator_workers }
+				hidden_effect = {
+					set_popularities = {
+						democratic = 0
+						neutrality = 0
+						fascism = 0
+						communism = 100
+					}
+					set_politics = {
+						ruling_party = communism
+					}
+					add_timed_idea = {
+					    idea = SOV_Fight_revolution
+					    days = 182
+					}
+					create_faction = balkan_union
+					set_technology = {
+					    gw_artillery = 1
+					    tech_recon = 1
+						tech_support = 1		
+						tech_engineers = 1
+					}
+					division_template = {
+						name = "Revolucionarni Radnici"
+						priority = 1
+						regiments = {
+							infantry = { x = 0 y = 0 }
+							infantry = { x = 0 y = 1 }
+							infantry = { x = 0 y = 2 }
+							infantry = { x = 0 y = 3 }
+							infantry = { x = 0 y = 4 }
+						}
+						support = {
+							artillery = { x = 0 y = 0 }
+							recon = { x = 0 y = 1 }
+						}
+					}
+					set_division_template_lock = {
+					    division_template = "Revolucionarni Radnici"
+					    is_locked = yes
+					}
+					division_template = {
+						name = "Soviet Volunteers"
+						priority = 2
+						regiments = {
+							infantry = { x = 0 y = 0 }
+							infantry = { x = 0 y = 1 }
+							infantry = { x = 0 y = 2 }
+							infantry = { x = 0 y = 3 }
+							infantry = { x = 0 y = 4 }
+							artillery_brigade = { x = 1 y = 0 }
+							artillery_brigade = { x = 1 y = 1 }
+						}
+						support = {
+							artillery = { x = 0 y = 0 }
+							recon = { x = 0 y = 1 }
+							engineer = { x = 0 y = 2 }
+						}
+					}
+					set_division_template_lock = {
+					    division_template = "Soviet Volunteers"
+					    is_locked = yes
+					}
+					capital_scope = {
+						create_unit = {
+							division = "name = \"Revolucionarni Radnici\" division_template = \"Revolucionarni Radnici\" start_experience_factor = 0.3"
+							owner = SER
+						}
+						create_unit = {
+							division = "name = \"Revolucionarni Radnici\" division_template = \"Revolucionarni Radnici\" start_experience_factor = 0.3"
+							owner = SER
+						}
+						create_unit = {
+							division = "name = \"Revolucionarni Radnici\" division_template = \"Revolucionarni Radnici\" start_experience_factor = 0.3"
+							owner = SER
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"Revolucionarni Radnici\" division_template = \"Revolucionarni Radnici\" start_experience_factor = 0.3"
+							owner = SER
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"Soviet Volunteers\" division_template = \"Soviet Volunteers\" start_experience_factor = 1"
+							owner = SER
+						}
+					}
+					random_owned_controlled_state = {
+						create_unit = {
+							division = "name = \"Soviet Volunteers\" division_template = \"Soviet Volunteers\" start_experience_factor = 1"
+							owner = SER
+						}
+					}
+				}
+			}
+
+			FROM = {
+				declare_war_on = {
+				    target = SER
+				    type = annex_everything
+				}
+			}
+
+			if = {
+				limit = {
+					106 = { is_core_of = MAC }
+					OR = {
+						FROM = {
+							owns_state = 106
+						}
+						any_country = {
+							is_in_faction_with = FROM
+							owns_state = 106
+						}
+						MAC = {
+							exists = yes
+							OR = {
+								is_in_faction_with = FROM
+								is_in_faction = no
+							}
+						}
+					}
+				}
+				SOV = {
+					add_opinion_modifier = { target = MAC modifier = member_permanent_revolution }
+				}
+				if = {
+					limit = {
+						MAC = {
+							OR = {
+								exists = no
+								is_subject = yes
+							}
+						}
+					}
+					every_country = {
+						limit = {
+							NOT = {
+								OR = {
+									is_in_faction_with = SOV
+									TAG = SOV
+								}
+							}
+							OR = {
+								is_in_faction_with = FROM
+								TAG = FROM
+							}
+						}
+						if = {
+							limit = {
+								MAC = {
+									exists = no
+								}
+							}
+							release = MAC
+							declare_war_on = {
+							    target = MAC
+							    type = annex_everything
+							}
+						}
+						else_if = {
+							limit = {
+								MAC = {
+									is_subject = yes
+								}
+							}
+							set_autonomy = {
+							    target = MAC
+							    autonomy_state = autonomy_free
+							}
+							declare_war_on = {
+							    target = MAC
+							    type = annex_everything
+							}
+						}
+					}
+				}
+				MAC = {
+					set_country_flag = liberated_by_sov
+					leave_faction = yes
+					army_experience = 25
+					add_political_power = 150
+					add_opinion_modifier = { target = SOV modifier = liberator_workers }
+					hidden_effect = {
+						set_popularities = {
+							democratic = 0
+							neutrality = 0
+							fascism = 0
+							communism = 100
+						}
+						set_politics = {
+							ruling_party = communism
+						}
+						add_timed_idea = {
+						    idea = SOV_Fight_revolution
+						    days = 182
+						}
+						SER = {
+							add_to_faction = MAC
+						}
+						set_technology = {
+						    gw_artillery = 1
+						    tech_recon = 1
+							tech_support = 1
+							tech_engineers = 1
+						}
+						division_template = {
+							name = "Revolucionerni Rabotnici"
+							priority = 1
+							regiments = {
+								infantry = { x = 0 y = 0 }
+								infantry = { x = 0 y = 1 }
+								infantry = { x = 0 y = 2 }
+								infantry = { x = 0 y = 3 }
+								infantry = { x = 0 y = 4 }					
+							}
+							support = {
+								artillery = { x = 0 y = 0 }
+								recon = { x = 0 y = 1 }
+							}
+						}
+						set_division_template_lock = {
+						    division_template = "Revolucionerni Rabotnici"
+						    is_locked = yes
+						}
+						division_template = {
+							name = "Soviet Volunteers"
+							priority = 2
+							regiments = {
+								infantry = { x = 0 y = 0 }
+								infantry = { x = 0 y = 1 }
+								infantry = { x = 0 y = 2 }
+								infantry = { x = 0 y = 3 }
+								infantry = { x = 0 y = 4 }
+								artillery_brigade = { x = 1 y = 0 }
+								artillery_brigade = { x = 1 y = 1 }
+							}
+							support = {
+								artillery = { x = 0 y = 0 }
+								recon = { x = 0 y = 1 }
+								engineer = { x = 0 y = 2 }
+							}
+						}
+						set_division_template_lock = {
+						    division_template = "Soviet Volunteers"
+						    is_locked = yes
+						}
+						capital_scope = {
+							create_unit = {
+								division = "name = \"Revolucionerni Rabotnici\" division_template = \"Revolucionerni Rabotnici\" start_experience_factor = 0.3"
+								owner = MAC
+							}
+							create_unit = {
+								division = "name = \"Revolucionerni Rabotnici\" division_template = \"Revolucionerni Rabotnici\" start_experience_factor = 0.3"
+								owner = MAC
+							}
+							create_unit = {
+								division = "name = \"Revolucionerni Rabotnici\" division_template = \"Revolucionerni Rabotnici\" start_experience_factor = 0.3"
+								owner = MAC
+							}
+							create_unit = {
+								division = "name = \"Soviet Volunteers\" division_template = \"Soviet Volunteers\" start_experience_factor = 1"
+								owner = MAC
+							}
+						}
+					}
+				}
+			}
+
+			if = {
+				limit = {
+					OR = {
+						FROM = {
+							owns_state = 105
+						}
+						any_country = {
+							is_in_faction_with = FROM
+							owns_state = 105
+						}
+						MAC = {
+							exists = yes
+							OR = {
+								is_in_faction_with = FROM
+								is_in_faction = no
+							}
+						}
+					}
+				}
+				SOV = {
+					add_opinion_modifier = { target = MNT modifier = member_permanent_revolution }
+				}
+				if = {
+					limit = {
+						MNT = {
+							OR = {
+								exists = no
+								is_subject = yes
+							}
+						}
+					}
+					every_country = {
+						limit = {
+							NOT = {
+								OR = {
+									is_in_faction_with = SOV
+									TAG = SOV
+								}
+							}
+							OR = {
+								is_in_faction_with = FROM
+								TAG = FROM
+							}
+						}
+						if = {
+							limit = {
+								MNT = {
+									exists = no
+								}
+							}
+							release = MNT
+							declare_war_on = {
+							    target = MNT
+							    type = annex_everything
+							}
+						}
+						else_if = {
+							limit = {
+								MNT = {
+									is_subject = yes
+								}
+							}
+							set_autonomy = {
+							    target = MNT
+							    autonomy_state = autonomy_free
+							}
+							declare_war_on = {
+							    target = MNT
+							    type = annex_everything
+							}
+						}
+					}
+				}
+				MNT = {
+					set_country_flag = liberated_by_sov
+					leave_faction = yes
+					army_experience = 25
+					add_political_power = 150
+					add_opinion_modifier = { target = SOV modifier = liberator_workers }
+					hidden_effect = {
+						set_popularities = {
+							democratic = 0
+							neutrality = 0
+							fascism = 0
+							communism = 100
+						}
+						set_politics = {
+							ruling_party = communism
+						}
+						add_timed_idea = {
+						    idea = SOV_Fight_revolution
+						    days = 182
+						}
+						SER = {
+							add_to_faction = MNT
+						}
+						set_technology = {
+						    gw_artillery = 1
+						    tech_recon = 1
+							tech_support = 1
+							tech_engineers = 1
+						}
+						division_template = {
+							name = "Revolutionary Workers"
+							priority = 1
+							regiments = {
+								infantry = { x = 0 y = 0 }
+								infantry = { x = 0 y = 1 }
+								infantry = { x = 0 y = 2 }
+								infantry = { x = 0 y = 3 }
+								infantry = { x = 0 y = 4 }					
+							}
+							support = {
+								artillery = { x = 0 y = 0 }
+								recon = { x = 0 y = 1 }
+							}
+						}
+						set_division_template_lock = {
+						    division_template = "Revolutionary Workers"
+						    is_locked = yes
+						}
+						division_template = {
+							name = "Soviet Volunteers"
+							priority = 2
+							regiments = {
+								infantry = { x = 0 y = 0 }
+								infantry = { x = 0 y = 1 }
+								infantry = { x = 0 y = 2 }
+								infantry = { x = 0 y = 3 }
+								infantry = { x = 0 y = 4 }
+								artillery_brigade = { x = 1 y = 0 }
+								artillery_brigade = { x = 1 y = 1 }
+							}
+							support = {
+								artillery = { x = 0 y = 0 }
+								recon = { x = 0 y = 1 }
+								engineer = { x = 0 y = 2 }
+							}
+						}
+						set_division_template_lock = {
+						    division_template = "Soviet Volunteers"
+						    is_locked = yes
+						}
+						capital_scope = {
+							create_unit = {
+								division = "name = \"Revolutionary Workers\" division_template = \"Revolutionary Workers\" start_experience_factor = 0.3"
+								owner = MNT
+							}
+							create_unit = {
+								division = "name = \"Revolutionary Workers\" division_template = \"Revolutionary Workers\" start_experience_factor = 0.3"
+								owner = MNT
+							}
+							create_unit = {
+								division = "name = \"Revolutionary Workers\" division_template = \"Revolutionary Workers\" start_experience_factor = 0.3"
+								owner = MNT
+							}
+							create_unit = {
+								division = "name = \"Soviet Volunteers\" division_template = \"Soviet Volunteers\" start_experience_factor = 1"
+								owner = MNT
+							}
+						}
+					}
+				}
+			}
+
+			if = {
+				limit = {
+					OR = {
+						FROM = {
+							owns_state = 104
+						}
+						any_country = {
+							is_in_faction_with = FROM
+							owns_state = 104
+						}
+						BOS = {
+							exists = yes
+							OR = {
+								is_in_faction_with = FROM
+								is_in_faction = no
+							}
+						}
+					}
+				}
+				SOV = {
+					add_opinion_modifier = { target = BOS modifier = member_permanent_revolution }
+				}
+				if = {
+					limit = {
+						BOS = {
+							OR = {
+								exists = no
+								is_subject = yes
+							}
+						}
+					}
+					every_country = {
+						limit = {
+							NOT = {
+								OR = {
+									is_in_faction_with = SOV
+									TAG = SOV
+								}
+							}
+							OR = {
+								is_in_faction_with = FROM
+								TAG = FROM
+							}
+						}
+						if = {
+							limit = {
+								BOS = {
+									exists = no
+								}
+							}
+							release = BOS
+							declare_war_on = {
+							    target = BOS
+							    type = annex_everything
+							}
+						}
+						else_if = {
+							limit = {
+								BOS = {
+									is_subject = yes
+								}
+							}
+							set_autonomy = {
+							    target = BOS
+							    autonomy_state = autonomy_free
+							}
+							declare_war_on = {
+							    target = BOS
+							    type = annex_everything
+							}
+						}
+					}
+				}
+				if = {
+					limit = {
+						any_country = {
+							is_in_faction_with = FROM
+							owns_state = 804
+						}
+					}
+					SER = {
+						transfer_state = 804
+					}
+				}
+				BOS = {
+					set_country_flag = liberated_by_sov
+					leave_faction = yes
+					army_experience = 25
+					add_political_power = 150
+					add_opinion_modifier = { target = SOV modifier = liberator_workers }
+					hidden_effect = {
+						set_popularities = {
+							democratic = 0
+							neutrality = 0
+							fascism = 0
+							communism = 100
+						}
+						set_politics = {
+							ruling_party = communism
+						}
+						add_timed_idea = {
+						    idea = SOV_Fight_revolution
+						    days = 182
+						}
+						SER = {
+							add_to_faction = BOS
+						}
+						set_technology = {
+						    gw_artillery = 1
+						    tech_recon = 1
+							tech_support = 1
+							tech_engineers = 1
+						}
+						division_template = {
+							name = "Revolucionarni Radnici"
+							priority = 1
+							regiments = {
+								infantry = { x = 0 y = 0 }
+								infantry = { x = 0 y = 1 }
+								infantry = { x = 0 y = 2 }
+								infantry = { x = 0 y = 3 }
+								infantry = { x = 0 y = 4 }					
+							}
+							support = {
+								artillery = { x = 0 y = 0 }
+								recon = { x = 0 y = 1 }
+							}
+						}
+						set_division_template_lock = {
+						    division_template = "Revolucionarni Radnici"
+						    is_locked = yes
+						}
+						division_template = {
+							name = "Soviet Volunteers"
+							priority = 2
+							regiments = {
+								infantry = { x = 0 y = 0 }
+								infantry = { x = 0 y = 1 }
+								infantry = { x = 0 y = 2 }
+								infantry = { x = 0 y = 3 }
+								infantry = { x = 0 y = 4 }
+								artillery_brigade = { x = 1 y = 0 }
+								artillery_brigade = { x = 1 y = 1 }
+							}
+							support = {
+								artillery = { x = 0 y = 0 }
+								recon = { x = 0 y = 1 }
+								engineer = { x = 0 y = 2 }
+							}
+						}
+						set_division_template_lock = {
+						    division_template = "Soviet Volunteers"
+						    is_locked = yes
+						}
+						capital_scope = {
+							create_unit = {
+								division = "name = \"Revolucionarni Radnici\" division_template = \"Revolucionarni Radnici\" start_experience_factor = 0.3"
+								owner = BOS
+							}
+							create_unit = {
+								division = "name = \"Revolucionarni Radnici\" division_template = \"Revolucionarni Radnici\" start_experience_factor = 0.3"
+								owner = BOS
+							}
+							create_unit = {
+								division = "name = \"Revolucionarni Radnici\" division_template = \"Revolucionarni Radnici\" start_experience_factor = 0.3"
+								owner = BOS
+							}
+							create_unit = {
+								division = "name = \"Soviet Volunteers\" division_template = \"Soviet Volunteers\" start_experience_factor = 1"
+								owner = BOS
+							}
+						}
+					}
+				}
+			}
+
+			if = {
+				limit = {
+					OR = {
+						FROM = {
+							owns_state = 102
+						}
+						any_country = {
+							is_in_faction_with = FROM
+							owns_state = 102
+						}
+						SLV = {
+							exists = yes
+							OR = {
+								is_in_faction_with = FROM
+								is_in_faction = no
+							}
+						}
+					}
+				}
+				SOV = {
+					add_opinion_modifier = { target = SLV modifier = member_permanent_revolution }
+				}
+				if = {
+					limit = {
+						SLV = {
+							OR = {
+								exists = no
+								is_subject = yes
+							}
+						}
+					}
+					every_country = {
+						limit = {
+							NOT = {
+								OR = {
+									is_in_faction_with = SOV
+									TAG = SOV
+								}
+							}
+							OR = {
+								is_in_faction_with = FROM
+								TAG = FROM
+							}
+						}
+						if = {
+							limit = {
+								SLV = {
+									exists = no
+								}
+							}
+							release = SLV
+							declare_war_on = {
+							    target = SLV
+							    type = annex_everything
+							}
+						}
+						else_if = {
+							limit = {
+								SLV = {
+									is_subject = yes
+								}
+							}
+							set_autonomy = {
+							    target = SLV
+							    autonomy_state = autonomy_free
+							}
+							declare_war_on = {
+							    target = SLV
+							    type = annex_everything
+							}
+						}
+					}
+				}
+				SLV = {
+					set_country_flag = liberated_by_sov
+					leave_faction = yes
+					army_experience = 25
+					add_political_power = 150
+					add_opinion_modifier = { target = SOV modifier = liberator_workers }
+					hidden_effect = {
+						set_popularities = {
+							democratic = 0
+							neutrality = 0
+							fascism = 0
+							communism = 100
+						}
+						set_politics = {
+							ruling_party = communism
+						}
+						add_timed_idea = {
+						    idea = SOV_Fight_revolution
+						    days = 182
+						}
+						SER = {
+							add_to_faction = SLV
+						}
+						set_technology = {
+						    gw_artillery = 1
+						    tech_recon = 1
+							tech_support = 1
+							tech_engineers = 1
+						}
+						division_template = {
+							name = "Revolucionarni Delavci"
+							priority = 1
+							regiments = {
+								infantry = { x = 0 y = 0 }
+								infantry = { x = 0 y = 1 }
+								infantry = { x = 0 y = 2 }
+								infantry = { x = 0 y = 3 }
+								infantry = { x = 0 y = 4 }					
+							}
+							support = {
+								artillery = { x = 0 y = 0 }
+								recon = { x = 0 y = 1 }
+							}
+						}
+						set_division_template_lock = {
+						    division_template = "Revolucionarni Delavci"
+						    is_locked = yes
+						}
+						division_template = {
+							name = "Soviet Volunteers"
+							priority = 2
+							regiments = {
+								infantry = { x = 0 y = 0 }
+								infantry = { x = 0 y = 1 }
+								infantry = { x = 0 y = 2 }
+								infantry = { x = 0 y = 3 }
+								infantry = { x = 0 y = 4 }
+								artillery_brigade = { x = 1 y = 0 }
+								artillery_brigade = { x = 1 y = 1 }
+							}
+							support = {
+								artillery = { x = 0 y = 0 }
+								recon = { x = 0 y = 1 }
+								engineer = { x = 0 y = 2 }
+							}
+						}
+						set_division_template_lock = {
+						    division_template = "Soviet Volunteers"
+						    is_locked = yes
+						}
+						capital_scope = {
+							create_unit = {
+								division = "name = \"Revolucionarni Delavci\" division_template = \"Revolucionarni Delavci\" start_experience_factor = 0.3"
+								owner = SLV
+							}
+							create_unit = {
+								division = "name = \"Revolucionarni Delavci\" division_template = \"Revolucionarni Delavci\" start_experience_factor = 0.3"
+								owner = SLV
+							}
+							create_unit = {
+								division = "name = \"Revolucionarni Delavci\" division_template = \"Revolucionarni Delavci\" start_experience_factor = 0.3"
+								owner = SLV
+							}
+							create_unit = {
+								division = "name = \"Soviet Volunteers\" division_template = \"Soviet Volunteers\" start_experience_factor = 1"
+								owner = SLV
+							}
+						}
+					}
+				}
+			}
+
+			if = {
+				limit = {
+					OR = {
+						FROM = {
+							owns_state = 109
+						}
+						any_country = {
+							is_in_faction_with = FROM
+							owns_state = 109
+						}
+						CRO = {
+							exists = yes
+							OR = {
+								is_in_faction_with = FROM
+								is_in_faction = no
+							}
+						}
+					}
+				}
+				SOV = {
+					add_opinion_modifier = { target = CRO modifier = member_permanent_revolution }
+				}
+				if = {
+					limit = {
+						CRO = {
+							OR = {
+								exists = no
+								is_subject = yes
+							}
+						}
+					}
+					every_country = {
+						limit = {
+							NOT = {
+								OR = {
+									is_in_faction_with = SOV
+									TAG = SOV
+								}
+							}
+							OR = {
+								is_in_faction_with = FROM
+								TAG = FROM
+							}
+						}
+						if = {
+							limit = {
+								CRO = {
+									exists = no
+								}
+							}
+							release = CRO
+							declare_war_on = {
+							    target = CRO
+							    type = annex_everything
+							}
+						}
+						else_if = {
+							limit = {
+								CRO = {
+									is_subject = yes
+								}
+							}
+							set_autonomy = {
+							    target = CRO
+							    autonomy_state = autonomy_free
+							}
+							declare_war_on = {
+							    target = CRO
+							    type = annex_everything
+							}
+						}
+					}
+				}
+				if = {
+					limit = {
+						any_country = {
+							is_in_faction_with = FROM
+							owns_state = 103
+						}
+					}
+					CRO = {
+						transfer_state = 103
+					}
+				}
+				CRO = {
+					set_country_flag = liberated_by_sov
+					leave_faction = yes
+					army_experience = 25
+					add_political_power = 150
+					add_opinion_modifier = { target = SOV modifier = liberator_workers }
+					hidden_effect = {
+						set_popularities = {
+							democratic = 0
+							neutrality = 0
+							fascism = 0
+							communism = 100
+						}
+						set_politics = {
+							ruling_party = communism
+						}
+						add_timed_idea = {
+						    idea = SOV_Fight_revolution
+						    days = 182
+						}
+						SER = {
+							add_to_faction = CRO
+						}
+						set_technology = {
+						    gw_artillery = 1
+						    tech_recon = 1
+							tech_support = 1
+							tech_engineers = 1
+						}
+						division_template = {
+							name = "Revolucionarni Radnici"
+							priority = 1
+							regiments = {
+								infantry = { x = 0 y = 0 }
+								infantry = { x = 0 y = 1 }
+								infantry = { x = 0 y = 2 }
+								infantry = { x = 0 y = 3 }
+								infantry = { x = 0 y = 4 }					
+							}
+							support = {
+								artillery = { x = 0 y = 0 }
+								recon = { x = 0 y = 1 }
+							}
+						}
+						set_division_template_lock = {
+						    division_template = "Revolucionarni Radnici"
+						    is_locked = yes
+						}
+						division_template = {
+							name = "Soviet Volunteers"
+							priority = 2
+							regiments = {
+								infantry = { x = 0 y = 0 }
+								infantry = { x = 0 y = 1 }
+								infantry = { x = 0 y = 2 }
+								infantry = { x = 0 y = 3 }
+								infantry = { x = 0 y = 4 }
+								artillery_brigade = { x = 1 y = 0 }
+								artillery_brigade = { x = 1 y = 1 }
+							}
+							support = {
+								artillery = { x = 0 y = 0 }
+								recon = { x = 0 y = 1 }
+								engineer = { x = 0 y = 2 }
+							}
+						}
+						set_division_template_lock = {
+						    division_template = "Soviet Volunteers"
+						    is_locked = yes
+						}
+						capital_scope = {
+							create_unit = {
+								division = "name = \"Revolucionarni Radnici\" division_template = \"Revolucionarni Radnici\" start_experience_factor = 0.3"
+								owner = CRO
+							}
+							create_unit = {
+								division = "name = \"Revolucionarni Radnici\" division_template = \"Revolucionarni Radnici\" start_experience_factor = 0.3"
+								owner = CRO
+							}
+							create_unit = {
+								division = "name = \"Revolucionarni Radnici\" division_template = \"Revolucionarni Radnici\" start_experience_factor = 0.3"
+								owner = CRO
+							}
+						}
+						random_owned_controlled_state = {
+							create_unit = {
+								division = "name = \"Revolucionarni Radnici\" division_template = \"Revolucionarni Radnici\" start_experience_factor = 0.3"
+								owner = CRO
+							}
+						}
+						random_owned_controlled_state = {
+							create_unit = {
+								division = "name = \"Soviet Volunteers\" division_template = \"Soviet Volunteers\" start_experience_factor = 1"
+								owner = CRO
+							}
+						}
+					}
+				}
+			}
+		}
+		every_country = {
+			limit = {
+				has_country_flag = give_core_back_ser_107
+			}
+			add_state_core = 107
+		}
+		every_country = {
+			limit = {
+				has_country_flag = give_core_back_ser_764
+			}
+			add_state_core = 764
+		}
+		every_country = {
+			limit = {
+				has_country_flag = give_core_back_ser_45
+			}
+			add_state_core = 45
+		}
+		every_country = {
+			limit = {
+				has_country_flag = give_core_back_ser_108
+			}
+			add_state_core = 108
+		}
+		every_country = {
+			limit = {
+				has_country_flag = give_core_back_mac_106
+			}
+			add_state_core = 106
+		}
+		every_country = {
+			limit = {
+				has_country_flag = give_core_back_mnt_105
+			}
+			add_state_core = 105
+		}
+		every_country = {
+			limit = {
+				has_country_flag = give_core_back_bos_104
+			}
+			add_state_core = 104
+		}
+		every_country = {
+			limit = {
+				has_country_flag = give_core_back_cro_109
+			}
+			add_state_core = 109
+		}
+		every_country = {
+			limit = {
+				has_country_flag = give_core_back_cro_103
+			}
+			add_state_core = 103
+		}
+		every_country = {
+			limit = {
+				has_country_flag = give_core_back_slv_102
+			}
+			add_state_core = 102
+		}
+		every_country = {
+			limit = {
+				has_country_flag = give_core_back_ser_802
+			}
+			add_state_core = 802
+		}
+		every_country = {
+			limit = {
+				has_country_flag = give_core_back_ser_803
+			}
+			add_state_core = 803
+		}
+		every_country = {
+			limit = {
+				has_country_flag = give_core_back_bos_804
+			}
+			add_state_core = 804
+		}
+	}
+
+	outcome_potential = {
+		custom_effect_tooltip = SOV_disolve_yugoslavia_tt
+		SOV = {
+			army_experience = 50
+			air_experience = 50
+			navy_experience = 50
+		}
+	}
+	
+	phases = {
+		SOV_disolve_yugoslavia_infiltration = { base = 30 } 
+	}
+	phases = { 
+		SOV_disolve_yugoslavia_intels = { base = 30 }
+	}
+	phases = { 
+		SOV_disolve_yugoslavia_escape = { base = 30 }
+	}
+}
+
+SOV_divide_british_isle = { #Divide the British Isle
+	icon = GFX_operations_coup_government
+	map_icon = GFX_operations_operations_coup_government_map
+	name = SOV_divide_british_isle
+	desc = SOV_divide_british_isle_desc
+	days = 50
+
+	allowed = {
+		original_tag = SOV
+	}
+
+	visible = {
+		network_national_coverage = {
+			target = FROM
+			value > 0
+		}
+
+		121 = { is_core_of = SCO }
+		133 = { is_core_of = SCO }
+		136 = { is_core_of = SCO }
+		120 = { is_core_of = SCO }
+		122 = { is_core_of = WLS }
+		119 = { is_core_of = NIR }
+
+		FROM = {
+			has_full_control_of_state = 121
+			NOT = {
+				OR = {
+					has_government = communism
+					is_in_faction_with = SOV
+				}
+			}
+		}
+
+		has_completed_focus = SOV_european_revolution
+
+		num_of_operatives > 0
+
+		SCO = {
+			exists = no
+		}
+
+		NOT = {
+			OR = {
+				has_country_flag = SOV_is_liberating_uk
+				has_country_flag = SOV_liberated_uk
+			}
+		}
+	}
+
+	operatives = 2
+
+	network_strength = 40
+
+	available = {
+		has_completed_focus = SOV_liberation_of_the_workers
+	}
+	
+	equipment = {
+		infantry_equipment = 4000
+		support_equipment = 400
+		artillery_equipment = 200
+	}
+
+	selection_target_state = {
+		state = 121
+		is_core_of = SCO
+	}
+
+	selection_target = {
+		targets = { FROM }
+	}
+
+	on_start = {
+		SOV = {
+			set_country_flag = SOV_is_liberating_uk
+		}
+		FROM = {
+			activate_mission = SOV_mission_british
+			set_country_flag = SOV_is_liberation_target_uk
+			country_event = { days = 1 id = russia2_revolutions.1 }
+		}
+		every_country = {
+			limit = {
+				NOT = {
+					tag = FROM
+				}
+				is_in_faction_with = FROM
+				OR = {
+					owns_state = 133
+					owns_state = 136
+					owns_state = 120
+					owns_state = 122
+					owns_state = 119
+				}
+			}
+			activate_mission = SOV_mission_british
+			set_country_flag = SOV_is_liberation_target_uk
+			country_event = { days = 1 id = russia2_revolutions.1 }
+		}
+	}
+
+	risk_chance = 0.2
+	experience = 5
+	outcome_extra_chance = 0
+
+	outcome_execute = {
+		SOV = {
+			army_experience = 50
+			air_experience = 50
+			navy_experience = 50
+			add_opinion_modifier = { target = SCO modifier = member_permanent_revolution }
+			hidden_effect = {
+				clr_country_flag = SOV_is_liberating_uk
+				set_country_flag = SOV_liberated_uk
+			}
+		}
+
+		every_country = {
+			limit = {
+				121 = { is_core_of = PREV }
+			}
+			set_country_flag = give_core_back_sco_121
+		}
+		every_country = {
+			limit = {
+				133 = { is_core_of = PREV }
+			}
+			set_country_flag = give_core_back_sco_133
+		}
+		every_country = {
+			limit = {
+				136 = { is_core_of = PREV }
+			}
+			set_country_flag = give_core_back_sco_136
+		}
+		every_country = {
+			limit = {
+				123 = { is_core_of = PREV }
+			}
+			set_country_flag = give_core_back_sco_120
+		}
+
+		FROM = {
+			hidden_effect = {
+				country_event = { days = 1 id = russia2_generic.14 }
+			}
+			add_political_power = -50
+			hidden_effect = {
+				if = {
+					limit = {
+						SCO = {
+							exists = no
+						}
+					}
+					release = SCO
+				}
+				else_if = {
+					limit = {
+						SCO = {
+							is_subject = yes
+						}
+					}
+					set_autonomy = {
+					    target = SCO
+					    autonomy_state = autonomy_free
+					}
+				}
+			}
+		}
+		every_country = {
+			limit = {
+				has_country_flag = give_core_back_sco_121
+			}
+			add_state_core = 121
+		}
+		if = {
+			limit = {
+				any_country = {
+					is_in_faction_with = FROM
+					owns_state = 133
+				}
+			}
+			SCO = {
+				transfer_state = 133
+			}
+		}
+		every_country = {
+			limit = {
+				has_country_flag = give_core_back_sco_133
+			}
+			add_state_core = 133
+		}
+		if = {
+			limit = {
+				any_country = {
+					is_in_faction_with = FROM
+					owns_state = 136
+				}
+			}
+			SCO = {
+				transfer_state = 136
+			}
+		}
+		every_country = {
+			limit = {
+				has_country_flag = give_core_back_sco_136
+			}
+			add_state_core = 136
+		}
+		if = {
+			limit = {
+				any_country = {
+					is_in_faction_with = FROM
+					owns_state = 120
+				}
+			}
+			SCO = {
+				transfer_state = 120
+			}
+		}
+		every_country = {
+			limit = {
+				has_country_flag = give_core_back_sco_120
+			}
+			add_state_core = 120
+		}
+
+		SCO = {
+			set_country_flag = liberated_by_sov
+			leave_faction = yes
+			army_experience = 25
+			add_political_power = 150
+			add_opinion_modifier = { target = SOV modifier = liberator_workers }
+			hidden_effect = {
+				set_popularities = {
+					democratic = 0
+					neutrality = 0
+					fascism = 0
+					communism = 100
+				}
+				set_politics = {
+					ruling_party = communism
+				}
+				add_timed_idea = {
+				    idea = SOV_Fight_revolution
+				    days = 182
+				}
+				create_faction = celtic_union
+				set_technology = {
+				    gw_artillery = 1
+				    tech_recon = 1
+					tech_support = 1		
+					tech_engineers = 1
+				}
+				division_template = {
+					name = "Luchd-obrach Rèabhlaideach"
+					priority = 1
+					regiments = {
+						infantry = { x = 0 y = 0 }
+						infantry = { x = 0 y = 1 }
+						infantry = { x = 0 y = 2 }
+						infantry = { x = 0 y = 3 }
+						infantry = { x = 0 y = 4 }					
+					}
+					support = {
+						artillery = { x = 0 y = 0 }
+						recon = { x = 0 y = 1 }
+					}
+				}
+				set_division_template_lock = {
+					division_template = "Luchd-obrach Rèabhlaideach"
+					is_locked = yes
+				}
+				division_template = {
+					name = "Soviet Volunteers"
+					priority = 2
+					regiments = {
+						infantry = { x = 0 y = 0 }
+						infantry = { x = 0 y = 1 }
+						infantry = { x = 0 y = 2 }
+						infantry = { x = 0 y = 3 }
+						infantry = { x = 0 y = 4 }
+						artillery_brigade = { x = 1 y = 0 }
+						artillery_brigade = { x = 1 y = 1 }
+					}
+					support = {
+						artillery = { x = 0 y = 0 }
+						recon = { x = 0 y = 1 }
+						engineer = { x = 0 y = 2 }
+					}
+				}
+				set_division_template_lock = {
+				    division_template = "Soviet Volunteers"
+				    is_locked = yes
+				}
+				capital_scope = {
+					create_unit = {
+						division = "name = \"Luchd-obrach Rèabhlaideach\" division_template = \"Luchd-obrach Rèabhlaideach\" start_experience_factor = 0.3"
+						owner = SCO
+					}
+					create_unit = {
+						division = "name = \"Luchd-obrach Rèabhlaideach\" division_template = \"Luchd-obrach Rèabhlaideach\" start_experience_factor = 0.3"
+						owner = SCO
+					}
+					create_unit = {
+						division = "name = \"Luchd-obrach Rèabhlaideach\" division_template = \"Luchd-obrach Rèabhlaideach\" start_experience_factor = 0.3"
+						owner = SCO
+					}
+					create_unit = {
+						division = "name = \"Luchd-obrach Rèabhlaideach\" division_template = \"Luchd-obrach Rèabhlaideach\" start_experience_factor = 0.3"
+						owner = SCO
+					}
+					create_unit = {
+						division = "name = \"Soviet Volunteers\" division_template = \"Soviet Volunteers\" start_experience_factor = 1"
+						owner = SCO
+					}
+				}
+				random_owned_controlled_state = {
+					create_unit = {
+						division = "name = \"Luchd-obrach Rèabhlaideach\" division_template = \"Luchd-obrach Rèabhlaideach\" start_experience_factor = 0.3"
+						owner = SCO
+					}
+				}
+				random_owned_controlled_state = {
+					create_unit = {
+						division = "name = \"Luchd-obrach Rèabhlaideach\" division_template = \"Luchd-obrach Rèabhlaideach\" start_experience_factor = 0.3"
+						owner = SCO
+					}
+				}
+				random_owned_controlled_state = {
+					create_unit = {
+						division = "name = \"Luchd-obrach Rèabhlaideach\" division_template = \"Luchd-obrach Rèabhlaideach\" start_experience_factor = 0.3"
+						owner = SCO
+					}
+				}
+				random_owned_controlled_state = {
+					create_unit = {
+						division = "name = \"Luchd-obrach Rèabhlaideach\" division_template = \"Luchd-obrach Rèabhlaideach\" start_experience_factor = 0.3"
+						owner = SCO
+					}
+				}
+				random_owned_controlled_state = {
+					create_unit = {
+						division = "name = \"Luchd-obrach Rèabhlaideach\" division_template = \"Luchd-obrach Rèabhlaideach\" start_experience_factor = 0.3"
+						owner = SCO
+					}
+				}
+			}
+		}
+		
+		FROM = {
+			declare_war_on = {
+			    target = SCO
+			    type = annex_everything
+			}
+		}
+
+		if = {
+			limit = {
+				OR = {
+					FROM = {
+						owns_state = 122
+					}
+					any_country = {
+						is_in_faction_with = FROM
+						owns_state = 122
+					}
+					WLS = {
+						exists = yes
+						OR = {
+							is_in_faction_with = FROM
+							is_in_faction = no
+						}
+					}
+				}
+			}
+			SOV = {
+				add_opinion_modifier = { target = WLS modifier = member_permanent_revolution }
+			}
+			if = {
+				limit = {
+					WLS = {
+						OR = {
+							exists = no
+							is_subject = yes
+						}
+					}
+				}
+				every_country = {
+					limit = {
+						NOT = {
+							OR = {
+								is_in_faction_with = SOV
+								TAG = SOV
+							}
+						}
+						OR = {
+							is_in_faction_with = FROM
+							TAG = FROM
+						}
+					}
+					every_country = {
+						limit = {
+							122 = { is_core_of = PREV }
+						}
+						set_country_flag = give_core_back_wls_122
+					}
+					if = {
+						limit = {
+							WLS = {
+								exists = no
+							}
+						}
+						release = WLS
+						declare_war_on = {
+						    target = WLS
+						    type = annex_everything
+						}
+					}
+					else_if = {
+						limit = {
+							WLS = {
+								is_subject = yes
+							}
+						}
+						set_autonomy = {
+						    target = WLS
+						    autonomy_state = autonomy_free
+						}
+						declare_war_on = {
+						    target = WLS
+						    type = annex_everything
+						}
+					}
+					every_country = {
+						limit = {
+							has_country_flag = give_core_back_wls_122
+						}
+						add_state_core = 122
+					}
+				}
+			}
+
+			WLS = {
+				set_country_flag = liberated_by_sov
+				leave_faction = yes
+				army_experience = 25
+				add_political_power = 150
+				add_opinion_modifier = { target = SOV modifier = liberator_workers }
+				hidden_effect = {
+					set_popularities = {
+						democratic = 0
+						neutrality = 0
+						fascism = 0
+						communism = 100
+					}
+					set_politics = {
+						ruling_party = communism
+					}
+					add_timed_idea = {
+					    idea = SOV_Fight_revolution
+					    days = 182
+					}
+					SCO = {
+						add_to_faction = WLS
+					}
+					set_technology = {
+					    gw_artillery = 1
+					    tech_recon = 1
+						tech_support = 1		
+						tech_engineers = 1
+					}
+					division_template = {
+						name = "Gweithwyr Chwyldroadol"
+						priority = 1
+						regiments = {
+							infantry = { x = 0 y = 0 }
+							infantry = { x = 0 y = 1 }
+							infantry = { x = 0 y = 2 }
+							infantry = { x = 0 y = 3 }
+							infantry = { x = 0 y = 4 }					
+						}
+						support = {
+							artillery = { x = 0 y = 0 }
+							recon = { x = 0 y = 1 }
+						}
+					}
+					set_division_template_lock = {
+					    division_template = "Gweithwyr Chwyldroadol"
+					    is_locked = yes
+					}
+					division_template = {
+						name = "Soviet Volunteers"
+						priority = 2
+						regiments = {
+							infantry = { x = 0 y = 0 }
+							infantry = { x = 0 y = 1 }
+							infantry = { x = 0 y = 2 }
+							infantry = { x = 0 y = 3 }
+							infantry = { x = 0 y = 4 }
+							artillery_brigade = { x = 1 y = 0 }
+							artillery_brigade = { x = 1 y = 1 }
+						}
+						support = {
+							artillery = { x = 0 y = 0 }
+							recon = { x = 0 y = 1 }
+							engineer = { x = 0 y = 2 }
+						}
+					}
+					set_division_template_lock = {
+					    division_template = "Soviet Volunteers"
+					    is_locked = yes
+					}
+					capital_scope = {
+						create_unit = {
+							division = "name = \"Gweithwyr Chwyldroadol\" division_template = \"Gweithwyr Chwyldroadol\" start_experience_factor = 0.3"
+							owner = WLS
+						}
+						create_unit = {
+							division = "name = \"Gweithwyr Chwyldroadol\" division_template = \"Gweithwyr Chwyldroadol\" start_experience_factor = 0.3"
+							owner = WLS
+						}
+						create_unit = {
+							division = "name = \"Gweithwyr Chwyldroadol\" division_template = \"Gweithwyr Chwyldroadol\" start_experience_factor = 0.3"
+							owner = WLS
+						}
+						create_unit = {
+							division = "name = \"Gweithwyr Chwyldroadol\" division_template = \"Gweithwyr Chwyldroadol\" start_experience_factor = 0.3"
+							owner = WLS
+						}
+						create_unit = {
+							division = "name = \"Gweithwyr Chwyldroadol\" division_template = \"Gweithwyr Chwyldroadol\" start_experience_factor = 0.3"
+							owner = WLS
+						}
+						create_unit = {
+							division = "name = \"Soviet Volunteers\" division_template = \"Soviet Volunteers\" start_experience_factor = 1"
+							owner = WLS
+						}
+					}
+				}
+			}
+		}
+
+		if = {
+			limit = {
+				OR = {
+					FROM = {
+						owns_state = 119
+					}
+					any_country = {
+						is_in_faction_with = FROM
+						owns_state = 119
+					}
+					NIR = {
+						exists = yes
+						OR = {
+							is_in_faction_with = FROM
+							is_in_faction = no
+						}
+					}
+				}
+			}
+			SOV = {
+				add_opinion_modifier = { target = NIR modifier = member_permanent_revolution }
+			}
+			if = {
+				limit = {
+					NIR = {
+						OR = {
+							exists = no
+							is_subject = yes
+						}
+					}
+				}
+				every_country = {
+					limit = {
+						NOT = {
+							OR = {
+								is_in_faction_with = SOV
+								TAG = SOV
+							}
+						}
+						OR = {
+							is_in_faction_with = FROM
+							TAG = FROM
+						}
+					}
+					every_country = {
+						limit = {
+							119 = { is_core_of = PREV }
+						}
+						set_country_flag = give_core_back_nir_119
+					}
+					if = {
+						limit = {
+							NIR = {
+								exists = no
+							}
+						}
+						release = NIR
+						declare_war_on = {
+						    target = NIR
+						    type = annex_everything
+						}
+					}
+					else_if = {
+						limit = {
+							NIR = {
+								is_subject = yes
+							}
+						}
+						set_autonomy = {
+						    target = NIR
+						    autonomy_state = autonomy_free
+						}
+						declare_war_on = {
+						    target = NIR
+						    type = annex_everything
+						}
+					}
+					every_country = {
+						limit = {
+							has_country_flag = give_core_back_nir_119
+						}
+						add_state_core = 119
+					}
+				}
+			}
+
+			NIR = {
+				set_country_flag = liberated_by_sov
+				leave_faction = yes
+				army_experience = 25
+				add_political_power = 150
+				add_opinion_modifier = { target = SOV modifier = liberator_workers }
+				hidden_effect = {
+					set_popularities = {
+						democratic = 0
+						neutrality = 0
+						fascism = 0
+						communism = 100
+					}
+					set_politics = {
+						ruling_party = communism
+					}
+					add_timed_idea = {
+					    idea = SOV_Fight_revolution
+					    days = 182
+					}
+					SCO = {
+						add_to_faction = NIR
+					}
+					set_technology = {
+					    gw_artillery = 1
+					    tech_recon = 1
+						tech_support = 1		
+						tech_engineers = 1
+					}
+					division_template = {
+						name = "Oibrithe Réabhlóideacha"
+						priority = 1
+						regiments = {
+							infantry = { x = 0 y = 0 }
+							infantry = { x = 0 y = 1 }
+							infantry = { x = 0 y = 2 }
+							infantry = { x = 0 y = 3 }
+							infantry = { x = 0 y = 4 }					
+						}
+						support = {
+							artillery = { x = 0 y = 0 }
+							recon = { x = 0 y = 1 }
+						}
+					}
+					set_division_template_lock = {
+					    division_template = "Oibrithe Réabhlóideacha"
+					    is_locked = yes
+					}
+					division_template = {
+						name = "Soviet Volunteers"
+						priority = 2
+						regiments = {
+							infantry = { x = 0 y = 0 }
+							infantry = { x = 0 y = 1 }
+							infantry = { x = 0 y = 2 }
+							infantry = { x = 0 y = 3 }
+							infantry = { x = 0 y = 4 }
+							artillery_brigade = { x = 1 y = 0 }
+							artillery_brigade = { x = 1 y = 1 }
+						}
+						support = {
+							artillery = { x = 0 y = 0 }
+							recon = { x = 0 y = 1 }
+							engineer = { x = 0 y = 2 }
+						}
+					}
+					set_division_template_lock = {
+					    division_template = "Soviet Volunteers"
+					    is_locked = yes
+					}
+					capital_scope = {
+						create_unit = {
+							division = "name = \"Oibrithe Réabhlóideacha\" division_template = \"Oibrithe Réabhlóideacha\" start_experience_factor = 0.3"
+							owner = NIR
+						}
+						create_unit = {
+							division = "name = \"Oibrithe Réabhlóideacha\" division_template = \"Oibrithe Réabhlóideacha\" start_experience_factor = 0.3"
+							owner = NIR
+						}
+						create_unit = {
+							division = "name = \"Oibrithe Réabhlóideacha\" division_template = \"Oibrithe Réabhlóideacha\" start_experience_factor = 0.3"
+							owner = NIR
+						}
+						create_unit = {
+							division = "name = \"Oibrithe Réabhlóideacha\" division_template = \"Oibrithe Réabhlóideacha\" start_experience_factor = 0.3"
+							owner = NIR
+						}
+						create_unit = {
+							division = "name = \"Oibrithe Réabhlóideacha\" division_template = \"Oibrithe Réabhlóideacha\" start_experience_factor = 0.3"
+							owner = NIR
+						}
+						create_unit = {
+							division = "name = \"Soviet Volunteers\" division_template = \"Soviet Volunteers\" start_experience_factor = 1"
+							owner = NIR
+						}
+					}
+				}
+			}
+		}
+	}
+
+	outcome_potential = {
+		custom_effect_tooltip = SOV_divide_british_isle_tt
+		SOV = {
+			army_experience = 50
+			air_experience = 50
+			navy_experience = 50
+		}
+	}
+	
+	phases = {
+		SOV_divide_british_isle_infiltration = { base = 30 } 
+	}
+	phases = { 
+		SOV_divide_british_isle_intels = { base = 30 }
+	}
+	phases = { 
+		SOV_divide_british_isle_escape = { base = 30 }
+	}
+}
+
+SOV_liberate_iberia = { #Liberate the Iberian Workers
+	icon = GFX_operations_coup_government
+	map_icon = GFX_operations_operations_coup_government_map
+	name = SOV_liberate_iberia
+	desc = SOV_liberate_iberia_desc
+	days = 50
+
+	allowed = {
+		original_tag = SOV
+	}
+
+	visible = {
+		network_national_coverage = {
+			target = FROM
+			value > 0
+		}
+
+		165 = { is_core_of = CAT }
+		792 = { is_core_of = NAV }
+		172 = { is_core_of = NAV }
+		171 = { is_core_of = GLC }
+
+		FROM = {
+			has_full_control_of_state = 165
+			NOT = {
+				OR = {
+					has_government = communism
+					is_in_faction_with = SOV
+				}
+			}
+		}
+
+		has_completed_focus = SOV_european_revolution
+
+		num_of_operatives > 0
+
+		CAT = {
+			exists = no
+		}
+
+		NOT = {
+			OR = {
+				has_country_flag = SOV_is_liberating_iberia
+				has_country_flag = SOV_liberated_iberia
+			}
+		}
+	}
+
+	operatives = 2
+
+	network_strength = 40
+
+	available = {
+		has_completed_focus = SOV_liberation_of_the_workers
+	}
+	
+	equipment = {
+		infantry_equipment = 4000
+		support_equipment = 400
+		artillery_equipment = 200
+	}
+
+	selection_target_state = {
+		state = 165
+		is_core_of = CAT
+	}
+
+	selection_target = {
+		targets = { FROM }
+	}
+
+	on_start = {
+		SOV = {
+			set_country_flag = SOV_is_liberating_iberia
+		}
+		FROM = {
+			activate_mission = SOV_mission_iberia
+			set_country_flag = SOV_is_liberation_target_iberia
+			country_event = { days = 1 id = russia2_revolutions.1 }
+		}
+		every_country = {
+			limit = {
+				NOT = {
+					tag = FROM
+				}
+				is_in_faction_with = FROM
+				OR = {
+					owns_state = 792
+					owns_state = 172
+					owns_state = 171
+				}
+			}
+			activate_mission = SOV_mission_iberia
+			set_country_flag = SOV_is_liberation_target_iberia
+			country_event = { days = 1 id = russia2_revolutions.1 }
+		}
+	}
+
+	risk_chance = 0.2
+	experience = 5
+	outcome_extra_chance = 0
+
+	outcome_execute = {
+		SOV = {
+			army_experience = 50
+			air_experience = 50
+			navy_experience = 50
+			add_opinion_modifier = { target = CAT modifier = member_permanent_revolution }
+			hidden_effect = {
+				clr_country_flag = SOV_is_liberating_iberia
+				set_country_flag = SOV_liberated_iberia
+			}
+		}
+
+		every_country = {
+			limit = {
+				165 = { is_core_of = PREV }
+			}
+			set_country_flag = give_core_back_cat_165 #Setting a country flag to give back the core to the targetted country (if they had one)
+		}
+
+		FROM = {
+			hidden_effect = {
+				country_event = { days = 1 id = russia2_generic.13 }
+			}
+			add_political_power = -50
+			hidden_effect = {
+				if = {
+					limit = {
+						CAT = {
+							exists = no
+						}
+					}
+					release = CAT
+				}
+				else_if = {
+					limit = {
+						CAT = {
+							is_subject = yes
+						}
+					}
+					set_autonomy = {
+					    target = CAT
+					    autonomy_state = autonomy_free
+					}
+				}
+				every_country = {
+					limit = {
+						has_country_flag = give_core_back_cat_165
+					}
+					add_state_core = 165 #Giving back the core to PREV (all the countries who previously had a core on this state). Yes I know this is stupid, but when you release a country you lose your core on it.
+				}
+			}
+		}
+
+		CAT = {
+			set_country_flag = liberated_by_sov
+			leave_faction = yes
+			army_experience = 25
+			add_political_power = 150
+			add_opinion_modifier = { target = SOV modifier = liberator_workers }
+			hidden_effect = {
+				set_popularities = {
+					democratic = 0
+					neutrality = 0
+					fascism = 0
+					communism = 100
+				}
+				set_politics = {
+					ruling_party = communism
+				}
+				add_timed_idea = {
+				    idea = SOV_Fight_revolution
+				    days = 182
+				}
+				create_faction = iberian_union
+				set_technology = {
+				    gw_artillery = 1
+				    tech_recon = 1
+					tech_support = 1		
+					tech_engineers = 1
+				}
+				division_template = {
+					name = "Treballadors Revolucionaris"
+					priority = 1
+					regiments = {
+						infantry = { x = 0 y = 0 }
+						infantry = { x = 0 y = 1 }
+						infantry = { x = 0 y = 2 }
+						infantry = { x = 0 y = 3 }
+						infantry = { x = 0 y = 4 }					
+					}
+					support = {
+						artillery = { x = 0 y = 0 }
+						recon = { x = 0 y = 1 }
+					}
+				}
+				set_division_template_lock = {
+					division_template = "Treballadors Revolucionaris"
+					is_locked = yes
+				}
+				division_template = {
+					name = "Soviet Volunteers"
+					priority = 2
+					regiments = {
+						infantry = { x = 0 y = 0 }
+						infantry = { x = 0 y = 1 }
+						infantry = { x = 0 y = 2 }
+						infantry = { x = 0 y = 3 }
+						infantry = { x = 0 y = 4 }
+						artillery_brigade = { x = 1 y = 0 }
+						artillery_brigade = { x = 1 y = 1 }
+					}
+					support = {
+						artillery = { x = 0 y = 0 }
+						recon = { x = 0 y = 1 }
+						engineer = { x = 0 y = 2 }
+					}
+				}
+				set_division_template_lock = {
+				    division_template = "Soviet Volunteers"
+				    is_locked = yes
+				}
+				capital_scope = {
+					create_unit = {
+						division = "name = \"Treballadors Revolucionaris\" division_template = \"Treballadors Revolucionaris\" start_experience_factor = 0.3"
+						owner = CAT
+					}
+					create_unit = {
+						division = "name = \"Treballadors Revolucionaris\" division_template = \"Treballadors Revolucionaris\" start_experience_factor = 0.3"
+						owner = CAT
+					}
+					create_unit = {
+						division = "name = \"Treballadors Revolucionaris\" division_template = \"Treballadors Revolucionaris\" start_experience_factor = 0.3"
+						owner = CAT
+					}
+					create_unit = {
+						division = "name = \"Treballadors Revolucionaris\" division_template = \"Treballadors Revolucionaris\" start_experience_factor = 0.3"
+						owner = CAT
+					}
+					create_unit = {
+						division = "name = \"Soviet Volunteers\" division_template = \"Soviet Volunteers\" start_experience_factor = 1"
+						owner = CAT
+					}
+					create_unit = {
+						division = "name = \"Soviet Volunteers\" division_template = \"Soviet Volunteers\" start_experience_factor = 1"
+						owner = CAT
+					}
+				}
+			}
+		}
+		
+		FROM = {
+			declare_war_on = {
+			    target = CAT
+			    type = annex_everything
+			}
+		}
+
+		if = {
+			limit = {
+				OR = {
+					FROM = {
+						owns_state = 792
+					}
+					any_country = {
+						is_in_faction_with = FROM
+						owns_state = 792
+					}
+					NAV = {
+						exists = yes
+						OR = {
+							is_in_faction_with = FROM
+							is_in_faction = no
+						}
+					}
+				}
+			}
+			SOV = {
+				add_opinion_modifier = { target = NAV modifier = member_permanent_revolution }
+			}
+			if = {
+				limit = {
+					NAV = {
+						OR = {
+							exists = no
+							is_subject = yes
+						}
+					}
+				}
+				every_country = {
+					limit = {
+						NOT = {
+							OR = {
+								is_in_faction_with = SOV
+								TAG = SOV
+							}
+						}
+						OR = {
+							is_in_faction_with = FROM
+							TAG = FROM
+						}
+					}
+					every_country = {
+						limit = {
+							792 = { is_core_of = PREV }
+						}
+						set_country_flag = give_core_back_nav_792
+					}
+					every_country = {
+						limit = {
+							172 = { is_core_of = PREV }
+						}
+						set_country_flag = give_core_back_nav_172
+					}
+					if = {
+						limit = {
+							NAV = {
+								exists = no
+							}
+						}
+						release = NAV
+						declare_war_on = {
+						    target = NAV
+						    type = annex_everything
+						}
+					}
+					else_if = {
+						limit = {
+							NAV = {
+								is_subject = yes
+							}
+						}
+						set_autonomy = {
+						    target = NAV
+						    autonomy_state = autonomy_free
+						}
+						declare_war_on = {
+						    target = NAV
+						    type = annex_everything
+						}
+					}
+					every_country = {
+						limit = {
+							has_country_flag = give_core_back_nav_792
+						}
+						add_state_core = 792
+					}
+				}
+			}
+
+			if = {
+				limit = {
+					any_country = {
+						is_in_faction_with = FROM
+						owns_state = 172
+					}
+				}
+				NAV = {
+					transfer_state = 172
+				}
+			}
+
+			every_country = {
+				limit = {
+					has_country_flag =  give_core_back_nav_172
+				}
+				add_state_core = 172
+			}
+
+			NAV = {
+				set_country_flag = liberated_by_sov
+				leave_faction = yes
+				army_experience = 25
+				add_political_power = 150
+				add_opinion_modifier = { target = SOV modifier = liberator_workers }
+				hidden_effect = {
+					set_popularities = {
+						democratic = 0
+						neutrality = 0
+						fascism = 0
+						communism = 100
+					}
+					set_politics = {
+						ruling_party = communism
+					}
+					add_timed_idea = {
+					    idea = SOV_Fight_revolution
+					    days = 182
+					}
+					CAT = {
+						add_to_faction = NAV
+					}
+					set_technology = {
+					    gw_artillery = 1
+					    tech_recon = 1
+						tech_support = 1		
+						tech_engineers = 1
+					}
+					division_template = {
+						name = "Langile Iraultzaileak"
+						priority = 1
+						regiments = {
+							infantry = { x = 0 y = 0 }
+							infantry = { x = 0 y = 1 }
+							infantry = { x = 0 y = 2 }
+							infantry = { x = 0 y = 3 }
+							infantry = { x = 0 y = 4 }					
+						}
+						support = {
+							artillery = { x = 0 y = 0 }
+							recon = { x = 0 y = 1 }
+						}
+					}
+					set_division_template_lock = {
+					    division_template = "Langile Iraultzaileak"
+					    is_locked = yes
+					}
+					division_template = {
+						name = "Soviet Volunteers"
+						priority = 2
+						regiments = {
+							infantry = { x = 0 y = 0 }
+							infantry = { x = 0 y = 1 }
+							infantry = { x = 0 y = 2 }
+							infantry = { x = 0 y = 3 }
+							infantry = { x = 0 y = 4 }
+							artillery_brigade = { x = 1 y = 0 }
+							artillery_brigade = { x = 1 y = 1 }
+						}
+						support = {
+							artillery = { x = 0 y = 0 }
+							recon = { x = 0 y = 1 }
+							engineer = { x = 0 y = 2 }
+						}
+					}
+					set_division_template_lock = {
+					    division_template = "Soviet Volunteers"
+					    is_locked = yes
+					}
+					capital_scope = {
+						create_unit = {
+							division = "name = \"Langile Iraultzaileak\" division_template = \"Langile Iraultzaileak\" start_experience_factor = 0.3"
+							owner = NAV
+						}
+						create_unit = {
+							division = "name = \"Langile Iraultzaileak\" division_template = \"Langile Iraultzaileak\" start_experience_factor = 0.3"
+							owner = NAV
+						}
+						create_unit = {
+							division = "name = \"Langile Iraultzaileak\" division_template = \"Langile Iraultzaileak\" start_experience_factor = 0.3"
+							owner = NAV
+						}
+						create_unit = {
+							division = "name = \"Langile Iraultzaileak\" division_template = \"Langile Iraultzaileak\" start_experience_factor = 0.3"
+							owner = NAV
+						}
+						create_unit = {
+							division = "name = \"Soviet Volunteers\" division_template = \"Soviet Volunteers\" start_experience_factor = 1"
+							owner = NAV
+						}
+					}
+				}
+			}
+		}
+
+		if = {
+			limit = {
+				OR = {
+					FROM = {
+						owns_state = 171
+					}
+					any_country = {
+						is_in_faction_with = FROM
+						owns_state = 171
+					}
+					GLC = {
+						exists = yes
+						OR = {
+							is_in_faction_with = FROM
+							is_in_faction = no
+						}
+					}
+				}
+			}
+			SOV = {
+				add_opinion_modifier = { target = GLC modifier = member_permanent_revolution }
+			}
+			if = {
+				limit = {
+					GLC = {
+						OR = {
+							exists = no
+							is_subject = yes
+						}
+					}
+				}
+				every_country = {
+					limit = {
+						NOT = {
+							OR = {
+								is_in_faction_with = SOV
+								TAG = SOV
+							}
+						}
+						OR = {
+							is_in_faction_with = FROM
+							TAG = FROM
+						}
+					}
+					every_country = {
+						limit = {
+							171 = { is_core_of = PREV }
+						}
+						set_country_flag = give_core_back_glc_171
+					}
+					if = {
+						limit = {
+							GLC = {
+								exists = no
+							}
+						}
+						release = GLC
+						declare_war_on = {
+						    target = GLC
+						    type = annex_everything
+						}
+					}
+					else_if = {
+						limit = {
+							GLC = {
+								is_subject = yes
+							}
+						}
+						set_autonomy = {
+						    target = GLC
+						    autonomy_state = autonomy_free
+						}
+						declare_war_on = {
+						    target = GLC
+						    type = annex_everything
+						}
+					}
+					every_country = {
+						limit = {
+							has_country_flag = give_core_back_glc_171
+						}
+						add_state_core = 171
+					}
+				}
+			}
+
+			GLC = {
+				set_country_flag = liberated_by_sov
+				leave_faction = yes
+				army_experience = 25
+				add_political_power = 150
+				add_opinion_modifier = { target = SOV modifier = liberator_workers }
+				hidden_effect = {
+					set_popularities = {
+						democratic = 0
+						neutrality = 0
+						fascism = 0
+						communism = 100
+					}
+					set_politics = {
+						ruling_party = communism
+					}
+					add_timed_idea = {
+					    idea = SOV_Fight_revolution
+					    days = 182
+					}
+					CAT = {
+						add_to_faction = GLC
+					}
+					set_technology = {
+					    gw_artillery = 1
+					    tech_recon = 1
+						tech_support = 1		
+						tech_engineers = 1
+					}
+					division_template = {
+						name = "Traballadores Revolucionarios"
+						priority = 1
+						regiments = {
+							infantry = { x = 0 y = 0 }
+							infantry = { x = 0 y = 1 }
+							infantry = { x = 0 y = 2 }
+							infantry = { x = 0 y = 3 }
+							infantry = { x = 0 y = 4 }					
+						}
+						support = {
+							artillery = { x = 0 y = 0 }
+							recon = { x = 0 y = 1 }
+						}
+					}
+					set_division_template_lock = {
+					    division_template = "Traballadores Revolucionarios"
+					    is_locked = yes
+					}
+					division_template = {
+						name = "Soviet Volunteers"
+						priority = 2
+						regiments = {
+							infantry = { x = 0 y = 0 }
+							infantry = { x = 0 y = 1 }
+							infantry = { x = 0 y = 2 }
+							infantry = { x = 0 y = 3 }
+							infantry = { x = 0 y = 4 }
+							artillery_brigade = { x = 1 y = 0 }
+							artillery_brigade = { x = 1 y = 1 }
+						}
+						support = {
+							artillery = { x = 0 y = 0 }
+							recon = { x = 0 y = 1 }
+							engineer = { x = 0 y = 2 }
+						}
+					}
+					set_division_template_lock = {
+					    division_template = "Soviet Volunteers"
+					    is_locked = yes
+					}
+					capital_scope = {
+						create_unit = {
+							division = "name = \"Traballadores Revolucionarios\" division_template = \"Traballadores Revolucionarios\" start_experience_factor = 0.3"
+							owner = GLC
+						}
+						create_unit = {
+							division = "name = \"Traballadores Revolucionarios\" division_template = \"Traballadores Revolucionarios\" start_experience_factor = 0.3"
+							owner = GLC
+						}
+						create_unit = {
+							division = "name = \"Traballadores Revolucionarios\" division_template = \"Traballadores Revolucionarios\" start_experience_factor = 0.3"
+							owner = GLC
+						}
+						create_unit = {
+							division = "name = \"Traballadores Revolucionarios\" division_template = \"Traballadores Revolucionarios\" start_experience_factor = 0.3"
+							owner = GLC
+						}
+						create_unit = {
+							division = "name = \"Soviet Volunteers\" division_template = \"Soviet Volunteers\" start_experience_factor = 1"
+							owner = GLC
+						}
+					}
+				}
+			}
+		}
+	}
+
+	outcome_potential = {
+		custom_effect_tooltip = SOV_liberate_iberia_tt
+		SOV = {
+			army_experience = 50
+			air_experience = 50
+			navy_experience = 50
+		}
+	}
+	
+	phases = {
+		SOV_liberate_iberia_infiltration = { base = 30 } 
+	}
+	phases = { 
+		SOV_liberate_iberia_intels = { base = 30 }
+	}
+	phases = { 
+		SOV_liberate_iberia_escape = { base = 30 }
+	}
+}

@@ -1,0 +1,54 @@
+scripted_gui = {
+
+	sov_national_obligations_decisions_scripted_gui = {
+		context_type = decision_category
+		window_name = "sov_national_obligations_decisions_gui_main"
+
+		visible = {
+            is_subject = no
+			has_global_flag = sov_national_obligations_allowed
+			has_country_flag = sov_unlocked_national_obligations
+			check_variable = {
+				var = sov_national_obligations_unlocked_indexes^num
+				value = 1
+				compare = greater_than_or_equals
+			}
+        }
+
+        ai_enabled = {
+			always = no
+		}
+
+        properties = {
+            sov_national_obligations_decisions_open = {
+                image = [THIS.GetCurrentSelectedIndexNationalObligationsIcon]
+            }
+        }
+
+        effects = {
+            sov_national_obligations_decisions_open_click = {
+                if = {
+                    limit = {
+                        NOT = {
+                            has_country_flag = sov_open_national_obligations
+                        }
+                    }
+                    set_country_flag = sov_open_national_obligations
+                }
+            }
+        }
+
+        triggers = {
+            sov_national_obligations_decisions_open_click_enabled = {
+                is_subject = no
+                has_global_flag = sov_national_obligations_allowed
+                has_country_flag = sov_unlocked_national_obligations
+                check_variable = {
+                    var = sov_national_obligations_unlocked_indexes^num
+                    value = 1
+                    compare = greater_than_or_equals
+                }
+            }
+        }
+	}
+}

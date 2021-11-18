@@ -1,427 +1,1988 @@
 on_actions = {
 
-	#SOU Gets Annexed By SOV and Receives Events
+	#A Country Dies During the SCW
 	on_capitulation = {
 		effect = {
 			if = {
 				limit = {
-					ROOT = {
-						tag = SOU
-					}
+					has_global_flag = second_russian_civil_war_in_progress
 					FROM = {
-						tag = SOV
-						has_country_flag = second_civil_war_in_progress
+						OR = {
+							tag = SOV
+							tag = SOU
+							tag = UKR
+							any_country = {
+								is_in_faction_with = SOV
+								NOT = {
+									TAG = SOV
+								}
+							}
+							any_country = {
+								is_in_faction_with = SOU
+								NOT = {
+									TAG = SOU
+								}
+							}
+							any_country = {
+								is_in_faction_with = UKR
+								NOT = {
+									TAG = UKR
+								}
+							}
+						}
 					}
 				}
-				ROOT = {
-					transfer_navy = {
-						target = FROM
-					}
-				}	
-				every_state = {
-					limit = {
-						is_owned_by = ROOT
-					}
-					FROM = {
-						transfer_state = PREV
-					}
-				}
+				#UKR Dies
 				if = {
 					limit = {
-						UKR = {
-							OR = {
-								is_in_faction_with = ROOT
-								has_war_with = FROM
+						sou_in_scw = yes
+						sov_in_scw = yes
+						ROOT = {
+							tag = UKR
+						}
+					}
+					log = "[UKR.GetNameDefCap] Capitulated (vs SOU & SOV)"
+					for_each_loop = {
+						array = global.countries
+						value = v
+						index = i
+						break = break_array
+
+						if = {
+							limit = {
+								any_country = {
+									is_in_faction_with = UKR
+									NOT = {
+										TAG = UKR
+									}
+								}
 							}
+							every_country = {
+								limit = {
+									is_in_faction_with = UKR
+									NOT = {
+										TAG = UKR
+									}
+								}
+								add_to_temp_array = { global.ukr_allies_russian_cw = var:v }
+							}
+						}
+					}
+					for_each_loop = {
+						array = global.ukr_allies_russian_cw
+						value = v
+						index = i
+						break = break_array
+
+						if = {
+							limit = {
+								var:v = {
+									is_in_faction_with = UKR
+									NOT = { 
+										TAG = UKR
+									}
+								}
+							}
+							every_state = {
+								limit = {
+									is_owned_by = var:v
+								}
+								UKR = {
+									transfer_state = PREV
+								}
+							}
+						}
+					}
+					for_each_loop = {
+						array = ukr.owned_states
+						value = v
+						index = i
+						break = break_array
+
+						add_to_temp_array = { ukr.owned_states_scw = var:v }
+					}
+					for_each_loop = {
+						array = ukr.owned_states_scw
+						value = v
+						index = i
+						break = break_array
+
+						if = {
+							limit = {
+								any_state = {
+									OR = {
+										is_controlled_by = SOU
+										is_controlled_by = SOV
+									}
+									state = var:v
+								}
+							}
+							every_state = {
+								limit = {
+									is_controlled_by = SOU
+									state = var:v
+								}
+								SOU = {
+									transfer_state = PREV
+								}
+							}
+							every_state = {
+								limit = {
+									is_controlled_by = SOV
+									state = var:v
+								}
+								SOV = {
+									transfer_state = PREV
+								}
+							}
+						}
+						else_if = {
+							limit = {
+								any_state = {
+									NOT = {
+										is_controlled_by = SOU
+										is_controlled_by = SOV
+									}
+									state = var:v
+								}
+							}
+							every_state = {
+								limit = {
+									any_country = {
+										NOT = {
+											TAG = SOV
+											TAG = SOU
+										}
+										controls_state = PREV
+										NOT = { TAG = ROOT }
+									}
+									is_core_of = ROOT
+								}
+								SOU = {
+									set_state_controller = var:v
+								}
+							}
+							SOU = {
+								transfer_state = var:v
+							}
+						}
+						if = {
+							limit = {
+								NOT = {
+									SOV = {
+										controls_state = var:v
+									}
+								}
+								var:v = {
+									is_owned_by = SOV
+								}
+							}
+							SOV = {
+								set_state_controller = var:v
+							} 
+						}
+						if = {
+							limit = {
+								NOT = {
+									SOU = {
+										controls_state = var:v
+									}
+								}
+								var:v = {
+									is_owned_by = SOU
+								}
+							}
+							SOU = {
+								set_state_controller = var:v
+							} 
+						}
+					}
+				}
+				#SOU Dies
+				else_if = {
+					limit = {
+						ROOT = {
+							ukr_in_scw = yes
+							sov_in_scw = yes
+							tag = SOU
+						}
+					}
+					log = "[SOU.GetNameDefCap] Capitulated (vs SOV & UKR)"
+					for_each_scope_loop = {
+						array = SOU.enemies
+						break = break_array
+
+						if = {
+							limit = {
+								NOT = {
+									is_in_array = { global.cleaning_red_carpet_achievement = THIS }
+								}
+							}
+							add_to_array = { global.cleaning_red_carpet_achievement = THIS }
+							set_variable = { global.cleaning_red_carpet_achievement_date@THIS = global.date }
+							set_country_flag = russia_reworked_new_achievement
+							if = {
+								limit = {
+									has_global_flag = russia_reworked_achievements_enabled
+								}
+								scoped_sound_effect = "russia_reworked_unlock_achievement"
+							}
+						}
+					}
+					for_each_loop = {
+						array = global.countries
+						value = v
+						index = i
+						break = break_array
+
+						if = {
+							limit = {
+								any_country = {
+									is_in_faction_with = SOU
+									NOT = {
+										tag = SOU
+									}
+								}
+							}
+							every_country = {
+								limit = {
+									is_in_faction_with = SOU
+									NOT = {
+										tag = SOU
+									}
+								}
+								add_to_temp_array = { global.sou_allies_russian_cw = var:v }
+							}
+						}
+					}
+					for_each_loop = {
+						array = global.sou_allies_russian_cw
+						value = v
+						index = i
+						break = break_array
+
+						if = {
+							limit = {
+								var:v = {
+									is_in_faction_with = SOU
+									NOT = { 
+										TAG = SOU
+									}
+								}
+							}
+							every_state = {
+								limit = {
+									is_owned_by = var:v
+								}
+								SOU = {
+									transfer_state = PREV
+								}
+							}
+						}
+					}
+					for_each_loop = {
+						array = sou.owned_states
+						value = v
+						index = i
+						break = break_array
+
+						add_to_temp_array = { sou.owned_states_scw = var:v }
+					}
+					for_each_loop = {
+						array = sou.owned_states_scw
+						value = v
+						index = i
+						break = break_array
+
+						if = {
+							limit = {
+								var:v = {
+									OR = {
+										state = 195
+										state = 213
+										state = 215
+										state = 216
+									}
+								}
+								FIN = {
+									is_in_faction_with = UKR
+									has_country_flag = fin_accepted_scw_ukr_alliance
+									is_in_array = { global.russian_scw_participants = FIN }
+								}
+							}
+							FIN = {
+								transfer_state = var:v
+							}
+						}
+						else_if = {
+							limit = {
+								is_in_array = { ukr.scw_claimed_states = var:v }
+							}
+							if = {
+								limit = {
+									UKR = {
+										has_government = anarchy
+									}
+								}
+								UKR = {
+									transfer_state = var:v
+								}
+							}
+							else_if = {
+								limit = {
+									NOT = {
+										UKR = {
+											has_government = anarchy
+										}
+									}
+								}
+								if = {
+									limit = {
+										is_in_array = { global.kievan_rus_state_ukraine = var:v }
+									}
+									UKR = {
+										transfer_state = var:v
+									}
+								}
+								else = {
+									if = {
+										limit = {
+											SOU = {
+												is_subject = no
+											}
+										}
+										UKR = {
+											set_autonomy = {
+												target = SOU
+												autonomy_state = autonomy_puppet
+											}
+										}
+										SOU = {
+											create_country_leader = {
+												name = "Ivan Kononov"
+												desc = "POLITICS_IVAN_KONONOV_DESC"
+												picture = "Portrait_Ivan_Kononov.dds"
+												expire = "1965.1.1"
+												ideology = oligarchism
+												traits = {
+													loyal_collaborator
+												}
+											}
+											set_cosmetic_tag = AFS
+										}
+									}
+									if = {
+										limit = {
+											SOU = {
+												is_subject_of = UKR
+											}
+											NOT = {
+												SOU = {
+													controls_state = var:v
+												}
+											}
+										}
+										SOU = {
+											set_state_controller = var:v
+										} 
+									}
+								}
+							}
+						}
+						else = {
+							SOV = {
+								log = "Transfering state var:v ([?var:v]) [?var:v.GetName] to SOV"
+								transfer_state = var:v
+							}
+						}
+					}
+					if = {
+						limit = {
+							NOT = {
+								UKR = {
+									has_government = anarchy
+								}
+								SOV = {
+									has_war_with = UKR
+								}
+							}
+							OR = {
+								UKR = {
+									check_variable = {
+										var = ukr.scw_claimed_states^num
+										value = 5
+										compare = greater_than_or_equals
+									}
+								}
+								SOU = {
+									is_subject_of = UKR
+								}
+								AND = {
+									BLR = {
+										is_subject_of = UKR
+									}
+									UKR = {
+										has_country_flag = ukr_blr_coup_succeeds
+									}
+								}
+								FIN = {
+									is_in_faction_with = UKR
+									has_country_flag = fin_accepted_scw_ukr_alliance
+									is_in_array = { global.russian_scw_participants = FIN }
+								}
+							}
+						}
+						SOV = {
+							country_event = { id = russia2_generic.44 days = 15 }
+							country_event = { id = russia2_russia.604 hours = 2 }
+						}
+						UKR = {
+							country_event = { id = russia2_ukraine.53 hours = 2 }
+						}
+					}
+					if = {
+						limit = {
+							FIN = {
+								is_in_faction_with = UKR
+								has_country_flag = fin_accepted_scw_ukr_alliance
+								is_in_array = { global.russian_scw_participants = FIN }
+								OR = {
+									owns_state = 195
+									owns_state = 213
+									owns_state = 215
+									owns_state = 216
+								}
+							}
+						}
+						FIN = {
+							country_event = { id = russia2_finland.33 days = 1 }
+						}
+					}
+				}
+				#SOV Dies
+				else_if = {
+					limit = {
+						ROOT = {
+							ukr_in_scw = yes
+							sou_in_scw = yes
+							tag = SOV
+						}
+					}
+					log = "[SOV.GetNameDefCap] Capitulated (vs SOU & UKR)"
+					for_each_loop = {
+						array = global.countries
+						value = v
+						index = i
+						break = break_array
+
+						if = {
+							limit = {
+								any_country = {
+									is_in_faction_with = SOV
+									NOT = {
+										TAG = SOV
+									}
+								}
+							}
+							every_country = {
+								limit = {
+									is_in_faction_with = SOV
+									NOT = {
+										TAG = SOV
+									}
+								}
+								add_to_temp_array = { global.sov_allies_russian_cw = var:v }
+							}
+						}
+					}
+					for_each_loop = {
+						array = global.sov_allies_russian_cw
+						value = v
+						index = i
+						break = break_array
+
+						if = {
+							limit = {
+								var:v = {
+									is_in_faction_with = SOV
+									NOT = { 
+										TAG = SOV
+									}
+								}
+							}
+							every_state = {
+								limit = {
+									is_owned_by = var:v
+								}
+								SOV = {
+									transfer_state = PREV
+								}
+							}
+						}
+					}
+					for_each_loop = {
+						array = sov.owned_states
+						value = v
+						index = i
+						break = break_array
+
+						add_to_temp_array = { sov.owned_states_scw = var:v }
+					}
+					for_each_loop = {
+						array = sov.owned_states_scw
+						value = v
+						index = i
+						break = break_array
+
+						if = {
+							limit = {
+								is_in_array = { ukr.scw_claimed_states = var:v }
+							}
+							if = {
+								limit = {
+									UKR = {
+										has_government = anarchy
+									}
+								}
+								UKR = {
+									transfer_state = var:v
+								}
+							}
+							else_if = {
+								limit = {
+									NOT = {
+										UKR = {
+											has_government = anarchy
+										}	
+									}
+								}
+								if = {
+									limit = {
+										is_in_array = { global.kievan_rus_state_ukraine = var:v }
+									}
+									UKR = {
+										transfer_state = var:v
+									}
+								}
+								else = {
+									if = {
+										limit = {
+											SOV = {
+												is_subject = no
+											}
+										}
+										UKR = {
+											set_autonomy = {
+												target = SOV
+												autonomy_state = autonomy_puppet
+											}
+										}
+										SOV = {
+											create_country_leader = {
+												name = "Ivan Kononov"
+												desc = "POLITICS_IVAN_KONONOV_DESC"
+												picture = "Portrait_Ivan_Kononov.dds"
+												expire = "1965.1.1"
+												ideology = oligarchism
+												traits = {
+													loyal_collaborator
+												}
+											}
+											set_cosmetic_tag = AFS
+										}
+										every_state = {
+											limit = {
+												is_controlled_by = UKR
+												is_owned_by = SOV
+											}
+											SOV = {
+												transfer_state = PREV
+											}
+										}
+									}
+								}
+							}
+						}
+						else = {
+							SOU = {
+								log = "Transfering state var:v ([?var:v]) [?var:v.GetName] to SOV"
+								transfer_state = var:v
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	#Someone Wins SCW
+	on_capitulation = {
+		effect = {
+			if = {
+				limit = {
+					has_global_flag = second_russian_civil_war_in_progress
+					FROM = {
+						OR = {
+							tag = SOV
+							tag = SOU
+							tag = UKR
+							any_country = {
+								OR = {
+									is_in_faction_with = SOV
+									is_subject_of = SOV
+								}
+								NOT = {
+									TAG = SOV
+								}
+							}
+							any_country = {
+								OR = {
+									is_in_faction_with = SOU
+									is_subject_of = SOU
+								}
+								NOT = {
+									TAG = SOU
+								}
+							}
+							any_country = {
+								OR = {
+									is_in_faction_with = UKR
+									is_subject_of = UKR
+								}
+								NOT = {
+									TAG = UKR
+								}
+							}
+						}
+					}
+				}
+				#UKR Wins SCW
+				if = {
+					limit = {
+						ukr_in_scw = yes
+						OR = {
+							AND = {
+								ROOT = {
+									TAG = SOU
+								}
+								NOT = {
+									sov_in_scw = yes
+								}
+							}
+							AND = {
+								ROOT = {
+									TAG = SOV
+								}
+								NOT = {
+									sou_in_scw = yes
+								}
+							}
+						}
+						FROM = {
+							OR = {
+								tag = UKR
+								any_country = {
+									OR = {
+										is_in_faction_with = UKR
+										is_subject_of = UKR
+									}
+									NOT = {
+										TAG = UKR
+									}
+								}
+							}
+						}
+					}
+					if = {
+						limit = {
+							has_global_flag = {
+								flag = second_russian_civil_war_in_progress
+								days < 365
+							}
+						}
+						if = {
+							limit = {
+								ukr_in_scw = yes
+							}
+							for_each_scope_loop = {
+								array = global.russian_scw_participants_ukr
+								break = break_array
+							 
+							 	if = {
+									limit = {
+										NOT = {
+											is_in_array = { global.speedrun_urals_achievement = THIS }
+										}
+									}
+									add_to_array = { global.speedrun_urals_achievement = THIS }
+									set_variable = { global.speedrun_urals_achievement_date@THIS = global.date }
+									set_country_flag = russia_reworked_new_achievement
+									if = {
+										limit = {
+											has_global_flag = russia_reworked_achievements_enabled
+										}
+										scoped_sound_effect = "russia_reworked_unlock_achievement"
+									}
+								 }
+							}
+						}	
+						for_each_scope_loop = {
+							array = global.russian_scw_participants_other
+							break = break_array
+						 
+							if = {
+								limit = {
+									NOT = {
+										is_in_array = { global.speedrun_urals_achievement = THIS }
+									}
+								}
+								add_to_array = { global.speedrun_urals_achievement = THIS }
+								set_variable = { global.speedrun_urals_achievement_date@THIS = global.date }
+								set_country_flag = russia_reworked_new_achievement
+								if = {
+									limit = {
+										has_global_flag = russia_reworked_achievements_enabled
+									}
+									scoped_sound_effect = "russia_reworked_unlock_achievement"
+								}
+							}
+						}
+					}
+					ROOT = {
+						transfer_navy = {
+							target = UKR
+						}
+					}
+					if = {
+						limit = {
+							ROOT = {
+								TAG = SOU
+							}
+						}
+						for_each_loop = {
+							array = global.countries
+							value = v
+							index = i
+							break = break_array
+	
+							if = {
+								limit = {
+									any_country = {
+										is_in_faction_with = SOU
+										NOT = {
+											TAG = SOU
+										}
+									}
+								}
+								every_country = {
+									limit = {
+										is_in_faction_with = SOU
+										NOT = {
+											TAG = SOU
+										}
+									}
+									add_to_temp_array = { global.sou_allies_russian_cw = var:v }
+								}
+							}
+						}
+						for_each_loop = {
+							array = global.sou_allies_russian_cw
+							value = v
+							index = i
+							break = break_array
+	
+							if = {
+								limit = {
+									var:v = {
+										is_in_faction_with = SOU
+										NOT = { 
+											TAG = SOU
+										}
+									}
+								}
+								every_state = {
+									limit = {
+										is_owned_by = var:v
+									}
+									SOU = {
+										transfer_state = PREV
+									}
+								}
+							}
+						}
+						for_each_loop = {
+							array = sou.owned_states
+							value = v
+							index = i
+							break = break_array
+	
+							add_to_temp_array = { sou.owned_states_scw = var:v }
+						}
+						for_each_loop = {
+							array = sou.owned_states_scw
+							value = v
+							index = i
+							break = break_array
+
+							if = {
+								limit = {
+									UKR = {
+										has_government = anarchy
+									}
+								}
+								UKR = {
+									transfer_state = var:v
+								}
+							}
+							if = {
+								limit = {
+									is_in_array = { global.kievan_rus_state_ukraine = var:v }
+								}
+								UKR = {
+									transfer_state = var:v
+								}
+								if = {
+									limit = {
+										UKR = {
+											NOT = {
+												has_government = anarchy
+											}
+										}
+										SOU = {
+											is_subject = no
+										}
+										SOV = {
+											is_subject = no
+										}
+									}
+									UKR = {
+										set_autonomy = {
+											target = SOU
+											autonomy_state = autonomy_puppet
+										}
+									}
+									SOU = {
+										create_country_leader = {
+											name = "Ivan Kononov"
+											desc = "POLITICS_IVAN_KONONOV_DESC"
+											picture = "Portrait_Ivan_Kononov.dds"
+											expire = "1965.1.1"
+											ideology = oligarchism
+											traits = {
+												loyal_collaborator
+											}
+										}
+										set_cosmetic_tag = AFS
+									}
+								}
+								if = {
+									limit = {
+										var:v = {
+											OR = {
+												state = 195
+												state = 213
+												state = 215
+												state = 216
+											}
+										}
+										FIN = {
+											is_in_faction_with = UKR
+											has_country_flag = fin_accepted_scw_ukr_alliance
+										}
+									}
+									FIN = {
+										transfer_state = var:v
+									}
+								}
+							}
+							if = {
+								limit = {
+									SOU = {
+										is_subject_of = UKR
+									}
+								}
+								if = {
+									limit = {
+										SOU = {
+											is_subject_of = UKR
+										}
+										NOT = {
+											SOU = {
+												controls_state = var:v
+											}
+											var:v = {
+												is_owned_by = UKR
+											}
+										}
+									}
+									SOU = {
+										set_state_controller = var:v
+									} 
+								}
+							}
+							if = {
+								limit = {
+									SOV = {
+										is_subject_of = UKR
+									}
+								}
+								if = {
+									limit = {
+										var:v = {
+											NOT = {
+												is_owned_by = UKR
+											}	
+										}
+									}
+									SOV = {
+										log = "Transfering state var:v ([?var:v]) [?var:v.GetName] to SOV"
+										transfer_state = var:v
+									}
+								}
+								if = {
+									limit = {
+										SOV = {
+											is_subject_of = UKR
+										}
+										NOT = {
+											SOV = {
+												controls_state = var:v
+											}
+											var:v = {
+												is_owned_by = UKR
+											}
+										}
+									}
+									SOV = {
+										set_state_controller = var:v
+									} 
+								}
+							}
+							if = {
+								limit = {
+									FIN = {
+										is_in_faction_with = UKR
+										has_country_flag = fin_accepted_scw_ukr_alliance
+									}
+									NOT = {
+										FIN = {
+											controls_state = var:v
+										}
+										var:v = {
+											is_owned_by = UKR
+										}
+										var:v = {
+											is_owned_by = SOV
+										}
+										var:v = {
+											is_owned_by = SOU
+										}
+									}
+								}
+								FIN = {
+									set_state_controller = var:v
+								} 
+							}
+						}
+						if = {
+							limit = {
+								FIN = {
+									is_in_faction_with = UKR
+									has_country_flag = fin_accepted_scw_ukr_alliance
+									is_in_array = { global.russian_scw_participants = FIN }
+									OR = {
+										owns_state = 195
+										owns_state = 213
+										owns_state = 215
+										owns_state = 216
+									}
+								}
+							}
+							FIN = {
+								country_event = { id = russia2_finland.33 days = 1 }
+							}
+						}
+					}
+					if = {
+						limit = {
+							ROOT = {
+								TAG = SOV
+							}
+						}
+						for_each_loop = {
+							array = global.countries
+							value = v
+							index = i
+							break = break_array
+	
+							if = {
+								limit = {
+									any_country = {
+										is_in_faction_with = SOV
+										NOT = {
+											TAG = SOV
+										}
+									}
+								}
+								every_country = {
+									limit = {
+										is_in_faction_with = SOV
+										NOT = {
+											TAG = SOV
+										}
+									}
+									add_to_temp_array = { global.sov_allies_russian_cw = var:v }
+								}
+							}
+						}
+						for_each_loop = {
+							array = global.sov_allies_russian_cw
+							value = v
+							index = i
+							break = break_array
+
+							if = {
+								limit = {
+									var:v = {
+										is_in_faction_with = SOV
+										NOT = { 
+											TAG = SOV
+										}
+									}
+								}
+								every_state = {
+									limit = {
+										is_owned_by = var:v
+									}
+									SOV = {
+										transfer_state = PREV
+									}
+								}
+							}
+						}
+						for_each_loop = {
+							array = sov.owned_states
+							value = v
+							index = i
+							break = break_array
+	
+							add_to_temp_array = { sov.owned_states_scw = var:v }
+						}
+						for_each_loop = {
+							array = sov.owned_states_scw
+							value = v
+							index = i
+							break = break_array
+							
+							if = {
+								limit = {
+									UKR = {
+										has_government = anarchy
+									}
+								}
+								UKR = {
+									transfer_state = var:v
+								}
+							}
+							else_if = {
+								limit = {
+									NOT = {
+										UKR = {
+											has_government = anarchy
+										}
+									}
+								}
+								if = {
+									limit = {
+										is_in_array = { global.kievan_rus_state_ukraine = var:v }
+									}
+									UKR = {
+										transfer_state = var:v
+									}
+								}
+								if = {
+									limit = {
+										SOU = {
+											is_subject_of = UKR
+										}
+										NOT = { 
+											is_in_array = { global.kievan_rus_state_ukraine = var:v }
+										}
+									}
+									SOU = {
+										log = "Transfering state var:v ([?var:v]) [?var:v.GetName] to SOV"
+										transfer_state = var:v
+									}
+								}
+								else = {
+									if = {
+										limit = {
+											UKR = {
+												NOT = {
+													has_government = anarchy
+												}
+											}
+											SOU = {
+												is_subject = no
+											}
+											SOV = {
+												is_subject = no
+											}
+										}
+										UKR = {
+											set_autonomy = {
+												target = SOV
+												autonomy_state = autonomy_puppet
+											}
+										}
+										SOV = {
+											create_country_leader = {
+												name = "Ivan Kononov"
+												desc = "POLITICS_IVAN_KONONOV_DESC"
+												picture = "Portrait_Ivan_Kononov.dds"
+												expire = "1965.1.1"
+												ideology = oligarchism
+												traits = {
+													loyal_collaborator
+												}
+											}
+											set_cosmetic_tag = AFS
+										}
+									}
+									if = {
+										limit = {
+											SOV = {
+												is_subject_of = UKR
+											}
+											NOT = {
+												SOV = {
+													controls_state = var:v
+												}
+												var:v = {
+													is_owned_by = UKR
+												}
+											}
+										}
+										SOV = {
+											set_state_controller = var:v
+										} 
+									}
+								}
+								if = {
+									limit = {
+										SOU = {
+											is_subject_of = UKR
+										}
+									}
+									if = {
+										limit = {
+											NOT = {
+												SOU = {
+													controls_state = var:v
+												}
+												var:v = {
+													is_owned_by = UKR
+												}
+											}
+										}
+										SOU = {
+											set_state_controller = var:v
+										} 
+									}
+								}
+							}
+						}
+					}
+					UKR = { #TODO Event For End of Civil War UKR
+						country_event = { id = russia2_ukraine.47  hours = 6 }
+						#news_event = { id =  days = 1 }
+					}
+				}
+				#SOU Wins SCW
+				else_if = {
+					limit = {
+						sou_in_scw = yes
+						OR = {
+							AND = {
+								ROOT = {
+									TAG = SOV
+								}
+								NOT = {
+									ukr_in_scw = yes
+								}
+							}
+							AND = {
+								ROOT = {
+									TAG = UKR
+								}
+								NOT = {
+									sov_in_scw = yes
+								}
+							}
+						}
+						FROM = {
+							OR = {
+								tag = SOU
+								any_country = {
+									OR = {
+										is_in_faction_with = SOU
+										is_subject_of = SOU
+									}
+									NOT = {
+										TAG = SOU
+									}
+								}
+							}
+						}
+					}
+					if = {
+						limit = {
+							has_global_flag = {
+								flag = second_russian_civil_war_in_progress
+								days < 365
+							}
+						}
+						if = {
+							limit = {
+								sou_in_scw = yes
+							}
+							for_each_scope_loop = {
+								array = global.russian_scw_participants_sou
+								break = break_array
+							 
+							 	if = {
+									limit = {
+                                        NOT = {
+										    is_in_array = { global.speedrun_urals_achievement = THIS }
+                                        }
+									}
+									add_to_array = { global.speedrun_urals_achievement = THIS }
+									set_variable = { global.speedrun_urals_achievement_date@THIS = global.date }
+									set_country_flag = russia_reworked_new_achievement
+									if = {
+										limit = {
+											has_global_flag = russia_reworked_achievements_enabled
+										}
+										scoped_sound_effect = "russia_reworked_unlock_achievement"
+									}
+								}
+							}
+						}	
+						for_each_scope_loop = {
+							array = global.russian_scw_participants_other
+                            break = break_array
+						
+                            if = {
+                                limit = {
+                                    NOT = {
+                                        is_in_array = { global.speedrun_urals_achievement = THIS }
+                                    }
+                                }
+                                add_to_array = { global.speedrun_urals_achievement = THIS }
+                                set_variable = { global.speedrun_urals_achievement_date@THIS = global.date }
+                                set_country_flag = russia_reworked_new_achievement
+                                if = {
+                                    limit = {
+                                        has_global_flag = russia_reworked_achievements_enabled
+                                    }
+                                    scoped_sound_effect = "russia_reworked_unlock_achievement"
+                                }
+                            }
+						}
+					}
+					ROOT = {
+						transfer_navy = {
+							target = SOU
+						}
+					}
+					if = {
+						limit = {
+							OR = {
+								TAG = GEO
+								TAG = BLR
+								TAG = AZR
+								TAG = ARM
+								TAG = KAZ
+								TAG = TMS
+							}
+						}
+						SOU = {
+							add_state_core = PREV
 						}
 					}
 					every_state = {
 						limit = {
-							is_owned_by = UKR
+							any_country = {
+								OR = {
+									is_in_faction_with = ROOT
+									is_subject_of = ROOT
+								}
+								owns_state = PREV
+								NOT = { TAG = ROOT }
+							}
 						}
-						FROM = {
+						SOU = {
 							transfer_state = PREV
-							add_state_core = PREV
 						}
 					}
+					every_state = {
+						limit = {
+							is_owned_by = ROOT
+						}
+						SOU = {
+							transfer_state = PREV
+						}
+					}
+					SOU = {
+						country_event = { id = russia2_russia.238 hours = 3 }
+						news_event = { id = newsrussia2.68 days = 1 }
+					}
 				}
-				FROM = {
-					country_event = { id = soviets.190 hours = 6 }
-					news_event = { id = newsrussia2.67 days = 1 }
+				#SOV Wins SCW
+				else_if = {
+					limit = {
+						sov_in_scw = yes
+						OR = {
+							AND = {
+								ROOT = {
+									TAG = SOU
+								}
+								NOT = {
+									SOV = {
+										has_war_with = UKR
+									}
+									UKR = {
+										AND = {
+											exists = yes
+											check_variable = {
+												var = ukr.scw_claimed_states^num
+												value = 5
+												compare = greater_than_or_equals
+											}
+										}
+									}
+									AND = {
+										BLR = {
+											is_subject_of = UKR
+										}
+										UKR = {
+											has_country_flag = ukr_blr_coup_succeeds
+										}
+									}
+									SOU = {
+										is_subject_of = UKR
+									}
+									FIN = {
+										is_in_faction_with = UKR
+										has_country_flag = fin_accepted_scw_ukr_alliance
+									}
+								}
+							}
+							AND = {
+								ROOT = {
+									TAG = UKR
+								}
+								NOT = {
+									sou_in_scw = yes
+								}
+							}
+						}
+						FROM = {
+							OR = {
+								tag = SOV
+								any_country = {
+									OR = {
+										is_in_faction_with = SOV
+										is_subject_of = SOV
+									}
+									NOT = {
+										TAG = SOV
+									}
+								}
+							}
+						}
+					}
+					if = {
+						limit = {
+							has_global_flag = {
+								flag = second_russian_civil_war_in_progress
+								days < 365
+							}
+						}
+						if = {
+							limit = {
+								sov_in_scw = yes
+							}
+							SOV = {
+								set_country_flag = old_tsar_still_alive
+							}
+							for_each_scope_loop = {
+								array = global.russian_scw_participants_sov
+                                break = break_array
+							 
+                                if = {
+                                    limit = {
+                                        NOT = {
+                                            is_in_array = { global.speedrun_urals_achievement = THIS }
+                                        }
+                                    }
+                                    add_to_array = { global.speedrun_urals_achievement = THIS }
+                                    set_variable = { global.speedrun_urals_achievement_date@THIS = global.date }
+                                    set_country_flag = russia_reworked_new_achievement
+                                    if = {
+                                        limit = {
+                                            has_global_flag = russia_reworked_achievements_enabled
+                                        }
+                                        scoped_sound_effect = "russia_reworked_unlock_achievement"
+                                    }
+                                }
+							}
+						}
+						if = {
+							limit = {
+								ukr_in_scw = yes
+							}
+							for_each_scope_loop = {
+								array = global.russian_scw_participants_ukr
+                                break = break_array
+							 
+                                if = {
+                                    limit = {
+                                        NOT = {
+                                            is_in_array = { global.speedrun_urals_achievement = THIS }
+                                        }
+                                    }
+                                    add_to_array = { global.speedrun_urals_achievement = THIS }
+                                    set_variable = { global.speedrun_urals_achievement_date@THIS = global.date }
+                                    set_country_flag = russia_reworked_new_achievement
+                                    if = {
+                                        limit = {
+                                            has_global_flag = russia_reworked_achievements_enabled
+                                        }
+                                        scoped_sound_effect = "russia_reworked_unlock_achievement"
+                                    }
+                                }
+							}
+						}	
+						for_each_scope_loop = {
+							array = global.russian_scw_participants_other
+                            break = break_array
+						 
+                            if = {
+                                limit = {
+                                    NOT = {
+                                        is_in_array = { global.speedrun_urals_achievement = THIS }
+                                    }
+                                }
+                                add_to_array = { global.speedrun_urals_achievement = THIS }
+                                set_variable = { global.speedrun_urals_achievement_date@THIS = global.date }
+                                set_country_flag = russia_reworked_new_achievement
+                                if = {
+                                    limit = {
+                                        has_global_flag = russia_reworked_achievements_enabled
+                                    }
+                                    scoped_sound_effect = "russia_reworked_unlock_achievement"
+                                }
+                            }
+						}
+					}
+					every_state = {
+						limit = {
+							any_country = {
+								OR = {
+									is_in_faction_with = ROOT
+									is_subject_of = ROOT
+								}
+								owns_state = PREV
+								NOT = { TAG = ROOT }
+							}
+						}
+						SOV = {
+							transfer_state = PREV
+						}
+					}
+					ROOT = {
+						transfer_navy = {
+							target = SOV
+						}
+					}
+					every_state = {
+						limit = {
+							is_owned_by = ROOT
+						}
+						SOV = {
+							transfer_state = PREV
+						}
+					}
+					SOV = {
+						country_event = { id = russia2_russia.190 hours = 6 }
+						news_event = { id = newsrussia2.67 days = 1 }
+					}
+					every_country = {
+						limit = {
+							has_country_flag = has_helped_whiteguard_by_volunteers
+						}
+						country_event = { id = russia2_generic.35 days = 1 }
+					}
 				}
+			}
+		}	
+	}
+	
+	#Set a country flag for major that send volunteers to WG durinf CW
+	on_send_volunteers = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						has_country_flag = help_whiteguard_during_russian_civil_war
+						has_idea = SOV_Participation_russian_civil_war_foreign
+					}
+					FROM = {
+						tag = SOV
+						has_global_flag = second_russian_civil_war_in_progress
+					}
+				}
+				ROOT = {
+					set_country_flag = has_helped_whiteguard_by_volunteers
+				}	
 			}
 		}
 	}
 
-	#SOV Gets Annexed By SOU and Receives Events
+	#Crimea loses all their ships on capitulation
 	on_capitulation = {
 		effect = {
 			if = {
 				limit = {
 					ROOT = {
-						tag = SOV
-						has_country_flag = second_civil_war_in_progress
-					}
-					FROM = {
-						tag = SOU
+						tag = CRI
+						has_idea = CRI_Master_black_sea
 					}
 				}
 				ROOT = {
 					transfer_navy = {
 						target = FROM
 					}
-				}	
-				every_state = {
-					limit = {
-						is_owned_by = ROOT
-					}
-					FROM = {
-						transfer_state = PREV
-					}
-				}
-				if = {
-					limit = {
-						OR = {
-							TAG = UKR
-							TAG = GEO
-							TAG = BLR
-							TAG = AZR
-							TAG = ARM
-							TAG = KAZ
-							TAG = TMS
-						}
-					}
-					SOU = {
-						add_state_core = PREV
-					}
 				}
 				FROM = {
-					country_event = { id = soviets.238 hours = 3 }
-					news_event = { id = newsrussia2.68 days = 1 }
+					country_event = russia2_generic.43
 				}
-
 			}
 		}
 	}
 
-	#Countries with the Russian agreement will not mess with Russian affairs
-	on_declare_war = {
+	#Arrays setup
+	on_war_relation_added = {
 		effect = {
 			if = {
 				limit = {
-					tag = SOV
-					any_country = {
-						has_idea = SOV_Root_russian_pact
-					}
+					has_global_flag = second_russian_civil_war_in_progress
 				}
-				hidden_effect = {
-					FROM = {
-						set_country_flag = is_target_of_russia_with_agreement
-					}
-					every_country = {
-						limit = {
-							has_idea = SOV_Root_russian_pact
-						}
-
-						add_ai_strategy = {
-							type = support
-							id = FROM
-							value = -1000
-						}
-
-						add_ai_strategy = {
-							type = alliance
-							id = FROM
-							value = -1000
-						}
-
-						add_ai_strategy = {
-							type = send_volunteers_desire
-							id = FROM
-							value = -1000
-						}
-					}
-				}
-			}
-		}
-	}
-
-	#Undo the hostile behaviors towards Russian enemy
-	on_capitulation = {
-		effect = {
-			if = {
-				limit = {
-					FROM = {
-						has_country_flag = is_target_of_russia_with_agreement
-					}
-				}
-				hidden_effect = {
-					FROM = {
-						clr_country_flag = is_target_of_russia_with_agreement
-					}
-					every_country = {
-						limit = {
-							has_idea = SOV_Root_russian_pact
-						}
-
-						add_ai_strategy = {
-							type = support
-							id = FROM
-							value = 1000
-						}
-
-						add_ai_strategy = {
-							type = alliance
-							id = FROM
-							value = 1000
-						}
-
-						add_ai_strategy = {
-							type = send_volunteers_desire
-							id = FROM
-							value = 1000
-						}
-					}
-				}
-			}
-		}
-	}
-
-	on_startup = {
-		effect = {
-			SOV = {
+				log = "Russia Reworked SCW on_war_relation_added debug :"
+				log = " ROOT : [ROOT.GetNameDefCap]"
+				log = " FROM : [FROM.GetNameDefCap]"
 				if = {
 					limit = {
-						has_game_rule = {
-							rule = SOV_ai_behavior
-							option = RANDOM
+						ROOT = {
+							OR = {
+								tag = SOV
+								tag = SOU
+								tag = UKR
+							}
+							if = {
+								limit = {
+									tag = UKR
+								}
+								is_in_array = { global.russian_scw_participants = UKR }
+							}
 						}
 					}
-					#Undo the Paradox nonsense country flags
+					log = " ROOT ([ROOT.GetNameDefCap]) is valid"
 					if = {
 						limit = {
-							has_country_flag = SOV_AI_RANDOM_COMMUNIST_HISTORICAL
+							NOT = {
+								#is_in_array = { global.russian_scw_participants = ROOT }
+								any_of = {
+									array = global.russian_scw_participants
+									value = v
+									index = i
+									
+									ROOT = {
+										tag = var:v
+									}
+								}
+							}
 						}
-						clr_country_flag = SOV_AI_RANDOM_COMMUNIST_HISTORICAL
+						add_to_array = { global.russian_scw_participants = ROOT }
+						log = " Added to array ROOT global.russian_scw_participants : [ROOT.GetNameDefCap]"
+						if = {
+							limit = {
+								ROOT = {
+									OR = {
+										tag = SOV
+										is_in_faction_with = SOV
+									}
+								}
+							}
+							add_to_array = { global.russian_scw_participants_sov = ROOT }
+						}
+						else_if = {
+							limit = {
+								ROOT = {
+									OR = {
+										tag = SOU
+										is_in_faction_with = SOU
+									}
+								}
+							}
+							add_to_array = { global.russian_scw_participants_sou = ROOT }
+						}
+						else_if = {
+							limit = {
+								ROOT = {
+									OR = {
+										tag = UKR
+										is_in_faction_with = UKR
+									}
+								}
+								is_in_array = { global.russian_scw_participants = UKR }
+							}
+							add_to_array = { global.russian_scw_participants_ukr = ROOT }
+						}
+						else = {
+							add_to_array = { global.russian_scw_participants_other = ROOT }
+						}
 					}
 					if = {
 						limit = {
-							has_country_flag = SOV_AI_RANDOM_COMMUNIST_ALTERNATE
-						}
-						clr_country_flag = SOV_AI_RANDOM_COMMUNIST_ALTERNATE
-					}
-					set_temp_variable = { random_sov_ai_factor = 0 }
-					randomize_temp_variable = {
-						var = random_sov_ai_factor
-						distribution = uniform
-						min = 1
-						max = 4
-					}
-					round_temp_variable = random_sov_ai_factor
-					#Communist
-					if = {
-						limit = {
-							check_variable = {
-								var = random_sov_ai_factor
-								value = 1
-								compare = equals
+							NOT = {
+								#is_in_array = { global.russian_scw_participants = FROM }
+								any_of = {
+									array = global.russian_scw_participants
+									value = v
+									index = i
+									
+									FROM = {
+										tag = var:v
+									}
+								}
 							}
 						}
-						set_country_flag = SOV_AI_RANDOM_COMMUNIST_BEHAVIOR
-					}
-					#Democratic
-					else_if = {
-						limit = {
-							check_variable = {
-								var = random_sov_ai_factor
-								value = 2
-								compare = equals
+						add_to_array = { global.russian_scw_participants = FROM }
+						log = " Added to array FROM global.russian_scw_participants : [FROM.GetNameDefCap]"
+						if = {
+							limit = {
+								FROM = {
+									OR = {
+										tag = SOV
+										is_in_faction_with = SOV
+									}
+								}
 							}
+							add_to_array = { global.russian_scw_participants_sov = FROM }
 						}
-						set_country_flag = SOV_AI_RANDOM_DEMOCRATIC_BEHAVIOR
-					}
-					#Neutrality
-					else_if = {
-						limit = {
-							check_variable = {
-								var = random_sov_ai_factor
-								value = 3
-								compare = equals
+						else_if = {
+							limit = {
+								FROM = {
+									OR = {
+										tag = SOU
+										is_in_faction_with = SOU
+									}
+								}
 							}
+							add_to_array = { global.russian_scw_participants_sou = FROM }
 						}
-						set_country_flag = SOV_AI_RANDOM_NEUTRAL_BEHAVIOR
-					}
-					#Fascist
-					else_if = {
-						limit = {
-							check_variable = {
-								var = random_sov_ai_factor
-								value = 4
-								compare = equals
+						else_if = {
+							limit = {
+								FROM = {
+									OR = {
+										tag = UKR
+										is_in_faction_with = UKR
+									}
+								}
+								is_in_array = { global.russian_scw_participants = UKR }
 							}
+							add_to_array = { global.russian_scw_participants_ukr = FROM }
 						}
-						set_country_flag = SOV_AI_RANDOM_FASCIST_BEHAVIOR
-					}
-				}
-			}
-		}
-	}
-
-	#Revert capital to St Petersburg in case
-	on_state_control_changed = {
-		effect = {
-			if = {
-				limit = {
-					FROM.FROM = {
-						state = 195
-					}
-					ROOT = {
-						TAG = SOV
-						has_country_flag = has_choosen_st_petersburg_as_capital
-					}
-					195 = {
-						is_capital = no
-					}
-				}
-				ROOT = {
-					set_capital = 195
-				}
-			}
-		}
-	}
-	
-	#Rename Stalingrad to Volgograd if SOV is not the owner
-	on_state_control_changed = {
-		effect = {
-			if = {
-				limit = {
-					FROM.FROM = {
-						state = 217
-					}
-					FROM = {
-						TAG = SOV
-					}
-					217 = {
-						NOT = {
-							is_owned_and_controlled_by = SOV
-						}
-						is_controlled_by = ROOT
-					}
-					ROOT = {
-						NOT = {
-							original_tag = SOV
-							has_government = communism
+						else = {
+							add_to_array = { global.russian_scw_participants_other = FROM }
 						}
 					}
-					NOT = {
-						has_global_flag = renamed_stalingrad_sov
-					}
 				}
-				set_global_flag = renamed_stalingrad_sov
-				set_province_name = { id = 3529 name = "Volgograd"}
-				217 = {
-					set_state_name = "Volgograd"
-				}
-			}
-			else_if = {
-				limit = {
-					FROM.FROM = {
-						state = 217
-					}
-					ROOT = {
-						TAG = SOV
-						has_government = communism
-					}
-					217 = {
-						NOT = {
-							is_controlled_by = FROM
-						}
-						is_owned_and_controlled_by = ROOT
-					}
-					has_global_flag = renamed_stalingrad_sov
-				}
-				clr_global_flag = renamed_stalingrad_sov
 				if = {
 					limit = {
-						has_country_leader = {
-							name = "Leon Trotsky"
-							ruling_only = yes
+						FROM = {
+							OR = {
+								tag = SOV
+								tag = SOU
+								tag = UKR
+							}
+							if = {
+								limit = {
+									tag = UKR
+								}
+								is_in_array = { global.russian_scw_participants = UKR }
+							}
 						}
 					}
-					set_province_name = { id = 3529 name = "Trotskygrad"}
-					217 = {
-						set_state_name = "Trotskygrad"
+					log = " FROM ([FROM.GetNameDefCap]) is valid"
+					if = {
+						limit = {
+							NOT = {
+								#is_in_array = { global.russian_scw_participants = ROOT }
+								any_of = {
+									array = global.russian_scw_participants
+									value = v
+									index = i
+									
+									ROOT = {
+										tag = var:v
+									}
+								}
+							}
+						}
+						add_to_array = { global.russian_scw_participants = ROOT }
+						log = " Added to array ROOT global.russian_scw_participants : [ROOT.GetNameDefCap]"
+						if = {
+							limit = {
+								ROOT = {
+									OR = {
+										tag = SOV
+										is_in_faction_with = SOV
+									}
+								}
+							}
+							add_to_array = { global.russian_scw_participants_sov = ROOT }
+						}
+						else_if = {
+							limit = {
+								ROOT = {
+									OR = {
+										tag = SOU
+										is_in_faction_with = SOU
+									}
+								}
+							}
+							add_to_array = { global.russian_scw_participants_sou = ROOT }
+						}
+						else_if = {
+							limit = {
+								ROOT = {
+									OR = {
+										tag = UKR
+										is_in_faction_with = UKR
+									}
+								}
+								is_in_array = { global.russian_scw_participants = UKR }
+							}
+							add_to_array = { global.russian_scw_participants_ukr = ROOT }
+						}
+						else = {
+							add_to_array = { global.russian_scw_participants_other = ROOT }
+						}
+					}
+					if = {
+						limit = {
+							NOT = {
+								#is_in_array = { global.russian_scw_participants = FROM }
+								any_of = {
+									array = global.russian_scw_participants
+									value = v
+									index = i
+									
+									FROM = {
+										tag = var:v
+									}
+								}
+							}
+						}
+						add_to_array = { global.russian_scw_participants = FROM }
+						log = " Added to array FROM global.russian_scw_participants : [FROM.GetNameDefCap]"
+						if = {
+							limit = {
+								FROM = {
+									OR = {
+										tag = SOV
+										is_in_faction_with = SOV
+									}
+								}
+							}
+							add_to_array = { global.russian_scw_participants_sov = FROM }
+						}
+						else_if = {
+							limit = {
+								FROM = {
+									OR = {
+										tag = SOU
+										is_in_faction_with = SOU
+									}
+								}
+							}
+							add_to_array = { global.russian_scw_participants_sou = FROM }
+						}
+						else_if = {
+							limit = {
+								FROM = {
+									OR = {
+										tag = UKR
+										is_in_faction_with = UKR
+									}
+								}
+								is_in_array = { global.russian_scw_participants = UKR }
+							}
+							add_to_array = { global.russian_scw_participants_ukr = FROM }
+						}
+						else = {
+							add_to_array = { global.russian_scw_participants_other = FROM }
+						}
 					}
 				}
-				else = {
-					set_province_name = { id = 3529 name = "Stalingrad"}
-					217 = {
-						set_state_name = "Stalingrad"
-					}
-				}
+				sov_clean_scw_arrays = yes
 			}
 		}
 	}
 
-	#Rename Leningrad to St Petersburg if SOV is not the owner
-	on_state_control_changed = {
+	#All the following are for safety measures
+	on_annex = {
 		effect = {
 			if = {
 				limit = {
-					FROM.FROM = {
-						state = 195
-					}
-					FROM = {
-						TAG = SOV
-					}
-					195 = {
-						NOT = {
-							is_owned_and_controlled_by = SOV
-						}
-						is_controlled_by = ROOT
-					}
-					ROOT = {
-						NOT = {
-							original_tag = SOV
-							has_government = communism
-						}
-					}
-					NOT = {
-						has_global_flag = renamed_leningrad_sov
-					}
+					has_global_flag = second_russian_civil_war_in_progress
 				}
-				set_global_flag = renamed_leningrad_sov
-				set_province_name = { id = 3151 name = "Saint Petersburg"}
-				hidden_effect = {
-					195 = {
-						set_state_name = "Saint Petersburg"
-					}
-				}	
+				sov_clean_scw_arrays = yes
 			}
-			else_if = {
+		}
+	}
+
+	on_subject_annexed = {
+		effect = {
+			if = {
 				limit = {
-					FROM.FROM = {
-						state = 195
-					}
-					ROOT = {
-						TAG = SOV
-						has_government = communism
-					}
-					195 = {
-						NOT = {
-							is_controlled_by = FROM
-						}
-						is_owned_and_controlled_by = ROOT
-					}
-					has_global_flag = renamed_leningrad_sov
+					has_global_flag = second_russian_civil_war_in_progress
 				}
-				clr_global_flag = renamed_leningrad_sov
-				set_province_name = { id = 3151 name = "Leningrad"}
-				hidden_effect = {
-					195 = {
-						set_state_name = "Leningrad"
-					}
+				sov_clean_scw_arrays = yes
+			}
+		}
+	}
+
+	on_release_as_free = {
+		effect = {
+			if = {
+				limit = {
+					has_global_flag = second_russian_civil_war_in_progress
 				}
+				sov_clean_scw_arrays = yes
+			}
+		}
+	}
+
+	on_release_as_puppet = {
+		effect = {
+			if = {
+				limit = {
+					has_global_flag = second_russian_civil_war_in_progress
+				}
+				sov_clean_scw_arrays = yes
+			}
+		}
+	}
+
+	on_puppet = {
+		effect = {
+			if = {
+				limit = {
+					has_global_flag = second_russian_civil_war_in_progress
+				}
+				sov_clean_scw_arrays = yes
+			}
+		}
+	}
+
+	on_peace = {
+		effect = {
+			if = {
+				limit = {
+					has_global_flag = second_russian_civil_war_in_progress
+				}
+				sov_clean_scw_arrays = yes
+			}
+		}
+	}
+
+	on_create_faction = {
+		effect = {
+			if = {
+				limit = {
+					has_global_flag = second_russian_civil_war_in_progress
+				}
+				sov_clean_scw_arrays = yes
+			}
+		}
+	}
+
+	on_faction_formed = {
+		effect = {
+			if = {
+				limit = {
+					has_global_flag = second_russian_civil_war_in_progress
+				}
+				sov_clean_scw_arrays = yes
+			}
+		}
+	}
+
+	on_join_faction = {
+		effect = {
+			if = {
+				limit = {
+					has_global_flag = second_russian_civil_war_in_progress
+				}
+				sov_clean_scw_arrays = yes
+			}
+		}
+	}
+
+	on_leave_faction = {
+		effect = {
+			if = {
+				limit = {
+					has_global_flag = second_russian_civil_war_in_progress
+				}
+				sov_clean_scw_arrays = yes
+			}
+		}
+	}
+
+	on_weekly_SOV = {
+		effect = {
+			if = {
+				limit = {
+					has_global_flag = second_russian_civil_war_in_progress
+				}
+				sov_clean_scw_arrays = yes
+			}
+		}
+	}
+
+	on_weekly_SOU = {
+		effect = {
+			if = {
+				limit = {
+					has_global_flag = second_russian_civil_war_in_progress
+				}
+				sov_clean_scw_arrays = yes
+			}
+		}
+	}
+
+	on_weekly_UKR = {
+		effect = {
+			if = {
+				limit = {
+					has_global_flag = second_russian_civil_war_in_progress
+				}
+				sov_clean_scw_arrays = yes
 			}
 		}
 	}

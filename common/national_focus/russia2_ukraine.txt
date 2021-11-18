@@ -1,0 +1,5257 @@
+focus_tree = {
+    id = russia2_ukraine_focus
+    continuous_focus_position = { x = 100 y = 2250 }
+
+    country = {
+        factor = 0
+
+        modifier = {
+            add = 1000
+            tag = UKR
+        }
+    }
+
+    # Anarchy Reigns
+    focus = {
+        id = UKR_anarchy_reigns
+        x = 10
+        y = 1
+        prerequisite = {  }
+        icon = GFX_Black_Guard_focus
+        cost = 4
+        ai_will_do = {
+            factor = 10
+        }
+        bypass = {
+
+        }
+        available = {
+            is_subject = no
+            has_government = anarchy
+            NOT = {
+                has_country_flag = ukr_anarchist_rebels
+                has_completed_focus = UKR_provisional_government
+                has_global_flag = the_great_russian_collapse_is_here
+            }
+        }
+        search_filters = { FOCUS_FILTER_ANARCHIST_UKRAINE FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY }
+        completion_reward = {
+            add_political_power = 200
+            add_stability = -0.1
+        }
+    }
+
+    # Declare the Free Territory
+    focus = {
+        id = UKR_declare_free_territory
+        x = 10
+        y = 2
+        prerequisite = { focus = UKR_anarchy_reigns }
+        icon = GFX_Embrace_total_anarchy
+        cost = 6
+        ai_will_do = {
+            factor = 10
+        }
+        bypass = {
+
+        }
+        available = {
+            NOT = {
+                has_global_flag = the_great_russian_collapse_is_here
+            }
+            is_subject = no
+            has_government = anarchy
+        }
+        search_filters = { FOCUS_FILTER_ANARCHIST_UKRAINE FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY }
+        completion_reward = {
+            add_stability = -0.25
+            add_political_power = 500
+            set_cosmetic_tag = AUKR
+        }
+    }
+
+    # Recall the Nabat Congress Members
+    focus = {
+        id = UKR_recall_nabat_congress_members
+        x = 7
+        y = 3
+        prerequisite = { focus = UKR_declare_free_territory }
+        icon = GFX_focus_generic_diplomatic_treaty
+        cost = 5
+        ai_will_do = {
+            factor = 10
+        }
+        bypass = {
+
+        }
+        available = {
+            NOT = {
+                has_global_flag = the_great_russian_collapse_is_here
+            }
+            is_subject = no
+            has_government = anarchy
+        }
+        search_filters = { FOCUS_FILTER_ANARCHIST_UKRAINE FOCUS_FILTER_POLITICAL FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_ideas = UKR_Nabat_congress
+            custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = UKR_vsevolod_mikhailovich_eikhenbaum
+            custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = UKR_vladimir_alexandrovich_antonov_ovseenko_anarchist
+        }
+    }
+
+    # Anarchist Legitimacy
+    focus = {
+        id = UKR_anarchist_legitimacy
+        x = 10
+        y = 3
+        prerequisite = { focus = UKR_declare_free_territory }
+        icon = GFX_Proclaim_the_commune
+        cost = 6
+        ai_will_do = {
+            factor = 10
+        }
+        bypass = {
+
+        }
+        available = {
+            NOT = {
+                has_global_flag = the_great_russian_collapse_is_here
+            }
+            is_subject = no
+            has_government = anarchy
+        }
+        search_filters = { FOCUS_FILTER_ANARCHIST_UKRAINE }
+        completion_reward = {
+            custom_effect_tooltip = UKR_anarchist_legitimacy_tt
+
+            for_each_loop = {
+                array = ukr.anarchist_states
+                value = v
+                index = i
+                break = break_array
+                
+                if = {
+                    limit = {
+                        check_variable = {
+                            var = ukr.anarchist_support@var:v
+                            value = 100
+                            compare = less_than
+                        }
+                    }
+                    add_to_variable = { ukr.anarchist_support@var:v = 10 }
+                }
+            }
+        }
+    }
+
+    # Rally the Green Armies
+    focus = {
+        id = UKR_rally_green_armies
+        x = 13
+        y = 3
+        prerequisite = { focus = UKR_declare_free_territory }
+        icon = GFX_focus_generic_support_the_left_right
+        cost = 5
+        ai_will_do = {
+            factor = 10
+        }
+        bypass = {
+
+        }
+        available = {
+            NOT = {
+                has_global_flag = the_great_russian_collapse_is_here
+            }
+            is_subject = no
+            has_government = anarchy
+        }
+        search_filters = { FOCUS_FILTER_ANARCHIST_UKRAINE FOCUS_FILTER_MANPOWER }
+        completion_reward = {
+            custom_effect_tooltip = green_armies_will_spawn_russian_state_tt
+            division_template = {
+                name = "Zeleni Dyviziya"
+                division_names_group = UKR_INF_01
+                priority = 1
+                regiments = {
+                    infantry = { x = 0 y = 0 }
+                    infantry = { x = 0 y = 1 }
+                    infantry = { x = 0 y = 2 }
+                    infantry = { x = 0 y = 3 }
+                    infantry = { x = 0 y = 4 }
+                }
+                support = {
+                    engineer = { x = 0 y = 0 }
+                }
+            }
+            division_template = {
+                name = "Seredniy Zeleni Dyviziya"
+                division_names_group = UKR_INF_01
+                priority = 1
+                regiments = {
+                    infantry = { x = 0 y = 0 }
+                    infantry = { x = 0 y = 1 }
+                    infantry = { x = 0 y = 2 }
+                    infantry = { x = 0 y = 3 }
+                    infantry = { x = 0 y = 4 }
+                    infantry = { x = 1 y = 0 }
+                    infantry = { x = 1 y = 1 }
+                }
+                support = {
+                    engineer = { x = 0 y = 0 }
+                }
+            }
+            hidden_effect = {
+                205 = {
+                    create_unit = {
+                        division = "name = \"Zeleni Dyviziya\" division_template = \"Zeleni Dyviziya\" start_experience_factor = 0.2 start_equipment_factor = 1"
+                        owner = ROOT
+                        allow_spawning_on_enemy_provs = yes
+                        prioritize_location = 11300
+                    }
+                    create_unit = {
+                        division = "name = \"Zeleni Dyviziya\" division_template = \"Zeleni Dyviziya\" start_experience_factor = 0.2 start_equipment_factor = 1"
+                        owner = ROOT
+                        allow_spawning_on_enemy_provs = yes
+                        prioritize_location = 11235
+                    }
+                }
+                208 = {
+                    create_unit = {
+                        division = "name = \"Seredniy Zeleni Dyviziya\" division_template = \"Seredniy Zeleni Dyviziya\" start_experience_factor = 0.2 start_equipment_factor = 1"
+                        owner = ROOT
+                        allow_spawning_on_enemy_provs = yes
+                        prioritize_location = 11186
+                    }
+                    create_unit = {
+                        division = "name = \"Seredniy Zeleni Dyviziya\" division_template = \"Seredniy Zeleni Dyviziya\" start_experience_factor = 0.2 start_equipment_factor = 1"
+                        owner = ROOT
+                        allow_spawning_on_enemy_provs = yes
+                        prioritize_location = 9097
+                    }
+                    create_unit = {
+                        division = "name = \"Seredniy Zeleni Dyviziya\" division_template = \"Seredniy Zeleni Dyviziya\" start_experience_factor = 0.2 start_equipment_factor = 1"
+                        owner = ROOT
+                        allow_spawning_on_enemy_provs = yes
+                        prioritize_location = 6174
+                    }
+                }
+                244 = {
+                    create_unit = {
+                        division = "name = \"Seredniy Zeleni Dyviziya\" division_template = \"Seredniy Zeleni Dyviziya\" start_experience_factor = 0.2 start_equipment_factor = 1"
+                        owner = ROOT
+                        allow_spawning_on_enemy_provs = yes
+                        prioritize_location = 70
+                    }
+                    create_unit = {
+                        division = "name = \"Seredniy Zeleni Dyviziya\" division_template = \"Seredniy Zeleni Dyviziya\" start_experience_factor = 0.2 start_equipment_factor = 1"
+                        owner = ROOT
+                        allow_spawning_on_enemy_provs = yes
+                        prioritize_location = 6095
+                    }
+                    create_unit = {
+                        division = "name = \"Seredniy Zeleni Dyviziya\" division_template = \"Seredniy Zeleni Dyviziya\" start_experience_factor = 0.2 start_equipment_factor = 1"
+                        owner = ROOT
+                        allow_spawning_on_enemy_provs = yes
+                        prioritize_location = 3072
+                    }
+                }
+                254 = {
+                    create_unit = {
+                        division = "name = \"Seredniy Zeleni Dyviziya\" division_template = \"Seredniy Zeleni Dyviziya\" start_experience_factor = 0.2 start_equipment_factor = 1"
+                        owner = ROOT
+                        allow_spawning_on_enemy_provs = yes
+                        prioritize_location = 9376
+                    }
+                    create_unit = {
+                        division = "name = \"Seredniy Zeleni Dyviziya\" division_template = \"Seredniy Zeleni Dyviziya\" start_experience_factor = 0.2 start_equipment_factor = 1"
+                        owner = ROOT
+                        allow_spawning_on_enemy_provs = yes
+                        prioritize_location = 269
+                    }
+                    create_unit = {
+                        division = "name = \"Seredniy Zeleni Dyviziya\" division_template = \"Seredniy Zeleni Dyviziya\" start_experience_factor = 0.2 start_equipment_factor = 1"
+                        owner = ROOT
+                        allow_spawning_on_enemy_provs = yes
+                        prioritize_location = 3275
+                    }
+                    create_unit = {
+                        division = "name = \"Seredniy Zeleni Dyviziya\" division_template = \"Seredniy Zeleni Dyviziya\" start_experience_factor = 0.2 start_equipment_factor = 1"
+                        owner = ROOT
+                        allow_spawning_on_enemy_provs = yes
+                        prioritize_location = 3387
+                    }
+                }
+                239 = {
+                    create_unit = {
+                        division = "name = \"Seredniy Zeleni Dyviziya\" division_template = \"Seredniy Zeleni Dyviziya\" start_experience_factor = 0.2 start_equipment_factor = 1"
+                        owner = ROOT
+                        allow_spawning_on_enemy_provs = yes
+                        prioritize_location = 9460
+                    }
+                    create_unit = {
+                        division = "name = \"Seredniy Zeleni Dyviziya\" division_template = \"Seredniy Zeleni Dyviziya\" start_experience_factor = 0.2 start_equipment_factor = 1"
+                        owner = ROOT
+                        allow_spawning_on_enemy_provs = yes
+                        prioritize_location = 433
+                    }
+                    create_unit = {
+                        division = "name = \"Zeleni Dyviziya\" division_template = \"Zeleni Dyviziya\" start_experience_factor = 0.2 start_equipment_factor = 1"
+                        owner = ROOT
+                        allow_spawning_on_enemy_provs = yes
+                        prioritize_location = 6492
+                    }
+                    create_unit = {
+                        division = "name = \"Zeleni Dyviziya\" division_template = \"Zeleni Dyviziya\" start_experience_factor = 0.2 start_equipment_factor = 1"
+                        owner = ROOT
+                        allow_spawning_on_enemy_provs = yes
+                        prioritize_location = 326
+                    }
+                    create_unit = {
+                        division = "name = \"Zeleni Dyviziya\" division_template = \"Zeleni Dyviziya\" start_experience_factor = 0.2 start_equipment_factor = 1"
+                        owner = ROOT
+                        allow_spawning_on_enemy_provs = yes
+                        prioritize_location = 3343
+                    }
+                }
+                247 = {
+                    create_unit = {
+                        division = "name = \"Zeleni Dyviziya\" division_template = \"Zeleni Dyviziya\" start_experience_factor = 0.2 start_equipment_factor = 1"
+                        owner = ROOT
+                        allow_spawning_on_enemy_provs = yes
+                        prioritize_location = 85
+                    }
+                    create_unit = {
+                        division = "name = \"Zeleni Dyviziya\" division_template = \"Zeleni Dyviziya\" start_experience_factor = 0.2 start_equipment_factor = 1"
+                        owner = ROOT
+                        allow_spawning_on_enemy_provs = yes
+                        prioritize_location = 150
+                    }
+                    create_unit = {
+                        division = "name = \"Seredniy Zeleni Dyviziya\" division_template = \"Seredniy Zeleni Dyviziya\" start_experience_factor = 0.2 start_equipment_factor = 1"
+                        owner = ROOT
+                        allow_spawning_on_enemy_provs = yes
+                        prioritize_location = 11084
+                    }
+                    create_unit = {
+                        division = "name = \"Seredniy Zeleni Dyviziya\" division_template = \"Seredniy Zeleni Dyviziya\" start_experience_factor = 0.2 start_equipment_factor = 1"
+                        owner = ROOT
+                        allow_spawning_on_enemy_provs = yes
+                        prioritize_location = 6346
+                    }
+                }
+                248 = {
+                    create_unit = {
+                        division = "name = \"Zeleni Dyviziya\" division_template = \"Zeleni Dyviziya\" start_experience_factor = 0.2 start_equipment_factor = 1"
+                        owner = ROOT
+                        allow_spawning_on_enemy_provs = yes
+                        prioritize_location = 9188
+                    }
+                    create_unit = {
+                        division = "name = \"Zeleni Dyviziya\" division_template = \"Zeleni Dyviziya\" start_experience_factor = 0.2 start_equipment_factor = 1"
+                        owner = ROOT
+                        allow_spawning_on_enemy_provs = yes
+                        prioritize_location = 2
+                    }
+                }
+                253 = {
+                    create_unit = {
+                        division = "name = \"Zeleni Dyviziya\" division_template = \"Zeleni Dyviziya\" start_experience_factor = 0.2 start_equipment_factor = 1"
+                        owner = ROOT
+                        allow_spawning_on_enemy_provs = yes
+                        prioritize_location = 3370
+                    }
+                    create_unit = {
+                        division = "name = \"Zeleni Dyviziya\" division_template = \"Zeleni Dyviziya\" start_experience_factor = 0.2 start_equipment_factor = 1"
+                        owner = ROOT
+                        allow_spawning_on_enemy_provs = yes
+                        prioritize_location = 3240
+                    } 
+                }
+                242 = {
+                    create_unit = {
+                        division = "name = \"Zeleni Dyviziya\" division_template = \"Zeleni Dyviziya\" start_experience_factor = 0.2 start_equipment_factor = 1"
+                        owner = ROOT
+                        allow_spawning_on_enemy_provs = yes
+                        prioritize_location = 3313
+                    }
+                    create_unit = {
+                        division = "name = \"Zeleni Dyviziya\" division_template = \"Zeleni Dyviziya\" start_experience_factor = 0.2 start_equipment_factor = 1"
+                        owner = ROOT
+                        allow_spawning_on_enemy_provs = yes
+                        prioritize_location = 335
+                    } 
+                }
+            }
+        }
+    }
+
+    # Makhno's Revenge
+    focus = {
+        id = UKR_makhno_revenge
+        x = 10
+        y = 4
+        prerequisite = { focus = UKR_recall_nabat_congress_members }
+        prerequisite = { focus = UKR_anarchist_legitimacy }
+        prerequisite = { focus = UKR_rally_green_armies }
+        icon = GFX_focus_generic_manpower
+        cost = 8
+        ai_will_do = {
+            factor = 10
+        }
+        bypass = {
+
+        }
+        available = {
+            NOT = {
+                has_global_flag = the_great_russian_collapse_is_here
+            }
+            is_subject = no
+            has_government = anarchy
+            has_global_flag = second_russian_civil_war_over
+            has_country_leader = {
+                name = "Makhno Nestor"
+                ruling_only = yes
+            }
+            custom_trigger_tooltip = {
+                tooltip = UKR_makhno_revenge_tt
+                check_variable = {
+                    var = num_core_states
+                    value = 20
+                    compare = greater_than_or_equals
+                }
+            }
+        }
+        search_filters = { FOCUS_FILTER_ANARCHIST_UKRAINE FOCUS_FILTER_POLITICAL FOCUS_FILTER_ANARCHIST_CORING_POINTS }
+        completion_reward = {
+            add_country_leader_trait = unbreakable_will
+            add_political_power = 50
+            custom_effect_tooltip = UKR_makhno_revenge_tt2
+            add_to_variable = { ukr.anarchist_coring_points = 2 }
+        }
+    }
+
+    # Social Reorganization
+    focus = {
+        id = UKR_social_reorganization
+        x = 10
+        y = 5
+        prerequisite = { focus = UKR_makhno_revenge }
+        icon = GFX_focus_generic_treaty
+        cost = 5
+        ai_will_do = {
+            factor = 5
+        }
+        bypass = {
+
+        }
+        available = {
+            NOT = {
+                has_global_flag = the_great_russian_collapse_is_here
+            }
+            is_subject = no
+            has_government = anarchy
+        }
+        search_filters = { FOCUS_FILTER_ANARCHIST_UKRAINE FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_ideas = UKR_Social_reorganization
+        }
+    }
+
+    # Execute the Soviet Command
+    focus = {
+        id = UKR_execute_soviet_command
+        x = 7
+        y = 6
+        prerequisite = { focus = UKR_social_reorganization }
+        icon = GFX_focus_generic_soviet_politics
+        cost = 5
+        ai_will_do = {
+            factor = 3
+        }
+        bypass = {
+
+        }
+        available = {
+            NOT = {
+                has_global_flag = the_great_russian_collapse_is_here
+            }
+            is_subject = no
+            has_government = anarchy
+        }
+        search_filters = { FOCUS_FILTER_ANARCHIST_UKRAINE }
+        completion_reward = {
+            country_event = russia2_ukraine.57
+            hidden_effect = {
+                country_event = { id = russia2_ukraine.58 days = 5 }
+            }
+        }
+    }
+
+    # Rally the Torches
+    focus = {
+        id = UKR_rally_torches
+        x = 4
+        y = 7
+        prerequisite = { focus = UKR_execute_soviet_command }
+        icon = GFX_focus_generic_strike_at_democracy2
+        cost = 8
+        ai_will_do = {
+            factor = 6
+        }
+        bypass = {
+
+        }
+        available = {
+            NOT = {
+                has_global_flag = the_great_russian_collapse_is_here
+            }
+            is_subject = no
+            has_government = anarchy
+            SPR_scw_in_progress = no
+            SPC = {
+                exists = yes
+                is_subject = no
+                NOT = {
+                    has_war_with = ROOT
+                }
+            }
+        }
+        search_filters = { FOCUS_FILTER_ANARCHIST_UKRAINE }
+        completion_reward = {
+            SPC = {
+                country_event = { id = russia2_ukraine.59 days = 1 }
+            }
+        }
+    }
+
+    # Get Back to the French Revolutionaries
+    focus = {
+        id = UKR_get_back_french_revolutionaries
+        x = 13
+        y = 6
+        prerequisite = { focus = UKR_social_reorganization }
+        icon = GFX_focus_chi_reach_out_to_france
+        cost = 5
+        ai_will_do = {
+            factor = 3
+        }
+        bypass = {
+
+        }
+        available = {
+            NOT = {
+                has_global_flag = the_great_russian_collapse_is_here
+            }
+            is_subject = no
+            has_government = anarchy
+        }
+        search_filters = { FOCUS_FILTER_ANARCHIST_UKRAINE }
+        completion_reward = {
+            custom_effect_tooltip = UKR_get_back_french_revolutionaries_tt
+        }
+    }
+
+    # Paris, Old Friend
+    focus = {
+        id = UKR_paris_old_friend
+        x = 16
+        y = 7
+        prerequisite = { focus = UKR_get_back_french_revolutionaries }
+        icon = GFX_focus_chi_reach_out_to_france
+        cost = 8
+        ai_will_do = {
+            factor = 6
+        }
+        bypass = {
+
+        }
+        available = {
+            NOT = {
+                has_global_flag = the_great_russian_collapse_is_here
+            }
+            is_subject = no
+            has_government = anarchy
+            controls_state = 16
+        }
+        search_filters = { FOCUS_FILTER_ANARCHIST_UKRAINE FOCUS_FILTER_ANNEXATION FOCUS_FILTER_MANPOWER }
+        completion_reward = {
+            if = {
+                limit = {
+                    16 = {
+                        NOT = {
+                            is_core_of = ROOT
+                        }
+                    }
+                }
+                add_state_core = 16
+            }
+            if = {
+                limit = {
+                    NOT = {
+                        owns_state = 16
+                    }
+                }
+                transfer_state = 16
+            }
+            hidden_effect = {
+                if = {
+                    limit = {
+                        NOT = {
+                            has_template = "Paryz'kyy Anarkhist"
+                        }
+                    }
+                    division_template = {
+                        name = "Paryz'kyy Anarkhist"
+                        priority = 2
+                        regiments = {
+                            infantry = { x = 0 y = 0 }
+                            infantry = { x = 0 y = 1 }
+                            infantry = { x = 0 y = 2 }
+                            infantry = { x = 0 y = 3 }
+                            infantry = { x = 0 y = 4 }
+                            infantry = { x = 1 y = 0 }
+                            infantry = { x = 1 y = 1 }
+                            infantry = { x = 1 y = 2 }
+                            infantry = { x = 1 y = 3 }
+                            infantry = { x = 1 y = 4 }
+                        }
+                        support = {
+                            artillery = { x = 0 y = 0 }
+                            light_tank_recon = { x = 0 y = 1 }
+							engineer = { x = 0 y = 2 }
+                        }
+                    }
+                }
+            }
+            16 = {
+                add_dynamic_modifier = {
+                    modifier = ukr_harmonious_anarchy
+                }
+                custom_effect_tooltip = SOV_skip_line
+                create_unit = {
+                    division = "name = \"Paryz'kyy Anarkhist\" division_template = \"Paryz'kyy Anarkhist\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
+                    owner = ROOT
+                    allow_spawning_on_enemy_provs = yes
+                    prioritize_location = 11506
+                }
+                if = {
+                    limit = {
+                        NOT = {
+                            ROOT = {
+                                controls_state = 16
+                            }
+                        }
+                    }
+                    custom_effect_tooltip = SOV_skip_line
+                }
+                create_unit = {
+                    division = "name = \"Paryz'kyy Anarkhist\" division_template = \"Paryz'kyy Anarkhist\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
+                    owner = ROOT
+                    allow_spawning_on_enemy_provs = yes
+                    prioritize_location = 9523
+                }
+                hidden_effect = {
+                    if = {
+                        limit = {
+                            has_dynamic_modifier = {
+                                modifier = ukr_anarchist_state_converted
+                            }
+                        }
+                        remove_dynamic_modifier = {
+                            modifier = ukr_anarchist_state_converted
+                        }
+                    }
+                    if = {
+                        limit = {
+                            has_dynamic_modifier = {
+                                modifier = ukr_anarchist_state_non_converted
+                            }
+                        }
+                        remove_dynamic_modifier = {
+                            modifier = ukr_anarchist_state_non_converted
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    # Liberty Over Equality
+    focus = {
+        id = UKR_liberty_over_equality
+        x = 10
+        y = 7
+        prerequisite = { focus = UKR_execute_soviet_command }
+        prerequisite = { focus = UKR_get_back_french_revolutionaries }
+        icon = GFX_focus_eng_move_to_secure_the_dominions
+        cost = 4
+        ai_will_do = {
+            factor = 6
+        }
+        bypass = {
+
+        }
+        available = {
+            NOT = {
+                has_global_flag = the_great_russian_collapse_is_here
+            }
+            is_subject = no
+            has_government = anarchy
+        }
+        search_filters = { FOCUS_FILTER_ANARCHIST_UKRAINE FOCUS_FILTER_ANARCHIST_CORING_POINTS }
+        completion_reward = {
+            custom_effect_tooltip = UKR_liberty_over_equality_tt
+            add_to_variable = { ukr.anarchist_coring_points = 6 }
+        }
+    }
+
+    # Independent Army Corps
+    focus = {
+        id = UKR_independent_army_corps
+        x = 10
+        y = 8
+        prerequisite = { focus = UKR_liberty_over_equality }
+        icon = GFX_focus_hol_war_on_pacifism
+        cost = 6
+        ai_will_do = {
+            factor = 4
+        }
+        bypass = {
+
+        }
+        available = {
+            is_subject = no
+            has_government = anarchy
+        }
+        search_filters = { FOCUS_FILTER_ANARCHIST_UKRAINE }
+        completion_reward = {
+            add_ideas = UKR_Independent_army_corps
+            every_army_leader = {
+                add_skill_level = 1
+				add_attack = 1
+                add_defense = 1
+				add_logistics = 1
+                add_planning = 1
+			}
+        }
+    }
+
+    # Spread the Revolution
+    focus = {
+        id = UKR_spread_revolution
+        x = 10
+        y = 9
+        prerequisite = { focus = UKR_independent_army_corps }
+        icon = GFX_focus_hol_gateway_to_europe
+        cost = 6
+        ai_will_do = {
+            factor = 5
+        }
+        bypass = {
+
+        }
+        available = {
+            is_subject = no
+            has_government = anarchy
+        }
+        search_filters = { FOCUS_FILTER_ANARCHIST_UKRAINE }
+        completion_reward = {
+            custom_effect_tooltip = UKR_spread_revolution_tt
+            add_ideas = UKR_Spread_revolution
+        }
+    }
+
+    # Take Over the Baltics
+    focus = {
+        id = UKR_take_over_baltics
+        x = 3
+        y = 10
+        prerequisite = { focus = UKR_spread_revolution }
+        icon = GFX_goal_generic_secret_weapon
+        cost = 5
+        ai_will_do = {
+            factor = 5
+        }
+        bypass = {
+
+        }
+        available = {
+            is_subject = no
+            has_government = anarchy
+        }
+        search_filters = { FOCUS_FILTER_ANARCHIST_UKRAINE FOCUS_FILTER_ANNEXATION }
+        completion_reward = {
+            unlock_decision_tooltip = UKR_take_over_baltics_decision
+            custom_effect_tooltip = UKR_take_over_baltics_tt
+            every_other_country = {
+                limit = {
+                    NOT = {
+                        is_in_faction_with = ROOT
+                        is_subject_of = ROOT
+                        has_capitulated = yes
+                        has_war_with = PREV
+                    }
+                    capital_scope = {
+                        is_owned_by = PREV
+                        OR = {
+                            state = 191
+                            state = 13
+                            state = 12
+                            state = 190
+                            state = 11
+                            state = 189
+                            state = 188
+                            state = 763
+                            state = 5
+                            state = 85
+                            state = 86
+                            state = 87
+                            state = 98
+                            state = 10
+                            state = 97
+                            state = 784
+                            state = 96
+                            state = 95
+                            state = 94
+                            state = 93
+                            state = 91
+                            state = 89
+                            state = 88
+                            state = 762
+                            state = 90
+                            state = 92
+                            state = 146
+                            state = 150
+                            state = 111
+                            state = 149
+                            state = 148
+                            state = 147
+                            state = 722
+                            state = 145
+                            state = 195
+                            state = 208
+                            state = 216
+                            state = 215
+                            state = 213
+                            state = 666
+                            state = 38
+                            state = 141
+                            state = 140
+                            state = 139
+                            state = 138
+                            state = 124
+                            state = 37
+                            state = 99
+                        }
+                    }
+                }
+                hidden_effect = {
+                    ROOT = {
+                        create_wargoal = {
+                            type = annex_everything
+                            target = PREV
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    # Push in the Balkans
+    focus = {
+        id = UKR_push_balkans
+        x = 7
+        y = 10
+        prerequisite = { focus = UKR_spread_revolution }
+        icon = GFX_goal_generic_secret_weapon
+        cost = 5
+        ai_will_do = {
+            factor = 5
+        }
+        bypass = {
+
+        }
+        available = {
+            is_subject = no
+            has_government = anarchy
+        }
+        search_filters = { FOCUS_FILTER_ANARCHIST_UKRAINE FOCUS_FILTER_ANNEXATION }
+        completion_reward = {
+            unlock_decision_tooltip = UKR_push_balkans_decision
+            custom_effect_tooltip = UKR_push_balkans_tt
+            every_other_country = {
+                limit = {
+                    NOT = {
+                        is_in_faction_with = ROOT
+                        is_subject_of = ROOT
+                        has_capitulated = yes
+                        has_war_with = PREV
+                    }
+                    capital_scope = {
+                        is_owned_by = PREV
+                        OR = {
+                            state = 736
+                            state = 102
+                            state = 109
+                            state = 103
+                            state = 104
+                            state = 45
+                            state = 163
+                            state = 804
+                            state = 105
+                            state = 764
+                            state = 107
+                            state = 108
+                            state = 802
+                            state = 803
+                            state = 106
+                            state = 44
+                            state = 805
+                            state = 185
+                            state = 731
+                            state = 184
+                            state = 47
+                            state = 186
+                            state = 182
+                            state = 187
+                            state = 48
+                            state = 212
+                            state = 801
+                            state = 211
+                            state = 341
+                            state = 797
+                            state = 77
+                            state = 46
+                            state = 766
+                            state = 78
+                            state = 80
+                            state = 79
+                            state = 76
+                            state = 84
+                            state = 81
+                            state = 83
+                            state = 82
+                            state = 154
+                            state = 43
+                            state = 155
+                            state = 73
+                            state = 664
+                            state = 71
+                            state = 70
+                            state = 72
+                        }
+                    }
+                }
+                hidden_effect = {
+                    ROOT = {
+                        create_wargoal = {
+                            type = annex_everything
+                            target = PREV
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    # European Anarchism
+    focus = {
+        id = UKR_european_anarchism
+        x = 5
+        y = 11
+        prerequisite = { focus = UKR_take_over_baltics focus = UKR_push_balkans }
+        icon = GFX_goal_generic_secret_weapon
+        cost = 8
+        ai_will_do = {
+            factor = 5
+        }
+        bypass = {
+
+        }
+        available = {
+            is_subject = no
+            has_government = anarchy
+        }
+        search_filters = { FOCUS_FILTER_ANARCHIST_UKRAINE FOCUS_FILTER_ANNEXATION }
+        completion_reward = {
+            custom_effect_tooltip = free_the_european_people_ukr_decision_unlock_tt
+        }
+    }
+
+    # Invade the Old Asian Territories
+    focus = {
+        id = UKR_invade_old_asian_territories
+        x = 13
+        y = 10
+        prerequisite = { focus = UKR_spread_revolution }
+        icon = GFX_goal_generic_secret_weapon
+        cost = 5
+        ai_will_do = {
+            factor = 5
+        }
+        bypass = {
+
+        }
+        available = {
+            is_subject = no
+            has_government = anarchy
+        }
+        search_filters = { FOCUS_FILTER_ANARCHIST_UKRAINE FOCUS_FILTER_ANNEXATION }
+        completion_reward = {
+            unlock_decision_tooltip = UKR_invade_old_asian_territories_decision
+            custom_effect_tooltip = UKR_invade_old_asian_territories_tt
+            every_other_country = {
+                limit = {
+                    NOT = {
+                        is_in_faction_with = ROOT
+                        is_subject_of = ROOT
+                        has_capitulated = yes
+                        has_war_with = PREV
+                    }
+                    capital_scope = {
+                        is_owned_by = PREV
+                        OR = {
+                            state = 329
+                            state = 330
+                            state = 644
+                            state = 637
+                            state = 562
+                            state = 574
+                            state = 565
+                            state = 564
+                            state = 563
+                            state = 561
+                            state = 560
+                            state = 657
+                            state = 409
+                            state = 408
+                            state = 655
+                            state = 537
+                            state = 654
+                            state = 40
+                            state = 570
+                            state = 571
+                            state = 578
+                            state = 577
+                            state = 516
+                            state = 576
+                            state = 568
+                            state = 569
+                            state = 567
+                            state = 566
+                            state = 575
+                            state = 714
+                            state = 761
+                            state = 715
+                            state = 328
+                            state = 717
+                            state = 716
+                            state = 610
+                            state = 609
+                            state = 611
+                            state = 612
+                            state = 745
+                            state = 527
+                            state = 525
+                            state = 732
+                            state = 742
+                            state = 405
+                            state = 585
+                            state = 584
+                            state = 586
+                            state = 404
+                            state = 589
+                            state = 588
+                            state = 590
+                            state = 583
+                            state = 402
+                            state = 587
+                            state = 406
+                            state = 407
+                            state = 267
+                            state = 415
+                        }
+                    }
+                }
+                hidden_effect = {
+                    ROOT = {
+                        create_wargoal = {
+                            type = annex_everything
+                            target = PREV
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    # End the Warlord Era
+    focus = {
+        id = UKR_end_warlord_era
+        x = 17
+        y = 10
+        prerequisite = { focus = UKR_spread_revolution }
+        icon = GFX_goal_generic_secret_weapon
+        cost = 5
+        ai_will_do = {
+            factor = 5
+        }
+        bypass = {
+
+        }
+        available = {
+            is_subject = no
+            has_government = anarchy
+        }
+        search_filters = { FOCUS_FILTER_ANARCHIST_UKRAINE FOCUS_FILTER_ANNEXATION }
+        completion_reward = {
+            unlock_decision_tooltip = UKR_end_warlord_era_decision
+            custom_effect_tooltip = UKR_end_warlord_era_tt
+            every_other_country = {
+                limit = {
+                    NOT = {
+                        is_in_faction_with = ROOT
+                        is_subject_of = ROOT
+                        has_capitulated = yes
+                        has_war_with = PREV
+                    }
+                    capital_scope = {
+                        is_owned_by = PREV
+                        OR = {
+                            state = 608
+                            state = 614
+                            state = 597
+                            state = 743
+                            state = 607
+                            state = 615
+                            state = 621
+                            state = 746
+                            state = 622
+                            state = 598
+                            state = 613
+                            state = 606
+                            state = 620
+                            state = 744
+                            state = 596
+                            state = 600
+                            state = 595
+                            state = 602
+                            state = 750
+                            state = 605
+                            state = 748
+                            state = 603
+                            state = 751
+                            state = 752
+                            state = 601
+                            state = 524
+                            state = 593
+                            state = 592
+                            state = 599
+                            state = 594
+                            state = 591
+                            state = 326
+                            state = 729
+                            state = 728
+                            state = 325
+                            state = 747
+                            state = 753
+                            state = 283
+                            state = 616
+                            state = 756
+                            state = 755
+                            state = 754
+                            state = 604
+                            state = 760
+                            state = 759
+                            state = 618
+                            state = 617
+                            state = 287
+                            state = 619
+                            state = 322
+                            state = 758
+                            state = 757
+                        }
+                    }
+                }
+                hidden_effect = {
+                    ROOT = {
+                        create_wargoal = {
+                            type = annex_everything
+                            target = PREV
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    # Asian Anarchism
+    focus = {
+        id = UKR_asian_anarchism
+        x = 15
+        y = 11
+        prerequisite = { focus = UKR_invade_old_asian_territories focus = UKR_end_warlord_era }
+        icon = GFX_goal_generic_secret_weapon
+        cost = 8
+        ai_will_do = {
+            factor = 5
+        }
+        bypass = {
+
+        }
+        available = {
+            is_subject = no
+            has_government = anarchy
+        }
+        search_filters = { FOCUS_FILTER_ANARCHIST_UKRAINE FOCUS_FILTER_ANNEXATION }
+        completion_reward = {
+            custom_effect_tooltip = free_the_asian_people_ukr_decision_unlock_tt
+        }
+    }
+
+    # Our Will, Our Weapon
+    focus = {
+        id = UKR_will_weapon
+        x = 10
+        y = 12
+        prerequisite = { focus = UKR_european_anarchism }
+        prerequisite = { focus = UKR_asian_anarchism }
+        icon = GFX_goal_generic_political_pressure
+        cost = 5
+        ai_will_do = {
+            factor = 7
+        }
+        bypass = {
+
+        }
+        available = {
+            is_subject = no
+            has_government = anarchy
+            custom_trigger_tooltip = {
+                tooltip = UKR_will_weapon_tt
+                check_variable = {
+                    var = num_core_states
+                    value = 25
+                    compare = greater_than_or_equals
+                }
+            }
+            custom_trigger_tooltip = {
+                tooltip = UKR_will_weapon_europe
+                any_state = {
+                    is_controlled_by = ROOT
+                    is_on_continent = europe
+                }
+            }
+            custom_trigger_tooltip = {
+                tooltip = UKR_will_weapon_asia
+                any_state = {
+                    is_controlled_by = ROOT
+                    OR = {
+                        is_on_continent = asia
+                        is_on_continent = australia
+                    }
+                }
+            }
+        }
+        search_filters = { FOCUS_FILTER_ANARCHIST_UKRAINE FOCUS_FILTER_ANARCHIST_CORING_POINTS }
+        completion_reward = {
+            add_ideas = UKR_Our_will_our_weapon
+        }
+    }
+
+    # Free the Middle East
+    focus = {
+        id = UKR_free_middle_east
+        x = 8
+        y = 13
+        prerequisite = { focus = UKR_will_weapon }
+        icon = GFX_goal_generic_occupy_states_ongoing_war
+        cost = 8
+        ai_will_do = {
+            factor = 5
+        }
+        bypass = {
+
+        }
+        available = {
+            is_subject = no
+            has_government = anarchy
+        }
+        search_filters = { FOCUS_FILTER_ANARCHIST_UKRAINE FOCUS_FILTER_ANNEXATION }
+        completion_reward = {
+            custom_effect_tooltip = free_the_middle_east_people_ukr_decision_unlock_tt
+        }
+    }
+
+    # Free Africa
+    focus = {
+        id = UKR_free_africa
+        x = 12
+        y = 13
+        prerequisite = { focus = UKR_will_weapon }
+        icon = GFX_goal_generic_occupy_states_ongoing_war
+        cost = 8
+        ai_will_do = {
+            factor = 5
+        }
+        bypass = {
+
+        }
+        available = {
+            is_subject = no
+            has_government = anarchy
+        }
+        search_filters = { FOCUS_FILTER_ANARCHIST_UKRAINE FOCUS_FILTER_ANNEXATION }
+        completion_reward = {
+            custom_effect_tooltip = free_the_african_people_ukr_decision_unlock_tt
+        }
+    }
+
+    # The Last Bastion
+    focus = {
+        id = UKR_last_bastion
+        x = 10
+        y = 14
+        prerequisite = { focus = UKR_free_middle_east }
+        prerequisite = { focus = UKR_free_africa }
+        icon = GFX_goal_generic_military_sphere
+        cost = 5
+        ai_will_do = {
+            factor = 5
+        }
+        bypass = {
+
+        }
+        available = {
+            is_subject = no
+            has_government = anarchy
+            custom_trigger_tooltip = {
+                tooltip = UKR_last_bastion_middle_east
+                any_state = {
+                    is_controlled_by = ROOT
+                    is_on_continent = middle_east
+                }
+            }
+            custom_trigger_tooltip = {
+                tooltip = UKR_last_bastion_africa
+                any_state = {
+                    is_controlled_by = ROOT
+                    is_on_continent = africa
+                }
+            }
+        }
+        search_filters = { FOCUS_FILTER_ANARCHIST_UKRAINE FOCUS_FILTER_ANNEXATION }
+        completion_reward = {
+            unlock_decision_tooltip = UKR_last_bastion_decision
+            custom_effect_tooltip = UKR_last_bastion_tt
+            every_other_country = {
+                limit = {
+                    NOT = {
+                        is_in_faction_with = ROOT
+                        is_subject_of = ROOT
+                        has_capitulated = yes
+                        has_war_with = PREV
+                    }
+                    capital_scope = {
+                        is_owned_by = PREV
+                        OR = {
+                            is_on_continent = north_america
+                            is_on_continent = south_america
+                        }
+                    }
+                }
+                hidden_effect = {
+                    ROOT = {
+                        create_wargoal = {
+                            type = annex_everything
+                            target = PREV
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    # Free America
+    focus = {
+        id = UKR_free_america
+        x = 10
+        y = 15
+        prerequisite = { focus = UKR_last_bastion }
+        icon = GFX_goal_generic_occupy_states_ongoing_war
+        cost = 8
+        ai_will_do = {
+            factor = 5
+        }
+        bypass = {
+
+        }
+        available = {
+            is_subject = no
+            has_government = anarchy
+        }
+        search_filters = { FOCUS_FILTER_ANARCHIST_UKRAINE FOCUS_FILTER_ANNEXATION }
+        completion_reward = {
+            custom_effect_tooltip = free_the_american_people_ukr_decision_unlock_tt
+        }
+    }
+
+    # Anarchist Utopia
+    focus = {
+        id = UKR_anarchist_utopia
+        x = 10
+        y = 16
+        prerequisite = { focus = UKR_free_america }
+        icon = GFX_focus_generic_support_the_left_right
+        cost = 10
+        ai_will_do = {
+            factor = 10
+        }
+        bypass = {
+
+        }
+        available = {
+            is_subject = no
+            has_government = anarchy
+            is_major = yes
+            custom_trigger_tooltip = {
+                tooltip = UKR_anarchist_utopia_tt
+                check_variable = {
+                    var = num_core_states
+                    value = 30
+                    compare = greater_than_or_equals
+                }
+            }
+            custom_trigger_tooltip = {
+                tooltip = UKR_anarchist_utopia_europe
+                any_state = {
+                    is_controlled_by = ROOT
+                    is_on_continent = europe
+                }
+            }
+            custom_trigger_tooltip = {
+                tooltip = UKR_anarchist_utopia_asia
+                any_state = {
+                    is_controlled_by = ROOT
+                    OR = {
+                        is_on_continent = asia
+                        is_on_continent = australia
+                    }
+                }
+            }
+            custom_trigger_tooltip = {
+                tooltip = UKR_anarchist_utopia_africa
+                any_state = {
+                    is_controlled_by = ROOT
+                    is_on_continent = africa
+                }
+            }
+            custom_trigger_tooltip = {
+                tooltip = UKR_anarchist_utopia_middle_east
+                any_state = {
+                    is_controlled_by = ROOT
+                    is_on_continent = middle_east
+                }
+            }
+            custom_trigger_tooltip = {
+                tooltip = UKR_anarchist_utopia_north_america
+                any_state = {
+                    is_controlled_by = ROOT
+                    is_on_continent = north_america
+                }
+            }
+            custom_trigger_tooltip = {
+                tooltip = UKR_anarchist_utopia_south_america
+                any_state = {
+                    is_controlled_by = ROOT
+                    is_on_continent = south_america
+                }
+            }
+        }
+        search_filters = { FOCUS_FILTER_ANARCHIST_UKRAINE FOCUS_FILTER_POLITICAL FOCUS_FILTER_ANNEXATION FOCUS_FILTER_ANARCHIST_CORING_POINTS }
+        completion_reward = {
+            set_cosmetic_tag = AFW
+            add_political_power = 300
+            custom_effect_tooltip = UKR_anarchist_utopia_tt2
+            add_to_variable = { ukr.anarchist_coring_points = ukr.num_core_states }
+        }
+    }
+
+    # State of the Army
+    focus = {
+        id = UKR_state_army
+        x = 36
+        y = 1
+        prerequisite = {  }
+        icon = GFX_goal_generic_small_arms
+        cost = 5
+        ai_will_do = {
+            factor = 6
+        }
+        bypass = {
+
+        }
+        available = {
+
+        }
+        search_filters = { FOCUS_FILTER_ARMY_UKRAINE }
+        completion_reward = {
+            country_event = russia2_ukraine.15
+        }
+    }
+
+    # Military Pensions
+    focus = {
+        id = UKR_military_pensions
+        x = 36
+        y = 2
+        prerequisite = { focus = UKR_state_army }
+        icon = GFX_Increased_minimum_wage
+        cost = 5
+        ai_will_do = {
+            factor = 5
+        }
+        bypass = {
+
+        }
+        available = {
+
+        }
+        search_filters = { FOCUS_FILTER_ARMY_UKRAINE }
+        completion_reward = {
+            country_event = russia2_ukraine.18
+        }
+    }
+
+    # Superiority Through Speed
+    focus = {
+        id = UKR_superiority_through_speed
+        x = 30
+        y = 3
+        prerequisite = { focus = UKR_military_pensions }
+        mutually_exclusive = { focus = UKR_fire_at_will_tactics focus = UKR_planned_offensive focus = UKR_scorched_earth }
+        icon = GFX_ukraine_mobilewarfare_mil
+        cost = 10
+        ai_will_do = {
+            factor = 0
+            modifier = {
+                add = 6
+                OR = {
+                    has_tech = mobile_warfare
+                    is_researching_technology = mobile_warfare
+                }
+            }
+        }
+        bypass = {
+
+        }
+        available = {
+
+        }
+        search_filters = { FOCUS_FILTER_ARMY_UKRAINE }
+        completion_reward = {
+            add_tech_bonus = {
+				name = UKR_superiority_through_speed
+				bonus = 1
+				uses = 2
+				category = cat_mobile_warfare
+			}
+        }
+    }
+
+    # Focus on Tank Production
+    focus = {
+        id = UKR_focus_tank_production
+        x = 30
+        y = 4
+        prerequisite = { focus = UKR_superiority_through_speed }
+        icon = GFX_focus_generic_army_tanks2
+        cost = 8
+        ai_will_do = {
+            factor = 4
+        }
+        bypass = {
+
+        }
+        available = {
+
+        }
+        search_filters = { FOCUS_FILTER_ARMY_UKRAINE }
+        completion_reward = {
+            add_ideas = UKR_Tank_production_effort
+            add_tech_bonus = {
+				name = UKR_focus_tank_production
+				bonus = 1
+				uses = 1
+				category = armor
+			}
+        }
+    }
+
+    # Faster Engines
+    focus = {
+        id = UKR_better_engines
+        x = 30
+        y = 5
+        prerequisite = { focus = UKR_focus_tank_production }
+        icon = GFX_focus_generic_license_production
+        cost = 5
+        ai_will_do = {
+            factor = 3
+        }
+        bypass = {
+
+        }
+        available = {
+
+        }
+        search_filters = { FOCUS_FILTER_ARMY_UKRAINE }
+        completion_reward = {
+            add_ideas = UKR_Better_engines
+        }
+    }
+
+    # Fire at Will Tactics
+    focus = {
+        id = UKR_fire_at_will_tactics
+        x = 34
+        y = 3
+        prerequisite = { focus = UKR_military_pensions }
+        mutually_exclusive = { focus = UKR_superiority_through_speed focus = UKR_planned_offensive focus = UKR_scorched_earth }
+        icon = GFX_ukraine_artillery_mil
+        cost = 10
+        ai_will_do = {
+            factor = 0
+            modifier = {
+                add = 6
+                OR = {
+                    has_tech = superior_firepower
+                    is_researching_technology = superior_firepower
+                }
+            }
+        }
+        bypass = {
+
+        }
+        available = {
+
+        }
+        search_filters = { FOCUS_FILTER_ARMY_UKRAINE }
+        completion_reward = {
+            add_tech_bonus = {
+				name = UKR_fire_at_will_tactics
+				bonus = 1
+				uses = 2
+				category = cat_superior_firepower
+			}
+        }
+    }
+
+    # Artillery Rain
+    focus = {
+        id = UKR_artillery_rain
+        x = 34
+        y = 4
+        prerequisite = { focus = UKR_fire_at_will_tactics }
+        icon = GFX_focus_generic_provoke_border_clashes
+        cost = 8
+        ai_will_do = {
+            factor = 4
+        }
+        bypass = {
+
+        }
+        available = {
+
+        }
+        search_filters = { FOCUS_FILTER_ARMY_UKRAINE }
+        completion_reward = {
+            add_ideas = UKR_Artillery_rain
+            add_tech_bonus = {
+				name = UKR_focus_tank_production
+				bonus = 1
+				uses = 1
+				category = artillery
+			}
+        }
+    }
+
+    # Artillery Trainings
+    focus = {
+        id = UKR_artillery_trainings
+        x = 34
+        y = 5
+        prerequisite = { focus = UKR_artillery_rain }
+        icon = GFX_focus_generic_military_academy
+        cost = 5
+        ai_will_do = {
+            factor = 3
+        }
+        bypass = {
+
+        }
+        available = {
+
+        }
+        search_filters = { FOCUS_FILTER_ARMY_UKRAINE }
+        completion_reward = {
+            add_ideas = UKR_Artillery_trainings
+        }
+    }
+
+    # Planned Offensive
+    focus = {
+        id = UKR_planned_offensive
+        x = 38
+        y = 3
+        prerequisite = { focus = UKR_military_pensions }
+        mutually_exclusive = { focus = UKR_superiority_through_speed focus = UKR_fire_at_will_tactics focus = UKR_scorched_earth }
+        icon = GFX_ukraine_grandbattleplan_mil
+        cost = 5
+        ai_will_do = {
+            factor = 0
+            modifier = {
+                add = 6
+                OR = {
+                    has_tech = trench_warfare
+                    is_researching_technology = trench_warfare
+                }
+            }
+        }
+        bypass = {
+
+        }
+        available = {
+
+        }
+        search_filters = { FOCUS_FILTER_ARMY_UKRAINE }
+        completion_reward = {
+            add_tech_bonus = {
+				name = UKR_planned_offensive
+				bonus = 1
+				uses = 2
+				category = cat_grand_battle_plan
+			}
+        }
+    }
+
+    # Logistic Priorities
+    focus = {
+        id = UKR_logistic_priorities
+        x = 38
+        y = 4
+        prerequisite = { focus = UKR_planned_offensive }
+        icon = GFX_goal_generic_position_armies
+        cost = 8
+        ai_will_do = {
+            factor = 4
+        }
+        bypass = {
+
+        }
+        available = {
+
+        }
+        search_filters = { FOCUS_FILTER_ARMY_UKRAINE }
+        completion_reward = {
+            add_ideas = UKR_Logistic_priorities
+            add_tech_bonus = {
+				name = UKR_focus_tank_production
+				bonus = 1
+				uses = 1
+				category = support_tech
+			}
+        }
+    }
+
+    # Improved Logistic
+    focus = {
+        id = UKR_improved_logistic
+        x = 38
+        y = 5
+        prerequisite = { focus = UKR_logistic_priorities }
+        icon = GFX_goal_generic_production2
+        cost = 5
+        ai_will_do = {
+            factor = 3
+        }
+        bypass = {
+
+        }
+        available = {
+
+        }
+        search_filters = { FOCUS_FILTER_ARMY_UKRAINE }
+        completion_reward = {
+            add_ideas = UKR_Improved_logistic
+            every_army_leader = {
+				add_logistics = 1
+			}
+        }
+    }
+
+    # Scorched Earth
+    focus = {
+        id = UKR_scorched_earth
+        x = 42
+        y = 3
+        prerequisite = { focus = UKR_military_pensions }
+        mutually_exclusive = { focus = UKR_superiority_through_speed focus = UKR_fire_at_will_tactics focus = UKR_planned_offensive }
+        icon = GFX_ukraine_massassault_mil
+        cost = 10
+        ai_will_do = {
+            factor = 0
+            modifier = {
+                add = 6
+                OR = {
+                    has_tech = mass_assault
+                    is_researching_technology = mass_assault
+                }
+            }
+        }
+        bypass = {
+
+        }
+        available = {
+
+        }
+        search_filters = { FOCUS_FILTER_ARMY_UKRAINE }
+        completion_reward = {
+            add_tech_bonus = {
+				name = UKR_scorched_earth
+				bonus = 1
+				uses = 2
+				category = cat_mass_assault
+			}
+        }
+    }
+
+    # Mass Gun Production
+    focus = {
+        id = UKR_mass_gun_production
+        x = 42
+        y = 4
+        prerequisite = { focus = UKR_scorched_earth }
+        icon = GFX_goal_generic_small_arms
+        cost = 8
+        ai_will_do = {
+            factor = 4
+        }
+        bypass = {
+
+        }
+        available = {
+
+        }
+        search_filters = { FOCUS_FILTER_ARMY_UKRAINE }
+        completion_reward = {
+            add_ideas = UKR_Mass_gun_production
+            add_tech_bonus = {
+				name = UKR_focus_tank_production
+				bonus = 1
+				uses = 1
+				category = infantry_weapons
+			}
+        }
+    }
+
+    # Never Stop Fighting
+    focus = {
+        id = UKR_never_stop_fighting
+        x = 42
+        y = 5
+        prerequisite = { focus = UKR_mass_gun_production }
+        icon = GFX_goal_generic_political_pressure
+        cost = 5
+        ai_will_do = {
+            factor = 3
+        }
+        bypass = {
+
+        }
+        available = {
+
+        }
+        search_filters = { FOCUS_FILTER_ARMY_UKRAINE FOCUS_FILTER_MANPOWER }
+        completion_reward = {
+            add_ideas = UKR_Never_stop_fighting
+        }
+    }
+
+    # Elite Troops
+    focus = {
+        id = UKR_elite_troops
+        x = 36
+        y = 6
+        prerequisite = { focus = UKR_better_engines focus = UKR_artillery_trainings focus = UKR_improved_logistic focus = UKR_never_stop_fighting }
+        icon = GFX_goal_generic_national_unity
+        cost = 6
+        ai_will_do = {
+            factor = 4
+        }
+        bypass = {
+
+        }
+        available = {
+
+        }
+        search_filters = { FOCUS_FILTER_ARMY_UKRAINE }
+        completion_reward = {
+            add_ideas = UKR_Elite_troops
+            add_tech_bonus = {
+				name = UKR_elite_troops
+				bonus = 1
+				uses = 1
+				category = para_tech
+			}
+            add_tech_bonus = {
+				name = UKR_elite_troops
+				bonus = 1
+				uses = 1
+				category = mountaineers_tech
+			}
+            add_tech_bonus = {
+				name = UKR_elite_troops
+				bonus = 1
+				uses = 1
+				category = marine_tech
+			}
+        }
+    }
+
+    # State of the Air Force
+    focus = {
+        id = UKR_state_air_force
+        x = 24
+        y = 3
+        prerequisite = { focus = UKR_military_pensions }
+        icon = GFX_focus_usa_escort_fighters
+        cost = 5
+        ai_will_do = {
+            factor = 2
+        }
+        bypass = {
+
+        }
+        available = {
+
+        }
+        search_filters = { FOCUS_FILTER_AIR_UKRAINE }
+        completion_reward = {
+            country_event = russia2_ukraine.16
+        }
+    }
+
+    # Superiority in the Air
+    focus = {
+        id = UKR_superiority_air
+        x = 22
+        y = 4
+        prerequisite = { focus = UKR_state_air_force }
+        mutually_exclusive = { focus = UKR_superiority_ground }
+        icon = GFX_Aviation_Cult_Neutral
+        cost = 8
+        ai_will_do = {
+            factor = 2
+        }
+        bypass = {
+
+        }
+        available = {
+
+        }
+        search_filters = { FOCUS_FILTER_AIR_UKRAINE }
+        completion_reward = {
+            add_tech_bonus = {
+				name = UKR_superiority_air
+				bonus = 1
+				uses = 1
+				category = strategic_destruction_tree
+			}
+            add_tech_bonus = {
+				name = UKR_superiority_air
+				bonus = 1
+				uses = 1
+				category = light_fighter
+			}
+        }
+    }
+
+    # Bombing Strategy
+    focus = {
+        id = UKR_bombing_strategy
+        x = 22
+        y = 5
+        prerequisite = { focus = UKR_superiority_air }
+        icon = GFX_goal_poland_goal
+        cost = 8
+        ai_will_do = {
+            factor = 2
+        }
+        bypass = {
+
+        }
+        available = {
+
+        }
+        search_filters = { FOCUS_FILTER_AIR_UKRAINE }
+        completion_reward = {
+            add_ideas = UKR_Bombing_strategy
+            add_tech_bonus = {
+				name = UKR_bombing_strategy
+				bonus = 0.75
+				uses = 1
+				category = cat_strategic_bomber
+			}
+            add_tech_bonus = {
+				name = UKR_bombing_strategy
+				bonus = 1
+				uses = 1
+				category = tactical_bomber
+			}
+        }
+    }
+
+    # Superiority on the Ground
+    focus = {
+        id = UKR_superiority_ground
+        x = 26
+        y = 4
+        prerequisite = { focus = UKR_state_air_force }
+        mutually_exclusive = { focus = UKR_superiority_air }
+        icon = GFX_goal_generic_radar
+        cost = 8
+        ai_will_do = {
+            factor = 2
+        }
+        bypass = {
+
+        }
+        available = {
+
+        }
+        search_filters = { FOCUS_FILTER_AIR_UKRAINE }
+        completion_reward = {
+            add_tech_bonus = {
+				name = UKR_superiority_air
+				bonus = 1
+				uses = 1
+				category = battlefield_support_tree
+			}
+            add_tech_bonus = {
+				name = UKR_superiority_air
+				bonus = 1
+				uses = 1
+				category = cas_bomber
+			}
+        }
+    }
+
+    # Air Counter Offensive
+    focus = {
+        id = UKR_air_counter_offensive
+        x = 26
+        y = 5
+        prerequisite = { focus = UKR_superiority_ground }
+        icon = GFX_goal_generic_propaganda
+        cost = 8
+        ai_will_do = {
+            factor = 2
+        }
+        bypass = {
+
+        }
+        available = {
+
+        }
+        search_filters = { FOCUS_FILTER_AIR_UKRAINE }
+        completion_reward = {
+            add_ideas = UKR_Air_counter_offensive
+            add_tech_bonus = {
+				name = UKR_air_counter_offensive
+				bonus = 0.75
+				uses = 1
+				category = light_fighter
+			}
+            add_tech_bonus = {
+				name = UKR_air_counter_offensive
+				bonus = 1
+				uses = 1
+				category = air_doctrine
+			}
+        }
+    }
+
+    # New Air Tactics
+    focus = {
+        id = UKR_new_air_tactics
+        x = 24
+        y = 6
+        prerequisite = { focus = UKR_bombing_strategy focus = UKR_air_counter_offensive }
+        icon = GFX_goal_generic_position_armies
+        cost = 10
+        ai_will_do = {
+            factor = 2
+        }
+        bypass = {
+
+        }
+        available = {
+
+        }
+        search_filters = { FOCUS_FILTER_AIR_UKRAINE }
+        completion_reward = {
+            add_ideas = UKR_New_air_tactics
+            add_tech_bonus = {
+				name = UKR_new_air_tactics
+				bonus = 0.5
+				uses = 1
+				category = light_air
+			}
+            add_tech_bonus = {
+				name = UKR_new_air_tactics
+				bonus = 0.75
+				uses = 1
+				category = medium_air
+			}
+            add_tech_bonus = {
+				name = UKR_new_air_tactics
+				bonus = 1
+				uses = 1
+				category = heavy_air
+			}
+        }
+    }
+
+    # State of the Navy
+    focus = {
+        id = UKR_state_navy
+        x = 48
+        y = 3
+        prerequisite = { focus = UKR_military_pensions }
+        icon = GFX_goal_generic_navy_battleship
+        cost = 5
+        ai_will_do = {
+            factor = 2
+        }
+        bypass = {
+
+        }
+        available = {
+
+        }
+        search_filters = { FOCUS_FILTER_NAVY_UKRAINE }
+        completion_reward = {
+            country_event = russia2_ukraine.17
+        }
+    }
+
+    # Adopt New Tactics
+    focus = {
+        id = UKR_adopt_new_tactics
+        x = 46
+        y = 4
+        prerequisite = { focus = UKR_state_navy }
+        mutually_exclusive = { focus = UKR_study_old_tactics }
+        icon = GFX_goal_generic_navy_cruiser
+        cost = 8
+        ai_will_do = {
+            factor = 2
+        }
+        bypass = {
+
+        }
+        available = {
+
+        }
+        search_filters = { FOCUS_FILTER_NAVY_UKRAINE }
+        completion_reward = {
+            add_tech_bonus = {
+				name = UKR_adopt_new_tactics
+				bonus = 1
+				uses = 1
+				category = base_strike_main
+			}
+            add_tech_bonus = {
+				name = UKR_adopt_new_tactics
+				bonus = 1
+				uses = 1
+				category = cv_tech
+			}
+            add_tech_bonus = {
+				name = UKR_adopt_new_tactics
+				bonus = 0.5
+				uses = 1
+				category = naval_bomber
+			}
+        }
+    }
+
+    # Our Own Aircraft Carrier
+    focus = {
+        id = UKR_own_aircraft_carrier
+        x = 46
+        y = 5
+        prerequisite = { focus = UKR_adopt_new_tactics }
+        icon = GFX_goal_generic_navy_carrier
+        cost = 8
+        ai_will_do = {
+            factor = 2
+        }
+        bypass = {
+
+        }
+        available = {
+            num_of_naval_factories > 0
+            if = {
+				limit = {
+					has_dlc = "Man the Guns"
+				}
+                has_tech = basic_ship_hull_carrier
+            }
+            else = {
+                has_tech = basic_carrier
+            }
+        }
+        search_filters = { FOCUS_FILTER_NAVY_UKRAINE }
+        completion_reward = {
+            if = {
+				limit = {
+					has_dlc = "Man the Guns"
+				}
+				hidden_effect = {
+					create_equipment_variant = {
+						name = "Kuznetsov"
+						type = ship_hull_carrier_1
+						parent_version = 0
+						modules = {
+							fixed_ship_deck_slot_1 = ship_deck_space
+							fixed_ship_deck_slot_2 = ship_deck_space
+							fixed_ship_anti_air_slot = ship_anti_air_1
+							fixed_ship_radar_slot = empty
+							fixed_ship_engine_slot = carrier_ship_engine_2
+							fixed_ship_secondaries_slot = dp_ship_secondaries
+							front_1_custom_slot = empty
+						}
+					}
+				}
+                add_equipment_production = {
+                    equipment = {
+                        type = ship_hull_carrier_1
+                        creator = "UKR" 
+                        version_name = "Kuznetsov"
+                    }
+                    requested_factories = 1
+                    progress = 0.60
+                    amount = 1
+                }
+			}
+			else = {
+				add_equipment_production = {
+					equipment = {
+						type = carrier_2
+						creator = "UKR" 
+					}
+					requested_factories = 1
+					progress = 0.60
+					amount = 1
+				}
+			}
+        }
+    }
+
+    # Study Old Tactics
+    focus = {
+        id = UKR_study_old_tactics
+        x = 50
+        y = 4
+        prerequisite = { focus = UKR_state_navy }
+        mutually_exclusive = { focus = UKR_adopt_new_tactics }
+        icon = GFX_goal_generic_navy_doctrines_tactics
+        cost = 8
+        ai_will_do = {
+            factor = 2
+        }
+        bypass = {
+
+        }
+        available = {
+
+        }
+        search_filters = { FOCUS_FILTER_NAVY_UKRAINE }
+        completion_reward = {
+            add_tech_bonus = {
+				name = UKR_study_old_tactics
+				bonus = 1
+				uses = 1
+				category = fleet_in_being_tree
+			}
+            add_tech_bonus = {
+				name = UKR_study_old_tactics
+				bonus = 1.5
+				uses = 1
+				category = bb_tech
+			}
+        }
+    }
+
+    # New Battleship Design
+    focus = {
+        id = UKR_new_battleship_design
+        x = 50
+        y = 5
+        prerequisite = { focus = UKR_study_old_tactics }
+        icon = GFX_goal_generic_navy_battleship
+        cost = 8
+        ai_will_do = {
+            factor = 2
+        }
+        bypass = {
+
+        }
+        available = {
+            num_of_naval_factories > 0
+            if = {
+				limit = {
+					has_dlc = "Man the Guns"
+				}
+                has_tech = basic_ship_hull_heavy
+            }
+            else = {
+                has_tech = basic_battleship
+            }
+        }
+        search_filters = { FOCUS_FILTER_NAVY_UKRAINE }
+        completion_reward = {
+            if = {
+				limit = {
+					has_dlc = "Man the Guns"
+				}
+                hidden_effect = {
+					create_equipment_variant = {
+						name = "Kyiv"
+						type = ship_hull_heavy_2
+						parent_version = 0
+						modules = {
+                            fixed_ship_battery_slot = ship_heavy_battery_2
+                            fixed_ship_anti_air_slot = ship_anti_air_1
+                            fixed_ship_fire_control_system_slot = ship_fire_control_system_1
+                            fixed_ship_radar_slot = empty
+                            fixed_ship_engine_slot = heavy_ship_engine_2
+                            fixed_ship_secondaries_slot = ship_secondaries_2
+                            fixed_ship_armor_slot = ship_armor_bb_2
+                            front_1_custom_slot = ship_heavy_battery_2
+                            mid_1_custom_slot = empty
+                            mid_2_custom_slot = empty
+                            rear_1_custom_slot = empty
+                        }
+					}
+				}
+				add_equipment_production = {
+					equipment = {
+						type = ship_hull_heavy_2
+						creator = "UKR" 
+					}
+					requested_factories = 1
+					progress = 0.60
+					amount = 1
+				}
+			}
+			else = {
+				add_equipment_production = {
+					equipment = {
+						type = battleship_2
+						creator = "UKR" 
+					}
+					requested_factories = 1
+					progress = 0.60
+					amount = 1
+				}
+			}
+        }
+    }
+
+    # Modernize the Navy
+    focus = {
+        id = UKR_modernize_navy
+        x = 48
+        y = 6
+        prerequisite = { focus = UKR_own_aircraft_carrier focus = UKR_new_battleship_design }
+        icon = GFX_goal_generic_military_deal
+        cost = 10
+        ai_will_do = {
+            factor = 2
+        }
+        bypass = {
+
+        }
+        available = {
+
+        }
+        search_filters = { FOCUS_FILTER_NAVY_UKRAINE }
+        completion_reward = {
+            add_ideas = UKR_Modern_navy
+            add_tech_bonus = {
+				name = UKR_modernize_navy
+				bonus = 1
+				uses = 1
+				category = dd_tech
+			}
+            add_tech_bonus = {
+				name = UKR_modernize_navy
+				bonus = 1
+				uses = 1
+				category = cl_tech
+			}
+            add_tech_bonus = {
+				name = UKR_modernize_navy
+				bonus = 1
+				uses = 1
+				category = tp_tech
+			}
+        }
+    }
+
+    # Industrial Revival
+    focus = {
+        id = UKR_industrial_revival
+        x = 30
+        y = 8
+        prerequisite = {  }
+        icon = GFX_goal_generic_construct_civilian
+        cost = 4
+        ai_will_do = {
+            factor = 5
+            modifier = {
+                add = -4
+                ukr_in_scw = yes
+            }
+            modifier = {
+                factor = 0
+                has_game_rule = {
+                    rule = UKR_ai_behavior
+                    option = ANARCHISM
+                }
+                SOV = {
+                    has_completed_focus = SOV_rally_under_denikin_cause
+                }
+                NOT = {
+                    has_global_flag = second_russian_civil_war_over
+                }
+            }
+        }
+        bypass = {
+            has_government = anarchy
+        }
+        available = {
+            NOT = {
+                has_government = anarchy
+            }
+            surrender_progress < 0.25
+        }
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+        completion_reward = {
+            country_event = russia2_ukraine.19
+            if = {
+                limit = {
+                    has_country_flag = ukr_anarchist_rebels
+                }
+                custom_effect_tooltip = UKR_bypass_industrial_focuses_anarchist
+            }
+        }
+    }
+
+    # Synthetic Resources
+    focus = {
+        id = UKR_synthetic_resources
+        x = 22
+        y = 9
+        prerequisite = { focus = UKR_industrial_revival }
+        icon = GFX_goal_generic_oil_refinery
+        cost = 5
+        ai_will_do = {
+            factor = 3
+        }
+        bypass = {
+
+        }
+        available = {
+
+        }
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+        completion_reward = {
+            add_tech_bonus = {
+				name = UKR_synthetic_resources
+				bonus = 1
+				uses = 2
+				category = synth_resources
+			}
+        }
+    }
+
+    # Resources Investment
+    focus = {
+        id = UKR_resources_investment
+        x = 22
+        y = 10
+        prerequisite = { focus = UKR_synthetic_resources }
+        icon = GFX_goal_generic_consumer_goods
+        cost = 5
+        ai_will_do = {
+            factor = 3
+        }
+        bypass = {
+            NOT = {
+                any_state = {
+                    is_fully_controlled_by = ROOT
+                }
+            }
+        }
+        available = {
+            any_state = {
+                is_fully_controlled_by = ROOT
+            }
+        }
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+        completion_reward = {
+            random_owned_controlled_state = {
+                add_resource = {
+                    type = steel
+                    amount = 10
+                }
+            }
+            random_owned_controlled_state = {
+                add_resource = {
+                    type = tungsten
+                    amount = 8
+                }
+            }
+            add_tech_bonus = {
+				name = UKR_resources_investment
+				bonus = 1
+				uses = 1
+				category = excavation_tech
+			}
+        }
+    }
+
+    # Reward the Workers
+    focus = {
+        id = UKR_reward_workers
+        x = 26
+        y = 9
+        prerequisite = { focus = UKR_industrial_revival }
+        icon = GFX_focus_spr_the_anti_fascist_workers_revolution
+        cost = 5
+        ai_will_do = {
+            factor = 3
+        }
+        bypass = {
+
+        }
+        available = {
+
+        }
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+        completion_reward = {
+            add_ideas = UKR_Rewarded_workers
+        }
+    }
+
+    # Dockyard Investment
+    focus = {
+        id = UKR_dockyard_investment
+        x = 26
+        y = 10
+        prerequisite = { focus = UKR_reward_workers }
+        icon = GFX_goal_generic_construct_naval_dockyard
+        cost = 5
+        ai_will_do = {
+            factor = 3
+        }
+        bypass = {
+
+        }
+        available = {
+
+        }
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+        completion_reward = {
+            add_timed_idea = {
+                idea = UKR_Dockyard_investment
+                days = 365
+            }
+            if = {
+                limit = {
+                    any_state = {
+                        is_fully_controlled_by = ROOT
+                        is_coastal = yes
+                    }
+                }
+                random_owned_controlled_state = {
+                    add_extra_state_shared_building_slots = 2
+                    add_building_construction = {
+                        type = dockyard
+                        level = 2
+                        instant_build = yes
+                    }
+                }
+            }
+        }
+    }
+
+    # A Nuclear Power
+    focus = {
+        id = UKR_nuclear_power
+        x = 24
+        y = 11
+        prerequisite = { focus = UKR_resources_investment focus = UKR_dockyard_investment }
+        icon = GFX_goal_generic_secret_weapon
+        cost = 8
+        ai_will_do = {
+            factor = 3
+        }
+        bypass = {
+
+        }
+        available = {
+
+        }
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+        completion_reward = {
+            add_ideas = UKR_Nuclear_secrets
+            add_tech_bonus = {
+				name = UKR_nuclear_power
+				bonus = 1
+				uses = 1
+				category = nuclear
+			}
+        }
+    }
+
+    # Infrastructure Project - Phase One
+    focus = {
+        id = UKR_revival_project_one
+        x = 30
+        y = 9
+        prerequisite = { focus = UKR_industrial_revival }
+        icon = GFX_goal_generic_production
+        cost = 8
+        ai_will_do = {
+            factor = 4
+            modifier = {
+                add = 4
+                ukr_in_scw = yes
+            }
+        }
+        bypass = {
+            has_government = anarchy
+        }
+        available = {
+            NOT = {
+                has_government = anarchy
+            }
+            custom_trigger_tooltip = {
+                tooltip = UKR_revival_project_one_tt
+                OR = {
+                    has_idea = UKR_Industrial_revival
+                    has_idea = UKR_Industrial_revival_2
+                    has_idea = UKR_Industrial_revival_3
+                    has_idea = UKR_Industrial_revival_4
+                }
+            }
+        }
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+        completion_reward = {
+            unlock_decision_tooltip = UKR_industrial_revival_project_phase_one
+            if = {
+                limit = {
+                    has_country_flag = ukr_anarchist_rebels
+                }
+                custom_effect_tooltip = UKR_bypass_industrial_focuses_anarchist
+            }
+        }
+    }
+
+    # Infrastructure Project - Phase Two
+    focus = {
+        id = UKR_revival_project_two
+        x = 30
+        y = 10
+        prerequisite = { focus = UKR_revival_project_one }
+        icon = GFX_goal_generic_production
+        cost = 8
+        ai_will_do = {
+            factor = 4
+            modifier = {
+                add = 4
+                ukr_in_scw = yes
+            }
+        }
+        bypass = {
+            has_government = anarchy
+        }
+        available = {
+            NOT = {
+                has_government = anarchy
+            }
+            custom_trigger_tooltip = {
+                tooltip = UKR_revival_project_two_tt
+                OR = {
+                    has_idea = UKR_Industrial_revival
+                    has_idea = UKR_Industrial_revival_2
+                    has_idea = UKR_Industrial_revival_3
+                    has_idea = UKR_Industrial_revival_4
+                }
+            }
+            has_country_flag = UKR_revival_project_one_finished
+        }
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+        completion_reward = {
+            unlock_decision_tooltip = UKR_industrial_revival_project_phase_two
+            if = {
+                limit = {
+                    has_country_flag = ukr_anarchist_rebels
+                }
+                custom_effect_tooltip = UKR_bypass_industrial_focuses_anarchist
+            }
+        }
+    }
+
+    # Infrastructure Project - Phase Three
+    focus = {
+        id = UKR_revival_project_three
+        x = 30
+        y = 11
+        prerequisite = { focus = UKR_revival_project_two }
+        icon = GFX_goal_generic_production
+        cost = 8
+        ai_will_do = {
+            factor = 4
+            modifier = {
+                add = 4
+                ukr_in_scw = yes
+            }
+        }
+        bypass = {
+            has_government = anarchy
+        }
+        available = {
+            NOT = {
+                has_government = anarchy
+            }
+            custom_trigger_tooltip = {
+                tooltip = UKR_revival_project_three_tt
+                OR = {
+                    has_idea = UKR_Industrial_revival
+                    has_idea = UKR_Industrial_revival_2
+                    has_idea = UKR_Industrial_revival_3
+                    has_idea = UKR_Industrial_revival_4
+                }
+            }
+            has_country_flag = UKR_revival_project_two_finished
+        }
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+        completion_reward = {
+            unlock_decision_tooltip = UKR_industrial_revival_project_phase_three
+            if = {
+                limit = {
+                    has_country_flag = ukr_anarchist_rebels
+                }
+                custom_effect_tooltip = UKR_bypass_industrial_focuses_anarchist
+            }
+        }
+    }
+
+    # Air Bases
+    focus = {
+        id = UKR_air_bases
+        x = 34
+        y = 9
+        prerequisite = { focus = UKR_industrial_revival }
+        icon = GFX_goal_generic_territory_or_war
+        cost = 5
+        ai_will_do = {
+            factor = 3
+        }
+        bypass = {
+            NOT = {
+                any_state = {
+                    is_fully_controlled_by = ROOT
+                }
+            }
+        }
+        available = {
+            any_state = {
+                is_fully_controlled_by = ROOT
+            }
+        }
+        search_filters = { FOCUS_FILTER_ARMY_UKRAINE }
+        completion_reward = {
+            random_owned_state = {
+				limit = {
+					is_fully_controlled_by = ROOT
+				}
+				add_building_construction = {
+					type = air_base
+					level = 2
+					instant_build = yes
+				}
+			}
+            random_owned_state = {
+				limit = {
+					is_fully_controlled_by = ROOT
+				}
+				add_building_construction = {
+					type = air_base
+					level = 2
+					instant_build = yes
+				}
+			}
+        }
+    }
+
+    # Air Defense
+    focus = {
+        id = UKR_air_defense
+        x = 34
+        y = 10
+        prerequisite = { focus = UKR_air_bases }
+        icon = GFX_focus_generic_air_defense
+        cost = 5
+        ai_will_do = {
+            factor = 3
+        }
+        bypass = {
+            NOT = {
+                any_state = {
+                    is_fully_controlled_by = ROOT
+                }
+            }
+        }
+        available = {
+            any_state = {
+                is_fully_controlled_by = ROOT
+            }
+        }
+        search_filters = { FOCUS_FILTER_ARMY_UKRAINE }
+        completion_reward = {
+            random_owned_state = {
+				limit = {
+					is_fully_controlled_by = ROOT
+				}
+				add_building_construction = {
+					type = anti_air_building
+					level = 2
+					instant_build = yes
+				}
+			}
+            random_owned_state = {
+				limit = {
+					is_fully_controlled_by = ROOT
+				}
+				add_building_construction = {
+					type = anti_air_building
+					level = 2
+					instant_build = yes
+				}
+			}
+        }
+    }
+
+    # Naval Bases
+    focus = {
+        id = UKR_naval_bases
+        x = 38
+        y = 9
+        prerequisite = { focus = UKR_industrial_revival }
+        icon = GFX_goal_generic_navy_cruiser
+        cost = 5
+        ai_will_do = {
+            factor = 3
+        }
+        bypass = {
+            NOT = {
+                has_full_control_of_state = 192
+                has_full_control_of_state = 197
+                has_full_control_of_state = 196
+                has_full_control_of_state = 200
+                has_full_control_of_state = 227
+                has_full_control_of_state = 137
+                has_full_control_of_state = 218
+                has_full_control_of_state = 234
+                has_full_control_of_state = 766
+            }
+        }
+        available = {
+            OR = {
+                has_full_control_of_state = 192
+                has_full_control_of_state = 197
+                has_full_control_of_state = 196
+                has_full_control_of_state = 200
+                has_full_control_of_state = 227
+                has_full_control_of_state = 137
+                has_full_control_of_state = 218
+                has_full_control_of_state = 234
+                has_full_control_of_state = 766
+            }
+        }
+        search_filters = { FOCUS_FILTER_ARMY_UKRAINE }
+        completion_reward = {
+            custom_effect_tooltip = UKR_naval_bases_tt
+            hidden_effect = {
+                if = {
+                    limit = {
+                        has_full_control_of_state = 192
+                    }
+                    192 = {
+                        add_building_construction = {
+                            type = naval_base
+                            level = 2
+                            province = 11670
+                            instant_build = yes
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        has_full_control_of_state = 197
+                    }
+                    197 = {
+                        add_building_construction = {
+                            type = naval_base
+                            level = 2
+                            province = 11683
+                            instant_build = yes
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        has_full_control_of_state = 196
+                    }
+                    196 = {
+                        add_building_construction = {
+                            type = naval_base
+                            level = 2
+                            province = 721
+                            instant_build = yes
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        has_full_control_of_state = 200
+                    }
+                    200 = {
+                        add_building_construction = {
+                            type = naval_base
+                            level = 2
+                            province = 9729
+                            instant_build = yes
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        has_full_control_of_state = 227
+                    }
+                    227 = {
+                        add_building_construction = {
+                            type = naval_base
+                            level = 2
+                            province = 3421
+                            instant_build = yes
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        has_full_control_of_state = 218
+                    }
+                    218 = {
+                        add_building_construction = {
+                            type = naval_base
+                            level = 2
+                            province = 9417
+                            instant_build = yes
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        has_full_control_of_state = 137
+                    }
+                    137 = {
+                        add_building_construction = {
+                            type = naval_base
+                            level = 2
+                            province = 9680
+                            instant_build = yes
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        has_full_control_of_state = 234
+                    }
+                    234 = {
+                        add_building_construction = {
+                            type = naval_base
+                            level = 2
+                            province = 6755
+                            instant_build = yes
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        has_full_control_of_state = 766
+                    }
+                    766 = {
+                        add_building_construction = {
+                            type = naval_base
+                            level = 2
+                            province = 6727
+                            instant_build = yes
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    # Naval Forts
+    focus = {
+        id = UKR_naval_forts
+        x = 38
+        y = 10
+        prerequisite = { focus = UKR_naval_bases }
+        icon = GFX_goal_generic_construct_naval_dockyard
+        cost = 5
+        ai_will_do = {
+            factor = 3
+        }
+        bypass = {
+            NOT = {
+                has_full_control_of_state = 192
+                has_full_control_of_state = 197
+                has_full_control_of_state = 196
+                has_full_control_of_state = 200
+                has_full_control_of_state = 227
+                has_full_control_of_state = 137
+                has_full_control_of_state = 218
+                has_full_control_of_state = 234
+                has_full_control_of_state = 766
+            }
+        }
+        available = {
+            OR = {
+                has_full_control_of_state = 192
+                has_full_control_of_state = 197
+                has_full_control_of_state = 196
+                has_full_control_of_state = 200
+                has_full_control_of_state = 227
+                has_full_control_of_state = 137
+                has_full_control_of_state = 218
+                has_full_control_of_state = 234
+                has_full_control_of_state = 766
+            }
+        }
+        search_filters = { FOCUS_FILTER_ARMY_UKRAINE }
+        completion_reward = {
+            custom_effect_tooltip = UKR_naval_forts_tt
+            hidden_effect = {
+                if = {
+                    limit = {
+                        has_full_control_of_state = 192
+                    }
+                    192 = {
+                        add_building_construction = {
+                            type = coastal_bunker
+                            level = 3
+                            province = 11670
+                            instant_build = yes
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        has_full_control_of_state = 197
+                    }
+                    197 = {
+                        add_building_construction = {
+                            type = coastal_bunker
+                            level = 3
+                            province = 11683
+                            instant_build = yes
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        has_full_control_of_state = 196
+                    }
+                    196 = {
+                        add_building_construction = {
+                            type = coastal_bunker
+                            level = 3
+                            province = 721
+                            instant_build = yes
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        has_full_control_of_state = 200
+                    }
+                    200 = {
+                        add_building_construction = {
+                            type = coastal_bunker
+                            level = 3
+                            province = 9729
+                            instant_build = yes
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        has_full_control_of_state = 227
+                    }
+                    227 = {
+                        add_building_construction = {
+                            type = coastal_bunker
+                            level = 3
+                            province = 3421
+                            instant_build = yes
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        has_full_control_of_state = 218
+                    }
+                    218 = {
+                        add_building_construction = {
+                            type = coastal_bunker
+                            level = 3
+                            province = 9417
+                            instant_build = yes
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        has_full_control_of_state = 137
+                    }
+                    137 = {
+                        add_building_construction = {
+                            type = coastal_bunker
+                            level = 3
+                            province = 9680
+                            instant_build = yes
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        has_full_control_of_state = 234
+                    }
+                    234 = {
+                        add_building_construction = {
+                            type = coastal_bunker
+                            level = 3
+                            province = 6755
+                            instant_build = yes
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        has_full_control_of_state = 766
+                    }
+                    766 = {
+                        add_building_construction = {
+                            type = coastal_bunker
+                            level = 3
+                            province = 6727
+                            instant_build = yes
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    # Protect the Main Cities
+    focus = {
+        id = UKR_protect_main_cities
+        x = 36
+        y = 11
+        prerequisite = { focus = UKR_air_defense focus = UKR_naval_forts }
+        icon = GFX_goal_generic_construct_military
+        cost = 8
+        ai_will_do = {
+            factor = 3
+        }
+        bypass = {
+            NOT = {
+                controls_state = 202
+                controls_state = 192
+                controls_state = 226
+                controls_state = 221
+                controls_state = 227
+                controls_state = 218
+                controls_state = 137
+            }
+        }
+        available = {
+            OR = {
+                controls_state = 202
+                controls_state = 192
+                controls_state = 226
+                controls_state = 221
+                controls_state = 227
+                controls_state = 218
+                controls_state = 137
+            }
+        }
+        search_filters = { FOCUS_FILTER_ARMY_UKRAINE FOCUS_FILTER_MANPOWER }
+        completion_reward = {
+            custom_effect_tooltip = UKR_protect_main_cities_tt
+            hidden_effect = {
+                if = {
+                    limit = {
+                        NOT = {
+                            has_template = "Defense Brigade"
+                        }
+                    }
+                    division_template = {
+                        name = "Defense Brigade"
+                        is_locked = no
+                        division_names_group = UKR_GAR_01
+
+                        regiments = {
+                            infantry = { x = 0 y = 0 }
+                            infantry = { x = 0 y = 1 }
+                            infantry = { x = 0 y = 2 }
+                            infantry = { x = 1 y = 0 }
+                            infantry = { x = 1 y = 1 }
+                        }
+                        support = {
+                            engineer = { x = 0 y = 0 }
+                            artillery = { x = 0 y = 1 }
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        controls_state = 202
+                    }
+                    202 = {
+                        meta_effect = {
+                            text = {
+                                create_unit = {
+                                    division = "name = \"[UNIT_NAME]\" division_template = \"[TEMPLATE_NAME]\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
+                                    owner = UKR
+                                    allow_spawning_on_enemy_provs = yes
+                                    prioritize_location = 525
+                                }
+                            }
+                            UNIT_NAME = "[202.GetName] Defense Brigade"
+                            TEMPLATE_NAME = "Defense Brigade"
+                        }
+                        meta_effect = {
+                            text = {
+                                create_unit = {
+                                    division = "name = \"[UNIT_NAME]\" division_template = \"[TEMPLATE_NAME]\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
+                                    owner = UKR
+                                    allow_spawning_on_enemy_provs = yes
+                                    prioritize_location = 525
+                                }
+                            }
+                            UNIT_NAME = "[202.GetName] Defense Brigade"
+                            TEMPLATE_NAME = "Defense Brigade"
+                        }
+                        add_building_construction = {
+                            type = bunker
+                            level = 1
+                            instant_build = yes
+                            province = 525
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        controls_state = 192
+                    }
+                    192 = {
+                        meta_effect = {
+                            text = {
+                                create_unit = {
+                                    division = "name = \"[UNIT_NAME]\" division_template = \"[TEMPLATE_NAME]\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
+                                    owner = UKR
+                                    allow_spawning_on_enemy_provs = yes
+                                    prioritize_location = 11670
+                                }
+                            }
+                            UNIT_NAME = "[192.GetName] Defense Brigade"
+                            TEMPLATE_NAME = "Defense Brigade"
+                        }
+                        meta_effect = {
+                            text = {
+                                create_unit = {
+                                    division = "name = \"[UNIT_NAME]\" division_template = \"[TEMPLATE_NAME]\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
+                                    owner = UKR
+                                    allow_spawning_on_enemy_provs = yes
+                                    prioritize_location = 11670
+                                }
+                            }
+                            UNIT_NAME = "[192.GetName] Defense Brigade"
+                            TEMPLATE_NAME = "Defense Brigade"
+                        }
+                        add_building_construction = {
+                            type = bunker
+                            level = 1
+                            instant_build = yes
+                            province = 11670
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        controls_state = 226
+                    }
+                    226 = {
+                        meta_effect = {
+                            text = {
+                                create_unit = {
+                                    division = "name = \"[UNIT_NAME]\" division_template = \"[TEMPLATE_NAME]\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
+                                    owner = UKR
+                                    allow_spawning_on_enemy_provs = yes
+                                    prioritize_location = 11437
+                                }
+                            }
+                            UNIT_NAME = "[226.GetName] Defense Brigade"
+                            TEMPLATE_NAME = "Defense Brigade"
+                        }
+                        meta_effect = {
+                            text = {
+                                create_unit = {
+                                    division = "name = \"[UNIT_NAME]\" division_template = \"[TEMPLATE_NAME]\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
+                                    owner = UKR
+                                    allow_spawning_on_enemy_provs = yes
+                                    prioritize_location = 11437
+                                }
+                            }
+                            UNIT_NAME = "[226.GetName] Defense Brigade"
+                            TEMPLATE_NAME = "Defense Brigade"
+                        }
+                        add_building_construction = {
+                            type = bunker
+                            level = 1
+                            instant_build = yes
+                            province = 11437
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        controls_state = 221
+                    }
+                    221 = {
+                        meta_effect = {
+                            text = {
+                                create_unit = {
+                                    division = "name = \"[UNIT_NAME]\" division_template = \"[TEMPLATE_NAME]\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
+                                    owner = UKR
+                                    allow_spawning_on_enemy_provs = yes
+                                    prioritize_location = 418
+                                }
+                            }
+                            UNIT_NAME = "[221.GetName] Defense Brigade"
+                            TEMPLATE_NAME = "Defense Brigade"
+                        }
+                        meta_effect = {
+                            text = {
+                                create_unit = {
+                                    division = "name = \"[UNIT_NAME]\" division_template = \"[TEMPLATE_NAME]\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
+                                    owner = UKR
+                                    allow_spawning_on_enemy_provs = yes
+                                    prioritize_location = 418
+                                }
+                            }
+                            UNIT_NAME = "[221.GetName] Defense Brigade"
+                            TEMPLATE_NAME = "Defense Brigade"
+                        }
+                        add_building_construction = {
+                            type = bunker
+                            level = 1
+                            instant_build = yes
+                            province = 418
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        controls_state = 227
+                    }
+                    227 = {
+                        meta_effect = {
+                            text = {
+                                create_unit = {
+                                    division = "name = \"[UNIT_NAME]\" division_template = \"[TEMPLATE_NAME]\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
+                                    owner = UKR
+                                    allow_spawning_on_enemy_provs = yes
+                                    prioritize_location = 6474
+                                }
+                            }
+                            UNIT_NAME = "[227.GetName] Defense Brigade"
+                            TEMPLATE_NAME = "Defense Brigade"
+                        }
+                        meta_effect = {
+                            text = {
+                                create_unit = {
+                                    division = "name = \"[UNIT_NAME]\" division_template = \"[TEMPLATE_NAME]\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
+                                    owner = UKR
+                                    allow_spawning_on_enemy_provs = yes
+                                    prioritize_location = 6474
+                                }
+                            }
+                            UNIT_NAME = "[227.GetName] Defense Brigade"
+                            TEMPLATE_NAME = "Defense Brigade"
+                        }
+                        add_building_construction = {
+                            type = bunker
+                            level = 1
+                            instant_build = yes
+                            province = 6474
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        controls_state = 218
+                    }
+                    218 = {
+                        meta_effect = {
+                            text = {
+                                create_unit = {
+                                    division = "name = \"[UNIT_NAME]\" division_template = \"[TEMPLATE_NAME]\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
+                                    owner = UKR
+                                    allow_spawning_on_enemy_provs = yes
+                                    prioritize_location = 9417
+                                }
+                            }
+                            UNIT_NAME = "[218.GetName] Defense Brigade"
+                            TEMPLATE_NAME = "Defense Brigade"
+                        }
+                        meta_effect = {
+                            text = {
+                                create_unit = {
+                                    division = "name = \"[UNIT_NAME]\" division_template = \"[TEMPLATE_NAME]\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
+                                    owner = UKR
+                                    allow_spawning_on_enemy_provs = yes
+                                    prioritize_location = 9417
+                                }
+                            }
+                            UNIT_NAME = "[218.GetName] Defense Brigade"
+                            TEMPLATE_NAME = "Defense Brigade"
+                        }
+                        add_building_construction = {
+                            type = bunker
+                            level = 1
+                            instant_build = yes
+                            province = 9417
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        controls_state = 137
+                    }
+                    137 = {
+                        meta_effect = {
+                            text = {
+                                create_unit = {
+                                    division = "name = \"[UNIT_NAME]\" division_template = \"[TEMPLATE_NAME]\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
+                                    owner = UKR
+                                    allow_spawning_on_enemy_provs = yes
+                                    prioritize_location = 3686
+                                }
+                            }
+                            UNIT_NAME = "[137.GetName] Defense Brigade"
+                            TEMPLATE_NAME = "Defense Brigade"
+                        }
+                        meta_effect = {
+                            text = {
+                                create_unit = {
+                                    division = "name = \"[UNIT_NAME]\" division_template = \"[TEMPLATE_NAME]\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
+                                    owner = UKR
+                                    allow_spawning_on_enemy_provs = yes
+                                    prioritize_location = 3686
+                                }
+                            }
+                            UNIT_NAME = "[137.GetName] Defense Brigade"
+                            TEMPLATE_NAME = "Defense Brigade"
+                        }
+                        add_building_construction = {
+                            type = bunker
+                            level = 1
+                            instant_build = yes
+                            province = 3686
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    # Research Funding
+    focus = {
+        id = UKR_research_funding
+        x = 30
+        y = 12
+        prerequisite = { focus = UKR_revival_project_three }
+        prerequisite = { focus = UKR_nuclear_power focus = UKR_protect_main_cities }
+        icon = GFX_focus_research
+        cost = 10
+        ai_will_do = {
+            factor = 10
+        }
+        bypass = {
+
+        }
+        available = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_government = anarchy
+                    }
+                }
+                has_country_flag = UKR_revival_project_three_finished
+            }
+        }
+        search_filters = { FOCUS_FILTER_RESEARCH }
+        completion_reward = {
+            add_research_slot = 1
+        }
+    }
+
+    # Kyivan Industry
+    focus = {
+        id = UKR_kyivan_industry
+        x = 30
+        y = 13
+        prerequisite = { focus = UKR_research_funding }
+        icon = GFX_goal_generic_construct_civ_factory
+        cost = 8
+        ai_will_do = {
+            factor = 9
+        }
+        bypass = {
+
+        }
+        available = {
+
+        }
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+        completion_reward = {
+            add_tech_bonus = {
+				name = UKR_kyivan_industry
+				bonus = 0.5
+				uses = 1
+				category = industry
+			}
+            custom_effect_tooltip = UKR_kyivan_industry_tt
+        }
+    }
+
+    # Prepare for the Worst...
+    focus = {
+        id = UKR_prepare_worst
+        x = 46
+        y = 8
+        prerequisite = {  }
+        icon = GFX_goal_generic_CAS
+        cost = 4
+        ai_will_do = {
+            factor = 10
+        }
+        bypass = {
+
+        }
+        available = {
+            has_global_flag = second_russian_civil_war_in_progress
+        }
+        search_filters = { FOCUS_FILTER_SCW_UKRAINE FOCUS_FILTER_POLITICAL FOCUS_FILTER_WAR_SUPPORT }
+        completion_reward = {
+            add_political_power = 50
+            add_war_support = 0.1
+        }
+    }
+
+    # Hope for the Best
+    focus = {
+        id = UKR_hope_best
+        x = 46
+        y = 9
+        prerequisite = { focus = UKR_prepare_worst }
+        icon = GFX_goal_generic_build_tank
+        cost = 4
+        ai_will_do = {
+            factor = 10
+        }
+        bypass = {
+
+        }
+        available = {
+            has_global_flag = second_russian_civil_war_in_progress
+        }
+        search_filters = { FOCUS_FILTER_SCW_UKRAINE FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY }
+        completion_reward = {
+            add_political_power = 50
+            add_stability = 0.1
+        }
+    }
+
+    # Boost the Industry
+    focus = {
+        id = UKR_boost_industry
+        x = 42
+        y = 10
+        prerequisite = { focus = UKR_hope_best }
+        icon = GFX_goal_generic_construct_infrastructure
+        cost = 5
+        ai_will_do = {
+            factor = 3
+        }
+        bypass = {
+
+        }
+        available = {
+            has_global_flag = second_russian_civil_war_in_progress
+            custom_trigger_tooltip = {
+				tooltip = is_in_scw_tt
+				is_in_array = { global.russian_scw_participants = ROOT.id }
+			}
+        }
+        search_filters = { FOCUS_FILTER_SCW_UKRAINE }
+        completion_reward = {
+            custom_effect_tooltip = UKR_boost_industry_tt
+            hidden_effect = {
+                add_offsite_building = {
+                    type = industrial_complex
+                    level = 1
+                }
+                add_offsite_building = {
+                    type = arms_factory
+                    level = 2
+                }
+            }
+        }
+    }
+
+    # A Stateless Society
+    focus = {
+        id = UKR_stateless_society
+        x = 42
+        y = 11
+        prerequisite = { focus = UKR_boost_industry }
+        icon = GFX_goal_generic_alliance
+        cost = 6
+        ai_will_do = {
+            factor = 4
+        }
+        bypass = {
+
+        }
+        available = {
+            has_government = anarchy
+            has_global_flag = second_russian_civil_war_in_progress
+            custom_trigger_tooltip = {
+				tooltip = is_in_scw_tt
+				is_in_array = { global.russian_scw_participants = ROOT.id }
+			}
+        }
+        search_filters = { FOCUS_FILTER_SCW_UKRAINE }
+        completion_reward = {
+            add_ideas = UKR_Stateless_society
+        }
+    }
+
+    # Emergency Conscription
+    focus = {
+        id = UKR_emergency_conscription
+        x = 46
+        y = 10
+        prerequisite = { focus = UKR_hope_best }
+        icon = GFX_goal_generic_axis_build_infantry
+        cost = 5
+        ai_will_do = {
+            factor = 5
+        }
+        bypass = {
+
+        }
+        available = {
+            has_global_flag = second_russian_civil_war_in_progress
+            custom_trigger_tooltip = {
+				tooltip = is_in_scw_tt
+				is_in_array = { global.russian_scw_participants = ROOT.id }
+			}
+        }
+        search_filters = { FOCUS_FILTER_SCW_UKRAINE FOCUS_FILTER_MANPOWER }
+        completion_reward = {
+            if = {
+                limit = {
+                    any_state = {
+                        is_fully_controlled_by = ROOT
+                    }
+                }
+                if = {
+                    limit = {
+                        NOT = {
+                            has_template = "Reserve Brigade"
+                        }
+                    }
+                    division_template = {
+                        name = "Reserve Brigade"
+                        is_locked = no
+
+                        regiments = {
+                            infantry = { x = 0 y = 0 }
+                            infantry = { x = 0 y = 1 }
+                            infantry = { x = 0 y = 2 }
+                            infantry = { x = 0 y = 3 }
+                        }
+                        support = {
+                            engineer = { x = 0 y = 0 }
+                        }
+                    }
+                }
+                random_controlled_state = {
+                    limit = {
+                        is_fully_controlled_by = ROOT
+                    }
+                    create_unit = {
+                        division = "name = \"1st Reserve Brigade\" division_template = \"Reserve Brigade\" start_experience_factor = 0.01 start_equipment_factor = 1.0"
+                        owner = UKR
+                        allow_spawning_on_enemy_provs = yes
+                    }
+                    create_unit = {
+                        division = "name = \"2nd Reserve Brigade\" division_template = \"Reserve Brigade\" start_experience_factor = 0.01 start_equipment_factor = 1.0"
+                        owner = UKR
+                        allow_spawning_on_enemy_provs = yes
+                    }
+                }
+            }
+            add_ideas = UKR_Emergency_conscription
+        }
+    }
+
+    # Seize Crimea
+    focus = {
+        id = UKR_seize_crimea
+        x = 46
+        y = 11
+        prerequisite = { focus = UKR_emergency_conscription }
+        icon = GFX_goal_generic_major_war
+        cost = 6
+        ai_will_do = {
+            factor = 5
+        }
+        bypass = {
+            CRI = {
+                OR = {
+                    exists = no
+                    NOT = {
+                        owns_state = 137
+                    }
+                }
+            }
+        }
+        available = {
+            CRI = {
+                exists = yes
+                has_war = no
+                has_full_control_of_state = 137
+                is_neighbor_of = ROOT
+            }
+            has_global_flag = second_russian_civil_war_in_progress
+            custom_trigger_tooltip = {
+				tooltip = is_in_scw_tt
+				is_in_array = { global.russian_scw_participants = ROOT.id }
+			}
+        }
+        will_lead_to_war_with = CRI
+        search_filters = { FOCUS_FILTER_SCW_UKRAINE FOCUS_FILTER_ANNEXATION }
+        completion_reward = {
+            country_event = russia2_ukraine.20
+        }
+    }
+
+    # Fortify the Key Cities
+    focus = {
+        id = UKR_fortify_key_cities
+        x = 50
+        y = 10
+        prerequisite = { focus = UKR_hope_best }
+        icon = GFX_goal_generic_construct_military
+        cost = 5
+        ai_will_do = {
+            factor = 4
+        }
+        bypass = {
+            NOT = {
+                controls_state = 202
+                controls_state = 221
+                controls_state = 192
+                controls_state = 226
+                controls_state = 227
+            }
+        }
+        available = {
+            OR = {
+                controls_state = 202
+                controls_state = 221
+                controls_state = 192
+                controls_state = 226
+                controls_state = 227
+            }
+            has_global_flag = second_russian_civil_war_in_progress
+            custom_trigger_tooltip = {
+				tooltip = is_in_scw_tt
+				is_in_array = { global.russian_scw_participants = ROOT.id }
+			}
+        }
+        search_filters = { FOCUS_FILTER_SCW_UKRAINE }
+        completion_reward = {
+            custom_effect_tooltip = UKR_fortify_key_cities_tt
+            hidden_effect = {
+                if = {
+                    limit = {
+                        controls_state = 202
+                    }
+                    202 = {
+                        add_building_construction = {
+                            type = bunker
+                            level = 3
+                            instant_build = yes
+                            province = 525
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        controls_state = 221
+                    }
+                    221 = {
+                        add_building_construction = {
+                            type = bunker
+                            level = 3
+                            instant_build = yes
+                            province = 418
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        controls_state = 192
+                    }
+                    192 = {
+                        add_building_construction = {
+                            type = bunker
+                            level = 3
+                            instant_build = yes
+                            province = 11670
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        controls_state = 226
+                    }
+                    226 = {
+                        add_building_construction = {
+                            type = bunker
+                            level = 3
+                            instant_build = yes
+                            province = 11437
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        controls_state = 227
+                    }
+                    227 = {
+                        add_building_construction = {
+                            type = bunker
+                            level = 3
+                            instant_build = yes
+                            province = 6474
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    # Foreign Support
+    focus = {
+        id = UKR_foreign_support
+        x = 50
+        y = 11
+        prerequisite = { focus = UKR_fortify_key_cities }
+        icon = GFX_goal_generic_intelligence_exchange
+        cost = 6
+        ai_will_do = {
+            factor = 6
+        }
+        bypass = {
+
+        }
+        available = {
+            NOT = {
+                has_government = anarchy
+            }
+            has_global_flag = second_russian_civil_war_in_progress
+            custom_trigger_tooltip = {
+				tooltip = is_in_scw_tt
+				is_in_array = { global.russian_scw_participants = ROOT.id }
+			}
+        }
+        search_filters = { FOCUS_FILTER_SCW_UKRAINE }
+        completion_reward = {
+            every_other_country = {
+                limit = {
+                    is_major = yes
+                    NOT = {
+                        is_in_faction_with = ROOT
+                        has_war_with = ROOT
+                        is_in_array = { global.russia_reworked_countries = THIS.id }
+                        any_country = {
+                            is_in_array = { global.russia_reworked_countries = THIS.id }
+                            is_in_faction_with = PREV
+                        }
+                    }
+                }
+                country_event = russia2_ukraine.28
+            }
+        }
+    }
+
+    # Motivate the Troops
+    focus = {
+        id = UKR_motivate_troops
+        x = 44
+        y = 12
+        prerequisite = { focus = UKR_stateless_society focus = UKR_seize_crimea }
+        icon = GFX_goal_generic_major_alliance
+        cost = 5
+        ai_will_do = {
+            factor = 5
+        }
+        bypass = {
+
+        }
+        available = {
+            has_global_flag = second_russian_civil_war_in_progress
+            custom_trigger_tooltip = {
+				tooltip = is_in_scw_tt
+				is_in_array = { global.russian_scw_participants = ROOT.id }
+			}
+        }
+        search_filters = { FOCUS_FILTER_SCW_UKRAINE }
+        completion_reward = {
+            add_ideas = UKR_Motivated_troops
+        }
+    }
+
+    # Temporary Administration of Occupied Territories
+    focus = {
+        id = UKR_temporary_administration_occupied_territories
+        x = 48
+        y = 12
+        prerequisite = { focus = UKR_foreign_support focus = UKR_seize_crimea }
+        icon = GFX_focus_generic_self_management
+        cost = 5
+        ai_will_do = {
+            factor = 100
+        }
+        bypass = {
+
+        }
+        available = {
+            has_global_flag = second_russian_civil_war_in_progress
+            custom_trigger_tooltip = {
+				tooltip = is_in_scw_tt
+				is_in_array = { global.russian_scw_participants = ROOT.id }
+			}
+        }
+        search_filters = { FOCUS_FILTER_SCW_UKRAINE }
+        completion_reward = {
+            country_event = russia2_ukraine.30
+        }
+    }
+
+    # The Final Push!
+    focus = {
+        id = UKR_final_push
+        x = 46
+        y = 13
+        prerequisite = { focus = UKR_motivate_troops }
+        prerequisite = { focus = UKR_temporary_administration_occupied_territories }
+        icon = GFX_focus_chi_army_reform
+        cost = 8
+        ai_will_do = {
+            factor = 9
+        }
+        bypass = {
+
+        }
+        available = {
+            has_global_flag = second_russian_civil_war_in_progress
+            custom_trigger_tooltip = {
+				tooltip = is_in_scw_tt
+				is_in_array = { global.russian_scw_participants = ROOT.id }
+			}
+        }
+        search_filters = { FOCUS_FILTER_SCW_UKRAINE }
+        completion_reward = {
+            add_ideas = UKR_Final_push
+        }
+    }
+
+    # The Provisional Government
+    focus = {
+        id = UKR_provisional_government
+        x = 62
+        y = 1
+        prerequisite = {  }
+        icon = GFX_focus_generic_treaty
+        cost = 5
+        ai_will_do = {
+            factor = 10
+        }
+        bypass = {
+
+        }
+        available = {
+            NOT = {
+                has_government = anarchy
+                has_country_flag = ukr_anarchist_rebels
+                has_completed_focus = UKR_anarchy_reigns
+            }
+        }
+        search_filters = { FOCUS_FILTER_NOT_ANARCHIST_UKRAINE FOCUS_FILTER_STABILITY }
+        completion_reward = {
+            set_cosmetic_tag = TUPG
+            add_stability = 0.1
+            add_ideas = UKR_Weakened_government
+        }
+    }
+
+    # Ukraine is Not Yet Lost!
+    focus = {
+        id = UKR_ukraine_not_yet_lost
+        x = 62
+        y = 2
+        prerequisite = { focus = UKR_provisional_government }
+        icon = GFX_goal_demand_sudetenland
+        cost = 4
+        ai_will_do = {
+            factor = 10
+        }
+        bypass = {
+
+        }
+        available = {
+            NOT = {
+                has_government = anarchy
+            }
+        }
+        search_filters = { FOCUS_FILTER_NOT_ANARCHIST_UKRAINE }
+        completion_reward = {
+            add_timed_idea = {
+                idea = UKR_Not_yet_lost
+                days = 365
+            }
+        }
+    }
+
+    # Hold Emergency Elections
+    focus = {
+        id = UKR_hold_elections
+        x = 62
+        y = 3
+        prerequisite = { focus = UKR_ukraine_not_yet_lost }
+        icon = GFX_focus_generic_diplomatic_treaty
+        cost = 4
+        ai_will_do = {
+            factor = 10
+        }
+        bypass = {
+
+        }
+        available = {
+            NOT = {
+                has_government = anarchy
+            }
+            OR = {
+                NOT = {
+                    has_global_flag = second_russian_civil_war_started
+                }
+                has_global_flag = second_russian_civil_war_over
+            }
+        }
+        search_filters = { FOCUS_FILTER_NOT_ANARCHIST_UKRAINE FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            country_event = russia2_ukraine.63
+            set_variable = { last_election = global.date }
+        }
+    }
+
+    # Reform the New Government
+    focus = {
+        id = UKR_reform_new_government
+        x = 62
+        y = 4
+        prerequisite = { focus = UKR_hold_elections }
+        icon = GFX_focus_hol_the_foundations_of_defense
+        cost = 6
+        ai_will_do = {
+            factor = 10
+        }
+        bypass = {
+
+        }
+        available = {
+            NOT = {
+                has_government = anarchy
+            }
+        }
+        search_filters = { FOCUS_FILTER_NOT_ANARCHIST_UKRAINE FOCUS_FILTER_STABILITY }
+        completion_reward = {
+            add_stability = 0.1
+            if = {
+                limit = {
+                    has_idea = UKR_Weakened_government
+                }
+                remove_ideas = UKR_Weakened_government
+            }
+            if = {
+                limit = {
+                    has_cosmetic_tag = TUPG
+                }
+                drop_cosmetic_tag = yes
+            }
+        }
+    }
+
+    # One Party System
+    focus = {
+        id = UKR_one_party_system
+        x = 60
+        y = 5
+        prerequisite = { focus = UKR_reform_new_government }
+        mutually_exclusive = { focus = UKR_allow_elections }
+        icon = GFX_focus_generic_support_the_left_right
+        cost = 5
+        ai_will_do = {
+            factor = 6
+        }
+        bypass = {
+
+        }
+        available = {
+            NOT = {
+                has_government = anarchy
+            }
+        }
+        search_filters = { FOCUS_FILTER_NOT_ANARCHIST_UKRAINE FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY }
+        completion_reward = {
+            add_stability = 0.05
+            add_political_power = 300
+        }
+    }
+
+    # Allow Elections
+    focus = {
+        id = UKR_allow_elections
+        x = 64
+        y = 5
+        prerequisite = { focus = UKR_reform_new_government }
+        mutually_exclusive = { focus = UKR_one_party_system }
+        icon = GFX_focus_generic_treaty
+        cost = 5
+        ai_will_do = {
+            factor = 6
+        }
+        bypass = {
+
+        }
+        available = {
+            NOT = {
+                has_government = anarchy
+            }
+        }
+        search_filters = { FOCUS_FILTER_NOT_ANARCHIST_UKRAINE FOCUS_FILTER_STABILITY }
+        completion_reward = {
+            add_stability = 0.05
+            custom_effect_tooltip = UKR_allow_elections_tt
+            hidden_effect = {
+                meta_effect = {
+                    text = {
+                        set_politics = {
+                            ruling_party = ROOT
+                            elections_allowed = yes
+                            last_election = [LAST_ELECTION_DATE]
+                            election_frequency = 24
+                        }
+                    }
+                    LAST_ELECTION_DATE = "[?last_election.GetDateStringNoHour]"
+                }
+            }
+        }
+    }
+
+    # New Laws
+    focus = {
+        id = UKR_new_laws
+        x = 62
+        y = 6
+        prerequisite = { focus = UKR_one_party_system focus = UKR_allow_elections }
+        icon = GFX_Ruling_with_law
+        cost = 5
+        ai_will_do = {
+            factor = 5
+        }
+        bypass = {
+
+        }
+        available = {
+            NOT = {
+                has_government = anarchy
+            }
+        }
+        search_filters = { FOCUS_FILTER_NOT_ANARCHIST_UKRAINE FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_ideas = UKR_New_laws
+        }
+    }
+
+    # Internal Matters
+    focus = {
+        id = UKR_internal_matters
+        x = 60
+        y = 7
+        prerequisite = { focus = UKR_new_laws }
+        icon = GFX_focus_Reign_of_Terror
+        cost = 6
+        ai_will_do = {
+            factor = 5
+        }
+        bypass = {
+
+        }
+        available = {
+            NOT = {
+                has_government = anarchy
+            }
+        }
+        search_filters = { FOCUS_FILTER_NOT_ANARCHIST_UKRAINE FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT }
+        completion_reward = {
+            add_stability = 0.1
+            add_war_support = 0.1
+        }
+    }
+
+    # Ukrainian Resilience
+    focus = {
+        id = UKR_ukrainian_resilience
+        x = 62
+        y = 7
+        prerequisite = { focus = UKR_new_laws }
+        icon = GFX_focus_generic_home_defense
+        cost = 4
+        ai_will_do = {
+            factor = 10
+        }
+        bypass = {
+
+        }
+        available = {
+            NOT = {
+                has_government = anarchy
+            }
+        }
+        search_filters = { FOCUS_FILTER_NOT_ANARCHIST_UKRAINE }
+        completion_reward = {
+            add_ideas = UKR_Ukrainian_resilience
+        }
+    }
+
+    # Our Past Glory
+    focus = {
+        id = UKR_past_glory
+        x = 64
+        y = 7
+        prerequisite = { focus = UKR_new_laws }
+        icon = GFX_focus_generic_diplomatic_treaty
+        cost = 6
+        ai_will_do = {
+            factor = 5
+        }
+        bypass = {
+
+        }
+        available = {
+            NOT = {
+                has_government = anarchy
+            }
+        }
+        search_filters = { FOCUS_FILTER_NOT_ANARCHIST_UKRAINE FOCUS_FILTER_MANPOWER }
+        completion_reward = {
+            add_ideas = UKR_Past_glory
+        }
+    }
+
+    # The Ukrainian Golden Age
+    focus = {
+        id = UKR_ukrainian_golden_age
+        x = 58
+        y = 8
+        prerequisite = { focus = UKR_internal_matters }
+        icon = GFX_focus_generic_support_the_left_right
+        cost = 8
+        ai_will_do = {
+            factor = 7
+        }
+        bypass = {
+
+        }
+        available = {
+            NOT = {
+                has_government = anarchy
+            }
+        }
+        search_filters = { FOCUS_FILTER_NOT_ANARCHIST_UKRAINE }
+        completion_reward = {
+            add_timed_idea = {
+                idea = UKR_Golden_age
+                days = 365
+            }
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 2
+                add_building_construction = {
+                    type = arms_factory
+                    level = 1
+                    instant_build = yes
+                }
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 1
+                    instant_build = yes
+                }
+            }
+        }
+    }
+
+    # Develop the Rural Regions
+    focus = {
+        id = UKR_develop_rural_regions
+        x = 54
+        y = 9
+        prerequisite = { focus = UKR_ukrainian_golden_age }
+        icon = GFX_goal_generic_construct_civilian
+        cost = 6
+        ai_will_do = {
+            factor = 7
+        }
+        bypass = {
+
+        }
+        available = {
+            NOT = {
+                has_government = anarchy
+            }
+        }
+        search_filters = { FOCUS_FILTER_NOT_ANARCHIST_UKRAINE }
+        completion_reward = {
+            custom_effect_tooltip = UKR_develop_rural_regions_tt
+        }
+    }
+
+    # The Secret Project
+    focus = {
+        id = UKR_secret_project
+        x = 54
+        y = 10
+        prerequisite = { focus = UKR_develop_rural_regions }
+        icon = GFX_goal_generic_dangerous_deal
+        cost = 8
+        ai_will_do = {
+            factor = 4
+        }
+        bypass = {
+
+        }
+        available = {
+            NOT = {
+                has_government = anarchy
+            }
+        }
+        search_filters = { FOCUS_FILTER_NOT_ANARCHIST_UKRAINE }
+        completion_reward = {
+            country_event = russia2_ukraine.68
+        }
+    }
+
+    # Share the Goods
+    focus = {
+        id = UKR_share_goods
+        x = 57
+        y = 9
+        prerequisite = { focus = UKR_ukrainian_golden_age }
+        mutually_exclusive = { focus = UKR_empower_upper_class }
+        icon = GFX_goal_generic_consumer_goods
+        cost = 5
+        ai_will_do = {
+            factor = 5
+        }
+        bypass = {
+
+        }
+        available = {
+            NOT = {
+                has_government = anarchy
+                has_government = democratic
+            }
+        }
+        search_filters = { FOCUS_FILTER_NOT_ANARCHIST_UKRAINE }
+        completion_reward = {
+            add_timed_idea = {
+                idea = UKR_Share_goods
+                days = 365
+            }
+        }
+    }
+
+    # Empower the Upper Class
+    focus = {
+        id = UKR_empower_upper_class
+        x = 59
+        y = 9
+        prerequisite = { focus = UKR_ukrainian_golden_age }
+        mutually_exclusive = { focus = UKR_share_goods }
+        icon = GFX_goal_generic_demand_territory
+        cost = 5
+        ai_will_do = {
+            factor = 5
+        }
+        bypass = {
+
+        }
+        available = {
+            NOT = {
+                has_government = anarchy
+                has_government = communism
+            }
+        }
+        search_filters = { FOCUS_FILTER_NOT_ANARCHIST_UKRAINE }
+        completion_reward = {
+            add_timed_idea = {
+                idea = UKR_Empower_upper_class
+                days = 365
+            }
+        }
+    }
+
+    # A Proud State
+    focus = {
+        id = UKR_proud_state
+        x = 56
+        y = 10
+        prerequisite = { focus = UKR_share_goods focus = UKR_empower_upper_class }
+        mutually_exclusive = { focus = UKR_stable_state }
+        icon = GFX_goal_generic_political_pressure
+        cost = 6
+        ai_will_do = {
+            factor = 6
+        }
+        bypass = {
+
+        }
+        available = {
+            NOT = {
+                has_government = anarchy
+            }
+            has_war_support > 0.75
+            custom_trigger_tooltip = {
+                tooltip = UKR_proud_state_tt
+                NOT = {
+                    any_state = {
+                        is_controlled_by = ROOT
+                        resistance > 25
+                    }
+                }
+            }
+        }
+        search_filters = { FOCUS_FILTER_NOT_ANARCHIST_UKRAINE FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_political_power = 150
+            add_ideas = UKR_Proud_state
+        }
+    }
+
+    # A Stable State
+    focus = {
+        id = UKR_stable_state
+        x = 60
+        y = 10
+        prerequisite = { focus = UKR_share_goods focus = UKR_empower_upper_class }
+        mutually_exclusive = { focus = UKR_proud_state }
+        icon = GFX_goal_generic_national_unity
+        cost = 6
+        ai_will_do = {
+            factor = 6
+        }
+        bypass = {
+
+        }
+        available = {
+            NOT = {
+                has_government = anarchy
+            }
+            has_stability > 0.75
+            custom_trigger_tooltip = {
+                tooltip = UKR_stable_state_tt
+                NOT = {
+                    any_state = {
+                        is_controlled_by = ROOT
+                        resistance > 25
+                    }
+                }
+            }
+        }
+        search_filters = { FOCUS_FILTER_NOT_ANARCHIST_UKRAINE FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_political_power = 150
+            add_ideas = UKR_Stable_state
+        }
+    }
+
+    # Prepare the Army
+    focus = {
+        id = UKR_prepare_army
+        x = 66
+        y = 8
+        prerequisite = { focus = UKR_past_glory }
+        icon = GFX_goal_generic_military_sphere
+        cost = 4
+        ai_will_do = {
+            factor = 4
+        }
+        bypass = {
+
+        }
+        available = {
+            NOT = {
+                has_government = anarchy
+            }
+        }
+        search_filters = { FOCUS_FILTER_NOT_ANARCHIST_UKRAINE }
+        completion_reward = {
+            add_timed_idea = {
+                idea = UKR_Prepare_army
+                days = 365
+            }
+        }
+    }
+
+    # Demand Eastern Poland
+    focus = {
+        id = UKR_demand_eastern_poland
+        x = 63
+        y = 9
+        prerequisite = { focus = UKR_prepare_army }
+        icon = GFX_goal_generic_more_territorial_claims
+        cost = 6
+        ai_will_do = {
+            factor = 5
+        }
+        will_lead_to_war_with = POL
+        bypass = {
+            AND = {
+                OR = {
+                    has_full_control_of_state = 93
+                    any_country = {
+                        has_full_control_of_state = 93
+                        OR = {
+                            has_war_with = ROOT
+                            is_subject_of = ROOT
+                            is_in_faction_with = ROOT
+                        }
+                    }
+                }
+                OR = {
+                    has_full_control_of_state = 91
+                    any_country = {
+                        has_full_control_of_state = 91
+                        OR = {
+                            has_war_with = ROOT
+                            is_subject_of = ROOT
+                            is_in_faction_with = ROOT
+                        }
+                    }
+                }
+                OR = {
+                    has_full_control_of_state = 89
+                    any_country = {
+                        has_full_control_of_state = 89
+                        OR = {
+                            has_war_with = ROOT
+                            is_subject_of = ROOT
+                            is_in_faction_with = ROOT
+                        }
+                    }
+                }
+            }
+        }
+        available = {
+            has_army_manpower = {
+                size > 300000
+            }
+            93 = {
+				OWNER = {
+					has_full_control_of_state = 93
+					NOT = {
+                        tag = ROOT
+						has_war_with = ROOT
+						is_subject_of = ROOT
+						is_in_faction_with = ROOT
+					}
+					is_neighbor_of = ROOT
+				}
+			}
+            91 = {
+				OWNER = {
+					has_full_control_of_state = 91
+					NOT = {
+                        tag = ROOT
+						has_war_with = ROOT
+						is_subject_of = ROOT
+						is_in_faction_with = ROOT
+					}
+					is_neighbor_of = ROOT
+				}
+			}
+            89 = {
+				OWNER = {
+					has_full_control_of_state = 89
+					NOT = {
+                        tag = ROOT
+						has_war_with = ROOT
+						is_subject_of = ROOT
+						is_in_faction_with = ROOT
+					}
+					is_neighbor_of = ROOT
+				}
+			}
+            NOT = {
+                has_government = anarchy
+            }
+        }
+        search_filters = { FOCUS_FILTER_NOT_ANARCHIST_UKRAINE FOCUS_FILTER_ANNEXATION }
+        completion_reward = {
+            if = {
+				limit = {
+					any_country = {
+						is_subject = yes
+						owns_state = 93
+					}
+				}
+				78 = {
+					OWNER = {
+						OVERLORD = {
+							country_event = { hours = 6 id = russia2_poland.26 }
+							custom_effect_tooltip = UKR_demand_eastern_poland_tt
+						}
+					}
+				}
+			}
+            if = {
+				limit = {
+					any_country = {
+						is_subject = yes
+						owns_state = 91
+					}
+				}
+				766 = {
+					OWNER = {
+						OVERLORD = {
+							country_event = { hours = 6 id = russia2_poland.26 }
+							custom_effect_tooltip = UKR_demand_eastern_poland_tt2
+						}
+					}
+				}
+			}
+            if = {
+				limit = {
+					any_country = {
+						is_subject = yes
+						owns_state = 89
+					}
+				}
+				79 = {
+					OWNER = {
+						OVERLORD = {
+							country_event = { hours = 6 id = russia2_poland.26 }
+							custom_effect_tooltip = UKR_demand_eastern_poland_tt3
+						}
+					}
+				}
+			}
+			else = {
+				every_country = {
+					limit = {
+                        OR = {
+                            owns_state = 93
+                            owns_state = 91
+                            owns_state = 89
+                        }
+					}
+					country_event = { hours = 6 id = russia2_poland.26 }
+				}
+			}
+        }
+    }
+
+    # Demand Bessarabia
+    focus = {
+        id = UKR_demand_bessarabia
+        x = 66
+        y = 9
+        prerequisite = { focus = UKR_prepare_army }
+        icon = GFX_goal_generic_more_territorial_claims
+        cost = 6
+        ai_will_do = {
+            factor = 5
+        }
+        will_lead_to_war_with = ROM
+		will_lead_to_war_with = MOL
+        bypass = {
+            AND = {
+                OR = {
+                    has_full_control_of_state = 78
+                    any_country = {
+                        has_full_control_of_state = 78
+                        OR = {
+                            has_war_with = ROOT
+                            is_subject_of = ROOT
+                            is_in_faction_with = ROOT
+                        }
+                    }
+                }
+                OR = {
+                    has_full_control_of_state = 766
+                    any_country = {
+                        has_full_control_of_state = 766
+                        OR = {
+                            has_war_with = ROOT
+                            is_subject_of = ROOT
+                            is_in_faction_with = ROOT
+                        }
+                    }
+                }
+                OR = {
+                    has_full_control_of_state = 79
+                    any_country = {
+                        has_full_control_of_state = 79
+                        OR = {
+                            has_war_with = ROOT
+                            is_subject_of = ROOT
+                            is_in_faction_with = ROOT
+                        }
+                    }
+                }
+            }
+        }
+        available = {
+            has_army_manpower = {
+                size > 250000
+            }
+            78 = {
+				OWNER = {
+					has_full_control_of_state = 78
+					NOT = {
+                        tag = ROOT
+						has_war_with = ROOT
+						is_subject_of = ROOT
+						is_in_faction_with = ROOT
+					}
+					is_neighbor_of = ROOT
+				}
+			}
+            766 = {
+				OWNER = {
+					has_full_control_of_state = 766
+					NOT = {
+                        tag = ROOT
+						has_war_with = ROOT
+						is_subject_of = ROOT
+						is_in_faction_with = ROOT
+					}
+					is_neighbor_of = ROOT
+				}
+			}
+            79 = {
+				OWNER = {
+					has_full_control_of_state = 79
+					NOT = {
+                        tag = ROOT
+						has_war_with = ROOT
+						is_subject_of = ROOT
+						is_in_faction_with = ROOT
+					}
+					is_neighbor_of = ROOT
+				}
+			}
+            NOT = {
+                has_government = anarchy
+            }
+        }
+        search_filters = { FOCUS_FILTER_NOT_ANARCHIST_UKRAINE FOCUS_FILTER_ANNEXATION }
+        completion_reward = {
+            if = {
+				limit = {
+					any_country = {
+						is_subject = yes
+						owns_state = 78
+					}
+				}
+				78 = {
+					OWNER = {
+						OVERLORD = {
+							country_event = { hours = 6 id = russia2_romania.17 }
+							custom_effect_tooltip = UKR_demand_bessarabia_tt
+						}
+					}
+				}
+			}
+            if = {
+				limit = {
+					any_country = {
+						is_subject = yes
+						owns_state = 766
+					}
+				}
+				766 = {
+					OWNER = {
+						OVERLORD = {
+							country_event = { hours = 6 id = russia2_romania.17 }
+							custom_effect_tooltip = UKR_demand_bessarabia_tt2
+						}
+					}
+				}
+			}
+            if = {
+				limit = {
+					any_country = {
+						is_subject = yes
+						owns_state = 79
+					}
+				}
+				79 = {
+					OWNER = {
+						OVERLORD = {
+							country_event = { hours = 6 id = russia2_romania.17 }
+							custom_effect_tooltip = UKR_demand_bessarabia_tt3
+						}
+					}
+				}
+			}
+			else = {
+				every_country = {
+					limit = {
+                        OR = {
+                            owns_state = 78
+                            owns_state = 79
+                            owns_state = 766
+                        }
+					}
+					country_event = { hours = 6 id = russia2_romania.17 }
+				}
+			}
+        }
+    }
+
+    # The Crimean Situation
+    focus = {
+        id = UKR_crimean_situation
+        x = 69
+        y = 9
+        prerequisite = { focus = UKR_prepare_army }
+        icon = GFX_goal_generic_more_territorial_claims
+        cost = 6
+        ai_will_do = {
+            factor = 5
+        }
+        will_lead_to_war_with = CRI
+        bypass = {
+            137 = {
+                OWNER = {
+                    OR = {
+                        tag = ROOT
+                        has_war_with = ROOT
+                    }
+                }
+            }
+        }
+        available = {
+            has_army_manpower = {
+                size > 100000
+            }
+            137 = {
+                OWNER = {
+                    NOT = {
+                        tag = ROOT
+                        has_war_with = ROOT
+                    }
+                }
+            }
+            NOT = {
+                has_government = anarchy
+            }
+        }
+        search_filters = { FOCUS_FILTER_NOT_ANARCHIST_UKRAINE FOCUS_FILTER_ANNEXATION }
+        completion_reward = {
+            country_event = { id = russia2_ukraine.69 hours = 6 }
+        }
+    }
+
+    # The Ukrainian Sphere
+    focus = {
+        id = UKR_ukrainian_sphere
+        x = 71
+        y = 8
+        prerequisite = { focus = UKR_past_glory }
+        icon = GFX_goal_generic_forceful_treaty
+        cost = 5
+        ai_will_do = {
+            factor = 5
+        }
+        bypass = {
+
+        }
+        available = {
+            is_subject = no
+            NOT = {
+                has_government = anarchy
+            }
+        }
+        search_filters = { FOCUS_FILTER_NOT_ANARCHIST_UKRAINE }
+        completion_reward = {
+            if = {
+                limit = {
+                    is_faction_leader = yes
+                }
+                set_faction_name = ukrainian_sphere
+            }
+            else = {
+                create_faction = ukrainian_sphere
+            }
+            add_ideas = UKR_Ukrainian_sphere
+        }
+    }
+
+    # Ukrainian Friendship
+    focus = {
+        id = UKR_ukrainian_friendship
+        x = 71
+        y = 9
+        prerequisite = { focus = UKR_ukrainian_sphere }
+        icon = GFX_goal_generic_improve_relations
+        cost = 6
+        ai_will_do = {
+            factor = 4
+        }
+        bypass = {
+
+        }
+        available = {
+            is_subject = no
+            is_faction_leader = yes
+            NOT = {
+                has_government = anarchy
+            }
+        }
+        search_filters = { FOCUS_FILTER_NOT_ANARCHIST_UKRAINE }
+        completion_reward = {
+            custom_effect_tooltip = UKR_ukrainian_friendship_tt
+        }
+    }
+
+    # Ensure Control Over Russia
+    focus = {
+        id = UKR_ensure_control_over_russia
+        x = 73
+        y = 9
+        prerequisite = { focus = UKR_ukrainian_sphere }
+        icon = GFX_goal_generic_forceful_treaty
+        cost = 8
+        ai_will_do = {
+            factor = 8
+        }
+        bypass = {
+
+        }
+        available = {
+            is_subject = no
+            NOT = {
+                has_government = anarchy
+            }
+            if = {
+                limit = {
+                    country_exists = SOU
+                }
+                SOU = {
+                    is_subject_of = UKR
+                }
+            }
+            else = {
+                SOV = {
+                    is_subject_of = UKR
+                }
+            }
+        }
+        search_filters = { FOCUS_FILTER_NOT_ANARCHIST_UKRAINE }
+        completion_reward = {
+            if = {
+                limit = {
+                    SOU = {
+                        is_subject_of = UKR
+                    }
+                }
+                custom_effect_tooltip = sou_becomes_integrated_country
+                hidden_effect = {
+                    set_autonomy = {
+                        target = SOU
+                        autonomy_state = autonomy_integrated_country
+                    }
+                }
+            }
+            else = {
+                custom_effect_tooltip = sov_becomes_integrated_country
+                hidden_effect = {
+                    set_autonomy = {
+                        target = SOV
+                        autonomy_state = autonomy_integrated_country
+                    }
+                }
+            }
+        }
+    }
+
+    # United Ukraine
+    focus = {
+        id = UKR_united_ukraine
+        x = 64
+        y = 10
+        prerequisite = { focus = UKR_demand_bessarabia focus = UKR_demand_eastern_poland focus = UKR_crimean_situation }
+        mutually_exclusive = { focus = UKR_ukrainian_dominance }
+        icon = GFX_goal_generic_major_alliance
+        cost = 6
+        ai_will_do = {
+            factor = 6
+        }
+        bypass = {
+
+        }
+        available = {
+            NOT = {
+                has_government = anarchy
+            }
+            custom_trigger_tooltip = {
+                tooltip = UKR_united_ukraine_tt
+                NOT = {
+                    any_state = {
+                        is_core_of = ROOT
+                        NOT = {
+                            is_owned_by = ROOT
+                        }
+                    }
+                }
+            }
+            has_army_manpower = {
+                size > 500000
+            }
+        }
+        search_filters = { FOCUS_FILTER_NOT_ANARCHIST_UKRAINE }
+        completion_reward = {
+            add_ideas = UKR_United_ukraine
+        }
+    }
+
+    # Ukrainian Dominance
+    focus = {
+        id = UKR_ukrainian_dominance
+        x = 68
+        y = 10
+        prerequisite = { focus = UKR_demand_bessarabia focus = UKR_demand_eastern_poland focus = UKR_crimean_situation }
+        mutually_exclusive = { focus = UKR_united_ukraine }
+        icon = GFX_goal_generic_demand_territory
+        cost = 6
+        ai_will_do = {
+            factor = 6
+        }
+        bypass = {
+
+        }
+        available = {
+            NOT = {
+                has_government = anarchy
+            }
+            num_subjects > 4
+            has_army_manpower = {
+                size > 500000
+            }
+        }
+        search_filters = { FOCUS_FILTER_NOT_ANARCHIST_UKRAINE }
+        completion_reward = {
+            add_ideas = UKR_Ukrainian_dominance
+        }
+    }
+
+    # Reform Kievan Rus'
+    focus = {
+        id = UKR_reform_kievan_rus
+        x = 62
+        y = 11
+        prerequisite = { focus = UKR_proud_state focus = UKR_stable_state }
+        prerequisite = { focus = UKR_united_ukraine focus = UKR_ukrainian_dominance }
+        icon = GFX_goal_generic_political_pressure
+        cost = 10
+        ai_will_do = {
+            factor = 10
+        }
+        bypass = {
+
+        }
+        cancel = {
+            is_subject = yes
+            has_country_flag = overlord_refused_kievan_rus
+        }
+        available = {
+            NOT = {
+                has_government = anarchy
+                has_country_flag = overlord_refused_kievan_rus
+            }
+            if = {
+                limit = {
+                    is_subject = no
+                }
+                137 = {
+                    is_owned_and_controlled_by = ROOT
+                }
+                234 = {
+                    is_owned_and_controlled_by = ROOT
+                }
+                218 = {
+                    is_owned_and_controlled_by = ROOT
+                }
+                766 = {
+                    is_owned_and_controlled_by = ROOT
+                }
+                79 = {
+                    is_owned_and_controlled_by = ROOT
+                }
+                78 = {
+                    is_owned_and_controlled_by = ROOT
+                }
+                80 = {
+                    is_owned_and_controlled_by = ROOT
+                }
+                89 = {
+                    is_owned_and_controlled_by = ROOT
+                }
+                91 = {
+                    is_owned_and_controlled_by = ROOT
+                }
+                93 = {
+                    is_owned_and_controlled_by = ROOT
+                }
+                194 = {
+                    is_owned_and_controlled_by = ROOT
+                }
+                204 = {
+                    is_owned_and_controlled_by = ROOT
+                }
+                206 = {
+                    is_owned_and_controlled_by = ROOT
+                }
+                241 = {
+                    is_owned_and_controlled_by = ROOT
+                }
+                224 = {
+                    is_owned_and_controlled_by = ROOT
+                }
+                222 = {
+                    is_owned_and_controlled_by = ROOT
+                }
+                240 = {
+                    is_owned_and_controlled_by = ROOT
+                }
+                243 = {
+                    is_owned_and_controlled_by = ROOT
+                }
+            }
+        }
+        search_filters = { FOCUS_FILTER_NOT_ANARCHIST_UKRAINE FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_ANNEXATION }
+        select_effect = {
+            if = {
+                limit = {
+                    is_subject = yes
+                }
+                OVERLORD = {
+                    country_event = { id = russia2_ukraine.82 days = 7 }
+                }
+            }
+		}
+        completion_reward = {
+            if = {
+                limit = {
+                    is_subject = yes
+                }
+                custom_effect_tooltip = choosing_focus_selec_will_send_event_overlord
+                add_stability = 0.1
+            }
+            else = {
+                custom_effect_tooltip = ukr_will_be_know_as_kiev_rus
+                add_war_support = 0.15
+                add_stability = 0.1
+                hidden_effect = {
+                    set_cosmetic_tag = KIER
+                }
+            }
+            every_state = {
+                limit = {
+                    ukr_is_kievan_rus_state = yes
+                    NOT = {
+                        is_core_of = ROOT
+                    }
+                }
+                custom_effect_tooltip = UKR_reform_kievan_rus_tt
+                hidden_effect = {
+                    ROOT = {
+                        add_state_core = PREV
+                    }
+                }
+            }
+        }
+    }
+}

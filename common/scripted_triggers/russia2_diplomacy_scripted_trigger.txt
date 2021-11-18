@@ -103,6 +103,114 @@ DIPLOMACY_REVOKE_OFFER_MILACC_ENABLE_TRIGGER = {
 }
 
 DIPLOMACY_GENERATE_WARGOAL_ENABLE_TRIGGER = {
+	if = {
+		limit = {
+			TAG = SOV
+			has_government = anarchy
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_CANT_JUSTIFY_WAR_ANARCHY
+			always = no
+		}
+	}
+	if = {
+		limit = {
+			NOT = {
+				has_global_flag = second_russian_civil_war_in_progress	
+				has_global_flag = second_russian_civil_war_over
+			}
+			has_global_flag = second_russian_civil_war_started
+			OR = {
+				FROM = {
+					TAG = SOV
+					sov_in_scw = yes
+				}
+				FROM = {
+					TAG = SOU
+					sou_in_scw = yes
+				}
+				FROM = {
+					TAG = UKR
+				}
+				FROM = {
+					is_in_faction_with = SOV
+				}
+				FROM = {
+					is_in_faction_with = SOU
+				}
+				FROM = {
+					is_in_faction_with = UKR
+				}
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_CANT_JUSTIFY_WAR_COUNTRY_PARTICIPATING_RCW
+			always = no
+		}
+	}
+	if = {
+		limit = {
+			has_global_flag = second_russian_civil_war_in_progress
+			OR = {
+				FROM = {
+					TAG = SOV
+					sov_in_scw = yes
+				}
+				FROM = {
+					TAG = SOU
+					sou_in_scw = yes
+				}
+				FROM = {
+					TAG = UKR
+				}
+				FROM = {
+					is_in_faction_with = SOV
+				}
+				FROM = {
+					is_in_faction_with = SOU
+				}
+				FROM = {
+					is_in_faction_with = UKR
+				}
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_CANT_JUSTIFY_WAR_COUNTRY_PARTICIPATING_RCW
+			always = no
+		}
+	}
+	if = {
+		limit = {
+			OR = {
+				TAG = SOV
+				TAG = SOU
+				TAG = UKR
+			}
+			FROM = {
+				NOT = {
+					has_global_flag = second_russian_civil_war_in_progress
+					has_global_flag = second_russian_civil_war_over
+				}
+				has_global_flag = second_russian_civil_war_started
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_CANT_JUSTIFY_WAR_CIVIL_WAR
+			always = no
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				is_in_array = { global.russian_scw_participants = ROOT.id }
+				has_global_flag = second_russian_civil_war_in_progress
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_CANT_JUSTIFY_WAR_CIVIL_WAR
+			always = no
+		}
+	}
     if = {
 		limit = {
 			has_game_rule = {
@@ -206,9 +314,39 @@ DIPLOMACY_GENERATE_WARGOAL_ENABLE_TRIGGER = {
             always = no
         }
     }
+	else_if = {
+		limit = {
+			tag = SOV
+			has_government = communism
+			has_completed_focus = SOV_great_purge2
+			has_idea = SOV_Great_purge
+			check_variable = {
+				var = sov_great_purge_completion
+				value = 100
+				compare = less_than
+			}
+		}
+		custom_trigger_tooltip = {
+            tooltip = RULE_CANT_JUSTIFY_GREAT_PURGE
+            always = no
+        }
+	}
 }
 
 DIPLOMACY_RELEASE_NATION_ENABLE_TRIGGER = {
+	if = {
+		limit = {
+			OR = {
+				TAG = SOV
+				sov_anarchist_russian_free_state = yes
+			}
+			has_government = anarchy
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_CANT_RELEASE_NATION_ANARCHY
+			always = no
+		}
+	}
     if = {
 		limit = {
 			has_game_rule = {
@@ -440,6 +578,9 @@ DIPLOMACY_RELEASE_NATION_ENABLE_TRIGGER = {
 					tag = KAR
 					tag = TAT
 					tag = URA
+					tag = EFR
+					tag = KMI
+					tag = VYA
                 }
             }
         }
@@ -449,7 +590,7 @@ DIPLOMACY_RELEASE_NATION_ENABLE_TRIGGER = {
             original_tag = SOV
             has_completed_focus = SOV_rally_under_denikin_cause
             NOT = {
-                has_country_flag = second_civil_war_over
+                has_global_flag = second_russian_civil_war_over
                 OR = {
                     has_completed_focus = SOV_bring_back_old_life
                     has_completed_focus = SOV_new_way_life
@@ -485,6 +626,9 @@ DIPLOMACY_RELEASE_NATION_ENABLE_TRIGGER = {
 					tag = KAR
 					tag = TAT
 					tag = URA
+					tag = EFR
+					tag = KMI
+					tag = VYA
                 }
             }
         }
@@ -529,6 +673,9 @@ DIPLOMACY_RELEASE_NATION_ENABLE_TRIGGER = {
 					tag = KAR
 					tag = TAT
 					tag = URA
+					tag = EFR
+					tag = KMI
+					tag = VYA
                 }
             }
         }
@@ -570,6 +717,9 @@ DIPLOMACY_RELEASE_NATION_ENABLE_TRIGGER = {
 					tag = KAR
 					tag = TAT
 					tag = URA
+					tag = EFR
+					tag = KMI
+					tag = VYA
                 }
             }
         }
@@ -611,6 +761,9 @@ DIPLOMACY_RELEASE_NATION_ENABLE_TRIGGER = {
 					tag = KAR
 					tag = TAT
 					tag = URA
+					tag = EFR
+					tag = KMI
+					tag = VYA
                 }
             }
         }
@@ -628,6 +781,115 @@ DIPLOMACY_RELEASE_NATION_ENABLE_TRIGGER = {
 }
 
 DIPLOMACY_OFFER_JOIN_FACTION_ENABLE_TRIGGER = {
+	if = {
+		limit = {
+			FROM = {
+				has_government = anarchy
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_CANT_INVITE_NATION_ANARCHY
+			always = no
+		}
+	}
+	if = {
+		limit = {
+			NOT = {
+				has_global_flag = second_russian_civil_war_in_progress	
+				has_global_flag = second_russian_civil_war_over
+			}
+			has_global_flag = second_russian_civil_war_started
+			OR = {
+				FROM = {
+					TAG = SOV
+					sov_in_scw = yes
+				}
+				FROM = {
+					TAG = SOU
+					sou_in_scw = yes
+				}
+				FROM = {
+					TAG = UKR
+				}
+				FROM = {
+					is_in_faction_with = SOV
+				}
+				FROM = {
+					is_in_faction_with = SOU
+				}
+				FROM = {
+					is_in_faction_with = UKR
+				}
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_CANT_INVITE_FACTION_COUNTRY_PARTICIPATING_RCW
+			always = no
+		}
+	}
+	if = {
+		limit = {
+			has_global_flag = second_russian_civil_war_in_progress
+			OR = {
+				FROM = {
+					TAG = SOV
+					sov_in_scw = yes
+				}
+				FROM = {
+					TAG = SOU
+					sou_in_scw = yes
+				}
+				FROM = {
+					TAG = UKR
+				}
+				FROM = {
+					is_in_faction_with = SOV
+				}
+				FROM = {
+					is_in_faction_with = SOU
+				}
+				FROM = {
+					is_in_faction_with = UKR
+				}
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_CANT_INVITE_FACTION_COUNTRY_PARTICIPATING_RCW
+			always = no
+		}
+	}
+	if = {
+		limit = {
+			OR = {
+				TAG = SOV
+				TAG = SOU
+				TAG = UKR
+			}
+			FROM = {
+				NOT = {
+					has_global_flag = second_russian_civil_war_in_progress
+					has_global_flag = second_russian_civil_war_over
+				}
+				has_global_flag = second_russian_civil_war_started
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_CANT_INVITE_FACTION_CIVIL_WAR
+			always = no
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				is_in_array = { global.russian_scw_participants = ROOT.id }
+				has_global_flag = second_russian_civil_war_in_progress
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_CANT_INVITE_FACTION_CIVIL_WAR
+			always = no
+		}
+	}
 	if = {
 		limit = {
 			tag = SOV
@@ -797,6 +1059,117 @@ DIPLOMACY_OFFER_JOIN_FACTION_ENABLE_TRIGGER = {
 DIPLOMACY_JOIN_FACTION_ENABLE_TRIGGER = {
 	if = {
 		limit = {
+			OR = {
+				TAG = SOV
+				sov_anarchist_russian_free_state = yes
+			}
+			has_government = anarchy
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_CANT_JOIN_FACTION_ANARCHY
+			always = no
+		}
+	}
+	if = {
+		limit = {
+			NOT = {
+				has_global_flag = second_russian_civil_war_in_progress	
+				has_global_flag = second_russian_civil_war_over
+			}
+			has_global_flag = second_russian_civil_war_started
+			OR = {
+				FROM = {
+					TAG = SOV
+					sov_in_scw = yes
+				}
+				FROM = {
+					TAG = SOU
+					sou_in_scw = yes
+				}
+				FROM = {
+					TAG = UKR
+				}
+				FROM = {
+					is_in_faction_with = SOV
+				}
+				FROM = {
+					is_in_faction_with = SOU
+				}
+				FROM = {
+					is_in_faction_with = UKR
+				}
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_CANT_JOIN_FACTION_COUNTRY_PARTICIPATING_RCW
+			always = no
+		}
+	}
+	if = {
+		limit = {
+			has_global_flag = second_russian_civil_war_in_progress
+			OR = {
+				FROM = {
+					TAG = SOV
+					sov_in_scw = yes
+				}
+				FROM = {
+					TAG = SOU
+					sou_in_scw = yes
+				}
+				FROM = {
+					TAG = UKR
+				}
+				FROM = {
+					is_in_faction_with = SOV
+				}
+				FROM = {
+					is_in_faction_with = SOU
+				}
+				FROM = {
+					is_in_faction_with = UKR
+				}
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_CANT_JOIN_FACTION_COUNTRY_PARTICIPATING_RCW
+			always = no
+		}
+	}
+	if = {
+		limit = {
+			OR = {
+				TAG = SOV
+				TAG = SOU
+				TAG = UKR
+			}
+			FROM = {
+				NOT = {
+					has_global_flag = second_russian_civil_war_in_progress
+					has_global_flag = second_russian_civil_war_over
+				}
+				has_global_flag = second_russian_civil_war_started
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_CANT_JOIN_FACTION_CIVIL_WAR
+			always = no
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				is_in_array = { global.russian_scw_participants = ROOT.id }
+				has_global_flag = second_russian_civil_war_in_progress
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_CANT_JOIN_FACTION_CIVIL_WAR
+			always = no
+		}
+	}
+	if = {
+		limit = {
 			FROM = {
 				tag = SOV
 				has_idea = SOV_Uncertain_fate
@@ -956,6 +1329,128 @@ DIPLOMACY_JOIN_FACTION_ENABLE_TRIGGER = {
 }
 
 DIPLOMACY_CREATE_FACTION_ENABLE_TRIGGER = {
+	if = {
+		limit = {
+			OR = {
+				TAG = SOV
+				sov_anarchist_russian_free_state = yes
+			}
+			has_government = anarchy
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_CANT_CREATE_FACTION_ANARCHY
+			always = no
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_government = anarchy
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_CANT_CREATE_FACTION_COUNTRIES_ANARCHY
+			always = no
+		}
+	}
+	if = {
+		limit = {
+			NOT = {
+				has_global_flag = second_russian_civil_war_in_progress	
+				has_global_flag = second_russian_civil_war_over
+			}
+			has_global_flag = second_russian_civil_war_started
+			OR = {
+				FROM = {
+					TAG = SOV
+					sov_in_scw = yes
+				}
+				FROM = {
+					TAG = SOU
+					sou_in_scw = yes
+				}
+				FROM = {
+					TAG = UKR
+				}
+				FROM = {
+					is_in_faction_with = SOV
+				}
+				FROM = {
+					is_in_faction_with = SOU
+				}
+				FROM = {
+					is_in_faction_with = UKR
+				}
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_CANT_CREATE_FACTION_COUNTRY_PARTICIPATING_RCW
+			always = no
+		}
+	}
+	if = {
+		limit = {
+			has_global_flag = second_russian_civil_war_in_progress
+			OR = {
+				FROM = {
+					TAG = SOV
+					sov_in_scw = yes
+				}
+				FROM = {
+					TAG = SOU
+					sou_in_scw = yes
+				}
+				FROM = {
+					TAG = UKR
+				}
+				FROM = {
+					is_in_faction_with = SOV
+				}
+				FROM = {
+					is_in_faction_with = SOU
+				}
+				FROM = {
+					is_in_faction_with = UKR
+				}
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_CANT_CREATE_FACTION_COUNTRY_PARTICIPATING_RCW
+			always = no
+		}
+	}
+	if = {
+		limit = {
+			OR = {
+				TAG = SOV
+				TAG = SOU
+				TAG = UKR
+			}
+			FROM = {
+				NOT = {
+					has_global_flag = second_russian_civil_war_in_progress
+					has_global_flag = second_russian_civil_war_over
+				}
+				has_global_flag = second_russian_civil_war_started
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_CANT_CREATE_FACTION_CIVIL_WAR
+			always = no
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				is_in_array = { global.russian_scw_participants = ROOT.id }
+				has_global_flag = second_russian_civil_war_in_progress
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_CANT_CREATE_FACTION_CIVIL_WAR
+			always = no
+		}
+	}
 	if = {
 		limit = {
 			FROM = {
@@ -1157,7 +1652,80 @@ DIPLOMACY_CREATE_FACTION_ENABLE_TRIGGER = {
 	}
 }
 
+DIPLOMACY_LEAVE_FACTION_ENABLE_TRIGGER = {
+	if = {
+		limit = {
+			has_game_rule = {
+				rule = allow_leave_faction
+				option = BLOCKED
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_ALLOW_LEAVE_FACTION_BLOCKED_TOOLTIP
+			always = no
+		}
+	}
+	if = {
+		limit = {
+			OR = {
+				TAG = SOV
+				sov_anarchist_russian_free_state = yes
+			}
+			has_government = anarchy
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_CANT_LEAVE_FACTION_ANARCHY
+			always = no
+		}
+	}
+}
+
 DIPLOMACY_DISMANTLE_FACTION_ENABLE_TRIGGER = {
+	if = {
+		limit = {
+			OR = {
+				TAG = SOV
+				sov_anarchist_russian_free_state = yes
+			}
+			has_government = anarchy
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_CANT_DISMANTLE_FACTION_ANARCHY
+			always = no
+		}
+	}
+	if = {
+		limit = {
+			OR = {
+				TAG = SOV
+				TAG = SOU
+				TAG = UKR
+			}
+			FROM = {
+				NOT = {
+					has_global_flag = second_russian_civil_war_in_progress
+					has_global_flag = second_russian_civil_war_over
+				}
+				has_global_flag = second_russian_civil_war_started
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_CANT_DISMANTLE_CIVIL_WAR
+			always = no
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				is_in_array = { global.russian_scw_participants = ROOT.id }
+				has_global_flag = second_russian_civil_war_in_progress
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_CANT_DISMANTLE_CIVIL_WAR
+			always = no
+		}
+	}
 	if = {
 		limit = {
 			tag = SOV
@@ -1173,6 +1741,38 @@ DIPLOMACY_DISMANTLE_FACTION_ENABLE_TRIGGER = {
 DIPLOMACY_ASSUME_FACTION_LEADERSHIP_ENABLE_TRIGGER = {
 	if = {
 		limit = {
+			OR = {
+				TAG = SOV
+				TAG = SOU
+				TAG = UKR
+			}
+			FROM = {
+				NOT = {
+					has_global_flag = second_russian_civil_war_in_progress
+					has_global_flag = second_russian_civil_war_over
+				}
+				has_global_flag = second_russian_civil_war_started
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_CANT_ASSUME_LEADERSHIP_CIVIL_WAR
+			always = no
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				is_in_array = { global.russian_scw_participants = ROOT.id }
+				has_global_flag = second_russian_civil_war_in_progress
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_CANT_ASSUME_LEADERSHIP_CIVIL_WAR
+			always = no
+		}
+	}
+	if = {
+		limit = {
 			FROM = {
 				tag = SOV
 				has_government = fascism
@@ -1185,7 +1785,137 @@ DIPLOMACY_ASSUME_FACTION_LEADERSHIP_ENABLE_TRIGGER = {
 	}
 }
 
+DIPLOMACY_KICK_FROM_FACTION_ENABLE_TRIGGER = {
+	if = {
+		limit = {
+			has_game_rule = {
+				rule = allow_kick_faction
+				option = BLOCKED
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_KICK_FROM_FACTION_BLOCKED_TOOLTIP
+			always = no
+		}
+	}
+	if = {
+		limit = {
+			OR = {
+				TAG = SOV
+				sov_anarchist_russian_free_state = yes
+			}
+			has_government = anarchy
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_CANT_KICK_FACTION_ANARCHY
+			always = no
+		}
+	}
+}
+
 DIPLOMACY_GUARANTEE_ENABLE_TRIGGER = {
+	if = {
+		limit = {
+			NOT = {
+				has_global_flag = second_russian_civil_war_in_progress	
+				has_global_flag = second_russian_civil_war_over
+			}
+			has_global_flag = second_russian_civil_war_started
+			OR = {
+				FROM = {
+					TAG = SOV
+					sov_in_scw = yes
+				}
+				FROM = {
+					TAG = SOU
+					sou_in_scw = yes
+				}
+				FROM = {
+					TAG = UKR
+				}
+				FROM = {
+					is_in_faction_with = SOV
+				}
+				FROM = {
+					is_in_faction_with = SOU
+				}
+				FROM = {
+					is_in_faction_with = UKR
+				}
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_CANT_GUARANTEE_COUNTRY_PARTICIPATING_RCW
+			always = no
+		}
+	}
+	if = {
+		limit = {
+			has_global_flag = second_russian_civil_war_in_progress
+			OR = {
+				FROM = {
+					TAG = SOV
+					sov_in_scw = yes
+				}
+				FROM = {
+					TAG = SOU
+					sou_in_scw = yes
+				}
+				FROM = {
+					TAG = UKR
+				}
+				FROM = {
+					is_in_faction_with = SOV
+				}
+				FROM = {
+					is_in_faction_with = SOU
+				}
+				FROM = {
+					is_in_faction_with = UKR
+				}
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_CANT_GUARANTEE_COUNTRY_PARTICIPATING_RCW
+			always = no
+		}
+	}
+	if = {
+		limit = {
+			OR = {
+				TAG = SOV
+				TAG = SOU
+				TAG = UKR
+			}
+			FROM = {
+				NOT = {
+					has_global_flag = second_russian_civil_war_in_progress
+					has_global_flag = second_russian_civil_war_over
+				}
+				has_global_flag = second_russian_civil_war_started
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_CANT_GUARANTEE_CIVIL_WAR
+			always = no
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				OR = {
+					AND = {
+						is_in_array = { global.russian_scw_participants = ROOT.id }
+						has_global_flag = second_russian_civil_war_in_progress
+					}
+				}
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_CANT_GUARANTEE_CIVIL_WAR
+			always = no
+		}
+	}
 	if = {
 		limit = {
 			has_game_rule = {

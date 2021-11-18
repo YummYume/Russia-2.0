@@ -1,0 +1,719 @@
+add_namespace = russia2_turkey
+
+# Check if File is Loaded
+country_event = {
+	id = russia2_turkey.2092066524
+
+	hidden = yes
+
+	is_triggered_only = yes
+
+	immediate = {
+		set_global_flag = russia_reworked_events_loaded_turkeys
+	}
+}
+
+#Fate of Turkey
+country_event = {
+	id = russia2_turkey.1
+	title = russia2_turkey.1.t
+	desc = russia2_turkey.1.d
+	picture = GFX_report_event_tur_opposition_party
+
+	is_triggered_only = yes
+
+	option = { #Demand Annexation
+		name = russia2_turkey.1.a
+		ai_chance = {
+			factor = 5
+		}
+		TUR = {
+			country_event = { id = russia2_turkey.2 days = 1 }
+		}
+	}
+
+	option = { #Demand Imperial Puppet
+		name = russia2_turkey.1.b
+		ai_chance = {
+			factor = 15
+		}
+		TUR = {
+			country_event = { id = russia2_turkey.5 days = 1 }
+		}
+	}
+
+	option = { #Demand the Straits
+		name = russia2_turkey.1.c
+		ai_chance = {
+			factor = 70
+		}
+		trigger = {
+			TUR = {
+				OR = {
+					owns_state = 797
+					controls_state = 797
+					owns_state = 341
+					controls_state = 341
+				}
+			}
+		}
+		TUR = {
+			country_event = { id = russia2_turkey.8 days = 1 }
+		}
+	}
+
+	option = { #Free Kurdistan!
+		name = russia2_turkey.1.e
+		ai_chance = {
+			factor = 10
+		}
+		trigger = {
+			any_state = {
+				is_owned_by = TUR
+				is_core_of = KUR
+			}
+		}
+		TUR = {
+			country_event = { id = russia2_turkey.11 days = 1 }
+		}
+		set_country_flag = choose_kurdistan_over_other
+		hidden_effect = {
+			#Pretty borders plz :)
+			KUR = {
+				add_state_claim = 354
+				add_state_claim = 675
+				add_state_claim = 656
+			}
+		}
+	}
+}
+
+#Russia wants to annex us
+country_event = {
+	id = russia2_turkey.2
+	title = russia2_turkey.2.t
+	desc = russia2_turkey.2.d
+	picture = GFX_menacing_tanks_russia2
+
+	is_triggered_only = yes
+
+	option = { #Accept Annexation
+		name = russia2_turkey.2.a
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 0
+				OR = {
+					any_country = {
+						is_major = yes
+						is_in_faction_with = TUR
+					}
+					any_country = {
+						has_guaranteed = TUR
+					}
+				}
+			}
+			modifier = {
+				add = 60
+				SOV = {
+					strength_ratio = {
+						tag = TUR
+						ratio > 1
+					}
+				}
+			}
+		}
+		SOV = {
+			country_event = { id = russia2_turkey.3 days = 1 }
+		}
+	}
+
+	option = { #Refuse Annexation
+		name = russia2_turkey.2.b
+		ai_chance = {
+			factor = 80
+			modifier = {
+				add = 20
+				OR = {
+					any_country = {
+						is_major = yes
+						is_in_faction_with = TUR
+					}
+					any_country = {
+						has_guaranteed = TUR
+					}
+				}
+			}
+			modifier = {
+				add = -60
+				SOV = {
+					strength_ratio = {
+						tag = TUR
+						ratio > 1
+					}
+				}
+			}
+		}
+		SOV = {
+			country_event = { id = russia2_turkey.4 days = 1 }
+		}
+	}
+}
+
+#Turkey Accepts Annexation
+country_event = {
+	id = russia2_turkey.3
+	title = russia2_turkey.3.t
+	desc = russia2_turkey.3.d
+	picture = GFX_handshake_russia2
+
+	is_triggered_only = yes
+
+	option = { #Accept Annexation
+		name = russia2_turkey.3.a
+		ai_chance = {
+			factor = 100
+		}
+		SOV = {
+			annex_country = {
+				target = TUR
+			}
+		}
+	}
+}
+
+#Turkey Refuses Annexation
+country_event = {
+	id = russia2_turkey.4
+	title = russia2_turkey.4.t
+	desc = russia2_turkey.4.d
+	picture = GFX_military_parade_russia2
+
+	is_triggered_only = yes
+
+	option = { #War
+		name = russia2_turkey.4.a
+		ai_chance = {
+			factor = 100
+		}
+		SOV = {
+			create_wargoal = {
+				type = annex_everything
+		    	target = TUR
+			}
+		}
+	}
+}
+
+#Russia wants to Imperial Puppet us
+country_event = {
+	id = russia2_turkey.5
+	title = russia2_turkey.5.t
+	desc = russia2_turkey.5.d
+	picture = GFX_report_event_tur_politician_march
+
+	is_triggered_only = yes
+
+	option = { #Accept Subjugation
+		name = russia2_turkey.5.a
+		ai_chance = {
+			base = 50
+			modifier = {
+				add = -35
+				OR = {
+					any_country = {
+						is_major = yes
+						is_in_faction_with = TUR
+					}
+					any_country = {
+						has_guaranteed = TUR
+					}
+				}
+			}
+			modifier = {
+				add = 30
+				SOV = {
+					strength_ratio = {
+						tag = TUR
+						ratio > 1
+					}
+				}
+			}
+		}
+		SOV = {
+			country_event = { id = russia2_turkey.6 days = 1 }
+		}
+	}
+
+	option = { #Refuse Subjugation
+		name = russia2_turkey.5.b
+		ai_chance = {
+			base = 50
+			modifier = {
+				add = 35
+				OR = {
+					any_country = {
+						is_major = yes
+						is_in_faction_with = TUR
+					}
+					any_country = {
+						has_guaranteed = TUR
+					}
+				}
+			}
+			modifier = {
+				add = -30
+				SOV = {
+					strength_ratio = {
+						tag = TUR
+						ratio > 1
+					}
+				}
+			}
+		}
+		SOV = {
+			country_event = { id = russia2_turkey.7 days = 1 }
+		}
+	}
+}
+
+#Turkey Accepts Subjugation
+country_event = {
+	id = russia2_turkey.6
+	title = russia2_turkey.6.t
+	desc = russia2_turkey.6.d
+	picture = GFX_handshake_russia2
+
+	is_triggered_only = yes
+
+	option = { #Accept Annexation
+		name = russia2_turkey.6.a
+		ai_chance = {
+			factor = 100
+		}
+		SOV = {
+			set_autonomy = {
+				target = TUR
+				autonomy_state = autonomy_imperial_governorates
+			}
+		}
+		hidden_effect = {
+			TUR = {
+				set_popularities = {
+					democratic = 10
+					neutrality = 70
+					fascism = 10
+					communism = 10
+				}
+			}
+		}
+	}
+}
+
+#Turkey Refuses Annexation
+country_event = {
+	id = russia2_turkey.7
+	title = russia2_turkey.7.t
+	desc = russia2_turkey.7.d
+	picture = GFX_cavalry_parade_russia2
+
+	is_triggered_only = yes
+
+	option = { #War
+		name = russia2_turkey.7.a
+		ai_chance = {
+			factor = 100
+		}
+		SOV = {
+			create_wargoal = {
+				type = puppet_wargoal_focus
+		    	target = TUR
+			}
+		}
+	}
+}
+
+#Russia Ask for the Bosphorus Strait
+country_event = {
+	id = russia2_turkey.8
+	title = russia2_turkey.8.t
+	desc = russia2_turkey.8.d
+	picture = GFX_report_event_tur_turkish_soldiers
+
+	is_triggered_only = yes
+
+	option = { #Accept to Give them
+		name = russia2_turkey.8.a
+		ai_chance = {
+			base = 60
+			modifier = {
+				add = -45
+				OR = {
+					any_country = {
+						is_major = yes
+						is_in_faction_with = TUR
+					}
+					any_country = {
+						has_guaranteed = TUR
+					}
+				}
+			}
+			modifier = {
+				add = 20
+				SOV = {
+					strength_ratio = {
+						tag = TUR
+						ratio > 1
+					}
+				}
+			}
+		}
+		SOV = {
+			country_event = { id = russia2_turkey.9 days = 1 }
+		}
+	}
+
+	option = { #Refuse to Give them
+		name = russia2_turkey.8.b
+		ai_chance = {
+			base = 40
+			modifier = {
+				add = 45
+				OR = {
+					any_country = {
+						is_major = yes
+						is_in_faction_with = TUR
+					}
+					any_country = {
+						has_guaranteed = TUR
+					}
+				}
+			}
+			modifier = {
+				add = -20
+				SOV = {
+					strength_ratio = {
+						tag = TUR
+						ratio > 1
+					}
+				}
+			}
+		}
+		SOV = {
+			country_event = { id = russia2_turkey.10 days = 1 }
+		}
+	}
+}
+
+#Turkey Accepts Subjugation
+country_event = {
+	id = russia2_turkey.9
+	title = russia2_turkey.9.t
+	desc = russia2_turkey.9.d
+	picture = GFX_soldiers_handshaking_kolchak_russia2
+
+	is_triggered_only = yes
+
+	option = { #Accept Strait
+		name = russia2_turkey.9.a
+		ai_chance = {
+			factor = 100
+		}
+		SOV = {
+			if = {
+				limit = {
+					TUR = {
+						OR = {
+							owns_state = 797
+							controls_state = 797
+						}
+					}
+				}
+				transfer_state = 797
+			}
+			if = {
+				limit = {
+					TUR = {
+						OR = {
+							owns_state = 341
+							controls_state = 341
+						}
+					}
+				}
+				transfer_state = 341
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					341 = {
+						is_demilitarized_zone = yes
+					}
+					797 = {
+						is_demilitarized_zone = yes
+					}
+				}
+			}
+			341 = {
+				set_demilitarized_zone = no
+			}
+			797 = {
+				set_demilitarized_zone = no
+			}
+		}
+	}
+}
+
+#Turkey Refuses Annexation
+country_event = {
+	id = russia2_turkey.10
+	title = russia2_turkey.10.t
+	desc = russia2_turkey.10.d
+	picture = GFX_russian_civil_war_russia2
+
+	is_triggered_only = yes
+
+	option = { #War
+		name = russia2_turkey.10.a
+		ai_chance = {
+			factor = 100
+		}
+		SOV = {
+			create_wargoal = {
+				type = take_state_focus
+				target = TUR
+				generator = { 797 341 }
+			}
+		}
+	}
+}
+
+#Russia Asks for Kurdistan
+country_event = {
+	id = russia2_turkey.11
+	title = russia2_turkey.11.t
+	desc = russia2_turkey.11.d
+	picture = GFX_report_event_tur_kurds_traditionalists_thwarted
+
+	is_triggered_only = yes
+
+	option = { #Accept to Give them
+		name = russia2_turkey.11.a
+		ai_chance = {
+			base = 70
+			modifier = {
+				add = -30
+				OR = {
+					any_country = {
+						is_major = yes
+						is_in_faction_with = TUR
+					}
+					any_country = {
+						has_guaranteed = TUR
+					}
+				}
+			}
+			modifier = {
+				add = 10
+				SOV = {
+					strength_ratio = {
+						tag = TUR
+						ratio > 1
+					}
+				}
+			}
+		}
+		SOV = {
+			country_event = { id = russia2_turkey.12 days = 1 }
+		}
+	}
+
+	option = { #Refuse to Give them
+		name = russia2_turkey.11.b
+		ai_chance = {
+			base = 30
+			modifier = {
+				add = 30
+				OR = {
+					any_country = {
+						is_major = yes
+						is_in_faction_with = TUR
+					}
+					any_country = {
+						has_guaranteed = TUR
+					}
+				}
+			}
+			modifier = {
+				add = -10
+				SOV = {
+					strength_ratio = {
+						tag = TUR
+						ratio > 1
+					}
+				}
+			}
+		}
+		SOV = {
+			country_event = { id = russia2_turkey.13 days = 1 }
+		}
+	}
+}
+
+#Turkey Accepts to Release Kurdistan
+country_event = {
+	id = russia2_turkey.12
+	title = russia2_turkey.12.t
+	desc = russia2_turkey.12.d
+	picture = GFX_soldiers_handshaking_kolchak_russia2
+
+	is_triggered_only = yes
+
+	option = { #Accept Strait
+		name = russia2_turkey.12.a
+		ai_chance = {
+			factor = 100
+		}
+		hidden_effect = {
+			TUR = {
+				release = KUR
+			}
+			every_state = {
+				limit = {
+					is_owned_by = TUR
+					is_claimed_by = KUR
+				}
+				KUR = {
+					transfer_state = PREV
+				}
+			}
+		}
+		SOV = {
+			set_autonomy = {
+				target = KUR
+				autonomy_state = autonomy_imperial_governorates
+			}
+		}
+		custom_effect_tooltip = unlocks_kurdistan_territory_decisions
+		hidden_effect = {
+			KUR = {
+				set_popularities = {
+					democratic = 30
+					neutrality = 50
+					fascism = 17
+					communism = 3
+				}
+			}
+		}
+	}
+}
+
+#Turkey Refuses Annexation
+country_event = {
+	id = russia2_turkey.13
+	title = russia2_turkey.13.t
+	desc = russia2_turkey.13.d
+	picture = GFX_report_event_tur_machine_gunners
+
+	is_triggered_only = yes
+
+	option = { #War
+		name = russia2_turkey.13.a
+		ai_chance = {
+			factor = 100
+		}
+		SOV = {
+			create_wargoal = {
+				type = take_state_focus
+				target = TUR
+				generator = { 344 350 352 353 800 }
+			}
+		}
+	}
+}
+
+#Leader of Kurdistan
+country_event = {
+	id = russia2_turkey.14
+	title = russia2_turkey.14.t
+	desc = russia2_turkey.14.d
+	picture = GFX_report_event_tur_upheaval_celebration
+
+	trigger = {
+		KUR = {
+			is_subject_of = SOV
+		}
+		SOV = {
+			has_government = neutrality
+			has_completed_focus = SOV_restoration_tsar
+			is_subject = no
+			has_completed_focus = SOV_fate_turkey
+			has_country_flag = choose_kurdistan_over_other
+		}
+	}
+
+	fire_only_once = yes
+
+	option = { #Democratic Leader
+		name = russia2_turkey.14.a
+		ai_chance = {
+			factor = 30
+		}
+		KUR = {
+			set_politics = {
+				ruling_party = democratic
+				elections_allowed = yes
+				last_election = "1937.12.17"
+				election_frequency = 48
+			}
+			hidden_effect = {
+				set_popularities = {
+					democratic = 50
+					neutrality = 27
+					fascism = 19
+					communism = 4
+				}
+			}
+		}
+	}
+
+	option = { #Neutral Leader
+		name = russia2_turkey.14.b
+		ai_chance = {
+			factor = 30
+		}
+		KUR = {
+			set_politics = {
+				ruling_party = neutrality
+			}
+			hidden_effect = {
+				set_popularities = {
+					democratic = 30
+					neutrality = 50
+					fascism = 17
+					communism = 3
+				}
+			}
+		}
+	}
+
+	option = { #Fascist Leader
+		name = russia2_turkey.14.c
+		ai_chance = {
+			factor = 30
+		}
+		KUR = {
+			set_politics = {
+				ruling_party = fascism
+			}
+			hidden_effect = {
+				set_popularities = {
+					democratic = 19
+					neutrality = 28
+					fascism = 50
+					communism = 3
+				}
+			}
+		}
+	}
+}

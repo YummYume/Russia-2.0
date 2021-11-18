@@ -1,0 +1,1160 @@
+focus_tree = {
+	id = russia2_continents_focus
+	continuous_focus_position = { x = 100 y = 1000 }
+
+	country = {
+		factor = 0
+
+		modifier = {
+			add = 1000
+			OR = {
+				tag = NAF
+                tag = CAF
+                tag = SAR
+                tag = CAI
+                tag = AFF
+                tag = MEF
+                tag = SFR
+                tag = SEA
+                tag = EAR
+                tag = OCE
+                tag = EUR
+			}
+		}
+	}
+
+    #Our future
+	focus = {
+		id = CON_our_future_ahead
+		x = 13
+		y = 0
+		icon = GFX_focus_generic_diplomatic_treaty
+		cost = 4
+		ai_will_do = {
+			factor = 10
+		}
+		available = {
+			has_capitulated = no
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT }
+		completion_reward = {
+			add_stability = 0.1
+            add_war_support = 0.1
+		}
+	}
+
+    #Industry Boost
+	focus = {
+		id = CON_the_root_industrial_revolution
+		x = 13
+		y = 1
+		prerequisite = { focus = CON_our_future_ahead }
+		icon = GFX_focus_generic_tank_production
+		cost = 10
+		ai_will_do = {
+			factor = 10
+		}
+		available = {
+			any_state = {
+                is_owned_and_controlled_by = ROOT
+                is_core_of = ROOT
+            }
+		}
+		bypass = {
+			NOT = {
+				any_state = {
+					is_owned_and_controlled_by = ROOT
+					is_core_of = ROOT
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+		completion_reward = {
+            add_tech_bonus = {
+				name = CON_the_root_industrial_revolution
+				bonus = 1.0
+				uses = 4
+				category = industry
+			}
+			random_owned_state = {
+				limit = {
+					is_owned_and_controlled_by = ROOT
+				}
+				add_extra_state_shared_building_slots = 6
+				add_building_construction = {
+					type = industrial_complex
+					level = 3
+					instant_build = yes
+				}
+                add_building_construction = {
+					type = arms_factory
+					level = 3
+					instant_build = yes
+				}
+			}
+            random_owned_state = {
+				limit = {
+					is_owned_and_controlled_by = ROOT
+				}
+				add_extra_state_shared_building_slots = 6
+				add_building_construction = {
+					type = industrial_complex
+					level = 3
+					instant_build = yes
+				}
+                add_building_construction = {
+					type = arms_factory
+					level = 3
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+    #The root navy
+	focus = {
+		id = CON_the_root_navy
+		x = 13
+		y = 2
+		prerequisite = { focus = CON_the_root_industrial_revolution }
+		icon = GFX_goal_generic_construct_naval_dockyard
+		cost = 5
+		ai_will_do = {
+			factor = 10
+		}
+		available = {
+			any_state = {
+                is_owned_and_controlled_by = ROOT
+                is_core_of = ROOT
+            }
+		}
+		bypass = {
+			NOT = {
+				any_state = {
+					is_owned_and_controlled_by = ROOT
+					is_core_of = ROOT
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+		completion_reward = {
+			random_owned_state = {
+				limit = {
+					is_owned_and_controlled_by = ROOT
+                    is_coastal = yes
+				}
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = dockyard
+					level = 3
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+    #Improve airforce
+	focus = {
+		id = CON_improve_the_root_airforce
+		x = 11
+		y = 3
+		prerequisite = { focus = CON_the_root_navy }
+		icon = GFX_goal_generic_build_airforce
+		cost = 5
+		ai_will_do = {
+			factor = 10
+		}
+		available = {
+			
+		}
+		search_filters = { FOCUS_FILTER_ARMY_RUSSIA FOCUS_FILTER_RESEARCH }
+		completion_reward = {
+            add_tech_bonus = {
+				name = CON_improve_the_root_airforce
+				bonus = 1
+				uses = 1
+				category = light_fighter
+			}
+            add_tech_bonus = {
+				name = CON_improve_the_root_airforce
+				bonus = 1
+				uses = 1
+				category = tactical_bomber
+			}
+            add_tech_bonus = {
+				name = CON_improve_the_root_airforce
+				bonus = 1
+				uses = 1
+				category = air_doctrine
+			}
+			random_owned_state = {
+				limit = {
+					is_owned_and_controlled_by = ROOT
+				}
+				add_building_construction = {
+					type = air_base
+					level = 4
+					instant_build = yes
+				}
+			}
+            random_owned_state = {
+				limit = {
+					is_owned_and_controlled_by = ROOT
+				}
+				add_building_construction = {
+					type = air_base
+					level = 4
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+    #Improve navy
+	focus = {
+		id = CON_improve_the_root_navy
+		x = 15
+		y = 3
+		prerequisite = { focus = CON_the_root_navy }
+		icon = GFX_goal_generic_navy_doctrines_tactics
+		cost = 5
+		ai_will_do = {
+			factor = 10
+		}
+		available = {
+			
+		}
+		search_filters = { FOCUS_FILTER_NAVY_RUSSIA FOCUS_FILTER_RESEARCH }
+		completion_reward = {
+            add_tech_bonus = {
+				name = CON_improve_the_root_navy
+				bonus = 1
+				uses = 1
+				category = dd_tech
+			}
+			add_tech_bonus = {
+				name = CON_improve_the_root_navy
+				bonus = 1
+				uses = 1
+				category = cl_tech
+			}
+            add_tech_bonus = {
+				name = CON_improve_the_root_navy
+				bonus = 1
+				uses = 1
+				category = naval_doctrine
+			}
+			random_owned_state = {
+				limit = {
+					is_owned_and_controlled_by = ROOT
+                    is_coastal = yes
+				}
+				add_building_construction = {
+					type = naval_base
+					level = 4
+					instant_build = yes
+					province = {
+						all_provinces = yes
+						limit_to_coastal = yes
+						level > 0
+					}
+				}
+			}
+            random_owned_state = {
+				limit = {
+					is_owned_and_controlled_by = ROOT
+                    is_coastal = yes
+				}
+				add_building_construction = {
+					type = naval_base
+					level = 4
+					instant_build = yes
+					province = {
+						all_provinces = yes
+						limit_to_coastal = yes
+						level > 0
+					}
+				}
+			}
+		}
+	}
+
+    #Improve army
+	focus = {
+		id = CON_improve_the_root_army
+		x = 13
+		y = 3
+		prerequisite = { focus = CON_the_root_navy }
+		icon = GFX_focus_generic_commonwealth_build_infantry
+		cost = 5
+		ai_will_do = {
+			factor = 10
+		}
+		available = {
+			
+		}
+		search_filters = { FOCUS_FILTER_ARMY_RUSSIA FOCUS_FILTER_RESEARCH }
+		completion_reward = {
+            add_tech_bonus = {
+				name = CON_improve_the_root_army
+				bonus = 1
+				uses = 1
+				category = infantry_weapons
+			}
+			add_tech_bonus = {
+				name = CON_improve_the_root_army
+				bonus = 1
+				uses = 1
+				category = artillery
+			}
+            add_tech_bonus = {
+				name = CON_improve_the_root_army
+				bonus = 1
+				uses = 1
+				category = land_doctrine
+			}
+			every_state = {
+				limit = {
+					is_owned_and_controlled_by = ROOT
+                    any_neighbor_state = {
+						CONTROLLER = {
+							NOT = {
+								is_in_faction_with = ROOT
+							}
+						}
+					}
+				}
+				add_building_construction = {
+					type = bunker
+					level = 3
+					instant_build = yes
+					province = {
+						all_provinces = yes
+						limit_to_border = yes
+					}
+				}
+			}
+		}
+	}
+
+    #Efficient Administration
+	focus = {
+		id = CON_efficient_administration
+		x = 13
+		y = 4
+		prerequisite = { focus = CON_improve_the_root_navy }
+		prerequisite = { focus = CON_improve_the_root_airforce }
+		prerequisite = { focus = CON_improve_the_root_army }
+		icon = GFX_goal_generic_intelligence_exchange
+		cost = 4
+		ai_will_do = {
+			factor = 10
+		}
+		available = {
+			is_subject = yes
+		}
+		bypass = {
+			is_subject = no
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		completion_reward = {
+            add_country_leader_trait = efficient_administration
+		}
+	}
+
+    #Our own will
+	focus = {
+		id = CON_our_own_will
+		x = 13
+		y = 5
+		prerequisite = { focus = CON_efficient_administration }
+		icon = GFX_goal_generic_demand_territory
+		cost = 4
+		ai_will_do = {
+			factor = 10
+		}
+		available = {
+			
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		completion_reward = {
+            add_popularity = {
+                ideology = ROOT
+                popularity = 0.2
+            }
+		}
+	}
+
+    #The first reforms
+	focus = {
+		id = CON_first_reforms
+		x = 5
+		y = 0
+		icon = GFX_focus_generic_industry_1
+		cost = 6
+		ai_will_do = {
+			factor = 100
+		}
+		available = {
+			has_capitulated = no
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+		completion_reward = {
+            add_political_power = 50
+            swap_ideas = {
+                remove_idea = CON_Unstable_continent
+                add_idea = CON_Unstable_continent1
+            }
+			set_country_flag = CON_root_first_reform_done
+		}
+	}
+
+    #The second reforms
+	focus = {
+		id = CON_second_reforms
+		x = 5
+		y = 1
+		prerequisite = { focus = CON_first_reforms }
+		icon = GFX_focus_generic_industry_2
+		cost = 10
+		ai_will_do = {
+			factor = 100
+		}
+		available = {
+			has_country_flag = {
+				flag = CON_root_first_reform_done
+				days > 100
+			}
+			has_capitulated = no
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+		completion_reward = {
+            add_political_power = 100
+            swap_ideas = {
+                remove_idea = CON_Unstable_continent1
+                add_idea = CON_Unstable_continent2
+            }
+			set_country_flag = CON_root_second_reform_done
+		}
+	}
+
+    #The final reforms
+	focus = {
+		id = CON_final_reforms
+		x = 5
+		y = 2
+		prerequisite = { focus = CON_second_reforms }
+		icon = GFX_focus_generic_industry_3
+		cost = 14
+		ai_will_do = {
+			factor = 100
+		}
+		available = {
+			has_country_flag = {
+				flag = CON_root_second_reform_done
+				days > 200
+			}
+			has_capitulated = no
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+		completion_reward = {
+            add_political_power = 200
+            swap_ideas = {
+                remove_idea = CON_Unstable_continent2
+                add_idea = CON_Unstable_continent3
+            }
+		}
+	}
+
+	#Research slot
+	focus = {
+		id = CON_open_new_universities
+		x = 13
+		y = 6
+		prerequisite = { focus = CON_our_own_will }
+		icon = GFX_focus_research
+		cost = 10
+		ai_will_do = {
+			factor = 10
+		}
+		available = {
+			num_of_factories > 15
+		}
+		search_filters = { FOCUS_FILTER_RESEARCH }
+		completion_reward = {
+            add_research_slot = 1
+		}
+	}
+
+    #Improve manpower
+	focus = {
+		id = CON_improve_recruitment
+		x = 13
+		y = 7
+		prerequisite = { focus = CON_open_new_universities }
+		icon = GFX_goal_rhineland
+		cost = 6
+		ai_will_do = {
+			factor = 10
+		}
+		available = {
+			
+		}
+		search_filters = { FOCUS_FILTER_ARMY_RUSSIA FOCUS_FILTER_MANPOWER }
+		completion_reward = {
+            add_ideas = CON_Improve_recruitment
+		}
+	}
+
+    #Future continent
+	focus = {
+		id = CON_future_of_root_continent
+		x = 13
+		y = 8
+		prerequisite = { focus = CON_improve_recruitment }
+		icon = GFX_goal_generic_territory_or_war
+		cost = 10
+		ai_will_do = {
+			factor = 10
+		}
+		available = {
+			is_subject = yes
+			has_capitulated = no
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		completion_reward = {
+			set_major = yes
+			add_stability = 0.05
+            OVERLORD = {
+                country_event = russia2_continent.13
+            }
+		}
+	}
+
+    #Infrastructure Improvement
+	focus = {
+		id = CON_infrastructure_improvement
+		x = 22
+		y = 0
+		icon = GFX_goal_generic_construct_infrastructure
+		cost = 4
+		ai_will_do = {
+			factor = 10
+		}
+		available = {
+			any_state = {
+				is_owned_and_controlled_by = ROOT
+				is_core_of = ROOT
+				infrastructure < 9
+			}
+		}
+		bypass = {
+			NOT = {
+				any_state = {
+					is_owned_and_controlled_by = ROOT
+					is_core_of = ROOT
+					infrastructure < 9
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+		completion_reward = {
+            random_owned_state = {
+				limit = {
+					is_owned_and_controlled_by = ROOT
+					is_core_of = ROOT
+					infrastructure < 9
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_owned_and_controlled_by = ROOT
+					is_core_of = ROOT
+					infrastructure < 9
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+    #The new infrastructure
+	focus = {
+		id = CON_new_infrastructure
+		x = 20
+		y = 1
+		prerequisite = { focus = CON_infrastructure_improvement }
+		icon = GFX_goal_generic_construct_infrastructure
+		cost = 5
+		ai_will_do = {
+			factor = 10
+		}
+		available = {
+			any_state = {
+				is_owned_and_controlled_by = ROOT
+				is_core_of = ROOT
+				infrastructure < 9
+			}
+		}
+		bypass = {
+			NOT = {
+				any_state = {
+					is_owned_and_controlled_by = ROOT
+					is_core_of = ROOT
+					infrastructure < 9
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+		completion_reward = {
+            random_owned_state = {
+				limit = {
+					is_owned_and_controlled_by = ROOT
+					is_core_of = ROOT
+					infrastructure < 9
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_owned_and_controlled_by = ROOT
+					is_core_of = ROOT
+					infrastructure < 9
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_owned_and_controlled_by = ROOT
+					is_core_of = ROOT
+					infrastructure < 9
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+    #Replace old infrastructure
+	focus = {
+		id = CON_replace_old_infrastructure
+		x = 18
+		y = 2
+		prerequisite = { focus = CON_new_infrastructure }
+		icon = GFX_goal_generic_construct_infrastructure
+		cost = 6
+		ai_will_do = {
+			factor = 10
+		}
+		available = {
+			any_state = {
+				is_owned_and_controlled_by = ROOT
+				is_core_of = ROOT
+				infrastructure < 8
+			}
+		}
+		bypass = {
+			NOT = {
+				any_state = {
+					is_owned_and_controlled_by = ROOT
+					is_core_of = ROOT
+					infrastructure < 8
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+		completion_reward = {
+            random_owned_state = {
+				limit = {
+					is_owned_and_controlled_by = ROOT
+					is_core_of = ROOT
+					infrastructure < 8
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 3
+					instant_build = yes
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_owned_and_controlled_by = ROOT
+					is_core_of = ROOT
+					infrastructure < 8
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 3
+					instant_build = yes
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_owned_and_controlled_by = ROOT
+					is_core_of = ROOT
+					infrastructure < 8
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 3
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+    #New root infrastructure
+	focus = {
+		id = CON_new_root_infrastructure
+		x = 20
+		y = 2
+		prerequisite = { focus = CON_new_infrastructure }
+		icon = GFX_goal_generic_construct_infrastructure
+		cost = 8
+		ai_will_do = {
+			factor = 10
+		}
+		available = {
+			any_state = {
+				is_owned_and_controlled_by = ROOT
+				is_core_of = ROOT
+				infrastructure < 8
+			}
+		}
+		bypass = {
+			NOT = {
+				any_state = {
+					is_owned_and_controlled_by = ROOT
+					is_core_of = ROOT
+					infrastructure < 8
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+		completion_reward = {
+            random_owned_state = {
+				limit = {
+					is_owned_and_controlled_by = ROOT
+					is_core_of = ROOT
+					infrastructure < 8
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 3
+					instant_build = yes
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_owned_and_controlled_by = ROOT
+					is_core_of = ROOT
+					infrastructure < 8
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 3
+					instant_build = yes
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_owned_and_controlled_by = ROOT
+					is_core_of = ROOT
+					infrastructure < 8
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 3
+					instant_build = yes
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_owned_and_controlled_by = ROOT
+					is_core_of = ROOT
+					infrastructure < 8
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 3
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+    #Develop train companies
+	focus = {
+		id = CON_develop_train_companies
+		x = 20
+		y = 3
+		prerequisite = { focus = CON_replace_old_infrastructure }
+		prerequisite = { focus = CON_new_root_infrastructure }
+		icon = GFX_goal_generic_construct_infrastructure
+		cost = 10
+		ai_will_do = {
+			factor = 10
+		}
+		available = {
+			any_state = {
+				is_owned_and_controlled_by = ROOT
+				is_core_of = ROOT
+				infrastructure < 7
+			}
+		}
+		bypass = {
+			NOT = {
+				any_state = {
+					is_owned_and_controlled_by = ROOT
+					is_core_of = ROOT
+					infrastructure < 7
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+		completion_reward = {
+            random_owned_state = {
+				limit = {
+					is_owned_and_controlled_by = ROOT
+					is_core_of = ROOT
+					infrastructure < 7
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 4
+					instant_build = yes
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_owned_and_controlled_by = ROOT
+					is_core_of = ROOT
+					infrastructure < 7
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 4
+					instant_build = yes
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_owned_and_controlled_by = ROOT
+					is_core_of = ROOT
+					infrastructure < 7
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 4
+					instant_build = yes
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_owned_and_controlled_by = ROOT
+					is_core_of = ROOT
+					infrastructure < 7
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 4
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+    #Encourage diversity in politics
+	focus = {
+		id = CON_encourage_diversity_politics
+		x = 22
+		y = 1
+		prerequisite = { focus = CON_infrastructure_improvement }
+		icon = GFX_goal_tripartite_pact
+		cost = 3
+		ai_will_do = {
+			factor = 10
+		}
+		available = {
+			
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		completion_reward = {
+            add_political_power = 150
+		}
+	}
+
+    #Use civilian guns
+	focus = {
+		id = CON_use_civilian_guns
+		x = 22
+		y = 2
+		prerequisite = { focus = CON_encourage_diversity_politics }
+		icon = GFX_goal_generic_small_arms
+		cost = 8
+		ai_will_do = {
+			factor = 10
+		}
+		available = {
+			
+		}
+		search_filters = { FOCUS_FILTER_ARMY_RUSSIA }
+		completion_reward = {
+            add_equipment_to_stockpile = {
+                type = infantry_equipment
+                amount = 10000
+            }
+		}
+	}
+
+    #Accessible workforce
+	focus = {
+		id = CON_accessible_workforce
+		x = 22
+		y = 3
+		prerequisite = { focus = CON_use_civilian_guns }
+		icon = GFX_goal_generic_construction
+		cost = 8
+		ai_will_do = {
+			factor = 10
+		}
+		available = {
+			
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+		completion_reward = {
+            add_ideas = CON_Accessible_workforce
+		}
+	}
+
+    #A profitable continent
+	focus = {
+		id = CON_profitable_continent
+		x = 22
+		y = 4
+		prerequisite = { focus = CON_develop_train_companies }
+		prerequisite = { focus = CON_accessible_workforce }
+		prerequisite = { focus = CON_the_root_oil_and_rubber }
+		icon = GFX_goal_generic_positive_trade_relations
+		cost = 10
+		ai_will_do = {
+			factor = 10
+		}
+		available = {
+			is_subject = yes
+			has_capitulated = no
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+		completion_reward = {
+			if = {
+				limit = {
+					is_subject_of = SOV
+				}
+				add_ideas = CON_Profitable_continent
+			}
+			else = {
+				add_ideas = CON_Profitable_continent1
+			}
+		}
+	}
+
+    #Develop steel
+	focus = {
+		id = CON_develop_steel
+		x = 24
+		y = 1
+		prerequisite = { focus = CON_infrastructure_improvement }
+		icon = GFX_focus_generic_steel
+		cost = 3
+		ai_will_do = {
+			factor = 10
+		}
+		available = {
+			any_state = {
+                is_owned_and_controlled_by = ROOT
+                is_core_of = ROOT
+            }
+		}
+		bypass = {
+			NOT = {
+				any_state = {
+					is_owned_and_controlled_by = ROOT
+					is_core_of = ROOT
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+		completion_reward = {
+            random_owned_state = {
+				limit = {
+					is_owned_and_controlled_by = ROOT
+                    is_core_of = ROOT
+				}
+                add_resource = {
+                    type = steel
+                    amount = 20
+                }
+            }
+		}
+	}
+
+    #Develop tungsten
+	focus = {
+		id = CON_develop_tungsten
+		x = 24
+		y = 2
+		prerequisite = { focus = CON_develop_steel }
+		icon = GFX_focus_generic_tungsten
+		cost = 3
+		ai_will_do = {
+			factor = 10
+		}
+		available = {
+			any_state = {
+                is_owned_and_controlled_by = ROOT
+                is_core_of = ROOT
+            }
+		}
+		bypass = {
+			NOT = {
+				any_state = {
+					is_owned_and_controlled_by = ROOT
+					is_core_of = ROOT
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+		completion_reward = {
+            random_owned_state = {
+				limit = {
+					is_owned_and_controlled_by = ROOT
+                    is_core_of = ROOT
+				}
+                add_resource = {
+                    type = tungsten
+                    amount = 20
+                }
+            }
+		}
+	}
+
+    #Develop aluminium chromium
+	focus = {
+		id = CON_develop_aluminium_chromium
+		x = 26
+		y = 2
+		prerequisite = { focus = CON_develop_steel }
+		icon = GFX_focus_generic_aluminum
+		cost = 6
+		ai_will_do = {
+			factor = 10
+		}
+		available = {
+			any_state = {
+                is_owned_and_controlled_by = ROOT
+                is_core_of = ROOT
+            }
+		}
+		bypass = {
+			NOT = {
+				any_state = {
+					is_owned_and_controlled_by = ROOT
+					is_core_of = ROOT
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+		completion_reward = {
+            random_owned_state = {
+				limit = {
+					is_owned_and_controlled_by = ROOT
+                    is_core_of = ROOT
+				}
+                add_resource = {
+                    type = aluminium
+                    amount = 20
+                }
+            }
+			random_owned_state = {
+				limit = {
+					is_owned_and_controlled_by = ROOT
+                    is_core_of = ROOT
+				}
+                add_resource = {
+                    type = chromium
+                    amount = 20
+                }
+            }
+		}
+	}
+
+    #Oil & rubber
+	focus = {
+		id = CON_the_root_oil_and_rubber
+		x = 24
+		y = 3
+		prerequisite = { focus = CON_develop_tungsten }
+		prerequisite = { focus = CON_develop_aluminium_chromium }
+		icon = GFX_goal_generic_oil_refinery
+		cost = 6
+		ai_will_do = {
+			factor = 10
+		}
+		available = {
+			any_state = {
+                is_owned_and_controlled_by = ROOT
+                is_core_of = ROOT
+            }
+		}
+		bypass = {
+			NOT = {
+				any_state = {
+					is_owned_and_controlled_by = ROOT
+					is_core_of = ROOT
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+		completion_reward = {
+            random_owned_state = {
+				limit = {
+					is_owned_and_controlled_by = ROOT
+                    is_core_of = ROOT
+				}
+                add_resource = {
+                    type = oil
+                    amount = 20
+                }
+            }
+            random_owned_state = {
+				limit = {
+					is_owned_and_controlled_by = ROOT
+                    is_core_of = ROOT
+				}
+                add_resource = {
+                    type = rubber
+                    amount = 20
+                }
+            }
+		}
+	}
+}

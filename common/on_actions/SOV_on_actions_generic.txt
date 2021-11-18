@@ -1,0 +1,2317 @@
+on_actions = {
+
+	#Cosmetic tag for changing ideology
+	on_ruling_party_change = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						tag = SOV
+					}
+				}
+				#Democratic
+				if = {
+					limit = {
+						ROOT = {
+							has_government = democratic
+							NOT = {
+								has_cosmetic_tag = SOV_democratic_russia
+								has_cosmetic_tag = SOV_temp_democratic_russia
+							}
+						}
+					}
+					if = {
+						limit = {
+							OR = {
+								has_completed_focus = SOV_pavel_guidance
+								has_completed_focus = SOV_trust_alexander
+							}
+						}
+						set_cosmetic_tag = SOV_democratic_russia
+					}
+					else = {
+						set_cosmetic_tag = SOV_temp_democratic_russia
+					}
+				}
+				#Neutral
+				else_if = {
+					limit = {
+						ROOT = {
+							has_government = neutrality
+							NOT = {
+								has_cosmetic_tag = RUS
+								has_cosmetic_tag = NRG
+								has_cosmetic_tag = RSE
+								has_cosmetic_tag = WMA
+							}
+						}
+					}
+					if = {
+						limit = {
+							has_completed_focus = SOV_restoration_tsar
+						}
+						set_cosmetic_tag = RUS
+					}
+					else_if = {
+						limit = {
+							has_global_flag = SOV_became_slavic_empire
+						}
+						set_cosmetic_tag = RSE
+					}
+					else = {
+						set_cosmetic_tag = NRG
+					}
+				}
+				#Fascist
+				else_if = {
+					limit = {
+						ROOT = {
+							has_government = fascism
+							NOT = {
+								has_cosmetic_tag = RFP
+								has_cosmetic_tag = THR
+								has_cosmetic_tag = GTR
+							}
+						}
+					}
+					if = {
+						limit = {
+							has_country_flag = has_formed_third_rome
+						}
+						set_cosmetic_tag = THR
+					}
+					else_if = {
+						limit = {
+							has_country_flag = has_formed_greater_russia
+						}
+						set_cosmetic_tag = GTR
+					}
+					else = {
+						set_cosmetic_tag = RFP
+					}
+				}
+				#Anarchist
+				else_if = {
+					limit = {
+						ROOT = {
+							has_government = anarchy
+							NOT = {
+								has_cosmetic_tag = ANAC
+							}
+						}
+					}
+					set_cosmetic_tag = ANAC
+				}
+				#Communist (drop if nothing)
+				else_if = {
+					limit = {
+						ROOT = {
+							has_government = communism
+							NOT = {
+								has_cosmetic_tag = SOV_proletarian_union
+								has_cosmetic_tag = SUW
+								has_cosmetic_tag = SNAU
+							}
+						}
+					}
+					if = {
+						limit = {
+							has_country_flag = has_formed_proletarian_union
+						}
+						set_cosmetic_tag = SOV_proletarian_union
+					}
+					else_if = {
+						limit = {
+							has_country_flag = socialist_union_worker_formed
+						}
+						set_cosmetic_tag = SUW
+					}
+					else_if = {
+						limit = {
+							has_country_flag = fall_of_america
+						}
+						set_cosmetic_tag = SNAU
+					}
+					else = {
+						drop_cosmetic_tag = yes
+					}
+				}
+			}
+		}
+	}
+
+	#Anarchist UKR doesn't have resistance
+	on_ruling_party_change = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						tag = UKR
+						has_government = anarchy
+					}
+				}
+				every_state = {
+					force_disable_resistance = UKR
+				}
+			}
+			else_if = {
+				limit = {
+					ROOT = {
+						tag = UKR
+						NOT = {
+							has_government = anarchy
+						}
+					}
+				}
+				every_state = {
+					limit = {
+						NOT = {
+							is_core_of = UKR
+						}
+					}
+					force_enable_resistance = UKR
+				}
+				if = {
+					limit = {
+						has_cosmetic_tag = AUKR
+					}
+					drop_cosmetic_tag = yes
+				}
+			}
+		}
+	}
+
+	#GER Surrendered at least once to SOV
+	on_capitulation = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						original_tag = GER
+					}
+					FROM = {
+						original_tag = SOV
+					}
+				}
+				GER = {
+					set_country_flag = has_surrendered_to_sov
+				}
+			}
+		}
+	}
+
+	# Andrey Vlasov Captured
+	on_state_control_changed = {
+		effect = {
+			if = {
+				limit = {
+					FROM.FROM = {
+						state = 244
+					}
+					FROM = {
+						original_tag = SOV
+						has_government = communism
+						has_unit_leader = 412
+						has_war_with = ROOT
+					}
+				}
+				ROOT = {
+					country_event = { id = russia2_russia.501 }
+					save_event_target_as = andrey_vlasov_new_nationality
+					set_country_flag = captured_andrey_vlasov
+				}
+				FROM = {
+					country_event = { id = russia2_russia.500 }
+					every_unit_leader = {
+						limit = {
+							has_id = 412
+						}
+						set_nationality = ROOT
+					}
+					kill_ideology_leader = neutrality
+					create_country_leader = {
+						name = "Pavel Bermondt-Avalov"
+						desc = "POLITICS_PAVEL_BERMONDT_DESC"
+						picture = "Portrait_Pavel_Bermondt_Avalov.dds"
+						ideology = military_junta_russia
+						traits = {
+							firm_grip imperial_russian_army
+						}
+					}
+				}
+			}
+		}
+	}
+
+	# Andrey Vlasov Dies
+	on_capitulation = {
+		effect = {
+			if = {
+				limit = {
+					FROM = {
+						original_tag = SOV
+						NOT = {
+							has_unit_leader = 412
+						}
+					}
+					ROOT = {
+						has_unit_leader = 412
+						has_country_flag = captured_andrey_vlasov
+						NOT = {
+							has_country_flag = andrey_vlasov_died
+						}
+					}
+				}
+				ROOT = {
+					save_event_target_as = andrey_vlasov_new_nationality
+					country_event = { id = russia2_russia.503 }
+					every_unit_leader = {
+						limit = {
+							has_id = 412
+						}
+						retire = yes
+					}
+					clr_country_flag = captured_andrey_vlasov
+					set_global_flag = andrey_vlasov_died
+				}
+				FROM = {
+					country_event = { id = russia2_russia.502 }
+				}
+			}
+		}
+	}
+
+	# Yalta Conference (Improved)
+	on_capitulation = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						tag = GER
+					}
+					FROM = {
+						AND = {
+							tag = SOV
+							has_completed_focus = SOV_yalta_conference
+							has_government = communism
+							is_subject = no
+							NOT = {
+								has_country_flag = yalta_conference_over
+							}
+						}
+						OR = {
+							AND = {
+								USA = {
+									has_war_with = GER
+									is_major = yes
+									has_country_flag = usa_accepted_yalta_conference
+									NOT = {
+										has_war_with = SOV
+									}
+								}
+							}
+							AND = {
+								ENG = {
+									has_war_with = GER
+									is_major = yes
+									has_country_flag = eng_accepted_yalta_conference
+									NOT = {
+										has_war_with = SOV
+									}
+								}
+							}
+							AND = {
+								FRA = {
+									has_war_with = GER
+									is_major = yes
+									has_country_flag = fra_accepted_yalta_conference
+									NOT = {
+										has_war_with = SOV
+									}
+								}
+							}
+						}
+					}
+				}
+				if = { #USA, ENG and FRA accepted (historical Yalta Conference)
+					limit = {
+						USA = {
+							has_country_flag = usa_accepted_yalta_conference
+						}
+						ENG = {
+							has_country_flag = eng_accepted_yalta_conference
+						}
+						FRA = {
+							has_country_flag = fra_accepted_yalta_conference
+						}
+					}
+					SOV = {
+						transfer_state = 60
+						transfer_state = 65
+						transfer_state = 64
+						transfer_state = 61
+						transfer_state = 62
+						transfer_state = 63
+						transfer_state = 68
+						transfer_state = 66
+						transfer_state = 67
+						transfer_state = 5
+						transfer_state = 763
+						add_opinion_modifier = { target = USA modifier = yalta_conference }
+						add_opinion_modifier = { target = ENG modifier = yalta_conference }
+						add_opinion_modifier = { target = FRA modifier = yalta_conference }
+						set_country_flag = yalta_conference_over
+						country_event = { id = russia2_yaltas.4 }
+					}
+					USA = {
+						transfer_state = 55
+						transfer_state = 54
+						transfer_state = 55
+						transfer_state = 53
+						transfer_state = 52
+						add_opinion_modifier = { target = SOV modifier = yalta_conference }
+						country_event = { id = russia2_yaltas.4 }
+					}
+					ENG = {
+						transfer_state = 56
+						transfer_state = 57
+						transfer_state = 58
+						transfer_state = 59
+						add_opinion_modifier = { target = SOV modifier = yalta_conference }
+						country_event = { id = russia2_yaltas.4 }
+					}
+					FRA = {
+						transfer_state = 50
+						transfer_state = 42
+						transfer_state = 51
+						add_opinion_modifier = { target = SOV modifier = yalta_conference }
+						country_event = { id = russia2_yaltas.4 }
+					}
+					hidden_effect = {
+						news_event = { id = newsrussia2.27  days = 1 }
+					}
+				}
+				else_if = { #USA and ENG accepted
+					limit = {
+						USA = {
+							has_country_flag = usa_accepted_yalta_conference
+						}
+						ENG = {
+							has_country_flag = eng_accepted_yalta_conference
+						}
+					}
+					SOV = {
+						transfer_state = 60
+						transfer_state = 65
+						transfer_state = 64
+						transfer_state = 61
+						transfer_state = 62
+						transfer_state = 63
+						transfer_state = 68
+						transfer_state = 66
+						transfer_state = 67
+						transfer_state = 5
+						transfer_state = 763
+						add_opinion_modifier = { target = USA modifier = yalta_conference }
+						add_opinion_modifier = { target = ENG modifier = yalta_conference }
+						set_country_flag = yalta_conference_over
+						country_event = { id = russia2_yaltas.4 }
+					}
+					USA = {
+						transfer_state = 55
+						transfer_state = 56
+						transfer_state = 57
+						transfer_state = 58
+						transfer_state = 59
+						transfer_state = 51
+						add_opinion_modifier = { target = SOV modifier = yalta_conference }
+						country_event = { id = russia2_yaltas.4 }
+					}
+					ENG = {
+						transfer_state = 50
+						transfer_state = 42
+						transfer_state = 54
+						transfer_state = 53
+						transfer_state = 52
+						add_opinion_modifier = { target = SOV modifier = yalta_conference }
+						country_event = { id = russia2_yaltas.4 }
+					}
+					hidden_effect = {
+						news_event = { id = newsrussia2.27  days = 1 }
+					}
+				}
+				else_if = { #USA and FRA accepted
+					limit = {
+						USA = {
+							has_country_flag = usa_accepted_yalta_conference
+						}
+						FRA = {
+							has_country_flag = fra_accepted_yalta_conference
+						}
+					}
+					SOV = {
+						transfer_state = 60
+						transfer_state = 65
+						transfer_state = 64
+						transfer_state = 61
+						transfer_state = 62
+						transfer_state = 63
+						transfer_state = 68
+						transfer_state = 66
+						transfer_state = 67
+						transfer_state = 5
+						transfer_state = 763
+						add_opinion_modifier = { target = USA modifier = yalta_conference }
+						add_opinion_modifier = { target = FRA modifier = yalta_conference }
+						set_country_flag = yalta_conference_over
+						country_event = { id = russia2_yaltas.4 }
+					}
+					USA = {
+						transfer_state = 55
+						transfer_state = 56
+						transfer_state = 57
+						transfer_state = 58
+						transfer_state = 59
+						add_opinion_modifier = { target = SOV modifier = yalta_conference }
+						country_event = { id = russia2_yaltas.4 }
+					}
+					FRA = {
+						transfer_state = 50
+						transfer_state = 42
+						transfer_state = 51
+						transfer_state = 54
+						transfer_state = 53
+						transfer_state = 52
+						add_opinion_modifier = { target = SOV modifier = yalta_conference }
+						country_event = { id = russia2_yaltas.4 }
+					}
+					hidden_effect = {
+						news_event = { id = newsrussia2.27  days = 1 }
+					}
+				}
+				else_if = { #USA accepted
+					limit = {
+						USA = {
+							has_country_flag = usa_accepted_yalta_conference
+						}
+					}
+					SOV = {
+						transfer_state = 60
+						transfer_state = 65
+						transfer_state = 64
+						transfer_state = 61
+						transfer_state = 62
+						transfer_state = 63
+						transfer_state = 68
+						transfer_state = 66
+						transfer_state = 67
+						transfer_state = 5
+						transfer_state = 763
+						add_opinion_modifier = { target = USA modifier = yalta_conference }
+						set_country_flag = yalta_conference_over
+						country_event = { id = russia2_yaltas.4 }
+					}
+					USA = {
+						transfer_state = 55
+						transfer_state = 54
+						transfer_state = 53
+						transfer_state = 52
+						transfer_state = 56
+						transfer_state = 57
+						transfer_state = 58
+						transfer_state = 59
+						transfer_state = 50
+						transfer_state = 42
+						transfer_state = 51
+						add_opinion_modifier = { target = SOV modifier = yalta_conference }
+						country_event = { id = russia2_yaltas.4 }
+					}
+					hidden_effect = {
+						news_event = { id = newsrussia2.27  days = 1 }
+					}
+				}
+				else_if = { #ENG and FRA accepted
+					limit = {
+						ENG = {
+							has_country_flag = eng_accepted_yalta_conference
+						}
+						FRA = {
+							has_country_flag = fra_accepted_yalta_conference
+						}
+					}
+					SOV = {
+						transfer_state = 60
+						transfer_state = 65
+						transfer_state = 64
+						transfer_state = 61
+						transfer_state = 62
+						transfer_state = 63
+						transfer_state = 68
+						transfer_state = 66
+						transfer_state = 67
+						transfer_state = 5
+						transfer_state = 763
+						add_opinion_modifier = { target = ENG modifier = yalta_conference }
+						add_opinion_modifier = { target = FRA modifier = yalta_conference }
+						set_country_flag = yalta_conference_over
+						country_event = { id = russia2_yaltas.4 }
+					}
+					ENG = {
+						transfer_state = 55
+						transfer_state = 56
+						transfer_state = 57
+						transfer_state = 58
+						transfer_state = 59
+						add_opinion_modifier = { target = SOV modifier = yalta_conference }
+						country_event = { id = russia2_yaltas.4 }
+					}
+					FRA = {
+						transfer_state = 50
+						transfer_state = 42
+						transfer_state = 51
+						transfer_state = 54
+						transfer_state = 53
+						transfer_state = 52
+						add_opinion_modifier = { target = SOV modifier = yalta_conference }
+						country_event = { id = russia2_yaltas.4 }
+					}
+					hidden_effect = {
+						news_event = { id = newsrussia2.27  days = 1 }
+					}
+				}
+				else_if = { #ENG accepted
+					limit = {
+						ENG = {
+							has_country_flag = eng_accepted_yalta_conference
+						}
+					}
+					SOV = {
+						transfer_state = 60
+						transfer_state = 65
+						transfer_state = 64
+						transfer_state = 61
+						transfer_state = 62
+						transfer_state = 63
+						transfer_state = 68
+						transfer_state = 66
+						transfer_state = 67
+						transfer_state = 5
+						transfer_state = 763
+						add_opinion_modifier = { target = ENG modifier = yalta_conference }
+						set_country_flag = yalta_conference_over
+						country_event = { id = russia2_yaltas.4 }
+					}
+					ENG = {
+						transfer_state = 55
+						transfer_state = 54
+						transfer_state = 53
+						transfer_state = 52
+						transfer_state = 56
+						transfer_state = 57
+						transfer_state = 58
+						transfer_state = 59
+						transfer_state = 50
+						transfer_state = 42
+						transfer_state = 51
+						add_opinion_modifier = { target = SOV modifier = yalta_conference }
+						country_event = { id = russia2_yaltas.4 }
+					}
+					hidden_effect = {
+						news_event = { id = newsrussia2.27  days = 1 }
+					}
+				}
+				else_if = { #FRA accepted
+					limit = {
+						FRA = {
+							has_country_flag = fra_accepted_yalta_conference
+						}
+					}
+					SOV = {
+						transfer_state = 60
+						transfer_state = 65
+						transfer_state = 64
+						transfer_state = 61
+						transfer_state = 62
+						transfer_state = 63
+						transfer_state = 68
+						transfer_state = 66
+						transfer_state = 67
+						transfer_state = 5
+						transfer_state = 763
+						add_opinion_modifier = { target = FRA modifier = yalta_conference }
+						set_country_flag = yalta_conference_over
+						country_event = { id = russia2_yaltas.4 }
+					}
+					FRA = {
+						transfer_state = 55
+						transfer_state = 54
+						transfer_state = 53
+						transfer_state = 52
+						transfer_state = 56
+						transfer_state = 57
+						transfer_state = 58
+						transfer_state = 59
+						transfer_state = 50
+						transfer_state = 42
+						transfer_state = 51
+						add_opinion_modifier = { target = SOV modifier = yalta_conference }
+						country_event = { id = russia2_yaltas.4 }
+					}
+					hidden_effect = {
+						news_event = { id = newsrussia2.27  days = 1 }
+					}
+				}
+				if = {
+					limit = {
+						NOT = {
+							any_country = {
+								is_in_faction_with = GER
+								OR = {
+									has_war_with = SOV
+									if = {
+										limit = {
+											USA = {
+												has_country_flag = usa_accepted_yalta_conference
+											}
+										}
+										has_war_with = USA
+									}
+									if = {
+										limit = {
+											ENG = {
+												has_country_flag = eng_accepted_yalta_conference
+											}
+										}
+										has_war_with = ENG
+									}
+									if = {
+										limit = {
+											FRA = {
+												has_country_flag = fra_accepted_yalta_conference
+											}
+										}
+										has_war_with = FRA
+									}
+								}
+							}
+							any_state = {
+								NOT = {
+									state = 52
+									state = 53
+									state = 50
+									state = 54
+									state = 42
+									state = 55
+									state = 51
+									state = 57
+									state = 60
+									state = 65
+									state = 66
+									state = 68
+									state = 64
+									state = 59
+									state = 56
+									state = 58
+									state = 61
+									state = 62
+									state = 63
+									state = 5
+									state = 763
+								}
+								is_owned_by = GER
+							}
+						}
+					}
+					every_state = {
+						limit = {
+							is_core_of = GER
+						}
+						remove_core_of = GER
+					}
+					every_state = {
+						limit = {
+							is_claimed_by = GER
+						}
+						remove_claim_by = GER
+					}
+				}
+			}
+		}
+	}
+
+	# Make sure GER is GONE
+	on_peaceconference_ended = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						tag = SOV
+						has_country_flag = yalta_conference_over
+						NOT = {
+							has_country_flag = yalta_germany_dismantled
+						}
+					}
+					FROM = {
+						tag = GER
+					}
+				}
+				every_state = {
+					limit = {
+						is_core_of = GER
+					}
+					remove_core_of = GER
+				}
+				every_state = {
+					limit = {
+						is_claimed_by = GER
+					}
+					remove_claim_by = GER
+				}
+				if = {
+					limit = {
+						country_exists = GER
+					}
+					if = {
+						limit = {
+							GER = {
+								is_subject = yes
+							}
+						}
+						GER = {
+							OVERLORD = {
+								annex_country = {
+									target = GER
+								}
+							}
+						}
+					}
+					else = {
+						if = {
+							limit = {
+								GER = {
+									has_government = democratic
+								}
+							}
+							if = {
+								limit = {
+									country_exists = USA
+									USA = {
+										is_subject = no
+										has_government = democratic
+										has_country_flag = usa_accepted_yalta_conference
+										NOT = {
+											has_war_with = SOV
+										}
+									}
+								}
+								USA = {
+									annex_country = {
+										target = GER
+									}
+								}
+							}
+							else_if = {
+								limit = {
+									country_exists = ENG
+									ENG = {
+										is_subject = no
+										has_government = democratic
+										has_country_flag = eng_accepted_yalta_conference
+										NOT = {
+											has_war_with = SOV
+										}
+									}
+								}
+								ENG = {
+									annex_country = {
+										target = GER
+									}
+								}
+							}
+							else_if = {
+								limit = {
+									country_exists = FRA
+									FRA = {
+										is_subject = no
+										has_government = democratic
+										has_country_flag = fra_accepted_yalta_conference
+										NOT = {
+											has_war_with = SOV
+										}
+									}
+								}
+								FRA = {
+									annex_country = {
+										target = GER
+									}
+								}
+							}
+						}
+						else = {
+							SOV = {
+								annex_country = {
+									target = GER
+								}
+							}
+						}
+					}
+				}
+				ROOT = {
+					set_country_flag = yalta_germany_dismantled
+				}
+			}
+		}
+	}
+
+	# Annex PRT when they Capitulate and vice versa
+	on_capitulation = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						tag = PRT
+						has_war_with = SOV
+					}
+					FROM = {
+						tag = SOV
+						has_country_flag = protestors_has_striked
+					}
+				}
+				every_state = {
+					limit = {
+						is_owned_by = ROOT
+					}
+					ROOT = {
+						remove_state_core = PREV
+					}
+					FROM = {
+						transfer_state = PREV
+						add_state_core = PREV
+						add_equipment_to_stockpile = {
+							type = infantry_equipment
+							amount = -15000
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					ROOT = {
+						tag = SOV
+						has_war_with = PRT
+						has_country_flag = protestors_has_striked
+					}
+					FROM = {
+						tag = PRT
+						has_war_with = SOV
+					}
+				}
+				every_state = {
+					limit = {
+						is_owned_by = ROOT
+					}
+					FROM = {
+						transfer_state = PREV
+						add_state_core = PREV
+					}
+				}
+			}
+		}
+	}
+
+	# Annex PRT when they Capitulate and vice versa and relaunch event
+	on_capitulation = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						tag = PRT
+						has_war_with = SOV
+					}
+					FROM = {
+						tag = SOV
+						has_country_flag = is_crushing_the_protestors
+					}
+				}
+				every_state = {
+					limit = {
+						is_owned_by = ROOT
+					}
+					ROOT = {
+						remove_state_core = PREV
+					}
+					FROM = {
+						transfer_state = PREV
+						add_state_core = PREV
+						add_equipment_to_stockpile = {
+							type = infantry_equipment
+							amount = -15000
+						}
+					}
+				}
+				FROM = {
+					country_event = { id = russia2_russia.521 days = 60 }
+				}
+			}
+			else_if = {
+				limit = {
+					ROOT = {
+						tag = SOV
+						has_war_with = PRT
+						has_country_flag = protestors_has_striked
+					}
+					FROM = {
+						tag = PRT
+						has_war_with = SOV
+					}
+				}
+				every_state = {
+					limit = {
+						is_owned_by = ROOT
+					}
+					FROM = {
+						transfer_state = PREV
+						add_state_core = PREV
+					}
+				}
+			}
+		}
+	}
+
+	# Annex PRT when they Capitulate and Finish off Protestors
+	on_capitulation = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						tag = PRT
+						has_war_with = SOV
+					}
+					FROM = {
+						tag = SOV
+						has_country_flag = killed_the_protestor_junta
+					}
+				}
+				every_state = {
+					limit = {
+						is_owned_by = ROOT
+					}
+					ROOT = {
+						remove_state_core = PREV
+					}
+					FROM = {
+						transfer_state = PREV
+						add_state_core = PREV
+						add_equipment_to_stockpile = {
+							type = infantry_equipment
+							amount = -15000
+						}
+					}
+				}
+				FROM = {
+					country_event = { id = russia2_russia.522 days = 5 }
+				}
+			}
+			else_if = {
+				limit = {
+					ROOT = {
+						tag = SOV
+						has_war_with = PRT
+						has_country_flag = protestors_has_striked
+					}
+					FROM = {
+						tag = PRT
+						has_war_with = SOV
+					}
+				}
+				every_state = {
+					limit = {
+						is_owned_by = ROOT
+					}
+					FROM = {
+						transfer_state = PREV
+						add_state_core = PREV
+					}
+				}
+			}
+		}
+	}
+
+	#China got annexed by a warlord
+	on_annex = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						OR = {
+							tag = event_target:WTT_current_china_leader
+							tag = GXC
+							tag = SHX
+							tag = PRC
+							tag = XSM
+							tag = YUN
+							tag = SIK
+							tag = CHI
+						}
+						NOT = {
+							tag = var:SOV.current_china_democracy_target
+						}
+					}
+					FROM = {
+						tag = var:SOV.current_china_democracy_target
+						has_idea = SOV_Democracy_china
+					}
+				}
+				ROOT = {
+					add_ideas = SOV_Democracy_china
+					add_popularity = {
+						ideology = democratic
+						popularity = var:FROM.party_popularity@democratic
+					}
+					if = {
+						limit = {
+							NOT = {
+								is_in_faction_with = SOV
+							}
+							OR = {
+								has_government = democratic
+								has_government = neutrality
+							}
+							SOV = {
+								is_subject = no
+								has_government = democratic
+								is_faction_leader = yes
+							}
+						}
+						country_event = russia2_china.41
+					}
+				}
+			}
+		}
+	}
+
+	#Defensive
+	on_war_relation_added = {
+		effect = {
+			if = {
+				limit = {
+					FROM = {
+						OR = {
+							tag = SOV
+							is_in_faction_with = SOV
+						}
+					}
+					ROOT = {
+						NOT = {
+							is_in_faction_with = SOV
+						}
+					}
+					SOV = {
+						has_idea = SOV_External_threats_idea
+						has_government = democratic
+						is_subject = no
+						is_faction_leader = yes
+					}
+				}
+				every_country = {
+					limit = {
+						OR = {
+							tag = SOV
+							is_in_faction_with = SOV
+						}
+						NOT = {
+							has_war_with = ROOT
+						}
+					}
+					ROOT = {
+						declare_war_on = {
+							target = PREV
+							type = defense_external_threats
+						}
+					}
+				}
+			}
+		}
+	}
+
+	#Offensive
+	on_war_relation_added = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						tag = SOV
+						has_idea = SOV_External_threats_idea
+						has_government = democratic
+						is_subject = no
+						is_faction_leader = yes
+					}
+					FROM = {
+						OR = {
+							NOT = {
+								has_government = democratic
+								has_government = neutrality
+							}
+							has_added_tension_amount > 10
+						}
+					}
+				}
+				every_country = {
+					limit = {
+						is_in_faction_with = SOV
+						NOT = {
+							has_war_with = FROM
+						}
+					}
+					declare_war_on = {
+						target = FROM
+						type = defense_external_threats
+					}
+				}
+			}
+		}
+	}
+	
+	#Germany Capitulate to Prussia
+	on_capitulation = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						TAG = GER
+					}
+					FROM = {
+						any_country = {
+							has_war_with = GER
+						}
+					}
+					SOV = {
+						has_country_flag = will_launch_monarchist_insurrection
+					}
+					country_exists = PRE
+				}
+				GER = {
+					leave_faction = yes
+				}
+				every_country = {
+					limit = {
+						has_war_with = GER
+					}
+					white_peace = {
+						tag = GER
+						message = restoration_of_the_kaiser
+					}
+				}
+				every_state = {
+					limit = {
+						is_initial_core_of_ger = yes
+					}
+					PRE = {
+						remove_state_core = PREV
+					}
+				}
+				ROOT = {
+					annex_country = {
+						target = PRE
+					}
+				}
+				SOV = {
+					if = {
+						limit = {
+							has_country_flag = ger_exiles_accept_puppet
+						}
+						set_autonomy = {
+							target = GER
+							autonomy_state = autonomy_imperial_governorates
+						}
+						GER = {
+							set_politics = {
+								ruling_party = neutrality
+								elections_allowed = no
+							}
+							hidden_effect = {
+								set_popularities = {
+									democratic = 10
+									neutrality = 70
+									fascism = 10
+									communism = 10
+								}
+							}
+							if = {
+								limit = {
+									date < 1941.06.04
+								}
+								create_country_leader = {
+									name = "Wilhelm II"
+									desc = "POLITICS_WILHELM_II_DESC"
+									picture = GFX_portrait_ger_wilhelm_ii
+									expire = "1965.1.1"
+									ideology = despotism
+									traits = {
+										anti_democrat imperial_connections
+									}
+								}
+							}
+							else = {
+								create_country_leader = {
+									name = "Wilhelm III"
+									desc = "POLITICS_WILHELM_III_DESC"
+									picture = GFX_portrait_ger_wilhelm_iii
+									expire = "1965.1.1"
+									ideology = despotism
+									traits = {
+										popular_figurehead2
+									}
+								}
+							}
+						}
+					}
+					else_if = {
+						limit = {
+							has_country_flag = ger_exiles_accept_puppet_reduced
+						}
+						set_autonomy = {
+							target = GER
+							autonomy_state = autonomy_dominion
+						}
+						GER = {
+							set_cosmetic_tag = GEC
+							set_politics = {
+								ruling_party = neutrality
+								elections_allowed = no
+							}
+							hidden_effect = {
+								set_popularities = {
+									democratic = 10
+									neutrality = 70
+									fascism = 10
+									communism = 10
+								}
+							}
+							if = {
+								limit = {
+									date < 1941.06.04
+								}
+								create_country_leader = {
+									name = "Wilhelm II"
+									desc = "POLITICS_WILHELM_II_DESC"
+									picture = GFX_portrait_ger_wilhelm_ii
+									expire = "1965.1.1"
+									ideology = despotism
+									traits = {
+										anti_democrat imperial_connections
+									}
+								}
+							}
+							else = {
+								create_country_leader = {
+									name = "Wilhelm III"
+									desc = "POLITICS_WILHELM_III_DESC"
+									picture = GFX_portrait_ger_wilhelm_iii
+									expire = "1965.1.1"
+									ideology = despotism
+									traits = {
+										popular_figurehead2
+									}
+								}
+							}
+							set_country_flag = GER_dominion_no_imperial
+							set_country_flag = germany_no_imperial_transform
+						}
+					}
+					else = {
+						add_to_faction = GER
+						GER = {
+							add_ai_strategy = {
+								type = alliance
+								id = SOV
+								value = 300
+							}
+							set_politics = {
+								ruling_party = neutrality
+								elections_allowed = no
+							}
+							hidden_effect = {
+								set_popularities = {
+									democratic = 10
+									neutrality = 70
+									fascism = 10
+									communism = 10
+								}
+							}
+							if = {
+								limit = {
+									date < 1941.06.04
+								}
+								create_country_leader = {
+									name = "Wilhelm II"
+									desc = "POLITICS_WILHELM_II_DESC"
+									picture = GFX_portrait_ger_wilhelm_ii
+									expire = "1965.1.1"
+									ideology = despotism
+									traits = {
+										anti_democrat imperial_connections
+									}
+								}
+							}
+							else = {
+								create_country_leader = {
+									name = "Wilhelm III"
+									desc = "POLITICS_WILHELM_III_DESC"
+									picture = GFX_portrait_ger_wilhelm_iii
+									expire = "1965.1.1"
+									ideology = despotism
+									traits = {
+										popular_figurehead2
+									}
+								}
+							}
+						}
+					}
+					every_state = {
+						limit = {
+							is_core_of = AUS
+							NOT = {
+								is_core_of = ITA
+							}
+							any_country = {
+								OR = {
+									is_in_faction_with = SOV
+									is_subject_of = SOV
+									TAG = SOV
+								}
+								owns_state = PREV
+							}
+						}
+						AUS = {
+							transfer_state = PREV
+						}
+						SOV = {
+							set_autonomy = {
+								target = AUS
+								autonomy_state = autonomy_puppet
+							}
+						}
+					}
+					if = {
+						limit = {
+							POL = {
+								is_subject_of = SOV
+							}
+							SOV = {
+								has_country_flag = poland_accept_imperial_puppet
+							}
+						}
+						every_state = {
+							limit = {
+								is_core_of = POL
+								any_country = {
+									OR = {
+										TAG = SOV
+										TAG = GER
+										is_in_faction_with = SOV
+										is_subject_of = SOV
+									}
+									owns_state = PREV
+								}
+							}
+							POL = {
+								transfer_state = PREV
+							}
+						}
+					}
+					every_state = {
+						limit = {
+							is_core_of = CZE
+							any_country = {
+								OR = {
+									is_in_faction_with = SOV
+									is_subject_of = SOV
+									TAG = SOV
+								}
+								owns_state = PREV
+							}
+						}
+						CZE = {
+							transfer_state = PREV
+						}
+						SOV = {
+							set_autonomy = {
+								target = CZE
+								autonomy_state = autonomy_puppet
+							}
+						}	
+					}
+					every_state = {
+						limit = {
+							is_core_of = FRA
+							any_country = {
+								OR = {
+									is_in_faction_with = SOV
+									is_subject_of = SOV
+									TAG = SOV
+								}
+								owns_state = PREV
+							}
+						}
+						FRA = {
+							transfer_state = PREV
+						}	
+					}
+					hidden_effect = {
+						news_event = {
+							id = newsrussia2.97 days = 2
+						}	
+					}
+					set_country_flag = restoration_german_monarchy_kaiser
+				}
+			}
+		}
+	}
+
+	#French Monarchist civil war end
+	on_civil_war_end_before_annexation = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						original_tag = FRA
+						has_government = neutrality
+					}
+					FROM = {
+						TAG = FRA
+						NOT = {
+							has_government = neutrality
+						}
+					}
+					SOV = {
+						has_country_flag = launched_civil_war_for_monarchist_france
+					}
+				}
+				SOV = {
+					country_event = { id = russia2_france.17 days = 1 }
+				}
+			}
+		}
+	}
+
+	#If Romania or Russia Attack eachother, cancel the righst of ressources
+	on_war_relation_added = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						TAG = ROM
+						OR = {
+							has_country_flag = giving_46_rights_to_sov
+							has_country_flag = giving_46_rights_to_sov_again
+						}
+					}
+					FROM = {
+						TAG = SOV
+					}
+				}
+				FROM = {
+					remove_resource_rights = 46
+				}
+			}
+			else_if = {
+				limit = {
+					ROOT = {
+						TAG = SOV
+					}
+					FROM = {
+						TAG = ROM
+						OR = {
+							has_country_flag = giving_46_rights_to_sov
+							has_country_flag = giving_46_rights_to_sov_again
+						}
+					}
+				}
+				ROOT = {
+					remove_resource_rights = 46
+				}
+			}
+		}
+	}
+
+	#Lock Division Template On Startup
+	on_startup = {
+		effect = {
+			SOV = {
+				if = {
+					limit = {
+						date < 1936.1.2
+						NOT = {
+							has_game_rule = {
+								rule = sov_fragmentation_status
+								option = SOV_FRAGMENTED
+							}
+						}
+					}
+					country_lock_all_division_template = yes
+				}
+			}
+		}
+	}
+
+	#Array for Russian States
+	on_startup = {
+		effect = {
+			if = {
+				limit = {
+					date < 1936.1.2
+					NOT = {
+						has_game_rule = {
+							rule = sov_fragmentation_status
+							option = SOV_FRAGMENTED
+						}
+					}
+				}
+				for_each_scope_loop = {
+					array = SOV.owned_controlled_states
+					
+					if = {
+						limit = {
+							THIS = {
+								any_state = {
+									is_owned_and_controlled_by = SOV
+								}
+							}
+						}
+						add_to_array = { global.sov_original_states = THIS }
+					}
+				}
+			}
+		}
+	}
+
+	#If Any Participant of the Yalta Conference Attack Russia and etc
+	on_war_relation_added = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						OR = {
+							TAG = ENG
+							TAG = USA
+							TAG = FRA
+						}
+						OR = {
+							has_country_flag = eng_accepted_yalta_conference
+							has_country_flag = usa_accepted_yalta_conference
+							has_country_flag = fra_accepted_yalta_conference
+						}
+					}
+					FROM = {
+						TAG = SOV
+						has_completed_focus = SOV_yalta_conference
+						has_government = communism
+						is_subject = no
+						NOT = {
+							has_country_flag = yalta_conference_over
+						}
+					}
+				}
+				ROOT = {
+					set_country_flag = has_broken_yalta_pact_war
+					clr_country_flag = eng_accepted_yalta_conference
+					clr_country_flag = usa_accepted_yalta_conference
+					clr_country_flag = fra_accepted_yalta_conference
+				}
+			}
+			else_if = {
+				limit = {
+					FROM = {
+						OR = {
+							TAG = ENG
+							TAG = USA
+							TAG = FRA
+						}
+						OR = {
+							has_country_flag = eng_accepted_yalta_conference
+							has_country_flag = usa_accepted_yalta_conference
+							has_country_flag = fra_accepted_yalta_conference
+						}
+					}
+					ROOT = {
+						TAG = SOV
+						has_completed_focus = SOV_yalta_conference
+						has_government = communism
+						is_subject = no
+						NOT = {
+							has_country_flag = yalta_conference_over
+						}
+					}
+				}
+				FROM = {
+					set_country_flag = has_broken_yalta_pact_war
+					clr_country_flag = eng_accepted_yalta_conference
+					clr_country_flag = usa_accepted_yalta_conference
+					clr_country_flag = fra_accepted_yalta_conference
+				}	
+			}
+		}
+	}
+
+	#If Italy or Russia Declare war on eachother while the diplomatic relation are up
+	on_war_relation_added = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						TAG = ITA
+					}
+					FROM = {
+						TAG = SOV
+						has_country_flag = accept_diplomatic_relation_with_italy
+					}
+				}
+				ROOT = {
+					set_country_flag = has_compromised_russian_italian_relation
+				}
+			}
+			else_if = {
+				limit = {
+					FROM = {
+						TAG = ITA
+					}
+					ROOT = {
+						TAG = SOV
+						has_country_flag = accept_diplomatic_relation_with_italy
+					}
+				}
+				FROM = {
+					set_country_flag = has_compromised_russian_italian_relation
+				}	
+			}
+		}
+	}
+
+	#If Germany or Russia Attack eachother, cancel the right of ressources
+	on_war_relation_added = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						TAG = GER
+					}
+					FROM = {
+						TAG = SOV
+						has_country_flag = has_negotiated_with_germany_ressource_rights
+					}
+				}
+				ROOT = {
+					remove_resource_rights = 582
+					remove_resource_rights = 573
+					remove_resource_rights = 581
+					remove_resource_rights = 564
+					remove_resource_rights = 232
+					remove_resource_rights = 234
+				}
+			}
+			else_if = {
+				limit = {
+					ROOT = {
+						TAG = SOV
+						has_country_flag = has_negotiated_with_germany_ressource_rights
+					}
+					FROM = {
+						TAG = GER
+					}
+				}
+				FROM = {
+					remove_resource_rights = 582
+					remove_resource_rights = 573
+					remove_resource_rights = 581
+					remove_resource_rights = 564
+					remove_resource_rights = 232
+					remove_resource_rights = 234
+				}
+			}
+		}
+	}
+
+	#Revert capital to St Petersburg in case
+	on_state_control_changed = {
+		effect = {
+			if = {
+				limit = {
+					FROM.FROM = {
+						state = 195
+					}
+					ROOT = {
+						TAG = SOV
+						has_country_flag = has_choosen_st_petersburg_as_capital
+					}
+					195 = {
+						is_capital = no
+					}
+				}
+				ROOT = {
+					set_capital = 195
+				}
+			}
+		}
+	}
+
+	on_startup = {
+		effect = {
+			SOV = {
+				if = {
+					limit = {
+						has_game_rule = {
+							rule = RUS_ai_behavior
+							option = RANDOM
+						}
+					}
+					#Undo the Paradox nonsense country flags
+					if = {
+						limit = {
+							has_country_flag = SOV_AI_RANDOM_COMMUNIST_HISTORICAL
+						}
+						clr_country_flag = SOV_AI_RANDOM_COMMUNIST_HISTORICAL
+					}
+					if = {
+						limit = {
+							has_country_flag = SOV_AI_RANDOM_COMMUNIST_ALTERNATE
+						}
+						clr_country_flag = SOV_AI_RANDOM_COMMUNIST_ALTERNATE
+					}
+					set_temp_variable = { random_sov_ai_factor = 0 }
+					randomize_temp_variable = {
+						var = random_sov_ai_factor
+						distribution = uniform
+						min = 1
+						max = 5
+					}
+					round_temp_variable = random_sov_ai_factor
+					if = {
+						limit = {
+							check_variable = {
+								var = random_sov_ai_factor
+								value = 5
+								compare = greater_than_or_equals
+							}
+						}
+						set_temp_variable = { random_sov_ai_factor = 1 }
+					}
+					#Communist
+					if = {
+						limit = {
+							check_variable = {
+								var = random_sov_ai_factor
+								value = 1
+								compare = equals
+							}
+						}
+						set_country_flag = SOV_AI_RANDOM_COMMUNIST_BEHAVIOR
+					}
+					#Democratic
+					else_if = {
+						limit = {
+							check_variable = {
+								var = random_sov_ai_factor
+								value = 2
+								compare = equals
+							}
+						}
+						set_country_flag = SOV_AI_RANDOM_DEMOCRATIC_BEHAVIOR
+					}
+					#Neutrality
+					else_if = {
+						limit = {
+							check_variable = {
+								var = random_sov_ai_factor
+								value = 3
+								compare = equals
+							}
+						}
+						set_country_flag = SOV_AI_RANDOM_NEUTRAL_BEHAVIOR
+					}
+					#Fascist
+					else_if = {
+						limit = {
+							check_variable = {
+								var = random_sov_ai_factor
+								value = 4
+								compare = equals
+							}
+						}
+						set_country_flag = SOV_AI_RANDOM_FASCIST_BEHAVIOR
+					}
+				}
+			}
+		}
+	}
+
+	#Undo the hostile behaviors towards Russian enemy
+	on_capitulation = {
+		effect = {
+			if = {
+				limit = {
+					FROM = {
+						has_country_flag = is_target_of_russia_with_agreement
+					}
+				}
+				hidden_effect = {
+					FROM = {
+						clr_country_flag = is_target_of_russia_with_agreement
+					}
+					every_country = {
+						limit = {
+							has_idea = SOV_Root_russian_pact
+						}
+
+						add_ai_strategy = {
+							type = support
+							id = FROM
+							value = 1000
+						}
+
+						add_ai_strategy = {
+							type = alliance
+							id = FROM
+							value = 1000
+						}
+
+						add_ai_strategy = {
+							type = send_volunteers_desire
+							id = FROM
+							value = 1000
+						}
+					}
+				}
+			}
+		}
+	}
+
+	#Countries with the Russian agreement will not mess with Russian affairs
+	on_declare_war = {
+		effect = {
+			if = {
+				limit = {
+					tag = SOV
+					any_country = {
+						has_idea = SOV_Root_russian_pact
+					}
+				}
+				hidden_effect = {
+					FROM = {
+						set_country_flag = is_target_of_russia_with_agreement
+					}
+					every_country = {
+						limit = {
+							has_idea = SOV_Root_russian_pact
+						}
+
+						add_ai_strategy = {
+							type = support
+							id = FROM
+							value = -1000
+						}
+
+						add_ai_strategy = {
+							type = alliance
+							id = FROM
+							value = -1000
+						}
+
+						add_ai_strategy = {
+							type = send_volunteers_desire
+							id = FROM
+							value = -1000
+						}
+					}
+				}
+			}
+		}
+	}
+
+	#Startup anti anarchist modifier
+	on_startup = {
+		effect = {
+			if = {
+				limit = {
+					date < 1936.1.2	
+				}
+				for_each_scope_loop = {
+					array = global.countries
+	
+					add_dynamic_modifier = { modifier = anti_anarchist_modifiers }
+				}
+			}
+		}
+	}
+
+	#remove anti anarchist modifiers
+	on_ruling_party_change = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						has_dynamic_modifier = {
+							modifier = anti_anarchist_modifiers
+						}
+						has_government = anarchy
+					}
+				}
+				ROOT = {
+					remove_dynamic_modifier = { modifier = anti_anarchist_modifiers }
+				}
+			}
+		}
+	}
+
+	#re-add anti anarchist modifiers
+	on_ruling_party_change = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						NOT = {
+							has_dynamic_modifier = {
+								modifier = anti_anarchist_modifiers
+							}
+							has_government = anarchy
+						}
+					}
+				}
+				ROOT = {
+					add_dynamic_modifier = { modifier = anti_anarchist_modifiers }
+				}
+			}
+		}
+	}
+
+	#Anarchist Ukraine
+	on_state_control_changed = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						tag = UKR
+						has_government = anarchy
+						is_subject = no
+					}
+				}
+				if = {
+					limit = {
+						UKR = {
+							NOT = {
+								has_variable = ukr.anarchist_support@FROM.FROM
+							}
+						}
+					}
+					set_temp_variable = { anarchy_support_divided_by_two = ukr.party_popularity_100@anarchy }
+					if = {
+						limit = {
+							OR = {
+								NOT = {
+									ROOT = {
+										has_completed_focus = UKR_get_back_french_revolutionaries
+									}
+								}
+								NOT = {
+									FROM.FROM = {
+										is_core_of = FRA
+									}
+								}
+							}
+						}
+						divide_temp_variable = { anarchy_support_divided_by_two = 2 }
+					}
+					set_variable = { ukr.anarchist_support@FROM.FROM = var:anarchy_support_divided_by_two }
+					clamp_variable = {
+						var = ukr.anarchist_support@FROM.FROM
+						min = 0
+						max = 100
+					}
+				}
+				ukr_update_anarchist_states = yes
+				ukr_update_state_cost = yes
+				ukr_add_daily_gain_anarchist_states = yes
+				ukr_update_current_view = yes
+				FROM.FROM = {
+					if = {
+						limit = {
+							NOT = {
+								has_dynamic_modifier = {
+									modifier = ukr_anarchist_state_non_converted
+								}
+								has_dynamic_modifier = {
+									modifier = ukr_anarchist_state_converted
+								}
+								is_core_of = UKR
+							}
+							check_variable = {
+								var = ukr.anarchist_support@FROM.FROM
+								value = 100
+								compare = less_than
+							}
+						}
+						add_dynamic_modifier = {
+							modifier = ukr_anarchist_state_non_converted
+						}
+					}
+					else_if = {
+						limit = {
+							NOT = {
+								has_dynamic_modifier = {
+									modifier = ukr_anarchist_state_non_converted
+								}
+								has_dynamic_modifier = {
+									modifier = ukr_anarchist_state_converted
+								}
+								is_core_of = UKR
+							}
+							check_variable = {
+								var = ukr.anarchist_support@FROM.FROM
+								value = 100
+								compare = equals
+							}
+						}
+						add_dynamic_modifier = {
+							modifier = ukr_anarchist_state_converted
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					FROM = {
+						tag = UKR
+						has_government = anarchy
+						is_subject = no
+					}
+				}
+				if = {
+					limit = {
+						has_variable = ukr.anarchist_support@FROM.FROM
+						check_variable = {
+							var = ukr.anarchist_support@FROM.FROM
+							value = 100
+							compare = less_than
+						}
+					}
+					if = {
+						limit = {
+							OR = {
+								NOT = {
+									FROM = {
+										has_completed_focus = UKR_get_back_french_revolutionaries
+									}
+								}
+								NOT = {
+									FROM.FROM = {
+										is_core_of = FRA
+									}
+								}
+							}
+						}
+						subtract_from_variable = { ukr.anarchist_support@FROM.FROM = 10 }
+					}
+					clamp_variable = {
+						var = ukr.anarchist_support@FROM.FROM
+						min = 0
+						max = 100
+					}
+				}
+				ukr_update_anarchist_states = yes
+				ukr_update_state_cost = yes
+				ukr_add_daily_gain_anarchist_states = yes
+				ukr_update_current_view = yes
+				FROM.FROM = {
+					if = {
+						limit = {
+							has_dynamic_modifier = {
+								modifier = ukr_anarchist_state_non_converted
+							}
+						}
+						remove_dynamic_modifier = {
+							modifier = ukr_anarchist_state_non_converted
+						}
+					}
+					if = {
+						limit = {
+							has_dynamic_modifier = {
+								modifier = ukr_anarchist_state_converted
+							}
+						}
+						remove_dynamic_modifier = {
+							modifier = ukr_anarchist_state_converted
+						}
+					}
+				}
+			}
+		}
+	}
+
+	#Add/Remove dynamic modifier for Paris (Anarchist Ukraine)
+	on_state_control_changed = {
+		effect = {
+			if = {
+				limit = {
+					FROM.FROM = {
+						state = 16
+					}
+					UKR = {
+						has_completed_focus = UKR_paris_old_friend
+					}
+				}
+				if = {
+					limit = {
+						FROM = {
+							tag = UKR
+							has_government = anarchy
+							is_subject = no
+						}
+						16 = {
+							has_dynamic_modifier = {
+								modifier = ukr_harmonious_anarchy
+							}
+						}
+					}
+					16 = {
+						remove_dynamic_modifier = {
+							modifier = ukr_harmonious_anarchy
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						ROOT = {
+							tag = UKR
+							has_government = anarchy
+							is_subject = no
+						}
+						16 = {
+							NOT = {
+								has_dynamic_modifier = {
+									modifier = ukr_harmonious_anarchy
+								}
+							}
+						}
+					}
+					16 = {
+						add_dynamic_modifier = {
+							modifier = ukr_harmonious_anarchy
+						}
+					}
+				}
+			}
+		}
+	}
+
+	#Anarchist Russian State Capitulate During the Reunification War
+	on_capitulation = {
+		effect = {
+			if = {
+				limit = {
+					has_global_flag = reunification_war_is_ongoing_anarchist
+					FROM = {
+						OR = {
+							TAG = SOV
+							any_country = {
+								is_in_faction_with = SOV
+							}
+						}
+					}
+					ROOT = {
+						sov_anarchist_russian_free_state = yes
+						has_government = anarchy
+						has_country_flag = is_ennemy_of_anarchist_russia_league_edition
+					}
+				}
+				every_state = {
+					limit = {
+						is_owned_by = ROOT
+					}
+					SOV = {
+						transfer_state = PREV
+					}
+				}
+				if = {
+					limit = {
+						NOT = {
+							any_country = {
+								exists = yes
+								has_country_flag = is_ennemy_of_anarchist_russia_league_edition
+							}
+						}
+					}
+					clr_global_flag = reunification_war_is_ongoing_anarchist
+					SOV = {
+						country_event = { id = russia2_russia.629 }
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					ROOT = {
+						TAG = SOV
+					}
+					FROM = {
+						sov_anarchist_russian_free_state = yes
+						has_government = anarchy
+						has_country_flag = is_ennemy_of_anarchist_russia_league_edition
+					}
+				}
+				every_country = {
+					limit = {
+						is_in_faction_with = SOV
+					}
+					FROM = {
+						annex_country = {
+							target = PREV
+						}
+					}
+				}
+				every_state = {
+					limit = {
+						is_owned_by = ROOT
+					}
+					FROM = {
+						transfer_state = PREV
+					}
+				}
+			}
+		}
+	}
+
+	#Ukrainian Elections
+	on_new_term_election = {
+		effect = {
+			if = {
+				limit = {
+					tag = UKR
+					has_completed_focus = UKR_allow_elections
+					is_subject = no
+					NOT = {
+						has_government = anarchy
+					}
+				}
+				country_event = russia2_ukraine.64
+			}
+		}
+	}
+
+	on_state_control_changed = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						tag = UKR
+						has_government = anarchy
+					}
+					FROM.FROM = {
+						has_resistance = yes
+					}
+				}
+				FROM.FROM = {
+					cancel_resistance = yes
+				}
+			}
+		}
+	}
+}
