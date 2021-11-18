@@ -48658,11 +48658,114 @@ SOV_negotiation_disputants_category_decisions = {
 		}
 	}
 
-	SOV_sway_dissidant_puppet_plan = {
+	SOV_sway_dissident_puppet_plan = {
 
 		icon = GFX_decision_eng_propaganda_campaigns
 
-		days_remove = 35
+		days_remove = 30
+
+		on_map_mode = map_and_decisions_view
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			FROM = {
+				exists = yes
+				has_government = anarchy
+				is_in_faction_with = SOV
+				NOT = {
+					has_country_flag = is_already_agreing_anarchist_russia_puppet_plan	
+				}
+			}
+		}
+
+		target_root_trigger = {
+			has_completed_focus = SOV_a_tight_grip
+		}
+
+		target_trigger = {
+			FROM = {
+				NOT = {
+					has_country_flag = is_already_agreing_anarchist_russia_puppet_plan	
+				}
+				exists = yes
+				has_government = anarchy
+				is_in_faction_with = SOV
+				OR = {
+					TAG = EFR
+					TAG = SIB
+					TAG = URA
+					TAG = KAZ
+					TAG = TMS
+					TAG = UZB
+					TAG = TAJ
+					TAG = KYR
+					TAG = GEO
+					TAG = AZR
+					TAG = ARM
+					TAG = DAG
+					TAG = ROS
+					TAG = KAL
+					TAG = CIR
+					TAG = VLG
+					TAG = VYA
+					TAG = TAT
+					TAG = PRM
+					TAG = KMI
+					TAG = KAR
+					TAG = NOV
+					TAG = UKR
+					TAG = BLR
+					TAG = CRI
+				}
+			}
+		}
+
+		cost = 25
+
+		available = {
+			NOT = {
+				has_country_flag = is_swaying_political_anarchist_oppenent
+			}
+			has_completed_focus = SOV_convince_disputants
+			custom_trigger_tooltip = {
+				tooltip = from_support_85_percent_our_project
+				FROM = {
+					check_variable = {
+						var = opinion_russian_anarchist_puppet_reform_plan
+						value = 85
+						compare = greater_than_or_equals
+					}
+				}
+			}
+		}
+
+		complete_effect = {
+			set_country_flag = is_swaying_political_anarchist_oppenent
+		}
+
+		remove_effect = {
+			clr_country_flag = is_swaying_political_anarchist_oppenent
+			custom_effect_tooltip = will_receive_random_event_choose_option_anarchists
+			hidden_effect = {
+				FROM = {
+					country_event = { id = russia2_russia.642 }
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	SOV_reveal_personality_for_from = {
+
+		icon = GFX_decision_recruit_operative
+
+		days_remove = 30
 
 		on_map_mode = map_and_decisions_view
 
@@ -48725,9 +48828,11 @@ SOV_negotiation_disputants_category_decisions = {
 
 		cost = 50
 
+		fire_only_once = yes
+
 		available = {
 			NOT = {
-				has_country_flag = is_swaying_political_anarchist_oppenent
+				has_country_flag = is_revealing_personality_from
 			}
 			has_completed_focus = SOV_convince_disputants
 			custom_trigger_tooltip = {
@@ -48743,15 +48848,80 @@ SOV_negotiation_disputants_category_decisions = {
 		}
 
 		complete_effect = {
-			set_country_flag = is_swaying_political_anarchist_oppenent
+			set_country_flag = is_revealing_personality_from
 		}
 
 		remove_effect = {
-			clr_country_flag = is_swaying_political_anarchist_oppenent
-			custom_effect_tooltip = will_receive_random_event_choose_option_anarchists
+			clr_country_flag = is_revealing_personality_from
+			custom_effect_tooltip = will_reveal_from_personality_tt
 			hidden_effect = {
-				FROM = {
-					country_event = { id = russia2_russia.642 }
+				if = {
+					limit = {
+						FROM = {
+							check_variable = {
+								var = militaristic_personality_type_anarchist
+								value = 0
+								compare = equals
+							}
+						}
+					}
+					FROM = {
+						add_to_variable = {
+							var = militaristic_personality_type_anarchist
+			    			value = 1
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						FROM = {
+							check_variable = {
+								var = economic_personality_type_anarchist
+								value = 0
+								compare = equals
+							}
+						}
+					}
+					FROM = {
+						add_to_variable = {
+							var = economic_personality_type_anarchist
+			    			value = 1
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						FROM = {
+							check_variable = {
+								var = social_personality_type_anarchist
+								value = 0
+								compare = equals
+							}
+						}
+					}
+					FROM = {
+						add_to_variable = {
+							var = social_personality_type_anarchist
+			    			value = 1
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						FROM = {
+							check_variable = {
+								var = peaceful_personality_type_anarchist
+								value = 0
+								compare = equals
+							}
+						}
+					}
+					FROM = {
+						add_to_variable = {
+							var = peaceful_personality_type_anarchist
+			    			value = 1
+						}
+					}
 				}
 			}
 		}
