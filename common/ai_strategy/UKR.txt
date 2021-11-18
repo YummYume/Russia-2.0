@@ -4,7 +4,13 @@ UKR_save_pp_for_coring_states = {
 	}
 
     enable = {
+		ukr_in_scw = yes
         has_active_mission = UKR_anarchism_timeout
+		check_variable = {
+			var = ukr.num_core_states
+			value = 20
+			compare = less_than
+		}
 	}
 
     abort_when_not_enabled = yes
@@ -52,8 +58,20 @@ UKR_dont_push_too_hard_scw  = {
 	}
 	
 	enable = {
+		ukr_in_scw = yes
 		has_active_mission = UKR_anarchism_timeout
 		num_of_controlled_states > 19
+		check_variable = {
+			var = ukr.num_core_states
+			value = 20
+			compare = less_than
+		}
+		any_enemy_country = {
+			strength_ratio = {
+				tag = UKR
+				ratio > 1
+			}
+		}
 	}
 	
 	abort_when_not_enabled = yes
@@ -64,21 +82,135 @@ UKR_dont_push_too_hard_scw  = {
 		priority = 1000
 
 		state_trigger = {
-			is_in_home_area = yes
+			OR = {
+				state = 195 #Hold onto Stalingrad
+				any_neighbor_state = {
+					is_controlled_by = UKR
+				}
+			}
 		}
 
 		execute_order = no
-		manual_attack = no
+		manual_attack = yes
 	}
 	
 	ai_strategy = {
 		type = front_unit_request
 	
 		state_trigger = {
-			is_in_home_area = yes
+			OR = {
+				state = 195 #Hold onto Stalingrad
+				any_neighbor_state = {
+					is_controlled_by = UKR
+				}
+			}
 		}
 		
 		value = 1000
+	}
+}
+
+UKR_be_careful_scw  = {
+	allowed = {
+		original_tag = UKR
+	}
+	
+	enable = {
+		ukr_in_scw = yes
+		check_variable = {
+			var = ukr.num_core_states
+			value = 19
+			compare = greater_than
+		}
+		stockpile_ratio = {
+			archetype = infantry_equipment
+			ratio < 0.9
+		}
+	}
+	
+	abort_when_not_enabled = yes
+	
+	ai_strategy = {
+		type = front_control
+		
+		priority = 500
+
+		execution_type = careful
+		execute_order = yes
+		manual_attack = yes
+	}
+}
+
+UKR_kill_BLR_fast_scw = {
+	allowed = {
+		original_tag = UKR
+	}
+	
+	enable = {
+		ukr_in_scw = yes
+		check_variable = {
+			var = ukr.num_core_states
+			value = 19
+			compare = greater_than
+		}
+		has_war_with = BLR
+		BLR = {
+			has_capitulated = no
+			strength_ratio = {
+				tag = UKR
+				ratio < 0.5
+			}
+			any_neighbor_state = {
+				is_controlled_by = UKR
+			}
+		}
+	}
+	
+	abort_when_not_enabled = yes
+	
+	ai_strategy = {
+		type = front_control
+		
+		priority = 700
+
+		tag = BLR
+		execution_type = rush_weak
+		execute_order = yes
+		manual_attack = yes
+	}
+}
+
+UKR_go_for_moscow_scw  = {
+	allowed = {
+		original_tag = UKR
+	}
+	
+	enable = {
+		ukr_in_scw = yes
+		219 = {
+			is_capital = yes
+			OWNER = {
+				has_war_with = UKR
+				surrender_progress > 0.8
+			}
+			any_neighbor_state = {
+				is_controlled_by = UKR
+			}
+		}
+	}
+	
+	abort_when_not_enabled = yes
+	
+	ai_strategy = {
+		type = front_control
+		
+		priority = 2000
+
+		state = 219
+
+		execution_type = rush
+		execute_order = yes
+		manual_attack = yes
 	}
 }
 
@@ -134,5 +266,49 @@ UKR_focus_on_guns_scw = {
 		type = equipment_production_factor
 		id = armor
 		value = 10
+	}
+}
+
+UKR_chill_bro_scw  = {
+	allowed = {
+		original_tag = UKR
+	}
+	
+	enable = {
+		ukr_in_scw = yes
+		OR = {
+			has_equipment = {
+				infantry_equipment < -10000
+			}
+			stockpile_ratio = {
+				archetype = infantry_equipment
+				ratio < 0.5
+			}
+			has_equipment = {
+				support_equipment < -1000
+			}
+			stockpile_ratio = {
+				archetype = support_equipment
+				ratio < 0.5
+			}
+			has_equipment = {
+				artillery_equipment < -1000
+			}
+			stockpile_ratio = {
+				archetype = artillery_equipment
+				ratio < 0.5
+			}
+		}
+	}
+	
+	abort_when_not_enabled = yes
+	
+	ai_strategy = {
+		type = front_control
+		
+		priority = 5000
+
+		execute_order = no
+		manual_attack = no
 	}
 }

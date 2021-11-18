@@ -1098,8 +1098,8 @@ UKR_second_civil_war_category_decisions = {
 			FROM = {
 				any_neighbor_state = {
 					OR = {
-						is_controlled_by = ROOT
 						is_in_array = { ukr.scw_claimed_states = PREV }
+						is_in_array = { ukr.core_states = PREV }
 					}
 				}
 			}
@@ -1230,6 +1230,144 @@ UKR_second_civil_war_category_decisions = {
 
 UKR_anarchist_legitimacy_category_decisions = {
 
+	UKR_recruit_division_in_claimed_state = {
+
+		icon = GFX_decision_generic_form_nation
+
+		allowed = {
+			original_tag = UKR
+		}
+
+		state_target = yes
+
+		target_array = ukr.scw_claimed_states
+
+		fire_only_once = yes
+
+		target_trigger = {
+			FROM = {
+				is_controlled_by = ROOT
+			}
+		}
+
+		target_root_trigger = {
+			check_variable = {
+				var = ukr.num_core_states
+				value = 20
+				compare = greater_than_or_equals
+			}
+		}
+
+		available = {
+			ROOT = {
+				controls_state = FROM
+				if = {
+					limit = {
+						FROM = {
+							is_core_of = ROOT
+						}
+					}
+					has_manpower > 10000
+				}
+				else = {
+					has_manpower > 5000
+				}
+			}
+		}
+
+		visible = {
+			ROOT = {
+				has_government = anarchy
+				is_subject = no
+				check_variable = {
+					var = ukr.num_core_states
+					value = 20
+					compare = greater_than_or_equals
+				}
+			}
+			FROM = {
+				is_controlled_by = ROOT
+			}
+		}
+
+		cost = 50
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 1000
+				FROM = {
+					is_core_of = ROOT
+				}
+			}
+		}
+
+		complete_effect = {
+			if = {
+				limit = {
+					FROM = {
+						is_core_of = ROOT
+					}
+				}
+				custom_effect_tooltip = UKR_recruit_division_in_claimed_state_tt
+				add_manpower = -10000
+			}
+			else = {
+				add_manpower = -5000
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_template = "Ukrayins'ka Dyviziya"
+					}
+				}
+				division_template = {
+					name = "Ukrayins'ka Dyviziya"
+					division_names_group = UKR_INF_01
+					priority = 1
+					regiments = {
+						infantry = { x = 0 y = 0 }
+						infantry = { x = 0 y = 1 }
+						infantry = { x = 0 y = 2 }
+						infantry = { x = 0 y = 3 }
+						infantry = { x = 0 y = 4 }
+						infantry = { x = 1 y = 0 }
+						infantry = { x = 1 y = 1 }
+						infantry = { x = 1 y = 2 }
+						infantry = { x = 1 y = 3 }
+					}
+					support = {
+						engineer = { x = 0 y = 0 }
+						artillery = { x = 0 y = 1 }
+					}
+				}
+			}
+			FROM = {
+				create_unit = {
+					division = "name = \"1ya Anarkhist Dobrovolets\" division_template = \"Ukrayins'ka Dyviziya\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+					owner = UKR
+				}
+				create_unit = {
+					division = "name = \"1ya Anarkhist Dobrovolets\" division_template = \"Ukrayins'ka Dyviziya\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+					owner = UKR
+				}
+				if = {
+					limit = {
+						is_core_of = ROOT
+					}
+					create_unit = {
+						division = "name = \"1ya Anarkhist Dobrovolets\" division_template = \"Ukrayins'ka Dyviziya\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+						owner = UKR
+					}
+					create_unit = {
+						division = "name = \"1ya Anarkhist Dobrovolets\" division_template = \"Ukrayins'ka Dyviziya\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+						owner = UKR
+					}
+				}
+			}
+		}
+	}
+
 	UKR_move_anarchist_capital_paris = {
 
 		icon = generic_nationalism
@@ -1346,7 +1484,7 @@ UKR_anarchist_legitimacy_category_decisions = {
 
 		fire_only_once = yes
 
-		days_mission_timeout = 365
+		days_mission_timeout = var:ukr.ukr_anarchist_timeout
 
 		cancel_trigger = {
 			hidden_trigger = {
