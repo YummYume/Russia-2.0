@@ -377,11 +377,18 @@ country_event = {
 		else = {
 			every_state = {
 				limit = {
-					is_controlled_by = ROOT
 					OR = {
 						has_state_flag = slavic_states
 						has_state_flag = slavic_states_czech
 						has_state_flag = german_slavic_state
+					}
+					OR = {
+						any_country = {
+							is_subject_of = ROOT
+							owns_state = PREV
+							NOT = { TAG = ROOT }
+						}
+						is_controlled_by = ROOT
 					}
 				}
 				SOV = {
