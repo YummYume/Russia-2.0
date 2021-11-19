@@ -1098,8 +1098,8 @@ UKR_second_civil_war_category_decisions = {
 			FROM = {
 				any_neighbor_state = {
 					OR = {
-						is_in_array = { ukr.scw_claimed_states = PREV }
-						is_in_array = { ukr.core_states = PREV }
+						is_in_array = { ukr.scw_claimed_states = THIS }
+						is_in_array = { ukr.core_states = THIS }
 					}
 				}
 			}
@@ -1125,6 +1125,11 @@ UKR_second_civil_war_category_decisions = {
 				factor = 0
 				UKR = {
 					has_country_flag = accept_to_help_whiteguard
+					check_variable = {
+						var = ukr.scw_claimed_states^num
+						value = 3
+						compare = greater_than_or_equals
+					}
 					NOT = {
 						has_war_with = SOV
 					}
@@ -1296,8 +1301,15 @@ UKR_anarchist_legitimacy_category_decisions = {
 			factor = 1
 			modifier = {
 				factor = 1000
-				FROM = {
-					is_core_of = ROOT
+				OR = {
+					check_variable = {
+						var = ukr.anarchist_coring_points
+						value = 1
+						compare = less_than
+					}
+					FROM = {
+						is_core_of = ROOT
+					}
 				}
 			}
 		}

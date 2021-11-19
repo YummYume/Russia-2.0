@@ -1,9 +1,11 @@
 UKR_save_pp_for_coring_states = {
+
 	allowed = {
 		original_tag = UKR
 	}
 
     enable = {
+		is_subject = no
 		ukr_in_scw = yes
         has_active_mission = UKR_anarchism_timeout
 		check_variable = {
@@ -52,12 +54,14 @@ UKR_save_pp_for_coring_states = {
 	}
 }
 
-UKR_dont_push_too_hard_scw  = {
+UKR_dont_push_too_hard_wait_for_cores_scw  = {
+
 	allowed = {
 		original_tag = UKR
 	}
 	
 	enable = {
+		is_subject = no
 		ukr_in_scw = yes
 		has_active_mission = UKR_anarchism_timeout
 		num_of_controlled_states > 19
@@ -111,11 +115,14 @@ UKR_dont_push_too_hard_scw  = {
 }
 
 UKR_be_careful_scw  = {
+
 	allowed = {
 		original_tag = UKR
 	}
 	
 	enable = {
+		date < 1940.6.1
+		is_subject = no
 		ukr_in_scw = yes
 		check_variable = {
 			var = ukr.num_core_states
@@ -126,6 +133,31 @@ UKR_be_careful_scw  = {
 			archetype = infantry_equipment
 			ratio < 0.9
 		}
+		NOT = {
+			OR = {
+				has_equipment = {
+					infantry_equipment < -25000
+				}
+				stockpile_ratio = {
+					archetype = infantry_equipment
+					ratio < 0.25
+				}
+				has_equipment = {
+					support_equipment < -2000
+				}
+				stockpile_ratio = {
+					archetype = support_equipment
+					ratio < 0.5
+				}
+				has_equipment = {
+					artillery_equipment < -2000
+				}
+				stockpile_ratio = {
+					archetype = artillery_equipment
+					ratio < 0.5
+				}
+			}
+		}
 	}
 	
 	abort_when_not_enabled = yes
@@ -135,6 +167,12 @@ UKR_be_careful_scw  = {
 		
 		priority = 500
 
+		state_trigger = {
+			any_neighbor_state = {
+				is_controlled_by = UKR
+			}
+		}
+
 		execution_type = careful
 		execute_order = yes
 		manual_attack = yes
@@ -142,11 +180,13 @@ UKR_be_careful_scw  = {
 }
 
 UKR_kill_BLR_fast_scw = {
+
 	allowed = {
 		original_tag = UKR
 	}
 	
 	enable = {
+		is_subject = no
 		ukr_in_scw = yes
 		check_variable = {
 			var = ukr.num_core_states
@@ -160,6 +200,9 @@ UKR_kill_BLR_fast_scw = {
 				tag = UKR
 				ratio < 0.5
 			}
+		}
+		any_state = {
+			is_controlled_by = BLR
 			any_neighbor_state = {
 				is_controlled_by = UKR
 			}
@@ -181,6 +224,7 @@ UKR_kill_BLR_fast_scw = {
 }
 
 UKR_go_for_moscow_scw  = {
+
 	allowed = {
 		original_tag = UKR
 	}
@@ -215,6 +259,7 @@ UKR_go_for_moscow_scw  = {
 }
 
 UKR_focus_on_guns_scw = {
+
 	allowed = {
 		original_tag = UKR
 	}
@@ -269,13 +314,35 @@ UKR_focus_on_guns_scw = {
 	}
 }
 
-UKR_chill_bro_scw  = {
+UKR_chill_scw  = {
+
 	allowed = {
 		original_tag = UKR
 	}
 	
 	enable = {
+		date < 1940.3.1 #Just attack at this point
 		ukr_in_scw = yes
+		OR = {
+			any_enemy_country = {
+				is_major = yes
+				stockpile_ratio = {
+					archetype = infantry_equipment
+					ratio > 0.8
+				}
+				strength_ratio = {
+					tag = UKR
+					ratio > 0.9
+				}
+			}
+			has_equipment = {
+				infantry_equipment < -25000
+			}
+			stockpile_ratio = {
+				archetype = infantry_equipment
+				ratio < 0.25
+			}
+		}
 		OR = {
 			has_equipment = {
 				infantry_equipment < -10000
@@ -308,7 +375,155 @@ UKR_chill_bro_scw  = {
 		
 		priority = 5000
 
+		state_trigger = {
+			any_neighbor_state = {
+				is_controlled_by = UKR
+			}
+			any_country = {
+				has_war_with = UKR
+				divisions_in_state = {
+					size > 4
+					state = PREV
+				}
+			}
+		}
+
 		execute_order = no
 		manual_attack = no
+	}
+}
+
+ukr_focus_on_civs_scw = {
+
+	allowed = {
+		original_tag = UKR
+	}
+	
+	enable = {
+		ukr_in_scw = yes
+		num_of_civilian_factories < 15
+		surrender_progress < 0.25
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = building_target
+		id = industrial_complex
+		value = 100
+	}
+}
+
+ukr_focus_on_mils_scw = {
+
+	allowed = {
+		original_tag = UKR
+	}
+	
+	enable = {
+		ukr_in_scw = yes
+		num_of_military_factories < 20
+		surrender_progress < 0.25
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = building_target
+		id = arms_factory
+		value = 100
+	}
+}
+
+ukr_focus_on_mils_civs = {
+
+	allowed = {
+		original_tag = UKR
+	}
+	
+	enable = {
+		is_subject = no
+		num_of_factories < 50
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = building_target
+		id = industrial_complex
+		value = 5
+	}
+
+	ai_strategy = {
+		type = building_target
+		id = arms_factory
+		value = 5
+	}
+}
+
+help_ukr_in_scw = {
+
+	enable = {
+		has_global_flag = second_russian_civil_war_in_progress
+		is_major = yes
+		if = {
+			limit = {
+				sou_in_scw = yes
+			}
+			NOT = {
+				has_government = SOU
+			}
+		}
+		NOT = {
+			has_country_flag = help_whiteguard_during_russian_civil_war
+		}
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = send_volunteers_desire
+		id = UKR			
+		value = 100
+	}
+
+	ai_strategy = {
+		type = send_lend_lease_desire
+		id = UKR
+		value = 100
+	}
+}
+
+ukr_anarchist_kill_everyone = {
+
+	reversed = yes
+
+	allowed = {
+		original_tag = UKR
+	}
+
+	enable = {
+		UKR = {
+			has_government = anarchy
+			is_subject = no
+			has_completed_focus = UKR_spread_revolution
+		}
+		is_neighbor_of = UKR
+		strength_ratio = {
+			tag = UKR
+			ratio < 1
+		}
+	}
+
+	ai_strategy = {
+		type = antagonize
+		id = "UKR"
+		value = 500
+	}
+
+	ai_strategy = {
+		type = conquer
+		id = "UKR"			
+		value = 500
 	}
 }

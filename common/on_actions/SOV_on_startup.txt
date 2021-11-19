@@ -4,6 +4,47 @@ on_actions = {
 		effect = {
 			if = {
 				limit = {
+					OR = {
+						has_game_rule = {
+							rule = UKR_ai_behavior
+							option = DEFAULT
+						}
+						has_game_rule = {
+							rule = UKR_ai_behavior
+							option = RANDOM
+						}
+					}
+				}
+				set_temp_variable = { behavior = 0 }
+				randomize_temp_variable = {
+					var = behavior
+					distribution = uniform
+					min = 0
+					max = 1
+				}
+				round_temp_variable = behavior
+				if = {
+					limit = {
+						check_variable = {
+							var = behavior
+							value = 1
+							compare = equals
+						}
+					}
+					set_global_flag = ukr_anarchist_behavior
+				}
+			}
+			else_if = {
+				limit = {
+					has_game_rule = {
+						rule = UKR_ai_behavior
+						option = ANARCHISM
+					}
+				}
+				set_global_flag = ukr_anarchist_behavior
+			}
+			if = {
+				limit = {
 					has_game_rule = {
 						rule = sov_enable_national_obligations
 						option = DEFAULT
