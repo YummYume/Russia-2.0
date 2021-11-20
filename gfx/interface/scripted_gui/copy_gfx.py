@@ -58,6 +58,8 @@ if __name__ == "__main__":
             "lacplesis",
             "third_friend",
             "national_priority",
+            "revenge_best_served_cold",
+            "just_like_old_times",
             "tour_de_france",
             "making_fun_of_me_uh",
             "click_me",
