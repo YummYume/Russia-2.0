@@ -62,7 +62,7 @@ if __name__ == '__main__':
                     print("\nKey %s was added." % key)
 
         if addedstates == 0:
-            report += "    No new state detected."
+            report += "    No new state detected.\n"
             print("\n  No new state detected.")
         
         report += "\nModified States :\n"
@@ -133,7 +133,7 @@ if __name__ == '__main__':
                         print("  No changes detected.")
 
         if modifiedstates == 0:
-            report += "    No modified state detected."
+            report += "    No modified state detected.\n"
             print("\n  No modified state detected.")
 
         report += "\nDeleted States :\n"
@@ -179,7 +179,7 @@ Number of states for { file1 } : { json1["statecount"] }
 Number of states for { file2 } : { json2["statecount"] }
 
 Number of new states : { addedstates }
-Number of modifier states : { modifiedstates }
+Number of modified states : { modifiedstates }
 Number of deleted states : { deletedstates }
 
 """

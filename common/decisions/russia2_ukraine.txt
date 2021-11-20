@@ -1098,8 +1098,8 @@ UKR_second_civil_war_category_decisions = {
 			FROM = {
 				any_neighbor_state = {
 					OR = {
-						is_in_array = { ukr.scw_claimed_states = PREV }
-						is_in_array = { ukr.core_states = PREV }
+						is_in_array = { ukr.scw_claimed_states = THIS }
+						is_in_array = { ukr.owned_states = THIS }
 					}
 				}
 			}
@@ -1125,6 +1125,11 @@ UKR_second_civil_war_category_decisions = {
 				factor = 0
 				UKR = {
 					has_country_flag = accept_to_help_whiteguard
+					check_variable = {
+						var = ukr.scw_claimed_states^num
+						value = 3
+						compare = greater_than_or_equals
+					}
 					NOT = {
 						has_war_with = SOV
 					}
@@ -1142,6 +1147,46 @@ UKR_second_civil_war_category_decisions = {
 					}
 				}
 				custom_effect_tooltip = UKR_claim_state_scw_tt2
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_government = anarchy
+					}
+				}
+				if = {
+					limit = {
+						NOT = {
+							has_template = "Ukrayins'ka Dyviziya"
+						}
+					}
+					division_template = {
+						name = "Ukrayins'ka Dyviziya"
+						division_names_group = UKR_INF_01
+						priority = 1
+						regiments = {
+							infantry = { x = 0 y = 0 }
+							infantry = { x = 0 y = 1 }
+							infantry = { x = 0 y = 2 }
+							infantry = { x = 0 y = 3 }
+							infantry = { x = 0 y = 4 }
+							infantry = { x = 1 y = 0 }
+							infantry = { x = 1 y = 1 }
+							infantry = { x = 1 y = 2 }
+							infantry = { x = 1 y = 3 }
+						}
+						support = {
+							engineer = { x = 0 y = 0 }
+							artillery = { x = 0 y = 1 }
+						}
+					}
+				}
+				FROM = {
+					create_unit = {
+						division = "name = \"1ya Anarkhist Dobrovolets\" division_template = \"Ukrayins'ka Dyviziya\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+						owner = UKR
+					}
+				}
 			}
 			hidden_effect = {
 				ROOT = {
@@ -1296,8 +1341,15 @@ UKR_anarchist_legitimacy_category_decisions = {
 			factor = 1
 			modifier = {
 				factor = 1000
-				FROM = {
-					is_core_of = ROOT
+				OR = {
+					check_variable = {
+						var = ukr.anarchist_coring_points
+						value = 1
+						compare = less_than
+					}
+					FROM = {
+						is_core_of = ROOT
+					}
 				}
 			}
 		}

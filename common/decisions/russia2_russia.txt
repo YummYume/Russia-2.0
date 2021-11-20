@@ -5023,6 +5023,7 @@ SOV_the_second_civil_war_fn = {
 				NOT = {
 					has_government = communism
 					has_civil_war = yes
+					has_war_with = ROOT
 				}
 				exists = yes
 			}
@@ -5040,8 +5041,7 @@ SOV_the_second_civil_war_fn = {
 		}
 
 		highlight_states = {
-			is_capital = yes
-			is_owned_by = FROM
+			state = FROM.CAPITAL
 		}
 
 		fire_only_once = yes
@@ -5099,6 +5099,32 @@ SOV_the_second_civil_war_fn = {
 
 		complete_effect = {
 			custom_effect_tooltip = sympathize_with_ukraine_civil_war_tt
+			if = {
+				limit = {
+					UKR = {
+						is_ai = yes
+					}
+					OR = {
+						has_game_rule = {
+							rule = UKR_ai_behavior
+							option = ANARCHISM
+						}
+						has_game_rule = {
+							rule = UKR_ai_behavior
+							option = ISOLATED
+						}
+						has_game_rule = {
+							rule = UKR_ai_behavior
+							option = AGGRESSIVE
+						}
+						has_game_rule = {
+							rule = UKR_ai_behavior
+							option = ALLIANCE_FINLAND
+						}
+					}
+				}
+				custom_effect_tooltip = sympathize_with_ukraine_wont_have_effect_tt
+			}
 			hidden_effect = {
 				set_country_flag = sympathize_with_ukraine
 			}
@@ -5250,6 +5276,7 @@ SOV_the_second_civil_war_fn = {
 		allowed = {
 			tag = SOV
 		}
+
 		available = {
 			has_civil_war = no
 			command_power > 25
@@ -5260,6 +5287,7 @@ SOV_the_second_civil_war_fn = {
 				has_country_flag = train_caucasian_soldiers_civil_war
 			}
 		}
+
 		visible = {
 			has_country_flag = second_civil_war_mission
 			all_of = {
@@ -5830,6 +5858,7 @@ SOV_the_second_civil_war_fn = {
 }
 
 SOV_deal_with_britain = {
+
 	SOV_air_raid_british_ships = {
 
 		icon = GFX_decision_generic_intelligence_operation
