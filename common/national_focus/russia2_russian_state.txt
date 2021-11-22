@@ -397,11 +397,12 @@ focus_tree = {
 
         }
         available = {
-
+            has_global_flag = second_russian_civil_war_in_progress
         }
         search_filters = {  }
         completion_reward = {
-
+            add_stability = 0.1
+            add_war_support = 0.1
         }
     }
 
@@ -420,11 +421,25 @@ focus_tree = {
 
         }
         available = {
-
+            has_global_flag = second_russian_civil_war_in_progress
+            custom_trigger_tooltip = {
+				tooltip = is_in_scw_tt
+				is_in_array = { global.russian_scw_participants = ROOT.id }
+			}
         }
         search_filters = {  }
         completion_reward = {
-
+            add_ideas = RSC_Defend_our_land
+            capital_scope = {
+                add_building_construction = {
+                    type = bunker
+                    level = 3
+                    instant_build = yes
+                    province = {
+                        limit_to_victory_point = yes
+                    }
+                }
+            }
         }
     }
 
@@ -443,11 +458,18 @@ focus_tree = {
 
         }
         available = {
-
+            has_global_flag = second_russian_civil_war_in_progress
+            custom_trigger_tooltip = {
+				tooltip = is_in_scw_tt
+				is_in_array = { global.russian_scw_participants = ROOT.id }
+			}
         }
         search_filters = {  }
         completion_reward = {
-
+            add_timed_idea = {
+                idea = RSC_Victory_any_means
+                days = 365
+            }
         }
     }
 
@@ -459,19 +481,21 @@ focus_tree = {
         prerequisite = {  }
         mutually_exclusive = { focus = RSC_state_chaos }
         icon = GFX_
-        cost = 5
+        cost = 6
         ai_will_do = {
-            factor = 1
+            factor = 5
         }
         bypass = {
 
         }
         available = {
-
+            NOT = {
+                has_government = anarchy
+            }
         }
         search_filters = {  }
         completion_reward = {
-
+            country_event = russia2_russian_states.1
         }
     }
 
@@ -482,19 +506,28 @@ focus_tree = {
         y = 2
         prerequisite = { focus = RSC_new_government }
         icon = GFX_
-        cost = 5
+        cost = 6
         ai_will_do = {
-            factor = 1
+            factor = 4
         }
         bypass = {
 
         }
         available = {
-
+            NOT = {
+                has_government = anarchy
+            }
         }
         search_filters = {  }
         completion_reward = {
-
+            add_ideas = RSC_Control_over_country
+            if = {
+                limit = {
+                    has_dlc = "La Resistance"
+                    has_intelligence_agency = no
+                }
+                create_intelligence_agency = yes
+            }
         }
     }
 
@@ -508,17 +541,19 @@ focus_tree = {
         icon = GFX_
         cost = 5
         ai_will_do = {
-            factor = 1
+            factor = 5
         }
         bypass = {
 
         }
         available = {
-
+            NOT = {
+                has_government = anarchy
+            }
         }
         search_filters = {  }
         completion_reward = {
-
+            add_ideas = RSC_Intervene_global_conflicts
         }
     }
 
@@ -532,17 +567,19 @@ focus_tree = {
         icon = GFX_
         cost = 5
         ai_will_do = {
-            factor = 1
+            factor = 5
         }
         bypass = {
 
         }
         available = {
-
+            NOT = {
+                has_government = anarchy
+            }
         }
         search_filters = {  }
         completion_reward = {
-
+            add_ideas = RSC_Stay_neutral
         }
     }
 
@@ -553,7 +590,7 @@ focus_tree = {
         y = 4
         prerequisite = { focus = RSC_intervene_global_conflicts focus = RSC_stay_neutral }
         icon = GFX_
-        cost = 5
+        cost = 8
         ai_will_do = {
             factor = 1
         }
@@ -561,11 +598,13 @@ focus_tree = {
 
         }
         available = {
-
+            NOT = {
+                has_government = anarchy
+            }
         }
         search_filters = {  }
         completion_reward = {
-
+            add_ideas = RSC_Proud_people
         }
     }
 
@@ -576,7 +615,7 @@ focus_tree = {
         y = 5
         prerequisite = { focus = RSC_proud_people }
         icon = GFX_
-        cost = 5
+        cost = 4
         ai_will_do = {
             factor = 1
         }
@@ -584,11 +623,14 @@ focus_tree = {
 
         }
         available = {
-
+            NOT = {
+                has_government = anarchy
+            }
+            is_subject = no
         }
         search_filters = {  }
         completion_reward = {
-
+            add_ideas = RSC_Masters_own_fate
         }
     }
 
@@ -599,7 +641,7 @@ focus_tree = {
         y = 6
         prerequisite = { focus = RSC_masters_own_fate }
         icon = GFX_
-        cost = 5
+        cost = 10
         ai_will_do = {
             factor = 1
         }
@@ -607,11 +649,34 @@ focus_tree = {
 
         }
         available = {
-
+            NOT = {
+                has_government = anarchy
+            }
+            is_subject = no
+            custom_trigger_tooltip = {
+                tooltip = RSC_reclaim_russia_tt
+                SOV = {
+                    exists = no
+                }
+                SOU = {
+                    exists = no
+                }
+            }
         }
         search_filters = {  }
         completion_reward = {
-
+            custom_effect_tooltip = RSC_reclaim_russia_tt2
+            every_state = {
+                limit = {
+                    is_core_of = SOV
+                }
+                custom_effect_tooltip = RSC_reclaim_russia_tt3
+                hidden_effect = {
+                    ROOT = {
+                        add_state_core = PREV
+                    }
+                }
+            }
         }
     }
 
@@ -623,19 +688,21 @@ focus_tree = {
         prerequisite = {  }
         mutually_exclusive = { focus = RSC_new_government }
         icon = GFX_
-        cost = 5
+        cost = 4
         ai_will_do = {
-            factor = 1
+            factor = 10
         }
         bypass = {
 
         }
         available = {
-
+            has_government = anarchy
+            has_global_flag = the_great_russian_collapse_is_here
         }
         search_filters = {  }
         completion_reward = {
-
+            add_stability = -0.1
+            add_political_power = 120
         }
     }
 
@@ -646,19 +713,20 @@ focus_tree = {
         y = 2
         prerequisite = { focus = RSC_state_chaos }
         icon = GFX_
-        cost = 5
+        cost = 6
         ai_will_do = {
-            factor = 1
+            factor = 4
         }
         bypass = {
 
         }
         available = {
-
+            has_government = anarchy
+            has_global_flag = the_great_russian_collapse_is_here
         }
         search_filters = {  }
         completion_reward = {
-
+            add_ideas = RSC_Our_new_way
         }
     }
 
@@ -669,19 +737,54 @@ focus_tree = {
         y = 3
         prerequisite = { focus = RSC_our_new_way }
         icon = GFX_
-        cost = 5
+        cost = 6
         ai_will_do = {
-            factor = 1
+            factor = 5
         }
         bypass = {
 
         }
         available = {
-
+            has_government = anarchy
+            has_global_flag = the_great_russian_collapse_is_here
         }
         search_filters = {  }
         completion_reward = {
+            set_temp_variable = { manpower_add = 0 }
 
+            for_each_loop = {
+                array = owned_states
+                value = v
+                index = i
+
+                if = {
+                    limit = {
+                        var:v = {
+                            is_controlled_by = ROOT
+                        }
+                    }
+                    set_temp_variable = { manpower_state_divided = var:v.state_population_k }
+                    divide_temp_variable = { manpower_state_divided = 10 }
+                    add_to_temp_variable = { manpower_add = manpower_state_divided }
+                }
+            }
+
+            if = {
+                limit = {
+                    # Avoid integer overflow
+                    check_variable = {
+                        var = manpower_state_divided
+                        value = 2140
+                        compare = greater_than_or_equals
+                    }
+                }
+                set_temp_variable = { manpower_state_divided = 2140000 }
+            }
+            else = {
+                multiply_temp_variable = { manpower_state_divided = 1000 }
+            }
+
+            add_manpower = var:manpower_add
         }
     }
 
@@ -694,13 +797,14 @@ focus_tree = {
         icon = GFX_
         cost = 5
         ai_will_do = {
-            factor = 1
+            factor = 5
         }
         bypass = {
 
         }
         available = {
-
+            has_government = anarchy
+            has_global_flag = the_great_russian_collapse_is_here
         }
         search_filters = {  }
         completion_reward = {
@@ -717,13 +821,14 @@ focus_tree = {
         icon = GFX_
         cost = 5
         ai_will_do = {
-            factor = 1
+            factor = 5
         }
         bypass = {
 
         }
         available = {
-
+            has_government = anarchy
+            has_global_flag = the_great_russian_collapse_is_here
         }
         search_filters = {  }
         completion_reward = {
@@ -741,13 +846,14 @@ focus_tree = {
         icon = GFX_
         cost = 5
         ai_will_do = {
-            factor = 1
+            factor = 6
         }
         bypass = {
 
         }
         available = {
-
+            has_government = anarchy
+            has_global_flag = the_great_russian_collapse_is_here
         }
         search_filters = {  }
         completion_reward = {
@@ -765,13 +871,14 @@ focus_tree = {
         icon = GFX_
         cost = 5
         ai_will_do = {
-            factor = 1
+            factor = 6
         }
         bypass = {
 
         }
         available = {
-
+            has_government = anarchy
+            has_global_flag = the_great_russian_collapse_is_here
         }
         search_filters = {  }
         completion_reward = {
@@ -786,9 +893,9 @@ focus_tree = {
         y = 1
         prerequisite = {  }
         icon = GFX_
-        cost = 5
+        cost = 4
         ai_will_do = {
-            factor = 1
+            factor = 3
         }
         bypass = {
 
@@ -798,7 +905,9 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            army_experience = 30
+            navy_experience = 30
+            air_experience = 30
         }
     }
 
@@ -809,9 +918,9 @@ focus_tree = {
         y = 2
         prerequisite = { focus = RSC_army_navy_air_force }
         icon = GFX_
-        cost = 5
+        cost = 4
         ai_will_do = {
-            factor = 1
+            factor = 3
         }
         bypass = {
 
@@ -821,7 +930,7 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_ideas = RSC_Improve_gun_production
         }
     }
 
@@ -832,9 +941,9 @@ focus_tree = {
         y = 3
         prerequisite = { focus = RSC_improve_gun_production }
         icon = GFX_
-        cost = 5
+        cost = 10
         ai_will_do = {
-            factor = 1
+            factor = 3
         }
         bypass = {
 
@@ -844,7 +953,12 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_tech_bonus = {
+				name = RSC_adopt_new_tactics
+				bonus = 1
+				uses = 2
+				category = land_doctrine
+			}
         }
     }
 
@@ -855,9 +969,9 @@ focus_tree = {
         y = 4
         prerequisite = { focus = RSC_adopt_new_tactics }
         icon = GFX_
-        cost = 5
+        cost = 6
         ai_will_do = {
-            factor = 1
+            factor = 3
         }
         bypass = {
 
@@ -867,7 +981,13 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_ideas = RSC_Mobile_army
+            add_tech_bonus = {
+				name = RSC_mobile_army
+				bonus = 1
+				uses = 1
+				category = cat_motorized_equipment
+			}
         }
     }
 
@@ -880,7 +1000,7 @@ focus_tree = {
         icon = GFX_
         cost = 5
         ai_will_do = {
-            factor = 1
+            factor = 2
         }
         bypass = {
 
@@ -890,7 +1010,7 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_ideas = RSC_Recruit_new_soldiers
         }
     }
 
@@ -913,7 +1033,7 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_ideas = RSC_Special_forces
         }
     }
 
@@ -927,16 +1047,39 @@ focus_tree = {
         cost = 5
         ai_will_do = {
             factor = 1
+            modifier = {
+                add = 7
+                OR = {
+                    tag = CRI
+                    tag = STP
+                }
+            }
         }
         bypass = {
 
         }
         available = {
-
+            any_state = {
+                is_coastal = yes
+            }
         }
         search_filters = {  }
         completion_reward = {
-
+            random_controlled_state = {
+                limit = {
+                    is_coastal = yes
+                }
+                add_building_construction = {
+					type = naval_base
+					level = 3
+					instant_build = yes
+                    province = {
+						all_provinces = yes
+						limit_to_coastal = yes
+						level > 0
+					}
+				}
+            }
         }
     }
 
@@ -947,19 +1090,38 @@ focus_tree = {
         y = 3
         prerequisite = { focus = RSC_naval_bases }
         icon = GFX_
-        cost = 5
+        cost = 8
         ai_will_do = {
             factor = 1
+            modifier = {
+                add = 7
+                OR = {
+                    tag = CRI
+                    tag = STP
+                }
+            }
         }
         bypass = {
 
         }
         available = {
-
+            any_state = {
+                is_coastal = yes
+            }
         }
         search_filters = {  }
         completion_reward = {
-
+            random_controlled_state = {
+                limit = {
+                    is_coastal = yes
+                }
+                add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+            }
         }
     }
 
@@ -971,9 +1133,16 @@ focus_tree = {
         prerequisite = { focus = RSC_invest_dockyards }
         mutually_exclusive = { focus = RSC_old_naval_way }
         icon = GFX_
-        cost = 5
+        cost = 8
         ai_will_do = {
             factor = 1
+            modifier = {
+                add = 7
+                OR = {
+                    tag = CRI
+                    tag = STP
+                }
+            }
         }
         bypass = {
 
@@ -983,7 +1152,24 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_tech_bonus = {
+				name = RSC_new_naval_way
+				bonus = 1
+				uses = 1
+				category = base_strike_main
+			}
+            add_tech_bonus = {
+				name = RSC_new_naval_way
+				bonus = 1
+				uses = 1
+				category = cv_tech
+			}
+            add_tech_bonus = {
+				name = RSC_new_naval_way
+				bonus = 0.5
+				uses = 1
+				category = naval_bomber
+			}
         }
     }
 
@@ -995,9 +1181,16 @@ focus_tree = {
         prerequisite = { focus = RSC_invest_dockyards }
         mutually_exclusive = { focus = RSC_new_naval_way }
         icon = GFX_
-        cost = 5
+        cost = 8
         ai_will_do = {
             factor = 1
+            modifier = {
+                add = 7
+                OR = {
+                    tag = CRI
+                    tag = STP
+                }
+            }
         }
         bypass = {
 
@@ -1007,7 +1200,18 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_tech_bonus = {
+				name = RSC_old_naval_way
+				bonus = 1
+				uses = 1
+				category = fleet_in_being_tree
+			}
+            add_tech_bonus = {
+				name = RSC_old_naval_way
+				bonus = 1.5
+				uses = 1
+				category = bb_tech
+			}
         }
     }
 
@@ -1018,19 +1222,46 @@ focus_tree = {
         y = 2
         prerequisite = { focus = RSC_army_navy_air_force }
         icon = GFX_
-        cost = 5
+        cost = 6
         ai_will_do = {
             factor = 1
         }
         bypass = {
-
+            NOT = {
+                any_state = {
+                    is_controlled_by = ROOT
+                    air_base < 8
+                }
+            }
         }
         available = {
-
+            any_state = {
+                is_controlled_by = ROOT
+                air_base < 8
+            }
         }
         search_filters = {  }
         completion_reward = {
-
+            random_controlled_state = {
+                limit = {
+                    air_base < 8
+                }
+                add_building_construction = {
+					type = air_base
+					level = 3
+					instant_build = yes
+				}
+            }
+            random_controlled_state = {
+                limit = {
+                    air_base < 8
+                }
+                add_building_construction = {
+					type = air_base
+					level = 3
+					instant_build = yes
+				}
+            }
         }
     }
 
@@ -1041,19 +1272,58 @@ focus_tree = {
         y = 3
         prerequisite = { focus = RSC_air_bases }
         icon = GFX_
-        cost = 5
+        cost = 8
         ai_will_do = {
             factor = 1
         }
         bypass = {
-
+            NOT = {
+                any_state = {
+                    is_controlled_by = ROOT
+                    anti_air_building < 5
+                }
+            }
         }
         available = {
-
+            any_state = {
+                is_controlled_by = ROOT
+                anti_air_building < 5
+            }
         }
         search_filters = {  }
         completion_reward = {
-
+            random_controlled_state = {
+                limit = {
+                    anti_air_building < 5
+                }
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = arms_factory
+                    level = 1
+                    instant_build = yes
+                }
+                add_building_construction = {
+					type = anti_air_building
+					level = 1
+					instant_build = yes
+				}
+            }
+            random_controlled_state = {
+                limit = {
+                    anti_air_building < 5
+                }
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = arms_factory
+                    level = 1
+                    instant_build = yes
+                }
+                add_building_construction = {
+					type = anti_air_building
+					level = 1
+					instant_build = yes
+				}
+            }
         }
     }
 
@@ -1077,7 +1347,18 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_tech_bonus = {
+				name = RSC_bombing_strategy
+				bonus = 1
+				uses = 1
+				category = cat_strategic_bomber
+			}
+            add_tech_bonus = {
+				name = RSC_bombing_strategy
+				bonus = 1
+				uses = 1
+				category = tactical_bomber
+			}
         }
     }
 
@@ -1089,7 +1370,7 @@ focus_tree = {
         prerequisite = { focus = RSC_improve_anti_air_defenses }
         mutually_exclusive = { focus = RSC_bombing_strategy }
         icon = GFX_
-        cost = 5
+        cost = 8
         ai_will_do = {
             factor = 1
         }
@@ -1101,7 +1382,18 @@ focus_tree = {
         }
         search_filters = {  }
         completion_reward = {
-
+            add_tech_bonus = {
+				name = RSC_air_superiority_strategy
+				bonus = 1
+				uses = 1
+				category = strategic_destruction_tree
+			}
+            add_tech_bonus = {
+				name = RSC_air_superiority_strategy
+				bonus = 1
+				uses = 1
+				category = light_fighter
+			}
         }
     }
 }
