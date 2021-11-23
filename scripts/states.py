@@ -12,7 +12,7 @@ if __name__ == '__main__':
     try:
         # Either put this in the root folder of HOI4 or put the full path to your HOI4 folder
         directory = r".\history\states"
-        localisation = r".\localisation\state_names_l_english.yml"
+        localisation = r".\localisation\english\state_names_l_english.yml"
         filepath = input("Enter the path to your HOI4 installation folder (%s) : " % sys.path[0])
         if not os.path.isdir(filepath):
             print("Path given (%s) is not a valid directory" % filepath)
