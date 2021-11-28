@@ -1,0 +1,1445 @@
+characters = {
+
+    #Country Leaders & Political Advisors
+    SOV_Nikolai_voznesensky = {
+		name = SOV_Nikolai_voznesensky
+
+		advisor = {
+			slot = political_advisor
+			idea_token = SOV_Nikolai_voznesensky
+			cost = 150
+
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						OR = {
+							check_variable = {
+								var = sov_great_purge_status^2
+								value = 1
+								compare = equals
+							}
+							has_country_flag = purge_politician
+						}
+					}
+				}
+				NOT = {
+					has_government = anarchy
+				}
+			}
+
+			traits = {
+				captain_of_industry
+			}
+
+			ai_will_do = {
+				factor = 3
+			}
+		}
+
+		portraits = {
+			army = {
+				small = "GFX_idea_generic_political_advisor_europe_2" #TODO
+			}
+		}
+	}
+
+    SOV_Kliment_voroshilov = {
+		name = SOV_Kliment_voroshilov
+
+		advisor = {
+			slot = political_advisor
+			idea_token = SOV_Kliment_voroshilov
+			cost = 150
+
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^0
+							value = 1
+							compare = equals
+						}
+					}
+                    has_country_flag = has_deserted_military
+					has_country_flag = sov_enemy_second_civil_war
+					has_idea = kliment_voroshilov
+                }
+                custom_trigger_tooltip = {
+					tooltip = sov_not_joined_another_side
+					NOT = { 
+						any_other_country = {
+							has_war_with = SOV
+							original_tag = SOV
+							has_unit_leader = 405
+						}
+					}
+				}
+				NOT = {
+					has_government = anarchy
+				}
+			}
+
+			traits = {
+				war_industrialist
+			}
+
+			ai_will_do = {
+				factor = 5
+			}
+		}
+
+		portraits = {
+			army = {
+				small = "GFX_idea_generic_political_advisor_europe_1" #TODO
+			}
+		}
+	}
+
+    SOV_Anatoly_pepelyayev = {
+		name = SOV_Anatoly_pepelyayev
+
+		advisor = {
+			slot = political_advisor
+			idea_token = SOV_Anatoly_pepelyayev
+			cost = 150
+
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+				OR = {
+					has_country_flag = soviet_generals_deserted
+					has_completed_focus = SOV_second_civil_war
+				}
+			}
+
+			traits = {
+				war_industrialist
+			}
+
+			ai_will_do = {
+				factor = 5
+			}
+		}
+
+		portraits = {
+			army = {
+				small = "GFX_idea_generic_political_advisor_europe_1" #TODO
+			}
+		}
+	}
+
+    SOV_Genrikh_yagoda = {
+		name = SOV_Genrikh_yagoda
+
+		advisor = {
+			slot = political_advisor
+			idea_token = SOV_Genrikh_yagoda
+			cost = 50
+
+			allowed = {
+				original_tag = SOV
+			}
+
+            allowed_to_remove = {
+				OR = {
+					has_country_flag = sov_purge_over
+					has_country_leader = {
+						name = "Leon Trotsky"
+						ruling_only = yes
+					}
+				}
+			}
+
+			available = {
+				has_government = communism
+				NOT = {
+					has_idea = SOV_nikolay_yezhov
+					has_idea = SOV_lavrentiy_beria
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^1
+							value = 2
+							compare = equals
+						}
+					}
+				}
+			}
+
+			traits = {
+				state_security_administrator_2
+                russia2_head_nkvd
+			}
+
+			ai_will_do = {
+				factor = 5
+			}
+		}
+
+		portraits = {
+			army = {
+				small = "GFX_idea_generic_political_advisor_europe_1" #TODO
+			}
+		}
+	}
+
+    SOV_Nikolay_yezhov = {
+		name = SOV_Nikolay_yezhov
+
+		advisor = {
+			slot = political_advisor
+			idea_token = SOV_Nikolay_yezhov
+			cost = 50
+
+			allowed = {
+				original_tag = SOV
+			}
+
+            allowed_to_remove = {
+				OR = {
+					has_country_flag = sov_purge_over
+					has_country_leader = {
+						name = "Leon Trotsky"
+						ruling_only = yes
+					}
+				}
+			}
+
+			available = {
+				has_government = communism
+				NOT = {
+					has_idea = SOV_genrikh_yagoda
+					has_idea = SOV_lavrentiy_beria
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						OR = {
+							has_country_flag = SOV_nikolay_yezhov_purged
+							has_country_flag = purge_politician
+						}
+					}
+				}
+			}
+
+			traits = {
+				state_security_administrator_3
+                russia2_head_nkvd
+			}
+
+			ai_will_do = {
+				factor = 5
+			}
+		}
+
+		portraits = {
+			army = {
+				small = "GFX_idea_generic_political_advisor_europe_1" #TODO
+			}
+		}
+	}
+
+    SOV_Lavrentiy_beria = {
+		name = SOV_Lavrentiy_beria
+
+		advisor = {
+			slot = political_advisor
+			idea_token = SOV_Lavrentiy_beria
+			cost = 50
+
+			allowed = {
+				original_tag = SOV
+			}
+
+            allowed_to_remove = {
+				has_country_flag = sov_purge_over
+			}
+
+			available = {
+				has_government = communism
+				NOT = {
+					has_completed_focus = SOV_avoid_purge
+					has_idea = SOV_nikolay_yezhov
+					has_idea = SOV_genrikh_yagoda
+					has_country_flag = sov_lavrentiy_beria_executed
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^1
+							value = 1
+							compare = equals
+						}
+					}
+				}
+			}
+
+			traits = {
+				state_security_administrator
+                russia2_head_nkvd
+			}
+
+			ai_will_do = {
+				factor = 5
+			}
+		}
+
+		portraits = {
+			army = {
+				small = "GFX_idea_generic_political_advisor_europe_1" #TODO
+			}
+		}
+	}
+
+    SOV_Mikhail_kalinin = {
+		name = SOV_Mikhail_kalinin
+
+		advisor = {
+			slot = political_advisor
+			idea_token = SOV_Mikhail_kalinin
+			cost = 150
+
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+				has_government = communism
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						OR = {
+							has_country_flag = mikhail_kalinin_purged
+							has_country_flag = purge_politician
+						}
+					}
+				}
+				NOT = {
+					has_country_flag = sov_enemy_second_civil_war
+				}
+			}
+
+			traits = {
+				russia2_head_state
+			}
+
+			ai_will_do = {
+				factor = 5
+			}
+		}
+
+		portraits = {
+			army = {
+				small = "GFX_idea_generic_political_advisor_europe_1" #TODO
+			}
+		}
+	}
+
+    SOV_Nikita_khrushchev = {
+		name = SOV_Nikita_khrushchev
+
+        country_leader = {
+			ideology = leninism
+			traits = {
+				secret_speech
+			}
+			expire = "1965.1.1"
+			id = -1
+		}
+
+		advisor = {
+			slot = political_advisor
+			idea_token = SOV_Nikita_khrushchev
+			cost = 150
+
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+				has_government = communism
+				has_completed_focus = SOV_great_purge2
+				NOT = {
+					has_country_flag = sov_enemy_second_civil_war
+				}
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^6
+							value = 1
+							compare = equals
+						}
+					}
+				}
+			}
+
+			traits = {
+				communist_appeasement
+			}
+
+			ai_will_do = {
+				factor = 5
+			}
+		}
+
+		portraits = {
+            civilian = {
+				large = "gfx/leaders/SOV/Portrait_Russia_Nikita_Khrushchev.dds"
+			}
+
+			army = {
+				small = "GFX_idea_generic_political_advisor_europe_1" #TODO
+			}
+		}
+	}
+
+    SOV_Vasily_stalin = {
+		name = SOV_Vasily_stalin
+
+        country_leader = {
+			ideology = stalinism
+			traits = {
+				unplanned_sortie
+                new_hope
+			}
+			expire = "1965.1.1"
+			id = -1
+		}
+
+		portraits = {
+            civilian = {
+				large = "gfx/leaders/SOV/Portrait_Russia_Vasily_Stalin.dds"
+			}
+		}
+	}
+
+    SOV_Yakov_agranov = {
+		name = SOV_Yakov_agranov
+
+		advisor = {
+			slot = political_advisor
+			idea_token = SOV_Yakov_agranov
+			cost = 100
+
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+				has_government = communism
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						OR = {
+							check_variable = {
+								var = sov_great_purge_status^35
+								value = 1
+								compare = equals
+							}
+							has_country_flag = purge_politician2
+						}
+					}
+				}
+			}
+
+			traits = {
+				silent_workhorse
+			}
+
+			ai_will_do = {
+				factor = 5
+			}
+		}
+
+		portraits = {
+			army = {
+				small = "GFX_idea_generic_political_advisor_europe_1" #TODO
+			}
+		}
+	}
+
+    SOV_Ivan_maisky = {
+		name = SOV_Ivan_maisky
+
+		advisor = {
+			slot = political_advisor
+			idea_token = SOV_Ivan_maisky
+			cost = 150
+
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+				has_country_flag = foreign_diplomacy_set
+				NOT = {
+					has_idea = SOV_vyacheslav_molotov
+				}
+				NOT = {
+					has_country_flag = replaced_maisky
+				}
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^5
+							value = 1
+							compare = equals
+						}
+					}
+				}
+			}
+
+			traits = {
+				sov_anti_fascist
+			}
+
+			ai_will_do = {
+				factor = 25
+			}
+		}
+
+		portraits = {
+			army = {
+				small = "GFX_idea_generic_political_advisor_europe_1" #TODO
+			}
+		}
+	}
+
+    SOV_Vyacheslav_molotov = {
+		name = SOV_Vyacheslav_molotov
+
+		advisor = {
+			slot = political_advisor
+			idea_token = SOV_Vyacheslav_molotov
+			cost = 150
+
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+				has_country_flag = foreign_diplomacy_set
+				NOT = {
+					has_idea = SOV_ivan_maisky
+				}
+				NOT = {
+					has_country_flag = kept_maisky
+				}
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^5
+							value = 2
+							compare = equals
+						}
+					}
+				}
+				NOT = {
+					has_country_flag = sov_enemy_second_civil_war
+				}
+			}
+
+			traits = {
+				sov_anti_capitalist
+			}
+
+			ai_will_do = {
+				factor = 25
+			}
+		}
+
+		portraits = {
+			army = {
+				small = "GFX_idea_generic_political_advisor_europe_1" #TODO
+			}
+		}
+	}
+
+    SOV_Raya_dunayevskaya = {
+		name = SOV_Raya_dunayevskaya
+
+		advisor = {
+			slot = political_advisor
+			idea_token = SOV_Raya_dunayevskaya
+			cost = 200
+
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+				has_government = communism
+				has_completed_focus = SOV_consolidate_true_communism
+			}
+
+			traits = {
+				marxist_humanism
+			}
+
+			ai_will_do = {
+				factor = 5
+			}
+		}
+
+		portraits = {
+			army = {
+				small = "GFX_idea_generic_political_advisor_europe_1" #TODO
+			}
+		}
+	}
+
+    SOV_Joseph_stalin = {
+		name = SOV_Joseph_stalin
+
+		country_leader = {
+			ideology = stalinism
+			traits = {
+				
+			}
+			expire = "1953.3.1"
+			id = -1
+		}
+
+		advisor = {
+			slot = political_advisor
+			idea_token = SOV_Joseph_stalin_democratic_priest
+			cost = 150
+
+			allowed = {
+				original_tag = SOV
+			}
+
+			visible = {
+				has_country_flag = sov_joseph_stalin_is_cool_now
+				has_country_flag = sov_stalin_exiled_siberia
+			}
+
+			available = {
+				has_government = democratic
+			}
+
+			traits = {
+				joseph_stalin_priest
+			}
+
+			ai_will_do = {
+				factor = 10000
+			}
+		}
+
+        advisor = {
+            slot = high_command
+			idea_token = SOV_Joseph_stalin_democratic_army
+			cost = 150
+			ledger = army
+
+			allowed = {
+				original_tag = SOV
+			}
+
+			visible = {
+				has_country_flag = sov_joseph_stalin_is_cool_now
+				has_country_flag = sov_stalin_prison
+			}
+
+			available = {
+				has_government = democratic
+			}
+
+			traits = { joseph_stalin_army }
+
+			ai_will_do = {
+				factor = 10000
+			}
+		}
+
+		portraits = {
+			civilian = {
+				large = "gfx/leaders/SOV/Portrait_Russia_Joseph_Stalin.dds"
+			}
+
+			army = {
+                large = "gfx/leaders/SOV/Portrait_Russia_Joseph_Stalin.dds"
+				small = "GFX_idea_generic_political_advisor_europe_1" #TODO
+			}
+		}
+	}
+
+    SOV_Alexander_kerensky = {
+		name = SOV_Alexander_kerensky
+
+		country_leader = {
+			ideology = socialism
+			traits = {
+				temporary_leader
+			}
+			expire = "1965.1.1"
+			id = -1
+		}
+
+		advisor = {
+			slot = political_advisor
+			idea_token = SOV_Alexander_kerensky
+			cost = 150
+
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+				has_government = democratic
+				has_completed_focus = SOV_trust_alexander
+				has_completed_focus = SOV_continue_investments
+			}
+
+			traits = {
+				liberal_socialist
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+        portraits = {
+			civilian = {
+				large = "gfx/leaders/SOV/Portrait_Russia_Alexander_Kerensky.dds"
+			}
+
+			army = {
+				small = "GFX_idea_generic_political_advisor_europe_1" #TODO
+			}
+		}
+    }
+
+    SOV_Pavel_milyukov = {
+		name = SOV_Pavel_milyukov
+
+		country_leader = {
+			ideology = liberalism
+			traits = {
+				stupidity_or_treason
+			}
+			expire = "1965.1.1"
+			id = -1
+		}
+
+		advisor = {
+			slot = political_advisor
+			idea_token = SOV_Pavel_milyukov
+			cost = 150
+
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+				has_government = democratic
+				has_completed_focus = SOV_pavel_guidance
+				has_completed_focus = SOV_continue_investments
+			}
+
+			traits = {
+				safety_homeland
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+        portraits = {
+			civilian = {
+				large = "gfx/leaders/SOV/Portrait_Russia_Pavel_Nikolaevich.dds"
+			}
+
+			army = {
+				small = "GFX_idea_generic_political_advisor_europe_1" #TODO
+			}
+		}
+    }
+
+    SOV_Alexander_konovalov = {
+		name = SOV_Alexander_konovalov
+
+		country_leader = {
+			ideology = conservatism
+			traits = {
+				grand_orient_russia_peoples
+			}
+			expire = "1965.1.1"
+			id = -1
+		}
+
+		advisor = {
+			slot = political_advisor
+			idea_token = SOV_Alexander_konovalov
+			cost = 150
+
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+				has_government = democratic
+				has_completed_focus = SOV_united_russia
+				has_completed_focus = SOV_end_investments
+			}
+
+			traits = {
+				conservative_trait
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+        portraits = {
+			civilian = {
+				large = "gfx/leaders/SOV/Portrait_Russia_Alexander_Konovalov.dds"
+			}
+
+			army = {
+				small = "GFX_idea_generic_political_advisor_europe_1" #TODO
+			}
+		}
+    }
+
+    SOV_Ivan_nikolaevich = {
+		name = SOV_Ivan_nikolaevich
+
+		country_leader = {
+			ideology = liberalism
+			traits = {
+				progressist_democratic_russia
+			}
+			expire = "1965.1.1"
+			id = -1
+		}
+
+		advisor = {
+			slot = political_advisor
+			idea_token = SOV_Ivan_nikolaevich
+			cost = 150
+
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+				has_government = democratic
+				has_completed_focus = SOV_preemptive_coup
+				has_completed_focus = SOV_end_investments
+			}
+
+			traits = {
+				progressive_trait
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+        portraits = {
+			civilian = {
+				large = "gfx/leaders/SOV/Portrait_Russia_Ivan_Nikolaevich_Efremov.dds"
+			}
+
+			army = {
+				small = "GFX_idea_generic_political_advisor_europe_1" #TODO
+			}
+		}
+    }
+
+    SOV_Andrey_vlaslov = {
+		name = SOV_Andrey_vlaslov
+
+		country_leader = {
+			ideology = despotism
+			traits = {
+				military_connected
+			}
+			expire = "1965.1.1"
+			id = -1
+		}
+
+		advisor = {
+			slot = political_advisor
+			idea_token = SOV_Andrey_vlaslov
+			cost = 150
+
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+                has_government = neutrality
+				has_completed_focus = SOV_firm_hand
+			}
+
+			traits = {
+				liberal_socialist
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+        portraits = {
+			civilian = {
+				large = "gfx/leaders/SOV/Portrait_Russia_Andrey_Vlasov.dds"
+			}
+
+			army = {
+				small = "GFX_idea_generic_political_advisor_europe_1" #TODO
+			}
+		}
+    }
+
+    SOV_Kirill_vladimirovich = {
+		name = SOV_Kirill_vladimirovich
+
+		country_leader = {
+			ideology = despotism
+			traits = {
+				proclaimed_tsar
+                naval_career
+			}
+			expire = "1942.1.1"
+			id = -1
+		}
+
+		portraits = {
+			civilian = {
+				large = "gfx/leaders/SOV/Portrait_Russia_Kirill_Vladimirovich.dds"
+			}
+		}
+    }
+
+    SOV_Vladimir_kirillovich = {
+		name = SOV_Vladimir_kirillovich
+
+		country_leader = {
+			ideology = despotism
+			traits = {
+				heir_of_the_Tsar
+			}
+			expire = "1965.1.1"
+			id = -1
+		}
+
+		advisor = {
+			slot = political_advisor
+			idea_token = SOV_Vladimir_kirillovich_tsar
+			cost = 150
+
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+                OR = {
+					has_country_flag = return_tsar_democratic
+					has_completed_focus = SOV_military_junta
+				}
+				NOT = {
+					has_country_flag = vladimir_politician_advisor_chosen
+				}
+			}
+
+			traits = {
+				tsar_all_russia
+			}
+
+			ai_will_do = {
+				factor = 10
+				modifier = {
+					factor = 100
+					has_completed_focus = SOV_restoration_tsar
+				}
+			}
+		}
+
+        advisor = {
+			slot = political_advisor
+			idea_token = SOV_Vladimir_kirillovich_democratic_political_advisor
+			cost = 150
+
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+                has_government = democratic
+				has_country_flag = return_tsar_democratic
+				has_country_flag = vladimir_politician_advisor_chosen
+			}
+
+			traits = {
+				inspirational_figure_politics
+			}
+
+			ai_will_do = {
+				factor = 10
+				modifier = {
+					factor = 100
+					has_completed_focus = SOV_secure_tsar_support
+				}
+			}
+		}
+
+        advisor = {
+			slot = army_chief
+			idea_token = SOV_Vladimir_kirillovich_democratic_military_advisor
+			cost = 100
+
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+                has_government = democratic
+				has_country_flag = return_tsar_democratic
+				has_country_flag = vladimir_military_advisor_chosen
+			}
+
+			traits = {
+				inspirational_figure_military
+			}
+
+			ai_will_do = {
+				factor = 10
+				modifier = {
+					factor = 100
+					has_completed_focus = SOV_secure_tsar_support
+				}
+			}
+		}
+
+        portraits = {
+			civilian = {
+				large = "gfx/leaders/SOV/Portrait_Russia_Vladimir_Kirillovich.dds"
+			}
+
+			army = {
+				small = "GFX_idea_generic_political_advisor_europe_1" #TODO
+			}
+		}
+    }
+
+    SOV_Peter_krutitsy = {
+		name = SOV_Peter_krutitsy
+
+		advisor = {
+			slot = political_advisor
+			idea_token = SOV_Peter_krutitsy
+			cost = 150
+
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+                has_government = neutrality
+				has_completed_focus = SOV_restoration_orthodox_church
+			}
+
+			traits = {
+				patriarch_moscow_all_rus
+			}
+
+			ai_will_do = {
+				factor = 10
+			}
+		}
+
+        portraits = {
+			army = {
+				small = "GFX_idea_generic_political_advisor_europe_1" #TODO
+			}
+		}
+    }
+
+    SOV_Vladimir_nabokov = {
+		name = SOV_Vladimir_nabokov
+
+		advisor = {
+			slot = political_advisor
+			idea_token = SOV_Vladimir_nabokov
+			cost = 150
+
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+                NOT = {
+					has_government = communism
+					has_government = fascism
+				}
+				OR = {
+					has_completed_focus = SOV_bring_back_old_life
+					has_completed_focus = SOV_launch_insurrection
+				}
+			}
+
+			traits = {
+				novelist_book
+			}
+
+			ai_will_do = {
+				factor = 10
+			}
+		}
+
+        portraits = {
+			army = {
+				small = "GFX_idea_generic_political_advisor_europe_1" #TODO
+			}
+		}
+    }
+
+    SOV_Konstantin_rodzaevsky = {
+		name = SOV_Konstantin_rodzaevsky
+
+		country_leader = {
+			ideology = fascism_ideology
+			traits = {
+				unpopular_leader
+			}
+			expire = "1965.1.1"
+			id = -1
+		}
+
+		advisor = {
+			slot = political_advisor
+			idea_token = SOV_Konstantin_rodzaevsky
+			cost = 150
+
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+				has_government = fascism
+                has_completed_focus = SOV_the_lawyer_remains
+			}
+
+			traits = {
+				application_of_law
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+        portraits = {
+			civilian = {
+				large = "gfx/leaders/SOV/Portrait_Russia_Konstantin_Rodzaevsky.dds"
+			}
+
+			army = {
+				small = "GFX_idea_generic_political_advisor_europe_1" #TODO
+			}
+		}
+    }
+
+    SOV_Anastasy_vonsyatsky = {
+		name = SOV_Anastasy_vonsyatsky
+
+		country_leader = {
+			ideology = fascism_anastasy
+			traits = {
+				dictator
+			}
+			expire = "1965.1.1"
+			id = -1
+		}
+
+		advisor = {
+			slot = political_advisor
+			idea_token = SOV_Anastasy_vonsyatsky
+			cost = 150
+
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+				has_government = fascism
+				has_completed_focus = SOV_the_tables_have_turned
+			}
+
+			traits = {
+				order_fisrt
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+        portraits = {
+			civilian = {
+				large = "gfx/leaders/SOV/Portrait_Russia_Anastasy_Vonsyatsky.dds"
+			}
+
+			army = {
+				small = "GFX_idea_generic_political_advisor_europe_1" #TODO
+			}
+		}
+    }
+
+    SOV_Viktor_baydalakov = {
+		name = SOV_Viktor_baydalakov
+
+		advisor = {
+			slot = political_advisor
+			idea_token = SOV_Viktor_baydalakov
+			cost = 200
+
+			allowed = {
+				original_tag = SOV
+			}
+
+			available = {
+				has_government = fascism
+				has_completed_focus = SOV_the_tables_have_turned
+			}
+
+			traits = {
+				SOV_national_alliance
+			}
+
+			ai_will_do = {
+				factor = 10
+			}
+		}
+
+        portraits = {
+			army = {
+				small = "GFX_idea_generic_political_advisor_europe_1" #TODO
+			}
+		}
+    }
+
+    SOV_Vsevolod_mikhailovich_eikhenbaum = {
+        name = SOV_Vsevolod_mikhailovich_eikhenbaum
+
+		country_leader = {
+			ideology = anarchist
+			traits = {
+				poet_and_activist_volin
+                participation_makhnovist_insurrection_2
+			}
+			expire = "1965.1.1"
+			id = -1
+		}
+
+		advisor = { #Only for Ukraine
+			slot = political_advisor
+			idea_token = UKR_Vsevolod_mikhailovich_eikhenbaum
+			cost = 50
+
+			allowed = {
+				original_tag = UKR
+			}
+
+			available = {
+				has_government = anarchy
+				has_completed_focus = UKR_recall_nabat_congress_members
+			}
+
+			traits = {
+				synthesis_anarchism
+			}
+
+			ai_will_do = {
+				factor = 10
+			}
+		}
+
+        portraits = {
+			civilian = {
+				large = "gfx/leaders/SOV/Portrait_Russia_Vsevolod_Mikhailovich_Eikhenbaum.dds"
+			}
+
+			army = {
+				small = "GFX_idea_generic_political_advisor_europe_1" #TODO
+			}
+		}
+    }
+
+    SOV_Vsevolod_mikhailovich_eikhenbaum = {
+        name = SOV_Vsevolod_mikhailovich_eikhenbaum
+
+		country_leader = {
+			ideology = anarchist
+			traits = {
+				
+			}
+			expire = "1965.1.1"
+			id = -1
+		}
+
+		advisor = { #Only for Ukraine
+			slot = political_advisor
+			idea_token = UKR_Vsevolod_mikhailovich_eikhenbaum
+			cost = 50
+
+			allowed = {
+				original_tag = UKR
+			}
+
+			available = {
+				has_government = anarchy
+				has_completed_focus = UKR_recall_nabat_congress_members
+			}
+
+			traits = {
+				synthesis_anarchism
+			}
+
+			ai_will_do = {
+				factor = 10
+			}
+		}
+
+        portraits = {
+			civilian = {
+				large = "gfx/leaders/SOV/Portrait_Russia_Vsevolod_Mikhailovich_Eikhenbaum.dds"
+			}
+
+			army = {
+				small = "GFX_idea_generic_political_advisor_europe_1" #TODO
+			}
+		}
+    }
+
+    SOV_Peoples_council_commune = {
+        name = SOV_Peoples_council_commune
+
+		country_leader = {
+			ideology = anarchist
+			traits = {
+				
+			}
+			expire = "1965.1.1"
+			id = -1
+		}
+
+        portraits = {
+			civilian = {
+				large = "gfx/leaders/SOV/Portrait_Russia_Anarchist_Commune.dds"
+			}
+		}
+    }
+
+    SOV_Supreme_military_council = {
+        name = SOV_Supreme_military_council
+
+		country_leader = {
+			ideology = anarchist
+			traits = {
+				
+			}
+			expire = "1965.1.1"
+			id = -1
+		}
+
+        portraits = {
+			civilian = {
+				large = "gfx/leaders/SOV/Portrait_Russia_Military_Council.dds"
+			}
+		}
+    }
+
+    SOV_Council_of_moscow = {
+        name = SOV_Council_of_moscow
+
+		country_leader = {
+			ideology = anarchist
+			traits = {
+				
+			}
+			expire = "1965.1.1"
+			id = -1
+		}
+
+        portraits = {
+			civilian = {
+				large = "gfx/leaders/SOV/Portrait_Russia_Anarchist_Commune.dds"
+			}
+		}
+    }
+
+    SOV_Vsevolod_merkulov = {
+        name = SOV_Vsevolod_merkulov
+
+		advisor = {
+			slot = political_advisor
+			idea_token = SOV_Vsevolod_merkulov
+			cost = 200
+
+			allowed = {
+				original_tag = SOV
+                #has_dlc = "La Resistance"
+			}
+
+			available = {
+				has_intelligence_agency = yes
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						check_variable = {
+							var = sov_great_purge_status^4
+							value = 1
+							compare = equals
+						}
+					}
+				}
+			}
+
+			traits = {
+				head_of_intelligence
+			}
+
+			ai_will_do = {
+				factor = 10
+                modifier = {
+                    factor = 0
+                    OR = {
+                        NOT = {
+                            has_dlc = "La Resistance"
+                        }
+                        NOT = {
+                            has_intelligence_agency = yes
+                        }
+                    }
+                }
+			}
+		}
+
+        portraits = {
+			army = {
+				small = "GFX_idea_generic_political_advisor_europe_1" #TODO
+			}
+		}
+    }
+}
