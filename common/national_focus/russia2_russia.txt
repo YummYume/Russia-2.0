@@ -6522,12 +6522,41 @@ focus_tree = {
 		}
 	}
 
+	#The Agitprop
+	focus = {
+		id = SOV_the_agitprop
+		x = 82
+		y = 4
+		prerequisite = { focus = SOV_nkvd_spies focus = SOV_mil_reogranisation }
+		icon = GFX_
+		cost = 6
+		ai_will_do = {
+			factor = 7
+		}
+		available = {
+			has_government = communism
+			is_subject = no
+			if = {
+				limit = {
+					has_idea = SOV_Exiled_russia
+				}
+				NOT = {
+					has_idea = SOV_Exiled_russia
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_COMMUNISM_STALIN_RUSSIA FOCUS_FILTER_COMMUNISM_TROTSKY_RUSSIA }
+		completion_reward = {
+			
+		}
+	}
+
 	#Lessons of War
 	focus = {
 		id = SOV_lesson_of_war
 		x = 82
-		y = 4
-		prerequisite = { focus = SOV_nkvd_spies focus = SOV_mil_reogranisation }
+		y = 5
+		prerequisite = { focus = SOV_the_agitprop }
 		icon = GFX_Lessons_war
 		cost = 8
 		ai_will_do = {
@@ -6592,6 +6621,7 @@ focus_tree = {
 			is_subject = no
 			has_country_leader = {
 		    	name = "Joseph Stalin"
+				ruling_only = yes
 			}
 			if = {
 				limit = {
@@ -6606,6 +6636,7 @@ focus_tree = {
 			NOT = {
 				has_country_leader = {
 			    	name = "Joseph Stalin"
+					ruling_only = yes
 				}
 			}
 		}
@@ -6616,6 +6647,41 @@ focus_tree = {
 			    popularity = 0.20
 			}
 			add_stability = 0.05
+		}
+	}
+
+	#De-Stalinization
+	focus = {
+		id = SOV_destalinization
+		x = 78
+		y = 4
+		prerequisite = { focus = SOV_stalinism }
+		icon = GFX_Destalinization
+		cost = 8
+		ai_will_do = {
+			factor = 10
+		}
+		available = {
+			has_government = communism
+			is_subject = no
+			NOT = {
+				has_country_leader = {
+					name = "Joseph Stalin"
+					ruling_only = yes
+				}
+			}
+			if = {
+				limit = {
+					has_idea = SOV_Exiled_russia
+				}
+				NOT = {
+					has_idea = SOV_Exiled_russia
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_COMMUNISM_STALIN_RUSSIA }
+		completion_reward = {
+			
 		}
 	}
 
@@ -8198,7 +8264,7 @@ focus_tree = {
 		x = 72
 		y = 12
 		prerequisite = { focus = SOV_post_war_influence }
-		icon = GFX_goal_unknown_golden
+		icon = GFX_The_proletarian_union
 		cost = 6
 		ai_will_do = {
 			factor = 10
@@ -9705,7 +9771,7 @@ focus_tree = {
 		x = 95
 		y = 11
 		prerequisite = { focus = SOV_permanent_revolution2 }
-		icon = GFX_Revolution_to_the_tumost
+		icon = GFX_Revolution_to_the_utmost
 		cost = 10
 		ai_will_do = {
 			factor = 4
@@ -9754,7 +9820,7 @@ focus_tree = {
 		x = 95
 		y = 12
 		prerequisite = { focus = SOV_revolution_to_the_utmost }
-		icon = GFX_goal_unknown_golden
+		icon = GFX_A_neverending_story
 		cost = 6
 		ai_will_do = {
 			factor = 10
@@ -15150,7 +15216,7 @@ focus_tree = {
 					expire = "1965.1.1"
 					ideology = despotism
 					traits = {
-						Heir_of_the_Tsar
+						heir_of_the_Tsar
 					}
 				}
 			}
