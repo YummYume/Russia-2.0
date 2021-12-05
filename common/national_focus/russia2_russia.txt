@@ -29,14 +29,6 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 		completion_reward = {
-			every_state = {
-				limit = {
-					ukr_is_kievan_rus_state = yes
-				}
-				UKR = {
-					transfer_state = PREV
-				}
-			}
 			add_tech_bonus = {
 				name = SOV_start_five_year_plan
 				bonus = 1.0
@@ -4221,7 +4213,10 @@ focus_tree = {
 			}
 		}
 		bypass = {
-			has_completed_focus = SOV_abandon_foreign_claims
+			OR = {
+				has_completed_focus = SOV_abandon_foreign_claims
+				has_government = anarchy
+			}
 		}
 		search_filters = { FOCUS_FILTER_ANNEXATION }
 		completion_reward = {
@@ -4475,7 +4470,7 @@ focus_tree = {
 		}
 		available = {
 			NOT = {
-				has_idea = trotskyite_plot
+				has_idea = trotskyite_plot_russia2_idea
 			}
 			custom_trigger_tooltip = {
 				tooltip = SOV_worker_culture_tt2
@@ -4541,7 +4536,7 @@ focus_tree = {
 		}
 		available = {
 			NOT = {
-				has_idea = trotskyite_plot
+				has_idea = trotskyite_plot_russia2_idea
 			}
 			custom_trigger_tooltip = {
 				tooltip = SOV_progress_cult2_tt2
@@ -4608,6 +4603,12 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_RESEARCH }
 		completion_reward = {
 			add_research_slot = 1
+			if = {
+				limit = {
+					has_government = communism
+				}
+				unlock_decision_tooltip = SOV_propaganda_knowledge_russia2
+			}
 		}
 	}
 
@@ -4836,6 +4837,13 @@ focus_tree = {
 			}
 			custom_effect_tooltip = available_designer
 			show_ideas_tooltip = volgograd_tractor_plant
+			if = {
+				limit = {
+					has_government = communism
+				}
+				unlock_decision_tooltip = SOV_propaganda_builders_of_communism_russia2
+				unlock_decision_tooltip = SOV_propaganda_rebuild_to_glory_russia2
+			}
 		}
 	}
 
@@ -4989,7 +4997,7 @@ focus_tree = {
 			is_subject = no
 			surrender_progress < 0.25
 			NOT = {
-				has_idea = trotskyite_plot_purged
+				has_idea = trotskyite_plot_purged_russia2_idea
 			}
 		}
 		search_filters = { FOCUS_FILTER_INDUSTRY }
@@ -5028,6 +5036,12 @@ focus_tree = {
 						}
 				}
 				custom_effect_tooltip = SOV_finish_the_second_five_year_plan_tt
+			}
+			if = {
+				limit = {
+					has_government = communism
+				}
+				unlock_decision_tooltip = SOV_propaganda_happy_life_russia2
 			}
 		}
 	}
@@ -5244,6 +5258,14 @@ focus_tree = {
 			}
 			hidden_effect = {
 				country_event = { id = russia2_russia.20 }
+			}
+			custom_effect_tooltip = unlock_propaganda_campaign_slot_tt
+			SOV_unlock_propaganda_campaign_slot_effect = yes
+			if = {
+				limit = {
+					has_government = communism
+				}
+				unlock_decision_tooltip = SOV_propaganda_heroes_forward_russia2
 			}
 		}
 	}
@@ -6921,8 +6943,8 @@ focus_tree = {
 		completion_reward = {
 			custom_effect_tooltip = SOV_great_purge2_tt
 			remove_ideas = SOV_Army_disorganisation
-			remove_ideas = trotskyite_plot
-			add_ideas = trotskyite_plot_purged
+			remove_ideas = trotskyite_plot_russia2_idea
+			add_ideas = trotskyite_plot_purged_russia2_idea
 			set_country_flag = sov_purge_ongoing
 			custom_effect_tooltip = available_political_advisor
 			show_ideas_tooltip = nikita_khrushchev
@@ -7001,8 +7023,10 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_COMMUNISM_STALIN_RUSSIA }
 		completion_reward = {
-			remove_ideas = trotskyite_plot_purged
+			remove_ideas = trotskyite_plot_purged_russia2_idea
 			add_ideas = SOV_More_op
+			unlock_decision_tooltip = SOV_propaganda_treacherous_enemy_russia2
+			unlock_decision_tooltip = SOV_propaganda_do_not_blab_russia2
 		}
 	}
 
@@ -7148,7 +7172,7 @@ focus_tree = {
 		x = 82
 		y = 4
 		prerequisite = { focus = SOV_nkvd_spies focus = SOV_mil_reogranisation }
-		icon = GFX_
+		icon = GFX_focus_generic_soviet_politics
 		cost = 6
 		ai_will_do = {
 			factor = 7
@@ -7167,7 +7191,16 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_COMMUNISM_STALIN_RUSSIA FOCUS_FILTER_COMMUNISM_TROTSKY_RUSSIA }
 		completion_reward = {
-			
+			unlock_decision_category_tooltip = SOV_propaganda_campaigns_russia2
+			unlock_decision_tooltip = SOV_propaganda_motherland_calls_russia2
+			unlock_decision_tooltip = SOV_propaganda_victory_at_hand_russia2
+			unlock_decision_tooltip = SOV_propaganda_defend_moscow_russia2
+			unlock_decision_tooltip = SOV_propaganda_fight_to_the_last_russia2
+			unlock_decision_tooltip = SOV_propaganda_hit_of_hammer_russia2
+			unlock_decision_tooltip = SOV_propaganda_transport_russia2
+			unlock_decision_tooltip = SOV_propaganda_oil_for_the_motherland_russia2
+			unlock_decision_tooltip = SOV_propaganda_more_metal_russia2
+			unlock_decision_tooltip = SOV_propaganda_high_yield_russia2
 		}
 	}
 
@@ -7227,7 +7260,7 @@ focus_tree = {
 
 	#Stalinism
 	focus = {
-		id = SOV_stalinism
+		id = SOV_stalinism_foc
 		x = 75
 		y = 3
 		prerequisite = { focus = SOV_stalin_consti }
@@ -7267,6 +7300,7 @@ focus_tree = {
 			    popularity = 0.20
 			}
 			add_stability = 0.05
+			unlock_decision_tooltip = SOV_propaganda_stalin_russia2
 		}
 	}
 
@@ -7275,7 +7309,7 @@ focus_tree = {
 		id = SOV_destalinization
 		x = 78
 		y = 4
-		prerequisite = { focus = SOV_stalinism }
+		prerequisite = { focus = SOV_stalinism_foc }
 		icon = GFX_Destalinization
 		cost = 8
 		ai_will_do = {
@@ -7310,7 +7344,7 @@ focus_tree = {
 		id = SOV_reign_of_terror
 		x = 75
 		y = 4
-		prerequisite = { focus = SOV_stalinism }
+		prerequisite = { focus = SOV_stalinism_foc }
 		icon = GFX_focus_Reign_of_Terror
 		cost = 5
 		ai_will_do = {
@@ -7331,6 +7365,8 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_COMMUNISM_STALIN_RUSSIA }
 		completion_reward = {
 			add_ideas = SOV_Reign_terror
+			custom_effect_tooltip = unlock_propaganda_campaign_slot_tt
+			SOV_unlock_propaganda_campaign_slot_effect = yes
 		}
 	}
 
@@ -7372,6 +7408,8 @@ focus_tree = {
 		completion_reward = {
 			add_political_power = 75
 			custom_effect_tooltip = SOV_foreign_policy_tt2
+			unlock_decision_tooltip = SOV_propaganda_anti_capitalism_russia2
+			unlock_decision_tooltip = SOV_propaganda_anti_fascism_russia2
 			hidden_effect = {
 				country_event = russia2_russia.28
 			}
@@ -7784,6 +7822,7 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_COMMUNISM_STALIN_RUSSIA }
 		completion_reward = {
 			add_timed_idea = { idea = SOV_Proclaimed_neutrality days = 548 }
+			unlock_decision_tooltip = SOV_propaganda_peace_russia2
 			hidden_effect = {
 				news_event = { days = 1 id = newsrussia2.16 }
 			}
@@ -8389,6 +8428,12 @@ focus_tree = {
 		continue_if_invalid = yes
 		completion_reward = {
 			add_ideas = { SOV_For_the_motherland }
+			custom_effect_tooltip = unlock_propaganda_campaign_slot_tt
+			SOV_unlock_propaganda_campaign_slot_effect = yes
+			unlock_decision_tooltip = SOV_propaganda_for_the_motherland_russia2
+			unlock_decision_tooltip = SOV_propaganda_sweep_scum_out_russia2
+			unlock_decision_tooltip = SOV_propaganda_glory_to_partisans_russia2
+			unlock_decision_tooltip = SOV_propaganda_death_to_invaders_russia2
 		}
 	}
 
@@ -8876,6 +8921,36 @@ focus_tree = {
 				}
 				add_ideas = SOV_Post_war_influence
 			}
+			custom_effect_tooltip = SOV_the_construction_of_communism_railways_tt
+			#Build railway from Moscow to Puppets
+			hidden_effect = { #Hiidden for tooltip reasons
+				every_subject_country = {
+					limit = {
+						capital_scope = {
+							OR = {
+								is_on_continent = europe
+								is_on_continent = asia
+								is_on_continent = middle_east
+							}
+						}
+					}
+
+					if = {
+						limit = {
+							can_build_railway = {
+								start_state = ROOT.capital
+								target_state = THIS.capital
+								build_only_on_allied = yes
+							}
+						}
+						build_railway = {				
+							start_state = ROOT.capital
+							target_state = THIS.capital
+							build_only_on_allied = yes
+						}
+					}		
+				}
+			}
 		}
 	}
 
@@ -9098,8 +9173,8 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_COMMUNISM_TROTSKY_RUSSIA }
 		completion_reward = {
 			custom_effect_tooltip = SOV_avoid_purge_tt
-			remove_ideas = trotskyite_plot
-			remove_ideas = home_of_revolution
+			remove_ideas = trotskyite_plot_russia2_idea
+			remove_ideas = home_of_revolution_russia2_idea
 			add_ideas = SOV_Instability
 			MEX = {
 				set_global_flag = MEX_Trotsky_return
@@ -9114,7 +9189,7 @@ focus_tree = {
 
 	#Anti-Stalinism Conspiracy
 	focus = {
-		id = SOV_anti_stalinism_conspiracy
+		id = SOV_anti_stalinism_conspiracy_foc
 		x = 87
 		y = 2
 		prerequisite = {focus = SOV_avoid_purge }
@@ -9148,7 +9223,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_COMMUNISM_TROTSKY_RUSSIA }
 		completion_reward = {
-			custom_effect_tooltip = SOV_anti_stalinism_conspiracy_tt
+			custom_effect_tooltip = SOV_anti_stalinism_conspiracy_foc_tt
 			swap_ideas = {
 				remove_idea = SOV_Instability
 				add_idea = SOV_Instability2
@@ -9161,7 +9236,7 @@ focus_tree = {
 		id = SOV_second_peaceful_revolution
 		x = 87
 		y = 3
-		prerequisite = {focus = SOV_anti_stalinism_conspiracy }
+		prerequisite = {focus = SOV_anti_stalinism_conspiracy_foc }
 		icon = GFX_focus_kill_stalin
 		cost = 20
 		ai_will_do = {
@@ -9217,7 +9292,7 @@ focus_tree = {
 		x = 91
 		y = 2
 		prerequisite = {focus = SOV_avoid_purge }
-		mutually_exclusive = { focus = SOV_anti_stalinism_conspiracy }
+		mutually_exclusive = { focus = SOV_anti_stalinism_conspiracy_foc }
 		icon = GFX_goal_generic_demand_territory
 		cost = 5
 		ai_will_do = {
@@ -9452,6 +9527,8 @@ focus_tree = {
 			hidden_effect = {
 				news_event = { id = newsrussia2.44 days = 1 }
 			}
+			custom_effect_tooltip = unlock_propaganda_campaign_slot_tt
+			SOV_unlock_propaganda_campaign_slot_effect = yes
 		}
 	}
 
@@ -9882,6 +9959,7 @@ focus_tree = {
 			    remove_idea = SOV_Rebuild_country
 			    add_idea = SOV_Rebuild_country2
 			}
+			unlock_decision_tooltip = SOV_propaganda_peace_russia2
 		}
 	}
 
@@ -10383,6 +10461,14 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_COMMUNISM_TROTSKY_RUSSIA }
 		completion_reward = { #WTF ?
 			swap_ruler_traits = { remove = counter_revolutionist add = true_revolutionist }
+			custom_effect_tooltip = unlock_propaganda_campaign_slot_tt
+			SOV_unlock_propaganda_campaign_slot_effect = yes
+			unlock_decision_tooltip = SOV_propaganda_for_the_motherland_russia2
+			unlock_decision_tooltip = SOV_propaganda_treacherous_enemy_russia2
+			unlock_decision_tooltip = SOV_propaganda_do_not_blab_russia2
+			unlock_decision_tooltip = SOV_propaganda_sweep_scum_out_russia2
+			unlock_decision_tooltip = SOV_propaganda_glory_to_partisans_russia2
+			unlock_decision_tooltip = SOV_propaganda_death_to_invaders_russia2
 		}
 	}
 
@@ -10432,6 +10518,8 @@ focus_tree = {
 					}
 				}
 			}
+			unlock_decision_tooltip = SOV_propaganda_anti_capitalism_russia2
+			unlock_decision_tooltip = SOV_propaganda_anti_fascism_russia2
 		}
 	}
 
@@ -10554,8 +10642,8 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_CONTINUE_INVESTMENTS_RUSSIA FOCUS_FILTER_DEMOCRATIC_UNITED_RUSSIA FOCUS_FILTER_DEMOCRATIC_PREEMPTIVE_COUP_RUSSIA FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_FASCIST_KONSTANTIN_RUSSIA FOCUS_FILTER_FASCIST_ANASTASY_RUSSIA }
 		completion_reward = {
 			add_ideas = SOV_Terrible_fate
-			remove_ideas = trotskyite_plot
-			remove_ideas = home_of_revolution
+			remove_ideas = trotskyite_plot_russia2_idea
+			remove_ideas = home_of_revolution_russia2_idea
 			hidden_effect = {
 				if = {
 					limit = {
@@ -12298,6 +12386,10 @@ focus_tree = {
 							state = 230
 							state = 229
 							state = 232
+							state = 826
+							state = 827
+							state = 828
+							state = 821
 						}	
 					}
 					add_to_array = { global.sov_caucasian_state_core = THIS }
@@ -12337,7 +12429,7 @@ focus_tree = {
 				207 = { is_owned_and_controlled_by = ROOT }
 				241 = { is_owned_and_controlled_by = ROOT }
 			}
-			custom_trigger_tooltip = { #Here I am
+			custom_trigger_tooltip = {
 				tooltip = owns_and_control_caucasian_state
 				234 = { is_owned_and_controlled_by = ROOT }
 				235 = { is_owned_and_controlled_by = ROOT }
@@ -19948,7 +20040,7 @@ focus_tree = {
 
 	#The Third Rome
 	focus = {
-		id = SOV_the_third_rome
+		id = SOV_the_third_rome_russia2
 		x = 80
 		y = 23
 		prerequisite = { focus = SOV_a_tragedy }
@@ -20018,6 +20110,10 @@ focus_tree = {
 					add_state_claim = 105
 					add_state_claim = 329
 					add_state_claim = 330
+					add_state_claim = 820
+					add_state_claim = 818
+					add_state_claim = 817
+					add_state_claim = 819
 				}
 				106 = {
 					set_state_flag = macedonian_state_third_rome
@@ -20833,7 +20929,7 @@ focus_tree = {
 		x = 88
 		y = 24
 		prerequisite = { focus = SOV_the_special_russian_forces }
-		prerequisite = { focus = SOV_the_third_rome focus = SOV_seek_greater_ambitions }
+		prerequisite = { focus = SOV_the_third_rome_russia2 focus = SOV_seek_greater_ambitions }
 		icon = GFX_New_russian_era
 		cost = 8
 		ai_will_do = {
@@ -20866,7 +20962,7 @@ focus_tree = {
 		x = 84
 		y = 25
 		prerequisite = { focus = SOV_new_russian_era }
-		prerequisite = { focus = SOV_the_third_rome }
+		prerequisite = { focus = SOV_the_third_rome_russia2 }
 		icon = GFX_Orders_with_discipline
 		cost = 10
 		ai_will_do = {
@@ -21263,7 +21359,6 @@ focus_tree = {
 						limit = {
 							THIS = {
 								OR = {
-									state = 233
 									state = 234
 									state = 235
 									state = 218
@@ -21301,6 +21396,9 @@ focus_tree = {
 									state = 208
 									state = 216
 									state = 215
+									state = 827
+									state = 828
+									state = 233
 								}
 							}
 						}
