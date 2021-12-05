@@ -15,11 +15,18 @@ if = {
 	set_oob = "SOV_1936_nsb"
 }
 if = {
-	limit = { has_dlc = "Man the Guns" }
-		set_naval_oob = "SOV_1936_naval_mtg"
-	else = {
-		set_naval_oob = "SOV_1936_naval_legacy"
+	limit = {
+		has_dlc = "Man the Guns"
 	}
+	set_naval_oob = "SOV_1936_naval_mtg"
+}
+if = {
+	limit = {
+		NOT = {
+			has_dlc = "Man the Guns"
+		}
+	}
+	set_naval_oob = "SOV_1936_naval_legacy"
 }
 
 #Global arrays
@@ -190,6 +197,46 @@ clamp_variable = {
 }
 set_variable = { anna_anderson_daily_legitimacy_gain = 0.005 } #0.5% per day
 
+#Agitprop
+set_variable = { SOV_new_propaganda_campaign = 0 } #Used to pick a poster slot
+set_variable = { SOV_propaganda_campaign_to_remove = 0 } #Used to reset a poster slot
+set_variable = { SOV_propaganda_locked_slot_index = 1 } #### === INSERT LOCKED SLOT INDEX IN STRIPE HERE === ####
+set_variable = { SOV_propaganda_empty_slot_index = 2 } #### === INSERT EMPTY SLOT INDEX IN STRIPE HERE === ####
+set_variable = { SOV_poster_left_icon_frame = SOV_propaganda_locked_slot_index } #Set up the appropriate empty slot GFX
+set_variable = { SOV_poster_center_icon_frame = SOV_propaganda_locked_slot_index } #Set up the appropriate locked slot GFX
+set_variable = { SOV_poster_right_icon_frame = SOV_propaganda_locked_slot_index } #Set up the appropriate locked slot GFX
+set_variable = { SOV_default_propaganda_campaign_duration = 180 } #Duration days for propaganda campaigns
+set_variable = { SOV_default_propaganda_campaign_cooldown = 90 } #Days of cooldown after a Propaganda Campaign has been finished.
+set_variable = { SOV_default_propaganda_campaign_old_days = 150 } #A propaganda poster will age (change GFX) after this amount of days have passed since the campaign was activated
+set_variable = { SOV_propaganda_cost = 15 } #Used not only to set the rest of propaganda campaign costs here, but also used to increase each campaign cost after being activated
+set_variable = { SOV_propaganda_cost_increase = 2 } #This will multiply the regular propaganda_cost each time a propaganda campaign is activated, so that it's cost is increased
+set_variable = { SOV_propaganda_motherland_calls_cost = SOV_propaganda_cost } # ID = 2
+set_variable = { SOV_propaganda_victory_at_hand_cost = SOV_propaganda_cost } # ID = 3
+set_variable = { SOV_propaganda_defend_moscow_cost = SOV_propaganda_cost } # ID = 4
+set_variable = { SOV_propaganda_fight_to_the_last_cost = SOV_propaganda_cost } # ID = 5
+set_variable = { SOV_propaganda_hit_of_hammer_cost = SOV_propaganda_cost } # ID = 6
+set_variable = { SOV_propaganda_transport_cost = SOV_propaganda_cost } # ID = 7
+set_variable = { SOV_propaganda_oil_for_the_motherland_cost = SOV_propaganda_cost } # ID = 8
+set_variable = { SOV_propaganda_more_metal_cost = SOV_propaganda_cost } # ID = 9
+set_variable = { SOV_propaganda_high_yield_cost = SOV_propaganda_cost } # ID = 10
+set_variable = { SOV_propaganda_for_the_motherland_cost = SOV_propaganda_cost } # ID = 11
+set_variable = { SOV_propaganda_heroes_forward_cost = SOV_propaganda_cost } # ID = 12
+set_variable = { SOV_propaganda_anti_capitalism_cost = SOV_propaganda_cost } # ID = 13
+set_variable = { SOV_propaganda_anti_fascism_cost = SOV_propaganda_cost } # ID = 14
+set_variable = { SOV_propaganda_treacherous_enemy_cost = SOV_propaganda_cost } # ID = 15
+set_variable = { SOV_propaganda_do_not_blab_cost = SOV_propaganda_cost } # ID = 16
+set_variable = { SOV_propaganda_sweep_scum_out_cost = SOV_propaganda_cost } # ID = 17
+set_variable = { SOV_propaganda_knowledge_cost = SOV_propaganda_cost } # ID = 18
+set_variable = { SOV_propaganda_builders_of_communism_cost = SOV_propaganda_cost } # ID = 19
+set_variable = { SOV_propaganda_glory_to_partisans_cost = SOV_propaganda_cost } # ID = 20
+set_variable = { SOV_propaganda_death_to_invaders_cost = SOV_propaganda_cost } # ID = 21
+set_variable = { SOV_propaganda_stalin_cost = SOV_propaganda_cost } # ID = 22
+set_variable = { SOV_propaganda_rebuild_to_glory_cost = SOV_propaganda_cost } # ID = 23
+set_variable = { SOV_propaganda_peace_cost = SOV_propaganda_cost } # ID = 24
+set_variable = { SOV_propaganda_happy_life_cost = SOV_propaganda_cost } # ID = 25
+set_variable = { SOV_propaganda_campaigns_taken = 0 } # Number of propaganda campaigns taken
+
+
 #African colonies available for purchase (Tsarist path)
 add_to_array = { sov_african_colonies_purchase_array = 268 }
 add_to_array = { sov_african_colonies_purchase_array = 269 }
@@ -272,9 +319,168 @@ POL = {
 	save_global_event_target_as = SOV_target_country_fascist
 }
 
+recruit_character = SOV_Nikolai_voznesensky
+recruit_character = SOV_Kliment_voroshilov_advisor
+recruit_character = SOV_Anatoly_pepelyayev
+recruit_character = SOV_Lazar_kaganovich
+recruit_character = SOV_Yevgeny_preobrazhensky
+recruit_character = SOV_Genrikh_yagoda
+recruit_character = SOV_Nikolay_yezhov
+recruit_character = SOV_Lavrentiy_beria
+recruit_character = SOV_Aleksey_rykov
+recruit_character = SOV_Lev_kamenev
+recruit_character = SOV_Nikolay_bukharin
+recruit_character = SOV_Grigory_zinovyev
+recruit_character = SOV_Mikhail_kalinin
+recruit_character = SOV_Nikita_khrushchev
+recruit_character = SOV_Leon_trotsky
+recruit_character = SOV_Vasily_stalin
+recruit_character = SOV_Yakov_agranov
+recruit_character = SOV_Ivan_maisky
+recruit_character = SOV_Vyacheslav_molotov
+recruit_character = SOV_Maksim_litvinov
+recruit_character = SOV_Ivan_smirnov
+recruit_character = SOV_Ivar_smilga
+recruit_character = SOV_Karl_radek
+recruit_character = SOV_Aleksandr_shlyapnikov
+recruit_character = SOV_Mikhail_tomsky
+recruit_character = SOV_Grigory_sokolnikov
+recruit_character = SOV_Raya_dunayevskaya
+recruit_character = SOV_Joseph_stalin
+recruit_character = SOV_Supreme_soviet_soviet_union
+recruit_character = SOV_Empty_supreme_soviet_soviet_union
+recruit_character = SOV_Alexander_kerensky
+recruit_character = SOV_Pavel_milyukov
+recruit_character = SOV_Alexander_konovalov
+recruit_character = SOV_Ivan_nikolaevich
+recruit_character = SOV_Andrey_vlasov
+recruit_character = SOV_Kirill_vladimirovich
+recruit_character = SOV_Vladimir_kirillovich
+recruit_character = SOV_Vladimir_kirillovich_democratic_political_advisor
+recruit_character = SOV_Peter_krutitsy
+recruit_character = SOV_Vladimir_nabokov
+recruit_character = SOV_Konstantin_rodzaevsky
+recruit_character = SOV_Anastasy_vonsyatsky
+recruit_character = SOV_Viktor_baydalakov
+recruit_character = SOV_Vsevolod_mikhailovich_eikhenbaum
+recruit_character = SOV_Peter_arshinov
+recruit_character = SOV_Alexei_borovo
+recruit_character = SOV_Peoples_council_commune
+recruit_character = SOV_Council_of_moscow
+recruit_character = SOV_Vsevolod_merkulov
+recruit_character = SOV_Anton_ivanovich_denikin
+recruit_character = SOV_Vladimir_kislitsin
+recruit_character = SOV_Vladimir_sidorin
+recruit_character = SOV_Boris_shteifon
+recruit_character = SOV_Vladimir_kirillovich_democratic_military_advisor
+recruit_character = SOV_Semyon_timoshenko
+recruit_character = SOV_Kliment_voroshilov_military
+recruit_character = SOV_Alexander_yegorov
+recruit_character = SOV_Vasily_blucher
+recruit_character = SOV_Supreme_military_council
+recruit_character = SOV_Pyotr_smirnov
+recruit_character = SOV_Mikhail_frinovsky
+recruit_character = SOV_Nikolay_kuznetsov
+recruit_character = SOV_Ivan_yumashev
+recruit_character = SOV_Submarine_council
+recruit_character = SOV_Carrier_council
+recruit_character = SOV_Battleship_council
+recruit_character = SOV_Naval_invasion_council
+recruit_character = SOV_Alexander_novikov
+recruit_character = SOV_Konstantin_vershinin
+recruit_character = SOV_Yakov_smushkevich
+recruit_character = SOV_Pavel_rychagov
+recruit_character = SOV_Bombardment_council
+recruit_character = SOV_Fighter_council
+recruit_character = SOV_Pilot_training_council
+recruit_character = SOV_Alexander_rodzyanko
+recruit_character = SOV_Pavel_bermondt_avalov
+recruit_character = SOV_Pyotr_Nikolayevich_Krasnov
+recruit_character = SOV_Andrei_shkuro
+recruit_character = SOV_Ivan_konev
+recruit_character = SOV_Aleksandr_vasilevsky
+recruit_character = SOV_Konstantin_rokossovsky
+recruit_character = SOV_Pavel_zhigarev
+recruit_character = SOV_Sergei_khudyakov
+recruit_character = SOV_Stepan_krasovsky
+recruit_character = SOV_Vladimir_kasatonov
+recruit_character = SOV_Gordey_levchenko
+recruit_character = SOV_Arseniy_golovko
+recruit_character = SOV_Army_infantry_warfare_council
+recruit_character = SOV_Army_armor_warfare_council
+recruit_character = SOV_Army_drill_council
+recruit_character = SOV_Logistic_council
+recruit_character = SOV_Organization_council
+recruit_character = SOV_Mikhail_tukhachevsky
+recruit_character = SOV_Boris_shaposhnikov
+recruit_character = SOV_Georgy_zhukov
+recruit_character = SOV_Yevgeny_miller
+recruit_character = SOV_Viktorin_molchanov
+recruit_character = SOV_Sergey_gorshkov
+recruit_character = SOV_Vladimir_tributs
+recruit_character = SOV_Sergei_rudenko
+recruit_character = SOV_Alexander_golovanov
+recruit_character = SOV_Igor_kurchatov
+recruit_character = SOV_Sergei_korolev
+recruit_character = SOV_All_warfare_theorist_council
+recruit_character = SOV_Ivan_kononov
+recruit_character = SOV_Nikolai_vatutin
+recruit_character = SOV_Semyon_budyonny
+recruit_character = SOV_Ivan_chernyakhovsky
+recruit_character = SOV_Issa_pliyev
+recruit_character = SOV_Leonid_govorov
+recruit_character = SOV_Grigory_kulik
+recruit_character = SOV_Kirill_meretskov
+recruit_character = SOV_Filipp_golikov
+recruit_character = SOV_Andrey_yeryomenko
+recruit_character = SOV_Georgiy_zakharov
+recruit_character = SOV_Yakov_cherevichenko
+recruit_character = SOV_Max_reyter
+recruit_character = SOV_Nikandr_chibisov
+recruit_character = SOV_Vasily_kuznetsov
+recruit_character = SOV_Ivan_fedyuninsky
+recruit_character = SOV_Maksim_purkayev
+recruit_character = SOV_Kuzma_galitsky
+recruit_character = SOV_Markian_popov
+recruit_character = SOV_Nikolai_berzarin
+recruit_character = SOV_Alexander_gorbatov
+recruit_character = SOV_Kirill_moskalenko
+recruit_character = SOV_Dmitry_lelyushenko
+recruit_character = SOV_Andrei_grechko
+recruit_character = SOV_Rodion_malinovsky
+recruit_character = SOV_Vasily_chuikov
+recruit_character = SOV_Filipp_oktyabrskiy
+recruit_character = SOV_Popov_pyotr_kharitonovich
+recruit_character = SOV_Tolstov_vladimir_sergeevich
+recruit_character = SOV_Pisarev_pyotr_konstantinovich
+recruit_character = SOV_Abram_dragomirov
+recruit_character = SOV_Mikhail_diterikhs
+recruit_character = SOV_Alexander_golubintzev
+recruit_character = SOV_Grigory_mikhaylovich_semyonov
+recruit_character = SOV_Mikhail_skorodumov
+recruit_character = SOV_Konstantin_petrovich_nechaev
+recruit_character = SOV_Mikhail_pleshkov
+recruit_character = SOV_Anton_turkul
+recruit_character = SOV_Isaac_bykadorov
+recruit_character = SOV_Vyacheslav_naumenko
+recruit_character = SOV_Fedor_abramov
+recruit_character = SOV_Bronislaw_kaminski
+recruit_character = SOV_Vladimir_marushevsky
+recruit_character = SOV_Vladimir_kharzhevsky
+recruit_character = SOV_Pavel_shatilov
+recruit_character = SOV_Pyotr_vladimirovich_glazenap
+recruit_character = SOV_Alexander_lukomsky
+recruit_character = SOV_Military_council_ukraine
+recruit_character = SOV_Military_council_belarus
+recruit_character = SOV_Military_council_urals
+recruit_character = SOV_Military_council_siberia
+recruit_character = SOV_Military_council_artic
+recruit_character = SOV_Military_council_steppe_kuban
+recruit_character = SOV_Military_council_western_siberia
+
 set_research_slots = 4
 set_stability = 0.5
-set_war_support = 0.45
+set_war_support = 0.4
 # Starting tech
 set_technology = {
 	infantry_weapons = 1
@@ -288,10 +494,6 @@ set_technology = {
 	paratroopers = 1
 	gw_artillery = 1
 	interwar_antiair = 1
-	gwtank = 1
-	basic_light_tank = 1  # PLACEHOLDER
-	#basic_heavy_tank = 1  # PLACEHOLDER
-	#basic_medium_tank = 1 # PLACEHOLDER
 	early_fighter = 1
 	fighter1 = 1
 	early_bomber = 1
@@ -301,9 +503,40 @@ set_technology = {
 	fleet_in_being = 1
 	fuel_silos = 1
 	fuel_refining = 1
+	basic_train = 1
+}
+
+if = {
+	limit = {
+		NOT = {
+			has_dlc = "No Step Back"
+		}
+	}
+	set_technology = {
+		gwtank = 1
+		basic_light_tank = 1
+
+	}
 }
 if = {
-	limit = { not = { has_dlc = "Man the Guns" } }
+	limit = {
+		has_dlc = "No Step Back"
+	}
+	set_technology = {
+		gwtank_chassis = 1
+		basic_light_tank_chassis = 1
+		improved_light_tank_chassis = 1
+		engine_tech_1 = 1
+		engine_tech_2 = 1
+	}
+}
+
+if = {
+	limit = {
+		NOT = {
+			has_dlc = "Man the Guns"
+		}
+	}
 	set_technology = {
 		early_submarine = 1
 		basic_submarine = 1
@@ -316,7 +549,9 @@ if = {
 	}
 }
 if = {
-	limit = { has_dlc = "Man the Guns" }
+	limit = {
+		has_dlc = "Man the Guns"
+	}
 	set_technology = {
 		basic_naval_mines = 1
 		submarine_mine_laying = 1
@@ -350,8 +585,8 @@ if = {
 	
 	#adding ministers, already have 2 set
 	add_ideas = {
-		SOV_lavrentiy_beria
-		SOV_vyacheslav_molotov
+		SOV_Lavrentiy_beria
+		SOV_Vyacheslav_molotov
 		stalingrad_tractor_factory
 		tula_arms_plant
 		vladimir_kasatonov
@@ -385,7 +620,7 @@ if = {
 	remove_ideas = pyotr_smirnov
 	remove_ideas = mikhail_frinovsky
 	set_country_flag = purge_2_group_a
-	remove_ideas = SOV_nikolay_yezhov
+	remove_ideas = SOV_Nikolay_yezhov
 	remove_ideas = yakov_smushkevich
 	remove_ideas = pavel_rychagov
 	remove_ideas = gordey_levchenko
@@ -880,11 +1115,18 @@ if = {
 	
 	oob = "SOV_1939"
 	if = {
-		limit = { has_dlc = "Man the Guns" }
-			set_naval_oob = "SOV_1939_naval_mtg"
-		else = {
-			set_naval_oob = "SOV_1939_naval_legacy"
+		limit = {
+			has_dlc = "Man the Guns"
 		}
+		set_naval_oob = "SOV_1939_naval_mtg"
+	}
+	if = {
+		limit = {
+			NOT = {
+				has_dlc = "Man the Guns"
+			}
+		}
+		set_naval_oob = "SOV_1939_naval_legacy"
 	}
 
 	set_technology = {
@@ -972,587 +1214,57 @@ add_to_faction = MON
 add_to_faction = TAN
 
 add_ideas = {
-	SOV_genrikh_yagoda
 	trotskyite_plot_russia2_idea
 	home_of_revolution_russia2_idea
-	SOV_infrastructure_problem
+	SOV_Infrastructure_problem
 	SOV_Dispersed_industry
 	SOV_Unhappy_peasants1
 	SOV_Suppressed_research
 	SOV_Army_disorganisation
+
+	#NKVD
+	SOV_Genrikh_yagoda
 }
 
-create_country_leader = {
-	name = "Joseph Stalin"
-	desc = "POLITICS_JOSEPH_STALIN_DESC"
-	picture = "Portrait_Soviet_Joseph_Stalin.dds"
-	expire = "1953.3.1"
-	ideology = stalinism
-	traits = {
-		
+if = {
+	limit = {
+		has_dlc = "No Step Back"
 	}
-}
-
-create_country_leader = {
-	name = "Konstantin Rodzaevsky"
-	desc = "POLITICS_KONSTANTIN_RODZAEVSKY_DESC"
-	picture = "Portrait_Soviet_Konstantin_Rodzaevsky.dds"
-	expire = "1965.1.1"
-	ideology = fascism_ideology
-	traits = {
-		unpopular_leader
+	create_equipment_variant = {
+		name = "A-20"
+		type = medium_tank_chassis_1
+		parent_version = 0
+		modules = {
+			main_armament_slot = tank_small_cannon_2
+			turret_type_slot = tank_medium_two_man_tank_turret
+			suspension_type_slot = tank_christie_suspension
+			armor_type_slot = tank_welded_armor
+			engine_type_slot = tank_diesel_engine
+			special_type_slot_1 = sloped_armor
+		}
+		upgrades = {
+			tank_nsb_engine_upgrade = 8
+			tank_nsb_armor_upgrade = 2
+		}
+		icon = "gfx/interface/technologies/SOV_basic_main_tank.dds"
 	}
-}
-
-create_country_leader = {
-	name = "Alexander Fyodorovich Kerensky"
-	desc = "POLITICS_ALEXANDER_KERENSKY_DESC"
-	picture = "Portrait_Alexander_Kerensky_Russia2.dds"
-	expire = "1965.1.1"
-	ideology = socialism
-	traits = {
-		temporary_leader
+	create_equipment_variant = {
+		name = "KV-1"
+		type = heavy_tank_chassis_1
+		parent_version = 0
+		modules = {
+			main_armament_slot = tank_medium_cannon
+			turret_type_slot = tank_heavy_three_man_tank_turret
+			suspension_type_slot = tank_torsion_bar_suspension
+			armor_type_slot = tank_welded_armor
+			engine_type_slot = tank_diesel_engine		
+		}
+		upgrades = {
+			tank_nsb_engine_upgrade = 10
+			tank_nsb_armor_upgrade = 9
+		}
+		icon = "gfx/interface/technologies/SOV_imp_heavy_tank.dds"
 	}
-}
-
-create_country_leader = {
-	name = "Andrey Vlasov"
-	desc = "POLITICS_ANDREY_VLASOV_DESC"
-	picture = "Portrait_Soviet_Andrey_Vlasov.dds"
-	expire = "1965.1.1"
-	ideology = despotism
-	traits = {
-		military_connected
-	}
-}
-
-create_country_leader = {
-	name = "Volin Eikhenbaum"
-	desc = "VSEVOLOD_MIKHAILOVICH_EIKHENBAUM_DESC"
-	picture = "Portrait_Vsevolod_Mikhailovich_Eikhenbaum.dds"
-	expire = "1965.1.1"
-	ideology = anarchist
-	traits = {
-		
-	}
-}
-
-add_namespace = {
-	name = "unit_leader_sov"
-	type = unit_leader
-}
-
-create_corps_commander = {
-	name = "Georgy Zhukov"
-	id = 410
-	picture = "Portrait_Soviet_Georgy_Zhukov.dds"
-	traits = { winter_specialist armor_officer media_personality war_hero }
-	skill = 5
-
-	
-	attack_skill = 5
-	defense_skill = 2
-	planning_skill = 4
-	logistics_skill = 5
-}
-
-create_corps_commander = {
-	name = "Konstantin Rokossovsky"
-	id = 402
-	picture = "Portrait_Soviet_Konstantin_Rokossovsky.dds"
-	traits = {  armor_officer trait_cautious brilliant_strategist }
-	skill = 4
-	
-	attack_skill = 3
-	defense_skill = 4
-	planning_skill = 2
-	logistics_skill = 4
-}
-
-create_corps_commander = {
-	name = "Ivan Kononov"
-	picture = "Portrait_Ivan_Kononov.dds"
-	traits = { cavalry_officer }
-	skill = 3
-	
-	attack_skill = 3
-	defense_skill = 2
-	planning_skill = 2
-	logistics_skill = 1
-}
-
-create_corps_commander = {
-	name = "Aleksandr Vasilevsky"
-	id = 407
-	picture = "Portrait_Soviet_Aleksandr_Vasilevsky.dds"
-	traits = { armor_officer politically_connected }
-	skill = 4
-
-	
-	attack_skill = 4
-	defense_skill = 4
-	planning_skill = 3
-	logistics_skill = 2
-}
-
-create_corps_commander = {
-	name = "Boris Shaposhnikov"
-	id = 510
-	picture = "Portrait_Soviet_Boris_Shaposhnikov.dds"
-	traits = { trait_cautious career_officer }
-	skill = 3
-	
-	attack_skill = 2
-	defense_skill = 3
-	planning_skill = 2
-	logistics_skill = 3
-}
-
-create_corps_commander = {
-	name = "Nikolai Vatutin"
-	picture = "Portrait_Soviet_Nikolai_Fyodorovich_Vatutin.dds"
-	traits = { infantry_officer trait_reckless }
-	skill = 3
-	
-	attack_skill = 1
-	defense_skill = 3
-	planning_skill = 3
-	logistics_skill = 3
-}
-
-create_corps_commander = {
-	name = "Ivan Konev"
-	id = 408
-	picture = "Portrait_Soviet_Ivan_Konev.dds"
-	traits = { armor_officer harsh_leader politically_connected }
-	skill = 5
-
-
-	
-	attack_skill = 4
-	defense_skill = 5
-	planning_skill = 2
-	logistics_skill = 5
-}
-
-create_corps_commander = {
-	name = "Semyon Timoshenko"
-	id = 404
-	picture = "Portrait_Soviet_semyon_timoshenko.dds"
-	traits = { cavalry_officer politically_connected career_officer }
-	skill = 3
-
-
-	
-	attack_skill = 3
-	defense_skill = 2
-	planning_skill = 2
-	logistics_skill = 3
-}
-
-create_field_marshal = {
-	name = "Kliment Voroshilov"
-	id = 405
-	picture = "Portrait_Soviet_Kliment_Voroshilov.dds"
-	traits = { old_guard politically_connected inflexible_strategist }
-	skill = 1
-
-
-	
-	attack_skill = 1
-	defense_skill = 1
-	planning_skill = 1
-	logistics_skill = 1
-}
-
-create_field_marshal = {
-	name = "Mikhail Tukhachevsky"
-	id = 401
-	picture = "Portrait_Soviet_Mikhail_Tukhachevsky.dds"
-	traits = { offensive_doctrine brilliant_strategist career_officer infantry_officer trait_reckless }
-	skill = 4
-
-	
-	attack_skill = 3
-	defense_skill = 4
-	planning_skill = 4
-	logistics_skill = 2
-}
-
-create_field_marshal = {
-	name = "Semyon Budyonny"
-	picture = "Portrait_Soviet_Semyon_Budyonny.dds"
-	traits = { old_guard politically_connected inflexible_strategist }
-	skill = 1
-
-	
-	attack_skill = 1
-	defense_skill = 1
-	planning_skill = 1
-	logistics_skill = 1
-}
-
-create_corps_commander = {
-	name = "Ivan Chernyakhovsky"
-	picture = "Portrait_Soviet_Ivan_Chernyakhovsky.dds"
-	traits = { armor_officer }
-	skill = 1 
-
-	
-	attack_skill = 1
-	defense_skill = 1
-	planning_skill = 1
-	logistics_skill = 1
-}
-
-create_corps_commander = {
-	name = "Issa Pliyev"
-	picture = "Portrait_Soviet_Issa_Pliyev.dds"
-	traits = { cavalry_officer }
-	skill = 1
-
-	
-	attack_skill = 1
-	defense_skill = 1
-	planning_skill = 1
-	logistics_skill = 1
-}
-
-create_corps_commander = {
-	name = "Leonid Govorov"
-	id = 450
-	picture = "Portrait_Soviet_Leonid_Govorov.dds"
-	traits = {   }
-	skill = 3
-	
-	attack_skill = 3
-	defense_skill = 2
-	planning_skill = 3
-	logistics_skill = 2
-}
-
-create_field_marshal = {
-	name = "Grigory Kulik"
-	id = 454
-	picture = "Portrait_Soviet_Grigory_Kulik.dds"
-	traits = { old_guard career_officer politically_connected inflexible_strategist }
-	skill = 1	
-	attack_skill = 1
-	defense_skill = 1
-	planning_skill = 1
-	logistics_skill = 1
-}
-
-create_corps_commander = {
-	name = "Kirill Meretskov"
-	picture = "Portrait_Soviet_Kirill_Meretskov.dds"
-	traits = { trait_reckless infantry_officer }
-	skill = 3
-	
-
-	
-	attack_skill = 2
-	defense_skill = 2
-	planning_skill = 3
-	logistics_skill = 3
-}
-
-create_corps_commander = {
-	name = "Filipp Golikov"
-	picture = "Portrait_Soviet_Filipp_Golikov.dds"
-	traits = { career_officer }
-	skill = 3
-	
-	attack_skill = 3
-	defense_skill = 3
-	planning_skill = 3
-	logistics_skill = 1
-}
-
-create_corps_commander = {
-	name = "Andrey Yeryomenko"
-	picture = "Portrait_Soviet_Andrey_Yeryomenko.dds"
-	traits = { cavalry_officer trait_reckless }
-	skill = 1 
-
-	
-	attack_skill = 1
-	defense_skill = 1
-	planning_skill = 1
-	logistics_skill = 1
-}
-
-create_corps_commander = {
-	name = "Georgiy Zakharov"
-	picture = "Portrait_Soviet_Georgiy_Zakharov.dds"
-	traits = { career_officer }
-	skill = 1 
-
-	
-	attack_skill = 1
-	defense_skill = 1
-	planning_skill = 1
-	logistics_skill = 1
-}
-
-create_corps_commander = {
-	name = "Yakov Cherevichenko"
-	picture = "Portrait_Soviet_Yakov_Cherevichenko.dds"
-	traits = { cavalry_officer }
-	skill = 3
-	
-	attack_skill = 3
-	defense_skill = 3
-	planning_skill = 2
-	logistics_skill = 2
-}
-
-create_corps_commander = {
-	name = "Max Reyter"
-	picture = "Portrait_Soviet_Max_Andreyevich.dds"
-	traits = { career_officer }
-	skill = 1
-
-	
-	attack_skill = 1
-	defense_skill = 1
-	planning_skill = 1
-	logistics_skill = 1
-}
-create_corps_commander = {
-	name = "Nikandr Chibisov"
-	picture = "Portrait_Soviet_Nikandr_Yevlampyevich_Chibisov.dds"
-	traits = { trickster }
-	skill = 3
-
-	
-	attack_skill = 1
-	defense_skill = 3
-	planning_skill = 3
-	logistics_skill = 3
-}
-create_corps_commander = {
-	name = "Vasily Kuznetsov"
-	picture = "Portrait_Soviet_Vasily_Kuznetsov.dds"
-	traits = { commando infantry_officer }
-	skill = 3
-	
-	attack_skill = 3
-	defense_skill = 3
-	planning_skill = 2
-	logistics_skill = 2
-}
-
-create_corps_commander = {
-	name = "Andrey Vlasov"
-	picture = "Portrait_Soviet_Andrey_Vlasov.dds"
-	traits = { winter_specialist infantry_officer }
-	id = 412
-	skill = 3
-	
-	attack_skill = 3
-	defense_skill = 3
-	planning_skill = 1
-	logistics_skill = 3
-}
-
-create_corps_commander = {
-	name = "Ivan Fedyuninsky"
-	picture = "Portrait_Soviet_Ivan_Fedyuninsky.dds"
-	traits = { infantry_officer }
-	skill = 1 
-	
-	attack_skill = 1
-	defense_skill = 1
-	planning_skill = 1
-	logistics_skill = 1
-}
-
-create_corps_commander = {
-	name = "Maksim Purkayev"
-	picture = "Portrait_Soviet_Maksim_Purkayev.dds"
-	traits = { career_officer }
-	skill = 3
-
-	
-	attack_skill = 2
-	defense_skill = 3
-	planning_skill = 2
-	logistics_skill = 3
-}
-create_corps_commander = {
-	name = "Kuzma Galitsky"
-	picture = "Portrait_Soviet_Kuzma_Galitsky.dds"
-	traits = { infantry_officer }
-	skill = 1 
-
-	
-	attack_skill = 1
-	defense_skill = 1
-	planning_skill = 1
-	logistics_skill = 1
-}
-create_corps_commander = {
-	name = "Markian Popov"
-	picture = "Portrait_Soviet_Matkian_Popov.dds"
-	traits = { winter_specialist infantry_officer brilliant_strategist }
-	skill = 2
-
-	
-	attack_skill = 2
-	defense_skill = 1
-	planning_skill = 2
-	logistics_skill = 2
-}
-
-create_corps_commander = {
-	name = "Nikolai Berzarin"
-	id = 451
-	picture = "Portrait_Soviet_Nikolai_Berzarin.dds"
-	traits = { infantry_officer }
-	skill = 3
-	
-	attack_skill = 3
-	defense_skill = 3
-	planning_skill = 2
-	logistics_skill = 2
-}
-
-create_corps_commander = {
-	name = "Alexander Gorbatov"
-	id = 452
-	picture = "Portrait_Soviet_Alexander_Gorbatov.dds"
-	traits = { career_officer cavalry_officer }
-	skill = 3
-	
-	attack_skill = 2
-	defense_skill = 3
-	planning_skill = 2
-	logistics_skill = 3
-}
-
-create_corps_commander = {
-	name = "Kirill Moskalenko"
-	picture = "Portrait_Soviet_Kirill_Moskalenko.dds"
-	traits = {  }
-	skill = 3
-	
-	attack_skill = 2
-	defense_skill = 2
-	planning_skill = 3
-	logistics_skill = 3
-}
-
-create_corps_commander = {
-	name = "Dmitry Lelyushenko"
-	picture = "Portrait_Soviet_Dmitri_Danilovich_Lelyushenko.dds"
-	traits = {armor_officer trait_reckless  }
-	skill = 1 
-	
-	attack_skill = 1
-	defense_skill = 1
-	planning_skill = 1
-	logistics_skill = 1
-}
-
-create_corps_commander = {
-	name = "Andrei Grechko"
-	picture = "Portrait_Soviet_Andrei_Antonovich_Grechko.dds"
-	traits = { cavalry_officer }
-	skill = 3
-
-
-	
-	attack_skill = 1
-	defense_skill = 3
-	planning_skill = 3
-	logistics_skill = 3
-}
-
-create_corps_commander = {
-	name = "Rodion Malinovsky"
-	picture = "Portrait_Soviet_Rodion_Malinovsky.dds"
-	traits = { career_officer old_guard trait_cautious politically_connected }
-	skill = 1 
-
-	
-	attack_skill = 1
-	defense_skill = 1
-	planning_skill = 1
-	logistics_skill = 1
-}
-
-create_corps_commander = {
-	name = "Vasily Chuikov"
-	picture = "Portrait_Soviet_Vasily_Chuikov.dds"
-	traits = { brilliant_strategist career_officer }
-	skill = 1
-
-	
-	attack_skill = 1
-	defense_skill = 1
-	planning_skill = 1
-	logistics_skill = 1
-}
-
-create_navy_leader = {
-	name = "Filipp Oktyabrskiy"
-	picture = "Portrait_Soviet_Filipp_Oktyabrsky.dds"
-	traits = { ground_pounder ironside }
-	skill = 2
-	attack_skill = 3
-	defense_skill = 2
-	maneuvering_skill = 1
-	coordination_skill = 1
-}
-
-create_navy_leader = {
-	name = "Sergey Gorshkov"
-	id = 411
-	picture = "Portrait_Soviet_Sergey_Gorshkov.dds"
-	traits = { navy_career_officer bold }
-	skill = 3
-	attack_skill = 3
-	defense_skill = 2
-	maneuvering_skill = 3
-	coordination_skill = 2
-}
-
-# Arrested in '41
-create_navy_leader = {
-	name = "Gordey Levchenko"
-	id = 406
-	picture = "Portrait_Soviet_Gordey_Levchenko.dds"
-	traits = { green_water_expert }
-	skill = 2
-	attack_skill = 2
-	defense_skill = 2
-	maneuvering_skill = 1
-	coordination_skill = 2
-}
-
-create_navy_leader = {
-	name = "Arseniy Golovko"
-	id = 409
-	picture = "Portrait_Soviet_Arseniy_Golovko.dds"
-	traits = { arctic_water_expert spotter }
-	skill = 4
-	attack_skill = 3
-	defense_skill = 4
-	maneuvering_skill = 3
-	coordination_skill = 3
-}
-
-create_navy_leader = {
-	name = "Vladimir Kasatonov"
-	id = 403
-	picture = "Portrait_Soviet_Vladimir_Kasatonov.dds"
-	traits = { seawolf }
-	skill = 2
-	attack_skill = 1
-	defense_skill = 2
-	maneuvering_skill = 2
-	coordination_skill = 2
 }
 
 if = {
@@ -1856,7 +1568,11 @@ if = {
 # 1939 Start #
 1939.1.1 = {
 	if = {
-		limit = { not = { has_dlc = "Man the Guns" } }
+		limit = {
+			NOT = {
+				has_dlc = "Man the Guns"
+			}
+		}
 		# Ship variants #
 		create_equipment_variant = {
 			name = "Series X Shchuka"
@@ -1881,7 +1597,9 @@ if = {
 		}
 	}
 	if = {
-		limit = { has_dlc = "Man the Guns" }
+		limit = {
+			has_dlc = "Man the Guns"
+		}
 		# Submarines #
 		create_equipment_variant = {
 			name = "Series XIII Leninets"				
@@ -1959,43 +1677,3 @@ if = {
 		}
 	}
 }
-
-set_variable = { SOV_new_propaganda_campaign = 0 } #Used to pick a poster slot
-set_variable = { SOV_propaganda_campaign_to_remove = 0 } #Used to reset a poster slot
-set_variable = { SOV_propaganda_locked_slot_index = 1 } #### === INSERT LOCKED SLOT INDEX IN STRIPE HERE === ####
-set_variable = { SOV_propaganda_empty_slot_index = 2 } #### === INSERT EMPTY SLOT INDEX IN STRIPE HERE === ####
-set_variable = { SOV_poster_left_icon_frame = SOV_propaganda_locked_slot_index } #Set up the appropriate empty slot GFX
-set_variable = { SOV_poster_center_icon_frame = SOV_propaganda_locked_slot_index } #Set up the appropriate locked slot GFX
-set_variable = { SOV_poster_right_icon_frame = SOV_propaganda_locked_slot_index } #Set up the appropriate locked slot GFX
-
-set_variable = { SOV_default_propaganda_campaign_duration = 180 } #Duration days for propaganda campaigns
-set_variable = { SOV_default_propaganda_campaign_cooldown = 90 } #Days of cooldown after a Propaganda Campaign has been finished.
-set_variable = { SOV_default_propaganda_campaign_old_days = 150 } #A propaganda poster will age (change GFX) after this amount of days have passed since the campaign was activated
-set_variable = { SOV_propaganda_cost = 15 } #Used not only to set the rest of propaganda campaign costs here, but also used to increase each campaign cost after being activated
-set_variable = { SOV_propaganda_cost_increase = 2 } #This will multiply the regular propaganda_cost each time a propaganda campaign is activated, so that it's cost is increased
-set_variable = { SOV_propaganda_motherland_calls_cost = SOV_propaganda_cost } # ID = 2
-set_variable = { SOV_propaganda_victory_at_hand_cost = SOV_propaganda_cost } # ID = 3
-set_variable = { SOV_propaganda_defend_moscow_cost = SOV_propaganda_cost } # ID = 4
-set_variable = { SOV_propaganda_fight_to_the_last_cost = SOV_propaganda_cost } # ID = 5
-set_variable = { SOV_propaganda_hit_of_hammer_cost = SOV_propaganda_cost } # ID = 6
-set_variable = { SOV_propaganda_transport_cost = SOV_propaganda_cost } # ID = 7
-set_variable = { SOV_propaganda_oil_for_the_motherland_cost = SOV_propaganda_cost } # ID = 8
-set_variable = { SOV_propaganda_more_metal_cost = SOV_propaganda_cost } # ID = 9
-set_variable = { SOV_propaganda_high_yield_cost = SOV_propaganda_cost } # ID = 10
-set_variable = { SOV_propaganda_for_the_motherland_cost = SOV_propaganda_cost } # ID = 11
-set_variable = { SOV_propaganda_heroes_forward_cost = SOV_propaganda_cost } # ID = 12
-set_variable = { SOV_propaganda_anti_capitalism_cost = SOV_propaganda_cost } # ID = 13
-set_variable = { SOV_propaganda_anti_fascism_cost = SOV_propaganda_cost } # ID = 14
-set_variable = { SOV_propaganda_treacherous_enemy_cost = SOV_propaganda_cost } # ID = 15
-set_variable = { SOV_propaganda_do_not_blab_cost = SOV_propaganda_cost } # ID = 16
-set_variable = { SOV_propaganda_sweep_scum_out_cost = SOV_propaganda_cost } # ID = 17
-set_variable = { SOV_propaganda_knowledge_cost = SOV_propaganda_cost } # ID = 18
-set_variable = { SOV_propaganda_builders_of_communism_cost = SOV_propaganda_cost } # ID = 19
-set_variable = { SOV_propaganda_glory_to_partisans_cost = SOV_propaganda_cost } # ID = 20
-set_variable = { SOV_propaganda_death_to_invaders_cost = SOV_propaganda_cost } # ID = 21
-set_variable = { SOV_propaganda_stalin_cost = SOV_propaganda_cost } # ID = 22
-set_variable = { SOV_propaganda_rebuild_to_glory_cost = SOV_propaganda_cost } # ID = 23
-set_variable = { SOV_propaganda_peace_cost = SOV_propaganda_cost } # ID = 24
-set_variable = { SOV_propaganda_happy_life_cost = SOV_propaganda_cost } # ID = 25
-
-set_variable = { SOV_propaganda_campaigns_taken = 0 } #Used as a requirement for certain focuses
