@@ -613,6 +613,9 @@ country_event = {
 			modifier = {
 				factor = 0
 				any_country = {
+					NOT = {
+						TAG = event_target:WTT_current_china_leader
+					}
 					is_major = yes
 					has_war_with = JAP
 				}
@@ -630,6 +633,9 @@ country_event = {
 			modifier = {
 				add = 95
 				any_country = {
+					NOT = {
+						TAG = event_target:WTT_current_china_leader
+					}
 					is_major = yes
 					has_war_with = JAP
 				}
@@ -760,6 +766,11 @@ country_event = {
 				type = antagonize
 				id = event_target:WTT_current_china_leader
 				value = 200
+			}
+			add_ai_strategy = {
+				type = alliance
+				id = SOV
+				value = -1000
 			}
 		}
 	}
@@ -989,7 +1000,7 @@ country_event = {
 	option = { #Good
 		name = russia2_japan.29.a
 		ai_chance = {
-			factor = 100
+			factor = 90
 		}
 		MAN = {
 			transfer_state = 408
@@ -1002,6 +1013,49 @@ country_event = {
 			add_state_core = 560
 			add_state_core = 657
 			add_state_core = 561
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					SOV = {
+						NOT = {
+							has_country_flag = america_receive_siberia_generic
+						}
+					}
+				}
+				563 = {
+					set_demilitarized_zone = yes
+				}
+				574 = {
+					set_demilitarized_zone = yes
+				}
+				562 = {
+					set_demilitarized_zone = yes
+				}
+			}
+			else_if = {
+				limit = {
+					SOV = {
+						has_country_flag = america_receive_siberia_generic
+					}
+				}
+				563 = {
+					set_demilitarized_zone = yes
+				}
+			}
+		}
+
+		option = { #We Will Keep It
+		name = russia2_japan.29.b
+		ai_chance = {
+			factor = 10
+		}
+		JAP = {
+			transfer_state = 408
+			transfer_state = 409
+			transfer_state = 560
+			transfer_state = 657
+			transfer_state = 561
 		}
 		hidden_effect = {
 			if = {
