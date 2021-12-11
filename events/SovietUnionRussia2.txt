@@ -388,33 +388,10 @@ country_event = {
 
 	option = { # Oh no
 		name = russia2_russia.18.a
-		start_civil_war = {
-    		ideology = neutrality
-    		size = 0.4
-		}
+		add_ideas = SOV_Regular_peasants_strikes
+		unlock_decision_tooltip = SOV_fix_peasants_situation
 		hidden_effect = {
-			news_event = { days = 2 id = newsrussia2.15 }
-			remove_ideas = SOV_Unhappy_peasants1
-			remove_ideas = SOV_Unhappy_peasants2
-			remove_ideas = SOV_Unhappy_peasants3
-			remove_ideas = SOV_Unhappy_peasants4
-			remove_ideas = SOV_Unhappy_peasants5
-			remove_ideas = SOV_Unhappy_peasants6
-			remove_ideas = SOV_Happy_peasants
-			random_other_country = {
-				limit = {
-					original_tag = SOV
-					has_war_with = ROOT
-				}
-				load_focus_tree = {
-					tree = russia2_soviet_focus
-					keep_completed = no
-				}
-				unlock_national_focus = SOV_avoid_purge
-				unlock_national_focus = SOV_speak_out_against_stalin
-				unlock_national_focus = SOV_counter_revolution
-				set_country_flag = nopurge_civil_war
-			}
+			country_event = { id = russia2_russia.93 days = 7 }
 		}
 	}
 }
@@ -494,7 +471,7 @@ country_event = {
 	}
 }
 
-#Katyń Massacre (wtf is up with the name?)
+#Katyń Massacre
 country_event = {
 	id = russia2_russia.21
 	title = russia2_russia.21.t
@@ -508,7 +485,7 @@ country_event = {
 		has_government = communism
 		is_subject = no
 		has_country_leader = {
-			name = "Joseph Stalin"
+			character = SOV_Joseph_stalin
 			ruling_only = yes
 		}
 		96 = { is_owned_and_controlled_by = SOV }
@@ -561,7 +538,7 @@ country_event = {
 			has_government = communism
 			is_subject = no
 			has_country_leader = {
-				name = "Joseph Stalin"
+				character = SOV_Joseph_stalin
 				ruling_only = yes
 			}
 		}
@@ -1516,14 +1493,16 @@ country_event = {
 	option = { #Perfect
 		name = russia2_russia.44.a
 		kill_country_leader = yes
-		create_country_leader = {
-			name = "Empty Supreme Soviet of the Soviet Union"
-			desc = "POLITICS_EMPTY_PARLIAMENT_DESC"
-			picture = "gfx/leaders/SOV/Portrait_Soviet_Empty_Parliament.dds"
-			expire = "1965.1.1"
-			ideology = stalinism
-			traits = {
-				empty_parliament
+		add_country_leader_role = {
+			character = SOV_Empty_supreme_soviet_soviet_union
+			promote_leader = yes
+			country_leader = {
+				desc = SOV_Empty_supreme_soviet_soviet_union_desc
+				ideology = stalinism
+				expire = "1965.1.1.1"
+				traits = {
+					empty_parliament
+				}
 			}
 		}
 		hidden_effect = {
@@ -1632,14 +1611,16 @@ country_event = {
 				popularity = 0.02
 			}
 		}
-		create_country_leader = {
-			name = "Empty Supreme Soviet of the Soviet Union"
-			desc = "POLITICS_EMPTY_PARLIAMENT_DESC"
-			picture = "gfx/leaders/SOV/Portrait_Soviet_Empty_Parliament.dds"
-			expire = "1965.1.1"
-			ideology = stalinism
-			traits = {
-				empty_parliament
+		add_country_leader_role = {
+			character = SOV_Empty_supreme_soviet_soviet_union
+			promote_leader = yes
+			country_leader = {
+				desc = SOV_Empty_supreme_soviet_soviet_union_desc
+				ideology = stalinism
+				expire = "1965.1.1.1"
+				traits = {
+					empty_parliament
+				}
 			}
 		}
 		hidden_effect = {
@@ -1787,14 +1768,16 @@ country_event = {
 				popularity = 0.02
 			}
 		}
-		create_country_leader = {
-			name = "Empty Supreme Soviet of the Soviet Union"
-			desc = "POLITICS_EMPTY_PARLIAMENT_DESC"
-			picture = "gfx/leaders/SOV/Portrait_Soviet_Empty_Parliament.dds"
-			expire = "1965.1.1"
-			ideology = stalinism
-			traits = {
-				empty_parliament
+		add_country_leader_role = {
+			character = SOV_Empty_supreme_soviet_soviet_union
+			promote_leader = yes
+			country_leader = {
+				desc = SOV_Empty_supreme_soviet_soviet_union_desc
+				ideology = stalinism
+				expire = "1965.1.1.1"
+				traits = {
+					empty_parliament
+				}
 			}
 		}
 		hidden_effect = {
@@ -1845,7 +1828,7 @@ country_event = {
 	}
 }
 
-#No purges massive civil war
+#No purges massive civil war #TODO change this
 country_event = {
 	id = russia2_russia.49
 	title = russia2_russia.49.t
@@ -1889,6 +1872,7 @@ country_event = {
 					traits = {
 					}
 				}
+
 				load_focus_tree = {
 					tree = russia2_soviet_focus
 					keep_completed = no
@@ -1927,7 +1911,7 @@ country_event = {
 	option = { #Our Hero Is Back !
 		name = russia2_russia.51.a
 		custom_effect_tooltip = SOV_trotsky_return
-		set_global_flag = Trotsky_return
+		set_global_flag = sov_trotsky_return_from_exile
 		set_global_flag = SOV_fourth_international_fired_rework
 	}
 }
@@ -1947,7 +1931,7 @@ country_event = {
 		NOT = {
 			has_civil_war = yes
 			has_country_leader = {
-				name = "Joseph Stalin"
+				character = SOV_Joseph_stalin
 				ruling_only = yes
 			}
 		}
@@ -1958,7 +1942,7 @@ country_event = {
 	option = { #Our Hero Is Back !
 		name = russia2_russia.52.a
 		custom_effect_tooltip = SOV_trotsky_return
-		set_global_flag = Trotsky_return
+		set_global_flag = sov_trotsky_return_from_exile
 		set_global_flag = SOV_fourth_international_fired_rework
 	}
 }
@@ -2387,14 +2371,16 @@ country_event = {
 		set_country_flag = konstantin_rodzaevsky_executed
 		hidden_effect = {
 			retire_ideology_leader = fascism
-			create_country_leader = {
-				name = "Anastasy Vonsyatsky"
-				desc = "POLITICS_ANASTASY_VONSYATSKY_DESC"
-				picture = "Portrait_Anastasy_Vonsyatsky.dds"
-				expire = "1965.1.1"
-				ideology = fascism_anastasy
-				traits = {
-					dictator
+			add_country_leader_role = {
+				character = SOV_Anastasy_vonsyatsky
+				promote_leader = yes
+				country_leader = {
+					desc = SOV_Anastasy_vonsyatsky_desc
+					ideology = fascism_anastasy
+					expire = "1965.1.1.1"
+					traits = {
+						dictator
+					}
 				}
 			}
 		}
@@ -2686,16 +2672,6 @@ country_event = {
 					}
 					set_politics = {
 						ruling_party = neutrality
-					}
-					retire_ideology_leader = communism
-					create_country_leader = {
-						name = "Vladimir Antonov-Ovseyenko"
-						desc = "POLITICS_VLADIMIR_ANTONOV_DESC"
-						picture = "gfx/leaders/UKR/Vladimir_Antonov_Ovseyenko.dds"
-						ideology = leninism
-						traits = {
-							
-						}
 					}
 					add_ideas = {
 						SOV_Ukrainian_revolt
@@ -3242,42 +3218,91 @@ country_event = {
 	}
 }
 
-#No Purge Civil War - aftermath if the "neutral" win the CW
+#Peasant Strike
 country_event = {
 	id = russia2_russia.93
 	title = russia2_russia.93.t
 	desc = russia2_russia.93.d
 	picture = GFX_report_event_soviet_purge_politicians
 
-	fire_only_once = yes
+	is_triggered_only = yes
 
-	trigger = {
-		original_tag = SOV
-		NOT = {
-			has_civil_war = yes
-		}
-		has_country_flag = nopurge_civil_war
+	immediate = {
+		clr_country_flag = sov_last_peasant_strike
+		set_country_flag = sov_last_peasant_strike
 	}
-
-	mean_time_to_happen = { days = 2 }
 
 	option = {
 		name = russia2_russia.93.a
-		set_political_party = {
-			ideology = communism
-			popularity = 100
+		if = {
+			limit = {
+				has_navy_size = {
+					size > 0
+					type = destroyer
+				}
+			}
+			destroy_ships = {
+				type = destroyer
+				count = 1
+			}
 		}
-		set_politics = {
-			ruling_party = communism
+		if = {
+			limit = {
+				has_navy_size = {
+					size > 0
+					type = light_cruiser
+				}
+			}
+			destroy_ships = {
+				type = light_cruiser
+				count = 1
+			}
 		}
-		create_country_leader = {
-			name = "Andrey Vlasov"
-			desc = "POLITICS_ANDREY_VLASOV_DESC"
-			picture = "Portrait_Soviet_Andrey_Vlasov.dds"
-			expire = "1965.1.1"
-			ideology = stalinism
+		if = {
+			limit = {
+				has_navy_size = {
+					size > 0
+					type = submarine
+				}
+			}
+			destroy_ships = {
+				type = submarine
+				count = 1
+			}
 		}
-		set_global_flag = Trotsky_return
+		random_owned_controlled_state = {
+			limit = {
+				non_damaged_building_level = {
+					building = industrial_complex level > 1
+				}
+			}
+			damage_building = {
+			    type = industrial_complex damage = 2
+			}
+		}
+
+		random_owned_controlled_state = {
+			limit = {
+				non_damaged_building_level = {
+					building = arms_factory level > 1
+				}
+			}
+			damage_building = {
+			    type = arms_factory damage = 2
+			}
+		}
+
+		random_owned_controlled_state = {
+			limit = {
+				non_damaged_building_level = {
+					building = infrastructure level > 1
+				}
+			}
+			damage_building = {
+			    type = infrastructure
+			    damage = 2
+			}
+		}
 	}
 }
 
@@ -3291,23 +3316,7 @@ country_event = {
 	fire_only_once = yes
 
 	trigger = {
-		tag = SOV
-		has_full_control_of_state = 217
-		AND = {
-			has_government = communism
-			NOT = {
-				has_country_leader = {
-					name = "Joseph Stalin"
-					ruling_only = yes
-				}
-				has_country_leader = {
-					name = "Empty Supreme Soviet of the Soviet Union"
-					ruling_only = yes
-				}
-				has_civil_war = yes
-				has_global_flag = second_russian_civil_war_in_progress
-			}
-		}
+		always = no #TODO shouldn't exist anymore?? --> moved to decisions
 	}
 
 	mean_time_to_happen = { days = 25 }
@@ -3327,6 +3336,10 @@ country_event = {
 		trigger = {
 			has_country_leader = {
 				name = "Nikita Khrushchev"
+				ruling_only = yes
+			}
+			has_country_leader = {
+				character = SOV_Joseph_stalin
 				ruling_only = yes
 			}
 		}
@@ -8518,13 +8531,13 @@ country_event = {
 
 	trigger = {
 		has_country_leader = {
-			name = "Kirill Vladimirovich"
+			character = SOV_Kirill_vladimirovich
 			ruling_only = yes
 		}
-		NOT = {
-			has_country_flag = sov_old_tsar_still_alive
+		has_country_flag = {
+			flag = sov_old_tsar_still_alive
+			days > 365
 		}
-		date > 1938.10.12
 	}
 
 	mean_time_to_happen = {
@@ -8538,18 +8551,22 @@ country_event = {
 		}
 		hidden_effect = {
 			kill_country_leader = yes
+			retire_character = SOV_Kirill_vladimirovich
 		}
-		create_country_leader = {
-			name = "Vladimir Kirillovich"
-			desc = "POLITICS_VLADIMIR_KIRILLOVICH_DESC"
-			picture = "Portrait_Vladimir_Kirillovich.dds"
-			expire = "1965.1.1"
-			ideology = despotism
-			traits = {
-				russia2_heir_of_the_tsar
+		custom_effect_tooltip = sov_tsar_kirill_dies
+		add_stability = -0.05
+		add_country_leader_role = {
+			character = SOV_Vladimir_kirillovich
+			promote_leader = yes
+			country_leader = {
+				desc = SOV_Vladimir_kirillovich_desc
+				ideology = despotism
+				expire = "1965.1.1.1"
+				traits = {
+					russia2_heir_of_the_tsar
+				}
 			}
 		}
-		add_stability = -0.05
 	}
 }
 
@@ -9718,14 +9735,16 @@ country_event = {
 			}
 			kill_ideology_leader = neutrality
 			drop_cosmetic_tag = yes
-			create_country_leader = {
-				name = "Joseph Stalin"
-				desc = "POLITICS_JOSEPH_STALIN_DESC"
-				picture = "Portrait_Soviet_Joseph_Stalin.dds"
-				expire = "1953.3.1"
-				ideology = stalinism
-				traits = {
+			add_country_leader_role = {
+				character = SOV_Joseph_stalin
+				promote_leader = yes
+				country_leader = {
+					desc = SOV_Joseph_stalin_desc
+					ideology = stalinism
+					expire = "1953.3.1"
+					traits = {
 
+					}
 				}
 			}
 			set_popularities = {
@@ -11646,7 +11665,7 @@ country_event = {
 			}	
 			add_attack = 1
 			add_logistics = 1
-			add_unit_leader_trait = yellow_jersey
+			add_unit_leader_trait = russia2_yellow_jersey
 		}	
 	}
 }
@@ -12290,14 +12309,16 @@ country_event = {
 			factor = 100
 		}
 		add_political_power = -100
-		create_country_leader = {
-			name = "Anastasy Vonsyatsky"
-			desc = "POLITICS_ANASTASY_VONSYATSKY_DESC"
-			picture = "Portrait_Anastasy_Vonsyatsky.dds"
-			expire = "1965.1.1"
-			ideology = fascism_anastasy
-			traits = {
-				dictator
+		add_country_leader_role = {
+			character = SOV_Anastasy_vonsyatsky
+			promote_leader = yes
+			country_leader = {
+				desc = SOV_Anastasy_vonsyatsky_desc
+				ideology = fascism_anastasy
+				expire = "1965.1.1.1"
+				traits = {
+					dictator
+				}
 			}
 		}
 		custom_effect_tooltip = SOV_can_have_anastasy_tt
@@ -12323,14 +12344,16 @@ country_event = {
 			factor = 75
 		}
 		add_stability = -0.1
-		create_country_leader = {
-			name = "Anastasy Vonsyatsky"
-			desc = "POLITICS_ANASTASY_VONSYATSKY_DESC"
-			picture = "Portrait_Anastasy_Vonsyatsky.dds"
-			expire = "1965.1.1"
-			ideology = fascism_anastasy
-			traits = {
-				dictator
+		add_country_leader_role = {
+			character = SOV_Anastasy_vonsyatsky
+			promote_leader = yes
+			country_leader = {
+				desc = SOV_Anastasy_vonsyatsky_desc
+				ideology = fascism_anastasy
+				expire = "1965.1.1.1"
+				traits = {
+					dictator
+				}
 			}
 		}
 		custom_effect_tooltip = SOV_can_have_anastasy_tt
@@ -12372,14 +12395,16 @@ country_event = {
 		add_stability = -0.15
 		add_war_support = 0.05
 		add_political_power = 100
-		create_country_leader = {
-			name = "Anastasy Vonsyatsky"
-			desc = "POLITICS_ANASTASY_VONSYATSKY_DESC"
-			picture = "Portrait_Anastasy_Vonsyatsky.dds"
-			expire = "1965.1.1"
-			ideology = fascism_anastasy
-			traits = {
-				dictator
+		add_country_leader_role = {
+			character = SOV_Anastasy_vonsyatsky
+			promote_leader = yes
+			country_leader = {
+				desc = SOV_Anastasy_vonsyatsky_desc
+				ideology = fascism_anastasy
+				expire = "1965.1.1.1"
+				traits = {
+					dictator
+				}
 			}
 		}
 		custom_effect_tooltip = SOV_can_have_anastasy_tt
@@ -12545,14 +12570,16 @@ country_event = {
 			factor = 100
 		}
 		add_stability = -0.1
-		create_country_leader = {
-			name = "Anastasy Vonsyatsky"
-			desc = "POLITICS_ANASTASY_VONSYATSKY_DESC"
-			picture = "Portrait_Anastasy_Vonsyatsky.dds"
-			expire = "1965.1.1"
-			ideology = fascism_anastasy
-			traits = {
-				dictator
+		add_country_leader_role = {
+			character = SOV_Anastasy_vonsyatsky
+			promote_leader = yes
+			country_leader = {
+				desc = SOV_Anastasy_vonsyatsky_desc
+				ideology = fascism_anastasy
+				expire = "1965.1.1.1"
+				traits = {
+					dictator
+				}
 			}
 		}
 		custom_effect_tooltip = SOV_can_have_anastasy_tt
@@ -12675,14 +12702,16 @@ country_event = {
 			factor = 100
 		}
 		add_stability = -0.1
-		create_country_leader = {
-			name = "Anastasy Vonsyatsky"
-			desc = "POLITICS_ANASTASY_VONSYATSKY_DESC"
-			picture = "Portrait_Anastasy_Vonsyatsky.dds"
-			expire = "1965.1.1"
-			ideology = fascism_anastasy
-			traits = {
-				dictator
+		add_country_leader_role = {
+			character = SOV_Anastasy_vonsyatsky
+			promote_leader = yes
+			country_leader = {
+				desc = SOV_Anastasy_vonsyatsky_desc
+				ideology = fascism_anastasy
+				expire = "1965.1.1.1"
+				traits = {
+					dictator
+				}
 			}
 		}
 		custom_effect_tooltip = SOV_can_have_anastasy_tt
@@ -12933,14 +12962,16 @@ country_event = {
 		ai_chance = {
 			factor = 100
 		}
-		create_country_leader = {
-			name = "Anastasy Vonsyatsky"
-			desc = "POLITICS_ANASTASY_VONSYATSKY_DESC"
-			picture = "Portrait_Anastasy_Vonsyatsky.dds"
-			expire = "1965.1.1"
-			ideology = fascism_anastasy
-			traits = {
-				dictator
+		add_country_leader_role = {
+			character = SOV_Anastasy_vonsyatsky
+			promote_leader = yes
+			country_leader = {
+				desc = SOV_Anastasy_vonsyatsky_desc
+				ideology = fascism_anastasy
+				expire = "1965.1.1.1"
+				traits = {
+					dictator
+				}
 			}
 		}
 		custom_effect_tooltip = SOV_can_have_anastasy_tt
@@ -14576,13 +14607,17 @@ country_event = {
 			factor = 50
 		}
 		add_stability = 0.05
-		create_country_leader = {
-			name = "Pavel Bermondt-Avalov"
-			desc = "POLITICS_PAVEL_BERMONDT_DESC"
-			picture = "Portrait_Pavel_Bermondt_Avalov.dds"
-			ideology = military_junta_russia
-			traits = {
-				russia2_firm_grip russia2_imperial_russian_army
+		add_country_leader_role = {
+			character = SOV_Pavel_bermondt_avalov
+			promote_leader = yes
+			country_leader = {
+				desc = SOV_Pavel_bermondt_avalov_desc
+				ideology = military_junta_russia
+				expire = "1965.1.1.1"
+				traits = {
+					russia2_firm_grip
+					russia2_imperial_russian_army
+				}
 			}
 		}
 	}
@@ -14970,10 +15005,10 @@ country_event = {
 				}
 			}
 			random_owned_controlled_state = {
-				add_extra_state_shared_building_slots = 1
+				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = industrial_complex
-					level = 1
+					level = 2
 					instant_build = yes
 				}
 			}
@@ -14987,10 +15022,10 @@ country_event = {
 				}
 			}
 			random_owned_controlled_state = {
-				add_extra_state_shared_building_slots = 1
+				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = arms_factory
-					level = 1
+					level = 2
 					instant_build = yes
 				}
 			}
@@ -15007,10 +15042,10 @@ country_event = {
 				limit = {
 					is_coastal = yes
 				}
-				add_extra_state_shared_building_slots = 1
+				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = dockyard
-					level = 1
+					level = 2
 					instant_build = yes
 				}
 			}
@@ -15040,7 +15075,7 @@ country_event = {
 			}
 			round_temp_variable = nexteconomicevent
 			SOV = {
-				country_event = { id = russia2_russia.360 days = nexteconomicevent }
+				country_event = { id = russia2_russia.360 days = var:nexteconomicevent }
 			}
 		}
 	}
@@ -24522,7 +24557,7 @@ country_event = {
 		sov_increase_great_purge_penalties = yes
 		remove_unit_leader = 401
 		custom_effect_tooltip = remove_theorist
-		show_ideas_tooltip = mikhail_tukhachevsky
+		show_ideas_tooltip = SOV_Mikhail_tukhachevsky
 	}
 
 	option = { #Don't purge
@@ -24594,7 +24629,7 @@ country_event = {
 		sov_increase_great_purge_penalties = yes
 		remove_unit_leader = 410
 		custom_effect_tooltip = remove_theorist
-		show_ideas_tooltip = georgy_zhukov
+		show_ideas_tooltip = SOV_Georgy_zhukov
 	}
 
 	option = { #Don't purge
@@ -24665,7 +24700,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_10_purge_completion
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_political_advisor
-		show_ideas_tooltip = mikhail_kalinin
+		show_ideas_tooltip = SOV_Mikhail_kalinin
 	}
 
 	option = { #Don't purge
@@ -24956,7 +24991,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_3_purge_completion
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_political_advisor
-		show_ideas_tooltip = soviet_vsevolod_merkulov
+		show_ideas_tooltip = SOV_Vsevolod_merkulov
 	}
 
 	option = { #Don't purge
@@ -25087,21 +25122,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_3_purge_completion
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_political_advisor
-		show_ideas_tooltip = nikita_khrushchev
-		hidden_effect = {
-			UKR = {
-				retire_ideology_leader = communism
-				create_country_leader = {
-					name = "Vladimir Antonov-Ovseyenko"
-					desc = "POLITICS_VLADIMIR_ANTONOV_DESC"
-					picture = "gfx/leaders/UKR/Vladimir_Antonov_Ovseyenko.dds"
-					ideology = leninism
-					traits = {
-						
-					}
-				}
-			}
-		}
+		show_ideas_tooltip = SOV_Nikita_khrushchev
 	}
 
 	option = { #Don't purge
@@ -25156,7 +25177,7 @@ country_event = {
 		sov_increase_great_purge_penalties = yes
 		remove_unit_leader = 404
 		custom_effect_tooltip = remove_chief_of_army
-		show_ideas_tooltip = semyon_timoshenko
+		show_ideas_tooltip = SOV_Semyon_timoshenko
 	}
 
 	option = { #Don't purge
@@ -25210,7 +25231,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_3_purge_completion
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_chief_of_army
-		show_ideas_tooltip = alexander_yegorov
+		show_ideas_tooltip = SOV_Alexander_yegorov
 	}
 
 	option = { #Don't purge
@@ -25264,7 +25285,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_3_purge_completion
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_chief_of_army
-		show_ideas_tooltip = vasily_blucher
+		show_ideas_tooltip = SOV_Vasily_blucher
 	}
 
 	option = { #Don't purge
@@ -25318,7 +25339,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_3_purge_completion
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_chief_of_navy
-		show_ideas_tooltip = pyotr_smirnov
+		show_ideas_tooltip = SOV_Pyotr_smirnov
 	}
 
 	option = { #Don't purge
@@ -25372,7 +25393,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_3_purge_completion
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_chief_of_navy
-		show_ideas_tooltip = mikhail_frinovsky
+		show_ideas_tooltip = SOV_Mikhail_frinovsky
 	}
 
 	option = { #Don't purge
@@ -25426,7 +25447,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_3_purge_completion
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_chief_of_navy
-		show_ideas_tooltip = nikolay_kuznetsov
+		show_ideas_tooltip = SOV_Nikolay_kuznetsov
 	}
 
 	option = { #Don't purge
@@ -25480,7 +25501,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_3_purge_completion
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_chief_of_navy
-		show_ideas_tooltip = ivan_yumashev
+		show_ideas_tooltip = SOV_Ivan_yumashev
 	}
 
 	option = { #Don't purge
@@ -25534,7 +25555,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_3_purge_completion
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_chief_of_airforce
-		show_ideas_tooltip = alexander_novikov
+		show_ideas_tooltip = SOV_Alexander_novikov
 	}
 
 	option = { #Don't purge
@@ -25588,7 +25609,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_3_purge_completion
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_chief_of_airforce
-		show_ideas_tooltip = konstantin_vershinin
+		show_ideas_tooltip = SOV_Konstantin_vershinin
 	}
 
 	option = { #Don't purge
@@ -25642,7 +25663,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_3_purge_completion
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_chief_of_airforce
-		show_ideas_tooltip = yakov_smushkevich
+		show_ideas_tooltip = SOV_Yakov_smushkevich
 	}
 
 	option = { #Don't purge
@@ -25696,7 +25717,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_3_purge_completion
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_chief_of_airforce
-		show_ideas_tooltip = pavel_rychagov
+		show_ideas_tooltip = SOV_Pavel_rychagov
 	}
 
 	option = { #Don't purge
@@ -25749,7 +25770,7 @@ country_event = {
 		sov_increase_great_purge_penalties = yes
 		remove_unit_leader = 408
 		custom_effect_tooltip = remove_military_high_command
-		show_ideas_tooltip = ivan_konev
+		show_ideas_tooltip = SOV_Ivan_konev
 	}
 
 	option = { #Purge Rokossovsky
@@ -25771,7 +25792,7 @@ country_event = {
 		sov_increase_great_purge_penalties = yes
 		remove_unit_leader = 402
 		custom_effect_tooltip = remove_military_high_command
-		show_ideas_tooltip = konstantin_rokossovsky
+		show_ideas_tooltip = SOV_Konstantin_rokossovsky
 	}
 
 	option = { #Don't purge
@@ -25826,7 +25847,7 @@ country_event = {
 		sov_increase_great_purge_penalties = yes
 		remove_unit_leader = 407
 		custom_effect_tooltip = remove_military_high_command
-		show_ideas_tooltip = aleksandr_vasilevsky
+		show_ideas_tooltip = SOV_Aleksandr_vasilevsky
 	}
 
 	option = { #Don't purge
@@ -25880,7 +25901,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_3_purge_completion
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_military_high_command
-		show_ideas_tooltip = pavel_zhigarev
+		show_ideas_tooltip = SOV_Pavel_zhigarev
 	}
 
 	option = { #Don't purge
@@ -25934,7 +25955,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_3_purge_completion
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_military_high_command
-		show_ideas_tooltip = sergei_khudyakov
+		show_ideas_tooltip = SOV_Sergei_khudyakov
 	}
 
 	option = { #Don't purge
@@ -25988,7 +26009,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_3_purge_completion
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_military_high_command
-		show_ideas_tooltip = stepan_krasovsky
+		show_ideas_tooltip = SOV_Stepan_krasovsky
 	}
 
 	option = { #Don't purge
@@ -26043,7 +26064,7 @@ country_event = {
 		sov_increase_great_purge_penalties = yes
 		remove_unit_leader = 403
 		custom_effect_tooltip = remove_military_high_command
-		show_ideas_tooltip = vladimir_kasatonov
+		show_ideas_tooltip = SOV_Vladimir_kasatonov
 	}
 
 	option = { #Don't purge
@@ -26098,7 +26119,7 @@ country_event = {
 		sov_increase_great_purge_penalties = yes
 		remove_unit_leader = 406
 		custom_effect_tooltip = remove_military_high_command
-		show_ideas_tooltip = gordey_levchenko
+		show_ideas_tooltip = SOV_Gordey_levchenko
 	}
 
 	option = { #Don't purge
@@ -26153,7 +26174,7 @@ country_event = {
 		sov_increase_great_purge_penalties = yes
 		remove_unit_leader = 409
 		custom_effect_tooltip = remove_military_high_command
-		show_ideas_tooltip = arseniy_golovko
+		show_ideas_tooltip = SOV_Arseniy_golovko
 	}
 
 	option = { #Don't purge
@@ -26206,7 +26227,7 @@ country_event = {
 		sov_increase_great_purge_penalties = yes
 		remove_unit_leader = 510
 		custom_effect_tooltip = remove_theorist
-		show_ideas_tooltip = boris_shaposhnikov
+		show_ideas_tooltip = SOV_Boris_shaposhnikov
 	}
 
 	option = { #Purge Gorshkov
@@ -26228,7 +26249,7 @@ country_event = {
 		sov_increase_great_purge_penalties = yes
 		remove_unit_leader = 411
 		custom_effect_tooltip = remove_theorist
-		show_ideas_tooltip = sergey_gorshkov
+		show_ideas_tooltip = SOV_Sergey_gorshkov
 	}
 
 	option = { #Don't purge
@@ -26282,7 +26303,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_3_purge_completion
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_theorist
-		show_ideas_tooltip = vladimir_tributs
+		show_ideas_tooltip = SOV_Vladimir_tributs
 	}
 
 	option = { #Don't purge
@@ -26336,7 +26357,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_3_purge_completion
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_theorist
-		show_ideas_tooltip = sergei_rudenko
+		show_ideas_tooltip = SOV_Sergei_rudenko
 	}
 
 	option = { #Don't purge
@@ -26390,7 +26411,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_3_purge_completion
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_theorist
-		show_ideas_tooltip = alexander_golovanov
+		show_ideas_tooltip = SOV_Alexander_golovanov
 	}
 
 	option = { #Don't purge
@@ -26444,7 +26465,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_3_purge_completion
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_theorist
-		show_ideas_tooltip = igor_kurchatov
+		show_ideas_tooltip = SOV_Igor_kurchatov
 	}
 
 	option = { #Don't purge
@@ -26498,7 +26519,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_3_purge_completion
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_theorist
-		show_ideas_tooltip = sergei_korolev
+		show_ideas_tooltip = SOV_Sergei_korolev
 	}
 
 	option = { #Don't purge
@@ -26920,51 +26941,7 @@ country_event = {
 	}
 }
 
-#Tsar's Death. His Son Takes Over Country Flag Edition
-country_event = {
-	id = russia2_russia.605
-	title = russia2_russia.226.t
-	desc = russia2_russia.226.d
-	picture = GFX_report_event_generic_funeral
-
-	fire_only_once = yes
-
-	trigger = {
-		has_country_leader = {
-			name = "Kirill Vladimirovich"
-			ruling_only = yes
-		}
-		has_country_flag = sov_old_tsar_still_alive
-		date > 1941.6.24
-	}
-
-	mean_time_to_happen = {
-		days =  10
-	}
-
-	option = {
-		name = russia2_russia.226.a
-		ai_chance = {
-			factor = 100
-		}
-		hidden_effect = {
-			kill_country_leader = yes
-		}
-		create_country_leader = {
-			name = "Vladimir Kirillovich"
-			desc = "POLITICS_VLADIMIR_KIRILLOVICH_DESC"
-			picture = "Portrait_Vladimir_Kirillovich.dds"
-			expire = "1965.1.1"
-			ideology = despotism
-			traits = {
-				russia2_heir_of_the_tsar
-			}
-		}
-		add_stability = -0.05
-	}
-}
-
-#Question of the Anarchy Market 
+#Question of the Anarchy Market
 country_event = {
 	id = russia2_russia.606
 	title = russia2_russia.606.t
@@ -27208,12 +27185,17 @@ country_event = {
 		add_stability = 0.1
 		add_political_power = 50
 		set_cosmetic_tag = FAM
-		create_country_leader = {
-			name = "Council of Moscow"
-			desc = "POLITICS_COUNCIL_MOSCOW_DESC"
-			picture = "portrait_anarchist_commune.dds"
-			expire = "1965.1.1"
-			ideology = anarchist
+		add_country_leader_role = {
+			character = SOV_Council_of_moscow
+			promote_leader = yes
+			country_leader = {
+				desc = SOV_Council_of_moscow_desc
+				ideology = anarchist
+				expire = "1965.1.1.1"
+				traits = {
+					
+				}
+			}
 		}
 	}
 }
