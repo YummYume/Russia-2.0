@@ -220,7 +220,7 @@ country_event = {
 				has_capitulated = yes
 				has_government = communism
 			}
-			add_timed_idea = { idea = FRA_Russian_help days = 730 }
+			add_timed_idea = { idea = FRA_Russian_help2 days = 730 }
 			add_opinion_modifier = { target = FROM modifier = russian_help }
 		}
 	}
@@ -727,6 +727,83 @@ country_event = {
 					value = 100
 				}
 			}
+		}
+	}
+}
+
+#SOV Threatens
+country_event = {
+	id = russia2_france.18
+	title = russia2_france.18.t
+	desc = russia2_france.18.d
+	picture = GFX_report_event_british_artillery
+
+	is_triggered_only = yes
+
+	option = { #Okay...
+		name = russia2_france.18.a
+		ai_chance = {
+			factor = 10
+			modifier = {
+				add = 30
+				surrender_progress > 0.75
+			}
+		}
+		SOV = {
+			puppet = FRA
+			country_event = { id = russia2_germany.15 days = 1 }
+		}
+	}
+
+	option = { #No!
+		name = russia2_france.18.b
+		ai_chance = {
+			factor = 90
+			modifier = {
+				add = -30
+				surrender_progress > 0.25
+			}
+		}
+		SOV = {
+			country_event = { id = russia2_germany.16 days = 1 }
+		}
+	}
+}
+
+#GER Accepts
+country_event = {
+	id = russia2_france.19
+	title = russia2_france.19.t
+	desc = russia2_france.19.d
+	picture = GFX_report_event_fascist_gathering
+
+	is_triggered_only = yes
+
+	option = { #Easy
+		name = russia2_france.19.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#GER Refuses
+country_event = {
+	id = russia2_france.20
+	title = russia2_france.20.t
+	desc = russia2_france.20.d
+	picture = GFX_report_event_generic_panzer_attack
+
+	is_triggered_only = yes
+
+	option = { #You die then
+		name = russia2_france.20.a
+		ai_chance = {
+			factor = 100
+		}
+		create_wargoal = {
+		    type = puppet_wargoal_focus
+		    target = FRA
 		}
 	}
 }

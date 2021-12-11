@@ -2300,7 +2300,7 @@ country_event = {
 							}
 						}
 					}
-					country_event = { id = russia2_ukraine.38 days = 1 }
+					country_event = { id = russia2_ukraine.38 hours = 1 }
 					ROOT = {
 						declare_war_on = {
 							target = PREV
@@ -2560,19 +2560,6 @@ country_event = {
 			}
 			if = {
 				limit = {
-					NOT = {
-						country_exists = SOU
-					}
-				}
-				every_state = {
-					limit = {
-						is_core_of = SOU
-					}
-					remove_core_of = SOU
-				}
-			}
-			if = {
-				limit = {
 					SOV = {
 						is_subject_of = UKR
 					}
@@ -2586,37 +2573,82 @@ country_event = {
 					}
 				}
 				SOV = {
-					set_capital = 217
+					set_capital = {
+						state = 217
+					}
+				}
+				every_state = {
+					limit = {
+						is_core_of = SOU
+					}
+					remove_core_of = SOU
 				}
 			}
-			if = {
+			else_if = {
 				limit = {
 					SOU = {
 						is_subject_of = UKR
 					}
 				}
-				SOU = {
-					retire_ideology_leader = communism
-					every_army_leader = {
-						retire = yes
-					}
-					sou_general_end_civil_war = yes
-					sou_create_country_leader_sov = yes
-				}
-				set_capital = 217
 				every_state = {
 					limit = {
 						is_core_of = SOV
+						is_owned_by = SOU 
 					}
-					remove_core_of = SOV
-				}
-				every_state = {
-					limit = {
-						is_owned_by = SOU
-					}
-					SOU = {
+					SOV = {
 						transfer_state = PREV
 					}
+				}
+				if = {
+					limit = {
+						SOU = {
+							any_owned_state = {
+								is_core_of = MON
+							}
+						}
+					}
+					SOU = {
+						release = MON
+					}
+					UKR = {
+						set_autonomy = {
+							target = MON
+							autonomy_state = autonomy_puppet
+						}
+					}
+				}
+				UKR = {
+					set_autonomy = {
+						target = SOV
+						autonomy_state = autonomy_puppet
+					}
+				}
+				SOV = {
+					every_state = {
+						limit = {
+							is_core_of = SOU
+						}
+						remove_core_of = SOU
+					}
+					every_state = {
+						limit = {
+							is_owned_by = SOV
+						}
+						SOV = {
+							transfer_state = PREV
+						}
+					}
+					create_country_leader = {
+						name = "Ivan Kononov"
+						desc = "POLITICS_IVAN_KONONOV_DESC"
+						picture = "Portrait_Ivan_Kononov.dds"
+						expire = "1965.1.1"
+						ideology = oligarchism
+						traits = {
+							loyal_collaborator
+						}
+					}
+					set_cosmetic_tag = AFS
 				}
 			}
 			every_country = {
@@ -2662,6 +2694,11 @@ country_event = {
 			581 = {
 				remove_dynamic_modifier = {
 					modifier = urals_secret
+				}
+			}
+			SOV = {
+				set_capital = {
+					state = 217
 				}
 			}
 		}
@@ -3047,25 +3084,25 @@ country_event = {
 		}
 		random_owned_controlled_state = {
 			create_unit = {
-                division = "name = \"6ya Anarkhist Dobrovolets\" division_template = \"Ukrayins'ka Dyviziya\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
+                division = "name = \"7ya Anarkhist Dobrovolets\" division_template = \"Ukrayins'ka Dyviziya\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
                 owner = UKR
             }
 		}
 		random_owned_controlled_state = {
 			create_unit = {
-                division = "name = \"6ya Anarkhist Dobrovolets\" division_template = \"Ukrayins'ka Dyviziya\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
+                division = "name = \"8ya Anarkhist Dobrovolets\" division_template = \"Ukrayins'ka Dyviziya\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
                 owner = UKR
             }
 		}
 		random_owned_controlled_state = {
 			create_unit = {
-                division = "name = \"6ya Anarkhist Dobrovolets\" division_template = \"Ukrayins'ka Dyviziya\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
+                division = "name = \"9ya Anarkhist Dobrovolets\" division_template = \"Ukrayins'ka Dyviziya\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
                 owner = UKR
             }
 		}
 		random_owned_controlled_state = {
 			create_unit = {
-                division = "name = \"6ya Anarkhist Dobrovolets\" division_template = \"Ukrayins'ka Dyviziya\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
+                division = "name = \"10ya Anarkhist Dobrovolets\" division_template = \"Ukrayins'ka Dyviziya\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
                 owner = UKR
             }
 		}

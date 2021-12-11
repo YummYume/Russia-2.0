@@ -18,15 +18,8 @@ sov_setup_scw = {
                 military_police = { x = 0 y = 0 }
             }
         }
-        division_template = {
-            name = "Vozdushno-Desantnaya Brigada"
-            is_locked = no
-            division_names_group = SOV_PAR_01
-
-            regiments = {
-                paratrooper = { x = 0 y = 0 }
-                paratrooper = { x = 0 y = 1 }
-            }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
         }
         delete_unit_template_and_units = {
             division_template = "Strelkovaya Diviziya"
@@ -45,6 +38,16 @@ sov_setup_scw = {
         }
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
+        }
+        division_template = {
+            name = "Vozdushno-Desantnaya Brigada"
+            is_locked = no
+            division_names_group = SOV_PAR_01
+    
+            regiments = {
+                paratrooper = { x = 0 y = 0 }
+                paratrooper = { x = 0 y = 1 }
+            }
         }
         load_oob = "SOV_civil_war"
         if = {
@@ -548,7 +551,20 @@ sov_spawn_sou_scw = {
     }
     SOU = {
         create_faction = Comintern
-        load_oob = "SOU_civil_war"
+        if = {
+            limit = {
+                NOT = {
+                    has_dlc = "No Step Back"
+                }
+            }
+            load_oob = "SOU_civil_war"
+        }
+        else_if = {
+            limit = {
+                has_dlc = "No Step Back"
+            }
+            load_oob = "SOU_civil_war_nsb"
+        }
         inherit_technology = SOV
         country_event = { id = russia2_russia.186 days = 1 }
         add_ideas = SOV_Second_civil_war_idea_modifier
@@ -3851,16 +3867,6 @@ rr_lock_all_templates = {
 
 rr_unlock_all_templates = {
     country_lock_all_division_template = no
-    division_template = {
-        name = "Vozdushno-Desantnaya Brigada"
-        is_locked = no
-        division_names_group = SOV_PAR_01
-
-        regiments = {
-            paratrooper = { x = 0 y = 0 }
-            paratrooper = { x = 0 y = 1 }
-        }
-    }
 }
 
 black_revolution_division_template_organiser = {
@@ -5640,6 +5646,9 @@ sov_release_siberia_anarchist_collapse = {
 }
 
 sov_release_urals_anarchist_collapse = {
+    URA = {
+        remove_state_core = 581
+    }
     SOV = {
         release_on_controlled = URA
     }
