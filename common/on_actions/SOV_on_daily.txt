@@ -813,11 +813,11 @@ on_actions = {
 					has_completed_focus = SOV_restoration_tsar
 					OR = {
 						has_country_leader = {
-							name = "Kirill Vladimirovich"
+							character = SOV_Kirill_vladimirovich
 							ruling_only = yes
 						}
 						has_country_leader = {
-							name = "Vladimir Kirillovich"
+							character = SOV_Vladimir_kirillovich
 							ruling_only = yes
 						}
 					}
@@ -825,7 +825,7 @@ on_actions = {
 						has_completed_focus = SOV_the_emperor
 						has_completed_focus = SOV_the_empress
 						has_country_leader = {
-							name = "Anastasia Nikolaevna"
+							character = SOV_Anastasia_nikolaevna
 							ruling_only = yes
 						}
 					}
@@ -929,6 +929,38 @@ on_actions = {
 						array = sov_great_purge_events
 						index = random_purge_event
 					}
+				}
+			}
+		}
+	}
+
+	#Peasant Strike
+	on_monthly_SOV = {
+		effect = {
+			if = {
+				limit = {
+					has_ideas = SOV_Regular_peasants_strikes
+					has_country_flag = {
+						flag = sov_last_peasant_strike
+						days > 300
+					}
+				}
+				set_temp_variable = { peasant_strike_chance = 0 }
+				randomize_temp_variable = {
+					var = peasant_strike_chance
+					min = 0
+					max = 1
+					distribution = uniform
+				}
+				if = {
+					limit = {
+						check_variable = {
+							var = peasant_strike_chance
+							value = 0.5
+							compare = greater_than_or_equals
+						}
+					}
+					country_event = russia2_russia.93
 				}
 			}
 		}
@@ -1083,7 +1115,7 @@ on_actions = {
 				limit = {
 					has_government = communism
 					has_country_leader = {
-						name = "Joseph Stalin"
+						character = SOV_Joseph_stalin
 						ruling_only = yes
 					}
 					date > 1944.12.1
@@ -1099,9 +1131,41 @@ on_actions = {
 					}
 
 					var:sov_chance_stalin_not_death = {
-						add_to_variable = { sov_chance_stalin_death = 1 }
+						add_to_variable = { sov_chance_stalin_death = 5 }
 						clamp_variable = {
 							var = sov_chance_stalin_death
+							min = 10
+							max = 100
+						}
+					}
+				}
+			}
+		}
+	}
+
+	#Death of Makhno
+	on_monthly_UKR = {
+		effect = {
+			if = {
+				limit = {
+					has_government = anarchy
+					has_country_flag = ukr_makhno_very_weak
+					has_character = UKR_Makhno_nestor
+					NOT = {
+						has_global_flag = ukr_makhno_dead
+					}
+				}
+				set_temp_variable = { ukr_chance_makhno_not_death = 100 }
+				subtract_from_temp_variable = { ukr_chance_makhno_not_death = ukr_chance_makhno_death }
+				random_list = {
+					var:ukr_chance_makhno_death = {
+						
+					}
+
+					var:ukr_chance_makhno_not_death = {
+						add_to_variable = { ukr_chance_makhno_death = 10 }
+						clamp_variable = {
+							var = sov_chance_makhno_death
 							min = 10
 							max = 100
 						}

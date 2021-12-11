@@ -1898,6 +1898,7 @@ country_event = {
 			ruling_party = anarchy
 			elections_allowed = no
 		}
+		set_global_flag = ukr_turned_anarchist_free_state
 		clr_country_flag = ukr_anarchist_rebels
 		custom_effect_tooltip = ukr_loses_all_cores
 		custom_effect_tooltip = ukr_unlocks_anarchist_legetimacy_decisions
@@ -2043,6 +2044,7 @@ country_event = {
 			ruling_party = anarchy
 			elections_allowed = no
 		}
+		set_global_flag = ukr_turned_anarchist_free_state
 		clr_country_flag = ukr_anarchist_rebels
 		custom_effect_tooltip = ukr_loses_all_cores
 		custom_effect_tooltip = ukr_unlocks_anarchist_legetimacy_decisions
@@ -3157,22 +3159,30 @@ country_event = {
 		ai_chance = {
 			factor = 25
 		}
-		hidden_effect = {
-			retire_ideology_leader = anarchy
-		}
-		create_country_leader = {
-			name = "Vladimir Antonov-Ovseyenko"
-			desc = "POLITICS_VLADIMIR_ANTONOV_DESC"
-			picture = "gfx/leaders/UKR/Vladimir_Antonov_Ovseyenko.dds"
-			ideology = anarchist
-			traits = {
-				anarchist_principles
+		add_country_leader_role = {
+			character = UKR_Vladimir_antonov_ovseyenko_anarchist
+			promote_leader = yes
+			country_leader = {
+				desc = UKR_Vladimir_antonov_ovseyenko_anarchist_desc
+				ideology = anarchist
+				expire = "1965.1.1.1"
+				traits = {
+					anarchist_principles
+				}
 			}
 		}
-		create_corps_commander = {
-			name = "Makhno Nestor"
-			picture = "Makhno_Nestor.dds"
-			traits = { unbreakable_will_trait commando infantry_leader infantry_expert urban_assault_specialist trickster guerilla_fighter }
+		add_corps_commander_role = {
+			character = UKR_Makhno_nestor
+			traits = {
+				russia2_unbreakable_will_trait
+				commando
+				infantry_leader
+				infantry_expert
+				urban_assault_specialist 
+				trickster
+				guerilla_fighter
+				russia2_weakened_trait
+			}
 			skill = 6
 			attack_skill = 5
 			defense_skill = 2
@@ -4734,6 +4744,93 @@ country_event = {
 				has_idea = strikes_3
 			}
 			remove_ideas = strikes_3
+		}
+	}
+}
+
+#Makhno Dies ;(
+country_event = {
+	id = russia2_ukraine.89
+	title = russia2_ukraine.89.t
+	desc = {
+		text = russia2_ukraine.89.d_1
+		trigger = {
+			has_country_leader = {
+				character = UKR_Makhno_nestor
+				ruling_only = yes
+			}
+		}
+	}
+	desc = {
+		text = russia2_ukraine.89.d_2
+		trigger = {
+			NOT = {
+				has_country_leader = {
+					character = UKR_Makhno_nestor
+					ruling_only = yes
+				}
+			}
+		}
+	}
+	picture = GFX_report_event_soviet_german_soldier_handshake
+
+	is_triggered_only = yes
+
+	immediate = {
+		set_global_flag = ukr_makhno_dead
+	}
+
+	option = { # :(
+		trigger = {
+			has_country_leader = {
+				character = UKR_Makhno_nestor
+				ruling_only = yes
+			}
+		}
+		name = russia2_ukraine.89.a
+		ai_chance = {
+			factor = 100
+		}
+		custom_effect_tooltip = UKR_makhno_nestor_dies
+		add_ideas = UKR_Makhno_wish
+		add_country_leader_role = {
+			character = UKR_Ida_mett
+			promote_leader = yes
+			country_leader = {
+				desc = UKR_Ida_mett_desc
+				ideology = anarchist
+				expire = "1965.1.1.1"
+				traits = {
+					anarchist_principles
+					russia2_tactical_and_theoretical_unity
+					russia2_collective_responsibility
+					russia2_federalism_trait
+				}
+			}
+		}
+		hidden_effect = {
+			retire_character = UKR_Makhno_nestor
+		}
+	}
+
+	option = { # :(
+		trigger = {
+			NOT = {
+				has_country_leader = {
+					character = UKR_Makhno_nestor
+					ruling_only = yes
+				}
+			}
+		}
+		name = russia2_ukraine.89.b
+		ai_chance = {
+			factor = 100
+		}
+		custom_effect_tooltip = UKR_makhno_nestor_dies
+		add_ideas = UKR_Makhno_wish
+		add_political_power = 100
+		hidden_effect = {
+			retire_character = UKR_Makhno_nestor
 		}
 	}
 }
