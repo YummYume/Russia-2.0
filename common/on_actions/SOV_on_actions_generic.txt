@@ -239,33 +239,41 @@ on_actions = {
 					FROM = {
 						original_tag = SOV
 						has_government = communism
-						has_unit_leader = 412
+						has_character = SOV_Andrey_vlasov
 						has_war_with = ROOT
 					}
 				}
 				ROOT = {
-					country_event = { id = russia2_russia.501 }
 					save_event_target_as = andrey_vlasov_new_nationality
 					set_country_flag = captured_andrey_vlasov
+					country_event = { id = russia2_russia.501 }
 				}
 				FROM = {
-					country_event = { id = russia2_russia.500 }
-					every_unit_leader = {
+					if = {
 						limit = {
-							has_id = 412
+							SOV_Andrey_vlasov = {
+								is_country_leader = yes
+							}
 						}
+						kill_ideology_leader = neutrality
+						add_country_leader_role = {
+							character = SOV_Alexei_borovo
+							promote_leader = yes
+							country_leader = {
+								desc = SOV_Alexei_borovo_desc
+								ideology = military_junta_russia
+								expire = "1965.1.1.1"
+								traits = {
+									russia2_firm_grip
+									russia2_imperial_russian_army
+								}
+							}
+						}
+					}
+					SOV_Andrey_vlasov = {
 						set_nationality = ROOT
 					}
-					kill_ideology_leader = neutrality
-					create_country_leader = {
-						name = "Pavel Bermondt-Avalov"
-						desc = "POLITICS_PAVEL_BERMONDT_DESC"
-						picture = "Portrait_Pavel_Bermondt_Avalov.dds"
-						ideology = military_junta_russia
-						traits = {
-							firm_grip imperial_russian_army
-						}
-					}
+					country_event = { id = russia2_russia.500 }
 				}
 			}
 		}
@@ -279,11 +287,11 @@ on_actions = {
 					FROM = {
 						original_tag = SOV
 						NOT = {
-							has_unit_leader = 412
+							has_character = SOV_Andrey_vlasov
 						}
 					}
 					ROOT = {
-						has_unit_leader = 412
+						has_character = SOV_Andrey_vlasov
 						has_country_flag = captured_andrey_vlasov
 						NOT = {
 							has_country_flag = andrey_vlasov_died
@@ -292,15 +300,10 @@ on_actions = {
 				}
 				ROOT = {
 					save_event_target_as = andrey_vlasov_new_nationality
-					country_event = { id = russia2_russia.503 }
-					every_unit_leader = {
-						limit = {
-							has_id = 412
-						}
-						retire = yes
-					}
+					retire_character = SOV_Andrey_vlasov
 					clr_country_flag = captured_andrey_vlasov
 					set_global_flag = andrey_vlasov_died
+					country_event = { id = russia2_russia.503 }
 				}
 				FROM = {
 					country_event = { id = russia2_russia.502 }
@@ -1200,7 +1203,7 @@ on_actions = {
 		}
 	}
 	
-	#Germany Capitulate to Prussia
+	#Germany Capitulates to Prussia
 	on_capitulation = {
 		effect = {
 			if = {
