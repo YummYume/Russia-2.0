@@ -582,10 +582,8 @@ country_event = {
 		custom_effect_tooltip = SOV_great_purge_begins_tt
 		hidden_effect = {
 			add_ideas = SOV_Great_purge
-			swap_ideas = {
-				remove_idea = SOV_Genrikh_yagoda
-				add_idea = SOV_Nikolay_yezhov
-			}
+			remove_ideas = SOV_Genrikh_yagoda
+			add_ideas = SOV_Nikolay_yezhov
 		}
 	}
 }
@@ -620,20 +618,16 @@ country_event = {
 			}
 			custom_effect_tooltip = SOV_great_purge_ends_tt
 			hidden_effect = {
-				swap_ideas = {
-					remove_idea = SOV_Nikolay_yezhov
-					add_idea = SOV_Lavrentiy_beria
-				}
+				remove_ideas = SOV_Nikolay_yezhov
+				add_ideas = SOV_Lavrentiy_beria
 				set_country_flag = SOV_Nikolay_yezhov_purged
 			}
 		}
 		else = {
 			custom_effect_tooltip = SOV_great_purge_ends_tt2
 			hidden_effect = {
-				swap_ideas = {
-					remove_idea = SOV_Nikolay_yezhov
-					add_idea = SOV_Genrikh_yagoda
-				}
+				remove_ideas = SOV_Nikolay_yezhov
+				add_ideas = SOV_Genrikh_yagoda
 				set_country_flag = SOV_Nikolay_yezhov_purged
 			}
 		}
@@ -659,7 +653,7 @@ country_event = {
 	}
 }
 
-#Remove Trotsky Plot
+#Remove Trotsky Plot TODO
 country_event = {
 	id = russia2_russia.27
 	title = soviet.53.t
@@ -1454,7 +1448,7 @@ country_event = {
 				ideology = stalinism
 				expire = "1965.1.1.1"
 				traits = {
-					empty_parliament
+					russia2_empty_parliament
 				}
 			}
 		}
@@ -1572,7 +1566,7 @@ country_event = {
 				ideology = stalinism
 				expire = "1965.1.1.1"
 				traits = {
-					empty_parliament
+					russia2_empty_parliament
 				}
 			}
 		}
@@ -1584,7 +1578,7 @@ country_event = {
 				}
 				set_country_flag = ENG_communist_civil_war
 				dismantle_faction = yes
-			}	
+			}
 			random_other_country = {
 				limit = {
 					original_tag = SOV
@@ -1729,7 +1723,7 @@ country_event = {
 				ideology = stalinism
 				expire = "1965.1.1.1"
 				traits = {
-					empty_parliament
+					russia2_empty_parliament
 				}
 			}
 		}
@@ -1788,56 +1782,527 @@ country_event = {
 	desc = russia2_russia.49.d
 	picture = GFX_report_event_soviet_tanks
 
-	trigger = {
-		tag = SOV
-		has_country_flag = SOV_soviet.48_notrotsky_rework
+	is_triggered_only = yes
+
+	immediate = {
+		set_global_flag = SOV_soviet_civil_war
 	}
-	
-	fire_only_once = yes
 
-	mean_time_to_happen = { days = 10 }
-
+	#Go with Stalin's side
 	option = {
 		name = russia2_russia.49.a
+		ai_will_do = {
+			factor = 100
+		}
+		set_temp_variable = { sov_opposition_strength = 100 }
+		subtract_from_temp_variable = { sov_opposition_strength = var:sov_great_purge_completion }
+		divide_temp_variable = { sov_opposition_strength = 100 }
+		clamp_temp_variable = {
+			var = sov_opposition_strength
+			min = 0.1
+			max = 0.9
+		}
 		start_civil_war = {
-			ideology = neutrality
-			size = 0.6
-			keep_unit_leaders = { 401 402 407 410 406 405 403 407 408 410 411 404 }
-			states = {
-				408 409 560 655 657 561 562 637 644 574 516 575 565 563 564 566 567 576 568 569 578 577 570 40 654 588 589 404 586 732 742 405 584 585 587 402 583 590 582 652 407 406 582 651 573 581 580 579 403 653 572 590 398 397 262 400 399 249 251 407 406 236 237 238 235 232 229 231 230 233 234 401 652 571 823 826 827 828 821 831 832 830 824 822 825
-			}	
+			ideology = communism
+			size = var:sov_opposition_strength
+			keep_political_leader = yes
 		}
 		hidden_effect = {
-			remove_unit_leader = 412 #Remove Andrey Vlasov
-			dismantle_faction = yes
+			create_faction = sov_comintern_faction
 			random_other_country = {
 				limit = {
 					original_tag = SOV
-					has_government = neutrality
-				}
-				kill_country_leader = yes
-				create_country_leader = {
-					name = "Andrey Vlasov"
-					desc = "POLITICS_ANDREY_VLASOV_DESC"
-					picture = "Portrait_Soviet_Andrey_Vlasov.dds"
-					expire = "1965.1.1"
-					ideology = military_junta_russia
-					traits = {
+					has_government = communism
+					NOT = {
+						tag = ROOT
 					}
 				}
+				every_country = {
+					limit = {
+						is_in_faction_with = THIS
+					}
+					leave_faction = yes
+				}
+				if = {
+					limit = {
+						NOT = {
+							check_variable = {
+								var = sov_great_purge_status^36
+								value = 1
+								compare = equals
+							}
+						}
+					}
+					add_country_leader_role = {
+						character = SOV_Aleksey_rykov
+						promote_leader = yes
+						country_leader = {
+							desc = SOV_Aleksey_rykov_desc
+							ideology = marxism
+							expire = "1965.1.1.1"
+							traits = {
 
+							}
+						}
+					}
+					hidden_effect = {
+						SOV = {
+							SOV_Aleksey_rykov = {
+								set_character_flag = sov_leading_war_against_stalin
+							}
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						NOT = {
+							check_variable = {
+								var = sov_great_purge_status^37
+								value = 1
+								compare = equals
+							}
+						}
+					}
+					add_country_leader_role = {
+						character = SOV_Lev_kamenev
+						promote_leader = yes
+						country_leader = {
+							desc = SOV_Lev_kamenev_desc
+							ideology = marxism
+							expire = "1965.1.1.1"
+							traits = {
+
+							}
+						}
+					}
+					hidden_effect = {
+						SOV = {
+							SOV_Lev_kamenev = {
+								set_character_flag = sov_leading_war_against_stalin
+							}
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						NOT = {
+							check_variable = {
+								var = sov_great_purge_status^38
+								value = 1
+								compare = equals
+							}
+						}
+					}
+					add_country_leader_role = {
+						character = SOV_Nikolay_bukharin
+						promote_leader = yes
+						country_leader = {
+							desc = SOV_Nikolay_bukharin_desc
+							ideology = marxism
+							expire = "1965.1.1.1"
+							traits = {
+
+							}
+						}
+					}
+					hidden_effect = {
+						SOV = {
+							SOV_Nikolay_bukharin = {
+								set_character_flag = sov_leading_war_against_stalin
+							}
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						NOT = {
+							check_variable = {
+								var = sov_great_purge_status^39
+								value = 1
+								compare = equals
+							}
+						}
+					}
+					add_country_leader_role = {
+						character = SOV_Grigory_zinovyev
+						promote_leader = yes
+						country_leader = {
+							desc = SOV_Grigory_zinovyev_desc
+							ideology = marxism
+							expire = "1965.1.1.1"
+							traits = {
+
+							}
+						}
+					}
+					hidden_effect = {
+						SOV = {
+							SOV_Grigory_zinovyev = {
+								set_character_flag = sov_leading_war_against_stalin
+							}
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						NOT = {
+							check_variable = {
+								var = sov_great_purge_status^6
+								value = 1
+								compare = equals
+							}
+						}
+					}
+					add_country_leader_role = {
+						character = SOV_Nikita_khrushchev
+						promote_leader = yes
+						country_leader = {
+							desc = SOV_Nikita_khrushchev_desc
+							ideology = marxism
+							expire = "1965.1.1.1"
+							traits = {
+
+							}
+						}
+					}
+					hidden_effect = {
+						SOV = {
+							SOV_Nikita_khrushchev = {
+								set_character_flag = sov_leading_war_against_stalin
+							}
+						}
+					}
+				}
+				else = {
+					add_country_leader_role = {
+						character = SOV_Vasily_stalin
+						promote_leader = yes
+						country_leader = {
+							desc = SOV_Vasily_stalin_desc
+							ideology = marxism
+							expire = "1965.1.1.1"
+							traits = {
+
+							}
+						}
+					}
+					hidden_effect = {
+						hidden_effect = {
+							if = {
+								limit = {
+									NOT = {
+										is_in_array = { global.drunkard_wheel_achievement = THIS }
+									}
+								}
+								add_to_array = { global.drunkard_wheel_achievement = THIS }
+								set_variable = { global.drunkard_wheel_achievement_date@THIS = global.date }
+								set_country_flag = russia_reworked_new_achievement
+								if = {
+									limit = {
+										has_global_flag = russia_reworked_achievements_enabled
+									}
+									scoped_sound_effect = "russia_reworked_unlock_achievement"
+								}
+							}
+						}
+						SOV = {
+							SOV_Vasily_stalin = {
+								set_character_flag = sov_leading_war_against_stalin
+							}
+						}
+					}
+				}
 				load_focus_tree = {
 					tree = russia2_soviet_focus
-					keep_completed = no
+					keep_completed = yes
 				}
-				unlock_national_focus = SOV_avoid_purge
-				unlock_national_focus = SOV_speak_out_against_stalin
-				unlock_national_focus = SOV_counter_revolution
-				set_country_flag = nopurge_civil_war
-				remove_unit_leader = 412				
 			}
 			news_event = { hours = 3 id = news.220 }
-			unlock_national_focus = SOV_great_purge2			
+		}
+	}
+
+	#Go against Stalin
+	option = {
+		name = russia2_russia.49.b
+		ai_will_do = {
+			factor = 0
+		}
+		set_temp_variable = { sov_opposition_strength = 100 }
+		subtract_from_temp_variable = { sov_opposition_strength = var:sov_great_purge_completion }
+		divide_temp_variable = { sov_opposition_strength = 100 }
+		clamp_temp_variable = {
+			var = sov_opposition_strength
+			min = 0.1
+			max = 0.9
+		}
+		start_civil_war = {
+			ideology = communism
+			size = var:sov_opposition_strength
+			keep_political_leader = yes
+		}
+		hidden_effect = {
+			create_faction = sov_comintern_faction
+		}
+		if = {
+			limit = {
+				NOT = {
+					check_variable = {
+						var = sov_great_purge_status^36
+						value = 1
+						compare = equals
+					}
+				}
+			}
+			add_country_leader_role = {
+				character = SOV_Aleksey_rykov
+				promote_leader = yes
+				country_leader = {
+					desc = SOV_Aleksey_rykov_desc
+					ideology = marxism
+					expire = "1965.1.1.1"
+					traits = {
+
+					}
+				}
+			}
+			hidden_effect = {
+				random_other_country = {
+					limit = {
+						original_tag = SOV
+						has_government = communism
+						NOT = {
+							tag = ROOT
+						}
+					}
+					SOV_Aleksey_rykov = {
+						set_character_flag = sov_leading_war_against_stalin
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				NOT = {
+					check_variable = {
+						var = sov_great_purge_status^37
+						value = 1
+						compare = equals
+					}
+				}
+			}
+			add_country_leader_role = {
+				character = SOV_Lev_kamenev
+				promote_leader = yes
+				country_leader = {
+					desc = SOV_Lev_kamenev_desc
+					ideology = marxism
+					expire = "1965.1.1.1"
+					traits = {
+
+					}
+				}
+			}
+			hidden_effect = {
+				random_other_country = {
+					limit = {
+						original_tag = SOV
+						has_government = communism
+						NOT = {
+							tag = ROOT
+						}
+					}
+					SOV_Lev_kamenev = {
+						set_character_flag = sov_leading_war_against_stalin
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				NOT = {
+					check_variable = {
+						var = sov_great_purge_status^38
+						value = 1
+						compare = equals
+					}
+				}
+			}
+			add_country_leader_role = {
+				character = SOV_Nikolay_bukharin
+				promote_leader = yes
+				country_leader = {
+					desc = SOV_Nikolay_bukharin_desc
+					ideology = marxism
+					expire = "1965.1.1.1"
+					traits = {
+
+					}
+				}
+			}
+			hidden_effect = {
+				random_other_country = {
+					limit = {
+						original_tag = SOV
+						has_government = communism
+						NOT = {
+							tag = ROOT
+						}
+					}
+					SOV_Nikolay_bukharin = {
+						set_character_flag = sov_leading_war_against_stalin
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				NOT = {
+					check_variable = {
+						var = sov_great_purge_status^39
+						value = 1
+						compare = equals
+					}
+				}
+			}
+			add_country_leader_role = {
+				character = SOV_Grigory_zinovyev
+				promote_leader = yes
+				country_leader = {
+					desc = SOV_Grigory_zinovyev_desc
+					ideology = marxism
+					expire = "1965.1.1.1"
+					traits = {
+
+					}
+				}
+			}
+			hidden_effect = {
+				random_other_country = {
+					limit = {
+						original_tag = SOV
+						has_government = communism
+						NOT = {
+							tag = ROOT
+						}
+					}
+					SOV_Grigory_zinovyev = {
+						set_character_flag = sov_leading_war_against_stalin
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				NOT = {
+					check_variable = {
+						var = sov_great_purge_status^6
+						value = 1
+						compare = equals
+					}
+				}
+			}
+			add_country_leader_role = {
+				character = SOV_Nikita_khrushchev
+				promote_leader = yes
+				country_leader = {
+					desc = SOV_Nikita_khrushchev_desc
+					ideology = marxism
+					expire = "1965.1.1.1"
+					traits = {
+
+					}
+				}
+			}
+			hidden_effect = {
+				random_other_country = {
+					limit = {
+						original_tag = SOV
+						has_government = communism
+						NOT = {
+							tag = ROOT
+						}
+					}
+					SOV_Nikita_khrushchev = {
+						set_character_flag = sov_leading_war_against_stalin
+					}
+				}
+			}
+		}
+		else = {
+			add_country_leader_role = {
+				character = SOV_Vasily_stalin
+				promote_leader = yes
+				country_leader = {
+					desc = SOV_Vasily_stalin_desc
+					ideology = marxism
+					expire = "1965.1.1.1"
+					traits = {
+
+					}
+				}
+			}
+			hidden_effect = {
+				random_other_country = {
+					limit = {
+						original_tag = SOV
+						has_government = communism
+						NOT = {
+							tag = ROOT
+						}
+					}
+					SOV_Vasily_stalin = {
+						set_character_flag = sov_leading_war_against_stalin
+					}
+				}
+				if = {
+					limit = {
+						NOT = {
+							is_in_array = { global.drunkard_wheel_achievement = THIS }
+						}
+					}
+					add_to_array = { global.drunkard_wheel_achievement = THIS }
+					set_variable = { global.drunkard_wheel_achievement_date@THIS = global.date }
+					set_country_flag = russia_reworked_new_achievement
+					if = {
+						limit = {
+							has_global_flag = russia_reworked_achievements_enabled
+						}
+						scoped_sound_effect = "russia_reworked_unlock_achievement"
+					}
+				}
+			}
+		}
+		hidden_effect = {
+			random_other_country = {
+				limit = {
+					original_tag = SOV
+					has_government = communism
+					NOT = {
+						tag = ROOT
+					}
+				}
+				create_country_leader = {
+					name = SOV_Joseph_stalin
+					desc = SOV_Joseph_stalin_desc
+					picture = "gfx/leaders/SOV/Portrait_Russia_Joseph_Stalin.dds"
+					expire = "1945.1.1.1"
+					ideology = stalinism
+					traits = {
+
+					}
+				}
+				every_country = {
+					limit = {
+						is_in_faction_with = THIS
+					}
+					leave_faction = yes
+				}
+				load_focus_tree = {
+					tree = russia2_soviet_focus
+					keep_completed = yes
+				}
+			}
+			news_event = { hours = 3 id = news.220 }
 		}
 	}
 }
@@ -2074,8 +2539,8 @@ country_event = {
 				ideology = stalinism
 				expire = "1965.1.1.1"
 				traits = {
-					unplanned_sortie
-					new_hope
+					russia2_unplanned_sortie
+					russia2_new_hope
 				}
 			}
 		}
@@ -2123,7 +2588,7 @@ country_event = {
 				ideology = stalinism
 				expire = "1965.1.1.1"
 				traits = {
-					secret_speech
+					russia2_secret_speech
 				}
 			}
 		}
@@ -2143,7 +2608,7 @@ country_event = {
 							ideology = marxism
 							expire = "1965.1.1.1"
 							traits = {
-								
+
 							}
 						}
 					}
@@ -2176,7 +2641,7 @@ country_event = {
 				ideology = stalinism
 				expire = "1965.1.1.1"
 				traits = {
-					
+
 				}
 			}
 
@@ -2214,8 +2679,8 @@ country_event = {
 				ideology = stalinism
 				expire = "1965.1.1.1"
 				traits = {
-					unplanned_sortie
-					new_hope
+					russia2_unplanned_sortie
+					russia2_new_hope
 				}
 			}
 		}
@@ -2263,7 +2728,7 @@ country_event = {
 				ideology = stalinism
 				expire = "1965.1.1.1"
 				traits = {
-					secret_speech
+					russia2_secret_speech
 				}
 			}
 		}
@@ -2283,7 +2748,7 @@ country_event = {
 							ideology = marxism
 							expire = "1965.1.1.1"
 							traits = {
-								
+
 							}
 						}
 					}
@@ -2316,7 +2781,7 @@ country_event = {
 				ideology = stalinism
 				expire = "1965.1.1.1"
 				traits = {
-					
+
 				}
 			}
 
@@ -2343,7 +2808,7 @@ country_event = {
 				is_in_faction_with = SOV
 				controls_state = 328
 			}
-		}	
+		}
 		SOV = {
 			has_government = communism
 		}
@@ -2766,7 +3231,7 @@ country_event = { #TODO Special Ai Maybe
 								state = 78
 								state = 89
 								state = 91
-								state = 93 
+								state = 93
 							}
 						}
 						SOV = {
@@ -2977,7 +3442,7 @@ country_event = {
 		ai_chance = {
 			base = 100
 		}
-		add_country_leader_trait = proletarian
+		add_country_leader_trait = russia2_proletarian
 		set_cosmetic_tag = SOV_proletarian_union
 		set_country_flag = has_formed_proletarian_union
 		every_other_country = {
@@ -3071,7 +3536,7 @@ country_event = {
 	is_triggered_only = yes
 
 	immediate = {
-		add_country_leader_trait = proletarian
+		add_country_leader_trait = russia2_proletarian
 		set_cosmetic_tag = SOV_proletarian_union
 		news_event = { id = newsrussia2.42 days = 1 }
 		if = {
@@ -3777,7 +4242,7 @@ country_event = {
 		remove_ideas = SOV_Army_disorganisation
 		hidden_effect = {
 			news_event = {
-				id = newsrussia2.69 days = 1 
+				id = newsrussia2.69 days = 1
 			}
 			set_cosmetic_tag = SOV_temp_democratic_russia
 		}
@@ -5374,7 +5839,7 @@ country_event = {
 		}
 		UKR = {
 			country_event = { id = russia2_ukraine.7 hours = 6 }
-		}	
+		}
 	}
 }
 
@@ -7374,10 +7839,10 @@ country_event = {
 						OR = {
 							has_country_flag = japan_accept_to_help_give_russian_far_east
 							has_country_flag = has_negotiated_with_germany_ressource_rights
-							has_country_flag = accept_american_occupation_siberia_after_cw 
-							has_country_flag = accept_french_factories_after_cw 
-							has_country_flag = accept_diplomatic_relation_with_italy 
-							has_country_flag = accept_english_help_for_shipment 
+							has_country_flag = accept_american_occupation_siberia_after_cw
+							has_country_flag = accept_french_factories_after_cw
+							has_country_flag = accept_diplomatic_relation_with_italy
+							has_country_flag = accept_english_help_for_shipment
 						}
 					}
 				}
@@ -7437,7 +7902,7 @@ country_event = {
 				add_equipment_to_stockpile = {
 					type = infantry_equipment
 					amount = -50000
-				}	
+				}
 			}
 			if = {
 				limit = {
@@ -8610,7 +9075,7 @@ country_event = {
 			NOT = {
 				has_country_flag = japan_accept_to_help_give_north_sakhalin
 				has_country_flag = japan_accept_to_help_give_russian_far_east
-			}	
+			}
 		}
 	}
 	desc = {
@@ -8621,7 +9086,7 @@ country_event = {
 				has_country_flag = japan_accept_to_help_give_russian_far_east
 			}
 		}
-	} 
+	}
 	picture = GFX_report_event_japanese_transport_soldiers
 
 	is_triggered_only = yes
@@ -8647,7 +9112,7 @@ country_event = {
 			NOT = {
 				has_country_flag = japan_accept_to_help_give_north_sakhalin
 				has_country_flag = japan_accept_to_help_give_russian_far_east
-			}	
+			}
 		}
 		name = russia2_russia.227.b
 		ai_chance = {
@@ -8850,7 +9315,7 @@ country_event = { #TODO Better Trigger AUS and CZE
 				}
 				else = {
 					release = GER
-				}	
+				}
 				add_to_faction = GER
 			}
 			GER = {
@@ -9137,7 +9602,7 @@ country_event = { #TODO Better Trigger AUS and CZE
 					target = CZE
 					autonomy_state = autonomy_puppet
 				}
-			}	
+			}
 		}
 		every_state = {
 			limit = {
@@ -9153,12 +9618,12 @@ country_event = { #TODO Better Trigger AUS and CZE
 			}
 			FRA = {
 				transfer_state = PREV
-			}	
+			}
 		}
 		hidden_effect = {
 			news_event = {
 				id = newsrussia2.97 days = 2
-			}	
+			}
 		}
 		set_country_flag = restoration_german_monarchy_kaiser
 	}
@@ -9730,7 +10195,7 @@ country_event = {  #TODO Chara Change
 				}
 				SOV = {
 					add_state_core = PREV
-				}	 
+				}
 			}
 		}
 		every_state = {
@@ -10579,7 +11044,7 @@ country_event = {
 			}
 			news_event = {
 				id = newsrussia2.99 days = 1
-			}		
+			}
 		}
 	}
 
@@ -11014,7 +11479,7 @@ country_event = {
 							is_in_faction_with = SOV
 							has_government = neutrality
 						}
-					}		
+					}
 				}
 			}
 			AND = {
@@ -11025,7 +11490,7 @@ country_event = {
 							is_in_faction_with = SOV
 							has_government = neutrality
 						}
-					}		
+					}
 				}
 			}
 		}
@@ -11249,10 +11714,10 @@ country_event = {
 						OR = {
 							has_country_flag = japan_accept_to_help_give_russian_far_east
 							has_country_flag = has_negotiated_with_germany_ressource_rights
-							has_country_flag = accept_american_occupation_siberia_after_cw 
-							has_country_flag = accept_french_factories_after_cw 
-							has_country_flag = accept_diplomatic_relation_with_italy 
-							has_country_flag = accept_english_help_for_shipment 
+							has_country_flag = accept_american_occupation_siberia_after_cw
+							has_country_flag = accept_french_factories_after_cw
+							has_country_flag = accept_diplomatic_relation_with_italy
+							has_country_flag = accept_english_help_for_shipment
 						}
 					}
 				}
@@ -11312,7 +11777,7 @@ country_event = {
 				add_equipment_to_stockpile = {
 					type = infantry_equipment
 					amount = -50000
-				}	
+				}
 			}
 			if = {
 				limit = {
@@ -11446,7 +11911,7 @@ country_event = {
 			factor = 100
 		}
 		custom_effect_tooltip = deserting_communist_generals
-		hidden_effect = {
+		hidden_effect = { #TODO change these to characters
 			remove_unit_leader = 410
 			remove_ideas = georgy_zhukov
 			remove_unit_leader = 408
@@ -11478,7 +11943,7 @@ country_event = {
 				set_country_flag = mikhail_deserted
 			}
 			set_country_flag = has_deserted_military
-		}	
+		}
 	}
 }
 
@@ -11549,7 +12014,7 @@ country_event = {
 				logistics_skill = 3
 			}
 			set_country_flag = soviet_generals_deserted
-		}	
+		}
 	}
 }
 
@@ -11834,11 +12299,11 @@ country_event = {
 		every_unit_leader = {
 			limit = {
 				has_id = 512
-			}	
+			}
 			add_attack = 1
 			add_logistics = 1
 			add_unit_leader_trait = russia2_yellow_jersey
-		}	
+		}
 	}
 }
 
@@ -11883,11 +12348,11 @@ country_event = {
 			}
 		}
 		SOV = {
-			country_event = { id = russia2_russia.271 days = 1 }	
+			country_event = { id = russia2_russia.271 days = 1 }
 		}
 	}
 
-	option = { #We Won't Let them Control our Country ! 
+	option = { #We Won't Let them Control our Country !
 		name = russia2_russia.270.b
 		ai_chance = {
 			factor = 40
@@ -11901,7 +12366,7 @@ country_event = {
 		}
 		custom_effect_tooltip = lead_to_war_against_russian_junta
 		SOV = {
-			country_event = { id = russia2_russia.272 days = 1 }	
+			country_event = { id = russia2_russia.272 days = 1 }
 		}
 	}
 }
@@ -11975,11 +12440,11 @@ country_event = {
 		}
 		custom_effect_tooltip = receive_this_event_bercause_rom_or_hun_is_our_puppet
 		SOV = {
-			country_event = { id = russia2_russia.275 days = 1 }	
+			country_event = { id = russia2_russia.275 days = 1 }
 		}
 	}
 
-	option = { #We Won't Let them Control our Country ! 
+	option = { #We Won't Let them Control our Country !
 		name = russia2_russia.273.b
 		ai_chance = {
 			factor = 40
@@ -11994,7 +12459,7 @@ country_event = {
 		custom_effect_tooltip = lead_to_war_against_russian_junta
 		custom_effect_tooltip = receive_this_event_bercause_rom_or_hun_is_our_puppet
 		SOV = {
-			country_event = { id = russia2_russia.276 days = 1 }	
+			country_event = { id = russia2_russia.276 days = 1 }
 		}
 	}
 }
@@ -12022,11 +12487,11 @@ country_event = {
 		}
 		custom_effect_tooltip = receive_this_event_bercause_rom_or_hun_is_our_puppet
 		SOV = {
-			country_event = { id = russia2_russia.277 days = 1 }	
+			country_event = { id = russia2_russia.277 days = 1 }
 		}
 	}
 
-	option = { #We Won't Let them Control our Country ! 
+	option = { #We Won't Let them Control our Country !
 		name = russia2_russia.274.b
 		ai_chance = {
 			factor = 40
@@ -12041,7 +12506,7 @@ country_event = {
 		custom_effect_tooltip = lead_to_war_against_russian_junta
 		custom_effect_tooltip = receive_this_event_bercause_rom_or_hun_is_our_puppet
 		SOV = {
-			country_event = { id = russia2_russia.278 = 1 }		
+			country_event = { id = russia2_russia.278 = 1 }
 		}
 	}
 }
@@ -12224,7 +12689,7 @@ country_event = {
 		hidden_effect = {
 			set_cosmetic_tag = RFP
 			country_event = { id = russia2_russia.282 days = 100 }
-			news_event = { id = newsrussia2.114 days = 1 } 
+			news_event = { id = newsrussia2.114 days = 1 }
 		}
 	}
 }
@@ -12539,7 +13004,7 @@ country_event = {
 		custom_effect_tooltip = SOV_can_have_anastasy_tt
 		set_country_flag = order_triumphed_over_law
 		hidden_effect = {
-			news_event = { id = newsrussia2.116 days = 2 } 
+			news_event = { id = newsrussia2.116 days = 2 }
 		}
 	}
 }
@@ -12574,7 +13039,7 @@ country_event = {
 		custom_effect_tooltip = SOV_can_have_anastasy_tt
 		set_country_flag = order_triumphed_over_law
 		hidden_effect = {
-			news_event = { id = newsrussia2.116 days = 2 } 
+			news_event = { id = newsrussia2.116 days = 2 }
 		}
 	}
 
@@ -12588,7 +13053,7 @@ country_event = {
 		custom_effect_tooltip = SOV_can_have_konstantin_tt
 		set_country_flag = law_triumphed_over_order
 		hidden_effect = {
-			news_event = { id = newsrussia2.115 days = 2 } 
+			news_event = { id = newsrussia2.115 days = 2 }
 		}
 	}
 }
@@ -12625,7 +13090,7 @@ country_event = {
 		custom_effect_tooltip = SOV_can_have_anastasy_tt
 		set_country_flag = order_triumphed_over_law
 		hidden_effect = {
-			news_event = { id = newsrussia2.116 days = 2 } 
+			news_event = { id = newsrussia2.116 days = 2 }
 		}
 	}
 }
@@ -12800,7 +13265,7 @@ country_event = {
 		custom_effect_tooltip = SOV_can_have_anastasy_tt
 		set_country_flag = order_triumphed_over_law
 		hidden_effect = {
-			news_event = { id = newsrussia2.116 days = 2 } 
+			news_event = { id = newsrussia2.116 days = 2 }
 		}
 	}
 }
@@ -12897,7 +13362,7 @@ country_event = {
 		custom_effect_tooltip = SOV_can_have_konstantin_tt
 		set_country_flag = law_triumphed_over_order
 		hidden_effect = {
-			news_event = { id = newsrussia2.115 days = 2 } 
+			news_event = { id = newsrussia2.115 days = 2 }
 		}
 	}
 }
@@ -12932,7 +13397,7 @@ country_event = {
 		custom_effect_tooltip = SOV_can_have_anastasy_tt
 		set_country_flag = order_triumphed_over_law
 		hidden_effect = {
-			news_event = { id = newsrussia2.116 days = 2 } 
+			news_event = { id = newsrussia2.116 days = 2 }
 		}
 	}
 }
@@ -12956,7 +13421,7 @@ country_event = {
 		set_country_flag = law_triumphed_over_order
 		set_country_flag = anastasy_deported_siberia
 		hidden_effect = {
-			news_event = { id = newsrussia2.115 days = 1 } 
+			news_event = { id = newsrussia2.115 days = 1 }
 		}
 	}
 }
@@ -13093,7 +13558,7 @@ country_event = {
 		set_country_flag = law_triumphed_over_order
 		set_country_flag = anastasy_was_killed
 		hidden_effect = {
-			news_event = { id = newsrussia2.115 days = 2 } 
+			news_event = { id = newsrussia2.115 days = 2 }
 		}
 	}
 }
@@ -13116,7 +13581,7 @@ country_event = {
 		custom_effect_tooltip = SOV_can_have_konstantin_tt
 		set_country_flag = law_triumphed_over_order
 		hidden_effect = {
-			news_event = { id = newsrussia2.115 days = 2 } 
+			news_event = { id = newsrussia2.115 days = 2 }
 		}
 	}
 }
@@ -13192,7 +13657,7 @@ country_event = {
 		custom_effect_tooltip = SOV_can_have_anastasy_tt
 		set_country_flag = order_triumphed_over_law
 		hidden_effect = {
-			news_event = { id = newsrussia2.116 days = 2 } 
+			news_event = { id = newsrussia2.116 days = 2 }
 		}
 	}
 }
@@ -13216,7 +13681,7 @@ country_event = {
 		custom_effect_tooltip = SOV_can_have_konstantin_tt
 		set_country_flag = law_triumphed_over_order
 		hidden_effect = {
-			news_event = { id = newsrussia2.115 days = 2 } 
+			news_event = { id = newsrussia2.115 days = 2 }
 		}
 	}
 }
@@ -13296,7 +13761,7 @@ country_event = {
 		set_country_flag = law_triumphed_over_order
 		set_country_flag = anastasy_still_in_america
 		hidden_effect = {
-			news_event = { id = newsrussia2.115 days = 2 } 
+			news_event = { id = newsrussia2.115 days = 2 }
 		}
 	}
 }
@@ -13343,7 +13808,7 @@ country_event = {
 		custom_effect_tooltip = SOV_can_have_konstantin_tt
 		set_country_flag = law_triumphed_over_order
 		hidden_effect = {
-			news_event = { id = newsrussia2.115 days = 2 } 
+			news_event = { id = newsrussia2.115 days = 2 }
 		}
 	}
 }
@@ -13366,7 +13831,7 @@ country_event = {
 		custom_effect_tooltip = SOV_can_have_konstantin_tt
 		set_country_flag = law_triumphed_over_order
 		hidden_effect = {
-			news_event = { id = newsrussia2.115 days = 2 } 
+			news_event = { id = newsrussia2.115 days = 2 }
 		}
 	}
 }
@@ -13692,7 +14157,7 @@ country_event = {
 #Undo the hostile behaviors towards Russian enemies
 country_event = {
 	id = russia2_russia.317
-	
+
 	hidden = yes
 
 	is_triggered_only = yes
@@ -13729,7 +14194,7 @@ country_event = {
 #Used for AI strategy, should work fine now, using event instead of on_action to avoid bugs and performance issues
 country_event = {
 	id = russia2_russia.318
-	
+
 	hidden = yes
 
 	trigger = {
@@ -13759,7 +14224,7 @@ country_event = {
 		for_each_scope_loop = {
 			array = SOV.enemies
 			break = end_array
-			
+
 			set_temp_variable = { temp_var_plane_count = num_deployed_planes }
 			SOV = {
 				add_to_variable = { plane_count_enemy_sov = temp_var_plane_count }
@@ -16596,7 +17061,7 @@ country_event = {
 			remove_ideas = SOV_Unhappy_peasants4
 			remove_ideas = SOV_Unhappy_peasants5
 			remove_ideas = SOV_Unhappy_peasants6
-		}	
+		}
 	}
 }
 
@@ -16619,7 +17084,7 @@ country_event = {
 		add_ideas = SOV_Anti_revolutionary
 		custom_effect_tooltip = change_economy_law_useless_money
 		hidden_effect = {
-			add_ideas = SOV_Useless_money	
+			add_ideas = SOV_Useless_money
 		}
 	}
 }
@@ -16655,7 +17120,7 @@ country_event = {
 					has_country_flag = anarchist_hold_leningrad
 					NOT = {
 						has_dlc = "Man the Guns"
-					}	
+					}
 				}
 				load_oob = "SOV_leningrad_ships_nomtg"
 				load_oob = "SOV_naval_ships_black_revolution_nomtg"
@@ -16665,7 +17130,7 @@ country_event = {
 					NOT = {
 						has_country_flag = anarchist_hold_leningrad
 						has_dlc = "Man the Guns"
-					}	
+					}
 				}
 				load_oob = "SOV_naval_ships_black_revolution_nomtg"
 			}
@@ -18090,7 +18555,7 @@ country_event = {
 					compare = less_than
 				}
 			}
-			
+
 			random_scope_in_array = {
 				array = SOV.owned_controlled_states
 				limit = {
@@ -18110,7 +18575,7 @@ country_event = {
 						state = 202
 					}
 				}
-				
+
 				remove_from_array = { SOV.sov_recon_rebel_anarchy_states = THIS }
 				THIS = {
 					set_state_flag = recon_units_scout_place
@@ -18148,7 +18613,7 @@ country_event = {
 
 	option = {
 		name = russia2_russia.416.a
-		custom_effect_tooltip = can_raid_small_base_now_tt 
+		custom_effect_tooltip = can_raid_small_base_now_tt
 	}
 }
 
@@ -18163,7 +18628,7 @@ country_event = {
 
 	option = {
 		name = russia2_russia.417.a
-		custom_effect_tooltip = can_raid_medium_base_now_tt 
+		custom_effect_tooltip = can_raid_medium_base_now_tt
 	}
 }
 
@@ -18178,7 +18643,7 @@ country_event = {
 
 	option = {
 		name = russia2_russia.418.a
-		custom_effect_tooltip = can_raid_large_base_now_tt 
+		custom_effect_tooltip = can_raid_large_base_now_tt
 	}
 }
 
@@ -18208,7 +18673,7 @@ country_event = {
 	}
 }
 
-#Result of Forced Quota - Industry 
+#Result of Forced Quota - Industry
 country_event = {
 	id = russia2_russia.420
 	title = russia2_russia.420.t
@@ -18219,7 +18684,7 @@ country_event = {
 
 	option = { #they worked well
 		name = russia2_russia.420.a
-		
+
 	}
 
 	option = { #More Work
@@ -18263,7 +18728,7 @@ country_event = {
 	}
 }
 
-#Result of Forced Labor - Industry 
+#Result of Forced Labor - Industry
 country_event = {
 	id = russia2_russia.421
 	title = russia2_russia.421.t
@@ -18274,7 +18739,7 @@ country_event = {
 
 	option = { #they worked well
 		name = russia2_russia.421.a
-		
+
 	}
 
 	option = { #More Work
@@ -18329,7 +18794,7 @@ country_event = {
 						country_event = { id = russia2_russia.440  days = 10 }
 					}
 					10 = {
-	
+
 					}
 				}
 			}
@@ -18713,7 +19178,7 @@ country_event = {
 
 	option = {
 		name = russia2_russia.431.a
-		custom_effect_tooltip = raid_is_over_anarchis_russia 
+		custom_effect_tooltip = raid_is_over_anarchis_russia
 	}
 }
 
@@ -19371,7 +19836,7 @@ country_event = {
 		add_stability = -0.15
 	}
 
-	option = { #Reform the Black 
+	option = { #Reform the Black
 		name = russia2_russia.446.b
 		ai_chance = { factor = 50 }
 		add_political_power = -50
@@ -19387,7 +19852,7 @@ country_event = {
 		ai_chance = { factor = 50 }
 		add_political_power = -100
 		remove_ideas = SOV_Black_guard_army_2
-		add_ideas = SOV_Black_guard_reformation 
+		add_ideas = SOV_Black_guard_reformation
 		custom_effect_tooltip = will_take_years_to_reform_black_guard
 		hidden_effect = {
 			random_list = {
@@ -19857,7 +20322,7 @@ country_event = {
 			}
 			set_country_flag = ukraine_refuse_lead_to_war
 		}
-		custom_effect_tooltip = will_take_time_to_core_ukraine_because_war 
+		custom_effect_tooltip = will_take_time_to_core_ukraine_because_war
 	}
 }
 
@@ -20020,7 +20485,7 @@ country_event = {
 		set_country_flag = receive_ukraine_complains_land_democratic_russia_united
 	}
 
-	option = { #We have to do something 
+	option = { #We have to do something
 		name = russia2_russia.457.a
 		ai_chance = { factor = 100 }
 		UKR = {
@@ -20246,7 +20711,7 @@ country_event = {
 	}
 }
 
-#Tension in Central Asia was Successful 
+#Tension in Central Asia was Successful
 country_event = {
 	id = russia2_russia.462
 	title = russia2_russia.462.t
@@ -20476,7 +20941,7 @@ country_event = {
 
 	option = { #Yes we want to be annexed
 		name = russia2_russia.469.a
-		ai_chance = { 
+		ai_chance = {
 			factor = 50
 			modifier = {
 				add = -50
@@ -20484,7 +20949,7 @@ country_event = {
 					is_major = yes
 					is_in_faction = yes
 				}
-			} 
+			}
 		}
 		SOV = {
 			country_event = { id = russia2_russia.470 days = 1 }
@@ -20493,7 +20958,7 @@ country_event = {
 
 	option = { #No
 		name = russia2_russia.469.a
-		ai_chance = { 
+		ai_chance = {
 			factor = 50
 			modifier = {
 				add = 50
@@ -20501,7 +20966,7 @@ country_event = {
 					is_major = yes
 					is_in_faction = yes
 				}
-			}  
+			}
 		}
 		SOV = {
 			country_event = { id = russia2_russia.471 days = 1 }
@@ -20567,7 +21032,7 @@ country_event = {
 	}
 }
 
-#Ultimatum send by SOV to Middle East Country - Puppet Edition 
+#Ultimatum send by SOV to Middle East Country - Puppet Edition
 country_event = {
 	id = russia2_russia.473
 	title = russia2_russia.473.t
@@ -20578,7 +21043,7 @@ country_event = {
 
 	option = { #Yes we want to be annexed
 		name = russia2_russia.473.a
-		ai_chance = { 
+		ai_chance = {
 			factor = 70
 		}
 		SOV = {
@@ -20588,7 +21053,7 @@ country_event = {
 
 	option = { #No
 		name = russia2_russia.473.b
-		ai_chance = { 
+		ai_chance = {
 			factor = 30
 		}
 		SOV = {
@@ -20666,7 +21131,7 @@ country_event = {
 	}
 }
 
-#Ultimatum send by SOV Foreign Country Occupying Middle East Territory 
+#Ultimatum send by SOV Foreign Country Occupying Middle East Territory
 country_event = {
 	id = russia2_russia.476
 	title = russia2_russia.476.t
@@ -20682,7 +21147,7 @@ country_event = {
 				is_subject = yes
 			}
 		}
-		ai_chance = { 
+		ai_chance = {
 			factor = 25
 			modifier = {
 				add = 50
@@ -20701,7 +21166,7 @@ country_event = {
 				is_subject = yes
 			}
 		}
-		ai_chance = { 
+		ai_chance = {
 			factor = 75
 			modifier = {
 				add = -50
@@ -20718,7 +21183,7 @@ country_event = {
 		trigger = {
 			is_subject = yes
 		}
-		ai_chance = { 
+		ai_chance = {
 			factor = 100
 		}
 		OVERLORD = {
@@ -20930,7 +21395,7 @@ country_event = {
 
 	option = { #War, is too risky now
 		name = russia2_russia.479.a
-		ai_chance = { 
+		ai_chance = {
 			factor = 60
 		}
 		custom_effect_tooltip = we_receive_this_because_puppet_danger
@@ -20941,7 +21406,7 @@ country_event = {
 
 	option = { #No, they belong to them
 		name = russia2_russia.479.b
-		ai_chance = { 
+		ai_chance = {
 			factor = 40
 		}
 		custom_effect_tooltip = we_receive_this_because_puppet_danger
@@ -20962,7 +21427,7 @@ country_event = {
 
 	option = { #We have no choice
 		name = russia2_russia.480.a
-		ai_chance = { 
+		ai_chance = {
 			factor = 100
 		}
 		SOV = {
@@ -20982,7 +21447,7 @@ country_event = {
 
 	option = { #War is comming
 		name = russia2_russia.481.a
-		ai_chance = { 
+		ai_chance = {
 			factor = 100
 		}
 		SOV = {
@@ -21002,7 +21467,7 @@ country_event = {
 
 	option = { #Good
 		name = russia2_russia.482.a
-		ai_chance = { 
+		ai_chance = {
 			factor = 100
 		}
 		every_state = {
@@ -21092,7 +21557,7 @@ country_event = {
 
 	option = { #We will destroy them
 		name = russia2_russia.483.a
-		ai_chance = { 
+		ai_chance = {
 			factor = 100
 		}
 		every_state = {
@@ -21188,7 +21653,7 @@ country_event = {
 
 	option = { #War is comming
 		name = russia2_russia.484.a
-		ai_chance = { 
+		ai_chance = {
 			factor = 100
 		}
 	}
@@ -21205,7 +21670,7 @@ country_event = {
 
 	option = { #Good
 		name = russia2_russia.485.a
-		ai_chance = { 
+		ai_chance = {
 			factor = 100
 		}
 	}
@@ -21242,7 +21707,7 @@ country_event = {
 				}
 			}
 		}
-		ai_chance = { 
+		ai_chance = {
 			factor = 33
 			modifier = {
 				factor = 0
@@ -21331,7 +21796,7 @@ country_event = {
 				}
 			}
 		}
-		ai_chance = { 
+		ai_chance = {
 			factor = 33
 			modifier = {
 				factor = 0
@@ -21400,7 +21865,7 @@ country_event = {
 
 	option = { #The Japanese
 		name = russia2_russia.486.c
-		ai_chance = { 
+		ai_chance = {
 			factor = 33
 			modifier = {
 				factor = 0
@@ -21436,7 +21901,7 @@ country_event = { #TODO Change to Chara
 
 	option = { #He shall be an Icon
 		name = russia2_russia.487.a
-		ai_chance = { 
+		ai_chance = {
 			factor = 33
 		}
 		custom_effect_tooltip = unlock_vladimir_as_politician
@@ -21445,7 +21910,7 @@ country_event = { #TODO Change to Chara
 
 	option = { #He shall Lead an Army
 		name = russia2_russia.487.b
-		ai_chance = { 
+		ai_chance = {
 			factor = 33
 		}
 		create_field_marshal = {
@@ -21462,7 +21927,7 @@ country_event = { #TODO Change to Chara
 
 	option = { #He shall be a military advisor
 		name = russia2_russia.487.c
-		ai_chance = { 
+		ai_chance = {
 			factor = 33
 		}
 		custom_effect_tooltip = unlock_vladimir_as_chief_advisor
@@ -21477,9 +21942,9 @@ country_event = {
 	title = russia2_russia.495.t
 	desc = russia2_russia.495.d
 	picture = GFX_report_event_stalin_01
-	
+
 	is_triggered_only = yes
-	
+
 	option = {
 		name = russia2_russia.495.a
 	}
@@ -21491,9 +21956,9 @@ country_event = {
 	title = russia2_russia.496.t
 	desc = russia2_russia.496.d
 	picture = GFX_report_event_german_troops
-	
+
 	is_triggered_only = yes
-	
+
 	option = {
 		name = russia2_russia.496.a
 	}
@@ -21505,9 +21970,9 @@ country_event = {
 	title = russia2_russia.497.t
 	desc = russia2_russia.497.d
 	picture = GFX_report_event_stalin_01
-	
+
 	is_triggered_only = yes
-	
+
 	option = {
 		name = russia2_russia.497.a
 	}
@@ -21519,9 +21984,9 @@ country_event = {
 	title = russia2_russia.498.t
 	desc = russia2_russia.498.d
 	picture = GFX_report_event_german_troops
-	
+
 	is_triggered_only = yes
-	
+
 	option = {
 		name = russia2_russia.498.a
 	}
@@ -21530,7 +21995,7 @@ country_event = {
 # Give Idea to People who Joined after
 country_event = {
 	id = russia2_russia.499
-	
+
 	hidden = yes
 
 	trigger = {
@@ -21561,7 +22026,7 @@ country_event = {
 	picture = GFX_report_event_german_troops
 
 	is_triggered_only = yes
-	
+
 	option = {
 		name = russia2_russia.500.a
 		custom_effect_tooltip = andrey_vlasov_captured_tt
@@ -21576,7 +22041,7 @@ country_event = {
 	picture = GFX_report_event_german_troops
 
 	is_triggered_only = yes
-	
+
 	option = {
 		name = russia2_russia.501.a
 		custom_effect_tooltip = andrey_vlasov_joins_tt
@@ -21591,7 +22056,7 @@ country_event = {
 	picture = GFX_report_event_german_troops
 
 	is_triggered_only = yes
-	
+
 	option = {
 		name = russia2_russia.502.a
 		custom_effect_tooltip = andrey_vlasov_dies_tt
@@ -21606,7 +22071,7 @@ country_event = {
 	picture = GFX_report_event_german_troops
 
 	is_triggered_only = yes
-	
+
 	option = {
 		name = russia2_russia.503.a
 		custom_effect_tooltip = andrey_vlasov_dies_tt
@@ -21621,7 +22086,7 @@ country_event = {
 	picture = GFX_report_event_german_troops
 
 	is_triggered_only = yes
-	
+
 	option = {
 		name = russia2_russia.504.a
 		set_country_flag = sov_trials_end
@@ -21777,7 +22242,7 @@ country_event = {
 	picture = GFX_report_event_german_troops
 
 	is_triggered_only = yes
-	
+
 	#Accept
 	option = {
 		name = russia2_russia.506.a
@@ -21870,7 +22335,7 @@ country_event = {
 	picture = GFX_report_event_german_troops
 
 	is_triggered_only = yes
-	
+
 	#Great
 	option = {
 		name = russia2_russia.507.a
@@ -21885,7 +22350,7 @@ country_event = {
 	picture = GFX_report_event_german_troops
 
 	is_triggered_only = yes
-	
+
 	#War
 	option = {
 		name = russia2_russia.508.a
@@ -21941,7 +22406,7 @@ country_event = {
 			}
 		}
 	}
-	
+
 	#Oh hi
 	option = {
 		name = russia2_russia.509.a
@@ -21992,7 +22457,7 @@ country_event = {
 			}
 		}
 	}
-	
+
 	#Recognized
 	option = {
 		name = russia2_russia.510.a
@@ -22033,7 +22498,7 @@ country_event = {
 			var = anna_anderson_legitimacy
 			min = 0
 			max = 200
-		}	
+		}
 		custom_effect_tooltip = anna_anderson_remove_legitimacy_5
 		set_country_flag = sov_met_princess_irene_no
 		add_stability = -0.05
@@ -22082,7 +22547,7 @@ country_event = {
 			}
 		}
 	}
-	
+
 	#Recognized
 	option = {
 		name = russia2_russia.511.a
@@ -22177,7 +22642,7 @@ country_event = {
 			set_country_flag = sov_met_grand_duchess_xenia
 		}
 	}
-	
+
 	#Recognized
 	option = {
 		name = russia2_russia.512.a
@@ -22239,7 +22704,7 @@ country_event = {
 			set_country_flag = sov_met_prince_michael
 		}
 	}
-	
+
 	#Recognized
 	option = {
 		name = russia2_russia.513.a
@@ -22298,12 +22763,12 @@ country_event = {
 		set_country_flag = sov_anna_anderson_struggle_over
 		set_country_flag = sov_anna_anderson_defeated
 	}
-	
+
 	#Bye Bye Impostor
 	option = {
 		name = russia2_russia.514.a
-		remove_country_leader_trait = challenged_leader
-		add_country_leader_trait = true_romanov
+		remove_country_leader_trait = russia2_challenged_leader
+		add_country_leader_trait = russia2_true_romanov
 	}
 }
 
@@ -22320,7 +22785,7 @@ country_event = {
 		set_country_flag = sov_anna_anderson_struggle_over
 		set_country_flag = sov_anna_anderson_win
 	}
-	
+
 	#Anastasia!
 	option = {
 		name = russia2_russia.515.a
@@ -22332,7 +22797,7 @@ country_event = {
 				ideology = despotism
 				expire = "1965.1.1.1"
 				traits = {
-					saint_grand_duchess_and_passion_bearer
+					russia2_saint_grand_duchess_and_passion_bearer
 				}
 			}
 		}
@@ -22373,7 +22838,7 @@ country_event = {
 			}
 		}
 	}
-	
+
 	#Ok
 	option = {
 		name = russia2_russia.516.a
@@ -22489,7 +22954,7 @@ country_event = {
 			}
 		}
 	}
-	
+
 	#Form a puppet
 	option = {
 		name = russia2_russia.517.a
@@ -22514,7 +22979,7 @@ country_event = {
 				}
 				exists = no
 			}
-			
+
 			transfer_state = event_target:sov_african_state_purchase
 			ROOT = {
 				set_autonomy = {
@@ -22721,7 +23186,7 @@ country_event = {
 					is_core_of = PREV
 				}
 			}
-			
+
 			transfer_state = event_target:sov_african_state_purchase
 			hidden_effect = {
 				if = {
@@ -22804,7 +23269,7 @@ country_event = {
 	picture = GFX_report_event_german_troops
 
 	is_triggered_only = yes
-	
+
 	# :(
 	option = {
 		name = russia2_russia.518.a
@@ -22824,7 +23289,7 @@ country_event = {
 	picture = GFX_report_event_generic_riot
 
 	is_triggered_only = yes
-	
+
 	option = { #We must stay vigilant
 		name = russia2_russia.519.a
 		add_ideas = SOV_Anti_military_junta_protestor
@@ -22842,7 +23307,7 @@ country_event = {
 	picture = GFX_report_event_generic_riot
 
 	is_triggered_only = yes
-	
+
 	option = { #Crush them
 		name = russia2_russia.520.a
 		every_state = {
@@ -22989,7 +23454,7 @@ country_event = {
 	picture = GFX_report_event_generic_riot
 
 	is_triggered_only = yes
-	
+
 	option = { #We must stay vigilant
 		name = russia2_russia.521.a
 		random_owned_controlled_state = {
@@ -23177,7 +23642,7 @@ country_event = {
 	picture = GFX_report_event_dead_soldiers
 
 	is_triggered_only = yes
-	
+
 	option = { #We are done with the protestors
 		name = russia2_russia.522.a
 		remove_ideas = SOV_Anti_military_junta_protestor
@@ -23187,11 +23652,11 @@ country_event = {
 #Fuck operations
 country_event = {
 	id = russia2_russia.523
-	
+
 	hidden = yes
 
 	is_triggered_only = yes
-	
+
 	immediate = {
 		if = {
 			limit = {
@@ -23215,7 +23680,7 @@ country_event = {
 					}
 					exists = no
 				}
-				
+
 				set_temp_variable = { revolution_normal_division_count = 1 }
 				set_temp_variable = { revolution_soviet_division_count = 1 }
 				if = {
@@ -23272,7 +23737,7 @@ country_event = {
 					round_temp_variable = resistance_division_multiplier
 					multiply_temp_variable = { revolution_soviet_division_count = resistance_division_multiplier }
 				}
-				
+
 				transfer_state = event_target:sov_target_country_revolution
 				set_country_flag = liberated_by_sov
 				leave_faction = yes
@@ -23307,7 +23772,7 @@ country_event = {
 					set_technology = {
 						gw_artillery = 1
 						tech_recon = 1
-						tech_support = 1		
+						tech_support = 1
 						tech_engineers = 1
 					}
 
@@ -23369,7 +23834,7 @@ country_event = {
 						division_template = "Soviet Volunteers"
 						is_locked = yes
 					}
-					
+
 					while_loop_effect = {
 						break = break_loop
 						limit = {
@@ -23379,7 +23844,7 @@ country_event = {
 								compare = greater_than_or_equals
 							}
 						}
-						
+
 						event_target:sov_target_country_revolution = {
 							create_unit = {
 								division = "name = \"Soviet Workers\" division_template = \"Soviet Workers\" start_experience_factor = 0.3"
@@ -23489,11 +23954,11 @@ country_event = {
 #Really
 country_event = {
 	id = russia2_russia.524
-	
+
 	hidden = yes
 
 	is_triggered_only = yes
-	
+
 	immediate = {
 		if = {
 			limit = {
@@ -23574,7 +24039,7 @@ country_event = {
 					round_temp_variable = resistance_division_multiplier
 					multiply_temp_variable = { revolution_soviet_division_count = resistance_division_multiplier }
 				}
-				
+
 				transfer_state = event_target:sov_target_country_revolution
 				set_country_flag = liberated_by_sov
 				leave_faction = yes
@@ -23609,7 +24074,7 @@ country_event = {
 					set_technology = {
 						gw_artillery = 1
 						tech_recon = 1
-						tech_support = 1		
+						tech_support = 1
 						tech_engineers = 1
 					}
 
@@ -23671,7 +24136,7 @@ country_event = {
 						division_template = "Soviet Volunteers"
 						is_locked = yes
 					}
-					
+
 					while_loop_effect = {
 						break = break_loop
 						limit = {
@@ -23681,7 +24146,7 @@ country_event = {
 								compare = greater_than_or_equals
 							}
 						}
-						
+
 						event_target:sov_target_country_revolution = {
 							create_unit = {
 								division = "name = \"Soviet Workers\" division_template = \"Soviet Workers\" start_experience_factor = 0.3"
@@ -23796,7 +24261,7 @@ country_event = {
 	picture = GFX_report_event_dead_soldiers
 
 	is_triggered_only = yes
-	
+
 	option = { #Ok
 		name = russia2_russia.525.a
 		add_political_power = 25
@@ -23811,7 +24276,7 @@ country_event = {
 	picture = GFX_report_event_dead_soldiers
 
 	is_triggered_only = yes
-	
+
 	option = { #Ok
 		name = russia2_russia.526.a
 		add_political_power = 25
@@ -23828,7 +24293,7 @@ country_event = {
 	timeout_days = 8
 
 	is_triggered_only = yes
-	
+
 	option = { #Yes
 		name = russia2_russia.527.a
 		ai_chance = {
@@ -23930,7 +24395,7 @@ country_event = {
 	is_triggered_only = yes
 
 	timeout_days = 5
-	
+
 	option = { #Yay
 		name = russia2_russia.528.a
 		ai_chance = {
@@ -23975,7 +24440,7 @@ country_event = {
 	is_triggered_only = yes
 
 	timeout_days = 5
-	
+
 	option = { #Aw
 		name = russia2_russia.529.a
 		ai_chance = {
@@ -24003,7 +24468,7 @@ country_event = {
 	picture = GFX_report_event_dead_soldiers
 
 	is_triggered_only = yes
-	
+
 	option = { #Yes
 		name = russia2_russia.530.a
 		ai_chance = {
@@ -24101,7 +24566,7 @@ country_event = {
 	picture = GFX_report_event_dead_soldiers
 
 	is_triggered_only = yes
-	
+
 	option = { #Yay
 		name = russia2_russia.531.a
 		ai_chance = {
@@ -24119,7 +24584,7 @@ country_event = {
 	picture = GFX_report_event_dead_soldiers
 
 	is_triggered_only = yes
-	
+
 	option = { #Kill
 		name = russia2_russia.532.a
 		ai_chance = {
@@ -24140,7 +24605,7 @@ country_event = {
 	picture = GFX_report_event_dead_soldiers
 
 	is_triggered_only = yes
-	
+
 	option = { #Yes
 		name = russia2_russia.533.a
 		ai_chance = {
@@ -24239,7 +24704,7 @@ country_event = {
 	picture = GFX_report_event_dead_soldiers
 
 	is_triggered_only = yes
-	
+
 	option = { #Yay
 		name = russia2_russia.534.a
 		ai_chance = {
@@ -24257,7 +24722,7 @@ country_event = {
 	picture = GFX_report_event_dead_soldiers
 
 	is_triggered_only = yes
-	
+
 	option = { #Kill
 		name = russia2_russia.535.a
 		ai_chance = {
@@ -24280,7 +24745,7 @@ country_event = {
 	is_triggered_only = yes
 
 	timeout_days = 5
-	
+
 	option = { #Ok
 		name = russia2_russia.536.a
 		ai_chance = {
@@ -24308,7 +24773,7 @@ country_event = {
 	is_triggered_only = yes
 
 	timeout_days = 5
-	
+
 	option = { #Ok
 		name = russia2_russia.537.a
 		ai_chance = {
@@ -24326,7 +24791,7 @@ country_event = {
 	picture = GFX_report_event_dead_soldiers
 
 	is_triggered_only = yes
-	
+
 	option = { #Oh
 		name = russia2_russia.538.a
 		ai_chance = {
@@ -24347,7 +24812,7 @@ country_event = {
 	picture = GFX_report_event_dead_soldiers
 
 	is_triggered_only = yes
-	
+
 	option = { #Accept
 		name = russia2_russia.539.a
 		ai_chance = {
@@ -24392,7 +24857,7 @@ country_event = {
 			every_other_country = {
 				limit = {
 					NOT = {
-						is_subject_of = ROOT					
+						is_subject_of = ROOT
 					}
 					is_in_faction_with = ROOT
 				}
@@ -24469,7 +24934,7 @@ country_event = {
 	picture = GFX_report_event_dead_soldiers
 
 	is_triggered_only = yes
-	
+
 	option = { #Nice
 		name = russia2_russia.540.a
 		ai_chance = {
@@ -24491,7 +24956,7 @@ country_event = {
 	picture = GFX_report_event_dead_soldiers
 
 	is_triggered_only = yes
-	
+
 	option = { #Oof
 		name = russia2_russia.541.a
 		ai_chance = {
@@ -24508,7 +24973,7 @@ country_event = {
 	picture = GFX_report_event_dead_soldiers
 
 	is_triggered_only = yes
-	
+
 	option = { #Enforce it (more rights)
 		name = russia2_russia.542.a
 		ai_chance = {
@@ -24551,7 +25016,7 @@ country_event = {
 	picture = GFX_report_event_dead_soldiers
 
 	is_triggered_only = yes
-	
+
 	option = { #Accept
 		name = russia2_russia.543.a
 		ai_chance = {
@@ -24635,7 +25100,7 @@ country_event = {
 	picture = GFX_report_event_dead_soldiers
 
 	is_triggered_only = yes
-	
+
 	option = { #Nice
 		name = russia2_russia.544.a
 		ai_chance = {
@@ -24656,7 +25121,7 @@ country_event = {
 	picture = GFX_report_event_dead_soldiers
 
 	is_triggered_only = yes
-	
+
 	option = { #Oof
 		name = russia2_russia.545.a
 		ai_chance = {
@@ -24673,7 +25138,7 @@ country_event = {
 	picture = GFX_report_event_dead_soldiers
 
 	is_triggered_only = yes
-	
+
 	option = { #Yes
 		name = russia2_russia.546.a
 		ai_chance = {
@@ -24719,7 +25184,7 @@ country_event = {
 			}
 			round_temp_variable = days_event
 			country_event = { id = russia2_russia.549 days = var:days_event }
-		}	
+		}
 	}
 
 	option = { #No
@@ -24742,7 +25207,7 @@ country_event = {
 	picture = GFX_report_event_dead_soldiers
 
 	is_triggered_only = yes
-	
+
 	option = { #Nice
 		name = russia2_russia.547.a
 		ai_chance = {
@@ -24759,7 +25224,7 @@ country_event = {
 	picture = GFX_report_event_dead_soldiers
 
 	is_triggered_only = yes
-	
+
 	option = { #Oof
 		name = russia2_russia.548.a
 		ai_chance = {
@@ -24776,7 +25241,7 @@ country_event = {
 	picture = GFX_report_event_dead_soldiers
 
 	is_triggered_only = yes
-	
+
 	option = { #Yes
 		name = russia2_russia.549.a
 		ai_chance = {
@@ -24806,7 +25271,7 @@ country_event = {
 	picture = GFX_report_event_dead_soldiers
 
 	is_triggered_only = yes
-	
+
 	option = { #Yes
 		name = russia2_russia.550.a
 		ai_chance = {
@@ -24827,7 +25292,7 @@ country_event = {
 	picture = GFX_report_event_dead_soldiers
 
 	is_triggered_only = yes
-	
+
 	option = { #Oops
 		name = russia2_russia.551.a
 		ai_chance = {
@@ -24875,7 +25340,7 @@ country_event = {
 	picture = GFX_report_event_dead_soldiers
 
 	is_triggered_only = yes
-	
+
 	option = { #Let's go
 		name = russia2_russia.552.a
 		ai_chance = {
@@ -24902,7 +25367,7 @@ country_event = {
 	desc = russia2_russia.553.d
 
 	is_triggered_only = yes
-	
+
 	option = { #Amazing
 		name = russia2_russia.553.a
 		ai_chance = {
@@ -24943,7 +25408,7 @@ country_event = {
 	}
 
 	mean_time_to_happen = { days = 1 }
-	
+
 	option = { #Purge
 		name = russia2_russia.554.a
 		ai_chance = {
@@ -24961,7 +25426,9 @@ country_event = {
 		}
 		custom_effect_tooltip = sov_add_10_purge_completion
 		sov_increase_great_purge_penalties = yes
-		remove_unit_leader = 401
+		SOV_Mikhail_tukhachevsky = {
+			remove_unit_leader_role = yes
+		}
 		custom_effect_tooltip = remove_theorist
 		show_ideas_tooltip = SOV_Mikhail_tukhachevsky
 	}
@@ -25015,7 +25482,7 @@ country_event = {
 	}
 
 	mean_time_to_happen = { days = 1 }
-	
+
 	option = { #Purge
 		name = russia2_russia.555.a
 		ai_chance = {
@@ -25087,7 +25554,7 @@ country_event = {
 	}
 
 	mean_time_to_happen = { days = 1 }
-	
+
 	option = { #Purge
 		name = russia2_russia.556.a
 		ai_chance = {
@@ -25143,7 +25610,7 @@ country_event = {
 			set_variable = { sov_great_purge_trigger^0 = 1 }
 		}
 	}
-	
+
 	option = { #Purge
 		name = russia2_russia.557.a
 		ai_chance = {
@@ -25161,7 +25628,9 @@ country_event = {
 		}
 		custom_effect_tooltip = sov_add_3_purge_completion
 		sov_increase_great_purge_penalties = yes
-		remove_unit_leader = 405
+		SOV_kliment_voroshilov = {
+			remove_unit_leader_role = yes
+		}
 		custom_effect_tooltip = remove_political_advisor
 		show_ideas_tooltip = SOV_kliment_voroshilov
 	}
@@ -25196,7 +25665,7 @@ country_event = {
 			set_variable = { sov_great_purge_trigger^1 = 1 }
 		}
 	}
-	
+
 	option = { #Purge Beria
 		name = russia2_russia.558.a
 		ai_chance = {
@@ -25205,14 +25674,14 @@ country_event = {
 		set_variable = { sov_great_purge_frame^4 = 2 }
 		set_variable = { sov_great_purge_date^4 = global.date }
 		set_variable = { sov_great_purge_status^1 = 1 }
-		add_to_variable = { sov_great_purge_completion = 6 }
+		add_to_variable = { sov_great_purge_completion = 7 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
 			var = sov_great_purge_completion
 			min = 0
 			max = 100
 		}
-		custom_effect_tooltip = sov_add_6_purge_completion
+		custom_effect_tooltip = sov_add_7_purge_completion
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_political_advisor
 		show_ideas_tooltip = SOV_Lavrentiy_beria
@@ -25226,14 +25695,14 @@ country_event = {
 		set_variable = { sov_great_purge_frame^5 = 2 }
 		set_variable = { sov_great_purge_date^5 = global.date }
 		set_variable = { sov_great_purge_status^1 = 2 }
-		add_to_variable = { sov_great_purge_completion = 6 }
+		add_to_variable = { sov_great_purge_completion = 7 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
 			var = sov_great_purge_completion
 			min = 0
 			max = 100
 		}
-		custom_effect_tooltip = sov_add_6_purge_completion
+		custom_effect_tooltip = sov_add_7_purge_completion
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_political_advisor
 		show_ideas_tooltip = SOV_Genrikh_yagoda
@@ -25271,7 +25740,7 @@ country_event = {
 			set_variable = { sov_great_purge_trigger^2 = 1 }
 		}
 	}
-	
+
 	option = { #Purge
 		name = russia2_russia.559.a
 		ai_chance = {
@@ -25325,7 +25794,7 @@ country_event = {
 			set_variable = { sov_great_purge_trigger^3 = 1 }
 		}
 	}
-	
+
 	option = { #Purge
 		name = russia2_russia.560.a
 		ai_chance = {
@@ -25378,7 +25847,7 @@ country_event = {
 			set_variable = { sov_great_purge_trigger^4 = 1 }
 		}
 	}
-	
+
 	option = { #Purge
 		name = russia2_russia.561.a
 		ai_chance = {
@@ -25432,7 +25901,7 @@ country_event = {
 			set_variable = { sov_great_purge_trigger^5 = 1 }
 		}
 	}
-	
+
 	option = { #Purge Maisky
 		name = russia2_russia.556.a
 		ai_chance = {
@@ -25441,14 +25910,14 @@ country_event = {
 		set_variable = { sov_great_purge_frame^9 = 2 }
 		set_variable = { sov_great_purge_date^9 = global.date }
 		set_variable = { sov_great_purge_status^5 = 1 }
-		add_to_variable = { sov_great_purge_completion = 6 }
+		add_to_variable = { sov_great_purge_completion = 7 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
 			var = sov_great_purge_completion
 			min = 0
 			max = 100
 		}
-		custom_effect_tooltip = sov_add_6_purge_completion
+		custom_effect_tooltip = sov_add_7_purge_completion
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_political_advisor
 		show_ideas_tooltip = SOV_Ivan_maisky
@@ -25463,14 +25932,14 @@ country_event = {
 		set_variable = { sov_great_purge_frame^10 = 2 }
 		set_variable = { sov_great_purge_date^10 = global.date }
 		set_variable = { sov_great_purge_status^5 = 2 }
-		add_to_variable = { sov_great_purge_completion = 6 }
+		add_to_variable = { sov_great_purge_completion = 7 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
 			var = sov_great_purge_completion
 			min = 0
 			max = 100
 		}
-		custom_effect_tooltip = sov_add_6_purge_completion
+		custom_effect_tooltip = sov_add_7_purge_completion
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_political_advisor
 		show_ideas_tooltip = SOV_Vyacheslav_molotov
@@ -25509,7 +25978,7 @@ country_event = {
 			set_variable = { sov_great_purge_trigger^6 = 1 }
 		}
 	}
-	
+
 	option = { #Purge
 		name = russia2_russia.563.a
 		ai_chance = {
@@ -25563,7 +26032,7 @@ country_event = {
 			set_variable = { sov_great_purge_trigger^7 = 1 }
 		}
 	}
-	
+
 	option = { #Purge
 		name = russia2_russia.564.a
 		ai_chance = {
@@ -25581,7 +26050,9 @@ country_event = {
 		}
 		custom_effect_tooltip = sov_add_3_purge_completion
 		sov_increase_great_purge_penalties = yes
-		remove_unit_leader = 404
+		SOV_Semyon_timoshenko = {
+			remove_unit_leader_role = yes
+		}
 		custom_effect_tooltip = remove_chief_of_army
 		show_ideas_tooltip = SOV_Semyon_timoshenko
 	}
@@ -25618,7 +26089,7 @@ country_event = {
 			set_variable = { sov_great_purge_trigger^8 = 1 }
 		}
 	}
-	
+
 	option = { #Purge
 		name = russia2_russia.565.a
 		ai_chance = {
@@ -25672,7 +26143,7 @@ country_event = {
 			set_variable = { sov_great_purge_trigger^9 = 1 }
 		}
 	}
-	
+
 	option = { #Purge
 		name = russia2_russia.566.a
 		ai_chance = {
@@ -25726,7 +26197,7 @@ country_event = {
 			set_variable = { sov_great_purge_trigger^10 = 1 }
 		}
 	}
-	
+
 	option = { #Purge
 		name = russia2_russia.567.a
 		ai_chance = {
@@ -25780,7 +26251,7 @@ country_event = {
 			set_variable = { sov_great_purge_trigger^11 = 1 }
 		}
 	}
-	
+
 	option = { #Purge
 		name = russia2_russia.568.a
 		ai_chance = {
@@ -25834,7 +26305,7 @@ country_event = {
 			set_variable = { sov_great_purge_trigger^12 = 1 }
 		}
 	}
-	
+
 	option = { #Purge
 		name = russia2_russia.569.a
 		ai_chance = {
@@ -25888,7 +26359,7 @@ country_event = {
 			set_variable = { sov_great_purge_trigger^13 = 1 }
 		}
 	}
-	
+
 	option = { #Purge
 		name = russia2_russia.570.a
 		ai_chance = {
@@ -25942,7 +26413,7 @@ country_event = {
 			set_variable = { sov_great_purge_trigger^14 = 1 }
 		}
 	}
-	
+
 	option = { #Purge
 		name = russia2_russia.571.a
 		ai_chance = {
@@ -25996,7 +26467,7 @@ country_event = {
 			set_variable = { sov_great_purge_trigger^15 = 1 }
 		}
 	}
-	
+
 	option = { #Purge
 		name = russia2_russia.572.a
 		ai_chance = {
@@ -26050,7 +26521,7 @@ country_event = {
 			set_variable = { sov_great_purge_trigger^16 = 1 }
 		}
 	}
-	
+
 	option = { #Purge
 		name = russia2_russia.573.a
 		ai_chance = {
@@ -26104,7 +26575,7 @@ country_event = {
 			set_variable = { sov_great_purge_trigger^17 = 1 }
 		}
 	}
-	
+
 	option = { #Purge
 		name = russia2_russia.574.a
 		ai_chance = {
@@ -26156,7 +26627,7 @@ country_event = {
 			set_variable = { sov_great_purge_trigger^18 = 1 }
 		}
 	}
-	
+
 	option = { #Purge Konev
 		name = russia2_russia.575.a
 		ai_chance = {
@@ -26165,16 +26636,18 @@ country_event = {
 		set_variable = { sov_great_purge_frame^23 = 2 }
 		set_variable = { sov_great_purge_date^23 = global.date }
 		set_variable = { sov_great_purge_status^18 = 1 }
-		add_to_variable = { sov_great_purge_completion = 6 }
+		add_to_variable = { sov_great_purge_completion = 7 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
 			var = sov_great_purge_completion
 			min = 0
 			max = 100
 		}
-		custom_effect_tooltip = sov_add_6_purge_completion
+		custom_effect_tooltip = sov_add_7_purge_completion
 		sov_increase_great_purge_penalties = yes
-		remove_unit_leader = 408
+		SOV_Ivan_konev = {
+			remove_unit_leader_role = yes
+		}
 		custom_effect_tooltip = remove_military_high_command
 		show_ideas_tooltip = SOV_Ivan_konev
 	}
@@ -26187,16 +26660,18 @@ country_event = {
 		set_variable = { sov_great_purge_frame^24 = 2 }
 		set_variable = { sov_great_purge_date^24 = global.date }
 		set_variable = { sov_great_purge_status^18 = 2 }
-		add_to_variable = { sov_great_purge_completion = 6 }
+		add_to_variable = { sov_great_purge_completion = 7 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
 			var = sov_great_purge_completion
 			min = 0
 			max = 100
 		}
-		custom_effect_tooltip = sov_add_6_purge_completion
+		custom_effect_tooltip = sov_add_7_purge_completion
 		sov_increase_great_purge_penalties = yes
-		remove_unit_leader = 402
+		SOV_Konstantin_rokossovsky = {
+			remove_unit_leader_role = yes
+		}
 		custom_effect_tooltip = remove_military_high_command
 		show_ideas_tooltip = SOV_Konstantin_rokossovsky
 	}
@@ -26233,7 +26708,7 @@ country_event = {
 			set_variable = { sov_great_purge_trigger^19 = 1 }
 		}
 	}
-	
+
 	option = { #Purge
 		name = russia2_russia.576.a
 		ai_chance = {
@@ -26251,7 +26726,9 @@ country_event = {
 		}
 		custom_effect_tooltip = sov_add_3_purge_completion
 		sov_increase_great_purge_penalties = yes
-		remove_unit_leader = 407
+		SOV_Aleksandr_vasilevsky = {
+			remove_unit_leader_role = yes
+		}
 		custom_effect_tooltip = remove_military_high_command
 		show_ideas_tooltip = SOV_Aleksandr_vasilevsky
 	}
@@ -26288,7 +26765,7 @@ country_event = {
 			set_variable = { sov_great_purge_trigger^20 = 1 }
 		}
 	}
-	
+
 	option = { #Purge
 		name = russia2_russia.577.a
 		ai_chance = {
@@ -26342,7 +26819,7 @@ country_event = {
 			set_variable = { sov_great_purge_trigger^21 = 1 }
 		}
 	}
-	
+
 	option = { #Purge
 		name = russia2_russia.578.a
 		ai_chance = {
@@ -26396,7 +26873,7 @@ country_event = {
 			set_variable = { sov_great_purge_trigger^22 = 1 }
 		}
 	}
-	
+
 	option = { #Purge
 		name = russia2_russia.579.a
 		ai_chance = {
@@ -26450,7 +26927,7 @@ country_event = {
 			set_variable = { sov_great_purge_trigger^23 = 1 }
 		}
 	}
-	
+
 	option = { #Purge
 		name = russia2_russia.580.a
 		ai_chance = {
@@ -26468,7 +26945,9 @@ country_event = {
 		}
 		custom_effect_tooltip = sov_add_3_purge_completion
 		sov_increase_great_purge_penalties = yes
-		remove_unit_leader = 403
+		SOV_Vladimir_kasatonov = {
+			remove_unit_leader_role = yes
+		}
 		custom_effect_tooltip = remove_military_high_command
 		show_ideas_tooltip = SOV_Vladimir_kasatonov
 	}
@@ -26505,7 +26984,7 @@ country_event = {
 			set_variable = { sov_great_purge_trigger^24 = 1 }
 		}
 	}
-	
+
 	option = { #Purge
 		name = russia2_russia.581.a
 		ai_chance = {
@@ -26523,7 +27002,9 @@ country_event = {
 		}
 		custom_effect_tooltip = sov_add_3_purge_completion
 		sov_increase_great_purge_penalties = yes
-		remove_unit_leader = 406
+		SOV_Gordey_levchenko = {
+			remove_unit_leader_role = yes
+		}
 		custom_effect_tooltip = remove_military_high_command
 		show_ideas_tooltip = SOV_Gordey_levchenko
 	}
@@ -26560,7 +27041,7 @@ country_event = {
 			set_variable = { sov_great_purge_trigger^25 = 1 }
 		}
 	}
-	
+
 	option = { #Purge
 		name = russia2_russia.582.a
 		ai_chance = {
@@ -26578,7 +27059,9 @@ country_event = {
 		}
 		custom_effect_tooltip = sov_add_3_purge_completion
 		sov_increase_great_purge_penalties = yes
-		remove_unit_leader = 409
+		SOV_Arseniy_golovko = {
+			remove_unit_leader_role = yes
+		}
 		custom_effect_tooltip = remove_military_high_command
 		show_ideas_tooltip = SOV_Arseniy_golovko
 	}
@@ -26613,7 +27096,7 @@ country_event = {
 			set_variable = { sov_great_purge_trigger^26 = 1 }
 		}
 	}
-	
+
 	option = { #Purge Shaposhnikov
 		name = russia2_russia.583.a
 		ai_chance = {
@@ -26622,16 +27105,18 @@ country_event = {
 		set_variable = { sov_great_purge_frame^32 = 2 }
 		set_variable = { sov_great_purge_date^32 = global.date }
 		set_variable = { sov_great_purge_status^26 = 1 }
-		add_to_variable = { sov_great_purge_completion = 6 }
+		add_to_variable = { sov_great_purge_completion = 7 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
 			var = sov_great_purge_completion
 			min = 0
 			max = 100
 		}
-		custom_effect_tooltip = sov_add_6_purge_completion
+		custom_effect_tooltip = sov_add_7_purge_completion
 		sov_increase_great_purge_penalties = yes
-		remove_unit_leader = 510
+		SOV_Boris_shaposhnikov = {
+			remove_unit_leader_role = yes
+		}
 		custom_effect_tooltip = remove_theorist
 		show_ideas_tooltip = SOV_Boris_shaposhnikov
 	}
@@ -26644,16 +27129,18 @@ country_event = {
 		set_variable = { sov_great_purge_frame^33 = 2 }
 		set_variable = { sov_great_purge_date^33 = global.date }
 		set_variable = { sov_great_purge_status^26 = 2 }
-		add_to_variable = { sov_great_purge_completion = 6 }
+		add_to_variable = { sov_great_purge_completion = 7 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
 			var = sov_great_purge_completion
 			min = 0
 			max = 100
 		}
-		custom_effect_tooltip = sov_add_6_purge_completion
+		custom_effect_tooltip = sov_add_7_purge_completion
 		sov_increase_great_purge_penalties = yes
-		remove_unit_leader = 411
+		SOV_Sergey_gorshkov = {
+			remove_unit_leader_role = yes
+		}
 		custom_effect_tooltip = remove_theorist
 		show_ideas_tooltip = SOV_Sergey_gorshkov
 	}
@@ -26690,7 +27177,7 @@ country_event = {
 			set_variable = { sov_great_purge_trigger^27 = 1 }
 		}
 	}
-	
+
 	option = { #Purge
 		name = russia2_russia.584.a
 		ai_chance = {
@@ -26744,7 +27231,7 @@ country_event = {
 			set_variable = { sov_great_purge_trigger^28 = 1 }
 		}
 	}
-	
+
 	option = { #Purge
 		name = russia2_russia.585.a
 		ai_chance = {
@@ -26798,7 +27285,7 @@ country_event = {
 			set_variable = { sov_great_purge_trigger^29 = 1 }
 		}
 	}
-	
+
 	option = { #Purge
 		name = russia2_russia.586.a
 		ai_chance = {
@@ -26852,7 +27339,7 @@ country_event = {
 			set_variable = { sov_great_purge_trigger^30 = 1 }
 		}
 	}
-	
+
 	option = { #Purge
 		name = russia2_russia.587.a
 		ai_chance = {
@@ -26906,7 +27393,7 @@ country_event = {
 			set_variable = { sov_great_purge_trigger^31 = 1 }
 		}
 	}
-	
+
 	option = { #Purge
 		name = russia2_russia.588.a
 		ai_chance = {
@@ -26960,7 +27447,7 @@ country_event = {
 			set_variable = { sov_great_purge_trigger^32 = 1 }
 		}
 	}
-	
+
 	option = { #Purge
 		name = russia2_russia.589.a
 		ai_chance = {
@@ -26978,7 +27465,9 @@ country_event = {
 		}
 		custom_effect_tooltip = sov_add_3_purge_completion
 		sov_increase_great_purge_penalties = yes
-		remove_unit_leader = 450
+		SOV_Leonid_govorov = {
+			remove_unit_leader_role = yes
+		}
 	}
 
 	option = { #Don't purge
@@ -27013,7 +27502,7 @@ country_event = {
 			set_variable = { sov_great_purge_trigger^33 = 1 }
 		}
 	}
-	
+
 	option = { #Purge
 		name = russia2_russia.590.a
 		ai_chance = {
@@ -27031,7 +27520,9 @@ country_event = {
 		}
 		custom_effect_tooltip = sov_add_3_purge_completion
 		sov_increase_great_purge_penalties = yes
-		remove_unit_leader = 451
+		SOV_Nikolai_berzarin = {
+			remove_unit_leader_role = yes
+		}
 	}
 
 	option = { #Don't purge
@@ -27066,7 +27557,7 @@ country_event = {
 			set_variable = { sov_great_purge_trigger^34 = 1 }
 		}
 	}
-	
+
 	option = { #Purge
 		name = russia2_russia.591.a
 		ai_chance = {
@@ -27119,7 +27610,7 @@ country_event = {
 			set_variable = { sov_great_purge_trigger^35 = 1 }
 		}
 	}
-	
+
 	option = { #Purge
 		name = russia2_russia.592.a
 		ai_chance = {
@@ -27158,6 +27649,222 @@ country_event = {
 	}
 }
 
+#Aleskey Rykov
+country_event = {
+	id = russia2_russia.593
+	title = russia2_russia.593.t
+	desc = russia2_russia.593.d
+
+	picture = GFX_43_Aleskey_rykov_purge_event
+
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			set_variable = { sov_great_purge_trigger^36 = 1 }
+		}
+	}
+
+	option = { #Purge
+		name = russia2_russia.593.a
+		ai_chance = {
+			factor = 95
+		}
+		set_variable = { sov_great_purge_frame^43 = 2 }
+		set_variable = { sov_great_purge_date^43 = global.date }
+		set_variable = { sov_great_purge_status^36 = 1 }
+		add_to_variable = { sov_great_purge_completion = 5 }
+		round_variable = sov_great_purge_completion
+		clamp_variable = {
+			var = sov_great_purge_completion
+			min = 0
+			max = 100
+		}
+		custom_effect_tooltip = sov_add_5_purge_completion
+		sov_increase_great_purge_penalties = yes
+		custom_effect_tooltip = remove_political_advisor
+		show_ideas_tooltip = SOV_Aleksey_rykov
+	}
+
+	option = { #Don't purge
+		name = russia2_russia.593.b
+		ai_chance = {
+			factor = 5
+		}
+		custom_effect_tooltip = sov_remove_2_purge_completion
+		add_political_power = -75
+		subtract_from_variable = { sov_great_purge_completion = 2 }
+		round_variable = sov_great_purge_completion
+		clamp_variable = {
+			var = sov_great_purge_completion
+			min = 0
+			max = 100
+		}
+	}
+}
+
+#Lev Kamenev
+country_event = {
+	id = russia2_russia.594
+	title = russia2_russia.594.t
+	desc = russia2_russia.594.d
+
+	picture = GFX_43_Lev_kamenev_purge_event
+
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			set_variable = { sov_great_purge_trigger^37 = 1 }
+		}
+	}
+
+	option = { #Purge
+		name = russia2_russia.594.a
+		ai_chance = {
+			factor = 95
+		}
+		set_variable = { sov_great_purge_frame^44 = 2 }
+		set_variable = { sov_great_purge_date^44 = global.date }
+		set_variable = { sov_great_purge_status^37 = 1 }
+		add_to_variable = { sov_great_purge_completion = 5 }
+		round_variable = sov_great_purge_completion
+		clamp_variable = {
+			var = sov_great_purge_completion
+			min = 0
+			max = 100
+		}
+		custom_effect_tooltip = sov_add_5_purge_completion
+		sov_increase_great_purge_penalties = yes
+		custom_effect_tooltip = remove_political_advisor
+		show_ideas_tooltip = SOV_Lev_kamenev
+	}
+
+	option = { #Don't purge
+		name = russia2_russia.594.b
+		ai_chance = {
+			factor = 5
+		}
+		custom_effect_tooltip = sov_remove_2_purge_completion
+		add_political_power = -75
+		subtract_from_variable = { sov_great_purge_completion = 2 }
+		round_variable = sov_great_purge_completion
+		clamp_variable = {
+			var = sov_great_purge_completion
+			min = 0
+			max = 100
+		}
+	}
+}
+
+#Nikolay Bukharin
+country_event = {
+	id = russia2_russia.595
+	title = russia2_russia.595.t
+	desc = russia2_russia.595.d
+
+	picture = GFX_43_Nikolay_bukharin_purge_event
+
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			set_variable = { sov_great_purge_trigger^38 = 1 }
+		}
+	}
+
+	option = { #Purge
+		name = russia2_russia.595.a
+		ai_chance = {
+			factor = 95
+		}
+		set_variable = { sov_great_purge_frame^45 = 2 }
+		set_variable = { sov_great_purge_date^45 = global.date }
+		set_variable = { sov_great_purge_status^38 = 1 }
+		add_to_variable = { sov_great_purge_completion = 5 }
+		round_variable = sov_great_purge_completion
+		clamp_variable = {
+			var = sov_great_purge_completion
+			min = 0
+			max = 100
+		}
+		custom_effect_tooltip = sov_add_5_purge_completion
+		sov_increase_great_purge_penalties = yes
+		custom_effect_tooltip = remove_political_advisor
+		show_ideas_tooltip = SOV_Nikolay_bukharin
+	}
+
+	option = { #Don't purge
+		name = russia2_russia.595.b
+		ai_chance = {
+			factor = 5
+		}
+		custom_effect_tooltip = sov_remove_2_purge_completion
+		add_political_power = -75
+		subtract_from_variable = { sov_great_purge_completion = 2 }
+		round_variable = sov_great_purge_completion
+		clamp_variable = {
+			var = sov_great_purge_completion
+			min = 0
+			max = 100
+		}
+	}
+}
+
+#Grigory Zinovyev
+country_event = {
+	id = russia2_russia.596
+	title = russia2_russia.596.t
+	desc = russia2_russia.596.d
+
+	picture = GFX_43_Grigory_zinovyev_purge_event
+
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			set_variable = { sov_great_purge_trigger^39 = 1 }
+		}
+	}
+
+	option = { #Purge
+		name = russia2_russia.596.a
+		ai_chance = {
+			factor = 95
+		}
+		set_variable = { sov_great_purge_frame^46 = 2 }
+		set_variable = { sov_great_purge_date^46 = global.date }
+		set_variable = { sov_great_purge_status^39 = 1 }
+		add_to_variable = { sov_great_purge_completion = 5 }
+		round_variable = sov_great_purge_completion
+		clamp_variable = {
+			var = sov_great_purge_completion
+			min = 0
+			max = 100
+		}
+		custom_effect_tooltip = sov_add_5_purge_completion
+		sov_increase_great_purge_penalties = yes
+		custom_effect_tooltip = remove_political_advisor
+		show_ideas_tooltip = SOV_Grigory_zinovyev
+	}
+
+	option = { #Don't purge
+		name = russia2_russia.596.b
+		ai_chance = {
+			factor = 5
+		}
+		custom_effect_tooltip = sov_remove_2_purge_completion
+		add_political_power = -75
+		subtract_from_variable = { sov_great_purge_completion = 2 }
+		round_variable = sov_great_purge_completion
+		clamp_variable = {
+			var = sov_great_purge_completion
+			min = 0
+			max = 100
+		}
+	}
+}
+
 #END OF THE PURGE EVENTS
 
 #Helping SOU (TAN)
@@ -27186,7 +27893,7 @@ country_event = {
 			is_faction_leader = yes
 		}
 	}
-	
+
 	option = {
 		name = russia2_russia.601.a
 		ai_chance = {
@@ -27209,7 +27916,7 @@ country_event = {
                 division = "name = \"4ya Strelkovaya Polk\" division_template = \"Strelkovaya Polk\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
                 owner = TAN
             }
-		}	
+		}
 		SOU = {
 			add_to_faction = ROOT
 		}
@@ -27264,7 +27971,7 @@ country_event = {
 			is_faction_leader = yes
 		}
 	}
-	
+
 	option = {
 		name = russia2_russia.602.a
 		ai_chance = {
@@ -27309,7 +28016,7 @@ country_event = {
 	desc = russia2_russia.603.d
 
 	is_triggered_only = yes
-	
+
 	option = {
 		name = russia2_russia.603.a
 		ai_chance = {
@@ -27337,7 +28044,7 @@ country_event = {
 	desc = russia2_russia.604.d
 
 	is_triggered_only = yes
-	
+
 	option = {
 		name = russia2_russia.604.a
 		ai_chance = {
@@ -27362,7 +28069,7 @@ country_event = {
 			factor = 70
 		}
 		add_ideas = export_focus
-		add_political_power = -100 
+		add_political_power = -100
 	}
 
 	option = { #Yes but a little bit, change trade law to limited exports
@@ -27599,7 +28306,7 @@ country_event = {
 				ideology = anarchist
 				expire = "1965.1.1.1"
 				traits = {
-					
+
 				}
 			}
 		}
@@ -27843,7 +28550,7 @@ country_event = {
 						popularity = 0.1
 					}
 				}
-				add_country_leader_trait = soviet_puppet
+				add_country_leader_trait = russia2_soviet_puppet
 				if = {
 					limit = {
 						OR = {
@@ -27859,10 +28566,10 @@ country_event = {
 							is_literally_china = yes
 						}
 						NOT = {
-							has_country_leader_with_trait = making_fun_of_me_uh
+							has_country_leader_with_trait = russia2_making_fun_of_me_uh
 						}
 					}
-					add_country_leader_trait = making_fun_of_me_uh
+					add_country_leader_trait = russia2_making_fun_of_me_uh
 					every_country = {
 						limit = {
 							is_ai = no
@@ -27928,7 +28635,7 @@ country_event = {
 						popularity = 0.1
 					}
 				}
-				add_country_leader_trait = russian_puppet
+				add_country_leader_trait = russia2_russian_puppet
 			}
 		}
 	}
@@ -29598,7 +30305,7 @@ country_event = {
 		}
 	}
 	picture = GFX_handshake_russia2
-	
+
 	is_triggered_only = yes
 
 	option = { #Excelent
@@ -29645,7 +30352,7 @@ country_event = {
 		}
 	}
 	picture = GFX_report_event_generic_rally
-	
+
 	is_triggered_only = yes
 
 	option = { #Good
@@ -29692,7 +30399,7 @@ country_event = {
 		}
 	}
 	picture = GFX_report_event_gre_trial
-	
+
 	is_triggered_only = yes
 
 	option = { #Good
@@ -29739,7 +30446,7 @@ country_event = {
 		}
 	}
 	picture = GFX_report_event_generic_riot
-	
+
 	is_triggered_only = yes
 
 	option = { #Rip
@@ -29763,7 +30470,7 @@ country_event = {
 	title = russia2_russia.647.t
 	desc = russia2_russia.647.d
 	picture = GFX_report_event_SOV_mongolia_cavalry
-	
+
 	is_triggered_only = yes
 
 	option = { #Military Occupation
@@ -29848,7 +30555,7 @@ country_event = {
 				owns_state = 818
 				owns_state = 817
 				owns_state = 819
-				owns_state = 330 
+				owns_state = 330
 			}
 		}
 		ai_chance = {
