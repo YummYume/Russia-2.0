@@ -497,6 +497,75 @@ SOV_great_purge_decisions = {
 			}
 		}
 	}
+
+	SOV_search_trotsky_in_from = {
+
+		icon = GFX_decision_generic_nationalism
+
+		state_target = yes
+
+		target_array = SOV.sov_trotsky_hiding_states
+
+		fire_only_once = yes
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		highlight_states = {
+			state = FROM
+		}
+
+		visible = {
+			has_idea = SOV_Great_purge
+		}
+
+		available = {
+			has_country_flag = sov_purge_over
+			NOT = {
+				has_country_flag = sov_searching_for_trotsky
+				has_global_flag = sov_leon_trotsky_dead
+			}
+		}
+
+		cost = 200
+
+		days_remove = 200
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = SOV_search_trotsky_in_from_tt
+			set_country_flag = sov_searching_for_trotsky
+		}
+
+		remove_effect = {
+			custom_effect_tooltip = SOV_search_trotsky_in_from_tt2
+			hidden_effect = {
+				if = {
+					limit = {
+						FROM = {
+							state = var:sov_leon_trotsky_hiding_state
+						}
+					}
+					country_event = russia2_russia.650
+				}
+				else = {
+					random_list = {
+						50 = {
+							country_event = russia2_russia.648
+						}
+						50 = {
+							country_event = russia2_russia.649
+						}
+					}
+				}
+				clr_country_flag = sov_searching_for_trotsky
+			}
+		}
+	}
 }
 
 SOV_democratic_help = {
@@ -28428,7 +28497,7 @@ SOV_the_black_revolution = {
 					clr_country_flag = civil_war_black_revolution
 					remove_ideas = SOV_Anarchist_terrorist
 					remove_ideas = SOV_army_disorganisation
-					remove_ideas = home_of_revolution_russia2_idea
+					remove_ideas = SOV_Home_of_revolution_russia2
 					dismantle_faction = yes
 					delete_unit_template_and_units = {
 						division_template = "Strelkovaya Diviziya"
@@ -29508,7 +29577,7 @@ SOV_the_black_revolution = {
 					clr_country_flag = civil_war_black_revolution
 					remove_ideas = SOV_Anarchist_terrorist
 					remove_ideas = SOV_army_disorganisation
-					remove_ideas = home_of_revolution_russia2_idea
+					remove_ideas = SOV_Home_of_revolution_russia2
 					add_ideas = extensive_conscription
 					add_ideas = SOV_Determination
 					add_ideas = SOV_Surprise_attack_black_revolution
@@ -29706,7 +29775,7 @@ SOV_the_black_revolution = {
 					clr_country_flag = civil_war_black_revolution
 					remove_ideas = SOV_Anarchist_terrorist
 					remove_ideas = SOV_army_disorganisation
-					remove_ideas = home_of_revolution_russia2_idea
+					remove_ideas = SOV_Home_of_revolution_russia2
 					add_ideas = extensive_conscription
 					add_ideas = SOV_Determination
 					country_event = { id = russia2_russia.404 hours = 1 }
@@ -29870,7 +29939,7 @@ SOV_the_black_revolution = {
 					clr_country_flag = civil_war_black_revolution
 					remove_ideas = SOV_Anarchist_terrorist
 					remove_ideas = SOV_army_disorganisation
-					remove_ideas = home_of_revolution_russia2_idea
+					remove_ideas = SOV_Home_of_revolution_russia2
 					add_ideas = extensive_conscription
 					add_ideas = SOV_Determination
 					country_event = { id = russia2_russia.404 hours = 1 }

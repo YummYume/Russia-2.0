@@ -653,28 +653,6 @@ country_event = {
 	}
 }
 
-#Remove Trotsky Plot TODO
-country_event = {
-	id = russia2_russia.27
-	title = soviet.53.t
-	desc = soviet.53.d
-	picture = GFX_report_event_stalin_01
-
-	fire_only_once = yes
-
-	trigger = {
-		tag = SOV
-		has_country_flag = SOV_purged_4
-	}
-
-	mean_time_to_happen = { days = 2 }
-
-	option = {
-		name = soviet.53.a
-		remove_ideas = trotskyite_plot_purged_russia2_idea
-	}
-}
-
 # Foreign Policies
 country_event = {
 	id = russia2_russia.28
@@ -10250,8 +10228,8 @@ country_event = {  #TODO Chara Change
 			remove_ideas = SOV_Slow_industry
 			remove_ideas = SOV_Organize_volunteer_forces
 			add_ideas = SOV_Suppressed_research
-			add_ideas = trotskyite_plot_purged_russia2_idea
-			add_ideas = home_of_revolution_russia2_idea
+			add_ideas = SOV_Trotskyite_plot_purged_russia2
+			add_ideas = SOV_Home_of_revolution_russia2
 			create_faction = Comintern
 			add_to_faction = MON
 			add_to_faction = TAN
@@ -17053,7 +17031,7 @@ country_event = {
 			factor = 100
 		}
 		add_ideas = SOV_Anarchist_terrorist
-		remove_ideas = trotskyite_plot_russia2_idea
+		remove_ideas = SOV_Trotskyite_plot_russia2
 		remove_ideas = SOV_Unhappy_peasants1
 		hidden_effect = {
 			remove_ideas = SOV_Unhappy_peasants2
@@ -30589,5 +30567,67 @@ country_event = {
 				autonomy_state = autonomy_puppet
 			}
 		}
+	}
+}
+
+#Trotsky not found
+country_event = {
+	id = russia2_russia.648
+	title = russia2_russia.648.t
+	desc = russia2_russia.648.d
+	picture = GFX_report_event_SOV_mongolia_cavalry
+
+	is_triggered_only = yes
+
+	option = { #Keep looking
+		name = russia2_russia.648.a
+		ai_chance = {
+			factor = 100
+		}
+		custom_effect_tooltip = sov_leon_trotsky_can_search_again_tt
+	}
+}
+
+#Trotsky found but escaped
+country_event = {
+	id = russia2_russia.649
+	title = russia2_russia.649.t
+	desc = russia2_russia.649.d
+	picture = GFX_report_event_SOV_mongolia_cavalry
+
+	is_triggered_only = yes
+
+	option = { #Dammit
+		name = russia2_russia.649.a
+		ai_chance = {
+			factor = 100
+		}
+		custom_effect_tooltip = sov_leon_trotsky_can_search_again_tt
+	}
+}
+
+#Trotsky found
+country_event = {
+	id = russia2_russia.650
+	title = russia2_russia.650.t
+	desc = russia2_russia.650.d
+	picture = GFX_report_event_SOV_mongolia_cavalry
+
+	is_triggered_only = yes
+
+	option = { #Thereeee we go
+		name = russia2_russia.650.a
+		ai_chance = {
+			factor = 100
+		}
+		custom_effect_tooltip = sov_leon_trotsky_dies_tt
+		remove_ideas = SOV_Trotskyite_plot_purged_russia2
+		if = {
+			limit = {
+				has_country_leader_with_trait = russia2_paranoia_stalin_trait
+			}
+			remove_country_leader_trait = russia2_paranoia_stalin_trait
+		}
+		set_global_flag = sov_leon_trotsky_dead
 	}
 }

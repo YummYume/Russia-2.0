@@ -54,6 +54,19 @@ set_variable = { training_time_factor_great_purge_max = 0.2 }
 set_variable = { political_advisor_cost_factor_great_purge = 0.05 } #Max : 0.5
 set_variable = { political_advisor_cost_factor_great_purge_max = 0.5 }
 
+#Trotsky hiding state
+add_to_array = { sov_trotsky_hiding_states = 16 }
+add_to_array = { sov_trotsky_hiding_states = 110 }
+add_to_array = { sov_trotsky_hiding_states = 277 }
+random_scope_in_array = {
+	array = sov_trotsky_hiding_states
+	break = break_loop
+
+	SOV = {
+		set_variable = { sov_leon_trotsky_hiding_state = PREV }
+	}
+}
+
 #Achievements
 set_variable = { sov_stalin_track_tries = 0 }
 set_variable = { sov_trotsky_successful_revolution_count = 0 }
@@ -606,8 +619,8 @@ if = {
 	unlock_national_focus = SOV_stalinism_foc
 	unlock_national_focus = SOV_reign_of_terror
 	unlock_national_focus = SOV_foreign_policy
-	remove_ideas = trotskyite_plot_russia2_idea
-	add_ideas = trotskyite_plot_purged_russia2_idea
+	remove_ideas = SOV_Trotskyite_plot_russia2
+	add_ideas = SOV_Trotskyite_plot_purged_russia2
 	set_stability = 0.80
 	add_timed_idea = {
 		idea = officers_purged_6
@@ -1426,8 +1439,8 @@ add_to_faction = MON
 add_to_faction = TAN
 
 add_ideas = {
-	trotskyite_plot_russia2_idea
-	home_of_revolution_russia2_idea
+	SOV_Trotskyite_plot_russia2
+	SOV_Home_of_revolution_russia2
 	SOV_Infrastructure_problem
 	SOV_Dispersed_industry
 	SOV_Unhappy_peasants1
