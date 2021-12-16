@@ -1,5 +1,30 @@
 characters = {
 
+	check_advisor_russia2_sov_russia2 = {
+		advisor = {
+			slot = advisor
+			idea_token = check_advisor_russia2_sov_russia2
+
+			traits = {
+				
+			}
+
+			visible = {
+				always = no
+			}
+
+			ai_will_do = {
+				factor = 0
+			}
+		}
+
+		portraits = {
+			army = {
+				small = "GFX_idea_generic_army_europe_2"
+			}
+		}
+	}
+
     SOV_Nikolai_voznesensky = {
 		name = SOV_Nikolai_voznesensky
 
@@ -22,7 +47,7 @@ characters = {
 								value = 1
 								compare = equals
 							}
-							has_country_flag = purge_politician
+							has_character_flag = SOV_purge_politician_trotsky_russia
 						}
 					}
 				}
@@ -56,21 +81,31 @@ characters = {
 			cost = 150
 
 			allowed = {
-				original_tag = SOV
+				OR = {
+					original_tag = SOV
+					original_tag = SOU
+				}
 			}
 
 			available = {
 				NOT = {
 					custom_trigger_tooltip = {
 						tooltip = SOV_idea_not_purged_tt
-						check_variable = {
-							var = sov_great_purge_status^0
-							value = 1
-							compare = equals
+						OR = {
+							check_variable = {
+								var = sov_great_purge_status^0
+								value = 1
+								compare = equals
+							}
+							has_character_flag = SOV_purge_military_trotsky
 						}
 					}
-                    has_country_flag = has_deserted_military
-					has_country_flag = sov_enemy_second_civil_war
+                    has_country_flag = SOV_has_deserted_military_democratic_russia
+					has_country_flag = sov_enemy_second_civil_war_russia2
+					custom_trigger_tooltip = {
+						tooltip = SOV_not_is_in_prison_tt #Seriously why do I have to create a tooltip for a character flag ?
+						has_character_flag = russia_is_in_prison_cw
+					}
 					has_idea = SOV_Kliment_voroshilov_military
                 }
                 custom_trigger_tooltip = {
@@ -219,10 +254,13 @@ characters = {
 					has_idea = SOV_Lavrentiy_beria
 					custom_trigger_tooltip = {
 						tooltip = SOV_idea_not_purged_tt
-						check_variable = {
-							var = sov_great_purge_status^1
-							value = 2
-							compare = equals
+						OR = {
+							check_variable = {
+								var = sov_great_purge_status^1
+								value = 2
+								compare = equals
+							}
+							has_character_flag = SOV_purge_politician_trotsky_russia
 						}
 					}
 				}
@@ -267,7 +305,7 @@ characters = {
 						tooltip = SOV_idea_not_purged_tt
 						OR = {
 							has_country_flag = SOV_Nikolay_yezhov_purged
-							has_country_flag = purge_politician
+							has_character_flag = SOV_purge_politician_trotsky_russia
 						}
 					}
 				}
@@ -312,10 +350,13 @@ characters = {
 					has_country_flag = sov_lavrentiy_beria_executed
 					custom_trigger_tooltip = {
 						tooltip = SOV_idea_not_purged_tt
-						check_variable = {
-							var = sov_great_purge_status^1
-							value = 1
-							compare = equals
+						OR = {
+							check_variable = {
+								var = sov_great_purge_status^1
+								value = 1
+								compare = equals
+							}
+							has_character_flag = SOV_purge_politician_trotsky_russia	
 						}
 					}
 				}
@@ -577,12 +618,16 @@ characters = {
 						tooltip = SOV_idea_not_purged_tt
 						OR = {
 							has_country_flag = mikhail_kalinin_purged
-							has_country_flag = purge_politician
+							has_character_flag = SOV_purge_politician_trotsky_russia
 						}
 					}
 				}
 				NOT = {
-					has_country_flag = sov_enemy_second_civil_war
+					has_country_flag = sov_enemy_second_civil_war_russia2
+					custom_trigger_tooltip = {
+						tooltip = SOV_not_is_in_prison_tt 
+						has_character_flag = russia_is_in_prison_cw
+					}
 				}
 			}
 
@@ -618,7 +663,11 @@ characters = {
 				has_government = communism
 				has_completed_focus = SOV_great_purge2
 				NOT = {
-					has_country_flag = sov_enemy_second_civil_war
+					has_country_flag = sov_enemy_second_civil_war_russia2
+					custom_trigger_tooltip = {
+						tooltip = SOV_not_is_in_prison_tt 
+						has_character_flag = russia_is_in_prison_cw
+					}
 				}
                 NOT = {
                     has_character_flag = sov_leading_war_against_stalin
@@ -698,7 +747,7 @@ characters = {
 								value = 1
 								compare = equals
 							}
-							has_country_flag = purge_politician2
+							has_character_flag = SOV_purge_politician_trotsky_russia
 						}
 					}
 				}
@@ -799,7 +848,11 @@ characters = {
 					}
 				}
 				NOT = {
-					has_country_flag = sov_enemy_second_civil_war
+					has_country_flag = sov_enemy_second_civil_war_russia2
+					custom_trigger_tooltip = {
+						tooltip = SOV_not_is_in_prison_tt 
+						has_character_flag = russia_is_in_prison_cw
+					}
 				}
 			}
 
@@ -1000,6 +1053,12 @@ characters = {
 			available = {
 				has_government = communism
 				has_completed_focus = SOV_the_comintern
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						has_character_flag = SOV_purge_politician_trotsky_russia
+					}
+				}
 			}
 
 			visible = {
@@ -1033,6 +1092,12 @@ characters = {
 			available = {
 				has_government = communism
 				has_completed_focus = SOV_found_the_pcdi
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = SOV_idea_not_purged_tt
+						has_character_flag = SOV_purge_politician_trotsky_russia
+					}
+				}
 			}
 
 			visible = {
@@ -1455,6 +1520,7 @@ characters = {
 			}
 
 			army = {
+				large = "gfx/leaders/SOV/Portrait_Russia_Vladimir_Kirillovich.dds"
 				small = "gfx/interface/ideas/advisors/advisor_SOV_vladimir_kirillovich.dds"
 			}
 		}
@@ -2056,7 +2122,10 @@ characters = {
 			cost = 100
 
 			allowed = {
-				original_tag = SOV
+				OR = {
+					original_tag = SOV
+					original_tag = SOU
+				}
 			}
 
 			available = {
@@ -2071,7 +2140,11 @@ characters = {
 					}
 				}
 				NOT = {
-					has_country_flag = sov_enemy_second_civil_war
+					has_country_flag = sov_enemy_second_civil_war_russia2
+					custom_trigger_tooltip = {
+						tooltip = SOV_not_is_in_prison_tt 
+						has_character_flag = russia_is_in_prison_cw
+					}
 				}
 				custom_trigger_tooltip = {
 					tooltip = sov_not_joined_another_side
@@ -2098,6 +2171,12 @@ characters = {
 		}
 
 		corps_commander = {
+			visible = {
+				NOT = {
+					has_character_flag = SOV_character_agains_anarchist_government
+					has_character_flag = russia_is_in_prison_cw
+				}
+			}
 			traits = {
 				career_officer
 				cavalry_officer
@@ -2128,25 +2207,35 @@ characters = {
 			cost = 100
 
 			allowed = {
-				original_tag = SOV
+				OR = {
+					original_tag = SOV
+					original_tag = SOU
+				}
 			}
 
 			available = {
 				NOT = {
 					custom_trigger_tooltip = {
 						tooltip = SOV_idea_not_purged_tt
-						check_variable = {
-							var = sov_great_purge_status^0
-							value = 1
-							compare = equals
+						OR = {
+							check_variable = {
+								var = sov_great_purge_status^0
+								value = 1
+								compare = equals
+							}
+							has_character_flag = SOV_purge_military_trotsky
 						}
 					}
 				}
 				NOT = {
-                    has_country_flag = has_deserted_military
+                    has_country_flag = SOV_has_deserted_military_democratic_russia
                 }
 				NOT = {
-					has_country_flag = sov_enemy_second_civil_war
+					has_country_flag = sov_enemy_second_civil_war_russia2
+					custom_trigger_tooltip = {
+						tooltip = SOV_not_is_in_prison_tt 
+						has_character_flag = russia_is_in_prison_cw
+					}
 				}
 				NOT = {
 					has_idea = SOV_Kliment_voroshilov_advisor
@@ -2176,6 +2265,12 @@ characters = {
 		}
 
 		field_marshal = {
+			visible = {
+				NOT = {
+					has_character_flag = SOV_character_agains_anarchist_government
+					has_character_flag = russia_is_in_prison_cw
+				}
+			}
 			traits = {
 				old_guard
 				politically_connected
@@ -2220,7 +2315,11 @@ characters = {
 					}
 				}
 				NOT = {
-					has_country_flag = sov_enemy_second_civil_war
+					has_country_flag = sov_enemy_second_civil_war_russia2
+					custom_trigger_tooltip = {
+						tooltip = SOV_not_is_in_prison_tt 
+						has_character_flag = russia_is_in_prison_cw
+					}
 				}
 				NOT = {
 					has_government = anarchy
@@ -2252,7 +2351,10 @@ characters = {
 			cost = 100
 
 			allowed = {
-				original_tag = SOV
+				OR = {
+					original_tag = SOV
+					original_tag = SOU
+				}
 			}
 
 			available = {
@@ -2267,7 +2369,11 @@ characters = {
 					}
 				}
 				NOT = {
-					has_country_flag = sov_enemy_second_civil_war
+					has_country_flag = sov_enemy_second_civil_war_russia2
+					custom_trigger_tooltip = {
+						tooltip = SOV_not_is_in_prison_tt 
+						has_character_flag = russia_is_in_prison_cw
+					}
 				}
 				NOT = {
 					has_government = anarchy
@@ -3138,7 +3244,10 @@ characters = {
 			cost = 100
 
 			allowed = {
-				original_tag = SOV
+				OR = {
+					original_tag = SOV
+					original_tag = SOU
+				}
 			}
 
 			available = {
@@ -3151,15 +3260,19 @@ characters = {
 								value = 1
 								compare = equals
 							}
-							has_country_flag = purge_military2
+							has_character_flag= SOV_purge_military_trotsky
 						}
 					}
 				}
 				NOT = {
-					has_country_flag = has_deserted_military
+					has_country_flag = SOV_has_deserted_military_democratic_russia
 				}
 				NOT = {
-					has_country_flag = sov_enemy_second_civil_war_konev
+					has_country_flag = sov_enemy_second_civil_war_russia2
+					custom_trigger_tooltip = {
+						tooltip = SOV_not_is_in_prison_tt 
+						has_character_flag = russia_is_in_prison_cw
+					}
 				}
 				custom_trigger_tooltip = {
 					tooltip = SOV_konev_civil_war
@@ -3187,6 +3300,12 @@ characters = {
 		}
 
 		corps_commander = {
+			visible = {
+				NOT = {
+					has_character_flag = SOV_character_agains_anarchist_government
+					has_character_flag = russia_is_in_prison_cw
+				}
+			}
 			traits = {
 				harsh_leader
 				armor_officer
@@ -3218,7 +3337,10 @@ characters = {
 			cost = 100
 
 			allowed = {
-				original_tag = SOV
+				OR = {
+					original_tag = SOV
+					original_tag = SOU
+				}
 			}
 
 			available = {
@@ -3233,10 +3355,14 @@ characters = {
 					}
 				}
 				NOT = {
-					has_country_flag = has_deserted_military
+					has_country_flag = SOV_has_deserted_military_democratic_russia
 				}
 				NOT = {
-					has_country_flag = sov_enemy_second_civil_war_vasilevsky
+					has_country_flag = sov_enemy_second_civil_war_russia2
+					custom_trigger_tooltip = {
+						tooltip = SOV_not_is_in_prison_tt 
+						has_character_flag = russia_is_in_prison_cw
+					}
 				}
 				custom_trigger_tooltip = {
 					tooltip = sov_not_joined_another_side
@@ -3263,6 +3389,12 @@ characters = {
 		}
 
 		corps_commander = {
+			visible = {
+				NOT = {
+					has_character_flag = SOV_character_agains_anarchist_government
+					has_character_flag = russia_is_in_prison_cw
+				}
+			}
 			traits = {
 				armor_officer
 				politically_connected
@@ -3333,6 +3465,12 @@ characters = {
 		}
 
 		corps_commander = {
+			visible = {
+				NOT = {
+					has_character_flag = SOV_character_agains_anarchist_government
+					has_character_flag = russia_is_in_prison_cw
+				}
+			}
 			traits = {
 				brilliant_strategist
 				trait_cautious
@@ -3377,7 +3515,7 @@ characters = {
 								value = 1
 								compare = equals
 							}
-							has_country_flag = purge_military
+							has_character_flag= SOV_purge_military_trotsky
 						}
 					}
 				}
@@ -3470,7 +3608,7 @@ characters = {
 								value = 1
 								compare = equals
 							}
-							has_country_flag = purge_military
+							has_character_flag= SOV_purge_military_trotsky
 						}
 					}
 				}
@@ -3654,7 +3792,7 @@ characters = {
 								value = 1
 								compare = equals
 							}
-							has_country_flag = purge_military
+							has_character_flag= SOV_purge_military_trotsky
 						}
 					}
 				}
@@ -3926,10 +4064,14 @@ characters = {
 					has_country_flag = mikhail_tukhachevsky_purged
 				}
 				NOT = {
-					has_country_flag = mikhail_deserted
+					has_country_flag = SOV_mikhail_deserted_democratic_russia
 				}
 				NOT = {
-					has_country_flag = sov_enemy_second_civil_war_mikhail
+					has_country_flag = sov_enemy_second_civil_war_russia2
+					custom_trigger_tooltip = {
+						tooltip = SOV_not_is_in_prison_tt 
+						has_character_flag = russia_is_in_prison_cw
+					}
 				}
 				NOT = {
 					has_government = anarchy
@@ -3937,7 +4079,7 @@ characters = {
 			}
 
 			research_bonus = {
-				cat_mass_assault = 0.15
+				infantry_weapons = 0.15
 			}
 
 			traits = {
@@ -3950,6 +4092,12 @@ characters = {
 		}
 
 		field_marshal = {
+			visible = {
+				NOT = {
+					has_character_flag = SOV_character_agains_anarchist_government
+					has_character_flag = russia_is_in_prison_cw
+				}
+			}
 			traits = {
 				brilliant_strategist
 				career_officer
@@ -3998,10 +4146,14 @@ characters = {
 					}
 				}
 				NOT = {
-					has_country_flag = has_deserted_military
+					has_country_flag = SOV_has_deserted_military_democratic_russia
 				}
 				NOT = {
-					has_country_flag = sov_enemy_second_civil_war
+					has_country_flag = sov_enemy_second_civil_war_russia2
+					custom_trigger_tooltip = {
+						tooltip = SOV_not_is_in_prison_tt 
+						has_character_flag = russia_is_in_prison_cw
+					}
 				}
 				NOT = {
 					has_government = anarchy
@@ -4009,7 +4161,7 @@ characters = {
 			}
 
 			research_bonus = {
-				land_doctrine = 0.10
+				infantry_weapons = 0.10
 			}
 
 			traits = {
@@ -4022,6 +4174,12 @@ characters = {
 		}
 
 		corps_commander = {
+			visible = {
+				NOT = {
+					has_character_flag = SOV_character_agains_anarchist_government
+					has_character_flag = russia_is_in_prison_cw
+				}
+			}
 			traits = {
 				career_officer
 				trait_cautious
@@ -4061,15 +4219,19 @@ characters = {
 						tooltip = SOV_idea_not_purged_tt
 						OR = {
 							has_country_flag = georgy_zhukov_purged
-							has_country_flag = purge_military
+							has_character_flag= SOV_purge_military_trotsky
 						}
 					}
 				}
 				NOT = {
-					has_country_flag = has_deserted_military
+					has_country_flag = SOV_has_deserted_military_democratic_russia
 				}
 				NOT = {
-					has_country_flag = sov_enemy_second_civil_war_georgy_zhu
+					has_country_flag = sov_enemy_second_civil_war_russia2
+					custom_trigger_tooltip = {
+						tooltip = SOV_not_is_in_prison_tt 
+						has_character_flag = russia_is_in_prison_cw
+					}
 				}
 				NOT = {
 					has_government = anarchy
@@ -4077,7 +4239,7 @@ characters = {
 			}
 
 			research_bonus = {
-				cat_mass_assault = 0.15
+				infantry_weapons = 0.15
 			}
 
 			traits = {
@@ -4090,6 +4252,12 @@ characters = {
 		}
 
 		corps_commander = {
+			visible = {
+				NOT = {
+					has_character_flag = SOV_character_agains_anarchist_government
+					has_character_flag = russia_is_in_prison_cw
+				}
+			}
 			traits = {
 				media_personality
 				armor_officer
@@ -4130,7 +4298,7 @@ characters = {
 			}
 
 			research_bonus = {
-				cat_mass_assault = 0.15
+				infantry_weapons = 0.15
 			}
 
 			traits = {
@@ -4174,7 +4342,7 @@ characters = {
 			}
 
 			research_bonus = {
-				land_doctrine = 0.10
+				infantry_weapons = 0.10
 			}
 
 			traits = {
@@ -4217,14 +4385,14 @@ characters = {
 								value = 2
 								compare = equals
 							}
-							has_country_flag = purge_military
+							has_character_flag= SOV_purge_military_trotsky
 						}
 					}
 				}
 			}
 
 			research_bonus = {
-				naval_doctrine = 0.10
+				naval_equipment = 0.10
 			}
 
 			traits = {
@@ -4284,7 +4452,7 @@ characters = {
 			}
 
 			research_bonus = {
-				cat_fleet_in_being = 0.15
+				naval_equipment = 0.15
 			}
 
 			traits = {
@@ -4326,14 +4494,14 @@ characters = {
 								value = 1
 								compare = equals
 							}
-							has_country_flag = purge_military
+							has_character_flag = SOV_purge_military_trotsky
 						}
 					}
 				}
 			}
 
 			research_bonus = {
-				cat_battlefield_support = 0.15
+				air_equipment = 0.15
 			}
 
 			traits = {
@@ -4379,7 +4547,7 @@ characters = {
 			}
 
 			research_bonus = {
-				air_doctrine = 0.10
+				air_equipment = 0.10
 			}
 
 			traits = {
@@ -4519,9 +4687,9 @@ characters = {
 			}
 
 			research_bonus = {
-				land_doctrine = 0.05
-				naval_doctrine = 0.05
-				air_doctrine = 0.05
+				infantry_weapons = 0.05
+				naval_equipment = 0.05
+				air_equipment = 0.05
 			}
 
 			traits = {
@@ -4544,6 +4712,13 @@ characters = {
 		name = SOV_Ivan_kononov
 
 		corps_commander = {
+			visible = {
+				NOT = {
+					has_character_flag = SOV_character_agains_anarchist_government
+					has_character_flag = russia_is_in_prison_cw
+					country_exists = UKR
+				}
+			}
 			traits = { cavalry_officer }
 			skill = 3
 			attack_skill = 3
@@ -4564,6 +4739,12 @@ characters = {
 		name = SOV_Nikolai_vatutin
 
 		corps_commander = {
+			visible = {
+				NOT = {
+					has_character_flag = SOV_character_agains_anarchist_government
+					has_character_flag = russia_is_in_prison_cw
+				}
+			}
 			traits = {
 				trait_reckless
 				infantry_officer
@@ -4587,6 +4768,12 @@ characters = {
 		name = SOV_Semyon_budyonny
 
 		field_marshal = {
+			visible = {
+				NOT = {
+					has_character_flag = SOV_character_agains_anarchist_government
+					has_character_flag = russia_is_in_prison_cw
+				}
+			}
 			traits = {
 				old_guard
 				inflexible_strategist
@@ -4611,6 +4798,12 @@ characters = {
 		name = SOV_Ivan_chernyakhovsky
 
 		corps_commander = {
+			visible = {
+				NOT = {
+					has_character_flag = SOV_character_agains_anarchist_government
+					has_character_flag = russia_is_in_prison_cw
+				}
+			}
 			traits = { armor_officer }
 			skill = 1
 			attack_skill = 1
@@ -4631,6 +4824,12 @@ characters = {
 		name = SOV_Issa_pliyev
 
 		corps_commander = {
+			visible = {
+				NOT = {
+					has_character_flag = SOV_character_agains_anarchist_government
+					has_character_flag = russia_is_in_prison_cw
+				}
+			}
 			traits = { cavalry_officer }
 			skill = 1
 			attack_skill = 1
@@ -4651,6 +4850,12 @@ characters = {
 		name = SOV_Leonid_govorov
 
 		corps_commander = {
+			visible = {
+				NOT = {
+					has_character_flag = SOV_character_agains_anarchist_government
+					has_character_flag = russia_is_in_prison_cw
+				}
+			}
 			skill = 3
 			attack_skill = 3
 			defense_skill = 2
@@ -4670,6 +4875,12 @@ characters = {
 		name = SOV_Grigory_kulik
 
 		field_marshal = {
+			visible = {
+				NOT = {
+					has_character_flag = SOV_character_agains_anarchist_government
+					has_character_flag = russia_is_in_prison_cw
+				}
+			}
 			traits = {
 				old_guard
 				inflexible_strategist
@@ -4695,6 +4906,12 @@ characters = {
 		name = SOV_Kirill_meretskov
 
 		corps_commander = {
+			visible = {
+				NOT = {
+					has_character_flag = SOV_character_agains_anarchist_government
+					has_character_flag = russia_is_in_prison_cw
+				}
+			}
 			traits = {
 				trait_reckless
 				infantry_officer
@@ -4718,6 +4935,12 @@ characters = {
 		name = SOV_Filipp_golikov
 
 		corps_commander = {
+			visible = {
+				NOT = {
+					has_character_flag = SOV_character_agains_anarchist_government
+					has_character_flag = russia_is_in_prison_cw
+				}
+			}
 			traits = { career_officer }
 			skill = 3
 			attack_skill = 3
@@ -4738,6 +4961,12 @@ characters = {
 		name = SOV_Andrey_yeryomenko
 
 		corps_commander = {
+			visible = {
+				NOT = {
+					has_character_flag = SOV_character_agains_anarchist_government
+					has_character_flag = russia_is_in_prison_cw
+				}
+			}
 			traits = {
 				trait_reckless
 				cavalry_officer
@@ -4761,6 +4990,12 @@ characters = {
 		name = SOV_Georgiy_zakharov
 
 		corps_commander = {
+			visible = {
+				NOT = {
+					has_character_flag = SOV_character_agains_anarchist_government
+					has_character_flag = russia_is_in_prison_cw
+				}
+			}
 			traits = { career_officer }
 			skill = 1
 			attack_skill = 1
@@ -4781,6 +5016,12 @@ characters = {
 		name = SOV_Yakov_cherevichenko
 
 		corps_commander = {
+			visible = {
+				NOT = {
+					has_character_flag = SOV_character_agains_anarchist_government
+					has_character_flag = russia_is_in_prison_cw
+				}
+			}
 			traits = { cavalry_officer }
 			skill = 3
 			attack_skill = 3
@@ -4801,6 +5042,12 @@ characters = {
 		name = SOV_Max_reyter
 
 		corps_commander = {
+			visible = {
+				NOT = {
+					has_character_flag = SOV_character_agains_anarchist_government
+					has_character_flag = russia_is_in_prison_cw
+				}
+			}
 			traits = { career_officer }
 			skill = 1
 			attack_skill = 1
@@ -4821,6 +5068,12 @@ characters = {
 		name = SOV_Nikandr_chibisov
 
 		corps_commander = {
+			visible = {
+				NOT = {
+					has_character_flag = SOV_character_agains_anarchist_government
+					has_character_flag = russia_is_in_prison_cw
+				}
+			}
 			traits = { trickster }
 			skill = 3
 			attack_skill = 1
@@ -4841,6 +5094,12 @@ characters = {
 		name = SOV_Vasily_kuznetsov
 
 		corps_commander = {
+			visible = {
+				NOT = {
+					has_character_flag = SOV_character_agains_anarchist_government
+					has_character_flag = russia_is_in_prison_cw
+				}
+			}
 			traits = {
 				infantry_officer
 				commando
@@ -4864,6 +5123,12 @@ characters = {
 		name = SOV_Ivan_fedyuninsky
 
 		corps_commander = {
+			visible = {
+				NOT = {
+					has_character_flag = SOV_character_agains_anarchist_government
+					has_character_flag = russia_is_in_prison_cw
+				}
+			}
 			traits = { infantry_officer }
 			skill = 1
 			attack_skill = 1
@@ -4884,6 +5149,12 @@ characters = {
 		name = SOV_Maksim_purkayev
 
 		corps_commander = {
+			visible = {
+				NOT = {
+					has_character_flag = SOV_character_agains_anarchist_government
+					has_character_flag = russia_is_in_prison_cw
+				}
+			}
 			traits = { career_officer }
 			skill = 3
 			attack_skill = 2
@@ -4904,6 +5175,12 @@ characters = {
 		name = SOV_Kuzma_galitsky
 
 		corps_commander = {
+			visible = {
+				NOT = {
+					has_character_flag = SOV_character_agains_anarchist_government
+					has_character_flag = russia_is_in_prison_cw
+				}
+			}
 			traits = { infantry_officer }
 			skill = 1
 			attack_skill = 1
@@ -4924,6 +5201,12 @@ characters = {
 		name = SOV_Markian_popov
 
 		corps_commander = {
+			visible = {
+				NOT = {
+					has_character_flag = SOV_character_agains_anarchist_government
+					has_character_flag = russia_is_in_prison_cw
+				}
+			}
 			traits = {
 				brilliant_strategist
 				infantry_officer
@@ -4948,6 +5231,12 @@ characters = {
 		name = SOV_Nikolai_berzarin
 
 		corps_commander = {
+			visible = {
+				NOT = {
+					has_character_flag = SOV_character_agains_anarchist_government
+					has_character_flag = russia_is_in_prison_cw
+				}
+			}
 			traits = { infantry_officer }
 			skill = 3
 			attack_skill = 3
@@ -4968,6 +5257,12 @@ characters = {
 		name = SOV_Alexander_gorbatov
 
 		corps_commander = {
+			visible = {
+				NOT = {
+					has_character_flag = SOV_character_agains_anarchist_government
+					has_character_flag = russia_is_in_prison_cw
+				}
+			}
 			traits = {
 				career_officer
 				cavalry_officer
@@ -4991,6 +5286,12 @@ characters = {
 		name = SOV_Kirill_moskalenko
 
 		corps_commander = {
+			visible = {
+				NOT = {
+					has_character_flag = SOV_character_agains_anarchist_government
+					has_character_flag = russia_is_in_prison_cw
+				}
+			}
 			skill = 3
 			attack_skill = 2
 			defense_skill = 2
@@ -5010,6 +5311,12 @@ characters = {
 		name = SOV_Dmitry_lelyushenko
 
 		corps_commander = {
+			visible = {
+				NOT = {
+					has_character_flag = SOV_character_agains_anarchist_government
+					has_character_flag = russia_is_in_prison_cw
+				}
+			}
 			traits = {
 				trait_reckless
 				armor_officer
@@ -5033,6 +5340,12 @@ characters = {
 		name = SOV_Andrei_grechko
 
 		corps_commander = {
+			visible = {
+				NOT = {
+					has_character_flag = SOV_character_agains_anarchist_government
+					has_character_flag = russia_is_in_prison_cw
+				}
+			}
 			traits = { cavalry_officer }
 			skill = 3
 			attack_skill = 1
@@ -5053,6 +5366,12 @@ characters = {
 		name = SOV_Rodion_malinovsky
 
 		corps_commander = {
+			visible = {
+				NOT = {
+					has_character_flag = SOV_character_agains_anarchist_government
+					has_character_flag = russia_is_in_prison_cw
+				}
+			}
 			traits = {
 				old_guard career_officer
 				trait_cautious
@@ -5077,6 +5396,12 @@ characters = {
 		name = SOV_Vasily_chuikov
 
 		corps_commander = {
+			visible = {
+				NOT = {
+					has_character_flag = SOV_character_agains_anarchist_government
+					has_character_flag = russia_is_in_prison_cw
+				}
+			}
 			traits = {
 				brilliant_strategist
 				career_officer

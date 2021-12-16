@@ -410,14 +410,14 @@ SOV_great_purge_decisions = {
 				division_names_group = SOV_PEN_01
 				template_counter = 2
 				regiments = {
-					infantry = { x = 0 y = 0 }
-					infantry = { x = 0 y = 1 }
-					infantry = { x = 1 y = 0 }
-					infantry = { x = 1 y = 1 }
-					infantry = { x = 2 y = 0 }
-					infantry = { x = 2 y = 1 }
-					infantry = { x = 2 y = 2 }
-					infantry = { x = 2 y = 3 }
+					penal_battalion = { x = 0 y = 0 }
+					penal_battalion = { x = 0 y = 1 }
+					penal_battalion = { x = 1 y = 0 }
+					penal_battalion = { x = 1 y = 1 }
+					penal_battalion = { x = 2 y = 0 }
+					penal_battalion = { x = 2 y = 1 }
+					penal_battalion = { x = 2 y = 2 }
+					penal_battalion = { x = 2 y = 3 }
 				}
 				support = {
 					engineer = { x = 0 y = 0 }
@@ -10929,17 +10929,9 @@ SOV_appeasement_communist = {
 						}
 					}
 					SOV = {
-						create_field_marshal = {
-							name = "Mikhail Tukhachevsky"
-							picture = "Portrait_Soviet_Mikhail_Tukhachevsky.dds"
-							traits = { offensive_doctrine brilliant_strategist career_officer infantry_officer trait_reckless }
-							skill = 4
-							attack_skill = 3
-							defense_skill = 4
-							planning_skill = 4
-							logistics_skill = 2
+						SOV_Mikhail_tukhachevsky = {
+							clr_character_flag = russia_is_in_prison_cw
 						}
-						clr_country_flag = sov_enemy_second_civil_war_mikhail
 					}
 				}
 				else_if = {
@@ -10951,29 +10943,15 @@ SOV_appeasement_communist = {
 						}
 					}
 					SOV = {
-						create_corps_commander = {
-							name = "Vasily Kuznetsov"
-							picture = "Portrait_Soviet_Vasily_Kuznetsov.dds"
-							traits = { commando infantry_officer }
-							skill = 3
-							attack_skill = 3
-							defense_skill = 3
-							planning_skill = 2
-							logistics_skill = 2
+						SOV_Vasily_kuznetsov = {
+							clr_character_flag = russia_is_in_prison_cw
 						}
 					}
 				}
 				else = {
 					SOV = {
-						create_corps_commander = {
-							name = "Max Reyter"
-							picture = "Portrait_Soviet_Max_Andreyevich.dds"
-							traits = { career_officer }
-							skill = 1
-							attack_skill = 1
-							defense_skill = 1
-							planning_skill = 1
-							logistics_skill = 1
+						SOV_Max_reyter = {
+							clr_character_flag = russia_is_in_prison_cw
 						}
 					}
 				}
@@ -11064,7 +11042,7 @@ SOV_transfer_of_power = {
 			is_subject = no
 			NOT = {
 				has_country_leader = {
-					name = "Pavel Bermondt-Avalov"
+					character = SOV_Pavel_bermondt_avalov
 					ruling_only = yes
 				}
 			}
@@ -28417,6 +28395,21 @@ SOV_the_black_revolution = {
 					ruling_party = anarchy
 				}
 				hidden_effect = {
+					division_template = {
+						name = "Patrul'nyy Ttryad Militsii"
+						is_locked = yes
+						division_names_group = SOV_CAV_01
+	
+						regiments = {
+							cavalry = { x = 0 y = 0 }
+							cavalry = { x = 0 y = 1 }
+							cavalry = { x = 1 y = 0 }
+							cavalry = { x = 1 y = 1 }
+						}
+						support = 	{
+							military_police = { x = 0 y = 0 }
+						}
+					}
 					set_popularities = {
 						democratic = 10
 						neutrality = 10
@@ -28448,8 +28441,54 @@ SOV_the_black_revolution = {
 					delete_unit_template_and_units = {
 						division_template = "Mekhanizirovaniy Korpus"
 					}
-					every_army_leader = {
-						retire = yes
+					delete_unit_template_and_units = {
+						division_template = "Mekhanizirovaniy Korpus"
+					}
+					delete_unit_template_and_units = {
+						division_template = "Vozdushno-Desantnaya Brigada"
+					}
+					every_character = {
+						limit = {
+							OR = {
+								is_character = SOV_Georgy_zhukov
+								is_character = SOV_Aleksandr_vasilevsky
+								is_character = SOV_Boris_shaposhnikov
+								is_character = SOV_Nikolai_vatutin
+								is_character = SOV_Ivan_konev
+								is_character = SOV_Semyon_timoshenko
+								is_character = SOV_Kliment_voroshilov_military
+								is_character = SOV_Kliment_voroshilov_advisor
+								is_character = SOV_Mikhail_tukhachevsky
+								is_character = SOV_Semyon_budyonny
+								is_character = SOV_Ivan_chernyakhovsky
+								is_character = SOV_Issa_pliyev
+								is_character = SOV_Leonid_govorov
+								is_character = SOV_Grigory_kulik
+								is_character = SOV_Kirill_meretskov
+								is_character = SOV_Filipp_golikov
+								is_character = SOV_Andrey_yeryomenko
+								is_character = SOV_Georgiy_zakharov
+								is_character = SOV_Yakov_cherevichenko
+								is_character = SOV_Max_reyter
+								is_character = SOV_Nikandr_chibisov
+								is_character = SOV_Vasily_kuznetsov
+								is_character = SOV_Ivan_fedyuninsky
+								is_character = SOV_Maksim_purkayev
+								is_character = SOV_Kuzma_galitsky
+								is_character = SOV_Markian_popov
+								is_character = SOV_Nikolai_berzarin
+								is_character = SOV_Kirill_moskalenko
+								is_character = SOV_Dmitry_lelyushenko
+								is_character = SOV_Andrei_grechko
+								is_character = SOV_Rodion_malinovsky
+								is_character = SOV_Vasily_chuikov
+								is_character = SOV_Konstantin_rokossovsky
+								is_character = SOV_Andrey_vlasov
+								is_character = SOV_Ivan_kononov
+								is_character = SOV_Alexander_gorbatov
+							}
+						}
+						set_character_flag = SOV_character_agains_anarchist_government
 					}
 					load_oob = "SOV_black_revolution_peaceful_oob"
 				}
@@ -29481,6 +29520,50 @@ SOV_the_black_revolution = {
 					}
 				}
 				SOV = {
+					every_character = {
+						limit = {
+							OR = {
+								is_character = SOV_Georgy_zhukov
+								is_character = SOV_Aleksandr_vasilevsky
+								is_character = SOV_Boris_shaposhnikov
+								is_character = SOV_Nikolai_vatutin
+								is_character = SOV_Ivan_konev
+								is_character = SOV_Semyon_timoshenko
+								is_character = SOV_Kliment_voroshilov_military
+								is_character = SOV_Kliment_voroshilov_advisor
+								is_character = SOV_Mikhail_tukhachevsky
+								is_character = SOV_Semyon_budyonny
+								is_character = SOV_Ivan_chernyakhovsky
+								is_character = SOV_Issa_pliyev
+								is_character = SOV_Leonid_govorov
+								is_character = SOV_Grigory_kulik
+								is_character = SOV_Kirill_meretskov
+								is_character = SOV_Filipp_golikov
+								is_character = SOV_Andrey_yeryomenko
+								is_character = SOV_Georgiy_zakharov
+								is_character = SOV_Yakov_cherevichenko
+								is_character = SOV_Max_reyter
+								is_character = SOV_Nikandr_chibisov
+								is_character = SOV_Vasily_kuznetsov
+								is_character = SOV_Ivan_fedyuninsky
+								is_character = SOV_Maksim_purkayev
+								is_character = SOV_Kuzma_galitsky
+								is_character = SOV_Markian_popov
+								is_character = SOV_Nikolai_berzarin
+								is_character = SOV_Kirill_moskalenko
+								is_character = SOV_Dmitry_lelyushenko
+								is_character = SOV_Andrei_grechko
+								is_character = SOV_Rodion_malinovsky
+								is_character = SOV_Vasily_chuikov
+								is_character = SOV_Konstantin_rokossovsky
+								is_character = SOV_Andrey_vlasov
+								is_character = SOV_Ivan_kononov
+								is_character = SOV_Alexander_gorbatov
+							}
+						}
+						set_character_flag = sov_character_switched_to_sou
+						set_nationality = SOU
+					}
 					set_politics = {
 						ruling_party = anarchy
 					}
@@ -29491,14 +29574,16 @@ SOV_the_black_revolution = {
 						communism = 50
 						anarchy = 20
 					}
-					create_country_leader = {
-						name = "People's Council"
-						desc = "POLITICS_PEOPLES_COMMUNE_DESC"
-						picture = "Portrait_Russia_Anarchist_Commune.dds"
-						expire = "1965.1.1"
-						ideology = anarchist
-						traits = {
+					add_country_leader_role = {
+						character = SOV_Peoples_council_commune
+						promote_leader = yes
+						country_leader = {
+							desc = SOV_Peoples_council_commune_desc
+							ideology = anarchist
+							expire = "1965.1.1.1"
+							traits = {
 
+							}
 						}
 					}
 					release = SOU
@@ -29535,6 +29620,9 @@ SOV_the_black_revolution = {
 					}
 					delete_unit_template_and_units = {
 						division_template = "Mekhanizirovaniy Korpus"
+					}
+					delete_unit_template_and_units = {
+						division_template = "Vozdushno-Desantnaya Brigada"
 					}
 					dismantle_faction = yes
 					retire_ideology_leader = communism
@@ -29679,6 +29767,50 @@ SOV_the_black_revolution = {
 					}
 				}
 				SOV = {
+					every_character = {
+						limit = {
+							OR = {
+								is_character = SOV_Georgy_zhukov
+								is_character = SOV_Aleksandr_vasilevsky
+								is_character = SOV_Boris_shaposhnikov
+								is_character = SOV_Nikolai_vatutin
+								is_character = SOV_Ivan_konev
+								is_character = SOV_Semyon_timoshenko
+								is_character = SOV_Kliment_voroshilov_military
+								is_character = SOV_Kliment_voroshilov_advisor
+								is_character = SOV_Mikhail_tukhachevsky
+								is_character = SOV_Semyon_budyonny
+								is_character = SOV_Ivan_chernyakhovsky
+								is_character = SOV_Issa_pliyev
+								is_character = SOV_Leonid_govorov
+								is_character = SOV_Grigory_kulik
+								is_character = SOV_Kirill_meretskov
+								is_character = SOV_Filipp_golikov
+								is_character = SOV_Andrey_yeryomenko
+								is_character = SOV_Georgiy_zakharov
+								is_character = SOV_Yakov_cherevichenko
+								is_character = SOV_Max_reyter
+								is_character = SOV_Nikandr_chibisov
+								is_character = SOV_Vasily_kuznetsov
+								is_character = SOV_Ivan_fedyuninsky
+								is_character = SOV_Maksim_purkayev
+								is_character = SOV_Kuzma_galitsky
+								is_character = SOV_Markian_popov
+								is_character = SOV_Nikolai_berzarin
+								is_character = SOV_Kirill_moskalenko
+								is_character = SOV_Dmitry_lelyushenko
+								is_character = SOV_Andrei_grechko
+								is_character = SOV_Rodion_malinovsky
+								is_character = SOV_Vasily_chuikov
+								is_character = SOV_Konstantin_rokossovsky
+								is_character = SOV_Andrey_vlasov
+								is_character = SOV_Ivan_kononov
+								is_character = SOV_Alexander_gorbatov
+							}
+						}
+						set_character_flag = sov_character_switched_to_sou
+						set_nationality = SOU
+					}
 					set_politics = {
 						ruling_party = anarchy
 					}
@@ -29689,14 +29821,16 @@ SOV_the_black_revolution = {
 						communism = 50
 						anarchy = 20
 					}
-					create_country_leader = {
-						name = "Supreme Military Council"
-						desc = "SUPREME_MILITARY_COUNCIL_DESC"
-						picture = "Portrait_military_council.dds"
-						expire = "1965.1.1"
-						ideology = anarchist
-						traits = {
+					add_country_leader_role = {
+						character = SOV_Supreme_military_council
+						promote_leader = yes
+						country_leader = {
+							desc = SOV_Supreme_military_council_desc
+							ideology = anarchist
+							expire = "1965.1.1.1"
+							traits = {
 
+							}
 						}
 					}
 					release = SOU
@@ -29732,6 +29866,9 @@ SOV_the_black_revolution = {
 					}
 					delete_unit_template_and_units = {
 						division_template = "Mekhanizirovaniy Korpus"
+					}
+					delete_unit_template_and_units = {
+						division_template = "Vozdushno-Desantnaya Brigada"
 					}
 					dismantle_faction = yes
 					retire_ideology_leader = communism
@@ -29843,6 +29980,50 @@ SOV_the_black_revolution = {
 					}
 				}
 				SOV = {
+					every_character = {
+						limit = {
+							OR = {
+								is_character = SOV_Georgy_zhukov
+								is_character = SOV_Aleksandr_vasilevsky
+								is_character = SOV_Boris_shaposhnikov
+								is_character = SOV_Nikolai_vatutin
+								is_character = SOV_Ivan_konev
+								is_character = SOV_Semyon_timoshenko
+								is_character = SOV_Kliment_voroshilov_military
+								is_character = SOV_Kliment_voroshilov_advisor
+								is_character = SOV_Mikhail_tukhachevsky
+								is_character = SOV_Semyon_budyonny
+								is_character = SOV_Ivan_chernyakhovsky
+								is_character = SOV_Issa_pliyev
+								is_character = SOV_Leonid_govorov
+								is_character = SOV_Grigory_kulik
+								is_character = SOV_Kirill_meretskov
+								is_character = SOV_Filipp_golikov
+								is_character = SOV_Andrey_yeryomenko
+								is_character = SOV_Georgiy_zakharov
+								is_character = SOV_Yakov_cherevichenko
+								is_character = SOV_Max_reyter
+								is_character = SOV_Nikandr_chibisov
+								is_character = SOV_Vasily_kuznetsov
+								is_character = SOV_Ivan_fedyuninsky
+								is_character = SOV_Maksim_purkayev
+								is_character = SOV_Kuzma_galitsky
+								is_character = SOV_Markian_popov
+								is_character = SOV_Nikolai_berzarin
+								is_character = SOV_Kirill_moskalenko
+								is_character = SOV_Dmitry_lelyushenko
+								is_character = SOV_Andrei_grechko
+								is_character = SOV_Rodion_malinovsky
+								is_character = SOV_Vasily_chuikov
+								is_character = SOV_Konstantin_rokossovsky
+								is_character = SOV_Andrey_vlasov
+								is_character = SOV_Ivan_kononov
+								is_character = SOV_Alexander_gorbatov
+							}
+						}
+						set_character_flag = sov_character_switched_to_sou
+						set_nationality = SOU
+					}
 					set_politics = {
 						ruling_party = anarchy
 					}
@@ -29853,14 +30034,16 @@ SOV_the_black_revolution = {
 						communism = 50
 						anarchy = 20
 					}
-					create_country_leader = {
-						name = "Supreme Military Council"
-						desc = "SUPREME_MILITARY_COUNCIL_DESC"
-						picture = "Portrait_military_council.dds"
-						expire = "1965.1.1"
-						ideology = anarchist
-						traits = {
+					add_country_leader_role = {
+						character = SOV_Supreme_military_council
+						promote_leader = yes
+						country_leader = {
+							desc = SOV_Supreme_military_council_desc
+							ideology = anarchist
+							expire = "1965.1.1.1"
+							traits = {
 
+							}
 						}
 					}
 					release = SOU
@@ -29896,6 +30079,9 @@ SOV_the_black_revolution = {
 					}
 					delete_unit_template_and_units = {
 						division_template = "Mekhanizirovaniy Korpus"
+					}
+					delete_unit_template_and_units = {
+						division_template = "Vozdushno-Desantnaya Brigada"
 					}
 					dismantle_faction = yes
 					retire_ideology_leader = communism
@@ -30691,10 +30877,6 @@ SOV_crush_the_anti_revolutionary = {
 				}
 				add_equipment_to_stockpile = {
 					type = artillery_equipment
-					amount = -25
-				}
-				add_equipment_to_stockpile = {
-					type = light_tank_equipment #TODO change that
 					amount = -25
 				}
 				add_equipment_to_stockpile = {
@@ -39386,10 +39568,8 @@ SOV_rename_soviet_cities = {
 					if = {
 						limit = {
 							has_country_leader = {
-								has_country_leader = {
-									character = SOV_Leon_trotsky
-									ruling_only = yes
-								}
+								character = SOV_Leon_trotsky
+								ruling_only = yes
 							}
 						}
 						NOT = {
@@ -41940,8 +42120,6 @@ SOV_alternative_flag = {
 		}
 	}
 }
-
-#TODO Add Factories if there was a civil war Black Revolution Maybe ?
 
 #Decisions from the base game
 SOV_industry_relocation_russia2 = {

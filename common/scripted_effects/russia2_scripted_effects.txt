@@ -68,18 +68,25 @@ sov_setup_scw = {
             SOV_Slow_industry
         }
         clr_country_flag = second_civil_war_mission
-        country_event = { id = russia2_ukraine.31 days = 1 }
+        if = {
+            limit = {
+                is_ai = yes
+            }
+            country_event = { id = russia2_russia.136 days = 1 }
+        }
+        else = {
+            country_event = { id = russia2_ukraine.31 days = 1 }
+        }
         country_event = { id = russia2_russia.227 days = 15 }
         set_country_flag = preparation_done_russian_civil_war_russia2
-        set_country_flag = sov_enemy_second_civil_war
-        set_country_flag = sov_enemy_second_civil_war_mikhail
-        set_country_flag = sov_enemy_second_civil_war_georgy_zhu
-        set_country_flag = sov_enemy_second_civil_war_konev
-        set_country_flag = sov_enemy_second_civil_war_vasilevsky
+        set_country_flag = sov_enemy_second_civil_war_russia2
         set_cosmetic_tag = WMA
         dismantle_faction = yes
         create_faction = anti_communist_coalition
-        retire_ideology_leader = communism
+        remove_country_leader_role = {
+            character = SOV_Joseph_stalin
+            ideology = stalinism
+        }
         add_country_leader_role = {
             character = SOV_Leon_trotsky
             promote_leader = yes
@@ -555,7 +562,7 @@ sov_spawn_sou_scw = {
         }
     }
     SOV = {
-        every_character = { #TODO use character flags to define which character is "dead" (cannot be obtained as advisor after the scw)
+        every_character = {
             limit = {
                 OR = {
                     is_character = SOV_Georgy_zhukov
@@ -565,6 +572,7 @@ sov_spawn_sou_scw = {
                     is_character = SOV_Ivan_konev
                     is_character = SOV_Semyon_timoshenko
                     is_character = SOV_Kliment_voroshilov_military
+                    is_character = SOV_Kliment_voroshilov_advisor
                     is_character = SOV_Mikhail_tukhachevsky
                     is_character = SOV_Semyon_budyonny
                     is_character = SOV_Ivan_chernyakhovsky
@@ -2954,6 +2962,10 @@ black_revolution_division_template_organiser = {
         division_template = "Strelkovaya Diviziya"
         is_locked = yes
     }
+    set_division_template_lock = {
+        division_template = "Patrul'nyy Ttryad Militsii"
+        is_locked = yes
+    }
 }
 
 anarchy_unlock_division_template = {
@@ -2983,6 +2995,10 @@ anarchy_unlock_division_template = {
     }
     set_division_template_lock = {
         division_template = "Strelkovaya Diviziya"
+        is_locked = no
+    }
+    set_division_template_lock = {
+        division_template = "Patrul'nyy Ttryad Militsii"
         is_locked = no
     }
 }
@@ -3320,405 +3336,6 @@ kievan_rus_state = {
             }
             add_to_array = { global.kievan_rus_state_ukraine = THIS }	
         }	
-    }
-}
-
-sou_general_end_civil_war = {
-    SOU = {
-        create_corps_commander = {
-            name = "Popov Pyotr Kharitonovich"
-            picture = "Portrait_Popov_Pyotr_Kharitonovich.dds"
-            traits = { cavalry_officer }
-            skill = 2
-            attack_skill = 2
-            defense_skill = 3
-            planning_skill = 3
-            logistics_skill = 3
-        }
-        create_corps_commander = {
-            name = "Tolstov Vladimir Sergeevich"
-            picture = "Portrait_Tolstov_Vladimir_Sergeevich.dds"
-            traits = { cavalry_officer }
-            skill = 2
-            attack_skill = 3
-            defense_skill = 1
-            planning_skill = 2
-            logistics_skill = 3
-        }
-        create_corps_commander = {
-            name = "Pisarev Pyotr Konstantinovich"
-            picture = "Portrait_Pisarev_Pyotr_Konstantinovich.dds"
-            traits = { infantry_officer }
-            skill = 2
-            attack_skill = 2
-            defense_skill = 1
-            planning_skill = 2
-            logistics_skill = 2
-        }
-        create_corps_commander = {
-            name = "Alexander Gorbatov"
-            picture = "Portrait_Soviet_Alexander_Gorbatov.dds"
-            traits = { career_officer cavalry_officer }
-            skill = 3
-            attack_skill = 2
-            defense_skill = 3
-            planning_skill = 2
-            logistics_skill = 3
-        }
-        create_corps_commander = {
-            name = "Andrey Vlasov"
-            picture = "Portrait_Soviet_Andrey_Vlasov.dds"
-            traits = { winter_specialist infantry_officer }
-            skill = 3
-            attack_skill = 3
-            defense_skill = 3
-            planning_skill = 1
-            logistics_skill = 3
-        }
-        create_corps_commander = {
-            name = "Konstantin Rokossovsky"
-            picture = "Portrait_Soviet_Konstantin_Rokossovsky.dds"
-            traits = {  armor_officer trait_cautious brilliant_strategist }
-            skill = 4
-            attack_skill = 3
-            defense_skill = 4
-            planning_skill = 2
-            logistics_skill = 4
-        }
-        create_corps_commander = {
-            name = "Pyotr Krasnov"
-            picture = "Portrait_Pyotr_Nikolayevich_Krasnov.dds"
-            traits = { trait_reckless infantry_officer trait_mountaineer }
-            skill = 4
-            attack_skill = 4
-            defense_skill = 3
-            planning_skill = 3
-            logistics_skill = 3
-        }
-        create_corps_commander = {
-            name = "Pavel Bermondt-Avalov"
-            id = 513
-            picture = "Portrait_Pavel_Bermondt_Avalov.dds"
-            traits = { infantry_officer }
-            skill = 3
-            attack_skill = 3
-            defense_skill = 2
-            planning_skill = 2
-            logistics_skill = 3
-        }
-        create_corps_commander = {
-            name = "Abram Dragomirov"
-            picture = "Portrait_Abram_Dragomirov.dds"
-            traits = { cavalry_officer }
-            skill = 3
-            attack_skill = 3
-            defense_skill = 2
-            planning_skill = 2
-            logistics_skill = 2
-        }
-        create_corps_commander = {
-            name = "Mikhail Diterikhs"
-            id = 511
-            picture = "Portrait_Mikhail_Diterikhs.dds"
-            traits = {  }
-            skill = 2
-            attack_skill = 2
-            defense_skill = 2
-            planning_skill = 2
-            logistics_skill = 2
-        }
-        create_corps_commander = {
-            name = "Alexander V. Golubintzev"
-            picture = "Portrait_Alexander_Golubintzev.dds"
-            traits = { cavalry_officer }
-            skill = 4
-            attack_skill = 3
-            defense_skill = 2
-            planning_skill = 1
-            logistics_skill = 4
-        }
-        create_corps_commander = {
-            name = "Vladimir Kislitsin"
-            id = 515
-            picture = "Portrait_Vladimir_Kislitsin.dds"
-            traits = { brilliant_strategist }
-            skill = 3
-            attack_skill = 3
-            defense_skill = 2
-            planning_skill = 3
-            logistics_skill = 3
-        }
-        create_corps_commander = {
-            name = "Viktorin Molchanov"
-            id = 517
-            picture = "Portrait_Viktorin_Molchanov.dds"
-            traits = { winter_specialist inflexible_strategist }
-            skill = 4
-            attack_skill = 3
-            defense_skill = 3
-            planning_skill = 2
-            logistics_skill = 2
-        }
-        create_corps_commander = {
-            name = "Grigory Mikhaylovich Semyonov"
-            picture = "Potrait_Grigory_Mikhaylovich_Semyonov.dds"
-            traits = { harsh_leader }
-            skill = 3
-            attack_skill = 3
-            defense_skill = 3
-            planning_skill = 2
-            logistics_skill = 1
-        }
-        create_corps_commander = {
-            name = "Andrei Shkuro"
-            id = 518
-            picture = "Portrait_Andrei_Shkuro.dds"
-            traits = { brilliant_strategist trickster }
-            skill = 3
-            attack_skill = 3
-            defense_skill = 1
-            planning_skill = 2
-            logistics_skill = 2
-        }
-        create_corps_commander = {
-            name = "Boris Shteifon"
-            picture = "Portrait_Boris_Shteifon.dds"
-            id = 519
-            traits = { war_hero trickster }
-            skill = 3
-            attack_skill = 3
-            defense_skill = 2
-            planning_skill = 3
-            logistics_skill = 2
-        }
-        create_corps_commander = {
-            name = "Vladimir Sidorin"
-            picture = "Portrait_Vladimir_Sidorin.dds"
-            traits = { trait_reckless }
-            skill = 2
-            attack_skill = 2
-            defense_skill = 3
-            planning_skill = 1
-            logistics_skill = 1
-        }
-        create_corps_commander = {
-            name = "Mikhail Skorodumov"
-            id = 516
-            picture = "Potrait_Mikhail_Skorodumov.dds"
-            traits = { trait_reckless bearer_of_artillery }
-            skill = 3
-            attack_skill = 4
-            defense_skill = 2
-            planning_skill = 3
-            logistics_skill = 1
-        }
-        create_corps_commander = {
-            name = "Konstantin Petrovich Nechaev"
-            picture = "Portrait_Konstantin_Petrovich_Nechaev.dds"
-            traits = { cavalry_officer inflexible_strategist }
-            skill = 3
-            attack_skill = 4
-            defense_skill = 2
-            planning_skill = 3
-            logistics_skill = 2
-        }
-        create_corps_commander = {
-            name = "Mikhail Pleshkov"
-            picture = "Portrait_Mikhail_Pleshkov.dds"
-            traits = { cavalry_officer }
-            skill = 2
-            attack_skill = 3
-            defense_skill = 2
-            planning_skill = 2
-            logistics_skill = 1
-        }
-        create_corps_commander = {
-            name = "Anton Turkul"
-            picture = "Portrait_Anton_Turkul.dds"
-            traits = { infantry_officer }
-            skill = 3
-            
-            attack_skill = 2
-            defense_skill = 2
-            planning_skill = 1
-            logistics_skill = 2
-        }
-        create_corps_commander = {
-            name = "Isaac Bykadorov"
-            picture = "Portrait_Isaac_Bykadorov.dds"
-            traits = { war_hero trait_reckless }
-            skill = 3
-            
-            attack_skill = 3
-            defense_skill = 1
-            planning_skill = 1
-            logistics_skill = 2
-        }
-        create_corps_commander = {
-            name = "Vyacheslav Naumenko"
-            picture = "Portrait_Vyacheslav_Grigoryevich_Naumenko.dds"
-            traits = { war_hero }
-            skill = 2
-            
-            attack_skill = 3
-            defense_skill = 2
-            planning_skill = 2
-            logistics_skill = 3
-        }
-        create_corps_commander = {
-            name = "Fedor Abramov"
-            picture = "Portrait_Fedor_Abramov.dds"
-            traits = { cavalry_officer bearer_of_artillery }
-            skill = 3
-            
-            attack_skill = 2
-            defense_skill = 2
-            planning_skill = 2
-            logistics_skill = 2
-        }
-        create_corps_commander = {
-            name = "Bronislaw Kaminski"
-            picture = "Portrait_Bronislav_Kaminsky.dds"
-            traits = { harsh_leader }
-            skill = 2
-            
-            attack_skill = 2
-            defense_skill = 1
-            planning_skill = 2
-            logistics_skill = 2
-        }
-        create_corps_commander = {
-            name = "Vladimir Marushevsky"
-            picture = "Portrait_Vladimir_Marushevsky.dds"
-            traits = { infantry_officer }
-            skill = 2
-            
-            attack_skill = 2
-            defense_skill = 1
-            planning_skill = 1
-            logistics_skill = 2
-        }
-        create_corps_commander = {
-            name = "Vladimir Kharzhevsky"
-            picture = "Portrait_Vladimir_Kharzhevsky.dds"
-            traits = { }
-            skill = 2
-            
-            attack_skill = 1
-            defense_skill = 3
-            planning_skill = 2
-            logistics_skill = 2
-        }
-        create_corps_commander = {
-            name = "Pavel Shatilov"
-            picture = "Portrait_Pavel_Shatilov.dds"
-            traits = { cavalry_officer }
-            skill = 4
-            
-            attack_skill = 3
-            defense_skill = 3
-            planning_skill = 2
-            logistics_skill = 2
-        }
-        create_corps_commander = {
-            name = "Pyotr Vladimirovich Glazenap"
-            picture = "Portrait_Peter_Glazenap.dds"
-            traits = { cavalry_officer }
-            skill = 3
-            attack_skill = 3
-            defense_skill = 2
-            planning_skill = 1
-            logistics_skill = 2
-        }
-        create_corps_commander = {
-            name = "Alexander Lukomsky"
-            picture = "Portrait_Alexander_Lukomsky.dds"
-            traits = { trait_engineer  }
-            skill = 3
-            attack_skill = 2
-            defense_skill = 2
-            planning_skill = 3
-            logistics_skill = 3
-        }
-        create_field_marshal = {
-            name = "Yevgeny Miller"
-            picture = "Potrait_Yevgeny_Miller.dds"
-            traits = { infantry_leader brilliant_strategist organisational_leader }
-            skill = 3
-            attack_skill = 3
-            defense_skill = 3
-            planning_skill = 2
-            logistics_skill = 2
-        }
-        create_field_marshal = {
-            name = "Anton Ivanovich Denikin"
-            id = 514
-            picture = "Portrait_Soviet_Anton_IvanovichMilitary.dds"
-            traits = { infantry_leader bearer_of_artillery offensive_doctrine }
-            skill = 5
-            attack_skill = 4
-            defense_skill = 3
-            planning_skill = 4
-            logistics_skill = 3
-        }
-        create_field_marshal = {
-            name = "Alexander Rodzyanko"
-            id = 512
-            picture = "Portrait_Alexander_Rodzyanko.dds"
-            traits = { inspirational_leader cavalry_officer }
-            skill = 2
-            attack_skill = 2
-            defense_skill = 2
-            planning_skill = 4
-            logistics_skill = 2
-        }
-        set_politics = {
-            ruling_party = neutrality
-        }
-        set_popularities = {
-            democratic = 33
-            neutrality = 33
-            fascism = 33
-            communism = 1
-        }
-    }
-}
-
-#TODO bye bye
-sou_create_country_leader_sov = {
-    SOU = {
-        create_country_leader = {
-            name = "Konstantin Rodzaevsky"
-            desc = "POLITICS_KONSTANTIN_RODZAEVSKY_DESC"
-            picture = "Portrait_Soviet_Konstantin_Rodzaevsky.dds"
-            expire = "1965.1.1"
-            ideology = fascism_ideology
-            traits = {
-                russia2_unpopular_leader
-            }
-        }
-        
-        create_country_leader = {
-            name = "Alexander Fyodorovich Kerensky"
-            desc = "POLITICS_ALEXANDER_KERENSKY_DESC"
-            picture = "Portrait_Alexander_Kerensky_Russia2.dds"
-            expire = "1965.1.1"
-            ideology = socialism
-            traits = {
-                russia2_temporary_leader
-            }
-        }
-        
-        create_country_leader = {
-            name = "Volin Eikhenbaum"
-            desc = "VSEVOLOD_MIKHAILOVICH_EIKHENBAUM_DESC"
-            picture = "Portrait_Vsevolod_Mikhailovich_Eikhenbaum.dds"
-            expire = "1965.1.1"
-            ideology = anarchist
-            traits = {
-                
-            }
-        }
     }
 }
 
@@ -4354,7 +3971,7 @@ ukr_spawn_free_division_decision_scripted_effect_african_colonist_edition = {
     }
 }
 
-sov_release_far_east_anarchist_collapse = { #Delete Soviet templates #TODO TANK Templates NSB
+sov_release_far_east_anarchist_collapse = {
     SOV = {
         release_on_controlled = EFR
     }
@@ -4429,6 +4046,9 @@ sov_release_far_east_anarchist_collapse = { #Delete Soviet templates #TODO TANK 
         }
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
+        }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
         }
         random_owned_controlled_state = { #12 Infantry and 1 Tank
             create_unit = {
@@ -4508,6 +4128,9 @@ sov_release_far_east_anarchist_collapse = { #Delete Soviet templates #TODO TANK 
 }
 
 sov_release_siberia_anarchist_collapse = {
+    SIB = {
+        remove_state_core = 581
+    }
     SOV = {
         release_on_controlled = SIB
     }
@@ -4588,6 +4211,9 @@ sov_release_siberia_anarchist_collapse = {
         }
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
+        }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
         }
         random_owned_controlled_state = { #18 Infantry Divisions 2 Tank Divisions
             create_unit = {
@@ -4776,6 +4402,9 @@ sov_release_urals_anarchist_collapse = {
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
         }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
+        }
         random_owned_controlled_state = { #7 Infantry Divisions and 1 Tank
             create_unit = {
                 division = "name = \"Free Ural Division\" division_template = \"Free Ural Division\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
@@ -4898,6 +4527,9 @@ sov_release_kazakh_anarchist_collapse = {
         }
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
+        }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
         }
         random_owned_controlled_state = { #13 Infantry Divisions and 2 Tank
             create_unit = {
@@ -5064,6 +4696,9 @@ sov_release_uzbekistan_anarchist_collapse = {
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
         }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
+        }
         random_owned_controlled_state = { #5 Infantry Divisions
             create_unit = {
                 division = "name = \"Free Uzbek Division\" division_template = \"Free Uzbek Division\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
@@ -5168,6 +4803,9 @@ sov_release_turkmenistan_anarchist_collapse = {
         }
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
+        }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
         }
         random_owned_controlled_state = { #5 Infantry Divisions
             create_unit = {
@@ -5274,6 +4912,9 @@ sov_release_tajikstan_anarchist_collapse = {
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
         }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
+        }
         random_owned_controlled_state = { #3 Infantry Divisions
             create_unit = {
                 division = "name = \"Free Tajik Division\" division_template = \"Free Tajik Division\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
@@ -5369,6 +5010,9 @@ sov_release_kyrghiz_anarchist_collapse = {
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
         }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
+        }
         random_owned_controlled_state = { #3 Infantry Divisions
             create_unit = {
                 division = "name = \"Free kyrghiz Division\" division_template = \"Free kyrghiz Division\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
@@ -5463,6 +5107,9 @@ sov_release_armenia_anarchist_collapse = {
         }
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
+        }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
         }
         random_owned_controlled_state = { #4 Infantry Divisions
             create_unit = {
@@ -5565,6 +5212,9 @@ sov_release_georgia_anarchist_collapse = {
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
         }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
+        }
         random_owned_controlled_state = { #4 Infantry Divisions
             create_unit = {
                 division = "name = \"Free Georgian Division\" division_template = \"Free Georgian Division\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
@@ -5665,6 +5315,9 @@ sov_release_azerbaijan_anarchist_collapse = {
         }
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
+        }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
         }
         random_owned_controlled_state = { #4 Infantry Divisions
             create_unit = {
@@ -5767,6 +5420,9 @@ sov_release_volgograd_anarchist_collapse = {
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
         }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
+        }
         random_owned_controlled_state = { #4 Infantry Divisions
             create_unit = {
                 division = "name = \"Free Volgograd Division\" division_template = \"Free Volgograd Division\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
@@ -5868,6 +5524,9 @@ sov_release_kalmykia_anarchist_collapse = {
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
         }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
+        }
         random_owned_controlled_state = { #4 Infantry Divisions
             create_unit = {
                 division = "name = \"Free Kalmyk Division\" division_template = \"Free Kalmyk Division\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
@@ -5968,6 +5627,9 @@ sov_release_rostov_anarchist_collapse = {
         }
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
+        }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
         }
         random_owned_controlled_state = { #4 Infantry Divisions and 1 Tank
             create_unit = {
@@ -6076,6 +5738,9 @@ sov_release_dagestan_anarchist_collapse = {
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
         }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
+        }
         random_owned_controlled_state = { #3 Infantry Divisions
             create_unit = {
                 division = "name = \"Free Dagestani Division\" division_template = \"Free Dagestani Division\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
@@ -6170,6 +5835,9 @@ sov_release_circassia_anarchist_collapse = {
         }
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
+        }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
         }
         random_owned_controlled_state = { #4 Infantry Divisions
             create_unit = {
@@ -6272,6 +5940,9 @@ sov_release_vyatka_anarchist_collapse = {
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
         }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
+        }
         random_owned_controlled_state = { #4 Infantry Divisions
             create_unit = {
                 division = "name = \"Free Vyatka Division\" division_template = \"Free Vyatka Division\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
@@ -6372,6 +6043,9 @@ sov_release_tatarstan_anarchist_collapse = {
         }
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
+        }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
         }
         random_owned_controlled_state = { #7 Infantry Divisions and 1 Tank
             create_unit = {
@@ -6498,6 +6172,9 @@ sov_release_perm_anarchist_collapse = {
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
         }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
+        }
         random_owned_controlled_state = { #5 Infantry Divisions
             create_unit = {
                 division = "name = \"Free Perm Division\" division_template = \"Free Perm Division\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
@@ -6605,6 +6282,9 @@ sov_release_karelia_anarchist_collapse = {
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
         }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
+        }
         random_owned_controlled_state = { #5 Infantry Divisions
             create_unit = {
                 division = "name = \"Free Karelian Division\" division_template = \"Free Karelian Division\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
@@ -6711,6 +6391,9 @@ sov_release_komi_anarchist_collapse = {
         }
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
+        }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
         }
         random_owned_controlled_state = { #5 Infantry Divisions
             create_unit = {
@@ -6820,6 +6503,9 @@ sov_release_novgorod_anarchist_collapse = {
         }
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
+        }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
         }
         random_owned_controlled_state = { #15 Infantry Divisions and 2 tank
             create_unit = {
@@ -6990,6 +6676,9 @@ sov_release_belarus_anarchist_collapse = {
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
         }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
+        }
         random_owned_controlled_state = { #7 Infantry Divisions and 1 Tank
             create_unit = {
                 division = "name = \"Free Belarusian Division\" division_template = \"Free Belarusian Division\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
@@ -7063,13 +6752,18 @@ sov_release_ukraine_anarchist_collapse = {
             communism = 3
         }
         set_cosmetic_tag = FUKR
-        create_country_leader = {
-            name = "Council of Ukraine"
-            desc = "POLITICS_COUNCIL_UKRAINE_DESC"
-            picture = "gfx/leaders/SOV/Portrait_Russia_Anarchist_Commune.dds"
-            expire = "1965.1.1"
-            ideology = anarchist
-        }
+        add_country_leader_role = {
+			character = UKR_Council_of_ukraine
+			promote_leader = yes
+			country_leader = {
+				desc = UKR_Council_of_ukraine
+				ideology = anarchist
+				expire = "1965.1.1.1"
+				traits = {
+
+				}
+			}
+		}
         division_template = {
            name = "Free Ukrainian Division"
             is_locked = no
@@ -7120,6 +6814,9 @@ sov_release_ukraine_anarchist_collapse = {
         }
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
+        }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
         }
         random_owned_controlled_state = { #21 Infantry Divisions and 3 tank
             create_unit = {
@@ -7325,6 +7022,9 @@ sov_release_crimea_anarchist_collapse = {
         }
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
+        }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
         }
         random_owned_controlled_state = { #4 Infantry Divisions
             create_unit = {
