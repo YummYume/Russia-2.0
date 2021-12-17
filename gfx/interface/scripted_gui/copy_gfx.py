@@ -61,7 +61,7 @@ if __name__ == "__main__":
             "revenge_best_served_cold",
             "just_like_old_times",
             "tour_de_france",
-            "making_fun_of_me_uh",
+            "russia2_making_fun_of_me_uh",
             "click_me",
             "big_tower"
         ]

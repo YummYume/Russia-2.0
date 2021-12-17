@@ -76,7 +76,9 @@ if __name__ == '__main__':
                         print("\n%s :" % key)
 
                 if value != json1[key]:
-                    report += "\n    State %s (%s) was modified :\n" % (value["nameloca"], str(key))
+                    if type(value) is dict:
+                        report += "\n    State %s (%s) was modified :\n" % (value["nameloca"], str(key))
+
                     if showall == False:
                         if type(value) is dict:
                             print("\nState %s (%s) :" % (value["nameloca"], str(key)))

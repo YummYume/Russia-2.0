@@ -163,8 +163,11 @@ country_event = {
 			}
 		}
 		USA = {
-			every_unit_leader = {
-				set_unit_leader_flag = flag_former_american_general
+			every_character = {
+				limit = {
+					is_unit_leader = yes
+				}
+				set_character_flag = flag_former_american_general
 				set_nationality = SOV
 			}
 			transfer_navy = {
@@ -291,13 +294,14 @@ country_event = {
 				add_to_faction = USA
 			}
 
-			every_unit_leader = {
-				limit = {
-					has_unit_leader_flag = {
-						flag = flag_former_american_general
+			SOV = {
+				every_character = {
+					limit = {
+						has_character_flag = flag_former_american_general
 					}
+					clr_character_flag = flag_former_american_general
+					set_nationality = USA
 				}
-				set_nationality = USA
 			}
 
 			every_state = {
@@ -321,12 +325,11 @@ country_event = {
 	option = { #Keep the Union
 		name = russia2_america.7.b
 
-		every_unit_leader = {
+		every_character = {
 			limit = {
-				has_unit_leader_flag = {
-					flag = flag_former_american_general
-				}
+				has_character_flag = flag_former_american_general
 			}
+			clr_character_flag = flag_former_american_general
 			set_nationality = USA
 		}
 		add_stability = keep_union_stability_loss
@@ -549,6 +552,7 @@ country_event = {
 		transfer_state = 637
 		transfer_state = 644
 		transfer_state = 574
+		transfer_state = 822
 		hidden_effect = {
 			562 = {
 				set_compliance = 25
@@ -560,6 +564,9 @@ country_event = {
 				set_compliance = 25
 			}
 			574 = {
+				set_compliance = 25
+			}
+			822 = {
 				set_compliance = 25
 			}
 		}
@@ -638,6 +645,7 @@ country_event = {
 		transfer_state = 637
 		transfer_state = 644
 		transfer_state = 574
+		transfer_state = 822
 		clr_country_flag = america_receive_siberia_generic
 	}
 }
@@ -683,10 +691,11 @@ country_event = {
 		transfer_state = 637
 		transfer_state = 644
 		transfer_state = 574
+		transfer_state = 822
 		clr_country_flag = america_receive_siberia_generic
-		add_tech_bonus = {
+		add_doctrine_cost_reduction = {
 			name = SOV_siberia_border_conflict
-			bonus = 1
+			cost_reduction = 0.5
 			uses = 1
 			category = land_doctrine
 		}
@@ -700,7 +709,7 @@ country_event = {
 	}
 }
 
-#SOV Wins Border War
+#SOV lose Border War
 country_event = {
 	id = russia2_america.20
 	title = russia2_america.20.t
@@ -742,9 +751,9 @@ country_event = {
 		name = russia2_america.21.a
 		add_stability = 0.1
 		add_war_support = 0.15
-		add_tech_bonus = {
+		add_doctrine_cost_reduction = {
 			name = SOV_siberia_border_conflict
-			bonus = 1
+			cost_reduction = 0.5
 			uses = 1
 			category = land_doctrine
 		}

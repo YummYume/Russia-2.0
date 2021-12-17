@@ -1,9 +1,49 @@
 ﻿capital = 202 #Kiev
+set_research_slots = 3
+set_stability = 0.65
+set_war_support = 0.25
+
+#Country Leaders
+recruit_character = UKR_Danilo_skoropadskiy_neutrality
+recruit_character = UKR_Danilo_skoropadskiy_democratic
+recruit_character = UKR_Nikita_khrushchev
+recruit_character = UKR_Vladimir_antonov_ovseyenko_communist
+recruit_character = UKR_Vladimir_antonov_ovseyenko_anarchist
+recruit_character = UKR_Makhno_nestor
+recruit_character = UKR_Council_of_ukraine
+recruit_character = UKR_Ida_mett
+
+#Advisors
+recruit_character = UKR_Vsevolod_mikhailovich_eikhenbaum
+recruit_character = UKR_aa2
+recruit_character = UKR_awt
+recruit_character = UKR_coi
+recruit_character = UKR_stc
+recruit_character = UKR_acgs
+recruit_character = UKR_nccr
+recruit_character = UKR_ncs
+recruit_character = UKR_nt
+recruit_character = UKR_acr
+recruit_character = UKR_pot
+recruit_character = UKR_aco2
+recruit_character = UKR_mt
+recruit_character = UKR_ar
+recruit_character = UKR_acd2
+recruit_character = UKR_ncm
+recruit_character = UKR_ai2
+recruit_character = UKR_acas
+
+#Field Marshals
+recruit_character = UKR_Vladimir_vitkovsky
+
+#Generals
+recruit_character = UKR_Ivan_kononov
 
 add_to_array = { global.russia_reworked_countries = THIS }
 add_to_array = { global.russia_reworked_russian_states = THIS }
 set_country_flag = russia_reworked_country_loaded
 
+#Anarchist variables
 set_variable = { ukr_current_anarchist_support = 0 }
 set_variable = { ukr_current_non_anarchist_support = 0 }
 set_variable = { ukr_anarchist_daily_gain = 0 }
@@ -12,15 +52,16 @@ set_variable = { ukr.anarchist_coring_points = 20 }
 set_variable = { view_anarchist_states_core = 2 }
 set_variable = { view_anarchist_states_converted = 2 }
 set_variable = { view_anarchist_states_can_be_cored = 1 }
+set_variable = { ukr_chance_makhno_death = 0 } #Increase by 10 everytime Makhno doesn't die
 
 set_research_slots = 3
 
-# Starting tech
+#Starting Technology
 set_technology = {
 	infantry_weapons = 1
 	infantry_weapons1 = 1
 	tech_recon = 1
-	tech_support = 1		
+	tech_support = 1
 	tech_engineers = 1
 	tech_military_police = 1
 	tech_mountaineers = 1
@@ -28,19 +69,40 @@ set_technology = {
 	paratroopers = 1
 	gw_artillery = 1
 	interwar_antiair = 1
-	gwtank = 1
-	basic_light_tank = 1  # PLACEHOLDER
-	#basic_heavy_tank = 1  # PLACEHOLDER
-	#basic_medium_tank = 1 # PLACEHOLDER
 	early_fighter = 1
 	fighter1 = 1
 	early_bomber = 1
 	strategic_bomber1 = 1
 	naval_bomber1 = 1
-	mass_assault = 1
 	fleet_in_being = 1
 	fuel_silos = 1
 	fuel_refining = 1
+	basic_train = 1
+}
+
+if = {
+	limit = {
+		NOT = {
+			has_dlc = "No Step Back"
+		}
+	}
+	set_technology = {
+		gwtank = 1
+		basic_light_tank = 1
+
+	}
+}
+if = {
+	limit = {
+		has_dlc = "No Step Back"
+	}
+	set_technology = {
+		gwtank_chassis = 1
+		basic_light_tank_chassis = 1
+		improved_light_tank_chassis = 1
+		engine_tech_1 = 1
+		engine_tech_2 = 1
+	}
 }
 if = {
 	limit = { not = { has_dlc = "Man the Guns" } }
@@ -119,7 +181,7 @@ if = {
 if = {
 	limit = { has_dlc = "Man the Guns" }
 	# Submarines #
-	create_equipment_variant = {			
+	create_equipment_variant = {
 		name = "AG Class"
 		type = ship_hull_submarine_1
 		name_group = SOV_SS_SHCHUKA
@@ -178,7 +240,7 @@ if = {
 		}
 	}
 	create_equipment_variant = {
-		name = "Series X Shchuka"				
+		name = "Series X Shchuka"
 		type = ship_hull_submarine_1
 		name_group = SOV_SS_SHCHUKA
 		parent_version = 0
@@ -224,7 +286,7 @@ if = {
 		obsolete = yes
 	}
 	create_equipment_variant = {
-		name = "Leningrad & Minsk Class"				
+		name = "Leningrad & Minsk Class"
 		type = ship_hull_light_2
 		name_group = SOV_DD_HISTORICAL
 		parent_version = 0
@@ -325,7 +387,7 @@ if = {
 		}
 	# Battleships #
 	create_equipment_variant = {
-		name = "Marat Class"					
+		name = "Marat Class"
 		type = ship_hull_heavy_1
 		name_group = SOV_BB_HISTORICAL
 		parent_version = 0
@@ -349,31 +411,6 @@ set_politics = {
 	ruling_party = neutrality
 }
 
-create_field_marshal = {
-	name = "Vladimir Vitkovsky"
-	picture = "Portrait_Vladimir_Vitkovsky.dds"
-	id = 521
-	traits = { trait_reckless }
-	skill = 3
-	
-	attack_skill = 2
-	defense_skill = 1
-	planning_skill = 2
-	logistics_skill = 1
-}
-create_corps_commander = {
-	name = "Ivan Kononov"
-	picture = "Portrait_Ivan_Kononov.dds"
-	id = 520
-	traits = { cavalry_officer }
-	skill = 3
-	
-	attack_skill = 3
-	defense_skill = 2
-	planning_skill = 2
-	logistics_skill = 1
-}
-
 set_popularities = {
 	democratic = 20
 	communism = 20
@@ -381,57 +418,128 @@ set_popularities = {
 	fascism = 10
 }
 
-create_country_leader = {
-	name = "Danilo Skoropadskiy"
-	desc = "POLITICS_DANILO_SKOROPADSKIY_DESC"
-	picture = "gfx/leaders/UKR/Danilo_Skoropadskiy.dds"
-	expire = "1953.3.1"
-	ideology = conservatism
-	traits = {
-		
-	}
+add_equipment_to_stockpile = {
+	type = train_equipment
+	amount = 20
 }
 
-create_country_leader = {
-	name = "Nikita Sergeyevich Khrushchev"
-	desc = "POLITICS_NIKITA_SERGEYEVICH_KHRUSHCHEV_DESC"
-	picture = "gfx/leaders/UKR/Nikita_Khrushchev.dds"
-	expire = "1953.3.1"
-	ideology = marxism
-	traits = {
-		
-	}
-}
+set_convoys = 25
 
-create_country_leader = {
-	name = "Stepan Bandera"
-	desc = "POLITICS_STEPAN_BANDERA_DESC"
-	picture = "gfx/leaders/UKR/Stepan_Bandera.dds"
-	expire = "1953.3.1"
-	ideology = fascism_ideology
-	traits = {
-		
+if = {
+	limit = {
+		has_dlc = "No Step Back"
 	}
-}
-
-create_country_leader = {
-	name = "Danilo Skoropadskiy"
-	desc = "POLITICS_DANILO_SKOROPADSKIY_DESC"
-	picture = "gfx/leaders/UKR/Danilo_Skoropadskiy.dds"
-	expire = "1953.3.1"
-	ideology = oligarchism
-	traits = {
-		
+	create_equipment_variant = {
+		name = "T-27"
+		type = light_tank_chassis_0
+		parent_version = 0
+		modules = {
+			main_armament_slot = tank_heavy_machine_gun
+			turret_type_slot = tank_light_fixed_superstructure_turret
+			suspension_type_slot = tank_bogie_suspension
+			armor_type_slot = tank_riveted_armor
+			engine_type_slot = tank_gasoline_engine
+		}
+		upgrades = {
+			tank_nsb_engine_upgrade = 1
+			tank_nsb_armor_upgrade = 1
+		}
+		obsolete = yes
+		icon = "gfx/interface/technologies/gwtank.dds"
 	}
-}
 
-create_country_leader = {
-	name = "Makhno Nestor"
-	desc = "POLITICS_MAKHNO_NESTOR_DESC"
-	picture = "gfx/leaders/UKR/Makhno_Nestor.dds"
-	expire = "1953.3.1"
-	ideology = anarchist
-	traits = {
-		anarchist_principles
+	create_equipment_variant = {
+		name = "T-26TU mod. 1933"
+		type = light_tank_chassis_1
+		parent_version = 0
+		modules = {
+			main_armament_slot = tank_small_cannon_2
+			turret_type_slot = tank_light_two_man_tank_turret
+			suspension_type_slot = tank_bogie_suspension
+			armor_type_slot = tank_riveted_armor
+			engine_type_slot = tank_gasoline_engine
+			special_type_slot_1 = tank_radio_1
+		}
+		upgrades = {
+			tank_nsb_engine_upgrade = 2
+			tank_nsb_armor_upgrade = 2
+		}
+		icon = "gfx/interface/technologies/SOV_basic_light_tank.dds"
+	}
+	create_equipment_variant = {
+		name = "BT-5"
+		type = light_tank_chassis_1
+		parent_version = 1
+		modules = {
+			main_armament_slot = tank_small_cannon_2
+			turret_type_slot = tank_light_one_man_tank_turret
+			suspension_type_slot = tank_christie_suspension
+			armor_type_slot = tank_riveted_armor
+			engine_type_slot = tank_gasoline_engine
+		}
+		upgrades = {
+			tank_nsb_engine_upgrade = 8
+			tank_nsb_armor_upgrade = 1
+		}
+		icon = "gfx/interface/technologies/SOV_imp_light_tank.dds"
+	}
+	create_equipment_variant = {
+		name = "BT-7"
+		type = light_tank_chassis_2
+		parent_version = 0
+		modules = {
+			main_armament_slot = tank_small_cannon_2
+			turret_type_slot = tank_light_two_man_tank_turret
+			suspension_type_slot = tank_christie_suspension
+			armor_type_slot = tank_welded_armor
+			engine_type_slot = tank_gasoline_engine
+		}
+		upgrades = {
+			tank_nsb_engine_upgrade = 10
+			tank_nsb_armor_upgrade = 2
+		}
+		icon = "gfx/interface/technologies/SOV_imp_light_tank.dds"
+	}
+
+	create_equipment_variant = {
+		name = "T-28"
+		type = medium_tank_chassis_0
+		parent_version = 0
+		modules = {
+			main_armament_slot = tank_close_support_gun
+			turret_type_slot = tank_medium_three_man_tank_turret
+			suspension_type_slot = tank_bogie_suspension
+			armor_type_slot = tank_riveted_armor
+			engine_type_slot = tank_gasoline_engine
+			special_type_slot_1 = tank_radio_1
+			special_type_slot_2 = secondary_turret_hmg
+			special_type_slot_3 = secondary_turret_hmg
+		}
+		upgrades = {
+			tank_nsb_armor_upgrade = 3
+			tank_nsb_engine_upgrade = 10
+		}
+		icon = "gfx/interface/technologies/SOV_basic_heavy_tank.dds"
+	}
+	create_equipment_variant = {
+		name = "T-35"
+		type = heavy_tank_chassis_0
+		parent_version = 0
+		modules = {
+			main_armament_slot = tank_close_support_gun
+			turret_type_slot = tank_medium_three_man_tank_turret
+			suspension_type_slot = tank_bogie_suspension
+			armor_type_slot = tank_riveted_armor
+			engine_type_slot = tank_gasoline_engine
+			special_type_slot_1 = tank_radio_1
+			special_type_slot_2 = secondary_turret_hmg
+			special_type_slot_3 = secondary_turret_hmg
+			special_type_slot_4 = secondary_turret_small_cannon
+		}
+		upgrades = {
+			tank_nsb_armor_upgrade = 3
+			tank_nsb_engine_upgrade = 10
+		}
+		icon = "gfx/interface/technologies/SOV_basic_heavy_tank.dds"
 	}
 }

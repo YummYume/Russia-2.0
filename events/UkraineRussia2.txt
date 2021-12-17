@@ -124,7 +124,7 @@ country_event = {
 				}
 			}
 			UKR = {
-				add_ideas = SOV_Second_civil_war
+				add_ideas = SOV_Second_civil_war_idea_modifier
 				add_to_war = {
 					targeted_alliance = SOV
 					enemy = SOU
@@ -264,7 +264,7 @@ country_event = {
 				}
 			}
 			UKR = {
-				add_ideas = SOV_Second_civil_war
+				add_ideas = SOV_Second_civil_war_idea_modifier
 				add_to_war = {
 					targeted_alliance = SOV
 					enemy = SOU
@@ -508,7 +508,7 @@ country_event = {
 				}
 			}
 		}
-		add_ideas = SOV_Second_civil_war
+		add_ideas = SOV_Second_civil_war_idea_modifier
 		if = {
 			limit = {
 				has_country_flag = has_accepted_scw_neutrality
@@ -598,7 +598,7 @@ country_event = {
 				}
 			}
 		}
-		add_ideas = SOV_Second_civil_war
+		add_ideas = SOV_Second_civil_war_idea_modifier
 		FIN = {
 			country_event = { id = russia2_ukraine.50 days = 3 }
 		}
@@ -1341,7 +1341,7 @@ country_event = {
 	id = russia2_ukraine.27
 	title = russia2_ukraine.27.t
 	desc = russia2_ukraine.27.d
-	picture = GFX_operation_barbarossa
+	picture = GFX_operation_barbarossa_russia2
 
 	is_triggered_only = yes
 
@@ -1382,7 +1382,7 @@ country_event = {
 		}
 		hidden_effect = {
 			UKR = {
-				add_ideas = SOV_Second_civil_war
+				add_ideas = SOV_Second_civil_war_idea_modifier
 			}
 		}
 	}
@@ -1583,6 +1583,7 @@ country_event = {
 		}
 		trigger = {
 			NOT = {
+				is_ai = no
 				check_variable = {
 					var = global.russia_switch_country_id_scw
 					value = 0
@@ -1898,6 +1899,7 @@ country_event = {
 			ruling_party = anarchy
 			elections_allowed = no
 		}
+		set_global_flag = ukr_turned_anarchist_free_state
 		clr_country_flag = ukr_anarchist_rebels
 		custom_effect_tooltip = ukr_loses_all_cores
 		custom_effect_tooltip = ukr_unlocks_anarchist_legetimacy_decisions
@@ -2043,6 +2045,7 @@ country_event = {
 			ruling_party = anarchy
 			elections_allowed = no
 		}
+		set_global_flag = ukr_turned_anarchist_free_state
 		clr_country_flag = ukr_anarchist_rebels
 		custom_effect_tooltip = ukr_loses_all_cores
 		custom_effect_tooltip = ukr_unlocks_anarchist_legetimacy_decisions
@@ -2181,7 +2184,7 @@ country_event = {
 		add_stability = -0.05
 		add_war_support = 0.1
 		hidden_effect = {
-			add_ideas = SOV_Second_civil_war
+			add_ideas = SOV_Second_civil_war_idea_modifier
 			country_event = { id = russia2_ukraine.48 days = 7 }
 		}
 	}
@@ -2284,7 +2287,7 @@ country_event = {
 			}
 		}
 		hidden_effect = {
-			add_ideas = SOV_Second_civil_war
+			add_ideas = SOV_Second_civil_war_idea_modifier
 			for_each_scope_loop = {
 				array = global.russian_scw_participants
 
@@ -2300,7 +2303,7 @@ country_event = {
 							}
 						}
 					}
-					country_event = { id = russia2_ukraine.38 days = 1 }
+					country_event = { id = russia2_ukraine.38 hours = 1 }
 					ROOT = {
 						declare_war_on = {
 							target = PREV
@@ -2477,7 +2480,7 @@ country_event = {
 				}
 				UKR = {
 					country_event = russia2_ukraine.45
-					add_ideas = SOV_Second_civil_war
+					add_ideas = SOV_Second_civil_war_idea_modifier
 				}
 			}
 		}
@@ -2533,11 +2536,27 @@ country_event = {
 		}
 		set_global_flag = second_russian_civil_war_over
 		clr_global_flag = second_russian_civil_war_in_progress
-		remove_ideas = SOV_Second_civil_war
+		remove_ideas = SOV_Second_civil_war_idea_modifier
 		SOV = {
 			set_country_flag = white_guard_lost_civil_war
 		}
 		hidden_effect = {
+			every_state = {
+				limit = {
+					is_owned_by = ROOT
+					NOT = {
+						is_core_of = ROOT
+					}
+				}
+				add_compliance = 40
+			}
+			SOU = {
+				every_character = {
+					set_nationality = SOV
+					set_character_flag = russia_is_in_prison_cw
+					clr_character_flag = sov_character_switched_to_sou
+				}
+			}
 			if = {
 				limit = {
 					AND = {
@@ -2560,19 +2579,6 @@ country_event = {
 			}
 			if = {
 				limit = {
-					NOT = {
-						country_exists = SOU
-					}
-				}
-				every_state = {
-					limit = {
-						is_core_of = SOU
-					}
-					remove_core_of = SOU
-				}
-			}
-			if = {
-				limit = {
 					SOV = {
 						is_subject_of = UKR
 					}
@@ -2586,44 +2592,88 @@ country_event = {
 					}
 				}
 				SOV = {
-					set_capital = 217
+					set_capital = {
+						state = 217
+					}
+				}
+				every_state = {
+					limit = {
+						is_core_of = SOU
+					}
+					remove_core_of = SOU
 				}
 			}
-			if = {
+			else_if = {
 				limit = {
 					SOU = {
 						is_subject_of = UKR
 					}
 				}
-				SOU = {
-					retire_ideology_leader = communism
-					every_army_leader = {
-						retire = yes
-					}
-					sou_general_end_civil_war = yes
-					sou_create_country_leader_sov = yes
-				}
-				set_capital = 217
 				every_state = {
 					limit = {
 						is_core_of = SOV
-					}
-					remove_core_of = SOV
-				}
-				every_state = {
-					limit = {
 						is_owned_by = SOU
 					}
-					SOU = {
+					SOV = {
 						transfer_state = PREV
 					}
+				}
+				if = {
+					limit = {
+						SOU = {
+							any_owned_state = {
+								is_core_of = MON
+							}
+						}
+					}
+					SOU = {
+						release = MON
+					}
+					UKR = {
+						set_autonomy = {
+							target = MON
+							autonomy_state = autonomy_puppet
+						}
+					}
+				}
+				UKR = {
+					set_autonomy = {
+						target = SOV
+						autonomy_state = autonomy_puppet
+					}
+				}
+				SOV = {
+					every_state = {
+						limit = {
+							is_core_of = SOU
+						}
+						remove_core_of = SOU
+					}
+					every_state = {
+						limit = {
+							is_owned_by = SOV
+						}
+						SOV = {
+							transfer_state = PREV
+						}
+					}
+					add_country_leader_role = {
+						character = SOV_Ivan_kononov
+						country_leader = {
+						  ideology = oligarchism
+						  traits = { russia2_loyal_collaborator }
+						  expire="1965.1.1"
+						}
+						promote_leader = yes
+					}
+					set_cosmetic_tag = AFS
 				}
 			}
 			every_country = {
 				limit = {
-					has_idea = SOV_Second_civil_war
+					has_idea = SOV_Second_civil_war_idea_modifier
 				}
-				remove_ideas = SOV_Second_civil_war
+				remove_ideas = SOV_Second_civil_war_idea_modifier
 			}
 			every_country = {
 				limit = {
@@ -2664,11 +2714,16 @@ country_event = {
 					modifier = urals_secret
 				}
 			}
+			SOV = {
+				set_capital = {
+					state = 217
+				}
+			}
 		}
 	}
 }
 
-#Deserting White Generals are granting us help 
+#Deserting White Generals are granting us help
 country_event = {
 	id = russia2_ukraine.48
 	title = russia2_ukraine.48.t
@@ -2696,21 +2751,17 @@ country_event = {
 		custom_effect_tooltip = some_generals_from_whiteguard_and_union_join
 		hidden_effect = {
 			SOV = {
-				every_unit_leader = {
+				every_character = {
 					limit = {
-						has_unit_leader_flag = {
-							flag = flag_former_deserting_generals
-						}
+						has_character_flag = flag_former_deserting_generals
 					}
 					set_nationality = UKR
 				}
 			}
 			SOU = {
-				every_unit_leader = {
+				every_character = {
 					limit = {
-						has_unit_leader_flag = {
-							flag = flag_former_deserting_generals
-						}
+						has_character_flag = flag_former_deserting_generals
 					}
 					set_nationality = UKR
 				}
@@ -2973,7 +3024,7 @@ country_event = {
 	title = russia2_ukraine.56.t
 	desc = russia2_ukraine.56.d
 	picture = GFX_report_event_polish_army
-	
+
 	fire_only_once = yes
 
 	is_triggered_only = yes
@@ -3047,25 +3098,25 @@ country_event = {
 		}
 		random_owned_controlled_state = {
 			create_unit = {
-                division = "name = \"6ya Anarkhist Dobrovolets\" division_template = \"Ukrayins'ka Dyviziya\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
+                division = "name = \"7ya Anarkhist Dobrovolets\" division_template = \"Ukrayins'ka Dyviziya\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
                 owner = UKR
             }
 		}
 		random_owned_controlled_state = {
 			create_unit = {
-                division = "name = \"6ya Anarkhist Dobrovolets\" division_template = \"Ukrayins'ka Dyviziya\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
+                division = "name = \"8ya Anarkhist Dobrovolets\" division_template = \"Ukrayins'ka Dyviziya\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
                 owner = UKR
             }
 		}
 		random_owned_controlled_state = {
 			create_unit = {
-                division = "name = \"6ya Anarkhist Dobrovolets\" division_template = \"Ukrayins'ka Dyviziya\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
+                division = "name = \"9ya Anarkhist Dobrovolets\" division_template = \"Ukrayins'ka Dyviziya\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
                 owner = UKR
             }
 		}
 		random_owned_controlled_state = {
 			create_unit = {
-                division = "name = \"6ya Anarkhist Dobrovolets\" division_template = \"Ukrayins'ka Dyviziya\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
+                division = "name = \"10ya Anarkhist Dobrovolets\" division_template = \"Ukrayins'ka Dyviziya\" start_experience_factor = 0.1 start_equipment_factor = 1.0"
                 owner = UKR
             }
 		}
@@ -3120,22 +3171,30 @@ country_event = {
 		ai_chance = {
 			factor = 25
 		}
-		hidden_effect = {
-			retire_ideology_leader = anarchy
-		}
-		create_country_leader = {
-			name = "Vladimir Antonov-Ovseyenko"
-			desc = "POLITICS_VLADIMIR_ANTONOV_DESC"
-			picture = "gfx/leaders/UKR/Vladimir_Antonov_Ovseyenko.dds"
-			ideology = anarchist
-			traits = {
-				anarchist_principles
+		add_country_leader_role = {
+			character = UKR_Vladimir_antonov_ovseyenko_anarchist
+			promote_leader = yes
+			country_leader = {
+				desc = UKR_Vladimir_antonov_ovseyenko_anarchist_desc
+				ideology = anarchist
+				expire = "1965.1.1.1"
+				traits = {
+					russia2_anarchist_principles
+				}
 			}
 		}
-		create_corps_commander = {
-			name = "Makhno Nestor"
-			picture = "Makhno_Nestor.dds"
-			traits = { unbreakable_will_trait commando infantry_leader infantry_expert urban_assault_specialist trickster guerilla_fighter }
+		add_corps_commander_role = {
+			character = UKR_Makhno_nestor
+			traits = {
+				russia2_unbreakable_will_trait
+				commando
+				infantry_leader
+				infantry_expert
+				urban_assault_specialist
+				trickster
+				guerilla_fighter
+				russia2_weakened_trait
+			}
 			skill = 6
 			attack_skill = 5
 			defense_skill = 2
@@ -3573,30 +3632,24 @@ country_event = {
 			}
 			if = {
 				limit = {
-					has_idea = UKR_danilo_skoropadskiy_neutrality
+					has_idea = UKR_Danilo_skoropadskiy_neutrality
 				}
-				swap_ideas = {
-					add_idea = UKR_danilo_skoropadskiy_democratic
-					remove_idea = UKR_danilo_skoropadskiy_neutrality
-				}
+				remove_ideas = UKR_Danilo_skoropadskiy_neutrality
+				add_ideas = UKR_Danilo_skoropadskiy_democratic
 			}
 			else_if = {
 				limit = {
-					has_idea = UKR_stepan_bandera
+					has_idea = UKR_Stepan_bandera
 				}
-				swap_ideas = {
-					add_idea = UKR_danilo_skoropadskiy_democratic
-					remove_idea = UKR_stepan_bandera
-				}
+				remove_ideas = UKR_Stepan_bandera
+				add_ideas = UKR_Danilo_skoropadskiy_democratic
 			}
 			else_if = {
 				limit = {
-					has_idea = UKR_vladimir_alexandrovich_antonov_ovseenko_communism
+					has_idea = UKR_Vladimir_alexandrovich_antonov_ovseenko_communism
 				}
-				swap_ideas = {
-					add_idea = UKR_danilo_skoropadskiy_democratic
-					remove_idea = UKR_vladimir_alexandrovich_antonov_ovseenko_communism
-				}
+				remove_ideas = UKR_Vladimir_alexandrovich_antonov_ovseenko_communism
+				add_ideas = UKR_Danilo_skoropadskiy_democratic
 			}
 			hidden_effect = {
 				if = {
@@ -3659,30 +3712,24 @@ country_event = {
 			add_stability = 0.1
 			if = {
 				limit = {
-					has_idea = UKR_danilo_skoropadskiy_democratic
+					has_idea = UKR_Danilo_skoropadskiy_democratic
 				}
-				swap_ideas = {
-					add_idea = UKR_danilo_skoropadskiy_neutrality
-					remove_idea = UKR_danilo_skoropadskiy_democratic
-				}
+				remove_ideas = UKR_Danilo_skoropadskiy_democratic
+				add_ideas = UKR_Danilo_skoropadskiy_neutrality
 			}
 			else_if = {
 				limit = {
-					has_idea = UKR_stepan_bandera
+					has_idea = UKR_Stepan_bandera
 				}
-				swap_ideas = {
-					add_idea = UKR_danilo_skoropadskiy_neutrality
-					remove_idea = UKR_stepan_bandera
-				}
+				remove_ideas = UKR_Stepan_bandera
+				add_ideas = UKR_Danilo_skoropadskiy_neutrality
 			}
 			else_if = {
 				limit = {
-					has_idea = UKR_vladimir_alexandrovich_antonov_ovseenko_communism
+					has_idea = UKR_Vladimir_alexandrovich_antonov_ovseenko_communism
 				}
-				swap_ideas = {
-					add_idea = UKR_danilo_skoropadskiy_neutrality
-					remove_idea = UKR_vladimir_alexandrovich_antonov_ovseenko_communism
-				}
+				remove_ideas = UKR_Vladimir_alexandrovich_antonov_ovseenko_communism
+				add_ideas = UKR_Danilo_skoropadskiy_neutrality
 			}
 			hidden_effect = {
 				if = {
@@ -3751,30 +3798,24 @@ country_event = {
 			}
 			if = {
 				limit = {
-					has_idea = UKR_danilo_skoropadskiy_democratic
+					has_idea = UKR_Danilo_skoropadskiy_democratic
 				}
-				swap_ideas = {
-					add_idea = UKR_vladimir_alexandrovich_antonov_ovseenko_communism
-					remove_idea = UKR_danilo_skoropadskiy_democratic
-				}
+				remove_ideas = UKR_Danilo_skoropadskiy_democratic
+				add_ideas = UKR_Vladimir_alexandrovich_antonov_ovseenko_communism
 			}
 			else_if = {
 				limit = {
-					has_idea = UKR_stepan_bandera
+					has_idea = UKR_Stepan_bandera
 				}
-				swap_ideas = {
-					add_idea = UKR_vladimir_alexandrovich_antonov_ovseenko_communism
-					remove_idea = UKR_stepan_bandera
-				}
+				remove_ideas = UKR_Stepan_bandera
+				add_ideas = UKR_Vladimir_alexandrovich_antonov_ovseenko_communism
 			}
 			else_if = {
 				limit = {
-					has_idea = UKR_danilo_skoropadskiy_neutrality
+					has_idea = UKR_Danilo_skoropadskiy_neutrality
 				}
-				swap_ideas = {
-					add_idea = UKR_vladimir_alexandrovich_antonov_ovseenko_communism
-					remove_idea = UKR_danilo_skoropadskiy_neutrality
-				}
+				remove_ideas = UKR_Danilo_skoropadskiy_neutrality
+				add_ideas = UKR_Vladimir_alexandrovich_antonov_ovseenko_communism
 			}
 			hidden_effect = {
 				if = {
@@ -3837,30 +3878,24 @@ country_event = {
 			add_stability = 0.1
 			if = {
 				limit = {
-					has_idea = UKR_danilo_skoropadskiy_democratic
+					has_idea = UKR_Danilo_skoropadskiy_democratic
 				}
-				swap_ideas = {
-					add_idea = UKR_stepan_bandera
-					remove_idea = UKR_danilo_skoropadskiy_democratic
-				}
+				remove_ideas = UKR_Danilo_skoropadskiy_democratic
+				add_ideas = UKR_Stepan_bandera
 			}
 			else_if = {
 				limit = {
-					has_idea = UKR_vladimir_alexandrovich_antonov_ovseenko_communism
+					has_idea = UKR_Vladimir_alexandrovich_antonov_ovseenko_communism
 				}
-				swap_ideas = {
-					add_idea = UKR_stepan_bandera
-					remove_idea = UKR_vladimir_alexandrovich_antonov_ovseenko_communism
-				}
+				remove_ideas = UKR_Vladimir_alexandrovich_antonov_ovseenko_communism
+				add_ideas = UKR_Stepan_bandera
 			}
 			else_if = {
 				limit = {
-					has_idea = UKR_danilo_skoropadskiy_neutrality
+					has_idea = UKR_Danilo_skoropadskiy_neutrality
 				}
-				swap_ideas = {
-					add_idea = UKR_stepan_bandera
-					remove_idea = UKR_danilo_skoropadskiy_neutrality
-				}
+				remove_ideas = UKR_Danilo_skoropadskiy_neutrality
+				add_ideas = UKR_Stepan_bandera
 			}
 			hidden_effect = {
 				if = {
@@ -4697,6 +4732,93 @@ country_event = {
 				has_idea = strikes_3
 			}
 			remove_ideas = strikes_3
+		}
+	}
+}
+
+#Makhno Dies ;(
+country_event = {
+	id = russia2_ukraine.89
+	title = russia2_ukraine.89.t
+	desc = {
+		text = russia2_ukraine.89.d_1
+		trigger = {
+			has_country_leader = {
+				character = UKR_Makhno_nestor
+				ruling_only = yes
+			}
+		}
+	}
+	desc = {
+		text = russia2_ukraine.89.d_2
+		trigger = {
+			NOT = {
+				has_country_leader = {
+					character = UKR_Makhno_nestor
+					ruling_only = yes
+				}
+			}
+		}
+	}
+	picture = GFX_report_event_soviet_german_soldier_handshake
+
+	is_triggered_only = yes
+
+	immediate = {
+		set_global_flag = ukr_makhno_dead
+	}
+
+	option = { # :(
+		trigger = {
+			has_country_leader = {
+				character = UKR_Makhno_nestor
+				ruling_only = yes
+			}
+		}
+		name = russia2_ukraine.89.a
+		ai_chance = {
+			factor = 100
+		}
+		custom_effect_tooltip = UKR_makhno_nestor_dies
+		add_ideas = UKR_Makhno_wish
+		add_country_leader_role = {
+			character = UKR_Ida_mett
+			promote_leader = yes
+			country_leader = {
+				desc = UKR_Ida_mett_desc
+				ideology = anarchist
+				expire = "1965.1.1.1"
+				traits = {
+					russia2_anarchist_principles
+					russia2_tactical_and_theoretical_unity
+					russia2_collective_responsibility
+					russia2_federalism_trait
+				}
+			}
+		}
+		hidden_effect = {
+			retire_character = UKR_Makhno_nestor
+		}
+	}
+
+	option = { # :(
+		trigger = {
+			NOT = {
+				has_country_leader = {
+					character = UKR_Makhno_nestor
+					ruling_only = yes
+				}
+			}
+		}
+		name = russia2_ukraine.89.b
+		ai_chance = {
+			factor = 100
+		}
+		custom_effect_tooltip = UKR_makhno_nestor_dies
+		add_ideas = UKR_Makhno_wish
+		add_political_power = 100
+		hidden_effect = {
+			retire_character = UKR_Makhno_nestor
 		}
 	}
 }

@@ -25,7 +25,7 @@ SOV_great_purge_decisions = {
     }
 
     available = {
-		has_idea = SOV_Great_purge
+		has_idea = SOV_Great_purge_idea_russia2
     }
 
 	priority = 100
@@ -34,7 +34,7 @@ SOV_great_purge_decisions = {
 		has_government = communism
 		is_subject = no
 		OR = {
-			has_idea = SOV_Great_purge
+			has_idea = SOV_Great_purge_idea_russia2
 			has_completed_focus = SOV_great_purge2
 		}
     }
@@ -102,6 +102,7 @@ SOV_europe_expansion = {
     visible = {
 		has_completed_focus = SOV_russian_expansion
 		NOT = {
+			has_government = anarchy
 			has_completed_focus = SOV_preemptive_coup
 			has_completed_focus = SOV_reunification
 			has_completed_focus = SOV_freedom_all
@@ -134,6 +135,7 @@ SOV_europe_expansion_democratic = {
 			has_completed_focus = SOV_freedom_all
 		}
 		NOT = {
+			has_government = anarchy
 			has_completed_focus = SOV_united_russia
 			has_completed_focus = SOV_abandon_foreign_claims
 		}
@@ -161,6 +163,7 @@ SOV_integrate_the_baltics = {
 	visible = {
 		has_completed_focus = SOV_russian_expansion
 		NOT = {
+			has_government = anarchy
 			has_completed_focus = SOV_freedom_all
 		}
 	}
@@ -194,6 +197,7 @@ SOV_unhappy_peasants = {
 			has_idea = SOV_Unhappy_peasants4
 			has_idea = SOV_Unhappy_peasants5
 			has_idea = SOV_Unhappy_peasants6
+			has_idea = SOV_Regular_peasants_strikes
 		}
 	}
 }
@@ -316,7 +320,8 @@ SOV_proclaim_revolution = {
 
 	available = {
 		has_country_leader = {
-			name = "Leon Trotsky"
+			character = SOV_Leon_trotsky
+			ruling_only = yes
 		}
 		is_faction_leader = yes
 	}
@@ -647,7 +652,7 @@ SOV_transfer_of_power = {
 		has_full_control_of_state = 231
 		NOT = {
 			has_country_leader = {
-				name = "Pavel Bermondt-Avalov"
+				character = SOV_Pavel_bermondt_avalov
 				ruling_only = yes
 			}
 		}
@@ -981,7 +986,7 @@ SOV_third_rome_decision_categories = {
 	priority = 30
 
 	visible = {
-		has_completed_focus = SOV_the_third_rome
+		has_completed_focus = SOV_the_third_rome_russia2
 		is_subject = no
 	}
 }
@@ -995,7 +1000,7 @@ SOV_legacy_of_byzantine = {
 	priority = 25
 
 	visible = {
-		has_completed_focus = SOV_the_third_rome
+		has_completed_focus = SOV_the_third_rome_russia2
 		is_subject = no
 		has_country_flag = take_legacy_byzantine
 	}
@@ -1435,7 +1440,7 @@ SOV_anarchism_election = {
 	priority = 30
 
 	visible = {
-		#has_completed_focus = SOV_proclamation_commune
+		has_completed_focus = SOV_anarchist_election
 		has_government = anarchy
 	}
 }
@@ -1496,6 +1501,10 @@ SOV_diplomatic_plays_decisions_democratic = {
 					231 = { is_core_of = SOV }
 					230 = { is_core_of = SOV }
 					229 = { is_core_of = SOV }
+					826 = { is_core_of = SOV }
+					827 = { is_core_of = SOV }
+					828 = { is_core_of = SOV }
+					821 = { is_core_of = SOV }
 				}
 			}
 		}
@@ -1845,16 +1854,6 @@ SOV_great_patriotic_war_russia2 = {
 
 	visible = {
 		has_government = communism
-		OR = {
-			has_country_leader = {
-				name = "Joseph Stalin"
-				ruling_only = yes
-			}
-			has_country_leader = {
-				name = "Vasily Stalin"
-				ruling_only = yes
-			}
-		}
 		has_war = yes
 		has_civil_war = no
 		is_subject = no
@@ -1895,7 +1894,7 @@ SOV_greater_kurdistan = {
 		KUR = {
 			is_subject_of = SOV
 		}
-		has_country_flag = choose_kurdistan_over_other
+		has_country_flag = choose_kurdistan_over_other_option_event_tur
 		is_subject = no
 	}
 }
@@ -1952,11 +1951,11 @@ SOV_anna_anderson_legitimacy = {
 		has_completed_focus = SOV_restoration_tsar
 		OR = {
 			has_country_leader = {
-				name = "Kirill Vladimirovich"
+				character = SOV_Kirill_vladimirovich
 				ruling_only = yes
 			}
 			has_country_leader = {
-				name = "Vladimir Kirillovich"
+				character = SOV_Vladimir_kirillovich
 				ruling_only = yes
 			}
 		}
@@ -1964,7 +1963,7 @@ SOV_anna_anderson_legitimacy = {
 			has_completed_focus = SOV_the_emperor
 			has_completed_focus = SOV_the_empress
 			has_country_leader = {
-				name = "Anastasia Nikolaevna"
+				character = SOV_Anastasia_nikolaevna
 				ruling_only = yes
 			}
 		}
@@ -2169,7 +2168,7 @@ SOV_replace_puppet_leader = {
 		OR = {
 			AND = {
 				has_country_leader = {
-					name = "Joseph Stalin"
+					character = SOV_Vasily_stalin
 					ruling_only = yes
 				}
 				has_government = communism
@@ -2177,7 +2176,7 @@ SOV_replace_puppet_leader = {
 			}
 			AND = {
 				has_country_leader = {
-					name = "Alexander Konovalov"
+					character = SOV_Alexander_konovalov
 					ruling_only = yes
 				}
 				has_government = democratic
@@ -2308,5 +2307,22 @@ SOV_negotiation_disputants_category_decisions = {
 		NOT = {
 			has_completed_focus = SOV_implement_the_project
 		}
+	}
+}
+
+#Propaganda Decision but for Our Mod - Base Game
+SOV_propaganda_campaigns_russia2 = {
+	priority = 100
+
+	icon = SOV_propaganda
+
+	scripted_gui = sov_propaganda_campaigns_ui_russia2
+
+	allowed = {
+		original_tag = SOV
+	}
+
+	visible = {
+		has_completed_focus = SOV_the_agitprop_russia2
 	}
 }

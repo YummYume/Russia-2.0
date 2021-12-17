@@ -54,14 +54,14 @@ if __name__ == "__main__":
                 name = "russia_reworked_{ achievement }_achievement"
                 position = {{ x = 15 y = { y } }}
                 size = {{ width = 600 height = 83 }}
-                
+
                 iconType = {{
                     name = "achievement_entry_bg"
                     spriteType = "GFX_russia2_achievement_entry_bg"
                     position = {{ x = -2 y = -4 }}
                     Orientation = "UPPER_LEFT"
                 }}
-                
+
                 iconType = {{
                     name = "russia_reworked_{ achievement }_achievement_icon_unlocked"
                     spriteType = "GFX_{ achievement }_unlocked"
@@ -101,7 +101,7 @@ if __name__ == "__main__":
                     fixedsize = yes
                     format = left
                 }}
-                
+
                 instantTextBoxType = {{
                     name = "achievement_desc"
                     position = {{ x = @ACHIEVEMENT_DESC_POSITION_X y = @ACHIEVEMENT_DESC_POSITION_Y }}
@@ -110,11 +110,11 @@ if __name__ == "__main__":
                     text = russia_reworked_{ achievement }_achievement_desc
                     maxWidth = 450
                     maxHeight = 100
-                    format = left			
+                    format = left
                 }}
-                
+
                 ## stuff to the right
-                
+
                 instantTextBoxType = {{
                     name = "achievement_obtained_by"
                     position = {{ x = -8 y = 3 }}
@@ -161,7 +161,7 @@ if __name__ == "__main__":
         name = "russia_reworked_{ achievement }_entry"
         position = {{ x = 0 y = 5 }}
         size = {{ width = 50 height = 25 }}
-        
+
         iconType = {{
             name = "flag"
             quadTextureSprite = "GFX_flag_small2"

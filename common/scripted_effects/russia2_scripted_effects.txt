@@ -18,15 +18,8 @@ sov_setup_scw = {
                 military_police = { x = 0 y = 0 }
             }
         }
-        division_template = {
-            name = "Vozdushno-Desantnaya Brigada"
-            is_locked = no
-            division_names_group = SOV_PAR_01
-
-            regiments = {
-                paratrooper = { x = 0 y = 0 }
-                paratrooper = { x = 0 y = 1 }
-            }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
         }
         delete_unit_template_and_units = {
             division_template = "Strelkovaya Diviziya"
@@ -46,41 +39,64 @@ sov_setup_scw = {
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
         }
+        division_template = {
+            name = "Vozdushno-Desantnaya Brigada"
+            is_locked = no
+            division_names_group = SOV_PAR_01
+    
+            regiments = {
+                paratrooper = { x = 0 y = 0 }
+                paratrooper = { x = 0 y = 1 }
+            }
+        }
         load_oob = "SOV_civil_war"
-        if = {
+        if = { #TODO try to remove that
             limit = {
                 is_ai = yes
             }
             add_command_power = 100
         }
-        remove_ideas = SOV_Prepare_second_war
-        remove_ideas = SOV_Terrible_fate
-        remove_ideas = SOV_Army_disorganisation
-        add_ideas = SOV_Supply_line
-        add_ideas = SOV_Second_civil_war
-        add_ideas = SOV_Urals_secret
-        add_ideas = SOV_Slow_industry
+        remove_ideas = {
+            SOV_Prepare_second_war
+            SOV_Terrible_fate
+            SOV_Army_disorganisation
+        }
+        add_ideas = {
+            SOV_Supply_line
+            SOV_Second_civil_war_idea_modifier
+            SOV_Urals_secret
+            SOV_Slow_industry
+        }
         clr_country_flag = second_civil_war_mission
-        country_event = { id = russia2_ukraine.31 days = 1 }
+        if = {
+            limit = {
+                is_ai = yes
+            }
+            country_event = { id = russia2_russia.136 days = 1 }
+        }
+        else = {
+            country_event = { id = russia2_ukraine.31 days = 1 }
+        }
         country_event = { id = russia2_russia.227 days = 15 }
-        set_country_flag = preparation_done
-        set_country_flag = ennemy_second_civil_war
-        set_country_flag = ennemy_second_civil_war_mikhail
-        set_country_flag = ennemy_second_civil_war_georgy_zhu
-        set_country_flag = ennemy_second_civil_war_konev
-        set_country_flag = ennemy_second_civil_war_vasilevsky
+        set_country_flag = preparation_done_russian_civil_war_russia2
+        set_country_flag = sov_enemy_second_civil_war_russia2
         set_cosmetic_tag = WMA
         dismantle_faction = yes
         create_faction = anti_communist_coalition
-        retire_ideology_leader = communism
-        create_country_leader = {
-            name = "Leon Trotsky"
-            desc = "POLITICS_LEON_TROTSKY_DESC"
-            picture = "Portrait_Leon_Trotsky.dds"
-            expire = "1965.1.1"
-            ideology = leninism
-            traits = {
-                counter_revolutionist
+        remove_country_leader_role = {
+            character = SOV_Joseph_stalin
+            ideology = stalinism
+        }
+        add_country_leader_role = {
+            character = SOV_Leon_trotsky
+            promote_leader = yes
+            country_leader = {
+                desc = SOV_Leon_trotsky_desc
+                ideology = leninism
+                expire = "1965.1.1.1"
+                traits = {
+                    russia2_counter_revolutionist
+                }
             }
         }
         set_party_name = {
@@ -103,355 +119,352 @@ sov_setup_scw = {
                 modifier = urals_secret
             }
         }
-        every_army_leader = {
-            retire = yes
-        }
-        create_corps_commander = {
-            name = "Alexander Gorbatov"
-            picture = "Portrait_Soviet_Alexander_Gorbatov.dds"
-            traits = { career_officer cavalry_officer }
-            skill = 3
-            attack_skill = 2
-            defense_skill = 3
-            planning_skill = 2
-            logistics_skill = 3
-        }
-        create_corps_commander = {
-            name = "Andrey Vlasov"
-            picture = "Portrait_Soviet_Andrey_Vlasov.dds"
-            traits = { winter_specialist infantry_officer }
-            skill = 3
-            attack_skill = 3
-            defense_skill = 3
-            planning_skill = 1
-            logistics_skill = 3
-        }
-        create_corps_commander = {
-            name = "Konstantin Rokossovsky"
-            picture = "Portrait_Soviet_Konstantin_Rokossovsky.dds"
-            traits = {  armor_officer trait_cautious brilliant_strategist }
-            skill = 4
-            attack_skill = 3
-            defense_skill = 4
-            planning_skill = 2
-            logistics_skill = 4
-        }
-        create_corps_commander = {
-            name = "Pyotr Krasnov"
-            picture = "Portrait_Pyotr_Nikolayevich_Krasnov.dds"
-            traits = { trait_reckless infantry_officer trait_mountaineer }
+        add_corps_commander_role = {
+            character = SOV_Pyotr_Nikolayevich_Krasnov
+            traits = {
+                trait_reckless
+                infantry_officer
+                trait_mountaineer
+            }
             skill = 4
             attack_skill = 4
             defense_skill = 3
             planning_skill = 3
             logistics_skill = 3
         }
-        create_corps_commander = {
-            name = "Popov Pyotr Kharitonovich"
-            picture = "Portrait_Popov_Pyotr_Kharitonovich.dds"
-            traits = { cavalry_officer }
+        add_corps_commander_role = {
+            character = SOV_Popov_pyotr_kharitonovich
+            traits = {
+                cavalry_officer
+            }
             skill = 2
             attack_skill = 2
             defense_skill = 3
             planning_skill = 3
             logistics_skill = 3
         }
-        create_corps_commander = {
-            name = "Tolstov Vladimir Sergeevich"
-            picture = "Portrait_Tolstov_Vladimir_Sergeevich.dds"
-            traits = { cavalry_officer }
+        add_corps_commander_role = {
+            character = SOV_Tolstov_vladimir_sergeevich
+            traits = {
+                cavalry_officer
+            }
             skill = 2
             attack_skill = 3
             defense_skill = 1
             planning_skill = 2
             logistics_skill = 3
         }
-        create_corps_commander = {
-            name = "Pisarev Pyotr Konstantinovich"
-            picture = "Portrait_Pisarev_Pyotr_Konstantinovich.dds"
-            traits = { infantry_officer }
+        add_corps_commander_role = {
+            character = SOV_Pisarev_pyotr_konstantinovich
+            traits = {
+                infantry_officer
+            }
             skill = 2
             attack_skill = 2
             defense_skill = 1
             planning_skill = 2
             logistics_skill = 2
         }
-        create_corps_commander = {
-            name = "Pavel Bermondt-Avalov"
-            id = 513
-            picture = "Portrait_Pavel_Bermondt_Avalov.dds"
-            traits = { infantry_officer }
+        add_corps_commander_role = {
+            character = SOV_Pavel_bermondt_avalov
+            traits = {
+                infantry_officer
+            }
             skill = 3
             attack_skill = 3
             defense_skill = 2
             planning_skill = 2
             logistics_skill = 3
         }
-        create_corps_commander = {
-            name = "Abram Dragomirov"
-            picture = "Portrait_Abram_Dragomirov.dds"
-            traits = { cavalry_officer }
+        add_corps_commander_role = {
+            character = SOV_Abram_dragomirov
+            traits = {
+                cavalry_officer
+            }
             skill = 3
             attack_skill = 3
             defense_skill = 2
             planning_skill = 2
             logistics_skill = 2
         }
-        create_corps_commander = {
-            name = "Mikhail Diterikhs"
-            id = 511
-            picture = "Portrait_Mikhail_Diterikhs.dds"
-            traits = {  }
+        add_corps_commander_role = {
+            character = SOV_Mikhail_diterikhs
+            traits = {
+            }
             skill = 2
             attack_skill = 2
             defense_skill = 2
             planning_skill = 2
             logistics_skill = 2
+            legacy_id = 511
         }
-        create_corps_commander = {
-            name = "Alexander V. Golubintzev"
-            picture = "Portrait_Alexander_Golubintzev.dds"
-            traits = { cavalry_officer }
+        add_corps_commander_role = {
+            character = SOV_Alexander_golubintzev
+            traits = {
+                cavalry_officer
+            }
             skill = 4
             attack_skill = 3
             defense_skill = 2
             planning_skill = 1
             logistics_skill = 4
         }
-        create_corps_commander = {
-            name = "Vladimir Kislitsin"
-            id = 515
-            picture = "Portrait_Vladimir_Kislitsin.dds"
-            traits = { brilliant_strategist }
+        add_corps_commander_role = {
+            character = SOV_Vladimir_kislitsin
+            traits = {
+                brilliant_strategist
+            }
             skill = 3
             attack_skill = 3
             defense_skill = 2
             planning_skill = 3
             logistics_skill = 3
         }
-        create_corps_commander = {
-            name = "Viktorin Molchanov"
-            id = 517
-            picture = "Portrait_Viktorin_Molchanov.dds"
-            traits = { winter_specialist inflexible_strategist }
+        add_corps_commander_role = {
+            character = SOV_Viktorin_molchanov
+            traits = {
+                winter_specialist
+                inflexible_strategist
+            }
             skill = 4
             attack_skill = 3
             defense_skill = 3
             planning_skill = 2
             logistics_skill = 2
+            legacy_id = 517
         }
-        create_corps_commander = {
-            name = "Grigory Mikhaylovich Semyonov"
-            picture = "Potrait_Grigory_Mikhaylovich_Semyonov.dds"
-            traits = { harsh_leader }
+        add_corps_commander_role = {
+            character = SOV_Grigory_mikhaylovich_semyonov
+            traits = {
+                harsh_leader
+            }
             skill = 3
             attack_skill = 3
             defense_skill = 3
             planning_skill = 2
             logistics_skill = 1
         }
-        create_corps_commander = {
-            name = "Andrei Shkuro"
-            id = 518
-            picture = "Portrait_Andrei_Shkuro.dds"
-            traits = { brilliant_strategist trickster }
+        add_corps_commander_role = {
+            character = SOV_Andrei_shkuro
+            traits = {
+                brilliant_strategist
+                trickster
+            }
             skill = 3
             attack_skill = 3
             defense_skill = 1
             planning_skill = 2
             logistics_skill = 2
+            legacy_id = 518
         }
-        create_corps_commander = {
-            name = "Boris Shteifon"
-            picture = "Portrait_Boris_Shteifon.dds"
-            id = 519
-            traits = { war_hero trickster }
+        add_corps_commander_role = {
+            character = SOV_Boris_shteifon
+            traits = {
+                war_hero
+                trickster
+            }
             skill = 3
             attack_skill = 3
             defense_skill = 2
             planning_skill = 3
             logistics_skill = 2
         }
-        create_corps_commander = {
-            name = "Vladimir Sidorin"
-            picture = "Portrait_Vladimir_Sidorin.dds"
-            traits = { trait_reckless }
+        add_corps_commander_role = {
+            character = SOV_Vladimir_sidorin
+            traits = {
+                trait_reckless
+            }
             skill = 2
             attack_skill = 2
             defense_skill = 3
             planning_skill = 1
             logistics_skill = 1
         }
-        create_corps_commander = {
-            name = "Mikhail Skorodumov"
-            id = 516
-            picture = "Potrait_Mikhail_Skorodumov.dds"
-            traits = { trait_reckless bearer_of_artillery }
+        add_corps_commander_role = {
+            character = SOV_Mikhail_skorodumov
+            traits = {
+                trait_reckless
+                bearer_of_artillery
+            }
             skill = 3
             attack_skill = 4
             defense_skill = 2
             planning_skill = 3
             logistics_skill = 1
         }
-        create_corps_commander = {
-            name = "Konstantin Petrovich Nechaev"
-            picture = "Portrait_Konstantin_Petrovich_Nechaev.dds"
-            traits = { cavalry_officer inflexible_strategist }
+        add_corps_commander_role = {
+            character = SOV_Konstantin_petrovich_nechaev
+            traits = {
+                cavalry_officer
+                inflexible_strategist
+            }
             skill = 3
             attack_skill = 4
             defense_skill = 2
             planning_skill = 3
             logistics_skill = 2
         }
-        create_corps_commander = {
-            name = "Mikhail Pleshkov"
-            picture = "Portrait_Mikhail_Pleshkov.dds"
-            traits = { cavalry_officer }
+        add_corps_commander_role = {
+            character = SOV_Mikhail_pleshkov
+            traits = {
+                cavalry_officer
+            }
             skill = 2
             attack_skill = 3
             defense_skill = 2
             planning_skill = 2
             logistics_skill = 1
         }
-        create_corps_commander = {
-            name = "Anton Turkul"
-            picture = "Portrait_Anton_Turkul.dds"
-            traits = { infantry_officer }
+        add_corps_commander_role = {
+            character = SOV_Anton_turkul
+            traits = {
+                infantry_officer
+            }
             skill = 3
-            
             attack_skill = 2
             defense_skill = 2
             planning_skill = 1
             logistics_skill = 2
         }
-        create_corps_commander = {
-            name = "Isaac Bykadorov"
-            picture = "Portrait_Isaac_Bykadorov.dds"
-            traits = { war_hero trait_reckless }
+        add_corps_commander_role = {
+            character = SOV_Isaac_bykadorov
+            traits = {
+                war_hero
+                trait_reckless
+            }
             skill = 3
-            
             attack_skill = 3
             defense_skill = 1
             planning_skill = 1
             logistics_skill = 2
         }
-        create_corps_commander = {
-            name = "Vyacheslav Naumenko"
-            picture = "Portrait_Vyacheslav_Grigoryevich_Naumenko.dds"
-            traits = { war_hero }
+        add_corps_commander_role = {
+            character = SOV_Vyacheslav_naumenko
+            traits = {
+                war_hero
+            }
             skill = 2
-            
             attack_skill = 3
             defense_skill = 2
             planning_skill = 2
             logistics_skill = 3
         }
-        create_corps_commander = {
-            name = "Fedor Abramov"
-            picture = "Portrait_Fedor_Abramov.dds"
-            traits = { cavalry_officer bearer_of_artillery }
+        add_corps_commander_role = {
+            character = SOV_Fedor_abramov
+            traits = {
+                cavalry_officer
+                bearer_of_artillery
+            }
             skill = 3
-            
             attack_skill = 2
             defense_skill = 2
             planning_skill = 2
             logistics_skill = 2
         }
-        create_corps_commander = {
-            name = "Bronislaw Kaminski"
-            picture = "Portrait_Bronislav_Kaminsky.dds"
-            traits = { harsh_leader }
+        add_corps_commander_role = {
+            character = SOV_Bronislaw_kaminski
+            traits = {
+                harsh_leader
+            }
             skill = 2
-            
             attack_skill = 2
             defense_skill = 1
             planning_skill = 2
             logistics_skill = 2
         }
-        create_corps_commander = {
-            name = "Vladimir Marushevsky"
-            picture = "Portrait_Vladimir_Marushevsky.dds"
-            traits = { infantry_officer }
+        add_corps_commander_role = {
+            character = SOV_Vladimir_marushevsky
+            traits = {
+                infantry_officer
+            }
             skill = 2
-            
             attack_skill = 2
             defense_skill = 1
             planning_skill = 1
             logistics_skill = 2
         }
-        create_corps_commander = {
-            name = "Vladimir Kharzhevsky"
-            picture = "Portrait_Vladimir_Kharzhevsky.dds"
-            traits = { }
+        add_corps_commander_role = {
+            character = SOV_Vladimir_kharzhevsky
+            traits = {
+            }
             skill = 2
-            
             attack_skill = 1
             defense_skill = 3
             planning_skill = 2
             logistics_skill = 2
         }
-        create_corps_commander = {
-            name = "Pavel Shatilov"
-            picture = "Portrait_Pavel_Shatilov.dds"
-            traits = { cavalry_officer }
+        add_corps_commander_role = {
+            character = SOV_Pavel_shatilov
+            traits = {
+                cavalry_officer
+            }
             skill = 4
-            
             attack_skill = 3
             defense_skill = 3
             planning_skill = 2
             logistics_skill = 2
         }
-        create_corps_commander = {
-            name = "Pyotr Vladimirovich Glazenap"
-            picture = "Portrait_Peter_Glazenap.dds"
-            traits = { cavalry_officer }
+        add_corps_commander_role = {
+            character = SOV_Pyotr_vladimirovich_glazenap
+            traits = {
+                cavalry_officer
+            }
             skill = 3
             attack_skill = 3
             defense_skill = 2
             planning_skill = 1
             logistics_skill = 2
         }
-        create_corps_commander = {
-            name = "Alexander Lukomsky"
-            picture = "Portrait_Alexander_Lukomsky.dds"
-            traits = { trait_engineer  }
+        add_corps_commander_role = {
+            character = SOV_Alexander_lukomsky
+            traits = {
+                trait_engineer
+            }
             skill = 3
             attack_skill = 2
             defense_skill = 2
             planning_skill = 3
             logistics_skill = 3
         }
-        create_field_marshal = {
-            name = "Yevgeny Miller"
-            picture = "Potrait_Yevgeny_Miller.dds"
-            traits = { infantry_leader brilliant_strategist organisational_leader }
+        add_field_marshal_role = {
+            character = SOV_Yevgeny_miller
+            traits = {
+                infantry_leader
+                brilliant_strategist
+                organisational_leader
+            }
             skill = 3
             attack_skill = 3
             defense_skill = 3
             planning_skill = 2
             logistics_skill = 2
         }
-        create_field_marshal = {
-            name = "Anton Ivanovich Denikin"
-            id = 514
-            picture = "Portrait_Soviet_Anton_IvanovichMilitary.dds"
-            traits = { infantry_leader bearer_of_artillery offensive_doctrine }
+        add_field_marshal_role = {
+            character = SOV_Anton_ivanovich_denikin
+            traits = {
+                infantry_leader
+                bearer_of_artillery
+                offensive_doctrine
+            }
             skill = 5
             attack_skill = 4
             defense_skill = 3
             planning_skill = 4
             logistics_skill = 3
+            legacy_id = 514
         }
-        create_field_marshal = {
-            name = "Alexander Rodzyanko"
-            id = 512
-            picture = "Portrait_Alexander_Rodzyanko.dds"
-            traits = { inspirational_leader cavalry_officer }
+        add_field_marshal_role = {
+            character = SOV_Alexander_rodzyanko
+            traits = {
+                inspirational_leader
+                cavalry_officer
+            }
             skill = 2
             attack_skill = 2
             defense_skill = 2
             planning_skill = 4
             logistics_skill = 2
+            legacy_id = 512
         }
         set_politics = {
             ruling_party = neutrality
@@ -462,17 +475,19 @@ sov_setup_scw = {
             fascism = 33
             communism = 1
         }
-        create_country_leader = {
-            name = "Anton Denikin"
-            desc = "POLITICS_ANTON_DENIKIN_DESC"
-            picture = "Portrait_Soviet_Anton_IvanovichMilitary.dds"
-            expire = "1947.8.8"
-            ideology = oligarchism
-            traits = {
-                war_veteran
+        add_country_leader_role = {
+            character = SOV_Anton_ivanovich_denikin
+            promote_leader = yes
+            country_leader = {
+                desc = SOV_Anton_ivanovich_denikin_desc
+                ideology = oligarchism
+                expire = "1965.1.1.1"
+                traits = {
+                    russia2_war_veteran
+                }
             }
         }
-        add_ideas = war_economy
+        add_ideas = war_economy #TODO make sure the player doesn't have an economy or conscription law above or already at this value
         add_ideas = limited_conscription
     }
 }
@@ -485,34 +500,36 @@ sov_spawn_sou_scw = {
             is_owned_by = SOV
             NOT = {
                 state = 408
-				state = 409
-				state = 560
-				state = 655
-				state = 537
-				state = 657
-				state = 561
-				state = 574
-				state = 562
-				state = 637
-				state = 644
-				state = 563
-				state = 565
-				state = 564
-				state = 575
-				state = 516
-				state = 566
-				state = 567
-				state = 576
-				state = 568
-				state = 569
-				state = 578
-				state = 570
-				state = 577
-				state = 571
-				state = 654
-				state = 40
-				state = 588
-				state = 589
+                state = 409
+                state = 560
+                state = 655
+                state = 537
+                state = 657
+                state = 561
+                state = 574
+                state = 562
+                state = 637
+                state = 644
+                state = 563
+                state = 565
+                state = 564
+                state = 575
+                state = 516
+                state = 566
+                state = 567
+                state = 576
+                state = 568
+                state = 569
+                state = 578
+                state = 570
+                state = 577
+                state = 571
+                state = 654
+                state = 40
+                state = 588
+                state = 589
+                state = 822
+                state = 824
             }
         }
         SOU = {
@@ -534,6 +551,9 @@ sov_spawn_sou_scw = {
                     state = 232
                     state = 235
                     state = 234
+                    state = 827
+                    state = 828
+                    state = 821
                 }
             }
             SOV = {
@@ -541,330 +561,74 @@ sov_spawn_sou_scw = {
             }
         }
     }
+    SOV = {
+        every_character = {
+            limit = {
+                OR = {
+                    is_character = SOV_Georgy_zhukov
+                    is_character = SOV_Aleksandr_vasilevsky
+                    is_character = SOV_Boris_shaposhnikov
+                    is_character = SOV_Nikolai_vatutin
+                    is_character = SOV_Ivan_konev
+                    is_character = SOV_Semyon_timoshenko
+                    is_character = SOV_Kliment_voroshilov_military
+                    is_character = SOV_Kliment_voroshilov_advisor
+                    is_character = SOV_Mikhail_tukhachevsky
+                    is_character = SOV_Semyon_budyonny
+                    is_character = SOV_Ivan_chernyakhovsky
+                    is_character = SOV_Issa_pliyev
+                    is_character = SOV_Leonid_govorov
+                    is_character = SOV_Grigory_kulik
+                    is_character = SOV_Kirill_meretskov
+                    is_character = SOV_Filipp_golikov
+                    is_character = SOV_Andrey_yeryomenko
+                    is_character = SOV_Georgiy_zakharov
+                    is_character = SOV_Yakov_cherevichenko
+                    is_character = SOV_Max_reyter
+                    is_character = SOV_Nikandr_chibisov
+                    is_character = SOV_Vasily_kuznetsov
+                    is_character = SOV_Ivan_fedyuninsky
+                    is_character = SOV_Maksim_purkayev
+                    is_character = SOV_Kuzma_galitsky
+                    is_character = SOV_Markian_popov
+                    is_character = SOV_Nikolai_berzarin
+                    is_character = SOV_Kirill_moskalenko
+                    is_character = SOV_Dmitry_lelyushenko
+                    is_character = SOV_Andrei_grechko
+                    is_character = SOV_Rodion_malinovsky
+                    is_character = SOV_Vasily_chuikov
+                }
+            }
+            set_character_flag = sov_character_switched_to_sou
+            set_nationality = SOU
+        }
+    }
     SOU = {
-        create_faction = Comintern
-        load_oob = "SOU_civil_war"
+        create_faction = sov_comintern_faction
+        if = {
+            limit = {
+                NOT = {
+                    has_dlc = "No Step Back"
+                }
+            }
+            load_oob = "SOU_civil_war"
+        }
+        else_if = {
+            limit = {
+                has_dlc = "No Step Back"
+            }
+            load_oob = "SOU_civil_war_nsb"
+        }
         inherit_technology = SOV
         country_event = { id = russia2_russia.186 days = 1 }
-        add_ideas = SOV_Second_civil_war
-        add_ideas = SOV_Supply_line
-        add_ideas = SOV_Urals_secret
-        add_ideas = SOV_Slow_industry
+        add_ideas = {
+            SOV_Second_civil_war_idea_modifier
+            SOV_Urals_secret
+            SOV_Supply_line
+            SOV_Slow_industry
+        }
+        #Bypass the purge TODO verify if purge isn't active
         unlock_national_focus = SOV_great_purge2
-        create_corps_commander = {
-            name = "Georgy Zhukov"
-            picture = "Portrait_Soviet_Georgy_Zhukov.dds"
-            traits = { winter_specialist armor_officer media_personality war_hero }
-            skill = 5
-            attack_skill = 5
-            defense_skill = 2
-            planning_skill = 4
-            logistics_skill = 5
-        }
-        create_corps_commander = {
-            name = "Aleksandr Vasilevsky"
-            picture = "Portrait_Soviet_Aleksandr_Vasilevsky.dds"
-            traits = { armor_officer politically_connected }
-            skill = 4
-            attack_skill = 4
-            defense_skill = 4
-            planning_skill = 3
-            logistics_skill = 2
-        }
-        create_corps_commander = {
-            name = "Boris Shaposhnikov"
-            picture = "Portrait_Soviet_Boris_Shaposhnikov.dds"
-            traits = { trait_cautious career_officer }
-            skill = 3
-            attack_skill = 2
-            defense_skill = 3
-            planning_skill = 2
-            logistics_skill = 3
-        }
-        create_corps_commander = {
-            name = "Nikolai Vatutin"
-            picture = "Portrait_Soviet_Nikolai_Fyodorovich_Vatutin.dds"
-            traits = { infantry_officer trait_reckless }
-            skill = 3
-            attack_skill = 1
-            defense_skill = 3
-            planning_skill = 3
-            logistics_skill = 3
-        }
-        create_corps_commander = {
-            name = "Ivan Konev"
-            picture = "Portrait_Soviet_Ivan_Konev.dds"
-            traits = { armor_officer harsh_leader politically_connected }
-            skill = 5
-            attack_skill = 4
-            defense_skill = 5
-            planning_skill = 2
-            logistics_skill = 5
-        }
-        create_corps_commander = {
-            name = "Semyon Timoshenko"
-            picture = "Portrait_Soviet_semyon_timoshenko.dds"
-            traits = { cavalry_officer politically_connected career_officer }
-            id = 522
-            skill = 3
-            attack_skill = 3
-            defense_skill = 2
-            planning_skill = 2
-            logistics_skill = 3
-        }
-        create_field_marshal = {
-            name = "Kliment Voroshilov"
-            picture = "Portrait_Soviet_Kliment_Voroshilov.dds"
-            traits = { old_guard politically_connected inflexible_strategist }
-            skill = 1
-            attack_skill = 1
-            defense_skill = 1
-            planning_skill = 1
-            logistics_skill = 1
-        }
-        create_field_marshal = {
-            name = "Mikhail Tukhachevsky"
-            picture = "Portrait_Soviet_Mikhail_Tukhachevsky.dds"
-            traits = { offensive_doctrine brilliant_strategist career_officer infantry_officer trait_reckless }
-            skill = 4
-            attack_skill = 3
-            defense_skill = 4
-            planning_skill = 4
-            logistics_skill = 2
-        }
-        create_field_marshal = {
-            name = "Semyon Budyonny"
-            picture = "Portrait_Soviet_Semyon_Budyonny.dds"
-            traits = { old_guard politically_connected inflexible_strategist }
-            skill = 1
-            attack_skill = 1
-            defense_skill = 1
-            planning_skill = 1
-            logistics_skill = 1
-        }
-        create_corps_commander = {
-            name = "Ivan Chernyakhovsky"
-            picture = "Portrait_Soviet_Ivan_Chernyakhovsky.dds"
-            id = 523
-            traits = { armor_officer }
-            skill = 1
-            attack_skill = 1
-            defense_skill = 1
-            planning_skill = 1
-            logistics_skill = 1
-        }
-        create_corps_commander = {
-            name = "Issa Pliyev"
-            picture = "Portrait_Soviet_Issa_Pliyev.dds"
-            traits = { cavalry_officer }
-            skill = 1
-            attack_skill = 1
-            defense_skill = 1
-            planning_skill = 1
-            logistics_skill = 1
-        }
-        create_corps_commander = {
-            name = "Leonid Govorov"
-            picture = "Portrait_Soviet_Leonid_Govorov.dds"
-            traits = {   }
-            skill = 3
-            attack_skill = 3
-            defense_skill = 2
-            planning_skill = 3
-            logistics_skill = 2
-        }
-        create_field_marshal = {
-            name = "Grigory Kulik"
-            picture = "Portrait_Soviet_Grigory_Kulik.dds"
-            traits = { old_guard career_officer politically_connected inflexible_strategist }
-            skill = 1
-            attack_skill = 1
-            defense_skill = 1
-            planning_skill = 1
-            logistics_skill = 1
-        }
-        create_corps_commander = {
-            name = "Kirill Meretskov"
-            picture = "Portrait_Soviet_Kirill_Meretskov.dds"
-            traits = { trait_reckless infantry_officer }
-            skill = 3
-            attack_skill = 2
-            defense_skill = 2
-            planning_skill = 3
-            logistics_skill = 3
-        }
-        create_corps_commander = {
-            name = "Filipp Golikov"
-            picture = "Portrait_Soviet_Filipp_Golikov.dds"
-            traits = { career_officer }
-            skill = 3
-            attack_skill = 3
-            defense_skill = 3
-            planning_skill = 3
-            logistics_skill = 1
-        }
-        create_corps_commander = {
-            name = "Andrey Yeryomenko"
-            picture = "Portrait_Soviet_Andrey_Yeryomenko.dds"
-            id = 524
-            traits = { cavalry_officer trait_reckless }
-            skill = 1
-            attack_skill = 1
-            defense_skill = 1
-            planning_skill = 1
-            logistics_skill = 1
-        }
-        create_corps_commander = {
-            name = "Georgiy Zakharov"
-            picture = "Portrait_Soviet_Georgiy_Zakharov.dds"
-            traits = { career_officer }
-            skill = 1
-            attack_skill = 1
-            defense_skill = 1
-            planning_skill = 1
-            logistics_skill = 1
-        }
-        create_corps_commander = {
-            name = "Yakov Cherevichenko"
-            picture = "Portrait_Soviet_Yakov_Cherevichenko.dds"
-            traits = { cavalry_officer }
-            skill = 3
-            attack_skill = 3
-            defense_skill = 3
-            planning_skill = 2
-            logistics_skill = 2
-        }
-        create_corps_commander = {
-            name = "Max Reyter"
-            picture = "Portrait_Soviet_Max_Andreyevich.dds"
-            traits = { career_officer }
-            skill = 1
-            attack_skill = 1
-            defense_skill = 1
-            planning_skill = 1
-            logistics_skill = 1
-        }
-        create_corps_commander = {
-            name = "Nikandr Chibisov"
-            picture = "Portrait_Soviet_Nikandr_Yevlampyevich_Chibisov.dds"
-            traits = { trickster }
-            skill = 3
-            attack_skill = 1
-            defense_skill = 3
-            planning_skill = 3
-            logistics_skill = 3
-        }
-        create_corps_commander = {
-            name = "Vasily Kuznetsov"
-            picture = "Portrait_Soviet_Vasily_Kuznetsov.dds"
-            traits = { commando infantry_officer }
-            skill = 3
-            attack_skill = 3
-            defense_skill = 3
-            planning_skill = 2
-            logistics_skill = 2
-        }
-        create_corps_commander = {
-            name = "Ivan Fedyuninsky"
-            picture = "Portrait_Soviet_Ivan_Fedyuninsky.dds"
-            traits = { infantry_officer }
-            skill = 1
-            attack_skill = 1
-            defense_skill = 1
-            planning_skill = 1
-            logistics_skill = 1
-        }
-        create_corps_commander = {
-            name = "Maksim Purkayev"
-            picture = "Portrait_Soviet_Maksim_Purkayev.dds"
-            traits = { career_officer }
-            skill = 3
-            attack_skill = 2
-            defense_skill = 3
-            planning_skill = 2
-            logistics_skill = 3
-        }
-        create_corps_commander = {
-            name = "Kuzma Galitsky"
-            picture = "Portrait_Soviet_Kuzma_Galitsky.dds"
-            traits = { infantry_officer }
-            skill = 1
-            attack_skill = 1
-            defense_skill = 1
-            planning_skill = 1
-            logistics_skill = 1
-        }
-        create_corps_commander = {
-            name = "Markian Popov"
-            picture = "Portrait_Soviet_Matkian_Popov.dds"
-            traits = { winter_specialist infantry_officer brilliant_strategist }
-            skill = 2
-            attack_skill = 2
-            defense_skill = 1
-            planning_skill = 2
-            logistics_skill = 2
-        }
-        create_corps_commander = {
-            name = "Nikolai Berzarin"
-            picture = "Portrait_Soviet_Nikolai_Berzarin.dds"
-            traits = { infantry_officer }
-            skill = 3
-            attack_skill = 3
-            defense_skill = 3
-            planning_skill = 2
-            logistics_skill = 2
-        }
-        create_corps_commander = {
-            name = "Kirill Moskalenko"
-            picture = "Portrait_Soviet_Kirill_Moskalenko.dds"
-            traits = {  }
-            skill = 3
-
-            attack_skill = 2
-            defense_skill = 2
-            planning_skill = 3
-            logistics_skill = 3
-        }
-        create_corps_commander = {
-            name = "Dmitry Lelyushenko"
-            picture = "Portrait_Soviet_Dmitri_Danilovich_Lelyushenko.dds"
-            traits = {armor_officer trait_reckless  }
-            skill = 1
-            attack_skill = 1
-            defense_skill = 1
-            planning_skill = 1
-            logistics_skill = 1
-        }
-        create_corps_commander = {
-            name = "Andrei Grechko"
-            picture = "Portrait_Soviet_Andrei_Antonovich_Grechko.dds"
-            traits = { cavalry_officer }
-            skill = 3
-            attack_skill = 1
-            defense_skill = 3
-            planning_skill = 3
-            logistics_skill = 3
-        }
-        create_corps_commander = {
-            name = "Rodion Malinovsky"
-            picture = "Portrait_Soviet_Rodion_Malinovsky.dds"
-            traits = { career_officer old_guard trait_cautious politically_connected }
-            skill = 1
-            attack_skill = 1
-            defense_skill = 1
-            planning_skill = 1
-            logistics_skill = 1
-        }
-        create_corps_commander = {
-            name = "Vasily Chuikov"
-            picture = "Portrait_Soviet_Vasily_Chuikov.dds"
-            traits = { brilliant_strategist career_officer }
-            skill = 1
-            attack_skill = 1
-            defense_skill = 1
-            planning_skill = 1
-            logistics_skill = 1
-        }
     }
 }
 
@@ -1246,6 +1010,7 @@ sov_liberate_caucasus_scw = {
             add_state_core = 231
             add_state_core = 230
             add_state_core = 229
+            add_state_core = 826
         }
         SOV = {
             set_autonomy = {
@@ -1473,12 +1238,12 @@ sov_liberate_caucasus_scw = {
                     create_unit = {
                         division = "name = \"11ya Kavkazskaya kazach'ya diviziya\" division_template = \"Kavkazskaya kazach'ya diviziya\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
                         owner = SOV
-                        prioritize_location = 11727
+                        prioritize_location = 3748
                     }
                     create_unit = {
                         division = "name = \"12ya Kavkazskaya kazach'ya diviziya\" division_template = \"Kavkazskaya kazach'ya diviziya\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
                         owner = SOV
-                        prioritize_location = 9722
+                        prioritize_location = 11694
                     }
                     create_unit = {
                         division = "name = \"13ya Kavkazskaya kazach'ya diviziya\" division_template = \"Kavkazskaya kazach'ya diviziya\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
@@ -1515,7 +1280,7 @@ sov_liberate_caucasus_scw = {
                     create_unit = {
                         division = "name = \"19ya Kavkazskaya kazach'ya diviziya\" division_template = \"Kavkazskaya kazach'ya diviziya\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
                         owner = SOV
-                        prioritize_location = 3672
+                        prioritize_location = 6701
                     }
                 }
             }
@@ -1606,12 +1371,12 @@ sov_liberate_caucasus_scw = {
                     create_unit = {
                         division = "name = \"11ya Opytnyy Kavkazskaya kazach'ya diviziya\" division_template = \"Opytnyy Kavkazskaya kazach'ya diviziya\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
                         owner = SOV
-                        prioritize_location = 11727
+                        prioritize_location = 748
                     }
                     create_unit = {
                         division = "name = \"12ya Opytnyy Kavkazskaya kazach'ya diviziya\" division_template = \"Opytnyy Kavkazskaya kazach'ya diviziya\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
                         owner = SOV
-                        prioritize_location = 9722
+                        prioritize_location = 3748
                     }
                     create_unit = {
                         division = "name = \"13ya Opytnyy Kavkazskaya kazach'ya diviziya\" division_template = \"Opytnyy Kavkazskaya kazach'ya diviziya\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
@@ -1631,7 +1396,7 @@ sov_liberate_caucasus_scw = {
                     create_unit = {
                         division = "name = \"16ya Kavkazskaya kazach'ya diviziya\" division_template = \"Kavkazskaya kazach'ya diviziya\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
                         owner = SOV
-                        prioritize_location = 9707
+                        prioritize_location = 11694
                     }
                 }
                 232 = {
@@ -1648,7 +1413,7 @@ sov_liberate_caucasus_scw = {
                     create_unit = {
                         division = "name = \"19th Kavkazskaya kazach'ya diviziya\" division_template = \"Kavkazskaya kazach'ya diviziya\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
                         owner = SOV
-                        prioritize_location = 3672
+                        prioritize_location = 6701
                     }
                 }
             }
@@ -1685,6 +1450,7 @@ sov_liberate_caucasus_scw = {
             add_state_core = 231
             add_state_core = 230
             add_state_core = 229
+            add_state_core = 826
         }
     }
 }
@@ -1715,6 +1481,9 @@ sov_liberate_central_asia_scw = {
             add_state_core = 405
             add_state_core = 585
             add_state_core = 584
+            add_state_core = 823
+            add_state_core = 831
+            add_state_core = 830
         }
         SOV = {
             set_autonomy = {
@@ -1731,12 +1500,28 @@ sov_liberate_central_asia_scw = {
             transfer_state = 405
             transfer_state = 742
             transfer_state = 732
+            transfer_state = 823
+            transfer_state = 831
+            transfer_state = 830
             add_state_core = 585
             add_state_core = 405
             add_state_core = 742
             add_state_core = 732
+            add_state_core = 823
+            add_state_core = 831
+            add_state_core = 830
         }
         KAZ = {
+            build_railway = {
+                level = 1
+                build_only_on_allied = yes
+                controller_priority = {
+                  base = 1
+                }
+                fallback = yes
+                start_province  = 7243
+                target_province = 12679
+            }
             random_owned_state = {
                 add_extra_state_shared_building_slots = 3
                 add_building_construction = {
@@ -1928,6 +1713,9 @@ sov_liberate_central_asia_scw = {
             add_state_core = 405
             add_state_core = 585
             add_state_core = 584
+            add_state_core = 823
+            add_state_core = 831
+            add_state_core = 830
         }
     }
 }
@@ -2323,73 +2111,8 @@ sov_transfer_navy_scw = {
         target = SOU
     }
     transfer_ship = {
-        prefer_name = "Uritskiy"
-        type = destroyer
-        target = SOU
-    }
-    transfer_ship = {
         prefer_name = "Stalin"
         type = destroyer
-        target = SOU
-    }
-    transfer_ship = {
-        prefer_name = "Shch-101"
-        type = submarine
-        target = SOU
-    }
-    transfer_ship = {
-        prefer_name = "Shch-102"
-        type = submarine
-        target = SOU
-    }
-    transfer_ship = {
-        prefer_name = "Shch-103"
-        type = submarine
-        target = SOU
-    }
-    transfer_ship = {
-        prefer_name = "Shch-104"
-        type = submarine
-        target = SOU
-    }
-    transfer_ship = {
-        prefer_name = "Shch-105"
-        type = submarine
-        target = SOU
-    }
-    transfer_ship = {
-        prefer_name = "Shch-106"
-        type = submarine
-        target = SOU
-    }
-    transfer_ship = {
-        prefer_name = "Shch-107"
-        type = submarine
-        target = SOU
-    }
-    transfer_ship = {
-        prefer_name = "Shch-108"
-        type = submarine
-        target = SOU
-    }
-    transfer_ship = {
-        prefer_name = "Shch-109"
-        type = submarine
-        target = SOU
-    }
-    transfer_ship = {
-        prefer_name = "Shch-110"
-        type = submarine
-        target = SOU
-    }
-    transfer_ship = {
-        prefer_name = "Shch-111"
-        type = submarine
-        target = SOU
-    }
-    transfer_ship = {
-        prefer_name = "Shch-112"
-        type = submarine
         target = SOU
     }
     transfer_ship = {
@@ -2533,6 +2256,16 @@ sov_transfer_navy_scw = {
         target = CRI
     }
     transfer_ship = {
+        prefer_name = "Shch-125"
+        type = submarine
+        target = CRI
+    }
+    transfer_ship = {
+        prefer_name = "Shch-205"
+        type = submarine
+        target = CRI
+    }
+    transfer_ship = {
         prefer_name = "A-1"
         type = submarine
         target = CRI
@@ -2576,845 +2309,147 @@ sov_transfer_navy_scw = {
 
 #Rebalance Industry - Civil War
 sov_rebalance_industry_scw = {
-    random_owned_state = {
+    set_temp_variable = { balance_civs_count = 0 }
+    while_loop_effect = {
         limit = {
-            NOT = {
-                state = 194
-                state = 204
-                state = 241
-                state = 206
-                state = 207
-                state = 201
-                state = 199
-                state = 198
-                state = 192
-                state = 197
-                state = 196
-                state = 200
-                state = 227
-                state = 228
-                state = 221
-                state = 226
-                state = 203
-                state = 259
-                state = 225
-                state = 193
-                state = 202
-                state = 137
-                state = 231
-                state = 230
-                state = 229
-                state = 590
-                state = 583
-                state = 402
-                state = 587
-                state = 404
-                state = 586
-                state = 589
-                state = 732
-                state = 742
-                state = 405
-                state = 585
-                state = 584
+            check_variable = {
+                var = balance_civs_count
+                value = 8
+                compare = less_than
             }
-            industrial_complex > 0
-            original_white_province_second_civil_war = no
         }
-        remove_building = {
-            type = industrial_complex
-            level = 1
-        }
-    }
-    random_owned_state = {
-        limit = {
-            original_white_province_second_civil_war = yes
-        }
-        add_extra_state_shared_building_slots = 1
-        add_building_construction = {
-            type = industrial_complex
-            level = 1
-            instant_build = yes
-        }
-    }
-    random_owned_state = {
-        limit = {
-            NOT = {
-                state = 194
-                state = 204
-                state = 241
-                state = 206
-                state = 207
-                state = 201
-                state = 199
-                state = 198
-                state = 192
-                state = 197
-                state = 196
-                state = 200
-                state = 227
-                state = 228
-                state = 221
-                state = 226
-                state = 203
-                state = 259
-                state = 225
-                state = 193
-                state = 202
-                state = 137
-                state = 231
-                state = 230
-                state = 229
-                state = 590
-                state = 583
-                state = 402
-                state = 587
-                state = 404
-                state = 586
-                state = 589
-                state = 732
-                state = 742
-                state = 405
-                state = 585
-                state = 584
+        random_owned_state = {
+            limit = {
+                NOT = {
+                    state = 194
+                    state = 204
+                    state = 241
+                    state = 206
+                    state = 207
+                    state = 201
+                    state = 199
+                    state = 198
+                    state = 192
+                    state = 197
+                    state = 196
+                    state = 200
+                    state = 227
+                    state = 228
+                    state = 221
+                    state = 226
+                    state = 203
+                    state = 259
+                    state = 225
+                    state = 193
+                    state = 202
+                    state = 137
+                    state = 231
+                    state = 230
+                    state = 229
+                    state = 590
+                    state = 583
+                    state = 402
+                    state = 587
+                    state = 404
+                    state = 586
+                    state = 589
+                    state = 732
+                    state = 742
+                    state = 405
+                    state = 585
+                    state = 584
+                }
+                industrial_complex > 0
+                original_white_province_second_civil_war = no
             }
-            industrial_complex > 0
-            original_white_province_second_civil_war = no
-        }
-        remove_building = {
-            type = industrial_complex
-            level = 1
-        }
-    }
-    random_owned_state = {
-        limit = {
-            original_white_province_second_civil_war = yes
-        }
-        add_extra_state_shared_building_slots = 1
-        add_building_construction = {
-            type = industrial_complex
-            level = 1
-            instant_build = yes
-        }
-    }
-    random_owned_state = {
-        limit = {
-            NOT = {
-                state = 194
-                state = 204
-                state = 241
-                state = 206
-                state = 207
-                state = 201
-                state = 199
-                state = 198
-                state = 192
-                state = 197
-                state = 196
-                state = 200
-                state = 227
-                state = 228
-                state = 221
-                state = 226
-                state = 203
-                state = 259
-                state = 225
-                state = 193
-                state = 202
-                state = 137
-                state = 231
-                state = 230
-                state = 229
-                state = 590
-                state = 583
-                state = 402
-                state = 587
-                state = 404
-                state = 586
-                state = 589
-                state = 732
-                state = 742
-                state = 405
-                state = 585
-                state = 584
+            remove_building = {
+                type = industrial_complex
+                level = 1
             }
-            industrial_complex > 0
-            original_white_province_second_civil_war = no
         }
-        remove_building = {
-            type = industrial_complex
-            level = 1
-        }
-    }
-    random_owned_state = {
-        limit = {
-            original_white_province_second_civil_war = yes
-        }
-        add_extra_state_shared_building_slots = 1
-        add_building_construction = {
-            type = industrial_complex
-            level = 1
-            instant_build = yes
-        }
-    }
-    random_owned_state = {
-        limit = {
-            NOT = {
-                state = 194
-                state = 204
-                state = 241
-                state = 206
-                state = 207
-                state = 201
-                state = 199
-                state = 198
-                state = 192
-                state = 197
-                state = 196
-                state = 200
-                state = 227
-                state = 228
-                state = 221
-                state = 226
-                state = 203
-                state = 259
-                state = 225
-                state = 193
-                state = 202
-                state = 137
-                state = 231
-                state = 230
-                state = 229
-                state = 590
-                state = 583
-                state = 402
-                state = 587
-                state = 404
-                state = 586
-                state = 589
-                state = 732
-                state = 742
-                state = 405
-                state = 585
-                state = 584
+        random_owned_state = {
+            limit = {
+                original_white_province_second_civil_war = yes
             }
-            industrial_complex > 0
-            original_white_province_second_civil_war = no
-        }
-        remove_building = {
-            type = industrial_complex
-            level = 1
-        }
-    }
-    random_owned_state = {
-        limit = {
-            original_white_province_second_civil_war = yes
-        }
-        add_extra_state_shared_building_slots = 1
-        add_building_construction = {
-            type = industrial_complex
-            level = 1
-            instant_build = yes
-        }
-    }
-    random_owned_state = {
-        limit = {
-            NOT = {
-                state = 194
-                state = 204
-                state = 241
-                state = 206
-                state = 207
-                state = 201
-                state = 199
-                state = 198
-                state = 192
-                state = 197
-                state = 196
-                state = 200
-                state = 227
-                state = 228
-                state = 221
-                state = 226
-                state = 203
-                state = 259
-                state = 225
-                state = 193
-                state = 202
-                state = 137
-                state = 231
-                state = 230
-                state = 229
-                state = 590
-                state = 583
-                state = 402
-                state = 587
-                state = 404
-                state = 586
-                state = 589
-                state = 732
-                state = 742
-                state = 405
-                state = 585
-                state = 584
+            add_extra_state_shared_building_slots = 1
+            add_building_construction = {
+                type = industrial_complex
+                level = 1
+                instant_build = yes
             }
-            industrial_complex > 0
-            original_white_province_second_civil_war = no
         }
-        remove_building = {
-            type = industrial_complex
-            level = 1
-        }
+        add_to_temp_variable = { balance_civs_count = 1 }
     }
-    random_owned_state = {
+    set_temp_variable = { balance_mils_count = 0 }
+    while_loop_effect = {
         limit = {
-            original_white_province_second_civil_war = yes
-        }
-        add_extra_state_shared_building_slots = 1
-        add_building_construction = {
-            type = industrial_complex
-            level = 1
-            instant_build = yes
-        }
-    }
-    random_owned_state = {
-        limit = {
-            NOT = {
-                state = 194
-                state = 204
-                state = 241
-                state = 206
-                state = 207
-                state = 201
-                state = 199
-                state = 198
-                state = 192
-                state = 197
-                state = 196
-                state = 200
-                state = 227
-                state = 228
-                state = 221
-                state = 226
-                state = 203
-                state = 259
-                state = 225
-                state = 193
-                state = 202
-                state = 137
-                state = 231
-                state = 230
-                state = 229
-                state = 590
-                state = 583
-                state = 402
-                state = 587
-                state = 404
-                state = 586
-                state = 589
-                state = 732
-                state = 742
-                state = 405
-                state = 585
-                state = 584
+            check_variable = {
+                var = balance_mils_count
+                value = 5
+                compare = less_than
             }
-            industrial_complex > 0
-            original_white_province_second_civil_war = no
         }
-        remove_building = {
-            type = industrial_complex
-            level = 1
-        }
-    }
-    random_owned_state = {
-        limit = {
-            original_white_province_second_civil_war = yes
-        }
-        add_extra_state_shared_building_slots = 1
-        add_building_construction = {
-            type = industrial_complex
-            level = 1
-            instant_build = yes
-        }
-    }
-    random_owned_state = {
-        limit = {
-            NOT = {
-                state = 194
-                state = 204
-                state = 241
-                state = 206
-                state = 207
-                state = 201
-                state = 199
-                state = 198
-                state = 192
-                state = 197
-                state = 196
-                state = 200
-                state = 227
-                state = 228
-                state = 221
-                state = 226
-                state = 203
-                state = 259
-                state = 225
-                state = 193
-                state = 202
-                state = 137
-                state = 231
-                state = 230
-                state = 229
-                state = 590
-                state = 583
-                state = 402
-                state = 587
-                state = 404
-                state = 586
-                state = 589
-                state = 732
-                state = 742
-                state = 405
-                state = 585
-                state = 584
+        random_owned_state = {
+            limit = {
+                NOT = {
+                    state = 194
+                    state = 204
+                    state = 241
+                    state = 206
+                    state = 207
+                    state = 201
+                    state = 199
+                    state = 198
+                    state = 192
+                    state = 197
+                    state = 196
+                    state = 200
+                    state = 227
+                    state = 228
+                    state = 221
+                    state = 226
+                    state = 203
+                    state = 259
+                    state = 225
+                    state = 193
+                    state = 202
+                    state = 137
+                    state = 231
+                    state = 230
+                    state = 229
+                    state = 590
+                    state = 583
+                    state = 402
+                    state = 587
+                    state = 404
+                    state = 586
+                    state = 589
+                    state = 732
+                    state = 742
+                    state = 405
+                    state = 585
+                    state = 584
+                }
+                arms_factory > 0
+                original_white_province_second_civil_war = no
             }
-            industrial_complex > 0
-            original_white_province_second_civil_war = no
-        }
-        remove_building = {
-            type = industrial_complex
-            level = 1
-        }
-    }
-    random_owned_state = {
-        limit = {
-            original_white_province_second_civil_war = yes
-        }
-        add_extra_state_shared_building_slots = 1
-        add_building_construction = {
-            type = industrial_complex
-            level = 1
-            instant_build = yes
-        }
-    }
-    random_owned_state = {
-        limit = {
-            NOT = {
-                state = 194
-                state = 204
-                state = 241
-                state = 206
-                state = 207
-                state = 201
-                state = 199
-                state = 198
-                state = 192
-                state = 197
-                state = 196
-                state = 200
-                state = 227
-                state = 228
-                state = 221
-                state = 226
-                state = 203
-                state = 259
-                state = 225
-                state = 193
-                state = 202
-                state = 137
-                state = 231
-                state = 230
-                state = 229
-                state = 590
-                state = 583
-                state = 402
-                state = 587
-                state = 404
-                state = 586
-                state = 589
-                state = 732
-                state = 742
-                state = 405
-                state = 585
-                state = 584
+            remove_building = {
+                type = arms_factory
+                level = 1
             }
-            industrial_complex > 0
-            original_white_province_second_civil_war = no
         }
-        remove_building = {
-            type = industrial_complex
-            level = 1
-        }
-    }
-    random_owned_state = {
-        limit = {
-            original_white_province_second_civil_war = yes
-        }
-        add_extra_state_shared_building_slots = 1
-        add_building_construction = {
-            type = industrial_complex
-            level = 1
-            instant_build = yes
-        }
-    }
-    random_owned_state = {
-        limit = {
-            NOT = {
-                state = 194
-                state = 204
-                state = 241
-                state = 206
-                state = 207
-                state = 201
-                state = 199
-                state = 198
-                state = 192
-                state = 197
-                state = 196
-                state = 200
-                state = 227
-                state = 228
-                state = 221
-                state = 226
-                state = 203
-                state = 259
-                state = 225
-                state = 193
-                state = 202
-                state = 137
-                state = 231
-                state = 230
-                state = 229
-                state = 590
-                state = 583
-                state = 402
-                state = 587
-                state = 404
-                state = 586
-                state = 589
-                state = 732
-                state = 742
-                state = 405
-                state = 585
-                state = 584
+        random_owned_state = {
+            limit = {
+                original_white_province_second_civil_war = yes
             }
-            industrial_complex > 0
-            original_white_province_second_civil_war = no
-        }
-        remove_building = {
-            type = industrial_complex
-            level = 1
-        }
-    }
-    random_owned_state = {
-        limit = {
-            original_white_province_second_civil_war = yes
-        }
-        add_extra_state_shared_building_slots = 1
-        add_building_construction = {
-            type = industrial_complex
-            level = 1
-            instant_build = yes
-        }
-    }
-    random_owned_state = {
-        limit = {
-            NOT = {
-                state = 194
-                state = 204
-                state = 241
-                state = 206
-                state = 207
-                state = 201
-                state = 199
-                state = 198
-                state = 192
-                state = 197
-                state = 196
-                state = 200
-                state = 227
-                state = 228
-                state = 221
-                state = 226
-                state = 203
-                state = 259
-                state = 225
-                state = 193
-                state = 202
-                state = 137
-                state = 231
-                state = 230
-                state = 229
-                state = 590
-                state = 583
-                state = 402
-                state = 587
-                state = 404
-                state = 586
-                state = 589
-                state = 732
-                state = 742
-                state = 405
-                state = 585
-                state = 584
+            add_extra_state_shared_building_slots = 1
+            add_building_construction = {
+                type = arms_factory
+                level = 1
+                instant_build = yes
             }
-            arms_factory > 0
-            original_white_province_second_civil_war = no
         }
-        remove_building = {
-            type = arms_factory
-            level = 1
-        }
-    }
-    random_owned_state = {
-        limit = {
-            original_white_province_second_civil_war = yes
-        }
-        add_extra_state_shared_building_slots = 1
-        add_building_construction = {
-            type = arms_factory
-            level = 1
-            instant_build = yes
-        }
-    }
-    random_owned_state = {
-        limit = {
-            NOT = {
-                state = 194
-                state = 204
-                state = 241
-                state = 206
-                state = 207
-                state = 201
-                state = 199
-                state = 198
-                state = 192
-                state = 197
-                state = 196
-                state = 200
-                state = 227
-                state = 228
-                state = 221
-                state = 226
-                state = 203
-                state = 259
-                state = 225
-                state = 193
-                state = 202
-                state = 137
-                state = 231
-                state = 230
-                state = 229
-                state = 590
-                state = 583
-                state = 402
-                state = 587
-                state = 404
-                state = 586
-                state = 589
-                state = 732
-                state = 742
-                state = 405
-                state = 585
-                state = 584
-            }
-            arms_factory > 0
-            original_white_province_second_civil_war = no
-        }
-        remove_building = {
-            type = arms_factory
-            level = 1
-        }
-    }
-    random_owned_state = {
-        limit = {
-            original_white_province_second_civil_war = yes
-        }
-        add_extra_state_shared_building_slots = 1
-        add_building_construction = {
-            type = arms_factory
-            level = 1
-            instant_build = yes
-        }
-    }
-    random_owned_state = {
-        limit = {
-            NOT = {
-                state = 194
-                state = 204
-                state = 241
-                state = 206
-                state = 207
-                state = 201
-                state = 199
-                state = 198
-                state = 192
-                state = 197
-                state = 196
-                state = 200
-                state = 227
-                state = 228
-                state = 221
-                state = 226
-                state = 203
-                state = 259
-                state = 225
-                state = 193
-                state = 202
-                state = 137
-                state = 231
-                state = 230
-                state = 229
-                state = 590
-                state = 583
-                state = 402
-                state = 587
-                state = 404
-                state = 586
-                state = 589
-                state = 732
-                state = 742
-                state = 405
-                state = 585
-                state = 584
-            }
-            arms_factory > 0
-            original_white_province_second_civil_war = no
-        }
-        remove_building = {
-            type = arms_factory
-            level = 1
-        }
-    }
-    random_owned_state = {
-        limit = {
-            original_white_province_second_civil_war = yes
-        }
-        add_extra_state_shared_building_slots = 1
-        add_building_construction = {
-            type = arms_factory
-            level = 1
-            instant_build = yes
-        }
-    }
-    random_owned_state = {
-        limit = {
-            NOT = {
-                state = 194
-                state = 204
-                state = 241
-                state = 206
-                state = 207
-                state = 201
-                state = 199
-                state = 198
-                state = 192
-                state = 197
-                state = 196
-                state = 200
-                state = 227
-                state = 228
-                state = 221
-                state = 226
-                state = 203
-                state = 259
-                state = 225
-                state = 193
-                state = 202
-                state = 137
-                state = 231
-                state = 230
-                state = 229
-                state = 590
-                state = 583
-                state = 402
-                state = 587
-                state = 404
-                state = 586
-                state = 589
-                state = 732
-                state = 742
-                state = 405
-                state = 585
-                state = 584
-            }
-            arms_factory > 0
-            original_white_province_second_civil_war = no
-        }
-        remove_building = {
-            type = arms_factory
-            level = 1
-        }
-    }
-    random_owned_state = {
-        limit = {
-            original_white_province_second_civil_war = yes
-        }
-        add_extra_state_shared_building_slots = 1
-        add_building_construction = {
-            type = arms_factory
-            level = 1
-            instant_build = yes
-        }
-    }
-    random_owned_state = {
-        limit = {
-            NOT = {
-                state = 194
-                state = 204
-                state = 241
-                state = 206
-                state = 207
-                state = 201
-                state = 199
-                state = 198
-                state = 192
-                state = 197
-                state = 196
-                state = 200
-                state = 227
-                state = 228
-                state = 221
-                state = 226
-                state = 203
-                state = 259
-                state = 225
-                state = 193
-                state = 202
-                state = 137
-                state = 231
-                state = 230
-                state = 229
-                state = 590
-                state = 583
-                state = 402
-                state = 587
-                state = 404
-                state = 586
-                state = 589
-                state = 732
-                state = 742
-                state = 405
-                state = 585
-                state = 584
-            }
-            arms_factory > 0
-            original_white_province_second_civil_war = no
-        }
-        remove_building = {
-            type = arms_factory
-            level = 1
-        }
-    }
-    random_owned_state = {
-        limit = {
-            original_white_province_second_civil_war = yes
-        }
-        add_extra_state_shared_building_slots = 1
-        add_building_construction = {
-            type = arms_factory
-            level = 1
-            instant_build = yes
-        }
+        add_to_temp_variable = { balance_mils_count = 1 }
     }
 }
 
@@ -3634,7 +2669,12 @@ sov_clean_scw_arrays = {
                     }
                 }
             }
-            remove_from_array = { global.russian_scw_participants = THIS }
+            if = {
+                limit = {
+                    is_in_array = { global.russian_scw_participants = THIS }
+                }
+                remove_from_array = { global.russian_scw_participants = THIS }
+            }
             if = {
                 limit = {
                     is_in_array = { global.russian_scw_participants_sov = THIS }
@@ -3671,6 +2711,7 @@ sov_clean_scw_arrays = {
                 }
                 remove_from_array = { global.russian_scw_participants_sov = THIS }
             }
+
             if = {
                 limit = {
                     is_in_array = { global.russian_scw_participants_sou = THIS }
@@ -3681,6 +2722,7 @@ sov_clean_scw_arrays = {
                 }
                 remove_from_array = { global.russian_scw_participants_sou = THIS }
             }
+
             if = {
                 limit = {
                     is_in_array = { global.russian_scw_participants_ukr = THIS }
@@ -3692,6 +2734,7 @@ sov_clean_scw_arrays = {
                 }
                 remove_from_array = { global.russian_scw_participants_ukr = THIS }
             }
+
             if = {
                 limit = {
                     is_in_array = { global.russian_scw_participants_other = THIS }
@@ -3772,7 +2815,6 @@ sov_clean_scw_arrays = {
             }
         }
     }
-    log = " Done."
 }
 #End of Second Civil War
 
@@ -3877,16 +2919,6 @@ rr_lock_all_templates = {
 
 rr_unlock_all_templates = {
     country_lock_all_division_template = no
-    division_template = {
-        name = "Vozdushno-Desantnaya Brigada"
-        is_locked = no
-        division_names_group = SOV_PAR_01
-
-        regiments = {
-            paratrooper = { x = 0 y = 0 }
-            paratrooper = { x = 0 y = 1 }
-        }
-    }
 }
 
 black_revolution_division_template_organiser = {
@@ -3930,6 +2962,10 @@ black_revolution_division_template_organiser = {
         division_template = "Strelkovaya Diviziya"
         is_locked = yes
     }
+    set_division_template_lock = {
+        division_template = "Patrul'nyy Ttryad Militsii"
+        is_locked = yes
+    }
 }
 
 anarchy_unlock_division_template = {
@@ -3959,6 +2995,10 @@ anarchy_unlock_division_template = {
     }
     set_division_template_lock = {
         division_template = "Strelkovaya Diviziya"
+        is_locked = no
+    }
+    set_division_template_lock = {
+        division_template = "Patrul'nyy Ttryad Militsii"
         is_locked = no
     }
 }
@@ -4029,6 +3069,7 @@ communism_great_purge_variable_calculator = {
     }
     set_variable = { political_advisor_cost_factor_great_purge_loca_next = political_advisor_cost_factor_great_purge } #For Next Reform
     multiply_variable = { political_advisor_cost_factor_great_purge_loca_next = 0.6 } #For Next Reform
+    
     #Second Reform
     set_variable = { army_org_factor_great_purge_loca_2 = army_org_factor_great_purge_loca_next } #-0.25
     multiply_variable = { army_org_factor_great_purge_loca_2 = 0.625 }
@@ -4092,6 +3133,7 @@ communism_great_purge_variable_calculator = {
     }
     set_variable = { political_advisor_cost_factor_great_purge_loca_2_next = political_advisor_cost_factor_great_purge_loca_next } #For Next Reform
     multiply_variable = { political_advisor_cost_factor_great_purge_loca_2_next = 0.5 } #For Next Reform
+    
     #Third Reform
     set_variable = { send_volunteer_factor_great_purge_loca_3 = send_volunteer_factor_great_purge_loca_2_next } #0
     multiply_variable = { send_volunteer_factor_great_purge_loca_3 = 0 }
@@ -4143,6 +3185,7 @@ communism_great_purge_variable_calculator = {
         var = political_advisor_cost_factor_great_purge_loca_3
         value = political_advisor_cost_factor_great_purge_loca_2_next
     }
+    
     #Fourth Reform
     set_variable = { army_org_factor_great_purge_loca_4 = army_org_factor_great_purge_loca_2_next } #-0.2
     multiply_variable = { army_org_factor_great_purge_loca_4 = 0.8 }
@@ -4182,6 +3225,7 @@ communism_great_purge_variable_calculator = {
         var = training_time_factor_great_purge_loca_4
         value = training_time_factor_great_purge_loca_3_next
     }
+    
     #Fifth Reform
     set_variable = { army_org_factor_great_purge_loca_5 = army_org_factor_great_purge_loca_4_next } #-0.1
     multiply_variable = { army_org_factor_great_purge_loca_5 = 0.5 }
@@ -4292,404 +3336,6 @@ kievan_rus_state = {
             }
             add_to_array = { global.kievan_rus_state_ukraine = THIS }	
         }	
-    }
-}
-
-sou_general_end_civil_war = {
-    SOU = {
-        create_corps_commander = {
-            name = "Popov Pyotr Kharitonovich"
-            picture = "Portrait_Popov_Pyotr_Kharitonovich.dds"
-            traits = { cavalry_officer }
-            skill = 2
-            attack_skill = 2
-            defense_skill = 3
-            planning_skill = 3
-            logistics_skill = 3
-        }
-        create_corps_commander = {
-            name = "Tolstov Vladimir Sergeevich"
-            picture = "Portrait_Tolstov_Vladimir_Sergeevich.dds"
-            traits = { cavalry_officer }
-            skill = 2
-            attack_skill = 3
-            defense_skill = 1
-            planning_skill = 2
-            logistics_skill = 3
-        }
-        create_corps_commander = {
-            name = "Pisarev Pyotr Konstantinovich"
-            picture = "Portrait_Pisarev_Pyotr_Konstantinovich.dds"
-            traits = { infantry_officer }
-            skill = 2
-            attack_skill = 2
-            defense_skill = 1
-            planning_skill = 2
-            logistics_skill = 2
-        }
-        create_corps_commander = {
-            name = "Alexander Gorbatov"
-            picture = "Portrait_Soviet_Alexander_Gorbatov.dds"
-            traits = { career_officer cavalry_officer }
-            skill = 3
-            attack_skill = 2
-            defense_skill = 3
-            planning_skill = 2
-            logistics_skill = 3
-        }
-        create_corps_commander = {
-            name = "Andrey Vlasov"
-            picture = "Portrait_Soviet_Andrey_Vlasov.dds"
-            traits = { winter_specialist infantry_officer }
-            skill = 3
-            attack_skill = 3
-            defense_skill = 3
-            planning_skill = 1
-            logistics_skill = 3
-        }
-        create_corps_commander = {
-            name = "Konstantin Rokossovsky"
-            picture = "Portrait_Soviet_Konstantin_Rokossovsky.dds"
-            traits = {  armor_officer trait_cautious brilliant_strategist }
-            skill = 4
-            attack_skill = 3
-            defense_skill = 4
-            planning_skill = 2
-            logistics_skill = 4
-        }
-        create_corps_commander = {
-            name = "Pyotr Krasnov"
-            picture = "Portrait_Pyotr_Nikolayevich_Krasnov.dds"
-            traits = { trait_reckless infantry_officer trait_mountaineer }
-            skill = 4
-            attack_skill = 4
-            defense_skill = 3
-            planning_skill = 3
-            logistics_skill = 3
-        }
-        create_corps_commander = {
-            name = "Pavel Bermondt-Avalov"
-            id = 513
-            picture = "Portrait_Pavel_Bermondt_Avalov.dds"
-            traits = { infantry_officer }
-            skill = 3
-            attack_skill = 3
-            defense_skill = 2
-            planning_skill = 2
-            logistics_skill = 3
-        }
-        create_corps_commander = {
-            name = "Abram Dragomirov"
-            picture = "Portrait_Abram_Dragomirov.dds"
-            traits = { cavalry_officer }
-            skill = 3
-            attack_skill = 3
-            defense_skill = 2
-            planning_skill = 2
-            logistics_skill = 2
-        }
-        create_corps_commander = {
-            name = "Mikhail Diterikhs"
-            id = 511
-            picture = "Portrait_Mikhail_Diterikhs.dds"
-            traits = {  }
-            skill = 2
-            attack_skill = 2
-            defense_skill = 2
-            planning_skill = 2
-            logistics_skill = 2
-        }
-        create_corps_commander = {
-            name = "Alexander V. Golubintzev"
-            picture = "Portrait_Alexander_Golubintzev.dds"
-            traits = { cavalry_officer }
-            skill = 4
-            attack_skill = 3
-            defense_skill = 2
-            planning_skill = 1
-            logistics_skill = 4
-        }
-        create_corps_commander = {
-            name = "Vladimir Kislitsin"
-            id = 515
-            picture = "Portrait_Vladimir_Kislitsin.dds"
-            traits = { brilliant_strategist }
-            skill = 3
-            attack_skill = 3
-            defense_skill = 2
-            planning_skill = 3
-            logistics_skill = 3
-        }
-        create_corps_commander = {
-            name = "Viktorin Molchanov"
-            id = 517
-            picture = "Portrait_Viktorin_Molchanov.dds"
-            traits = { winter_specialist inflexible_strategist }
-            skill = 4
-            attack_skill = 3
-            defense_skill = 3
-            planning_skill = 2
-            logistics_skill = 2
-        }
-        create_corps_commander = {
-            name = "Grigory Mikhaylovich Semyonov"
-            picture = "Potrait_Grigory_Mikhaylovich_Semyonov.dds"
-            traits = { harsh_leader }
-            skill = 3
-            attack_skill = 3
-            defense_skill = 3
-            planning_skill = 2
-            logistics_skill = 1
-        }
-        create_corps_commander = {
-            name = "Andrei Shkuro"
-            id = 518
-            picture = "Portrait_Andrei_Shkuro.dds"
-            traits = { brilliant_strategist trickster }
-            skill = 3
-            attack_skill = 3
-            defense_skill = 1
-            planning_skill = 2
-            logistics_skill = 2
-        }
-        create_corps_commander = {
-            name = "Boris Shteifon"
-            picture = "Portrait_Boris_Shteifon.dds"
-            id = 519
-            traits = { war_hero trickster }
-            skill = 3
-            attack_skill = 3
-            defense_skill = 2
-            planning_skill = 3
-            logistics_skill = 2
-        }
-        create_corps_commander = {
-            name = "Vladimir Sidorin"
-            picture = "Portrait_Vladimir_Sidorin.dds"
-            traits = { trait_reckless }
-            skill = 2
-            attack_skill = 2
-            defense_skill = 3
-            planning_skill = 1
-            logistics_skill = 1
-        }
-        create_corps_commander = {
-            name = "Mikhail Skorodumov"
-            id = 516
-            picture = "Potrait_Mikhail_Skorodumov.dds"
-            traits = { trait_reckless bearer_of_artillery }
-            skill = 3
-            attack_skill = 4
-            defense_skill = 2
-            planning_skill = 3
-            logistics_skill = 1
-        }
-        create_corps_commander = {
-            name = "Konstantin Petrovich Nechaev"
-            picture = "Portrait_Konstantin_Petrovich_Nechaev.dds"
-            traits = { cavalry_officer inflexible_strategist }
-            skill = 3
-            attack_skill = 4
-            defense_skill = 2
-            planning_skill = 3
-            logistics_skill = 2
-        }
-        create_corps_commander = {
-            name = "Mikhail Pleshkov"
-            picture = "Portrait_Mikhail_Pleshkov.dds"
-            traits = { cavalry_officer }
-            skill = 2
-            attack_skill = 3
-            defense_skill = 2
-            planning_skill = 2
-            logistics_skill = 1
-        }
-        create_corps_commander = {
-            name = "Anton Turkul"
-            picture = "Portrait_Anton_Turkul.dds"
-            traits = { infantry_officer }
-            skill = 3
-            
-            attack_skill = 2
-            defense_skill = 2
-            planning_skill = 1
-            logistics_skill = 2
-        }
-        create_corps_commander = {
-            name = "Isaac Bykadorov"
-            picture = "Portrait_Isaac_Bykadorov.dds"
-            traits = { war_hero trait_reckless }
-            skill = 3
-            
-            attack_skill = 3
-            defense_skill = 1
-            planning_skill = 1
-            logistics_skill = 2
-        }
-        create_corps_commander = {
-            name = "Vyacheslav Naumenko"
-            picture = "Portrait_Vyacheslav_Grigoryevich_Naumenko.dds"
-            traits = { war_hero }
-            skill = 2
-            
-            attack_skill = 3
-            defense_skill = 2
-            planning_skill = 2
-            logistics_skill = 3
-        }
-        create_corps_commander = {
-            name = "Fedor Abramov"
-            picture = "Portrait_Fedor_Abramov.dds"
-            traits = { cavalry_officer bearer_of_artillery }
-            skill = 3
-            
-            attack_skill = 2
-            defense_skill = 2
-            planning_skill = 2
-            logistics_skill = 2
-        }
-        create_corps_commander = {
-            name = "Bronislaw Kaminski"
-            picture = "Portrait_Bronislav_Kaminsky.dds"
-            traits = { harsh_leader }
-            skill = 2
-            
-            attack_skill = 2
-            defense_skill = 1
-            planning_skill = 2
-            logistics_skill = 2
-        }
-        create_corps_commander = {
-            name = "Vladimir Marushevsky"
-            picture = "Portrait_Vladimir_Marushevsky.dds"
-            traits = { infantry_officer }
-            skill = 2
-            
-            attack_skill = 2
-            defense_skill = 1
-            planning_skill = 1
-            logistics_skill = 2
-        }
-        create_corps_commander = {
-            name = "Vladimir Kharzhevsky"
-            picture = "Portrait_Vladimir_Kharzhevsky.dds"
-            traits = { }
-            skill = 2
-            
-            attack_skill = 1
-            defense_skill = 3
-            planning_skill = 2
-            logistics_skill = 2
-        }
-        create_corps_commander = {
-            name = "Pavel Shatilov"
-            picture = "Portrait_Pavel_Shatilov.dds"
-            traits = { cavalry_officer }
-            skill = 4
-            
-            attack_skill = 3
-            defense_skill = 3
-            planning_skill = 2
-            logistics_skill = 2
-        }
-        create_corps_commander = {
-            name = "Pyotr Vladimirovich Glazenap"
-            picture = "Portrait_Peter_Glazenap.dds"
-            traits = { cavalry_officer }
-            skill = 3
-            attack_skill = 3
-            defense_skill = 2
-            planning_skill = 1
-            logistics_skill = 2
-        }
-        create_corps_commander = {
-            name = "Alexander Lukomsky"
-            picture = "Portrait_Alexander_Lukomsky.dds"
-            traits = { trait_engineer  }
-            skill = 3
-            attack_skill = 2
-            defense_skill = 2
-            planning_skill = 3
-            logistics_skill = 3
-        }
-        create_field_marshal = {
-            name = "Yevgeny Miller"
-            picture = "Potrait_Yevgeny_Miller.dds"
-            traits = { infantry_leader brilliant_strategist organisational_leader }
-            skill = 3
-            attack_skill = 3
-            defense_skill = 3
-            planning_skill = 2
-            logistics_skill = 2
-        }
-        create_field_marshal = {
-            name = "Anton Ivanovich Denikin"
-            id = 514
-            picture = "Portrait_Soviet_Anton_IvanovichMilitary.dds"
-            traits = { infantry_leader bearer_of_artillery offensive_doctrine }
-            skill = 5
-            attack_skill = 4
-            defense_skill = 3
-            planning_skill = 4
-            logistics_skill = 3
-        }
-        create_field_marshal = {
-            name = "Alexander Rodzyanko"
-            id = 512
-            picture = "Portrait_Alexander_Rodzyanko.dds"
-            traits = { inspirational_leader cavalry_officer }
-            skill = 2
-            attack_skill = 2
-            defense_skill = 2
-            planning_skill = 4
-            logistics_skill = 2
-        }
-        set_politics = {
-            ruling_party = neutrality
-        }
-        set_popularities = {
-            democratic = 33
-            neutrality = 33
-            fascism = 33
-            communism = 1
-        }
-    }
-}
-
-sou_create_country_leader_sov = {
-    SOU = {
-        create_country_leader = {
-            name = "Konstantin Rodzaevsky"
-            desc = "POLITICS_KONSTANTIN_RODZAEVSKY_DESC"
-            picture = "Portrait_Soviet_Konstantin_Rodzaevsky.dds"
-            expire = "1965.1.1"
-            ideology = fascism_ideology
-            traits = {
-                unpopular_leader
-            }
-        }
-        
-        create_country_leader = {
-            name = "Alexander Fyodorovich Kerensky"
-            desc = "POLITICS_ALEXANDER_KERENSKY_DESC"
-            picture = "Portrait_Alexander_Kerensky_ru2.dds"
-            expire = "1965.1.1"
-            ideology = socialism
-            traits = {
-                temporary_leader
-            }
-        }
-        
-        create_country_leader = {
-            name = "Volin Eikhenbaum"
-            desc = "VSEVOLOD_MIKHAILOVICH_EIKHENBAUM_DESC"
-            picture = "Portrait_Vsevolod_Mikhailovich_Eikhenbaum.dds"
-            expire = "1965.1.1"
-            ideology = anarchist
-            traits = {
-                
-            }
-        }
     }
 }
 
@@ -5325,7 +3971,7 @@ ukr_spawn_free_division_decision_scripted_effect_african_colonist_edition = {
     }
 }
 
-sov_release_far_east_anarchist_collapse = { #Delete Soviet templates
+sov_release_far_east_anarchist_collapse = {
     SOV = {
         release_on_controlled = EFR
     }
@@ -5340,8 +3986,8 @@ sov_release_far_east_anarchist_collapse = { #Delete Soviet templates
         }
         set_party_name = {
             ideology = anarchy
-            long_name = anarchy_people_council_russian_state_party
-            name = anarchy_people_council_russian_state_party
+            long_name = russia2_anarchy_people_council_russian_state_party
+            name = russia2_anarchy_people_council_russian_state_party
         }
         set_popularities = {
             anarchy = 90
@@ -5400,6 +4046,9 @@ sov_release_far_east_anarchist_collapse = { #Delete Soviet templates
         }
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
+        }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
         }
         random_owned_controlled_state = { #12 Infantry and 1 Tank
             create_unit = {
@@ -5479,6 +4128,9 @@ sov_release_far_east_anarchist_collapse = { #Delete Soviet templates
 }
 
 sov_release_siberia_anarchist_collapse = {
+    SIB = {
+        remove_state_core = 581
+    }
     SOV = {
         release_on_controlled = SIB
     }
@@ -5493,8 +4145,8 @@ sov_release_siberia_anarchist_collapse = {
         }
         set_party_name = {
             ideology = anarchy
-            long_name = anarchy_people_council_russian_state_party
-            name = anarchy_people_council_russian_state_party
+            long_name = russia2_anarchy_people_council_russian_state_party
+            name = russia2_anarchy_people_council_russian_state_party
         }
         set_popularities = {
             anarchy = 90
@@ -5559,6 +4211,9 @@ sov_release_siberia_anarchist_collapse = {
         }
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
+        }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
         }
         random_owned_controlled_state = { #18 Infantry Divisions 2 Tank Divisions
             create_unit = {
@@ -5666,6 +4321,9 @@ sov_release_siberia_anarchist_collapse = {
 }
 
 sov_release_urals_anarchist_collapse = {
+    URA = {
+        remove_state_core = 581
+    }
     SOV = {
         release_on_controlled = URA
     }
@@ -5680,8 +4338,8 @@ sov_release_urals_anarchist_collapse = {
         }
         set_party_name = {
             ideology = anarchy
-            long_name = anarchy_people_council_russian_state_party
-            name = anarchy_people_council_russian_state_party
+            long_name = russia2_anarchy_people_council_russian_state_party
+            name = russia2_anarchy_people_council_russian_state_party
         }
         set_popularities = {
             anarchy = 90
@@ -5743,6 +4401,9 @@ sov_release_urals_anarchist_collapse = {
         }
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
+        }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
         }
         random_owned_controlled_state = { #7 Infantry Divisions and 1 Tank
             create_unit = {
@@ -5806,8 +4467,8 @@ sov_release_kazakh_anarchist_collapse = {
         }
         set_party_name = {
             ideology = anarchy
-            long_name = anarchy_people_council_russian_state_party
-            name = anarchy_people_council_russian_state_party
+            long_name = russia2_anarchy_people_council_russian_state_party
+            name = russia2_anarchy_people_council_russian_state_party
         }
         set_popularities = {
             anarchy = 90
@@ -5866,6 +4527,9 @@ sov_release_kazakh_anarchist_collapse = {
         }
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
+        }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
         }
         random_owned_controlled_state = { #13 Infantry Divisions and 2 Tank
             create_unit = {
@@ -5971,8 +4635,8 @@ sov_release_uzbekistan_anarchist_collapse = {
         }
         set_party_name = {
             ideology = anarchy
-            long_name = anarchy_people_council_russian_state_party
-            name = anarchy_people_council_russian_state_party
+            long_name = russia2_anarchy_people_council_russian_state_party
+            name = russia2_anarchy_people_council_russian_state_party
         }
         set_popularities = {
             anarchy = 90
@@ -6032,6 +4696,9 @@ sov_release_uzbekistan_anarchist_collapse = {
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
         }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
+        }
         random_owned_controlled_state = { #5 Infantry Divisions
             create_unit = {
                 division = "name = \"Free Uzbek Division\" division_template = \"Free Uzbek Division\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
@@ -6076,8 +4743,8 @@ sov_release_turkmenistan_anarchist_collapse = {
         }
         set_party_name = {
             ideology = anarchy
-            long_name = anarchy_people_council_russian_state_party
-            name = anarchy_people_council_russian_state_party
+            long_name = russia2_anarchy_people_council_russian_state_party
+            name = russia2_anarchy_people_council_russian_state_party
         }
         set_popularities = {
             anarchy = 90
@@ -6137,6 +4804,9 @@ sov_release_turkmenistan_anarchist_collapse = {
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
         }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
+        }
         random_owned_controlled_state = { #5 Infantry Divisions
             create_unit = {
                 division = "name = \"Free Turkmen Division\" division_template = \"Free Turkmen Division\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
@@ -6181,8 +4851,8 @@ sov_release_tajikstan_anarchist_collapse = {
         }
         set_party_name = {
             ideology = anarchy
-            long_name = anarchy_people_council_russian_state_party
-            name = anarchy_people_council_russian_state_party
+            long_name = russia2_anarchy_people_council_russian_state_party
+            name = russia2_anarchy_people_council_russian_state_party
         }
         set_popularities = {
             anarchy = 90
@@ -6242,6 +4912,9 @@ sov_release_tajikstan_anarchist_collapse = {
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
         }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
+        }
         random_owned_controlled_state = { #3 Infantry Divisions
             create_unit = {
                 division = "name = \"Free Tajik Division\" division_template = \"Free Tajik Division\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
@@ -6276,8 +4949,8 @@ sov_release_kyrghiz_anarchist_collapse = {
         }
         set_party_name = {
             ideology = anarchy
-            long_name = anarchy_people_council_russian_state_party
-            name = anarchy_people_council_russian_state_party
+            long_name = russia2_anarchy_people_council_russian_state_party
+            name = russia2_anarchy_people_council_russian_state_party
         }
         set_popularities = {
             anarchy = 90
@@ -6337,6 +5010,9 @@ sov_release_kyrghiz_anarchist_collapse = {
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
         }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
+        }
         random_owned_controlled_state = { #3 Infantry Divisions
             create_unit = {
                 division = "name = \"Free kyrghiz Division\" division_template = \"Free kyrghiz Division\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
@@ -6371,8 +5047,8 @@ sov_release_armenia_anarchist_collapse = {
         }
         set_party_name = {
             ideology = anarchy
-            long_name = anarchy_people_council_russian_state_party
-            name = anarchy_people_council_russian_state_party
+            long_name = russia2_anarchy_people_council_russian_state_party
+            name = russia2_anarchy_people_council_russian_state_party
         }
         set_popularities = {
             anarchy = 90
@@ -6432,6 +5108,9 @@ sov_release_armenia_anarchist_collapse = {
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
         }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
+        }
         random_owned_controlled_state = { #4 Infantry Divisions
             create_unit = {
                 division = "name = \"Free Armenian Division\" division_template = \"Free Armenian Division\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
@@ -6472,8 +5151,8 @@ sov_release_georgia_anarchist_collapse = {
         }
         set_party_name = {
             ideology = anarchy
-            long_name = anarchy_people_council_russian_state_party
-            name = anarchy_people_council_russian_state_party
+            long_name = russia2_anarchy_people_council_russian_state_party
+            name = russia2_anarchy_people_council_russian_state_party
         }
         set_popularities = {
             anarchy = 90
@@ -6533,6 +5212,9 @@ sov_release_georgia_anarchist_collapse = {
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
         }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
+        }
         random_owned_controlled_state = { #4 Infantry Divisions
             create_unit = {
                 division = "name = \"Free Georgian Division\" division_template = \"Free Georgian Division\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
@@ -6573,8 +5255,8 @@ sov_release_azerbaijan_anarchist_collapse = {
         }
         set_party_name = {
             ideology = anarchy
-            long_name = anarchy_people_council_russian_state_party
-            name = anarchy_people_council_russian_state_party
+            long_name = russia2_anarchy_people_council_russian_state_party
+            name = russia2_anarchy_people_council_russian_state_party
         }
         set_popularities = {
             anarchy = 90
@@ -6634,6 +5316,9 @@ sov_release_azerbaijan_anarchist_collapse = {
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
         }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
+        }
         random_owned_controlled_state = { #4 Infantry Divisions
             create_unit = {
                 division = "name = \"Free Azerbaijani Division\" division_template = \"Free Azerbaijani Division\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
@@ -6674,8 +5359,8 @@ sov_release_volgograd_anarchist_collapse = {
         }
         set_party_name = {
             ideology = anarchy
-            long_name = anarchy_people_council_russian_state_party
-            name = anarchy_people_council_russian_state_party
+            long_name = russia2_anarchy_people_council_russian_state_party
+            name = russia2_anarchy_people_council_russian_state_party
         }
         set_popularities = {
             anarchy = 90
@@ -6735,6 +5420,9 @@ sov_release_volgograd_anarchist_collapse = {
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
         }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
+        }
         random_owned_controlled_state = { #4 Infantry Divisions
             create_unit = {
                 division = "name = \"Free Volgograd Division\" division_template = \"Free Volgograd Division\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
@@ -6775,8 +5463,8 @@ sov_release_kalmykia_anarchist_collapse = {
         }
         set_party_name = {
             ideology = anarchy
-            long_name = anarchy_people_council_russian_state_party
-            name = anarchy_people_council_russian_state_party
+            long_name = russia2_anarchy_people_council_russian_state_party
+            name = russia2_anarchy_people_council_russian_state_party
         }
         set_popularities = {
             anarchy = 90
@@ -6836,6 +5524,9 @@ sov_release_kalmykia_anarchist_collapse = {
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
         }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
+        }
         random_owned_controlled_state = { #4 Infantry Divisions
             create_unit = {
                 division = "name = \"Free Kalmyk Division\" division_template = \"Free Kalmyk Division\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
@@ -6876,8 +5567,8 @@ sov_release_rostov_anarchist_collapse = {
         }
         set_party_name = {
             ideology = anarchy
-            long_name = anarchy_people_council_russian_state_party
-            name = anarchy_people_council_russian_state_party
+            long_name = russia2_anarchy_people_council_russian_state_party
+            name = russia2_anarchy_people_council_russian_state_party
         }
         set_popularities = {
             anarchy = 90
@@ -6937,6 +5628,9 @@ sov_release_rostov_anarchist_collapse = {
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
         }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
+        }
         random_owned_controlled_state = { #4 Infantry Divisions and 1 Tank
             create_unit = {
                 division = "name = \"Free Rostovsky Division\" division_template = \"Free Rostovsky Division\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
@@ -6983,8 +5677,8 @@ sov_release_dagestan_anarchist_collapse = {
         }
         set_party_name = {
             ideology = anarchy
-            long_name = anarchy_people_council_russian_state_party
-            name = anarchy_people_council_russian_state_party
+            long_name = russia2_anarchy_people_council_russian_state_party
+            name = russia2_anarchy_people_council_russian_state_party
         }
         set_popularities = {
             anarchy = 90
@@ -7044,6 +5738,9 @@ sov_release_dagestan_anarchist_collapse = {
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
         }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
+        }
         random_owned_controlled_state = { #3 Infantry Divisions
             create_unit = {
                 division = "name = \"Free Dagestani Division\" division_template = \"Free Dagestani Division\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
@@ -7078,8 +5775,8 @@ sov_release_circassia_anarchist_collapse = {
         }
         set_party_name = {
             ideology = anarchy
-            long_name = anarchy_people_council_russian_state_party
-            name = anarchy_people_council_russian_state_party
+            long_name = russia2_anarchy_people_council_russian_state_party
+            name = russia2_anarchy_people_council_russian_state_party
         }
         set_popularities = {
             anarchy = 90
@@ -7139,6 +5836,9 @@ sov_release_circassia_anarchist_collapse = {
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
         }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
+        }
         random_owned_controlled_state = { #4 Infantry Divisions
             create_unit = {
                 division = "name = \"Free Circassian Division\" division_template = \"Free Circassian Division\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
@@ -7179,8 +5879,8 @@ sov_release_vyatka_anarchist_collapse = {
         }
         set_party_name = {
             ideology = anarchy
-            long_name = anarchy_people_council_russian_state_party
-            name = anarchy_people_council_russian_state_party
+            long_name = russia2_anarchy_people_council_russian_state_party
+            name = russia2_anarchy_people_council_russian_state_party
         }
         set_popularities = {
             anarchy = 90
@@ -7240,6 +5940,9 @@ sov_release_vyatka_anarchist_collapse = {
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
         }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
+        }
         random_owned_controlled_state = { #4 Infantry Divisions
             create_unit = {
                 division = "name = \"Free Vyatka Division\" division_template = \"Free Vyatka Division\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
@@ -7280,8 +5983,8 @@ sov_release_tatarstan_anarchist_collapse = {
         }
         set_party_name = {
             ideology = anarchy
-            long_name = anarchy_people_council_russian_state_party
-            name = anarchy_people_council_russian_state_party
+            long_name = russia2_anarchy_people_council_russian_state_party
+            name = russia2_anarchy_people_council_russian_state_party
         }
         set_popularities = {
             anarchy = 90
@@ -7340,6 +6043,9 @@ sov_release_tatarstan_anarchist_collapse = {
         }
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
+        }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
         }
         random_owned_controlled_state = { #7 Infantry Divisions and 1 Tank
             create_unit = {
@@ -7405,8 +6111,8 @@ sov_release_perm_anarchist_collapse = {
         }
         set_party_name = {
             ideology = anarchy
-            long_name = anarchy_people_council_russian_state_party
-            name = anarchy_people_council_russian_state_party
+            long_name = russia2_anarchy_people_council_russian_state_party
+            name = russia2_anarchy_people_council_russian_state_party
         }
         set_popularities = {
             anarchy = 90
@@ -7466,6 +6172,9 @@ sov_release_perm_anarchist_collapse = {
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
         }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
+        }
         random_owned_controlled_state = { #5 Infantry Divisions
             create_unit = {
                 division = "name = \"Free Perm Division\" division_template = \"Free Perm Division\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
@@ -7512,8 +6221,8 @@ sov_release_karelia_anarchist_collapse = {
         }
         set_party_name = {
             ideology = anarchy
-            long_name = anarchy_people_council_russian_state_party
-            name = anarchy_people_council_russian_state_party
+            long_name = russia2_anarchy_people_council_russian_state_party
+            name = russia2_anarchy_people_council_russian_state_party
         }
         set_popularities = {
             anarchy = 90
@@ -7573,6 +6282,9 @@ sov_release_karelia_anarchist_collapse = {
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
         }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
+        }
         random_owned_controlled_state = { #5 Infantry Divisions
             create_unit = {
                 division = "name = \"Free Karelian Division\" division_template = \"Free Karelian Division\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
@@ -7619,8 +6331,8 @@ sov_release_komi_anarchist_collapse = {
         }
         set_party_name = {
             ideology = anarchy
-            long_name = anarchy_people_council_russian_state_party
-            name = anarchy_people_council_russian_state_party
+            long_name = russia2_anarchy_people_council_russian_state_party
+            name = russia2_anarchy_people_council_russian_state_party
         }
         set_popularities = {
             anarchy = 90
@@ -7680,6 +6392,9 @@ sov_release_komi_anarchist_collapse = {
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
         }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
+        }
         random_owned_controlled_state = { #5 Infantry Divisions
             create_unit = {
                 division = "name = \"Free Komi Division\" division_template = \"Free Komi Division\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
@@ -7726,8 +6441,8 @@ sov_release_novgorod_anarchist_collapse = {
         }
         set_party_name = {
             ideology = anarchy
-            long_name = anarchy_people_council_russian_state_party
-            name = anarchy_people_council_russian_state_party
+            long_name = russia2_anarchy_people_council_russian_state_party
+            name = russia2_anarchy_people_council_russian_state_party
         }
         set_popularities = {
             anarchy = 90
@@ -7788,6 +6503,9 @@ sov_release_novgorod_anarchist_collapse = {
         }
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
+        }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
         }
         random_owned_controlled_state = { #15 Infantry Divisions and 2 tank
             create_unit = {
@@ -7897,8 +6615,8 @@ sov_release_belarus_anarchist_collapse = {
         }
         set_party_name = {
             ideology = anarchy
-            long_name = anarchy_people_council_russian_state_party
-            name = anarchy_people_council_russian_state_party
+            long_name = russia2_anarchy_people_council_russian_state_party
+            name = russia2_anarchy_people_council_russian_state_party
         }
         set_popularities = {
             anarchy = 90
@@ -7957,6 +6675,9 @@ sov_release_belarus_anarchist_collapse = {
         }
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
+        }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
         }
         random_owned_controlled_state = { #7 Infantry Divisions and 1 Tank
             create_unit = {
@@ -8020,8 +6741,8 @@ sov_release_ukraine_anarchist_collapse = {
         }
         set_party_name = {
             ideology = anarchy
-            long_name = anarchy_people_council_russian_state_party
-            name = anarchy_people_council_russian_state_party
+            long_name = russia2_anarchy_people_council_russian_state_party
+            name = russia2_anarchy_people_council_russian_state_party
         }
         set_popularities = {
             anarchy = 90
@@ -8031,13 +6752,18 @@ sov_release_ukraine_anarchist_collapse = {
             communism = 3
         }
         set_cosmetic_tag = FUKR
-        create_country_leader = {
-            name = "Council of Ukraine"
-            desc = "POLITICS_COUNCIL_UKRAINE_DESC"
-            picture = "gfx/leaders/SOV/portrait_anarchist_commune.dds"
-            expire = "1965.1.1"
-            ideology = anarchist
-        }
+        add_country_leader_role = {
+			character = UKR_Council_of_ukraine
+			promote_leader = yes
+			country_leader = {
+				desc = UKR_Council_of_ukraine
+				ideology = anarchist
+				expire = "1965.1.1.1"
+				traits = {
+
+				}
+			}
+		}
         division_template = {
            name = "Free Ukrainian Division"
             is_locked = no
@@ -8088,6 +6814,9 @@ sov_release_ukraine_anarchist_collapse = {
         }
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
+        }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
         }
         random_owned_controlled_state = { #21 Infantry Divisions and 3 tank
             create_unit = {
@@ -8233,8 +6962,8 @@ sov_release_crimea_anarchist_collapse = {
         }
         set_party_name = {
             ideology = anarchy
-            long_name = anarchy_people_council_russian_state_party
-            name = anarchy_people_council_russian_state_party
+            long_name = russia2_anarchy_people_council_russian_state_party
+            name = russia2_anarchy_people_council_russian_state_party
         }
         set_popularities = {
             anarchy = 90
@@ -8294,6 +7023,9 @@ sov_release_crimea_anarchist_collapse = {
         delete_unit_template_and_units = {
             division_template = "Mekhanizirovaniy Korpus"
         }
+        delete_unit_template_and_units = {
+            division_template = "Vozdushno-Desantnaya Brigada"
+        }
         random_owned_controlled_state = { #4 Infantry Divisions
             create_unit = {
                 division = "name = \"Free Crimean Division\" division_template = \"Free Crimean Division\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
@@ -8315,6 +7047,1937 @@ sov_release_crimea_anarchist_collapse = {
                 division = "name = \"Free Crimean Division\" division_template = \"Free Crimean Division\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
                 owner = CRI
             }
+        }
+    }
+}
+
+EUR_corps_commander_generation = {
+    EUR = {
+        create_field_marshal = {
+            name = "Alan Brooke" # Aristocrat
+            portrait_path = "gfx/leaders/EUR/Portrait_Britain_Alan_Brooke.dds"
+            traits = { defensive_doctrine trait_cautious career_officer }
+            skill = 5
+            attack_skill = 3
+            defense_skill = 5
+            planning_skill = 5
+            logistics_skill = 3
+        }
+        
+        create_field_marshal = {
+            name = "Bernard Montgomery" # Aristocrat
+            portrait_path = "gfx/leaders/EUR/Portrait_Britain_Bernard_Montgomery.dds"
+            traits = { logistics_wizard offensive_doctrine media_personality trait_cautious inflexible_strategist organizer }
+            skill = 4 
+            attack_skill = 2
+            defense_skill = 4
+            planning_skill = 3
+            logistics_skill = 4
+        }
+        
+        create_corps_commander = {
+            name = "Claude Auchinleck"
+            portrait_path = "gfx/leaders/EUR/Portrait_Britain_Claude_Auchinleck.dds"
+            traits = { inflexible_strategist career_officer }
+            skill = 5
+            attack_skill = 3
+            defense_skill = 5
+            planning_skill = 3
+            logistics_skill = 5
+        }
+        
+        create_corps_commander = {
+            name = "Neil Ritchie"
+            portrait_path = "gfx/leaders/EUR/Portrait_Britain_Neil_Ritchie.dds"
+            traits = { inflexible_strategist armor_officer politically_connected  }
+            skill = 4
+            attack_skill = 3
+            defense_skill = 4
+            planning_skill = 3
+            logistics_skill = 3
+        }
+        
+        create_corps_commander = {
+            name = "Alan Cunningham"
+            portrait_path = "gfx/leaders/EUR/Portrait_Britain_Alan_Cunningham.dds"
+            traits = {}
+            skill = 4
+            attack_skill = 4
+            defense_skill = 1
+            planning_skill = 4
+            logistics_skill = 4
+        }
+        
+        create_corps_commander = {
+            name = "William Slim"
+            portrait_path = "gfx/leaders/EUR/Portrait_Britain_William_Slim.dds"
+            traits = { trickster war_hero }
+            skill = 5
+            attack_skill = 3
+            defense_skill = 3
+            planning_skill = 5
+            logistics_skill = 5
+        }
+        
+        create_corps_commander = {
+            name = "Richard O'Connor"
+            portrait_path = "gfx/leaders/EUR/Portrait_Britain_Richard_OConnor.dds"
+            traits = {  }
+            skill = 4
+            attack_skill = 2
+            defense_skill = 4
+            planning_skill = 4
+            logistics_skill = 3
+        }
+        
+        create_corps_commander = {
+            name = "William Platt"
+            portrait_path = "gfx/leaders/EUR/Portrait_Britain_William_Platt.dds"
+            traits = {  }
+            skill = 3
+            attack_skill = 2
+            defense_skill = 2
+            planning_skill = 3
+            logistics_skill = 3
+        }
+        
+        create_corps_commander = {
+            name = "George Giffard"
+            portrait_path = "gfx/leaders/EUR/Portrait_Britain_George_Giffard.dds"
+            traits = { career_officer }
+            skill = 3
+            attack_skill = 2
+            defense_skill = 2
+            planning_skill = 3
+            logistics_skill = 3
+        }
+        
+        create_corps_commander = {
+            name = "Harold Alexander" # Aristocrat
+            portrait_path = "gfx/leaders/EUR/Portrait_Britain_Harold_Alexander.dds"
+            traits = { politically_connected }
+            skill = 5
+            attack_skill = 4
+            defense_skill = 4
+            planning_skill = 3
+            logistics_skill = 5
+        }
+        
+        create_corps_commander = {
+            name = "Jackie Smyth"
+            portrait_path = "gfx/leaders/EUR/Portrait_Britain_John_Jackie_Smyth.dds"
+            traits = { old_guard }
+            skill = 1
+            attack_skill = 1
+            defense_skill = 1
+            planning_skill = 1
+            logistics_skill = 1
+        }
+        
+        create_corps_commander = {
+            name = "Thomas Jacomb Hutton"
+                portrait_path = "gfx/leaders/EUR/Portrait_Britain_Thomas_Jacomb_Hutton.dds"
+            traits = { old_guard }
+            skill = 2
+            attack_skill = 2
+            defense_skill = 2
+            planning_skill = 2
+            logistics_skill = 1
+        }
+        
+        create_corps_commander = {
+            name = "Arthur Percival"
+                portrait_path = "gfx/leaders/EUR/Portrait_Britain_Arthur_Percival.dds"
+            traits = {  trait_cautious }
+            skill = 2
+            attack_skill = 2
+            defense_skill = 2
+            planning_skill = 2
+            logistics_skill = 1
+        }
+        
+        create_corps_commander = {
+            name = "Merton Beckwith-Smith"
+                portrait_path = "gfx/leaders/EUR/Portrait_Britain_Merton_Beckwith_Smith.dds"
+            traits = { commando }
+            skill = 1
+            attack_skill = 1
+            defense_skill = 1
+            planning_skill = 1
+            logistics_skill = 1
+        }
+        
+        create_corps_commander = {
+            name = "Henry Pownall"
+            portrait_path = "gfx/leaders/EUR/Portrait_Britain_Henry_Pownall.dds"
+            traits = {  trickster }
+            skill = 2
+            attack_skill = 1
+            defense_skill = 2
+            planning_skill = 2
+            logistics_skill = 2
+        }
+        
+        create_corps_commander = {
+            name = "John Vereker Lord Gort" # Aristocrat
+            portrait_path = "gfx/leaders/EUR/Portrait_Britain_John_Vereker.dds"
+            traits = { politically_connected trait_cautious }
+            skill = 4
+            attack_skill = 3
+            defense_skill = 3
+            planning_skill = 4
+            logistics_skill = 3
+        }
+        
+        create_corps_commander = {
+            name = "Henry Wilson"
+                portrait_path = "gfx/leaders/EUR/Portrait_Britain_Henry_Maitland_Wilson.dds"
+            traits = { old_guard politically_connected }
+            skill = 4
+            attack_skill = 2
+            defense_skill = 4
+            planning_skill = 4
+            logistics_skill = 3
+        }
+        
+        create_corps_commander = {
+            name = "William Gott"
+                portrait_path = "gfx/leaders/EUR/Portrait_Britain_William_Gott.dds"
+            traits = { armor_officer war_hero inflexible_strategist }
+            skill = 3
+            attack_skill = 2
+            defense_skill = 3
+            planning_skill = 2
+            logistics_skill = 3
+        }
+        
+        create_corps_commander = {
+            name = "Jock Campbell"
+                portrait_path = "gfx/leaders/EUR/Portrait_Britain_Jock_Campbell.dds"
+            traits = { armor_officer  }
+            skill = 4
+            attack_skill = 4
+            defense_skill = 3
+            planning_skill = 2
+            logistics_skill = 4
+        }
+        
+        create_corps_commander = {
+            name = "Oliver Leese" # Aristocrat
+            portrait_path = "gfx/leaders/EUR/Portrait_Britain_Oliver_Leese.dds"
+            traits = {  armor_officer harsh_leader politically_connected }
+            skill = 4
+            attack_skill = 4
+            defense_skill = 2
+            planning_skill = 3
+            logistics_skill = 4
+        }
+        
+        create_corps_commander = {
+            name = "Miles Dempsey"
+            portrait_path = "gfx/leaders/EUR/Portrait_Britain_Miles_Dempsey.dds"
+            traits = { brilliant_strategist infantry_officer career_officer }
+            skill = 4
+            attack_skill = 3
+            defense_skill = 4
+            planning_skill = 4
+            logistics_skill = 2
+        }
+        
+        create_corps_commander = {
+            name = "Brian Horrocks"
+            portrait_path = "gfx/leaders/EUR/Portrait_Britain_Brian_Horrocks.dds"
+            traits = {  armor_officer career_officer war_hero }
+            skill = 3
+            
+            attack_skill = 1
+            defense_skill = 3
+            planning_skill = 3
+            logistics_skill = 3
+        }
+        
+        create_corps_commander = {
+            name = "Archibald Wavell" # Aristocrat
+            portrait_path = "gfx/leaders/EUR/Portrait_Britain_Archibald_Wavell.dds"
+            traits = { career_officer }
+            skill = 4
+            attack_skill = 4
+            defense_skill = 2
+            planning_skill = 3
+            logistics_skill = 4
+        }
+        
+        create_navy_leader = {
+            name = "James Fownes Somerville" # Aristocrat
+                portrait_path = "gfx/leaders/EUR/Portrait_Britain_James_Fownes_Somerville.dds"
+            traits = { superior_tactician aviation_enthusiast navy_career_officer }
+            skill = 5
+            attack_skill = 4
+            defense_skill = 3
+            maneuvering_skill = 4
+            coordination_skill = 5
+        }
+        
+        create_navy_leader = {
+            name = "Henry Harwood" # Aristocrat
+                portrait_path = "gfx/leaders/EUR/Portrait_Britain_Henry_Harwood.dds"
+            traits = { old_guard_navy bold }
+            skill = 3
+            attack_skill = 3
+            defense_skill = 2
+            maneuvering_skill = 3
+            coordination_skill = 2
+        }
+        
+        create_navy_leader = {
+            name = "Andrew Cunningham"
+                portrait_path = "gfx/leaders/EUR/Portrait_Britain_Andrew_Cunningham.dds"
+            traits = { blockade_runner superior_tactician navy_career_officer bold gunnery_expert}
+            skill = 5
+            attack_skill = 5
+            defense_skill = 4
+            maneuvering_skill = 3
+            coordination_skill = 4
+        }
+        
+        create_navy_leader = {
+            name = "Bruce Fraser"
+                portrait_path = "gfx/leaders/EUR/Portrait_Britain_Bruce_Fraser.dds"
+            traits = { aviation_enthusiast naval_lineage blockade_runner }
+            skill = 4
+            attack_skill = 3
+            defense_skill = 2
+            maneuvering_skill = 4
+            coordination_skill = 4
+        }
+        
+        create_navy_leader = {
+            name = "John Tovey" # Aristocrat
+                portrait_path = "gfx/leaders/EUR/Portrait_Britain_John_Tovey.dds"
+            traits = { gentlemanly naval_lineage superior_tactician }
+            skill = 4
+            attack_skill = 3
+            defense_skill = 3
+            maneuvering_skill = 2
+            coordination_skill = 5
+        }
+        
+        create_navy_leader = {
+            name = "Bernard Rawlings" # Aristocrat
+                portrait_path = "gfx/leaders/EUR/Portrait_Britain_Bernard_Rawlings.dds"
+            traits = { gentlemanly }
+            skill = 3
+            attack_skill = 3
+            defense_skill = 2
+            maneuvering_skill = 3
+            coordination_skill = 2
+        }
+        
+        create_navy_leader = {
+            name = "John Cunningham"
+                portrait_path = "gfx/leaders/EUR/Portrait_Britain_John_Cunningham.dds"
+            traits = { navy_career_officer green_water_expert }
+            skill = 4
+            attack_skill = 2
+            defense_skill = 4
+            maneuvering_skill = 4
+            coordination_skill = 3
+        }
+        
+        create_navy_leader = {
+            name = "Charles Forbes"
+                portrait_path = "gfx/leaders/EUR/Portrait_Britain_Charles_Forbes.dds"
+            traits = { gunnery_expert fly_swatter }
+            skill = 3
+            attack_skill = 3
+            defense_skill = 2
+            maneuvering_skill = 2
+            coordination_skill = 3
+        }
+        
+        create_navy_leader = {
+            name = "Algernon Willis"
+                portrait_path = "gfx/leaders/EUR/Portrait_Britain_Algernon_Willis.dds"
+            traits = { battleship_adherent spotter }
+            skill = 3
+            attack_skill = 3
+            defense_skill = 2
+            maneuvering_skill = 3
+            coordination_skill = 2
+        }
+        
+        create_navy_leader = {
+            name = "Arthur Power"
+                portrait_path = "gfx/leaders/EUR/Portrait_Britain_Arthur_Power.dds"
+            traits = { gunnery_expert }
+            skill = 2
+            attack_skill = 3
+            defense_skill = 1
+            maneuvering_skill = 1
+            coordination_skill = 2
+        }
+        
+        create_corps_commander = {
+            name = "Jean de Lattre de Tassigny"
+            portrait_path = "gfx/leaders/EUR/Portrait_France_Jean_de_Lattre_de_Tassigny.dds"
+            traits = { trickster brilliant_strategist cavalry_officer war_hero }
+            skill = 4
+            attack_skill = 4
+            defense_skill = 2
+            planning_skill = 4
+            logistics_skill = 3
+        }
+        
+        create_corps_commander = {
+            name = "Alphonse Juin"
+            portrait_path = "gfx/leaders/EUR/Portrait_France_Alphonse_Juin.dds"
+            traits = { armor_officer career_officer trait_cautious  }
+            skill = 4
+            attack_skill = 3
+            defense_skill = 2
+            planning_skill = 4
+            logistics_skill = 4
+        }
+        
+        create_field_marshal = {
+            name = "Maurice Gamelin"
+            portrait_path = "gfx/leaders/EUR/Portrait_France_Maurice_Gamelin.dds"
+            traits = { defensive_doctrine old_guard inflexible_strategist career_officer }
+            skill = 2
+            attack_skill = 1
+            defense_skill = 3
+            planning_skill = 2
+            logistics_skill = 1
+        }
+        
+        create_field_marshal = {
+            name = "Maxime Weygand"
+            portrait_path = "gfx/leaders/EUR/Portrait_France_Maxime_Weygand.dds"
+            traits = { defensive_doctrine old_guard inflexible_strategist career_officer }
+            skill = 3
+            attack_skill = 3
+            defense_skill = 3
+            planning_skill = 2
+            logistics_skill = 2
+        }
+        
+        create_field_marshal = {
+            name = "Alphonse Georges"
+            portrait_path = "gfx/leaders/EUR/Portrait_France_Alphonse_Joseph_Georges.dds"
+            traits = { defensive_doctrine old_guard trait_cautious }
+            skill = 3
+            attack_skill = 2
+            defense_skill = 2
+            planning_skill = 4
+            logistics_skill = 2
+        }
+        
+        create_field_marshal = {
+            name = "Antoine-Marie-Benoît Besson"
+            portrait_path = "gfx/leaders/EUR/Portrait_France_Generic_land_2.dds"
+            traits = { defensive_doctrine old_guard }
+            skill = 2
+            attack_skill = 1
+            defense_skill = 2
+            planning_skill = 2
+            logistics_skill = 2
+        }
+        
+        create_corps_commander = {
+            name = "Charles De Gaulle"
+            portrait_path = "gfx/leaders/EUR/Portrait_France_Charles_De_Gaulle.dds"
+            traits = {  armor_officer harsh_leader media_personality }
+            skill = 4
+            attack_skill = 4
+            defense_skill = 4
+            planning_skill = 3
+            logistics_skill = 2
+        }
+        
+        create_corps_commander = {
+            name = "gfx/leaders/EUR/Philippe Leclerc"
+            portrait_path = "gfx/leaders/EUR/Portrait_france_philippe_leclerc.dds"
+            traits = {  armor_officer trait_reckless career_officer }
+            skill = 3
+            attack_skill = 3
+            defense_skill = 2
+            planning_skill = 2
+            logistics_skill = 3
+        }
+        
+        create_corps_commander = {
+            name = "Henri Giraud"
+            portrait_path = "gfx/leaders/EUR/Portrait_france_henri_giraud.dds"
+            traits = {  trickster trait_cautious career_officer infantry_officer }
+            skill = 3
+            attack_skill = 2
+            defense_skill = 2
+            planning_skill = 4
+            logistics_skill = 2
+        }
+        
+        create_corps_commander = {
+            name = "Charles Huntziger"
+            portrait_path = "gfx/leaders/EUR/Portrait_france_charles_huntziger.dds"
+            traits = { old_guard infantry_officer }
+            skill = 3
+            attack_skill = 3
+            defense_skill = 1
+            planning_skill = 3
+            logistics_skill = 3
+        }
+        
+        create_corps_commander = {
+            name = "Gaston-Henri Billotte"
+            portrait_path = "gfx/leaders/EUR/Portrait_France_Generic_land_1.dds"
+            traits = { old_guard trait_cautious infantry_officer }
+            skill = 2
+            attack_skill = 1
+            defense_skill = 3
+            planning_skill = 1
+            logistics_skill = 2
+        }
+        
+        create_corps_commander = {
+            name = "Henry Freydenberg"
+            portrait_path = "gfx/leaders/EUR/Portrait_France_Generic_land_3.dds"
+            traits = { old_guard infantry_officer }
+            skill = 2
+            attack_skill = 1
+            defense_skill = 2
+            planning_skill = 2
+            logistics_skill = 2
+        }
+        
+        create_corps_commander = {
+            name = "René Olry"
+            portrait_path = "gfx/leaders/EUR/Portrait_France_Generic_land_5.dds"
+            traits = { old_guard infantry_officer trait_mountaineer }
+            skill = 3
+            attack_skill = 2
+            defense_skill = 4
+            planning_skill = 2
+            logistics_skill = 2
+        }
+        
+        create_navy_leader = {
+            name = "François Darlan"
+            portrait_path = "gfx/leaders/EUR/Portrait_France_Francois_Darlan.dds"
+            traits = { naval_lineage bold superior_tactician }
+            skill = 3
+            attack_skill = 2
+            defense_skill = 2
+            maneuvering_skill = 3
+            coordination_skill = 3
+        }
+        
+        create_navy_leader = {
+            name = "Jean-Marie Charles Abrial"
+            portrait_path = "gfx/leaders/EUR/Portrait_France_Jean-Marie_Charles_Abrial.dds"
+            traits = { chief_engineer superior_tactician }
+            skill = 3
+            attack_skill = 2
+            defense_skill = 3
+            maneuvering_skill = 3
+            coordination_skill = 2
+        }
+        
+        create_navy_leader = {
+            name = "Jean-Pierre Esteva"
+            portrait_path = "gfx/leaders/EUR/Portrait_France_Jean-Pierre_Esteva.dds"
+            traits = { aviation_enthusiast }
+            skill = 2
+            attack_skill = 1
+            defense_skill = 2
+            maneuvering_skill = 2
+            coordination_skill = 2
+        }
+        
+        create_navy_leader = {
+            name = "René-Émile Godfroy"
+            portrait_path = "gfx/leaders/EUR/Portrait_France_Rene-Emile_Godfroy.dds"
+            traits = { gentlemanly battleship_adherent old_guard_navy spotter }
+            skill = 2
+            attack_skill = 2
+            defense_skill = 1
+            maneuvering_skill = 2
+            coordination_skill = 2
+        }
+        
+        create_navy_leader = {
+            name = "Jean de Laborde"
+            portrait_path = "gfx/leaders/EUR/Portrait_France_Jean_de_Laborde.dds"
+            traits = { naval_lineage aviation_enthusiast }
+            skill = 1
+            attack_skill = 1
+            defense_skill = 1
+            maneuvering_skill = 1
+            coordination_skill = 1
+        }
+        
+        create_field_marshal = {
+            name = "Gerd von Rundstedt"
+            portrait_path = "gfx/leaders/EUR/Portrait_Germany_Gerd_von_Rundstedt.dds"
+            traits = { defensive_doctrine urban_assault_specialist old_guard }
+            skill = 3
+            attack_skill = 3
+            defense_skill = 2
+            planning_skill = 3
+            logistics_skill = 2
+        }
+        
+        create_field_marshal = {
+            name = "Günther von Kluge"
+            portrait_path = "gfx/leaders/EUR/Portrait_Germany_Gunther_von_Kluge.dds"
+            traits = {  offensive_doctrine armor_officer }
+            skill = 3
+            attack_skill = 3
+            defense_skill = 2
+            planning_skill = 2
+            logistics_skill = 3
+        }
+        
+        create_corps_commander = {
+            name = "Friedrich Paulus"
+            portrait_path = "gfx/leaders/EUR/Portrait_Germany_Friedrich_Paulus.dds"
+            traits = { trait_cautious armor_officer }
+            skill = 1
+            attack_skill = 1
+            defense_skill = 1
+            planning_skill = 1
+            logistics_skill = 1
+        }
+        
+        create_corps_commander = {
+            name = "Erwin Rommel"
+            portrait_path = "gfx/leaders/EUR/Portrait_Germany_Erwin_Rommel.dds"
+            traits = { trickster trait_reckless war_hero armor_officer media_personality }
+            skill = 4
+            attack_skill = 4
+            defense_skill = 4
+            planning_skill = 2
+            logistics_skill = 3
+        }
+        
+        create_corps_commander = {
+            name = "Erich von Manstein"
+            portrait_path = "gfx/leaders/EUR/Portrait_Germany_Erich_von_Manstein.dds"
+            traits = { trickster armor_officer brilliant_strategist trait_engineer }
+            skill = 4
+            attack_skill = 2
+            defense_skill = 4
+            planning_skill = 3
+            logistics_skill = 4
+        }
+        
+        create_corps_commander = {
+            name = "Heinz Guderian"
+            portrait_path = "gfx/leaders/EUR/Portrait_Germany_Heinz_Guderian.dds"
+            traits = { trickster brilliant_strategist panzer_leader armor_officer career_officer }
+            skill = 4
+            attack_skill = 2
+            defense_skill = 4
+            planning_skill = 4
+            logistics_skill = 3
+        }
+        
+        create_corps_commander = {
+            name = "Wilhelm List"
+            portrait_path = "gfx/leaders/EUR/Portrait_Germany_Wilhelm_List.dds"
+            traits = { career_officer inflexible_strategist }
+            skill = 2
+            attack_skill = 2
+            defense_skill = 2
+            planning_skill = 1
+            logistics_skill = 2
+        }
+        
+        create_corps_commander = {
+            name = "Ewald von Kleist"
+            desc = ""
+            portrait_path = "gfx/leaders/EUR/Portrait_Germany_Ewald_von_Kleist.dds"
+            traits = { armor_officer trait_cautious }
+            skill = 2
+            attack_skill = 2
+            defense_skill = 1
+            planning_skill = 2
+            logistics_skill = 2
+        }
+        
+        create_corps_commander = {
+            name = "Fedor von Bock"
+            portrait_path = "gfx/leaders/EUR/Portrait_Germany_Fedor_von_Bock.dds"
+            traits = { harsh_leader trait_cautious }
+            skill = 4
+            attack_skill = 4
+            defense_skill = 3
+            planning_skill = 4
+            logistics_skill = 2
+        }
+        
+        create_field_marshal = {
+            name = "Walter Model"
+            portrait_path = "gfx/leaders/EUR/Portrait_Germany_Walter_Model.dds"
+            traits = { defensive_doctrine brilliant_strategist trait_cautious politically_connected }
+            skill = 3
+            attack_skill = 2
+            defense_skill = 4
+            planning_skill = 2
+            logistics_skill = 2
+        }
+        
+        create_corps_commander = {
+            name = "Maximilian von Weichs"
+            portrait_path = "gfx/leaders/EUR/Portrait_Germany_Maximilian_von_Weichs.dds"
+            traits = { cavalry_officer }
+            skill = 4
+            attack_skill = 4
+            defense_skill = 2
+            planning_skill = 3
+            logistics_skill = 4
+        }
+        
+        create_corps_commander = {
+            name = "Wilhelm Ritter von Leeb"
+            portrait_path = "gfx/leaders/EUR/Portrait_Germany_Wilhelm_Ritter_von_Leeb.dds"
+            traits = { old_guard infantry_officer }
+            skill = 3
+            attack_skill = 4
+            defense_skill = 3
+            planning_skill = 1
+            logistics_skill = 2
+        }
+        
+        create_corps_commander = {
+            name = "Georg-Hans Reinhardt"
+            portrait_path = "gfx/leaders/EUR/Portrait_Germany_Georg_von_Reinhardt.dds"
+            traits = { trait_cautious armor_officer }
+            skill = 3
+            attack_skill = 1
+            defense_skill = 2
+            planning_skill = 4
+            logistics_skill = 3
+        }
+        
+        create_corps_commander = {
+            name = "Walter Krüger"
+            portrait_path = "gfx/leaders/EUR/Portrait_Germany_Walter_Kruger.dds"
+            traits = { armor_officer trait_reckless politically_connected}
+            skill = 3
+            attack_skill = 3
+            defense_skill = 3
+            planning_skill = 1
+            logistics_skill = 3
+        }
+        
+        create_corps_commander = {
+            name = "Kurt Student"
+            portrait_path = "gfx/leaders/EUR/Portrait_Germany_Kurt_Student.dds"
+            traits = { commando trait_reckless }
+            skill = 4
+            attack_skill = 4
+            defense_skill = 2
+            planning_skill = 4
+            logistics_skill = 3
+        }
+        
+        create_corps_commander = {
+            name = "Erwin von Witzleben"
+            portrait_path = "gfx/leaders/EUR/Portrait_Germany_Erwin_von_Witzleben.dds"
+            traits = { infantry_officer career_officer }
+            skill = 4
+            attack_skill = 4
+            defense_skill = 3
+            planning_skill = 2
+            logistics_skill = 4
+        }
+        
+        create_corps_commander = {
+            name = "Hermann Hoth"
+            portrait_path = "gfx/leaders/EUR/Portrait_Germany_Herman_Hoth.dds"
+            traits = { trait_reckless armor_officer }
+            skill = 3
+            attack_skill = 2
+            defense_skill = 2
+            planning_skill = 3
+            logistics_skill = 3
+        }
+        
+        create_corps_commander = {
+            name = "Johannes Blaskowitz"
+            portrait_path = "gfx/leaders/EUR/Portrait_Germany_Johannes_Blaskowitz.dds"
+            traits = { infantry_officer }
+            skill = 3
+            attack_skill = 3
+            defense_skill = 2
+            planning_skill = 3
+            logistics_skill = 2
+        }
+        
+        create_corps_commander = {
+            name = "gfx/leaders/EUR/Paul Hausser"
+            portrait_path = "gfx/leaders/EUR/Portrait_Germany_Paul_Hausser.dds"
+            traits = {  armor_officer politically_connected }
+            skill = 4
+            attack_skill = 3
+            defense_skill = 3
+            planning_skill = 4
+            logistics_skill = 3
+        }
+        
+        create_corps_commander = {
+            name = "Friedrich Schulz"
+            portrait_path = "gfx/leaders/EUR/Portrait_Germany_Friedrich_Schulz.dds"
+            traits = { infantry_officer }
+            skill = 3
+            attack_skill = 3
+            defense_skill = 3
+            planning_skill = 1
+            logistics_skill = 3
+        }
+        
+        create_corps_commander = {
+            name = "Georg von Küchler"
+            portrait_path = "gfx/leaders/EUR/Portrait_Germany_Georg_von_Kuchler.dds"
+            traits = {  }
+            skill = 4
+            attack_skill = 3
+            defense_skill = 2
+            planning_skill = 4
+            logistics_skill = 4
+        }
+        
+        create_corps_commander = {
+            name = "Alfred Jodl"
+            portrait_path = "gfx/leaders/EUR/Portrait_Germany_Alfred_Jodl.dds"
+            traits = { politically_connected career_officer }
+            skill = 3
+            attack_skill = 2
+            defense_skill = 2
+            planning_skill = 3
+            logistics_skill = 3
+        }
+        
+        create_corps_commander = {
+            name = "Sepp Dietrich"
+            portrait_path = "gfx/leaders/EUR/Portrait_Germany_Josef_Dietrich.dds"
+            traits = { armor_officer politically_connected brilliant_strategist trait_reckless }
+            skill = 4
+            attack_skill = 2
+            defense_skill = 3
+            planning_skill = 4
+            logistics_skill = 4
+        }
+        
+        create_corps_commander = {
+            name = "Hasso von Manteuffel"
+                portrait_path = "gfx/leaders/EUR/Portrait_Germany_Hasso_von_Manteuffel.dds"
+            traits = { armor_officer career_officer trait_cautious }
+            skill = 4
+            attack_skill = 4
+            defense_skill = 3
+            planning_skill = 3
+            logistics_skill = 3
+        }
+        
+        create_corps_commander = {
+            name = "Albert Kesselring"
+            portrait_path = "gfx/leaders/EUR/Portrait_Germany_Albert_Kesselring.dds"
+            traits = { brilliant_strategist trait_cautious war_hero }
+            skill = 4
+            attack_skill = 2
+            defense_skill = 4
+            planning_skill = 3
+            logistics_skill = 4
+        }
+        
+        create_corps_commander = {
+            name = "Gotthard Heinrici"
+            portrait_path = "gfx/leaders/EUR/Portrait_Germany_Gotthard_Heinrici.dds"
+            traits = { trait_engineer infantry_officer trait_cautious }
+            skill = 3
+            attack_skill = 3
+            defense_skill = 1
+            planning_skill = 3
+            logistics_skill = 3
+        }
+        
+        create_corps_commander = {
+            name = "Ernst-Eberhard Hell"
+            portrait_path = "gfx/leaders/EUR/Portrait_Germany_Ernst_Eberhard_Hell.dds"
+            traits = { winter_specialist trait_engineer war_hero }
+            skill = 3
+            attack_skill = 3
+            defense_skill = 2
+            planning_skill = 3
+            logistics_skill = 2
+        }
+        
+        create_corps_commander = {
+            name = "Felix Steiner"
+            portrait_path = "gfx/leaders/EUR/Portrait_ger_felix_steiner.dds"
+            traits = {  }
+            skill = 3
+            attack_skill = 3
+            defense_skill = 2
+            planning_skill = 3
+            logistics_skill = 2
+        }
+        
+        create_navy_leader = {
+            name = "Karl Dönitz"
+            portrait_path = "gfx/leaders/EUR/Portrait_Germany_Karl_Donitz.dds"
+            traits = { navy_career_officer seawolf }
+            skill = 5
+            attack_skill = 5
+            defense_skill = 3
+            maneuvering_skill = 3
+            coordination_skill = 5
+        }
+        
+        create_navy_leader = {
+            name = "Erich Raeder"
+                portrait_path = "gfx/leaders/EUR/Portrait_Germany_Erich_Raeder.dds"
+            traits = { naval_lineage battleship_adherent }
+            skill = 4
+            attack_skill = 3
+            defense_skill = 4
+            maneuvering_skill = 3
+            coordination_skill = 3
+        }
+        
+        create_navy_leader = {
+            name = "Alfred Saalwächter"
+                portrait_path = "gfx/leaders/EUR/Portrait_Germany_Alfred_Saalwachter.dds"
+            traits = { old_guard_navy bold}
+            skill = 4
+            attack_skill = 4
+            defense_skill = 2
+            maneuvering_skill = 3
+            coordination_skill = 4
+        }
+        
+        create_navy_leader = {
+            name = "Hermann Boehm"
+                portrait_path = "gfx/leaders/EUR/Portrait_Germany_Hermann_Boehm.dds"
+            traits = { craven superior_tactician }
+            skill = 4
+            attack_skill = 3
+            defense_skill = 4
+            maneuvering_skill = 4
+            coordination_skill = 2
+        }
+        
+        create_navy_leader = {
+            name = "Wilhelm Marschall"
+                portrait_path = "gfx/leaders/EUR/Portrait_Germany_Wilhelm_Marschall.dds"
+            traits = { old_guard_navy bold}
+            skill = 4
+            attack_skill = 4
+            defense_skill = 2
+            maneuvering_skill = 3
+            coordination_skill = 4
+        }
+        
+        create_navy_leader = {
+            name = "Günther Lütjens"
+                portrait_path = "gfx/leaders/EUR/Portrait_Germany_Gunter_Lutjens.dds"
+            traits = { gentlemanly navy_career_officer superior_tactician }
+            skill = 3
+            attack_skill = 4
+            defense_skill = 1
+            maneuvering_skill = 1
+            coordination_skill = 4
+        }
+    }
+}
+
+EAR_corps_commander_generation = {
+    EAR = {
+        create_corps_commander = {
+            name = "Tomoyuki Yamashita"
+                picture = "Portrait_Japan_Tomoyuki_Yamashita.dds"
+            traits = {
+                trickster trait_engineer brilliant_strategist politically_connected
+            }
+            skill = 5
+            attack_skill = 4
+            defense_skill = 5
+            planning_skill = 3
+            logistics_skill = 4
+        }
+        
+        create_field_marshal = {
+            name = "Hisaichi Terauchi"
+            picture = "Portrait_Japan_Hisaichi_Terauchi.dds"
+            traits = { 
+                offensive_doctrine
+                JAP_samurai_lineage   # hakushaku
+                politically_connected
+            }
+            skill = 4
+            attack_skill = 4
+            defense_skill = 4
+            planning_skill = 3
+            logistics_skill = 2
+        }
+        
+        create_field_marshal = {
+            name = "Shunroku Hata"
+                picture = "Portrait_Japan_Shunroku_Hata.dds"
+            traits = { offensive_doctrine JAP_samurai_lineage }
+            skill = 4
+            attack_skill = 3
+            defense_skill = 4
+            planning_skill = 2
+            logistics_skill = 4
+        }
+        
+        create_corps_commander = {
+            name = "Akira Muto"
+                picture = "Portrait_Japan_Akira_Muto.dds"
+            traits = { career_officer  }
+            skill = 2
+            attack_skill = 2
+            defense_skill = 2
+            planning_skill = 2
+            logistics_skill = 1
+        }
+        
+        create_corps_commander = {
+            name = "Kanji Ishiwara"
+                picture = "Portrait_Japan_Kanji_Ishiwara.dds"
+            traits = { JAP_samurai_lineage }
+            skill = 1 
+            attack_skill = 1
+            defense_skill = 1
+            planning_skill = 1
+            logistics_skill = 1
+        }
+        
+        create_corps_commander = {
+            name = "Shizuichi Tanaka"
+                picture = "Portrait_Japan_Shizuichi_Tanaka.dds"
+            traits = { trickster career_officer infantry_officer }
+            skill = 4
+            attack_skill = 4
+            defense_skill = 3
+            planning_skill = 2
+            logistics_skill = 4
+        }
+        
+        create_corps_commander = {
+            name = "Yasuji Okamura"
+                picture = "Portrait_Japan_Yasuji_Okamura.dds"
+            traits = { trait_reckless }
+            skill = 1
+            attack_skill = 1
+            defense_skill = 1
+            planning_skill = 1
+            logistics_skill = 1
+        }
+        
+        create_corps_commander = {
+            name = "Toshizo Nishio" #Toshizo
+                picture = "Portrait_Japan_Toshizo_Nishio.dds"
+            traits = { brilliant_strategist infantry_officer }
+            skill = 3
+            attack_skill = 3
+            defense_skill = 2
+            planning_skill = 3
+            logistics_skill = 2
+        }
+        
+        create_corps_commander = {
+            name = "Rikichi Ando" #Ando
+                picture = "Portrait_Japan_Rikichi_Ando.dds"
+            traits = { career_officer }
+            skill = 3
+            attack_skill = 1
+            defense_skill = 3
+            planning_skill = 3
+            logistics_skill = 3
+        }
+        
+        create_corps_commander = {
+            name = "Naruhiko Higashikuni"
+            picture = "Portrait_Japan_Naruhiko_Higashikuni.dds"
+            traits = { JAP_samurai_lineage politically_connected }
+            skill = 3 
+            attack_skill = 3
+            defense_skill = 3
+            planning_skill = 2
+            logistics_skill = 2
+        }
+        
+        create_corps_commander = {
+            name = "Seishiro Itagaki"
+                picture = "Portrait_Japan_Seishiro_Itagaki.dds"
+            traits = { JAP_samurai_lineage inflexible_strategist trait_reckless }
+            skill = 3
+            attack_skill = 3
+            defense_skill = 3
+            planning_skill = 2
+            logistics_skill = 2
+        }
+        
+        create_corps_commander = {
+            name = "Takashi Sakai"
+                picture = "Portrait_Japan_Takashi_Sakai.dds"
+            traits = { infantry_officer trait_reckless }
+            skill = 3
+            attack_skill = 2
+            defense_skill = 2
+            planning_skill = 3
+            logistics_skill = 3
+        }
+        
+        create_corps_commander = {
+            name = "Kenji Doihara"
+                picture = "Portrait_Japan_Kenji_Doihara.dds"
+            traits = { career_officer substance_abuser }
+            skill = 1 
+            attack_skill = 1
+            defense_skill = 1
+            planning_skill = 1
+            logistics_skill = 1
+        }
+        
+        create_corps_commander = {
+            name = "Kenkichi Ueda"
+                picture = "Portrait_Japan_Kenkichi_Ueda.dds"
+            traits = { old_guard cavalry_officer trait_reckless }
+            skill = 4
+            attack_skill = 3
+            defense_skill = 2
+            planning_skill = 4
+            logistics_skill = 4
+        }
+        
+        create_corps_commander = {
+            name = "Shigeru Honjo"
+                picture = "Portrait_Japan_Shigeru_Honjo.dds"
+            traits = { old_guard war_hero }
+            skill = 1
+            attack_skill = 1
+            defense_skill = 1
+            planning_skill = 1
+            logistics_skill = 1
+        }
+        
+        create_corps_commander = {
+            name = "Yoshijiro Umezu"
+                picture = "Portrait_Japan_Yoshijiro_Umezu.dds"
+            traits = { trait_cautious politically_connected }
+            skill = 3
+            attack_skill = 3
+            defense_skill = 3
+            planning_skill = 1
+            logistics_skill = 3
+        }
+        
+        create_corps_commander = {
+            name = "Otozo Yamada"
+                picture = "Portrait_Japan_Otozo_Yamada.dds"
+            traits = { cavalry_officer career_officer }
+            skill = 3
+            attack_skill = 3
+            defense_skill = 1
+            planning_skill = 3
+            logistics_skill = 3
+        }
+        
+        create_corps_commander = {
+            name = "Hatazo Adachi"
+                picture = "Portrait_Japan_Hatazo_Adachi.dds"
+            traits = { trickster JAP_samurai_lineage trait_reckless infantry_officer }
+            skill = 2
+            attack_skill = 1
+            defense_skill = 2
+            planning_skill = 2
+            logistics_skill = 2
+        }
+        
+        create_corps_commander = {
+            name = "Iwane Matsui"
+                picture = "Portrait_Japan_Iwane_Matsui.dds"
+            traits = { old_guard trait_reckless }
+            skill = 1
+            attack_skill = 1
+            defense_skill = 1
+            planning_skill = 1
+            logistics_skill = 1
+        }
+        create_corps_commander = {
+            name = "Sadao Araki"
+                picture = "Portrait_Japan_Sadao_Araki.dds"
+            traits = { JAP_samurai_lineage }
+            skill = 2
+            attack_skill = 1
+            defense_skill = 2
+            planning_skill = 2
+            logistics_skill = 2
+        }
+        
+        create_corps_commander = {
+            name = "Keisuke Fujie"
+                picture = "Portrait_Japan_Keisuke_Fujie.dds"
+            traits = { fortress_buster career_officer politically_connected } 
+            skill = 3
+            attack_skill = 1
+            defense_skill = 3
+            planning_skill = 3
+            logistics_skill = 3
+        }
+        create_corps_commander = {
+            name = "Kiichiro Higuchi"
+                picture = "Portrait_Japan_Kiichiro_Higuchi.dds"
+            traits = { career_officer trait_cautious }
+            skill = 2
+            attack_skill = 2
+            defense_skill = 2
+            planning_skill = 2
+            logistics_skill = 1
+        }
+        
+        create_corps_commander = {
+            name = "Masaharu Homma"
+                picture = "Portrait_Japan_Masaharu_Homma.dds"
+            traits = { media_personality trait_cautious }
+            skill = 2
+            attack_skill = 2
+            defense_skill = 2
+            planning_skill = 1
+            logistics_skill = 2
+        }
+        
+        create_corps_commander = {
+            name = "Harukichi Hyakutake"
+                picture = "Portrait_Japan_Harukichi_Hyakutake.dds"
+            traits = { infantry_officer  }
+            skill = 3
+            attack_skill = 2
+            defense_skill = 2
+            planning_skill = 3
+            logistics_skill = 3
+        }
+        
+        create_corps_commander = {
+            name = "Jo Iimura"
+                picture = "Portrait_Japan_Jo_Iimura.dds"
+            traits = { career_officer }
+            skill = 2
+            attack_skill = 1
+            defense_skill = 2
+            planning_skill = 2
+            logistics_skill = 2
+        }
+        
+        create_corps_commander = {
+            name = "Hitoshi Imamura"
+                picture = "Portrait_Japan_Hitoshi_Imamura.dds"
+            traits = {  commando career_officer infantry_officer }
+            skill = 3
+            attack_skill = 3
+            defense_skill = 1
+            planning_skill = 3
+            logistics_skill = 3
+        }
+        
+        create_corps_commander = {
+            name = "Masatane Kanda"
+                picture = "Portrait_Japan_Masatane_Kanda.dds"
+            traits = { trait_cautious }
+            skill = 2
+            attack_skill = 2
+            defense_skill = 2
+            planning_skill = 1
+            logistics_skill = 2
+        }
+        
+        create_corps_commander = {
+            name = "Kuniaki Koiso"
+                picture = "Portrait_Japan_Kuniaki_Koiso.dds"
+            traits = { JAP_samurai_lineage old_guard politically_connected }
+            skill = 2
+            attack_skill = 2
+            defense_skill = 2
+            planning_skill = 2
+            logistics_skill = 1
+        }
+        
+        create_field_marshal = {
+            name = "Tu Yu-ming"
+            gfx = "GFX_portrait_chi_du_yuming"
+            traits = { defensive_doctrine trait_cautious armor_officer harsh_leader }
+            skill = 4
+            attack_skill = 4
+            defense_skill = 4
+            planning_skill = 2
+            logistics_skill = 3
+        }
+        
+        create_field_marshal = {
+            name = "Hsueh Yueh"
+            gfx = "GFX_portrait_chi_xue_yue"
+            traits = { offensive_doctrine trait_reckless brilliant_strategist war_hero }
+            skill = 3
+            attack_skill = 3
+            defense_skill = 3
+            planning_skill = 1
+            logistics_skill = 3
+        }
+        
+        create_field_marshal = {
+            name = "Tai An-lan"
+            gfx = "GFX_portrait_chi_tai_an_lan"
+            traits = {  offensive_doctrine trait_reckless career_officer }
+            skill = 3
+            attack_skill = 3
+            defense_skill = 3
+            planning_skill = 3
+            logistics_skill = 1
+        }
+        
+        create_field_marshal = {
+            name = "Wang Yao-wu"
+            gfx = "GFX_portrait_chi_wang_yaowu"
+            traits = { defensive_doctrine trait_cautious infantry_officer }
+            skill = 2
+            attack_skill = 2
+            defense_skill = 1
+            planning_skill = 2
+            logistics_skill = 2
+        }
+        
+        create_corps_commander = {
+            name = "Sun Li Jen"
+            gfx = "GFX_portrait_chi_sun_li_jen"
+            traits = { brilliant_strategist }
+            skill = 4
+            attack_skill = 5
+            defense_skill = 4
+            planning_skill = 2
+            logistics_skill = 2
+        }
+        
+        create_corps_commander = {
+            name = "Hu Zongnan"
+            gfx = "GFX_portrait_chi_hu_zongnan"
+            traits = { politically_connected }
+            skill = 4
+            attack_skill = 4
+            defense_skill = 3
+            planning_skill = 3
+            logistics_skill = 3
+        }
+        
+        create_corps_commander = {
+            name = "Gu Zhutong"
+            gfx = "GFX_portrait_chi_gu_zhutong"
+            traits = { career_officer }
+            skill = 3
+            attack_skill = 3
+            defense_skill = 3
+            planning_skill = 2
+            logistics_skill = 2
+        }
+        
+        create_corps_commander = {
+            name = "Wei Lihuang"
+            gfx = "GFX_portrait_chi_wei_lihuang"
+            traits = { infantry_officer }
+            skill = 3
+            attack_skill = 3
+            defense_skill = 3
+            planning_skill = 2
+            logistics_skill = 2
+        }
+        
+        create_corps_commander = {
+            name = "Fu Zuoyi"
+            gfx = "GFX_portrait_chi_fu_zuoyi"
+            traits = { }
+            skill = 3
+            attack_skill = 3
+            defense_skill = 3
+            planning_skill = 2
+            logistics_skill = 2
+        }
+        
+        create_field_marshal = {
+            name = "Zhang Xueliang"
+            gfx = "GFX_portrait_chi_zhang_xueliang"
+            traits = { }
+            skill = 3
+            attack_skill = 3
+            defense_skill = 3
+            planning_skill = 2
+            logistics_skill = 2
+        }
+        
+        create_navy_leader = {
+            name = "Isoroku Yamamoto"
+                picture = "Portrait_Japan_Isoroku_Yamamoto.dds"
+            traits = { aviation_enthusiast bold air_controller flight_deck_manager superior_tactician spotter }
+            skill = 5
+            attack_skill = 5
+            defense_skill = 2
+            maneuvering_skill = 3
+            coordination_skill = 6
+        }
+        
+        create_navy_leader = {
+            name = "Mineichi Koga"
+                picture = "Portrait_Japan_Mineichi_Koga.dds"
+            traits = { bold battleship_adherent superior_tactician spotter }
+            skill = 4
+            attack_skill = 4
+            defense_skill = 2
+            maneuvering_skill = 4
+            coordination_skill = 3
+        }
+        
+        create_navy_leader = {
+            name = "Kiyoshi Hasegawa"
+                picture = "Portrait_Japan_Hasegawa_Kiyoshi.dds"
+            traits = { gentlemanly }
+            skill = 2
+            attack_skill = 2
+            defense_skill = 2
+            maneuvering_skill = 1
+            coordination_skill = 2
+        }
+        
+        # Keen on planes
+        create_navy_leader = {
+            name = "Shigeyoshi Inoue"
+                picture = "Portrait_Japan_Shigeyoshi_Inoue.dds"
+            traits = { aviation_enthusiast navy_career_officer }
+            skill = 2
+            attack_skill = 2
+            defense_skill = 1
+            maneuvering_skill = 1
+            coordination_skill = 3
+        }
+        
+        create_navy_leader = {
+            name = "Nobutake Kondō"
+                picture = "Portrait_Japan_Nobutake_Kondo.dds"
+            traits = { battleship_adherent naval_lineage fly_swatter }
+            skill = 3
+            attack_skill = 4
+            defense_skill = 2
+            maneuvering_skill = 2
+            coordination_skill = 2
+        }
+        
+        create_navy_leader = {
+            name = "Takeo Takagi"
+                picture = "Portrait_Japan_Takeo_Takagi.dds"
+            traits = { spotter }
+            skill = 3
+            attack_skill = 3
+            defense_skill = 1
+            maneuvering_skill = 3
+            coordination_skill = 3
+        }
+        
+        create_navy_leader = {
+            name = "Soemu Toyoda"
+                picture = "Portrait_Japan_Soemu_Toyoda.dds"
+            traits = { bold ironside old_guard_navy }
+            skill = 3
+            attack_skill = 5
+            defense_skill = 1
+            maneuvering_skill = 2
+            coordination_skill = 2
+        }
+        
+        create_navy_leader = {
+            name = "Jisaburo Ozawa"
+                picture = "Portrait_Japan_Jisaburo_Ozawa.dds"
+            traits = { bold aviation_enthusiast navy_career_officer blockade_runner superior_tactician }
+            skill = 5
+            attack_skill = 5
+            defense_skill = 3
+            maneuvering_skill = 3
+            coordination_skill = 4
+        }
+        
+        create_navy_leader = {
+            name = "Zengo Yoshida"
+                picture = "Portrait_Japan_Zengo_Yoshida.dds"
+            traits = { old_guard_navy }
+            skill = 2
+            attack_skill = 2
+            defense_skill = 2
+            maneuvering_skill = 1
+            coordination_skill = 2
+        }
+        
+        create_navy_leader = {
+            name = "Hiroaki Abe"
+                picture = "Portrait_Japan_Hiroaki_Abe.dds"
+            traits = { battleship_adherent }
+            skill = 2
+            attack_skill = 3
+            defense_skill = 1
+            maneuvering_skill = 2
+            coordination_skill = 1
+        }
+        
+        create_navy_leader = {
+            name = "Tadashige Daigo"
+                picture = "Portrait_Japan_Tadashige_Daigo.dds"
+            traits = { navy_career_officer seawolf }
+            skill = 1
+            attack_skill = 1
+            defense_skill = 1
+            maneuvering_skill = 1
+            coordination_skill = 1
+        }
+        
+        create_navy_leader = {
+            name = "Gengo Hyakutake"
+                picture = "Portrait_Japan_Gengo_Hyakutake.dds"
+            traits = { gentlemanly }
+            skill = 2
+            attack_skill = 1
+            defense_skill = 2
+            maneuvering_skill = 2
+            coordination_skill = 2
+        }
+    }
+}
+
+NAF_corps_commander_generation = {
+    NAF = {
+        create_corps_commander = {
+            name = "George S. Patton"
+            picture = "Portrait_USA_George_S_Patton.dds"
+            traits = {  trickster armor_officer panzer_leader war_hero trait_reckless }
+            skill = 5
+        
+            attack_skill = 7 
+            defense_skill = 3
+            planning_skill = 2
+            logistics_skill = 4
+        }
+        
+        create_corps_commander = {
+            name = "Omar Bradley"
+            picture = "Portrait_USA_Omar_Bradley.dds"
+            traits = {  trait_engineer trait_cautious brilliant_strategist harsh_leader }
+            skill = 5
+        
+            attack_skill = 3
+            defense_skill = 5
+            planning_skill = 4
+            logistics_skill = 4
+        }
+        
+        create_field_marshal = {
+            name = "Dwight D. Eisenhower"
+            picture = "Portrait_USA_Dwight_D_Eisenhower.dds"
+            traits = { logistics_wizard organizer offensive_doctrine trait_cautious armor_officer politically_connected }
+            skill = 5
+            attack_skill = 3
+            defense_skill = 3
+            planning_skill = 5
+            logistics_skill = 5
+        }
+        
+        create_corps_commander = {
+            name = "Geoffrey Keyes"
+            picture = "Portrait_USA_Geoffrey_Keyes.dds"
+            traits = { armor_officer career_officer }
+            skill = 2
+        
+            attack_skill = 2
+            defense_skill = 2
+            planning_skill = 2
+            logistics_skill = 1
+        }
+        
+        create_corps_commander = {
+            name = "Lucian Truscott"
+            picture = "Portrait_USA_Lucian_Truscott.dds"
+            traits = { trait_engineer commando cavalry_officer }
+            skill = 3
+        
+            attack_skill = 3
+            defense_skill = 3
+            planning_skill = 2
+            logistics_skill = 2
+        }
+        
+        create_corps_commander = {
+            name = "Mark Clark"
+            picture = "Portrait_USA_Mark_W_Clark.dds"
+            traits = { infantry_officer trait_reckless }
+            skill = 4
+        
+            attack_skill = 5
+            defense_skill = 3
+            planning_skill = 2
+            logistics_skill = 3
+        }
+        
+        create_field_marshal = {
+            name = "Douglas MacArthur"
+            picture = "Portrait_USA_Douglas_MacArthur.dds"
+            traits = {  offensive_doctrine brilliant_strategist career_officer media_personality politically_connected }
+            skill = 4
+        
+            attack_skill = 4
+            defense_skill = 3
+            planning_skill = 4
+            logistics_skill = 2
+        }
+        
+        create_corps_commander = {
+            name = "Walter Krueger"
+            picture = "Portrait_USA_Walter_Krueger.dds"
+            traits = { armor_officer career_officer brilliant_strategist }
+            skill = 3
+        
+            attack_skill = 3
+            defense_skill = 3
+            planning_skill = 1
+            logistics_skill = 2
+        }
+        
+        create_corps_commander = {
+            name = "Lloyd Fredendall"
+            picture = "Portrait_USA_Lloyd_Fredendall.dds"
+            traits = { old_guard infantry_officer inflexible_strategist }
+            skill = 2
+        
+            attack_skill = 3
+            defense_skill = 2
+            planning_skill = 1
+            logistics_skill = 1
+        }
+        
+        create_corps_commander = {
+            name = "Leslie McNair"
+            picture = "Portrait_USA_Lesley_McNair.dds"
+            traits = {  old_guard career_officer armor_officer }
+            skill = 3
+        
+            attack_skill = 1
+            defense_skill = 2
+            planning_skill = 4
+            logistics_skill = 2
+        }
+        
+        create_corps_commander = {
+            name = "Jonathan Wainwright"
+            picture = "Portrait_USA_Jonathan_Wainwright.dds"
+            traits = {  }
+            skill = 1
+            attack_skill = 1
+            defense_skill = 1
+            planning_skill = 1
+            logistics_skill = 1
+        }
+        
+        create_corps_commander = {
+            name = "Russell Hartle"
+            picture = "Portrait_USA_Russell_P_Hartle.dds"
+            traits = { infantry_officer }
+            skill = 1
+            rank = 1
+            attack_skill = 1
+            defense_skill = 1
+            planning_skill = 1
+            logistics_skill = 1
+        }
+        
+        create_corps_commander = {
+            name = "Leonard Gerow"
+            picture = "Portrait_USA_Leonard_T_Gerow.dds"
+            traits = { infantry_officer }
+            skill = 3
+            attack_skill = 3
+            defense_skill = 2
+            planning_skill = 2
+            logistics_skill = 3
+        }
+        
+        create_corps_commander = {
+            name = "Edward Brooks"
+            picture = "Portrait_USA_Edward_Brooks.dds"
+            traits = { armor_officer trait_reckless }
+            skill = 2
+            attack_skill = 2
+            defense_skill = 1
+            planning_skill = 2
+            logistics_skill = 2
+        }
+        
+        create_corps_commander = {
+            name = "Clarence Huebner"
+            picture = "Portrait_USA_Clarence_Huebner.dds"
+            traits = { old_guard harsh_leader }
+            skill = 2
+            attack_skill = 1
+            defense_skill = 2
+            planning_skill = 2
+            logistics_skill = 2
+        }
+        
+        create_corps_commander = {
+            name = "Alexander Patch"
+            picture = "Portrait_USA_Alexander_Patch.dds"
+            traits = {  commando infantry_officer }
+            skill = 3
+        
+            attack_skill = 3
+            defense_skill = 2
+            planning_skill = 2
+            logistics_skill = 3
+        }
+        
+        create_corps_commander = {
+            name = "William Simpson"
+            picture = "Portrait_USA_William_Hood_Simpson.dds"
+            traits = { infantry_officer }
+            skill = 3
+            
+            attack_skill = 2
+            defense_skill = 4
+            planning_skill = 2
+            logistics_skill = 2
+        }
+        
+        create_corps_commander = {
+            name = "J. Lawton Collins"
+            picture = "Portrait_USA_Lawton_Collins.dds"
+            traits = {  trickster career_officer }
+            skill = 3
+            attack_skill = 3
+            defense_skill = 2
+            planning_skill = 3
+            logistics_skill = 2
+        }
+        
+        create_corps_commander = {
+            name = "Courtney Hodges"
+            picture = "Portrait_USA_Cortney_Hodges.dds"
+            traits = {  panzer_leader career_officer infantry_officer }
+            skill = 4
+            attack_skill = 4
+            defense_skill = 3
+            planning_skill = 2
+            logistics_skill = 4
+        }
+        
+        create_corps_commander = {
+            name = "Joseph Stilwell"
+            picture = "Portrait_USA_Joseph_Stilwell.dds"
+            traits = { politically_connected infantry_officer career_officer harsh_leader }
+            skill = 1 
+            attack_skill = 1
+            defense_skill = 1
+            planning_skill = 1
+            logistics_skill = 1
+        }
+        
+        create_corps_commander = {
+            name = "Oscar Griswold"
+            picture = "Portrait_USA_Oscar_Griswold.dds"
+            traits = { infantry_officer  }
+            skill = 2
+            attack_skill = 2
+            defense_skill = 1
+            planning_skill = 2
+            logistics_skill = 2
+        }
+        
+        create_corps_commander = {
+            name = "Maurice Rose"
+            picture = "Portrait_USA_Maurice_Rose.dds"
+            traits = { armor_officer trait_reckless brilliant_strategist  }
+            skill = 3
+            attack_skill = 4
+            defense_skill = 1
+            planning_skill = 2
+            logistics_skill = 3
+        }
+        
+        create_navy_leader = {
+            name = "Ernest King"
+                picture = "Portrait_USA_Earnest_King.dds"
+            traits = { navy_career_officer aviation_enthusiast caustic_personality blockade_runner superior_tactician }
+            skill = 5
+            attack_skill = 4
+            defense_skill = 3
+            maneuvering_skill = 3
+            coordination_skill = 6
+        }
+        
+        create_navy_leader = {
+            name = "Chester W. Nimitz"
+                picture = "Portrait_USA_Chester_W_Nimitz.dds"
+            traits = { gentlemanly blue_water_expert naval_lineage superior_tactician spotter }
+            skill = 5
+            attack_skill = 3
+            defense_skill = 3
+            maneuvering_skill = 5
+            coordination_skill = 5
+        }
+        
+        create_navy_leader = {
+            name = "William Halsey, Jr."
+                picture = "Portrait_USA_William_Halsey_Jr.dds"
+            traits = { bold aviation_enthusiast superior_tactician spotter }
+            skill = 4
+            attack_skill = 5
+            defense_skill = 3
+            maneuvering_skill = 3
+            coordination_skill = 2
+        }
+        
+        create_navy_leader = {
+            name = "Frank Jack Fletcher"
+                picture = "Portrait_USA_Frank_Jack_Fletcher.dds"
+            traits = { gunnery_expert superior_tactician spotter }
+            skill = 3
+            attack_skill = 2
+            defense_skill = 2
+            maneuvering_skill = 3
+            coordination_skill = 3
+        }
+        
+        create_navy_leader = {
+            name = "Raymond A. Spruance"
+                picture = "Portrait_USA_Raymond_A_Spruance.dds"
+            traits = { navy_career_officer gentlemanly superior_tactician }
+            skill = 4
+            attack_skill = 4
+            defense_skill = 3
+            maneuvering_skill = 3
+            coordination_skill = 3
+        }
+        
+        create_navy_leader = {
+            name = "Harold Rainsford Stark"
+                picture = "Portrait_USA_Harold_Rainsford_Stark.dds"
+            traits = { cuts_corners blockade_runner spotter }
+            skill = 2
+            attack_skill = 2
+            defense_skill = 1
+            maneuvering_skill = 2
+            coordination_skill = 2
+        }
+        
+        create_navy_leader = {
+            name = "Arleigh Burke"
+                picture = "Portrait_USA_Arleigh_Burke.dds"
+            traits = { bold fleet_protector old_guard_navy superior_tactician }
+            skill = 4
+            attack_skill = 3
+            defense_skill = 3
+            maneuvering_skill = 3
+            coordination_skill = 4
+        }
+        
+        create_navy_leader = {
+            name = "Charles M. Cooke, Jr."
+                picture = "Portrait_USA_Charles_M_Cooke.dds"
+            traits = { career_officer }
+            skill = 2
+            attack_skill = 1
+            defense_skill = 1
+            maneuvering_skill = 2
+            coordination_skill = 3
+        }
+        
+        create_corps_commander = {
+            name = "Thomas Victor Anderson"
+            portrait_path = "gfx/leaders/Europe/Portrait_Europe_Generic_land_3.dds"
+            traits = {  }
+            skill = 4
+            attack_skill = 2
+            defense_skill = 3
+            planning_skill = 3
+            logistics_skill = 5
+        }
+        
+        create_field_marshal = {
+            name = "Charles Foulkes"
+            gfx = "GFX_CAN_charles_foulkes"
+            traits = { }
+            skill = 4
+            attack_skill = 4
+            defense_skill = 2
+            planning_skill = 4
+            logistics_skill = 3
+        }
+        
+        create_corps_commander = {
+            name = "Percival John Montague"
+            portrait_path = "gfx/leaders/Europe/Portrait_Europe_Generic_land_2.dds"
+            traits = { }
+            skill = 3
+            attack_skill = 1
+            defense_skill = 1
+            planning_skill = 3
+            logistics_skill = 5
+        }
+        create_corps_commander = {
+            name = "Bert Hoffmeister"
+            gfx = "GFX_CAN_bert_hoffmeister"
+            traits = { hill_fighter }
+            skill = 4
+            attack_skill = 4
+            defense_skill = 3
+            planning_skill = 3
+            logistics_skill = 3
+        }
+        
+        create_navy_leader = {
+            name = "Leonard W. Murray"
+            gfx = "GFX_CAN_leonard_warren_murray"
+            traits = { }
+            skill = 4
+            attack_skill = 4
+            defense_skill = 3
+            maneuvering_skill = 3
+            coordination_skill = 3
+        }
+        
+        create_navy_leader = {
+            name = "H.T. Baillie-Grohman"
+            portrait_path = "gfx/leaders/Europe/Portrait_Europe_Generic_navy_2.dds"
+            traits = { spotter }
+            skill = 4
+            attack_skill = 3
+            defense_skill = 3
+            maneuvering_skill = 3
+            coordination_skill = 4
+        }
+        create_navy_leader = {
+            name = "James D. Prentice"
+            gfx = "GFX_CAN_james_prentice"
+            traits = { spotter }
+            skill = 3
+            attack_skill = 3
+            defense_skill = 2
+            maneuvering_skill = 3
+            coordination_skill = 2
+        }
+        create_navy_leader = {
+            name = "Harry DeWolf"
+            gfx = "GFX_CAN_harry_dewolf"
+            traits = { superior_tactician bold }
+            skill = 4
+            attack_skill = 3
+            defense_skill = 2
+            maneuvering_skill = 3
+            coordination_skill = 5
         }
     }
 }
