@@ -356,14 +356,14 @@ country_event = {
 					is_subject_of = ROOT
 				}
 			}
-			custom_effect_tooltip = FROM_is_puppet_slavic_states
+			custom_effect_tooltip = FROM_is_puppet_SOV_slavic_states
 			every_state = {
 				limit = {
 					is_controlled_by = FROM
 					OR = {
-						has_state_flag = slavic_states
-						has_state_flag = slavic_states_czech
-						has_state_flag = german_slavic_state
+						has_state_flag = SOV_slavic_states
+						has_state_flag = SOV_czech_slavic_states
+						has_state_flag = SOV_german_slavic_state
 					}	
 				}
 				SOV = {
@@ -377,11 +377,18 @@ country_event = {
 		else = {
 			every_state = {
 				limit = {
-					is_controlled_by = ROOT
 					OR = {
-						has_state_flag = slavic_states
-						has_state_flag = slavic_states_czech
-						has_state_flag = german_slavic_state
+						has_state_flag = SOV_slavic_states
+						has_state_flag = SOV_czech_slavic_states
+						has_state_flag = SOV_german_slavic_state
+					}
+					OR = {
+						any_country = {
+							is_subject_of = ROOT
+							owns_state = PREV
+							NOT = { TAG = ROOT }
+						}
+						is_controlled_by = ROOT
 					}
 				}
 				SOV = {
@@ -395,7 +402,7 @@ country_event = {
 		if = {
 			limit = {
 				all_owned_state = {
-					has_state_flag = slavic_states
+					has_state_flag = SOV_slavic_states
 				}
 			}
 			custom_effect_tooltip = SOV_game_totally_over_TT
@@ -434,7 +441,7 @@ country_event = {
 					is_subject_of = ROOT
 				}
 			}
-			custom_effect_tooltip = FROM_is_puppet_slavic_states
+			custom_effect_tooltip = FROM_is_puppet_SOV_slavic_states
 			FROM = {
 				country_event = { id = russia2_generic.19 days = 1 }
 			}
@@ -1452,7 +1459,7 @@ country_event = {
 			}
 			custom_effect_tooltip = french_wont_get_any_factories_cw
 		}
-		if = { #TODO add Idea
+		if = {
 			limit = {
 				has_country_flag = accept_diplomatic_relation_with_italy
 			}
@@ -1462,6 +1469,12 @@ country_event = {
 					country = ITA
 					relation = non_aggression_pact
 					active = yes
+				}
+				add_ideas = SOV_Russian_italian_diplomacy_neutral
+			}
+			hidden_effect = {
+				ITA = {
+					add_ideas = SOV_Russian_italian_diplomacy_neutral
 				}
 			}
 			set_variable = { russian_italian_diplomacy_relation_var = 0 }
@@ -1888,6 +1901,21 @@ country_event = {
 				target = UKR
 				type = annex_everything
 			}
+			hidden_effect = {
+				every_country = {
+					limit = {
+						is_in_faction_with = SOV
+						NOT = {
+							TAG = SOV
+						}
+					}
+					add_to_war = {
+						targeted_alliance = SOV
+						enemy = UKR
+						hostility_reason = anti_soviet_alliance
+					}
+				}
+			}
 			if = {
 				limit = {
 					SOU = {
@@ -1897,6 +1925,21 @@ country_event = {
 				declare_war_on = {
 					target = SOU
 					type = annex_everything
+				}
+				hidden_effect = {
+					every_country = {
+						limit = {
+							is_in_faction_with = SOV
+							NOT = {
+								TAG = SOV
+							}
+						}
+						add_to_war = {
+							targeted_alliance = SOV
+							enemy = SOU
+							hostility_reason = anti_soviet_alliance
+						}
+					}
 				}
 			}
 			if = {
@@ -1909,6 +1952,21 @@ country_event = {
 					target = BLR
 					type = annex_everything
 				}
+				hidden_effect = {
+					every_country = {
+						limit = {
+							is_in_faction_with = SOV
+							NOT = {
+								TAG = SOV
+							}
+						}
+						add_to_war = {
+							targeted_alliance = SOV
+							enemy = BLR
+							hostility_reason = anti_soviet_alliance
+						}
+					}
+				}
 			}
 			if = {
 				limit = {
@@ -1919,6 +1977,21 @@ country_event = {
 				declare_war_on = {
 					target = FIN
 					type = annex_everything
+				}
+				hidden_effect = {
+					every_country = {
+						limit = {
+							is_in_faction_with = SOV
+							NOT = {
+								TAG = SOV
+							}
+						}
+						add_to_war = {
+							targeted_alliance = SOV
+							enemy = FIN
+							hostility_reason = anti_soviet_alliance
+						}
+					}
 				}
 			}
 		}
