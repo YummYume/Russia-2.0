@@ -23425,6 +23425,71 @@ focus_tree = {
 		}
 	}
 
+	#Cooperation Between the League
+	focus = {
+		id = SOV_copperation_between_league
+		x = 131
+		y = 11
+		prerequisite = { focus = SOV_future_of_the_league }
+		icon = GFX_Embrace_total_anarchy
+		cost = 6
+		ai_will_do = {
+			factor = 7
+		}
+		available = {
+			has_government = anarchy
+			NOT = {
+				has_completed_focus = SOV_reform_russia
+			}
+		}
+		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
+		completion_reward = {
+			custom_effect_tooltip = sov_every_members_receive_2_civ_fac
+			every_country = {
+				limit = {
+					OR = {
+						TAG = EFR
+						TAG = SIB
+						TAG = URA
+						TAG = KAZ
+						TAG = TMS
+						TAG = UZB
+						TAG = TAJ
+						TAG = KYR
+						TAG = GEO
+						TAG = AZR
+						TAG = ARM
+						TAG = DAG
+						TAG = ROS
+						TAG = KAL
+						TAG = CIR
+						TAG = VLG
+						TAG = VYA
+						TAG = TAT
+						TAG = PRM
+						TAG = KMI
+						TAG = KAR
+						TAG = NOV
+						TAG = UKR
+						TAG = BLR
+						TAG = CRI
+					}
+				}	
+				random_owned_state = {
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = industrial_complex
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
+			hidden_effect = {
+
+			}
+		}
+	}
+
 	#Reform Russia
 	focus = {
 		id = SOV_reform_russia
@@ -23807,7 +23872,7 @@ focus_tree = {
 		mutually_exclusive = { focus = SOV_reform_russia }
 		mutually_exclusive = { focus = SOV_a_tight_grip }
 		icon = GFX_Embrace_total_anarchy
-		cost = 5
+		cost = 8
 		ai_will_do = {
 			factor = 7
 		}
@@ -23828,7 +23893,7 @@ focus_tree = {
 		y = 12
 		prerequisite = { focus = SOV_semi_devolution }
 		icon = GFX_Embrace_total_anarchy
-		cost = 5
+		cost = 10
 		ai_will_do = {
 			factor = 7
 		}
@@ -23837,7 +23902,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
-
+			unlock_decision_tooltip = SOV_anarchist_selection_beneficiary_decisions
 		}
 	}
 
@@ -23848,16 +23913,181 @@ focus_tree = {
 		y = 13
 		prerequisite = { focus = SOV_choose_beneficiary }
 		icon = GFX_Embrace_total_anarchy
-		cost = 5
+		cost = 10
 		ai_will_do = {
 			factor = 7
 		}
 		available = {
 			has_government = anarchy
+			custom_trigger_tooltip = {
+				tooltip = not_any_country_whose_fate_hasnt_been_chosen_anarchist_semi_devolution
+				NOT = {
+					any_country = {
+						OR = {
+							AND = {
+								has_country_flag = is_neighbor_of_from_first_beneficiary
+								OR = {
+									has_country_flag = is_neighbor_of_from_second_beneficiary
+									has_country_flag = is_neighbor_of_from_sov_beneficiary
+								}
+							}
+							AND = {
+								has_country_flag = is_neighbor_of_from_second_beneficiary
+								OR = {
+									has_country_flag = is_neighbor_of_from_first_beneficiary
+									has_country_flag = is_neighbor_of_from_sov_beneficiary
+								}
+							}
+							AND = {
+								has_country_flag = is_neighbor_of_from_sov_beneficiary
+								OR = {
+									has_country_flag = is_neighbor_of_from_first_beneficiary
+									has_country_flag = is_neighbor_of_from_second_beneficiary
+								}
+							}
+							NOT = {
+								AND = {
+									has_country_flag = is_neighbor_of_from_first_beneficiary
+									has_country_flag = is_neighbor_of_from_second_beneficiary
+									has_country_flag = is_neighbor_of_from_sov_beneficiary
+								}		
+							}
+						}
+					}
+				}
+			}
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
-
+			every_country = {
+				limit = {
+					OR = {
+						TAG = EFR
+						TAG = SIB
+						TAG = URA
+						TAG = KAZ
+						TAG = TMS
+						TAG = UZB
+						TAG = TAJ
+						TAG = KYR
+						TAG = GEO
+						TAG = AZR
+						TAG = ARM
+						TAG = DAG
+						TAG = ROS
+						TAG = KAL
+						TAG = CIR
+						TAG = VLG
+						TAG = VYA
+						TAG = TAT
+						TAG = PRM
+						TAG = KMI
+						TAG = KAR
+						TAG = NOV
+						TAG = UKR
+						TAG = BLR
+						TAG = CRI
+					}
+					has_country_flag = is_neighbor_of_from_first_beneficiary
+					NOT = {
+						TAG = event_target:FROM_first_beneficiary
+						TAG = event_target:FROM_second_beneficiary
+						TAG = SOV
+					}
+				}
+				event_target:FROM_first_beneficiary = {
+					set_autonomy = {
+						target = PREV
+						autonomy_state = autonomy_supervised_free_territory
+					}
+				}
+			}
+			every_country = {
+				limit = {
+					OR = {
+						TAG = EFR
+						TAG = SIB
+						TAG = URA
+						TAG = KAZ
+						TAG = TMS
+						TAG = UZB
+						TAG = TAJ
+						TAG = KYR
+						TAG = GEO
+						TAG = AZR
+						TAG = ARM
+						TAG = DAG
+						TAG = ROS
+						TAG = KAL
+						TAG = CIR
+						TAG = VLG
+						TAG = VYA
+						TAG = TAT
+						TAG = PRM
+						TAG = KMI
+						TAG = KAR
+						TAG = NOV
+						TAG = UKR
+						TAG = BLR
+						TAG = CRI
+					}
+					has_country_flag = is_neighbor_of_from_second_beneficiary
+					NOT = {
+						TAG = event_target:FROM_first_beneficiary
+						TAG = event_target:FROM_second_beneficiary
+						TAG = SOV
+					}
+				}
+				event_target:FROM_second_beneficiary = {
+					set_autonomy = {
+						target = PREV
+						autonomy_state = autonomy_supervised_free_territory
+					}
+				}
+			}
+			every_country = {
+				limit = {
+					OR = {
+						TAG = EFR
+						TAG = SIB
+						TAG = URA
+						TAG = KAZ
+						TAG = TMS
+						TAG = UZB
+						TAG = TAJ
+						TAG = KYR
+						TAG = GEO
+						TAG = AZR
+						TAG = ARM
+						TAG = DAG
+						TAG = ROS
+						TAG = KAL
+						TAG = CIR
+						TAG = VLG
+						TAG = VYA
+						TAG = TAT
+						TAG = PRM
+						TAG = KMI
+						TAG = KAR
+						TAG = NOV
+						TAG = UKR
+						TAG = BLR
+						TAG = CRI
+					}
+					has_country_flag = is_neighbor_of_from_sov_beneficiary
+					NOT = {
+						TAG = event_target:FROM_first_beneficiary
+						TAG = event_target:FROM_second_beneficiary
+						TAG = SOV
+					}
+				}
+				SOV = {
+					set_autonomy = {
+						target = PREV
+						autonomy_state = autonomy_supervised_free_territory
+					}
+				}
+			}
 		}
 	}
 
