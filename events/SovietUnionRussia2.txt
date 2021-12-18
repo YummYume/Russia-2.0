@@ -29689,7 +29689,7 @@ country_event = {
 	}
 }
 
-#Remove Useles Advisors
+#Remove Useless Advisors
 country_event = {
 	id = russia2_russia.651
 
@@ -29842,7 +29842,7 @@ country_event = {
 	title = russia2_russia.652.t
 	desc = russia2_russia.652.d
 	picture = GFX_report_event_generic_riot
-	
+
 	is_triggered_only = yes
 
 	option = { #Choose First Beneficiary
@@ -29878,6 +29878,61 @@ country_event = {
 			set_country_flag = is_neighbor_of_from_sov_beneficiary
 			clr_country_flag = is_neighbor_of_from_second_beneficiary
 			clr_country_flag = is_neighbor_of_from_first_beneficiary
+		}
+	}
+}
+
+#Wide Putin ;)
+country_event = {
+	id = russia2_russia.653
+	title = russia2_russia.653.t
+	desc = russia2_russia.653.d
+	picture = GFX_report_event_SOV_mongolia_cavalry
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = SOV
+		has_government = democratic
+		is_subject = no
+		has_global_flag = russia_reworked_wide_putin_enabled
+		has_country_flag = {
+			flag = sov_united_russia_takes_control
+			days > 365
+		}
+	}
+
+	immediate = {
+		hidden_effect = {
+			scoped_sound_effect = "russia_reworked_wide_putin"
+		}
+	}
+
+	option = { #Yes!
+		name = russia2_russia.653.a
+		ai_chance = {
+			factor = 100
+		}
+		add_country_leader_role = {
+			character = SOV_Wide_putin
+			promote_leader = yes
+			country_leader = {
+				desc = SOV_Wide_putin_desc
+				ideology = conservatism
+				expire = "2000.1.1.1"
+				traits = {
+					russia2_wide_trait
+					russia2_eating_crimea_breakfast
+					russia2_99_percent_approval_rate
+				}
+			}
+		}
+	}
+
+	option = { #No
+		name = russia2_russia.653.b
+		ai_chance = {
+			factor = 0
 		}
 	}
 }
