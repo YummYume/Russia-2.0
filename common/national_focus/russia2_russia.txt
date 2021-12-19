@@ -4418,12 +4418,15 @@ focus_tree = {
 			}
 		}
 		bypass = {
-			TAN = {
-				OR = {
-					exists = no
-					NOT = { has_government = ROOT }
-					is_subject = yes
+			OR = {
+				TAN = {
+					OR = {
+						exists = no
+						NOT = { has_government = ROOT }
+						is_subject = yes
+					}
 				}
+				has_government = anarchy
 			}
 		}
 		search_filters = { FOCUS_FILTER_ANNEXATION }
@@ -22509,7 +22512,7 @@ focus_tree = {
 		mutually_exclusive = { focus = SOV_anarcho_communism }
 		mutually_exclusive = { focus = SOV_individualist_anarchism }
 		icon = GFX_goal_molotov_ribbentrop_pact
-		cost = 10
+		cost = 7
 		ai_will_do = {
 			factor = 7
 		}
@@ -22556,7 +22559,7 @@ focus_tree = {
 		y = 10
 		prerequisite = { focus = SOV_anarcho_syndicalism }
 		icon = GFX_goal_molotov_ribbentrop_pact
-		cost = 10
+		cost = 8
 		ai_will_do = {
 			factor = 7
 		}
@@ -22599,7 +22602,7 @@ focus_tree = {
 		y = 12
 		prerequisite = { focus = SOV_anarchist_synthetism }
 		icon = GFX_goal_molotov_ribbentrop_pact
-		cost = 10
+		cost = 8
 		ai_will_do = {
 			factor = 7
 		}
@@ -22670,7 +22673,7 @@ focus_tree = {
 		mutually_exclusive = { focus = SOV_anarcho_syndicalism }
 		mutually_exclusive = { focus = SOV_individualist_anarchism }
 		icon = GFX_goal_molotov_ribbentrop_pact
-		cost = 10
+		cost = 7
 		ai_will_do = {
 			factor = 7
 		}
@@ -22770,7 +22773,7 @@ focus_tree = {
 		prerequisite = { focus = SOV_platformism_anarchism focus = SOV_anarchist_synthetism }
 		mutually_exclusive = { focus = SOV_individual_freedom }
 		icon = GFX_goal_molotov_ribbentrop_pact
-		cost = 8
+		cost = 10
 		ai_will_do = {
 			factor = 7
 		}
@@ -22834,7 +22837,7 @@ focus_tree = {
 		prerequisite = { focus = SOV_question_market }
 		prerequisite = { focus = SOV_follow_makhnovshchina_model }
 		icon = GFX_goal_molotov_ribbentrop_pact
-		cost = 7
+		cost = 10
 		ai_will_do = {
 			factor = 7
 		}
@@ -22881,7 +22884,7 @@ focus_tree = {
 		mutually_exclusive = { focus = SOV_anarcho_syndicalism }
 		mutually_exclusive = { focus = SOV_anarcho_communism }
 		icon = GFX_goal_molotov_ribbentrop_pact
-		cost = 10
+		cost = 7
 		ai_will_do = {
 			factor = 7
 		}
@@ -22913,7 +22916,7 @@ focus_tree = {
 		y = 10
 		prerequisite = { focus = SOV_individualist_anarchism }
 		icon = GFX_goal_molotov_ribbentrop_pact
-		cost = 10
+		cost = 7
 		ai_will_do = {
 			factor = 7
 		}
@@ -22935,7 +22938,7 @@ focus_tree = {
 		y = 11
 		prerequisite = { focus = SOV_egoism_anarchism }
 		icon = GFX_goal_molotov_ribbentrop_pact
-		cost = 10
+		cost = 8
 		ai_will_do = {
 			factor = 7
 		}
@@ -22957,7 +22960,7 @@ focus_tree = {
 		prerequisite = { focus = SOV_egoism_anarchism focus = SOV_anarchist_synthetism }
 		mutually_exclusive = { focus = SOV_mutualism_anarchism }
 		icon = GFX_goal_molotov_ribbentrop_pact
-		cost = 10
+		cost = 7
 		ai_will_do = {
 			factor = 7
 		}
@@ -23002,7 +23005,7 @@ focus_tree = {
 		prerequisite = { focus = SOV_transvaluation_values }
 		prerequisite = { focus = SOV_free_market }
 		icon = GFX_goal_molotov_ribbentrop_pact
-		cost = 10
+		cost = 8
 		ai_will_do = {
 			factor = 7
 		}
@@ -23023,7 +23026,7 @@ focus_tree = {
 		y = 9
 		prerequisite = { focus = SOV_compromise_anarchist_ideals }
 		icon = GFX_focus_secret_rearmament
-		cost = 5
+		cost = 7
 		ai_will_do = {
 			factor = 7
 		}
@@ -23101,15 +23104,24 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_PROCLAMATION_COMMUNE_RUSSIA }
 		completion_reward = {
+			custom_effect_tooltip = SOV_spread_anarchist_revolution_west_tt
+			show_ideas_tooltip = SOV_Anarchist_uprising
 			hidden_effect = {
-				every_state = {
+				every_country = {
 					limit = {
-						is_on_continent = europe
 						NOT = {
-							is_core_of = SOV
+							TAG = SOV
+						}
+						any_state = {
+							is_capital = yes
+							is_on_continent = europe
+							is_owned_by = PREV
 						}
 					}
-					set_state_flag = anarchist_europe_state_goal
+					country_event = { id = russia2_generic.45 hours = 1 }
+				}
+				TUR = {
+					country_event = { id = russia2_generic.45 hours = 1 }
 				}
 			}
 		}
@@ -23137,7 +23149,26 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_PROCLAMATION_COMMUNE_RUSSIA }
 		completion_reward = {
-
+			set_cosmetic_tag = EUAR
+			hidden_effect = {
+				every_state = {
+					limit = {
+						is_european_valid_state_core = yes
+					}
+					SOV = {
+						add_state_core = PREV
+					}
+				}
+				add_state_core = 124
+				add_state_core = 145
+				add_state_core = 183
+				add_state_core = 182
+				add_state_core = 114
+				add_state_core = 1
+				add_state_core = 164
+				add_state_core = 177
+				add_state_core = 116
+			}
 		}
 	}
 
@@ -23159,7 +23190,30 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_PROCLAMATION_COMMUNE_RUSSIA }
 		completion_reward = {
-
+			custom_effect_tooltip = SOV_spread_anarchist_revolution_east_tt
+			show_ideas_tooltip = SOV_Anarchist_uprising
+			hidden_effect = {
+				every_country = {
+					limit = {
+						NOT = {
+							TAG = SOV
+						}
+						OR = {
+							any_state = {
+								is_capital = yes
+								is_on_continent = asia
+								is_owned_by = PREV
+							}
+							any_state = {
+								is_capital = yes
+								is_on_continent = middle_east
+								is_owned_by = PREV
+							}
+						}
+					}
+					country_event = { id = russia2_generic.45 hours = 1 }
+				}
+			}
 		}
 	}
 
@@ -23185,7 +23239,54 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_PROCLAMATION_COMMUNE_RUSSIA }
 		completion_reward = {
-
+			set_cosmetic_tag = AAUC
+			hidden_effect = {
+				every_state = {
+					limit = {
+						is_asian_valid_state_core = yes
+					}
+					SOV = {
+						add_state_core = PREV
+					}
+				}
+				add_state_core = 537
+				add_state_core = 524
+				add_state_core = 526
+				add_state_core = 645
+				add_state_core = 623
+				add_state_core = 327
+				add_state_core = 624
+				add_state_core = 628
+				add_state_core = 625
+				add_state_core = 627
+				add_state_core = 626
+				add_state_core = 333
+				add_state_core = 334
+				add_state_core = 672
+				add_state_core = 335
+				add_state_core = 667
+				add_state_core = 721
+				add_state_core = 738
+				add_state_core = 668
+				add_state_core = 673
+				add_state_core = 669
+				add_state_core = 647
+				add_state_core = 684
+				add_state_core = 638
+				add_state_core = 646
+				add_state_core = 648
+				add_state_core = 733
+				add_state_core = 422
+				add_state_core = 281
+				add_state_core = 725
+				add_state_core = 639
+				add_state_core = 633
+				add_state_core = 632
+				add_state_core = 650
+				add_state_core = 631
+				add_state_core = 630
+				add_state_core = 642
+			}
 		}
 	}
 
@@ -23208,15 +23309,33 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_PROCLAMATION_COMMUNE_RUSSIA }
 		completion_reward = {
+			custom_effect_tooltip = SOV_spread_anarchist_revolution_both_tt
+			show_ideas_tooltip = SOV_Anarchist_uprising
 			hidden_effect = {
-				every_state = {
+				every_country = {
 					limit = {
-						is_on_continent = europe
 						NOT = {
-							is_core_of = SOV
+							TAG = SOV
+						}
+						OR = {
+							any_state = {
+								is_capital = yes
+								is_on_continent = europe
+								is_owned_by = PREV
+							}
+							any_state = {
+								is_capital = yes
+								is_on_continent = asia
+								is_owned_by = PREV
+							}
+							any_state = {
+								is_capital = yes
+								is_on_continent = middle_east
+								is_owned_by = PREV
+							}
 						}
 					}
-					set_state_flag = anarchist_europe_state_goal
+					country_event = { id = russia2_generic.45 hours = 1 }
 				}
 			}
 		}
@@ -23246,7 +23365,71 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_PROCLAMATION_COMMUNE_RUSSIA }
 		completion_reward = {
-
+			set_cosmetic_tag = AUEA
+			hidden_effect = {
+				every_state = {
+					limit = {
+						is_asian_valid_state_core = yes
+					}
+					SOV = {
+						add_state_core = PREV
+					}
+				}
+				every_state = {
+					limit = {
+						is_european_valid_state_core = yes
+					}
+					SOV = {
+						add_state_core = PREV
+					}
+				}
+				add_state_core = 124
+				add_state_core = 145
+				add_state_core = 183
+				add_state_core = 182
+				add_state_core = 114
+				add_state_core = 1
+				add_state_core = 164
+				add_state_core = 177
+				add_state_core = 116
+				add_state_core = 537
+				add_state_core = 524
+				add_state_core = 526
+				add_state_core = 645
+				add_state_core = 623
+				add_state_core = 327
+				add_state_core = 624
+				add_state_core = 628
+				add_state_core = 625
+				add_state_core = 627
+				add_state_core = 626
+				add_state_core = 333
+				add_state_core = 334
+				add_state_core = 672
+				add_state_core = 335
+				add_state_core = 667
+				add_state_core = 721
+				add_state_core = 738
+				add_state_core = 668
+				add_state_core = 673
+				add_state_core = 669
+				add_state_core = 647
+				add_state_core = 684
+				add_state_core = 638
+				add_state_core = 646
+				add_state_core = 648
+				add_state_core = 733
+				add_state_core = 422
+				add_state_core = 281
+				add_state_core = 725
+				add_state_core = 639
+				add_state_core = 633
+				add_state_core = 632
+				add_state_core = 650
+				add_state_core = 631
+				add_state_core = 630
+				add_state_core = 642
+			}
 		}
 	}
 
@@ -23781,7 +23964,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
-			unlock_decision_tooltip = SOV_sway_dissident_puppet_plan
+			custom_effect_tooltip = SOV_SOV_convince_disputants_tt
 			if = {
 				limit = {
 					any_country = {
@@ -23908,7 +24091,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
-			unlock_decision_tooltip = SOV_anarchist_selection_beneficiary_decisions
+			custom_effect_tooltip = SOV_choose_beneficiary_decision_tt
 		}
 	}
 

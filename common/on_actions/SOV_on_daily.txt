@@ -1229,4 +1229,119 @@ on_actions = {
 			}
 		}
 	}
+
+	#If Anarchist SOV completed Spread the Revolution to the West
+	on_weekly = {
+		effect = {
+			if = {
+				limit = {
+					SOV = {
+						has_government = anarchy
+						exists = yes
+						has_completed_focus = SOV_spread_revolution_west
+						#NOT = { has_country_flag = }
+					}
+					FROM = {
+						NOT = {
+							has_idea = SOV_Anarchist_uprising
+						}
+						NOT = {
+							TAG = SOV
+						}
+						any_state = {
+							is_capital= yes
+							is_on_continent = europe
+							is_owned_by = FROM
+						}
+					}
+				}
+				FROM = {
+					add_ideas = SOV_Anarchist_uprising
+				}
+			}
+		}
+	}
+
+	#If Anarchist SOV completed Spread the Revolution to the East
+	on_weekly = {
+		effect = {
+			if = {
+				limit = {
+					SOV = {
+						has_government = anarchy
+						exists = yes
+						has_completed_focus = SOV_spread_revolution_east
+						#NOT = { has_country_flag = }
+					}
+					FROM = {
+						NOT = {
+							has_idea = SOV_Anarchist_uprising
+						}
+						NOT = {
+							TAG = SOV
+						}
+						OR = {
+							any_state = {
+								is_capital = yes
+								is_on_continent = asia
+								is_owned_by = FROM
+							}
+							any_state = {
+								is_capital = yes
+								is_on_continent = middle_east
+								is_owned_by = FROM
+							}
+						}
+					}
+				}
+				FROM = {
+					add_ideas = SOV_Anarchist_uprising
+				}
+			}
+		}
+	}
+
+		#If Anarchist SOV completed Spread the Revolution to Both
+		on_weekly = {
+			effect = {
+				if = {
+					limit = {
+						SOV = {
+							has_government = anarchy
+							exists = yes
+							has_completed_focus = SOV_spread_revolution_both
+							#NOT = { has_country_flag = }
+						}
+						FROM = {
+							NOT = {
+								has_idea = SOV_Anarchist_uprising
+							}
+							NOT = {
+								TAG = SOV
+							}
+							OR = {
+								any_state = {
+									is_capital = yes
+									is_on_continent = europe
+									is_owned_by = FROM
+								}
+								any_state = {
+									is_capital = yes
+									is_on_continent = asia
+									is_owned_by = FROM
+								}
+								any_state = {
+									is_capital = yes
+									is_on_continent = middle_east
+									is_owned_by = FROM
+								}
+							}
+						}
+					}
+					FROM = {
+						add_ideas = SOV_Anarchist_uprising
+					}
+				}
+			}
+		}
 }
