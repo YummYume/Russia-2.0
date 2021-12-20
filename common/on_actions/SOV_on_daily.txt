@@ -1239,7 +1239,11 @@ on_actions = {
 						has_government = anarchy
 						exists = yes
 						has_completed_focus = SOV_spread_revolution_west
-						#NOT = { has_country_flag = }
+						NOT = { 
+							has_country_flag = anarchist_revolution_level_2
+							has_country_flag = anarchist_revolution_level_3
+							has_country_flag = anarchist_revolution_level_4
+						}
 					}
 					FROM = {
 						NOT = {
@@ -1271,7 +1275,11 @@ on_actions = {
 						has_government = anarchy
 						exists = yes
 						has_completed_focus = SOV_spread_revolution_east
-						#NOT = { has_country_flag = }
+						NOT = { 
+							has_country_flag = anarchist_revolution_level_2
+							has_country_flag = anarchist_revolution_level_3
+							has_country_flag = anarchist_revolution_level_4
+						}
 					}
 					FROM = {
 						NOT = {
@@ -1301,47 +1309,513 @@ on_actions = {
 		}
 	}
 
-		#If Anarchist SOV completed Spread the Revolution to Both
-		on_weekly = {
-			effect = {
-				if = {
-					limit = {
-						SOV = {
-							has_government = anarchy
-							exists = yes
-							has_completed_focus = SOV_spread_revolution_both
-							#NOT = { has_country_flag = }
-						}
-						FROM = {
-							NOT = {
-								has_idea = SOV_Anarchist_uprising
-							}
-							NOT = {
-								TAG = SOV
-							}
-							OR = {
-								any_state = {
-									is_capital = yes
-									is_on_continent = europe
-									is_owned_by = FROM
-								}
-								any_state = {
-									is_capital = yes
-									is_on_continent = asia
-									is_owned_by = FROM
-								}
-								any_state = {
-									is_capital = yes
-									is_on_continent = middle_east
-									is_owned_by = FROM
-								}
-							}
+	#If Anarchist SOV completed Spread the Revolution to Both
+	on_weekly = {
+		effect = {
+			if = {
+				limit = {
+					SOV = {
+						has_government = anarchy
+						exists = yes
+						has_completed_focus = SOV_spread_revolution_both
+						NOT = { 
+							has_country_flag = anarchist_revolution_level_2
+							has_country_flag = anarchist_revolution_level_3
+							has_country_flag = anarchist_revolution_level_4
 						}
 					}
 					FROM = {
-						add_ideas = SOV_Anarchist_uprising
+						NOT = {
+							has_idea = SOV_Anarchist_uprising
+						}
+						NOT = {
+							TAG = SOV
+						}
+						OR = {
+							any_state = {
+								is_capital = yes
+								is_on_continent = europe
+								is_owned_by = FROM
+							}
+							any_state = {
+								is_capital = yes
+								is_on_continent = asia
+								is_owned_by = FROM
+							}
+							any_state = {
+								is_capital = yes
+								is_on_continent = middle_east
+								is_owned_by = FROM
+							}
+						}
+					}
+				}
+				FROM = {
+					add_ideas = SOV_Anarchist_uprising
+				}
+			}
+		}
+	}
+
+	#If Anarchist SOV completed Spread the Revolution to the West and has level 2
+	on_weekly = {
+		effect = {
+			if = {
+				limit = {
+					SOV = {
+						has_government = anarchy
+						exists = yes
+						has_completed_focus = SOV_spread_revolution_west
+						has_country_flag = anarchist_revolution_level_2 
+					}
+					FROM = {
+						NOT = {
+							has_idea = SOV_Anarchist_uprising_2
+						}
+						NOT = {
+							TAG = SOV
+						}
+						any_state = {
+							is_capital= yes
+							is_on_continent = europe
+							is_owned_by = FROM
+						}
+					}
+				}
+				FROM = {
+					if = {
+						limit = {
+							FROM = {
+								has_idea = SOV_Anarchist_uprising
+							}
+						}
+						swap_ideas = {
+							remove_idea = SOV_Anarchist_uprising
+							add_idea = SOV_Anarchist_uprising_2
+						}
+					}
+					else = {
+						add_ideas = SOV_Anarchist_uprising_2
 					}
 				}
 			}
 		}
+	}
+
+	#If Anarchist SOV completed Spread the Revolution to the East has level 2
+	on_weekly = {
+		effect = {
+			if = {
+				limit = {
+					SOV = {
+						has_government = anarchy
+						exists = yes
+						has_completed_focus = SOV_spread_revolution_east
+						has_country_flag = anarchist_revolution_level_2 
+					}
+					FROM = {
+						NOT = {
+							has_idea = SOV_Anarchist_uprising_2
+						}
+						NOT = {
+							TAG = SOV
+						}
+						OR = {
+							any_state = {
+								is_capital = yes
+								is_on_continent = asia
+								is_owned_by = FROM
+							}
+							any_state = {
+								is_capital = yes
+								is_on_continent = middle_east
+								is_owned_by = FROM
+							}
+						}
+					}
+				}
+				FROM = {
+					if = {
+						limit = {
+							FROM = {
+								has_idea = SOV_Anarchist_uprising
+							}
+						}
+						swap_ideas = {
+							remove_idea = SOV_Anarchist_uprising
+							add_idea = SOV_Anarchist_uprising_2
+						}
+					}
+					else = {
+						add_ideas = SOV_Anarchist_uprising_2
+					}
+				}
+			}
+		}
+	}
+
+	#If Anarchist SOV completed Spread the Revolution to Both and has level 2
+	on_weekly = {
+		effect = {
+			if = {
+				limit = {
+					SOV = {
+						has_government = anarchy
+						exists = yes
+						has_completed_focus = SOV_spread_revolution_both
+						has_country_flag = anarchist_revolution_level_2 
+					}
+					FROM = {
+						NOT = {
+							has_idea = SOV_Anarchist_uprising_5
+						}
+						NOT = {
+							TAG = SOV
+						}
+						OR = {
+							any_state = {
+								is_capital = yes
+								is_on_continent = europe
+								is_owned_by = FROM
+							}
+							any_state = {
+								is_capital = yes
+								is_on_continent = asia
+								is_owned_by = FROM
+							}
+							any_state = {
+								is_capital = yes
+								is_on_continent = middle_east
+								is_owned_by = FROM
+							}
+						}
+					}
+				}
+				FROM = {
+					if = {
+						limit = {
+							FROM = {
+								has_idea = SOV_Anarchist_uprising
+							}
+						}
+						swap_ideas = {
+							remove_idea = SOV_Anarchist_uprising
+							add_idea = SOV_Anarchist_uprising_5
+						}
+					}
+					else = {
+						add_ideas = SOV_Anarchist_uprising_5
+					}
+				}
+			}
+		}
+	}
+
+	#If Anarchist SOV completed Spread the Revolution to the West and has level 3
+	on_weekly = {
+		effect = {
+			if = {
+				limit = {
+					SOV = {
+						has_government = anarchy
+						exists = yes
+						has_completed_focus = SOV_spread_revolution_west
+						has_country_flag = anarchist_revolution_level_3
+					}
+					FROM = {
+						NOT = {
+							has_idea = SOV_Anarchist_uprising_3
+						}
+						NOT = {
+							TAG = SOV
+						}
+						any_state = {
+							is_capital= yes
+							is_on_continent = europe
+							is_owned_by = FROM
+						}
+					}
+				}
+				FROM = {
+					if = {
+						limit = {
+							FROM = {
+								has_idea = SOV_Anarchist_uprising_2
+							}
+						}
+						swap_ideas = {
+							remove_idea = SOV_Anarchist_uprising_2
+							add_idea = SOV_Anarchist_uprising_3
+						}
+					}
+					else = {
+						add_ideas = SOV_Anarchist_uprising_3
+					}
+				}
+			}
+		}
+	}
+
+	#If Anarchist SOV completed Spread the Revolution to the East has level 3
+	on_weekly = {
+		effect = {
+			if = {
+				limit = {
+					SOV = {
+						has_government = anarchy
+						exists = yes
+						has_completed_focus = SOV_spread_revolution_east
+						has_country_flag = anarchist_revolution_level_3
+					}
+					FROM = {
+						NOT = {
+							has_idea = SOV_Anarchist_uprising_3
+						}
+						NOT = {
+							TAG = SOV
+						}
+						OR = {
+							any_state = {
+								is_capital = yes
+								is_on_continent = asia
+								is_owned_by = FROM
+							}
+							any_state = {
+								is_capital = yes
+								is_on_continent = middle_east
+								is_owned_by = FROM
+							}
+						}
+					}
+				}
+				FROM = {
+					if = {
+						limit = {
+							FROM = {
+								has_idea = SOV_Anarchist_uprising_2
+							}
+						}
+						swap_ideas = {
+							remove_idea = SOV_Anarchist_uprising_2
+							add_idea = SOV_Anarchist_uprising_3
+						}
+					}
+					else = {
+						add_ideas = SOV_Anarchist_uprising_3
+					}
+				}
+			}
+		}
+	}
+
+	#If Anarchist SOV completed Spread the Revolution to Both and has level 3
+	on_weekly = {
+		effect = {
+			if = {
+				limit = {
+					SOV = {
+						has_government = anarchy
+						exists = yes
+						has_completed_focus = SOV_spread_revolution_both
+						has_country_flag = anarchist_revolution_level_3
+					}
+					FROM = {
+						NOT = {
+							has_idea = SOV_Anarchist_uprising_6
+						}
+						NOT = {
+							TAG = SOV
+						}
+						OR = {
+							any_state = {
+								is_capital = yes
+								is_on_continent = europe
+								is_owned_by = FROM
+							}
+							any_state = {
+								is_capital = yes
+								is_on_continent = asia
+								is_owned_by = FROM
+							}
+							any_state = {
+								is_capital = yes
+								is_on_continent = middle_east
+								is_owned_by = FROM
+							}
+						}
+					}
+				}
+				FROM = {
+					if = {
+						limit = {
+							FROM = {
+								has_idea = SOV_Anarchist_uprising_5
+							}
+						}
+						swap_ideas = {
+							remove_idea = SOV_Anarchist_uprising_5
+							add_idea = SOV_Anarchist_uprising_6
+						}
+					}
+					else = {
+						add_ideas = SOV_Anarchist_uprising_6
+					}
+				}
+			}
+		}
+	}
+
+	#If Anarchist SOV completed Spread the Revolution to the West and has level 4
+	on_weekly = {
+		effect = {
+			if = {
+				limit = {
+					SOV = {
+						has_government = anarchy
+						exists = yes
+						has_completed_focus = SOV_spread_revolution_west
+						has_country_flag = anarchist_revolution_level_4
+					}
+					FROM = {
+						NOT = {
+							has_idea = SOV_Anarchist_uprising_4
+						}
+						NOT = {
+							TAG = SOV
+						}
+						any_state = {
+							is_capital= yes
+							is_on_continent = europe
+							is_owned_by = FROM
+						}
+					}
+				}
+				FROM = {
+					if = {
+						limit = {
+							FROM = {
+								has_idea = SOV_Anarchist_uprising_3
+							}
+						}
+						swap_ideas = {
+							remove_idea = SOV_Anarchist_uprising_3
+							add_idea = SOV_Anarchist_uprising_4
+						}
+					}
+					else = {
+						add_ideas = SOV_Anarchist_uprising_4
+					}
+				}
+			}
+		}
+	}
+
+	#If Anarchist SOV completed Spread the Revolution to the East has level 4
+	on_weekly = {
+		effect = {
+			if = {
+				limit = {
+					SOV = {
+						has_government = anarchy
+						exists = yes
+						has_completed_focus = SOV_spread_revolution_east
+						has_country_flag = anarchist_revolution_level_4
+					}
+					FROM = {
+						NOT = {
+							has_idea = SOV_Anarchist_uprising_4
+						}
+						NOT = {
+							TAG = SOV
+						}
+						OR = {
+							any_state = {
+								is_capital = yes
+								is_on_continent = asia
+								is_owned_by = FROM
+							}
+							any_state = {
+								is_capital = yes
+								is_on_continent = middle_east
+								is_owned_by = FROM
+							}
+						}
+					}
+				}
+				FROM = {
+					if = {
+						limit = {
+							FROM = {
+								has_idea = SOV_Anarchist_uprising_3
+							}
+						}
+						swap_ideas = {
+							remove_idea = SOV_Anarchist_uprising_3
+							add_idea = SOV_Anarchist_uprising_4
+						}
+					}
+					else = {
+						add_ideas = SOV_Anarchist_uprising_4
+					}
+				}
+			}
+		}
+	}
+
+	#If Anarchist SOV completed Spread the Revolution to Both and has level 4
+	on_weekly = {
+		effect = {
+			if = {
+				limit = {
+					SOV = {
+						has_government = anarchy
+						exists = yes
+						has_completed_focus = SOV_spread_revolution_both
+						has_country_flag = anarchist_revolution_level_4
+					}
+					FROM = {
+						NOT = {
+							has_idea = SOV_Anarchist_uprising_7
+						}
+						NOT = {
+							TAG = SOV
+						}
+						OR = {
+							any_state = {
+								is_capital = yes
+								is_on_continent = europe
+								is_owned_by = FROM
+							}
+							any_state = {
+								is_capital = yes
+								is_on_continent = asia
+								is_owned_by = FROM
+							}
+							any_state = {
+								is_capital = yes
+								is_on_continent = middle_east
+								is_owned_by = FROM
+							}
+						}
+					}
+				}
+				FROM = {
+					if = {
+						limit = {
+							FROM = {
+								has_idea = SOV_Anarchist_uprising_6
+							}
+						}
+						swap_ideas = {
+							remove_idea = SOV_Anarchist_uprising_6
+							add_idea = SOV_Anarchist_uprising_7
+						}
+					}
+					else = {
+						add_ideas = SOV_Anarchist_uprising_7
+					}
+				}
+			}
+		}
+	}
 }
