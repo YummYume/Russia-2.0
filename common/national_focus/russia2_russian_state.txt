@@ -674,11 +674,17 @@ focus_tree = {
                 has_government = anarchy
             }
             is_subject = no
-            SOV = {
-                OR = {
-                    exists = no
+            OR = {
+                SOV = {
+                    has_capitulated = yes
+                }
+                SOV = {
                     is_subject = yes
                 }
+                NOT = {
+                    country_exists = SOV
+                }
+                has_war_with = SOV
             }
         }
         search_filters = { FOCUS_FILTER_RSC_POLITICAL_PATH FOCUS_FILTER_ANNEXATION }
@@ -686,7 +692,7 @@ focus_tree = {
             custom_effect_tooltip = RSC_reclaim_russia_tt
             every_state = {
                 limit = {
-                    is_core_of = SOV
+                    sov_is_base_russian_state_trigger = yes
                 }
                 custom_effect_tooltip = RSC_reclaim_russia_tt2
                 hidden_effect = {
