@@ -47,7 +47,7 @@ UKR_save_pp_for_coring_states = {
 		value = -9999
 	}
 
-	ai_strategy = { 
+	ai_strategy = {
 		type = pp_spend_priority
 		id = relation
 		value = -9999
@@ -59,7 +59,7 @@ UKR_dont_push_too_hard_wait_for_cores_scw  = {
 	allowed = {
 		original_tag = UKR
 	}
-	
+
 	enable = {
 		is_subject = no
 		ukr_in_scw = yes
@@ -77,12 +77,12 @@ UKR_dont_push_too_hard_wait_for_cores_scw  = {
 			}
 		}
 	}
-	
+
 	abort_when_not_enabled = yes
-	
+
 	ai_strategy = {
 		type = front_control
-		
+
 		priority = 1000
 
 		state_trigger = {
@@ -97,10 +97,10 @@ UKR_dont_push_too_hard_wait_for_cores_scw  = {
 		execute_order = no
 		manual_attack = yes
 	}
-	
+
 	ai_strategy = {
 		type = front_unit_request
-	
+
 		state_trigger = {
 			OR = {
 				state = 195 #Hold onto Stalingrad
@@ -109,7 +109,7 @@ UKR_dont_push_too_hard_wait_for_cores_scw  = {
 				}
 			}
 		}
-		
+
 		value = 1000
 	}
 }
@@ -119,7 +119,7 @@ UKR_be_careful_scw  = {
 	allowed = {
 		original_tag = UKR
 	}
-	
+
 	enable = {
 		date < 1940.6.1
 		is_subject = no
@@ -159,12 +159,12 @@ UKR_be_careful_scw  = {
 			}
 		}
 	}
-	
+
 	abort_when_not_enabled = yes
-	
+
 	ai_strategy = {
 		type = front_control
-		
+
 		priority = 500
 
 		state_trigger = {
@@ -184,7 +184,7 @@ UKR_kill_BLR_fast_scw = {
 	allowed = {
 		original_tag = UKR
 	}
-	
+
 	enable = {
 		is_subject = no
 		ukr_in_scw = yes
@@ -208,12 +208,12 @@ UKR_kill_BLR_fast_scw = {
 			}
 		}
 	}
-	
+
 	abort_when_not_enabled = yes
-	
+
 	ai_strategy = {
 		type = front_control
-		
+
 		priority = 700
 
 		tag = BLR
@@ -228,7 +228,7 @@ UKR_go_for_moscow_scw  = {
 	allowed = {
 		original_tag = UKR
 	}
-	
+
 	enable = {
 		ukr_in_scw = yes
 		219 = {
@@ -242,12 +242,12 @@ UKR_go_for_moscow_scw  = {
 			}
 		}
 	}
-	
+
 	abort_when_not_enabled = yes
-	
+
 	ai_strategy = {
 		type = front_control
-		
+
 		priority = 2000
 
 		state = 219
@@ -263,12 +263,12 @@ UKR_focus_on_guns_scw = {
 	allowed = {
 		original_tag = UKR
 	}
-	
+
 	enable = {
 		ukr_in_scw = yes
 		num_of_military_factories < 50
 	}
-	
+
 	abort_when_not_enabled = yes
 
 	ai_strategy = {
@@ -294,19 +294,19 @@ UKR_focus_on_guns_scw = {
 		id = naval_bomber
 		value = -9999
 	}
-	
+
 	ai_strategy = {
 		type = equipment_production_factor
 		id = infantry
 		value = 100
 	}
-	
+
 	ai_strategy = {
 		type = equipment_production_factor
 		id = artillery
 		value = 20
 	}
-	
+
 	ai_strategy = {
 		type = equipment_production_factor
 		id = armor
@@ -319,7 +319,7 @@ UKR_chill_scw  = {
 	allowed = {
 		original_tag = UKR
 	}
-	
+
 	enable = {
 		date < 1940.3.1 #Just attack at this point
 		ukr_in_scw = yes
@@ -367,12 +367,12 @@ UKR_chill_scw  = {
 			}
 		}
 	}
-	
+
 	abort_when_not_enabled = yes
-	
+
 	ai_strategy = {
 		type = front_control
-		
+
 		priority = 5000
 
 		state_trigger = {
@@ -398,7 +398,7 @@ ukr_focus_on_civs_scw = {
 	allowed = {
 		original_tag = UKR
 	}
-	
+
 	enable = {
 		ukr_in_scw = yes
 		num_of_civilian_factories < 15
@@ -419,7 +419,7 @@ ukr_focus_on_mils_scw = {
 	allowed = {
 		original_tag = UKR
 	}
-	
+
 	enable = {
 		ukr_in_scw = yes
 		num_of_military_factories < 20
@@ -440,7 +440,7 @@ ukr_focus_on_mils_civs = {
 	allowed = {
 		original_tag = UKR
 	}
-	
+
 	enable = {
 		is_subject = no
 		num_of_factories < 50
@@ -483,7 +483,7 @@ help_ukr_in_scw = {
 
 	ai_strategy = {
 		type = send_volunteers_desire
-		id = UKR			
+		id = UKR
 		value = 100
 	}
 
@@ -523,7 +523,82 @@ ukr_anarchist_kill_everyone = {
 
 	ai_strategy = {
 		type = conquer
-		id = "UKR"			
+		id = "UKR"
 		value = 500
 	}
 }
+
+UKR_recover_core_territory = {
+
+	reversed = yes
+
+	target_array = neighbors
+
+	enable = {
+		NOT = {
+            is_in_faction_with = UKR
+            is_subject_of = UKR
+        }
+		strength_ratio = {
+			tag = UKR
+			ratio < 1.25
+		}
+        if = {
+			limit = {
+				is_subject = yes
+			}
+			OVERLORD = {
+				strength_ratio = {
+					tag = UKR
+					ratio < 1.25
+				}
+			}
+		}
+		OR = {
+            any_owned_state = {
+				is_core_of = UKR
+			}
+			any_controlled_state = {
+				is_core_of = UKR
+			}
+        }
+	}
+
+	enable_reverse = {
+        NOT = {
+            has_global_flag = second_russian_civil_war_in_progress
+        }
+		UKR = {
+			has_war = no
+			is_subject = no
+		}
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = conquer
+		id = UKR
+		value = 9999
+	}
+
+    ai_strategy = {
+		type = consider_weak
+		id = UKR
+		value = 9999
+	}
+
+	ai_strategy = {
+		type = antagonize
+		id = UKR
+		value = 9999
+	}
+
+	ai_strategy = {
+		type = declare_war
+		id = UKR
+		value = 9999
+	}
+}
+
+#TODO kievan rus
