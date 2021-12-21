@@ -2147,3 +2147,219 @@ country_event = {
 		}
 	}
 }
+
+#SOV Wants to Invite Us to their Faction
+country_event = {
+	id = russia2_generic.52
+	title = russia2_generic.52.t
+	desc = russia2_generic.52.d
+	picture = GFX_report_event_canada_treaty
+
+	is_triggered_only = yes
+
+	option = { #Accept
+		ai_chance = {
+			factor = 50
+			modifier = {
+				any_state = {
+					is_owned_by = ROOT
+					is_claimed_by = SOV
+				}
+				add = -30
+			}
+			modifier = {
+				OR = {
+					has_opinion = {
+						target = SOV
+						value > 50
+					}
+					is_neighbor_of = SOV
+				}
+				add = 30
+			}
+			modifier = {
+				is_major= yes
+				add = -20
+			}
+		}
+		name = russia2_generic.52.a
+		FROM = {
+			country_event = { id = russia2_generic.53 hours = 3 }
+		}
+	}
+
+	option = { #Refuse
+		ai_chance = {
+			factor = 50
+			modifier = {
+				any_state = {
+					is_owned_by = ROOT
+					is_claimed_by = SOV
+				}
+				add = 30
+			}
+			modifier = {
+				OR = {
+					has_opinion = {
+						target = SOV
+						value > 50
+					}
+					is_neighbor_of = SOV
+				}
+				add = -30
+			}
+			modifier = {
+				is_major= yes
+				add = 20
+			}
+		}
+		name = russia2_generic.52.b
+		FROM = {
+			country_event = { id = russia2_generic.54 hours = 3 }
+		}
+	}
+}
+
+#FROM Accept to join our faction
+country_event = {
+	id = russia2_generic.53
+	title = russia2_generic.53.t
+	desc = russia2_generic.53.d
+	picture = GFX_handshake_russia2
+
+	is_triggered_only = yes
+
+	option = {
+		ai_chance = {
+			factor = 100
+		}
+		name = russia2_generic.53.a
+		SOV = {
+			add_to_faction = FROM
+		}
+	}
+}
+
+#FROM Refuse to join our faction
+country_event = {
+	id = russia2_generic.54
+	title = russia2_generic.54.t
+	desc = russia2_generic.54.d
+	picture = GFX_report_event_czech_soldiers_01
+
+	is_triggered_only = yes
+
+	option = {
+		ai_chance = {
+			factor = 100
+		}
+		name = russia2_generic.54.a
+	}
+}
+
+#SOV Ask to join our Faction
+country_event = {
+	id = russia2_generic.55
+	title = russia2_generic.55.t
+	desc = russia2_generic.55.d
+	picture = GFX_report_event_french_british_officers
+
+	is_triggered_only = yes
+
+	option = { #Accept
+		ai_chance = {
+			factor = 60
+			modifier = {
+				any_state = {
+					is_owned_by = ROOT
+					is_claimed_by = SOV
+				}
+				add = -30
+			}
+			modifier = {
+				OR = {
+					has_opinion = {
+						target = SOV
+						value > 60
+					}
+					is_neighbor_of = SOV
+				}
+				add = 30
+			}
+		}
+		name = russia2_generic.55.a
+		FROM = {
+			country_event = { id = russia2_generic.56 hours = 3 }
+		}
+	}
+
+	option = { #Refuse
+		ai_chance = {
+			factor = 40
+			modifier = {
+				any_state = {
+					is_owned_by = ROOT
+					is_claimed_by = SOV
+				}
+				add = 30
+			}
+			modifier = {
+				OR = {
+					has_opinion = {
+						target = SOV
+						value > 60
+					}
+					is_neighbor_of = SOV
+				}
+				add = -30
+			}
+		}
+		name = russia2_generic.55.b
+		FROM = {
+			country_event = { id = russia2_generic.57 hours = 3 }
+		}
+	}
+}
+
+#FROM Accept to let us join their faction
+country_event = {
+	id = russia2_generic.56
+	title = russia2_generic.56.t
+	desc = russia2_generic.56.d
+	picture = GFX_handshake_russia2
+
+	is_triggered_only = yes
+
+	option = {
+		ai_chance = {
+			factor = 100
+		}
+		name = russia2_generic.56.a
+		SOV = {
+			clr_country_flag = cant_spam_join_faction_anarchist
+		}
+		FROM = {
+			add_to_faction = SOV
+		}
+	}
+}
+
+#FROM Refuse to let us join their faction
+country_event = {
+	id = russia2_generic.57
+	title = russia2_generic.57.t
+	desc = russia2_generic.57.d
+	picture = GFX_report_event_degaulle_churchill
+
+	is_triggered_only = yes
+
+	option = {
+		ai_chance = {
+			factor = 100
+		}
+		name = russia2_generic.57.a
+		SOV = {
+			clr_country_flag = cant_spam_join_faction_anarchist
+		}
+	}
+}
