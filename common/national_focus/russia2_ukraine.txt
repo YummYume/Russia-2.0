@@ -31,6 +31,7 @@ focus_tree = {
             NOT = {
                 has_country_flag = ukr_anarchist_rebels
                 has_completed_focus = UKR_provisional_government
+                has_completed_focus = UKR_state_chaos
                 has_global_flag = the_great_russian_collapse_is_here
             }
         }
@@ -131,7 +132,7 @@ focus_tree = {
                 value = v
                 index = i
                 break = break_array
-                
+
                 if = {
                     limit = {
                         check_variable = {
@@ -367,7 +368,7 @@ focus_tree = {
                         owner = ROOT
                         allow_spawning_on_enemy_provs = yes
                         prioritize_location = 3240
-                    } 
+                    }
                 }
                 242 = {
                     create_unit = {
@@ -381,7 +382,7 @@ focus_tree = {
                         owner = ROOT
                         allow_spawning_on_enemy_provs = yes
                         prioritize_location = 335
-                    } 
+                    }
                 }
             }
         }
@@ -2272,7 +2273,7 @@ focus_tree = {
                 add_equipment_production = {
                     equipment = {
                         type = ship_hull_carrier_1
-                        creator = "UKR" 
+                        creator = "UKR"
                         version_name = "Kuznetsov"
                     }
                     requested_factories = 1
@@ -2284,7 +2285,7 @@ focus_tree = {
 				add_equipment_production = {
 					equipment = {
 						type = carrier_2
-						creator = "UKR" 
+						creator = "UKR"
 					}
 					requested_factories = 1
 					progress = 0.60
@@ -2384,7 +2385,7 @@ focus_tree = {
 				add_equipment_production = {
 					equipment = {
 						type = ship_hull_heavy_2
-						creator = "UKR" 
+						creator = "UKR"
 					}
 					requested_factories = 1
 					progress = 0.60
@@ -2395,7 +2396,7 @@ focus_tree = {
 				add_equipment_production = {
 					equipment = {
 						type = battleship_2
-						creator = "UKR" 
+						creator = "UKR"
 					}
 					requested_factories = 1
 					progress = 0.60
@@ -4317,6 +4318,7 @@ focus_tree = {
             NOT = {
                 has_government = anarchy
             }
+            surrender_progress > 0.05
         }
         search_filters = { FOCUS_FILTER_NOT_ANARCHIST_UKRAINE }
         completion_reward = {
@@ -5300,6 +5302,220 @@ focus_tree = {
                     }
                 }
             }
+        }
+    }
+
+    # A State of Chaos
+    focus = {
+        id = UKR_state_chaos
+        x = 78
+        y = 1
+        prerequisite = {  }
+        icon = GFX_goal_generic_attack_allies
+        cost = 4
+        ai_will_do = {
+            factor = 10
+        }
+        bypass = {
+
+        }
+        available = {
+            has_government = anarchy
+            has_global_flag = the_great_russian_collapse_is_here
+            NOT = {
+                has_completed_focus = UKR_anarchy_reigns
+            }
+        }
+        search_filters = { FOCUS_FILTER_RSC_ANARCHIST_PATH FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_stability = -0.1
+            add_political_power = 120
+        }
+    }
+
+    # Our New Way
+    focus = {
+        id = UKR_our_new_way
+        x = 78
+        y = 2
+        prerequisite = { focus = UKR_state_chaos }
+        icon = GFX_focus_spr_anarchism_knows_no_borders
+        cost = 6
+        ai_will_do = {
+            factor = 4
+        }
+        bypass = {
+
+        }
+        available = {
+            has_government = anarchy
+            has_global_flag = the_great_russian_collapse_is_here
+        }
+        search_filters = { FOCUS_FILTER_RSC_ANARCHIST_PATH FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_ideas = RSC_Our_new_way
+        }
+    }
+
+    # Bring Home the Exiles
+    focus = {
+        id = UKR_bring_home_exiles
+        x = 78
+        y = 3
+        prerequisite = { focus = UKR_our_new_way }
+        icon = GFX_goal_generic_allies_build_infantry
+        cost = 8
+        ai_will_do = {
+            factor = 5
+        }
+        bypass = {
+
+        }
+        available = {
+            has_government = anarchy
+            has_global_flag = the_great_russian_collapse_is_here
+        }
+        search_filters = { FOCUS_FILTER_RSC_ANARCHIST_PATH FOCUS_FILTER_MANPOWER }
+        completion_reward = {
+            add_manpower = 50000
+            hidden_effect = {
+                if = {
+                    limit = {
+                        NOT = {
+                            has_template = "Russian Exiles"
+                        }
+                    }
+                    division_template = {
+                        name = "Russian Exiles"
+                        priority = 1
+                        regiments = {
+                            infantry = { x = 0 y = 0 }
+                            infantry = { x = 0 y = 1 }
+                            infantry = { x = 0 y = 2 }
+                            infantry = { x = 0 y = 3 }
+                            infantry = { x = 0 y = 4 }
+                            infantry = { x = 1 y = 0 }
+                            infantry = { x = 1 y = 1 }
+                            infantry = { x = 1 y = 2 }
+                            infantry = { x = 1 y = 3 }
+                        }
+                        support = {
+                            engineer = { x = 0 y = 0 }
+                            artillery = { x = 0 y = 1 }
+                        }
+                    }
+                }
+            }
+            capital_scope = {
+                create_unit = {
+                    division = "name = \"1st Russian Exiles Division\" division_template = \"Russian Exiles\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+                    owner = ROOT
+                }
+                create_unit = {
+                    division = "name = \"2nd Russian Exiles Division\" division_template = \"Russian Exiles\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+                    owner = ROOT
+                }
+            }
+        }
+    }
+
+    # Everyone Needs a Home
+    focus = {
+        id = UKR_everyone_needs_home
+        x = 78
+        y = 4
+        prerequisite = { focus = UKR_bring_home_exiles }
+        icon = GFX_goal_generic_consumer_goods
+        cost = 8
+        ai_will_do = {
+            factor = 5
+        }
+        bypass = {
+
+        }
+        available = {
+            has_government = anarchy
+            has_global_flag = the_great_russian_collapse_is_here
+        }
+        search_filters = { FOCUS_FILTER_RSC_ANARCHIST_PATH FOCUS_FILTER_MANPOWER }
+        completion_reward = {
+            add_ideas = RSC_Everyone_needs_home
+        }
+    }
+
+    # Training for Everyone
+    focus = {
+        id = UKR_training_everyone
+        x = 78
+        y = 5
+        prerequisite = { focus = UKR_everyone_needs_home }
+        icon = GFX_goal_generic_occupy_states_ongoing_war
+        cost = 4
+        ai_will_do = {
+            factor = 5
+        }
+        bypass = {
+
+        }
+        available = {
+            has_government = anarchy
+            has_global_flag = the_great_russian_collapse_is_here
+        }
+        search_filters = { FOCUS_FILTER_RSC_ANARCHIST_PATH FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_ideas = RSC_Training_for_everyone
+        }
+    }
+
+    # Master of the League
+    focus = {
+        id = UKR_master_league
+        x = 77
+        y = 6
+        prerequisite = { focus = UKR_training_everyone }
+        mutually_exclusive = { focus = UKR_member_league }
+        icon = GFX_goal_molotov_ribbentrop_pact
+        cost = 10
+        ai_will_do = {
+            factor = 6
+        }
+        bypass = {
+
+        }
+        available = {
+            has_government = anarchy
+            is_subject = no
+            has_global_flag = the_great_russian_collapse_is_here
+        }
+        search_filters = { FOCUS_FILTER_RSC_ANARCHIST_PATH FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_ideas = RSC_Master_league
+        }
+    }
+
+    # Member of the League
+    focus = {
+        id = UKR_member_league
+        x = 79
+        y = 6
+        prerequisite = { focus = UKR_training_everyone }
+        mutually_exclusive = { focus = UKR_master_league }
+        icon = GFX_focus_generic_support_the_left_right
+        cost = 10
+        ai_will_do = {
+            factor = 6
+        }
+        bypass = {
+
+        }
+        available = {
+            has_government = anarchy
+            is_subject = yes
+            has_global_flag = the_great_russian_collapse_is_here
+        }
+        search_filters = { FOCUS_FILTER_RSC_ANARCHIST_PATH }
+        completion_reward = {
+            add_ideas = RSC_Member_league
         }
     }
 }

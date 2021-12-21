@@ -1,0 +1,307 @@
+RSC_russia_reworked_load_decision_category_russia2 = {
+
+    RSC_russia_reworked_load_decision_russia2 = {
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			always = no
+		}
+	}
+}
+
+RSC_reclaim_russia_decision_category = {
+
+	RSC_reunite_russia_decision = {
+
+		icon = GFX_decision_generic_form_nation
+
+		fire_only_once = yes
+
+		visible = {
+			NOT = {
+				has_cosmetic_tag = RSCR
+				has_government = anarchy
+			}
+		}
+
+		available = {
+			is_subject = no
+			SOV = {
+				OR = {
+					exists = no
+					has_capitulated = yes
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = rsc_not_any_country_is_rscr
+				NOT = {
+					any_country = {
+						has_cosmetic_tag = RSCR
+					}
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = rsc_controls_all_base_sov_cores
+				NOT = {
+					any_state = {
+						sov_is_base_russian_state_trigger = yes
+						NOT = {
+							is_controlled_by = ROOT
+						}
+					}
+				}
+			}
+		}
+
+		cost = 0
+
+		ai_will_do = {
+			factor = 1000
+		}
+
+		complete_effect = {
+			add_stability = 0.1
+			add_war_support = 0.1
+			set_cosmetic_tag = RSCR
+		}
+	}
+}
+
+RSC_industrial_planning_decision_category = {
+
+	RSC_industrial_planning_one = {
+
+		icon = GFX_decision_generic_operation
+
+		days_re_enable = 10
+
+		visible = {
+			NOT = {
+				has_country_flag = RSC_industrial_planning_one_finished
+			}
+		}
+
+		available = {
+
+		}
+
+		cost = 100
+
+		ai_will_do = {
+			factor = 1000
+		}
+
+		days_remove = 100
+
+		complete_effect = {
+			set_country_flag = RSC_industrial_planning_one_started
+		}
+
+		cancel_trigger = {
+			surrender_progress > 0.25
+		}
+
+		cancel_effect = {
+			clr_country_flag = RSC_industrial_planning_one_started
+		}
+
+		remove_effect = {
+			clr_country_flag = RSC_industrial_planning_one_started
+			set_country_flag = RSC_industrial_planning_one_finished
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					is_coastal = yes
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	RSC_industrial_planning_two = {
+
+		icon = GFX_decision_generic_wreckers
+
+		days_re_enable = 10
+
+		visible = {
+			NOT = {
+				has_country_flag = RSC_industrial_planning_two_finished
+			}
+		}
+
+		available = {
+			has_country_flag = RSC_industrial_planning_one_finished
+		}
+
+		cost = 150
+
+		ai_will_do = {
+			factor = 1000
+		}
+
+		days_remove = 100
+
+		complete_effect = {
+			set_country_flag = RSC_industrial_planning_two_started
+		}
+
+		cancel_trigger = {
+			surrender_progress > 0.25
+		}
+
+		cancel_effect = {
+			clr_country_flag = RSC_industrial_planning_two_started
+		}
+
+		remove_effect = {
+			clr_country_flag = RSC_industrial_planning_two_started
+			set_country_flag = RSC_industrial_planning_two_finished
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					is_coastal = yes
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					is_coastal = yes
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	RSC_industrial_planning_three = {
+
+		icon = GFX_decision_generic_merge_plant_materiel
+
+		days_re_enable = 10
+
+		visible = {
+			NOT = {
+				has_country_flag = RSC_industrial_planning_three_finished
+			}
+		}
+
+		available = {
+			has_country_flag = RSC_industrial_planning_two_finished
+		}
+
+		cost = 200
+
+		ai_will_do = {
+			factor = 1000
+		}
+
+		days_remove = 100
+
+		complete_effect = {
+			set_country_flag = RSC_industrial_planning_three_started
+		}
+
+		cancel_trigger = {
+			surrender_progress > 0.25
+		}
+
+		cancel_effect = {
+			clr_country_flag = RSC_industrial_planning_three_started
+		}
+
+		remove_effect = {
+			clr_country_flag = RSC_industrial_planning_three_started
+			set_country_flag = RSC_industrial_planning_three_finished
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = industrial_complex
+					level = 3
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = arms_factory
+					level = 3
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					is_coastal = yes
+				}
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = dockyard
+					level = 3
+					instant_build = yes
+				}
+			}
+		}
+	}
+}

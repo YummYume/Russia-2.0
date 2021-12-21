@@ -145,7 +145,7 @@ d_russia_reworked_search_errors = {
                         has_focus_tree = russia2_soviet_focus
                     }
                 }
-                log = " [THIS.GetName] is missing russia2_soviet_focus"
+                log = " [THIS.GetTag] [THIS.GetName] is missing russia2_soviet_focus"
                 set_country_flag = russia_rework_focus_missing_sov
                 add_to_variable = { global.russia_reworked_core_file_missing = 1 }
             }
@@ -161,7 +161,7 @@ d_russia_reworked_search_errors = {
         set_global_flag = russia_reworked_focus_loaded_ukr
     }
     else = {
-        log = " [UKR.GetName] is missing russia2_ukraine_focus"
+        log = " [UKR.GetTag] [UKR.GetName] is missing russia2_ukraine_focus"
         add_to_variable = { global.russia_reworked_core_file_missing = 1 }
     }
 
@@ -186,7 +186,7 @@ d_russia_reworked_search_errors = {
                         has_focus_tree = russia2_continents_focus
                     }
                 }
-                log = " [THIS.GetName] is missing russia2_continents_focus"
+                log = " [THIS.GetTag] [THIS.GetName] is missing russia2_continents_focus"
                 set_country_flag = russia_rework_focus_missing_con
                 add_to_variable = { global.russia_reworked_core_file_missing = 1 }
             }
@@ -207,12 +207,120 @@ d_russia_reworked_search_errors = {
                 limit = {
                     has_focus_tree = soviet_focus
                 }
+                log = " [THIS.GetTag] [THIS.GetName] has soviet_focus as their focus tree"
+                log = " NOTE : While this is not technically a missing file, it will most likely cause issues. This focus tree should NOT be used."
+                set_country_flag = russia_rework_using_soviet_focus
+                add_to_variable = { global.russia_reworked_noncore_file_missing = 1 }
+            }
+        }
+    }
+
+    if = {
+        limit = {
+            all_of_scopes = {
+                array = global.russia_reworked_russian_states
+
+                if = {
+                    limit = {
+                        NOT = {
+                            tag = UKR
+                        }
+                    }
+                    has_focus_tree = russian_states_focus
+                }
+            }
+        }
+        set_global_flag = russia_reworked_focus_loaded_russian_states
+    }
+    else = {
+        for_each_scope_loop = {
+            array = global.russia_reworked_russian_states
+            break = break_loop
+
+            if = {
+                limit = {
+                    NOT = {
+                        tag = UKR
+                        has_focus_tree = russian_states_focus
+                    }
+                }
+                log = " [THIS.GetTag] [THIS.GetName] is missing russian_states_focus"
+                set_country_flag = russia_rework_focus_missing_rsc
+                add_to_variable = { global.russia_reworked_core_file_missing = 1 }
+            }
+        }
+    }
+
+    #Decisions
+    log = "Russia Reworked : Scanning Decisions files"
+    SOV = {
+        activate_decision = SOV_russia_reworked_load_decision_russia2
+        activate_decision = SOV_russia_reworked_load_decision_soviet
+        activate_decision = RSC_russia_reworked_load_decision_russia2
+    }
+    UKR = {
+        activate_decision = UKR_russia_reworked_load_decision_russia2
+    }
+    if = {
+        limit = {
+            SOV = {
+                has_decision = SOV_russia_reworked_load_decision_russia2
+            }
+        }
+        set_global_flag = russia_reworked_decision_loaded_russia
+        SOV = {
+            remove_decision = SOV_russia_reworked_load_decision_russia2
+        }
+    }
+    else = {
+        log = " At least one of the 2 files, russia2_russia_decision_categories.txt or russia2_russia.txt, is missing"
+        add_to_variable = { global.russia_reworked_core_file_missing = 1 }
+    }
+
+    if = {
+        limit = {
+            SOV = {
+                has_decision = SOV_russia_reworked_load_decision_soviet
+            }
+        }
+        for_each_scope_loop = {
+            array = global.countries
+            break = break_loop
+
+            if = {
+                limit = {
+                    has_focus_tree = soviet_focus
+                }
                 log = " [THIS.GetName] has soviet_focus as their focus tree"
                 log = " NOTE : While this is not technically a missing file, it will most likely cause issues. This focus tree should NOT be used."
                 set_country_flag = russia_rework_using_soviet_focus
                 add_to_variable = { global.russia_reworked_noncore_file_missing = 1 }
             }
         }
+        set_global_flag = russia_reworked_decision_loaded_ukraine
+        UKR = {
+            remove_decision = UKR_russia_reworked_load_decision_russia2
+        }
+    }
+    else = {
+        log = " At least one of the 2 files, russia2_ukraine_decision_categories.txt and russia2_ukraine.txt, is missing"
+        add_to_variable = { global.russia_reworked_core_file_missing = 1 }
+    }
+
+    if = {
+        limit = {
+            SOV = {
+                has_decision = RSC_russia_reworked_load_decision_russia2
+            }
+        }
+        set_global_flag = russia_reworked_decision_loaded_russian_states
+        SOV = {
+            remove_decision = RSC_russia_reworked_load_decision_russia2
+        }
+    }
+    else = {
+        log = " At least one of the 2 files, russia2_russian_states_decision_categories.txt and russia2_russian_states.txt, is missing"
+        add_to_variable = { global.russia_reworked_core_file_missing = 1 }
     }
 
     #Ideas
@@ -222,6 +330,8 @@ d_russia_reworked_search_errors = {
             SOV_russia2_idea_load
             UKR_russia2_idea_load
             CRI_russia2_idea_load
+            CON_russia2_idea_load
+            RSC_russia2_idea_load
             soviet_idea_load
             soviet_nsb_idea_load
             tajikistan_idea_load
@@ -261,6 +371,28 @@ d_russia_reworked_search_errors = {
             }
         }
         log = " Idea file russia2_crimea.txt seems to be missing"
+        add_to_variable = { global.russia_reworked_core_file_missing = 1 }
+    }
+    if = {
+        limit = {
+            NOT = {
+                SOV = {
+                    has_idea = CON_russia2_idea_load
+                }
+            }
+        }
+        log = " Idea file russia2_continents.txt seems to be missing"
+        add_to_variable = { global.russia_reworked_core_file_missing = 1 }
+    }
+    if = {
+        limit = {
+            NOT = {
+                SOV = {
+                    has_idea = RSC_russia2_idea_load
+                }
+            }
+        }
+        log = " Idea file russia2_russian_states.txt seems to be missing"
         add_to_variable = { global.russia_reworked_core_file_missing = 1 }
     }
     if = {
@@ -324,6 +456,8 @@ d_russia_reworked_search_errors = {
             SOV_russia2_idea_load
             UKR_russia2_idea_load
             CRI_russia2_idea_load
+            CON_russia2_idea_load
+            RSC_russia2_idea_load
             soviet_idea_load
             soviet_nsb_idea_load
             tajikistan_idea_load
@@ -440,6 +574,7 @@ d_russia_reworked_search_errors = {
         country_event = russia2_ukraine.2092066524
         country_event = russia2_america.2092066524
         country_event = russia2_yaltas.2092066524
+        country_event = russia2_russian_states.2092066524
     }
 
     if = {
@@ -742,6 +877,16 @@ d_russia_reworked_search_errors = {
         add_to_variable = { global.russia_reworked_core_file_missing = 1 }
     }
 
+    if = {
+        limit = {
+            NOT = {
+                has_global_flag = russia_reworked_events_loaded_russian_states
+            }
+        }
+        log = " RussianStatesRussia2.txt event file seems to be missing"
+        add_to_variable = { global.russia_reworked_core_file_missing = 1 }
+    }
+
     #Countries
     log = "Russia Reworked : Scanning Country files"
     for_each_loop = {
@@ -961,7 +1106,7 @@ d_russia_reworked_battle_royale = {
             NOT = {
                 any_of_scopes = {
                     array = global.russia_reworked_russian_states
-                    
+
                     exists = yes
                 }
             }
@@ -1061,7 +1206,7 @@ d_russia_reworked_battle_royale_with_sov = {
                 NOT = {
                     any_of_scopes = {
                         array = global.russia_reworked_russian_states
-                        
+
                         exists = yes
                     }
                 }
@@ -1441,5 +1586,27 @@ d_russia_reworked_tsar_bomba_nuke_debug = {
             log = " STATE_ID : required"
             log = " NUMBER_OF_NUKES : optional, default:3, min:1, max:100"
         }
+    }
+}
+
+d_russia_reworked_display_russian_states = {
+    log = "Russia Reworked debug :"
+    log = " Russian states tags :"
+
+    for_each_scope_loop = {
+        array = global.russia_reworked_russian_states
+
+        log = " tag = [THIS.GetTag]"
+    }
+}
+
+d_russia_reworked_display_russian_states_array = {
+    log = "Russia Reworked debug :"
+    log = " Russian states tags :"
+
+    for_each_scope_loop = {
+        array = global.russia_reworked_russian_states
+
+        log = "\"[THIS.GetTag]\","
     }
 }

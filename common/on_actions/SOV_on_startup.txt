@@ -6,8 +6,36 @@ on_actions = {
 				#Remove the retarded Generated Advisors who are unavailable unless you recruit characters in the history files, GG Paradox
 				country_event = { id = russia2_russia.651 }
 			}
+			if = {
+				limit = {
+					has_game_rule = {
+						rule = sov_enable_wide_putin
+						option = SOV_ENABLE_WIDE_PUTIN
+					}
+				}
+				set_global_flag = russia_reworked_wide_putin_enabled
+			}
 			#Disable vanilla Yalta Conference
 			set_global_flag = had_yalta_conference
+			#Disable form Siberia
+			set_global_flag = form_siberian_republic_flag
+			set_global_flag = far_east_integrated_flag
+			set_global_flag = urals_integrated_flag
+			set_global_flag = ainu_integrated_flag
+			#Disable form Ural
+			set_global_flag = form_idel_ural_flag
+			#Disable Mountainous Republic
+			set_global_flag = form_mountainous_republic_flag
+			#Disable form Turkestan
+			set_global_flag = form_turkestan_flag
+			#Disable form Transcausasian Republic
+			set_global_flag = form_transcaucasia_flag
+			set_global_flag = azeris_united_flag
+			set_global_flag = northern_caucasus_claimed_flag
+			set_global_flag = anatolians_liberated_flag
+			set_global_flag = kalmyk_khanate_restored_flag
+			set_global_flag = crimean_khanate_restored_flag
+			set_global_flag = anatolian_kurds_subjugated_flag
 			if = {
 				limit = {
 					OR = {
@@ -56,6 +84,94 @@ on_actions = {
 				}
 				UKR = {
 					set_country_flag = UKR_AI_ANARCHIST_BEHAVIOR
+				}
+			}
+			for_each_scope_loop = {
+                array = global.russia_reworked_russian_states
+                break = break_loop
+
+				if = {
+					limit = {
+						meta_trigger = {
+							text = {
+								has_game_rule = {
+									rule = [TAG_RULE]
+									option = DEMOCRATIC
+								}
+							}
+							TAG_RULE = "[THIS.GetTag]_ai_behavior"
+						}
+					}
+					set_country_flag = RSC_AI_RANDOM_DEMOCRATIC_BEHAVIOR
+				}
+				else_if = {
+					limit = {
+						meta_trigger = {
+							text = {
+								has_game_rule = {
+									rule = [TAG_RULE]
+									option = NEUTRALITY
+								}
+							}
+							TAG_RULE = "[THIS.GetTag]_ai_behavior"
+						}
+					}
+					set_country_flag = RSC_AI_RANDOM_NEUTRAL_BEHAVIOR
+				}
+				else_if = {
+					limit = {
+						meta_trigger = {
+							text = {
+								has_game_rule = {
+									rule = [TAG_RULE]
+									option = COMMUNISM
+								}
+							}
+							TAG_RULE = "[THIS.GetTag]_ai_behavior"
+						}
+					}
+					set_country_flag = RSC_AI_RANDOM_COMMUNIST_BEHAVIOR
+				}
+				else_if = {
+					limit = {
+						meta_trigger = {
+							text = {
+								has_game_rule = {
+									rule = [TAG_RULE]
+									option = FASCISM
+								}
+							}
+							TAG_RULE = "[THIS.GetTag]_ai_behavior"
+						}
+					}
+					set_country_flag = RSC_AI_RANDOM_FASCIST_BEHAVIOR
+				}
+				else_if = {
+					limit = {
+						meta_trigger = {
+							text = {
+								has_game_rule = {
+									rule = [TAG_RULE]
+									option = RANDOM
+								}
+							}
+							TAG_RULE = "[THIS.GetTag]_ai_behavior"
+						}
+					}
+					random_list = {
+						25 = {
+							set_country_flag = RSC_AI_RANDOM_DEMOCRATIC_BEHAVIOR
+						}
+						25 = {
+							set_country_flag = RSC_AI_RANDOM_NEUTRAL_BEHAVIOR
+						}
+						25 = {
+							set_country_flag = RSC_AI_RANDOM_COMMUNIST_BEHAVIOR
+						}
+						25 = {
+							set_country_flag = RSC_AI_RANDOM_FASCIST_BEHAVIOR
+						}
+					}
 				}
 			}
 			if = {
@@ -155,6 +271,44 @@ on_actions = {
 				id = 99
 				name = "Syktyvkar"
 			}
+			#DESTROY FER
+			every_state = {
+				limit = {
+					is_core_of = FER
+				}
+				FER = {
+					remove_state_core = PREV
+				}
+			}
+			if = {
+				limit = {
+					country_exists = FER
+				}
+				SOV = {
+					annex_country = {
+						target = FER
+					}
+				}
+			}
+			#DESTROY KOM
+			every_state = {
+				limit = {
+					is_core_of = KOM
+				}
+				KOM = {
+					remove_state_core = PREV
+				}
+			}
+			if = {
+				limit = {
+					country_exists = KOM
+				}
+				SOV = {
+					annex_country = {
+						target = KOM
+					}
+				}
+			}
 			EFR = {
 				add_state_core = 644
 				add_state_core = 637
@@ -171,18 +325,6 @@ on_actions = {
 				add_state_core = 655
 				add_state_core = 537
 				add_state_core = 822
-			}
-			FER = {
-				remove_state_core = 637
-				remove_state_core = 562
-				remove_state_core = 563
-				remove_state_core = 561
-				remove_state_core = 560
-				remove_state_core = 657
-				remove_state_core = 409
-				remove_state_core = 408
-				remove_state_core = 655
-				remove_state_core = 822
 			}
 			SIB = {
 				add_state_core = 408
@@ -220,7 +362,6 @@ on_actions = {
 				add_state_core = 579
 				add_state_core = 403
 				add_state_core = 824
-				add_state_core = 581
 			}
 			KAR = {
 				add_state_core = 216
@@ -235,9 +376,12 @@ on_actions = {
 				add_state_core = 828
 				add_state_core = 821
 			}
+			BSK = {
+				add_state_core = 652
+			}
 			CRI = {
 				add_state_core = 137
-				remove_state_core = 196
+				add_state_core = 196
 			}
 			DAG = {
 				add_state_core = 232
@@ -266,13 +410,7 @@ on_actions = {
 			KMI = {
 				add_state_core = 262
 				add_state_core = 397
-				add_state_core = 825
 				add_state_core = 581
-			}
-			KOM = {
-				remove_state_core = 397
-				remove_state_core = 581
-				remove_state_core = 262
 			}
 			VYA = {
 				add_state_core = 400
@@ -296,7 +434,6 @@ on_actions = {
 			}
 			PRM = {
 				add_state_core = 398
-				add_state_core = 399
 			}
 			ROS = {
 				add_state_core = 218
@@ -313,12 +450,12 @@ on_actions = {
 			}
 			TAT = {
 				add_state_core = 249
-				add_state_core = 251
-				add_state_core = 652
+			}
+			VGE = {
 				add_state_core = 401
-				add_state_core = 651
 			}
 			URA = {
+				add_state_core = 403
 				add_state_core = 581
 				add_state_core = 573
 				add_state_core = 582
@@ -326,7 +463,9 @@ on_actions = {
 				add_state_core = 653
 				add_state_core = 580
 				add_state_core = 579
-				add_state_core = 403
+				add_state_core = 398
+				add_state_claim = 651
+				add_state_claim = 652
 			}
 			if = {
 				limit = {
@@ -335,60 +474,232 @@ on_actions = {
 						option = SOV_FRAGMENTED
 					}
 				}
+				SOV = {
+					drop_cosmetic_tag = yes
+					clr_global_flag = SOV_became_russia
+					add_state_core = 207
+					add_state_core = 206
+					add_state_core = 241
+					add_state_core = 204
+					add_state_core = 194
+					add_state_core = 201
+					add_state_core = 199
+					add_state_core = 198
+					add_state_core = 202
+					add_state_core = 193
+					add_state_core = 225
+					add_state_core = 259
+					add_state_core = 203
+					add_state_core = 834
+					add_state_core = 192
+					add_state_core = 197
+					add_state_core = 196
+					add_state_core = 226
+					add_state_core = 200
+					add_state_core = 221
+					add_state_core = 227
+					add_state_core = 228
+					add_state_core = 231
+					add_state_core = 229
+					add_state_core = 230
+					add_state_core = 407
+					add_state_core = 406
+					add_state_core = 402
+					add_state_core = 587
+					add_state_core = 583
+					add_state_core = 590
+					add_state_core = 588
+					add_state_core = 589
+					add_state_core = 404
+					add_state_core = 586
+					add_state_core = 732
+					add_state_core = 742
+					add_state_core = 405
+					add_state_core = 830
+					add_state_core = 585
+					add_state_core = 823
+					add_state_core = 832
+					add_state_core = 584
+				}
+				for_each_scope_loop = {
+					array = global.russia_reworked_russian_states
+
+					if = {
+						limit = {
+							exists = yes
+						}
+						meta_effect = {
+							text = {
+								division_template = {
+									name = "[TEMPLATE_NAME]"
+									is_locked = no
+
+									regiments = {
+										infantry = { x = 0 y = 0 }
+										infantry = { x = 0 y = 1 }
+										infantry = { x = 0 y = 2 }
+										infantry = { x = 1 y = 0 }
+										infantry = { x = 1 y = 1 }
+										infantry = { x = 1 y = 2 }
+										infantry = { x = 2 y = 0 }
+										infantry = { x = 2 y = 1 }
+										infantry = { x = 2 y = 2 }
+									}
+									support = {
+										artillery = { x = 0 y = 0 }
+									}
+								}
+							}
+							TEMPLATE_NAME = "[THIS.GetAdjective] Military Police"
+						}
+						meta_effect = {
+							text = {
+								division_template = {
+									name = "[TEMPLATE_NAME]"
+									is_locked = no
+
+									regiments = {
+										light_armor = { x = 0 y = 0 }
+										light_armor = { x = 0 y = 1 }
+										light_armor = { x = 1 y = 0 }
+										light_armor = { x = 1 y = 1 }
+										light_armor = { x = 1 y = 2 }
+										motorized = { x = 2 y = 0 }
+										motorized = { x = 2 y = 1 }
+										motorized = { x = 2 y = 2 }
+										motorized = { x = 2 y = 3 }
+									}
+								}
+							}
+							TEMPLATE_NAME = "[THIS.Capital.GetName] Tank Brigade"
+						}
+
+						set_temp_variable = { num_divisions_russian_state = THIS.owned_controlled_states }
+						set_temp_variable = { tank_division_russian_state = 0 }
+						clamp_temp_variable = {
+							var = num_divisions_russian_state
+							min = 3
+							max = 50
+						}
+
+						while_loop_effect = {
+							break = break
+							limit = {
+								check_variable = {
+									var = num_divisions_russian_state
+									value = 1
+									compare = greater_than_or_equals
+								}
+							}
+
+							random_owned_controlled_state = {
+								meta_effect = {
+									text = {
+										create_unit = {
+											division = "name = \"[UNIT_NAME]\" division_template = \"[TEMPLATE_NAME]\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+											owner = PREV
+											allow_spawning_on_enemy_provs = yes
+										}
+									}
+									UNIT_NAME = "[PREV.GetAdjective] Military Police [?num_divisions_russian_state]"
+									TEMPLATE_NAME = "[PREV.GetAdjective] Military Police"
+								}
+							}
+							add_to_temp_variable = { tank_division_russian_state = 1 }
+							if = {
+								limit = {
+									check_variable = {
+										var = tank_division_russian_state
+										value = 10
+										compare = greater_than_or_equals
+									}
+								}
+								capital_scope = {
+									meta_effect = {
+										text = {
+											create_unit = {
+												division = "name = \"[UNIT_NAME]\" division_template = \"[TEMPLATE_NAME]\" start_experience_factor = 0.6 start_equipment_factor = 1.0"
+												owner = PREV
+												allow_spawning_on_enemy_provs = yes
+											}
+										}
+										UNIT_NAME = "[THIS.GetName] Tank Brigade"
+										TEMPLATE_NAME = "[THIS.GetName] Tank Brigade"
+									}
+								}
+								set_temp_variable = { tank_division_russian_state = 0 }
+							}
+							subtract_from_temp_variable = { num_divisions_russian_state = 1 }
+						}
+						delete_unit_template_and_units = {
+							division_template = "Strelkovaya Diviziya"
+						}
+						delete_unit_template_and_units = {
+							division_template = "Gornostrelkovaya Diviziya"
+						}
+						delete_unit_template_and_units = {
+							division_template = "Motostrelkovaya Diviziya"
+						}
+						delete_unit_template_and_units = {
+							division_template = "Kavaleriyskaya Diviziya"
+						}
+						delete_unit_template_and_units = {
+							division_template = "NKVD Pogranichnaya Diviziya"
+						}
+						delete_unit_template_and_units = {
+							division_template = "Mekhanizirovaniy Korpus"
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					has_game_rule = {
+						rule = sov_fragmentation_status
+						option = SOV_UTTERLY_FRAGMENTED
+					}
+				}
 				TAN = {
 					leave_faction = yes
 				}
 				MON = {
 					leave_faction = yes
 				}
+				UKR = {
+					transfer_state = 834
+					if = {
+						limit = {
+							NOT = {
+								has_game_rule = {
+									rule = sov_crimea_status
+									option = SOV_CRIMEA_EXTENDED
+								}
+							}
+						}
+						transfer_state = 196
+					}
+				}
+				BSK = {
+					transfer_state = 652
+				}
 				SOV = {
-					if = {
-						limit = {
-							has_game_rule = {
-								rule = sov_siberia_status
-								option = SOV_SIBERIA_RELEASED
-							}
-						}
-						release = SIB
-						release = URA
-						SIB = {
-							transfer_state = 581
-							add_state_core = 581
-						}
-					}
-					else = {
-						release = EFR
-						release = URA
-						release = SIB
-					}
-					release = CIR
-					release = CRI
-					release = DAG
-					if = {
-						limit = {
-							has_game_rule = {
-								rule = sov_kuban_status
-								option = SOV_KUBAN_RELEASED
-							}
-						}
-						release = KUB
-					}
-					else = {
-						release = VLG
-						release = ROS
-						release = KAL
-					}
+					release = PRM
+					release = TAT
 					if = {
 						limit = {
 							has_game_rule = {
 								rule = sov_novgorod_status
-								option = SOV_NOVGOROD_RELEASED
+								option = SOV_NOVGOROD_EXTENDED
 							}
 						}
 						release = NOV
 						release = KAR
+						release = KMI
 						NOV = {
 							transfer_state = 195
+							transfer_state = 825
+							transfer_state = 216
+							transfer_state = 215
 						}
 					}
 					else = {
@@ -398,144 +709,351 @@ on_actions = {
 						release = STP
 						release = NOV
 					}
-					release = PRM
-					release = TAT
-					# Not sure if this is necessary?
-					add_country_leader_role = {
-						character = SOV_Joseph_stalin
-						promote_leader = yes
-						country_leader = {
-							desc = SOV_Joseph_stalin_desc
-							ideology = stalinism
-							expire = "1953.1.1.1"
-							traits = {
-
+					if = {
+						limit = {
+							has_game_rule = {
+								rule = sov_siberia_status
+								option = SOV_SIBERIA_FULL
 							}
+						}
+						release = SIB
+						release = URA
+						every_state = {
+							limit = {
+								is_core_of = SIB
+								NOT = {
+									is_owned_by = SIB
+								}
+							}
+							SIB = {
+								transfer_state = PREV
+							}
+						}
+					}
+					else_if = {
+						limit = {
+							has_game_rule = {
+								rule = sov_siberia_status
+								option = SOV_SIBERIA_EXTENDED
+							}
+						}
+						release = URA
+						release = SIB
+						SIB = {
+							transfer_state = 40
+							transfer_state = 564
+							transfer_state = 329
+							transfer_state = 654
+							transfer_state = 516
+							transfer_state = 824
+							transfer_state = 577
+							transfer_state = 408
+							transfer_state = 409
+							transfer_state = 822
+							transfer_state = 644
+							transfer_state = 574
+						}
+					}
+					else_if = {
+						limit = {
+							has_game_rule = {
+								rule = sov_siberia_status
+								option = SOV_SIBERIA_SEMI_EXTENDED
+							}
+						}
+						release = EFR
+						release = URA
+						release = SIB
+						SIB = {
+							transfer_state = 40
+							transfer_state = 564
+							transfer_state = 329
+							transfer_state = 654
+							transfer_state = 516
+							transfer_state = 824
+							transfer_state = 577
+						}
+					}
+					else = {
+						release = EFR
+						release = URA
+						release = SIB
+					}
+					if = {
+						limit = {
+							country_exists = EFR
+							has_game_rule = {
+								rule = sov_far_east_status
+								option = SOV_FAR_EAST_EXTENDED
+							}
+						}
+						every_state = {
+							limit = {
+								is_core_of = EFR
+								NOT = {
+									is_owned_by = EFR
+									is_owned_by = SIB
+								}
+							}
+							EFR = {
+								transfer_state = PREV
+							}
+						}
+					}
+					if = {
+						limit = {
+							has_game_rule = {
+								rule = sov_urals_status
+								option = SOV_URALS_EXTENDED
+							}
+						}
+						every_state = {
+							limit = {
+								is_core_of = URA
+								NOT = {
+									is_owned_by = URA
+									is_owned_by = SIB
+								}
+							}
+							URA = {
+								transfer_state = PREV
+							}
+						}
+					}
+					release = CRI
+					if = {
+						limit = {
+							has_game_rule = {
+								rule = sov_uzbekistan_status
+								option = SOV_UZBEKISTAN_EXTENDED
+							}
+						}
+						UZB = {
+							transfer_state = 830
+							transfer_state = 823
+							transfer_state = 831
+						}
+					}
+					if = {
+						limit = {
+							has_game_rule = {
+								rule = sov_turkmenistan_status
+								option = SOV_TURKMENISTAN_EXTENDED
+							}
+						}
+						TMS = {
+							transfer_state = 832
+						}
+					}
+					if = {
+						limit = {
+							has_game_rule = {
+								rule = sov_volga_germany_status
+								option = SOV_VOLGA_GERMANY_RELEASED
+							}
+						}
+						VGE = {
+							transfer_state = 401
+						}
+					}
+					else = {
+						transfer_state = 829
+					}
+					if = {
+						limit = {
+							has_game_rule = {
+								rule = sov_kuban_status
+								option = SOV_KUBAN_RELEASED_AND_EXTENDED
+							}
+						}
+						release = KUB
+						KUB = {
+							transfer_state = 237
+							transfer_state = 827
+							transfer_state = 828
+							transfer_state = 821
+							transfer_state = 232
+						}
+					}
+					else_if = {
+						limit = {
+							has_game_rule = {
+								rule = sov_kuban_status
+								option = SOV_KUBAN_RELEASED
+							}
+						}
+						release = CIR
+						release = DAG
+						release = KUB
+						KUB = {
+							transfer_state = 237
+						}
+						if = {
+							limit = {
+								has_game_rule = {
+									rule = sov_circassia_status
+									option = SOV_CIRCASSIA_EXTENDED
+								}
+							}
+							CIR = {
+								transfer_state = 827
+								transfer_state = 828
+								transfer_state = 821
+							}
+						}
+					}
+					else = {
+						release = CIR
+						release = DAG
+						release = VLG
+						release = ROS
+						release = KAL
+						if = {
+							limit = {
+								has_game_rule = {
+									rule = sov_circassia_status
+									option = SOV_CIRCASSIA_EXTENDED
+								}
+							}
+							CIR = {
+								transfer_state = 827
+								transfer_state = 828
+								transfer_state = 821
+							}
+						}
+					}
+					if = {
+						limit = {
+							has_game_rule = {
+								rule = sov_georgia_status
+								option = SOV_GEORGIA_EXTENDED
+							}
+						}
+						GEO = {
+							transfer_state = 826
 						}
 					}
 					drop_cosmetic_tag = yes
 					clr_global_flag = SOV_became_russia
-					SOV = {
-						remove_ideas = SOV_Unhappy_peasants1
-						add_state_core = 408
-						add_state_core = 409
-						add_state_core = 560
-						add_state_core = 655
-						add_state_core = 537
-						add_state_core = 657
-						add_state_core = 561
-						add_state_core = 574
-						add_state_core = 562
-						add_state_core = 637
-						add_state_core = 644
-						add_state_core = 563
-						add_state_core = 565
-						add_state_core = 564
-						add_state_core = 575
-						add_state_core = 516
-						add_state_core = 566
-						add_state_core = 567
-						add_state_core = 576
-						add_state_core = 568
-						add_state_core = 569
-						add_state_core = 578
-						add_state_core = 570
-						add_state_core = 577
-						add_state_core = 571
-						add_state_core = 654
-						add_state_core = 40
-						add_state_core = 329
-						add_state_core = 216
-						add_state_core = 215
-						add_state_core = 213
-						add_state_core = 233
-						add_state_core = 234
-						add_state_core = 235
-						add_state_core = 137
-						add_state_core = 232
-						add_state_core = 236
-						add_state_core = 237
-						add_state_core = 236
-						add_state_core = 237
-						add_state_core = 217
-						add_state_core = 265
-						add_state_core = 245
-						add_state_core = 238
-						add_state_core = 218
-						add_state_core = 208
-						add_state_core = 209
-						add_state_core = 210
-						add_state_core = 263
-						add_state_core = 244
-						add_state_core = 264
-						add_state_core = 216
-						add_state_core = 215
-						add_state_core = 351
-						add_state_core = 214
-						add_state_core = 262
-						add_state_core = 397
-						add_state_core = 400
-						add_state_core = 398
-						add_state_core = 399
-						add_state_core = 218
-						add_state_core = 238
-						add_state_core = 245
-						add_state_core = 195
-						add_state_core = 217
-						add_state_core = 265
-						add_state_core = 249
-						add_state_core = 251
-						add_state_core = 652
-						add_state_core = 401
-						add_state_core = 651
-						add_state_core = 581
-						add_state_core = 573
-						add_state_core = 582
-						add_state_core = 572
-						add_state_core = 653
-						add_state_core = 580
-						add_state_core = 579
-						add_state_core = 403
-						add_state_core = 241
-						add_state_core = 207
-						add_state_core = 206
-						add_state_core = 204
-						add_state_core = 194
-						add_state_core = 225
-						add_state_core = 193
-						add_state_core = 221
-						add_state_core = 228
-						add_state_core = 227
-						add_state_core = 226
-						add_state_core = 200
-						add_state_core = 196
-						add_state_core = 259
-						add_state_core = 203
-						add_state_core = 197
-						add_state_core = 192
-						add_state_core = 198
-						add_state_core = 199
-						add_state_core = 201
-						add_state_core = 202
-						add_state_core = 231
-						add_state_core = 229
-						add_state_core = 230
-						add_state_core = 407
-						add_state_core = 406
-						add_state_core = 587
-						add_state_core = 402
-						add_state_core = 583
-						add_state_core = 590
-						add_state_core = 588
-						add_state_core = 589
-						add_state_core = 586
-						add_state_core = 404
-						add_state_core = 585
-						add_state_core = 405
-						add_state_core = 742
-						add_state_core = 732
-						add_state_core = 584
-					}
+					remove_ideas = SOV_Unhappy_peasants1
+					add_state_core = 408
+					add_state_core = 409
+					add_state_core = 560
+					add_state_core = 655
+					add_state_core = 537
+					add_state_core = 657
+					add_state_core = 561
+					add_state_core = 574
+					add_state_core = 562
+					add_state_core = 637
+					add_state_core = 644
+					add_state_core = 563
+					add_state_core = 565
+					add_state_core = 564
+					add_state_core = 575
+					add_state_core = 516
+					add_state_core = 566
+					add_state_core = 567
+					add_state_core = 576
+					add_state_core = 568
+					add_state_core = 569
+					add_state_core = 578
+					add_state_core = 570
+					add_state_core = 577
+					add_state_core = 571
+					add_state_core = 654
+					add_state_core = 40
+					add_state_core = 329
+					add_state_core = 216
+					add_state_core = 215
+					add_state_core = 213
+					add_state_core = 233
+					add_state_core = 234
+					add_state_core = 235
+					add_state_core = 137
+					add_state_core = 232
+					add_state_core = 236
+					add_state_core = 237
+					add_state_core = 236
+					add_state_core = 237
+					add_state_core = 217
+					add_state_core = 265
+					add_state_core = 245
+					add_state_core = 238
+					add_state_core = 218
+					add_state_core = 208
+					add_state_core = 209
+					add_state_core = 210
+					add_state_core = 263
+					add_state_core = 244
+					add_state_core = 264
+					add_state_core = 216
+					add_state_core = 215
+					add_state_core = 351
+					add_state_core = 214
+					add_state_core = 262
+					add_state_core = 397
+					add_state_core = 400
+					add_state_core = 398
+					add_state_core = 399
+					add_state_core = 218
+					add_state_core = 238
+					add_state_core = 245
+					add_state_core = 195
+					add_state_core = 217
+					add_state_core = 265
+					add_state_core = 249
+					add_state_core = 251
+					add_state_core = 652
+					add_state_core = 401
+					add_state_core = 651
+					add_state_core = 581
+					add_state_core = 573
+					add_state_core = 582
+					add_state_core = 572
+					add_state_core = 653
+					add_state_core = 580
+					add_state_core = 579
+					add_state_core = 403
+					add_state_core = 241
+					add_state_core = 207
+					add_state_core = 206
+					add_state_core = 204
+					add_state_core = 194
+					add_state_core = 225
+					add_state_core = 193
+					add_state_core = 221
+					add_state_core = 228
+					add_state_core = 227
+					add_state_core = 226
+					add_state_core = 200
+					add_state_core = 196
+					add_state_core = 259
+					add_state_core = 203
+					add_state_core = 197
+					add_state_core = 192
+					add_state_core = 198
+					add_state_core = 199
+					add_state_core = 201
+					add_state_core = 202
+					add_state_core = 231
+					add_state_core = 229
+					add_state_core = 230
+					add_state_core = 407
+					add_state_core = 406
+					add_state_core = 587
+					add_state_core = 402
+					add_state_core = 583
+					add_state_core = 590
+					add_state_core = 588
+					add_state_core = 589
+					add_state_core = 586
+					add_state_core = 404
+					add_state_core = 585
+					add_state_core = 405
+					add_state_core = 742
+					add_state_core = 732
+					add_state_core = 584
 				}
 				set_global_flag = SOV_stalingrad_renamed
 				217 = {
@@ -593,6 +1111,8 @@ on_actions = {
 						add_state_core = 257
 						add_state_core = 258
 						add_state_core = 833
+						add_state_core = 251
+						add_state_core = 401
 						every_state = {
 							limit = {
 								is_core_of = GPM
@@ -998,6 +1518,8 @@ on_actions = {
 					add_state_core = 257
 					add_state_core = 258
 					add_state_core = 833
+					add_state_core = 251
+					add_state_core = 401
 					add_ideas = SOV_Grand_muscovy
 				}
 			}
