@@ -35,7 +35,7 @@ is_border_conflict_defender_vs_FROM = {
 has_not_initiated_border_incident_with_FROM = {
 	custom_trigger_tooltip = {
 		tooltip = not_initiated_border_incident_with_FROM
-		NOT = {		
+		NOT = {
 			any_state = {
 				check_variable = { FROM.defender_state_vs_@PREV = id }
 			}
@@ -144,7 +144,7 @@ check_has_focus_tree_to_switch_to_democratic = {
 		AND = {
 			tag = GER
 			has_dlc = "Waking the Tiger"
-		} 
+		}
 	}
 }
 
@@ -318,18 +318,11 @@ CHI_is_on_historical_plan_trigger = {
 	}
 }
 SOV_is_on_historical_plan_trigger = {
-	OR = {
-		AND = {
-			is_historical_focus_on = yes
-			has_game_rule = {
-				rule = RUS_ai_behavior
-				option = DEFAULT
-			}
-		}
-		has_country_flag = SOV_AI_RANDOM_COMMUNIST_HISTORICAL
-		has_game_rule = {
-			rule = RUS_ai_behavior
-			option = HISTORICAL_COMMUNISM
+	SOV = {
+		is_historical_focus_on = yes
+		OR = {
+			has_country_flag = RUS_AI_DEFAULT_BEHAVIOR
+			has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 		}
 	}
 }
@@ -403,7 +396,7 @@ ENG_is_on_historical_plan_trigger = {
 SOV_save_pp_for_manpower_trouble = {
 	has_manpower < 500000
 	has_political_power < 200
-	surrender_progress > 0	
+	surrender_progress > 0
 }
 
 anti_submarine_strategy_required_trigger = {
@@ -473,7 +466,7 @@ should_USA_invade_europe_or_africa = {
 			OR = {
 				AND = {
 					has_government = democratic
-					ENG = { has_government = democratic } 
+					ENG = { has_government = democratic }
 					OR = {
 						GER = { has_government = fascism }
 						ITA = { has_government = fascism }
@@ -492,16 +485,16 @@ enemy_has_equal_or_better_radar_tech_trigger = {
 		tooltip = enemy_has_equal_or_better_radar_tech_trigger_tt
 		if = {
 			limit = {
-				ROOT = { 
-					has_tech = radio_detection 
+				ROOT = {
+					has_tech = radio_detection
 					NOT = {
 						has_tech = decimetric_radar
 					}
-				} 
+				}
 			}
-			FROM = { 
+			FROM = {
 				OR = {
-					has_tech = radio_detection 
+					has_tech = radio_detection
 					has_tech = decimetric_radar
 				}
 			}
