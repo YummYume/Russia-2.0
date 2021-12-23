@@ -18797,7 +18797,7 @@ focus_tree = {
 		y = 25
 		prerequisite = { focus = SOV_royal_orders }
 		icon = GFX_Purchase_Africa_Tsar
-		cost = 5
+		cost = 8
 		ai_will_do = {
 			factor = 6
 		}
@@ -18828,7 +18828,7 @@ focus_tree = {
 		prerequisite = { focus = SOV_purchase_african_colonies }
 		mutually_exclusive =  { focus = SOV_the_empress }
 		icon = GFX_
-		cost = 5
+		cost = 7
 		ai_will_do = {
 			factor = 6
 		}
@@ -18871,7 +18871,7 @@ focus_tree = {
 		prerequisite = { focus = SOV_purchase_african_colonies }
 		mutually_exclusive =  { focus = SOV_the_emperor }
 		icon = GFX_
-		cost = 5
+		cost = 7
 		ai_will_do = {
 			factor = 6
 		}
@@ -18909,6 +18909,7 @@ focus_tree = {
 		x = 54
 		y = 27
 		prerequisite = { focus = SOV_the_empress }
+		mutually_exclusive = { focus = SOV_alliance_kaiser_empress }
 		icon = GFX_Contact_German_Monarchist
 		cost = 5
 		ai_will_do = {
@@ -18929,8 +18930,8 @@ focus_tree = {
 		}
 		bypass = {
 			GER = {
-				has_government = neutrality
-				NOT = {
+				OR = {
+					has_government = neutrality
 					is_subject_of = SOV
 				}
 			}
@@ -18940,6 +18941,52 @@ focus_tree = {
 			country_event = { id = russia2_russia.192 days = 2 }
 			custom_effect_tooltip = SOV_contact_german_exiles_tt
 			custom_effect_tooltip = unlock_decision_reinstore_german_monarchy
+		}
+	}
+
+	#Alliance With the Kaiser
+	focus = {
+		id = SOV_alliance_kaiser_empress
+		x = 56
+		y = 27
+		prerequisite = { focus = SOV_the_empress }
+		mutually_exclusive = { focus = SOV_contact_german_exiles }
+		icon = GFX_focus_ger_return_of_the_kaiser
+		cost = 7
+		ai_will_do = {
+			factor = 6
+		}
+		available = {
+			is_faction_leader = yes
+			is_subject = no
+			is_major = yes
+			has_government = neutrality
+			GER = {
+				has_government = neutrality
+				has_completed_focus = GER_return_of_the_kaiser
+				NOT = {
+					is_subject_of = SOV
+					has_capitulated = yes
+				}
+			}
+			NOT = {
+				has_war_with = GER
+				is_in_faction_with = GER
+			}
+		}
+		bypass = {
+			GER = {
+				OR = {
+					is_in_faction_with = SOV
+					is_subject_of = SOV
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA }
+		completion_reward = {
+			GER = {
+				country_event = { id = russia2_germany.35 days = 1 }
+			}
 		}
 	}
 
@@ -19007,12 +19054,66 @@ focus_tree = {
 		}
 	}
 
+	#Second Ultimatum for Poland
+	focus = {
+		id = SOV_second_ultimatum_poland
+		x = 49
+		y = 28
+		prerequisite = { focus = SOV_contact_french_exiles }
+		icon = GFX_goal_generic_major_war
+		cost = 8
+		ai_will_do = {
+			factor = 6
+		}
+		available = {
+			is_faction_leader = yes
+			is_subject = no
+			is_major = yes
+			has_government = neutrality
+			custom_trigger_tooltip = {
+				tooltip = poland_refuse_first_ultimatum_tt
+				NOT = {
+					has_country_flag = poland_accept_imperial_puppet
+					has_country_flag = has_given_eastern_poland
+				}
+			}
+			country_exists = POL
+			NOT = {
+				POL = {
+					has_capitulated = yes
+					is_subject_of = SOV
+					is_in_faction_with = SOV
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA }
+		completion_reward = {
+			if = {
+				limit = {
+					POL = {
+						is_subject = yes
+					}
+				}
+				POL = {
+					OVERLORD = {
+						country_event = { id = russia2_poland.32 days = 1 }
+					}
+				}
+			}
+			else = {
+				POL = {
+					country_event = { id = russia2_poland.32 days = 1 }
+				}
+			}
+		}
+	}
+
 	#Imperial Obligations
 	focus = {
 		id = SOV_imperial_obligations_focus
 		x = 52
 		y = 28
-		prerequisite = { focus = SOV_contact_german_exiles focus = SOV_contact_french_exiles }
+		prerequisite = { focus = SOV_contact_german_exiles focus = SOV_contact_french_exiles focus = SOV_alliance_kaiser_empress }
 		icon = GFX_goal_unknown_golden
 		cost = 6
 		ai_will_do = {
@@ -21374,7 +21475,7 @@ focus_tree = {
 			factor = 7
 		}
 		available = {
-
+			is_subject = no
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_PROCLAMATION_COMMUNE_RUSSIA FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
@@ -21596,6 +21697,7 @@ focus_tree = {
 			factor = 7
 		}
 		available = {
+			is_subject = no
 			has_government = anarchy
 			has_country_flag = end_of_the_revolution
 		}
@@ -21857,6 +21959,7 @@ focus_tree = {
 			factor = 7
 		}
 		available = {
+			is_subject = no
 			has_government = anarchy
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_PROCLAMATION_COMMUNE_RUSSIA FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
@@ -21877,6 +21980,7 @@ focus_tree = {
 			factor = 7
 		}
 		available = {
+			is_subject = no
 			has_government = anarchy
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_PROCLAMATION_COMMUNE_RUSSIA FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
@@ -21900,6 +22004,7 @@ focus_tree = {
 			factor = 7
 		}
 		available = {
+			is_subject = no
 			has_government = anarchy
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_PROCLAMATION_COMMUNE_RUSSIA FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
@@ -22069,6 +22174,7 @@ focus_tree = {
 			factor = 7
 		}
 		available = {
+			is_subject = no
 			has_government = anarchy
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_PROCLAMATION_COMMUNE_RUSSIA FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
@@ -22260,6 +22366,7 @@ focus_tree = {
 			factor = 6
 		}
 		available = {
+			is_subject = no
 			has_government = anarchy
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_PROCLAMATION_COMMUNE_RUSSIA FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
@@ -22332,6 +22439,7 @@ focus_tree = {
 			factor = 7
 		}
 		available = {
+			is_subject = no
 			has_government = anarchy
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_PROCLAMATION_COMMUNE_RUSSIA FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
@@ -22404,6 +22512,7 @@ focus_tree = {
 			factor = 7
 		}
 		available = {
+			is_subject = no
 			has_government = anarchy
 			has_country_flag = order_has_been_restored
 		}
@@ -22428,6 +22537,7 @@ focus_tree = {
 			factor = 7
 		}
 		available = {
+			is_subject = no
 			has_government = anarchy
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_PROCLAMATION_COMMUNE_RUSSIA }
@@ -23008,6 +23118,7 @@ focus_tree = {
 			factor = 7
 		}
 		available = {
+			is_subject = no
 			has_government = anarchy
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_PROCLAMATION_COMMUNE_RUSSIA }
@@ -23030,6 +23141,7 @@ focus_tree = {
 			factor = 7
 		}
 		available = {
+			is_subject = no
 			has_government = anarchy
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_PROCLAMATION_COMMUNE_RUSSIA }
@@ -23073,6 +23185,7 @@ focus_tree = {
 			factor = 7
 		}
 		available = {
+			is_subject = no
 			has_government = anarchy
 			custom_trigger_tooltip = {
 				tooltip = must_owns_150_valid_european_states_tt
@@ -23118,6 +23231,7 @@ focus_tree = {
 			factor = 7
 		}
 		available = {
+			is_subject = no
 			has_government = anarchy
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_PROCLAMATION_COMMUNE_RUSSIA }
@@ -23165,6 +23279,7 @@ focus_tree = {
 			factor = 7
 		}
 		available = {
+			is_subject = no
 			has_government = anarchy
 			custom_trigger_tooltip = {
 				tooltip = must_owns_130_valid_asian_states_tt
@@ -23238,6 +23353,7 @@ focus_tree = {
 			factor = 7
 		}
 		available = {
+			is_subject = no
 			has_government = anarchy
 			has_country_flag = has_elected_anarcho_individualism
 		}
@@ -23291,6 +23407,7 @@ focus_tree = {
 			factor = 7
 		}
 		available = {
+			is_subject = no
 			has_government = anarchy
 			has_country_flag = has_elected_anarcho_individualism
 			custom_trigger_tooltip = {
@@ -23383,6 +23500,7 @@ focus_tree = {
 			factor = 7
 		}
 		available = {
+			is_subject = no
 			has_government = anarchy
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_PROCLAMATION_COMMUNE_RUSSIA }
@@ -23392,7 +23510,93 @@ focus_tree = {
 		}
 	}
 
-	#Spread the Revolution to the land of fake Freedom
+	#Training in Africa
+	focus = {
+		id = SOV_training_anarchist_africa
+		x = 110
+		y = 17
+		prerequisite = { focus = SOV_form_commune_eurasia focus = SOV_form_commune_asia focus = SOV_form_commune_europe focus = SOV_form_the_communes_of_peoples }
+		icon = GFX_goal_generic_special_forces
+		cost = 10
+		ai_will_do = {
+			factor = 7
+		}
+		available = {
+			is_subject = no
+			has_government = anarchy
+			custom_trigger_tooltip = {
+				tooltip = SOV_training_available_africa_tt
+				must_owns_10_valid_north_african_states_trigger_anarchist = yes
+			}
+		}
+		search_filters = { FOCUS_FILTER_ANARCHY_PROCLAMATION_COMMUNE_RUSSIA }
+		completion_reward = {
+			add_ideas = SOV_Extreme_anarchist_training
+		}
+	}
+
+	#Training in Harsh Cold Weather
+	focus = {
+		id = SOV_training_harsh_cold_anarchist
+		x = 109
+		y = 18
+		prerequisite = { focus = SOV_training_anarchist_africa }
+		icon = GFX_goal_generic_wolf_pack
+		cost = 10
+		ai_will_do = {
+			factor = 7
+		}
+		available = {
+			is_subject = no
+			has_government = anarchy
+			OR = {
+				100 = {
+					is_owned_and_controlled_by = SOV
+				}
+				101 = {
+					is_owned_and_controlled_by = SOV
+				}
+				463 = {
+					is_owned_and_controlled_by = SOV
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_ANARCHY_PROCLAMATION_COMMUNE_RUSSIA }
+		completion_reward = {
+			swap_ideas = {
+				remove_idea = SOV_Extreme_anarchist_training
+				add_idea = SOV_Extreme_anarchist_training_2
+			}
+		}
+	}
+
+	#Training in Harsh Environment
+	focus = {
+		id = SOV_training_harsh_environment
+		x = 108
+		y = 19
+		prerequisite = { focus = SOV_training_harsh_cold_anarchist }
+		icon = GFX_goal_generic_war_with_comintern
+		cost = 10
+		ai_will_do = {
+			factor = 7
+		}
+		available = {
+			is_subject = no
+			has_government = anarchy
+			has_terrain = jungle
+
+		}
+		search_filters = { FOCUS_FILTER_ANARCHY_PROCLAMATION_COMMUNE_RUSSIA }
+		completion_reward = {
+			swap_ideas = {
+				remove_idea = SOV_Extreme_anarchist_training_2
+				add_idea = SOV_Extreme_anarchist_training_3
+			}
+		}
+	}
+
+	#Spread the Revolution to the Land of Fake Freedom
 	focus = {
 		id = SOV_spread_revolution_land_fake_freedom
 		x = 112
@@ -23404,11 +23608,79 @@ focus_tree = {
 			factor = 7
 		}
 		available = {
+			is_subject = no
 			has_government = anarchy
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_PROCLAMATION_COMMUNE_RUSSIA }
 		completion_reward = {
+			custom_effect_tooltip = SOV_spread_revolution_land_fake_freedom_tt
+			show_ideas_tooltip = SOV_Anarchist_uprising
+			custom_effect_tooltip = SOV_anarchist_uprising_upgrade_tt
+			hidden_effect = {
+				every_country = {
+					limit = {
+						NOT = {
+							TAG = SOV
+						}
+						OR = {
+							any_state = {
+								is_capital = yes
+								is_on_continent = north_america
+								is_owned_by = PREV
+							}
+							any_state = {
+								is_capital = yes
+								is_on_continent = south_america
+								is_owned_by = PREV
+							}
+						}
+					}
+					country_event = { id = russia2_generic.59 hours = 1 }
+				}
+			}
+		}
+	}
 
+	#Spread the Revolution Everywhere 
+	focus = {
+		id = SOV_spread_revolution_everywhere
+		x = 112
+		y = 18
+		prerequisite = { focus = SOV_spread_revolution_land_fake_freedom }
+		icon = GFX_focus_ger_great_red_menace
+		cost = 10
+		ai_will_do = {
+			factor = 7
+		}
+		available = {
+			is_subject = no
+			has_government = anarchy
+			custom_trigger_tooltip = {
+				tooltip = SOV_spread_revolution_everywhere_condition_tt
+				must_owns_15_valid_american_states_trigger_anarchist = yes
+			}
+		}
+		search_filters = { FOCUS_FILTER_ANARCHY_PROCLAMATION_COMMUNE_RUSSIA }
+		completion_reward = {
+			custom_effect_tooltip = SOV_spread_revolution_everywhere_tt
+			hidden_effect = {
+				every_country = {
+					limit = {
+						NOT = {
+							TAG = SOV
+							has_idea = SOV_Anarchist_uprising
+							has_idea = SOV_Anarchist_uprising_2
+							has_idea = SOV_Anarchist_uprising_3
+							has_idea = SOV_Anarchist_uprising_4
+							has_idea = SOV_Anarchist_uprising_5
+							has_idea = SOV_Anarchist_uprising_6
+							has_idea = SOV_Anarchist_uprising_7
+						}
+					}
+					country_event = { id = russia2_generic.59 hours = 1 }
+				}
+			}
+			add_ideas = SOV_A_world_without_borders
 		}
 	}
 
@@ -23427,6 +23699,7 @@ focus_tree = {
 			factor = 7
 		}
 		available = {
+			is_subject = no
 			has_government = anarchy
 			has_country_flag = chaos_has_triumphed
 			has_country_flag = black_revolution_turned_civil_war
@@ -23489,6 +23762,7 @@ focus_tree = {
 			factor = 7
 		}
 		available = {
+			is_subject = no
 			has_government = anarchy
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
@@ -23529,6 +23803,7 @@ focus_tree = {
 			factor = 7
 		}
 		available = {
+			is_subject = no
 			has_government = anarchy
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
@@ -23565,6 +23840,7 @@ focus_tree = {
 			factor = 7
 		}
 		available = {
+			is_subject = no
 			has_government = anarchy
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
@@ -23588,6 +23864,7 @@ focus_tree = {
 			factor = 7
 		}
 		available = {
+			is_subject = no
 			has_government = anarchy
 			NOT = {
 				has_completed_focus = SOV_reform_russia
@@ -23655,6 +23932,7 @@ focus_tree = {
 			factor = 7
 		}
 		available = {
+			is_subject = no
 			has_government = anarchy
 			has_country_flag = has_chosen_reform_russia_anarchist
 		}
@@ -23730,6 +24008,7 @@ focus_tree = {
 			factor = 7
 		}
 		available = {
+			is_subject = no
 			has_government = anarchy
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
@@ -23808,6 +24087,7 @@ focus_tree = {
 			factor = 7
 		}
 		available = {
+			is_subject = no
 			has_government = anarchy
 			NOT = {
 				has_global_flag = reunification_war_is_ongoing_anarchist
@@ -23866,6 +24146,7 @@ focus_tree = {
 			factor = 7
 		}
 		available = {
+			is_subject = no
 			has_government = anarchy
 			has_country_flag = has_chosen_a_tight_grip_anarchist
 		}
@@ -23922,6 +24203,7 @@ focus_tree = {
 			factor = 7
 		}
 		available = {
+			is_subject = no
 			has_government = anarchy
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
@@ -23963,6 +24245,7 @@ focus_tree = {
 			factor = 7
 		}
 		available = {
+			is_subject = no
 			has_government = anarchy
 			custom_trigger_tooltip = {
 				tooltip = every_league_member_accept_project_reform
@@ -24028,6 +24311,7 @@ focus_tree = {
 			factor = 7
 		}
 		available = {
+			is_subject = no
 			has_government = anarchy
 			has_country_flag = has_chosen_semi_devolution_anarchist
 		}
@@ -24049,6 +24333,7 @@ focus_tree = {
 			factor = 7
 		}
 		available = {
+			is_subject = no
 			has_government = anarchy
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
@@ -24069,6 +24354,7 @@ focus_tree = {
 			factor = 7
 		}
 		available = {
+			is_subject = no
 			has_government = anarchy
 			custom_trigger_tooltip = {
 				tooltip = not_any_country_whose_fate_hasnt_been_chosen_anarchist_semi_devolution
@@ -24254,6 +24540,7 @@ focus_tree = {
 			factor = 7
 		}
 		available = {
+			is_subject = no
 			has_government = anarchy
 			has_country_flag = sov_finished_anarchy_reform_chaos
 		}
@@ -24275,6 +24562,7 @@ focus_tree = {
 			factor = 7
 		}
 		available = {
+			is_subject = no
 			has_government = anarchy
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
@@ -24288,14 +24576,15 @@ focus_tree = {
 	focus = {
 		id = SOV_rebirth
 		x = 118
-		y = 18
-		prerequisite = { focus = SOV_spread_revolution_land_fake_freedom focus = SOV_spread_anarchism_beyond_our_neighbors }
+		y = 20
+		prerequisite = { focus = SOV_spread_revolution_everywhere focus = SOV_spread_anarchism_beyond_our_neighbors }
 		icon = GFX_goal_unknown_golden
 		cost = 6
 		ai_will_do = {
 			factor = 10
 		}
 		available = {
+			is_subject = no
 			is_subject = no
 			has_government = anarchy
 			is_major = yes

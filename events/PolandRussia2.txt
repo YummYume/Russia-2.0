@@ -1943,3 +1943,113 @@ country_event = {
 		}
 	}
 }
+
+#Second Ultimatum for Poland
+country_event = {
+	id = russia2_poland.32
+	title = russia2_poland.32.t
+	desc = russia2_poland.32.d
+	picture = GFX_menacing_tanks_russia2
+	
+	is_triggered_only = yes
+	
+	#Accept
+	option = {
+		name = russia2_poland.32.a
+		ai_chance = {
+			base = 70
+			modifier = {
+				add = -40
+				OR = {
+					is_major = yes
+					is_in_faction = yes
+				}
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					TAG = POL
+				}
+			}
+			custom_effect_tooltip =  receive_this_event_because_pol_is_our_puppet_neutrality
+		}
+		SOV = {
+			country_event = { id = russia2_poland.33 hours = 5 }
+		}
+	}
+
+	#Refuse
+	option = {
+		name = russia2_poland.32.b
+		ai_chance = {
+			base = 30
+			modifier = {
+				add = 40
+				OR = {
+					is_major = yes
+					is_in_faction = yes
+				}
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					TAG = POL
+				}
+			}
+			custom_effect_tooltip =  receive_this_event_because_pol_is_our_puppet_neutrality
+		}
+		custom_effect_tooltip = lead_to_war_against_russian_junta
+		SOV = {
+			country_event = { id = russia2_poland.34 hours = 5 }
+		}
+	}
+}
+
+#We receive Poland
+country_event = {
+	id = russia2_poland.33
+	title = russia2_poland.33.t
+	desc = russia2_poland.33.d
+	picture = GFX_soldiers_handshaking_kolchak_russia2
+	
+	is_triggered_only = yes
+	
+	#Good
+	option = {
+		name = russia2_poland.33.a
+		ai_chance = {
+			factor = 100
+		}
+		SOV = {
+			annex_country = {
+				target = POL
+			}
+		}
+	}
+}
+
+#We Don't receive Poland
+country_event = {
+	id = russia2_poland.34
+	title = russia2_poland.34.t
+	desc = russia2_poland.34.d
+	picture = GFX_soldiers_parade_russia2
+	
+	is_triggered_only = yes
+	
+	#War
+	option = {
+		name = russia2_poland.34.a
+		ai_chance = {
+			factor = 100
+		}
+		SOV = {
+			create_wargoal = {
+				type = annex_everything
+				target = POL
+			}
+		}
+	}
+}

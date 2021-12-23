@@ -174,4 +174,146 @@ on_actions = {
 			}
 		}
 	}
+
+	#Anarchist Civil War Caused by the Individualist, if the anarchist side win. Annex ROOT
+	on_civil_war_end = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						has_government = anarchy
+					}
+					SOV = {
+						has_government = anarchy
+					}
+				}
+				SOV = {
+					annex_country = {
+						target = ROOT
+						transfer_troops = yes
+					}
+				}
+				clr_global_flag = an_anarchist_recolution_is_happening_indi
+			}
+			else_if = {
+				limit = {
+					ROOT = {
+						NOT = {
+							has_government = anarchy
+						}
+					}
+					FROM = {
+						has_government = anarchy
+					}
+					SOV = {
+						has_government = anarchy
+					}
+				}
+				clr_global_flag = an_anarchist_recolution_is_happening_indi
+			}
+		}
+	}
+
+	#Division Spaw in Targeted States after Declare War - Anarcho-Communism
+	on_declare_war = { #Add Event Instead
+		effect = {
+			if = {
+				limit ={
+					ROOT = {
+						TAG = SOV
+						has_government = anarchy
+						has_country_flag = can_infiltrate_foreign_countries_wargoal
+					}
+				}
+				if = {
+					limit = {
+						ROOT = {
+							NOT = {
+								has_template = "Taynaya Militsiya Diviziya"
+							}
+						}
+					}
+					division_template = {
+						name = "Taynaya Militsiya Diviziya"
+						is_locked = yes
+						regiments = {
+							infantry = { x = 0 y = 0 }
+							infantry = { x = 0 y = 1 }
+							infantry = { x = 0 y = 2 }
+							infantry = { x = 0 y = 3 }
+							infantry = { x = 0 y = 4 }
+							infantry = { x = 1 y = 0 }
+						}
+						support = { 
+							engineer = { x = 0 y = 0 }
+						} 
+					}
+				}
+				if = {
+					limit = {
+						ROOT = {
+							has_country_flag = can_infiltrate_foreign_countries_wargoal_lvl2
+						}
+					}
+					every_state = {
+						limit = {
+							is_owned_by = FROM
+							has_state_flag = is_chosen_infiltrated_states_anarchist_communism
+						}
+						create_unit = {
+							division = "name = \"1ya Taynaya Militsiya Diviziya\" division_template = \"Taynaya Militsiya Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+							owner = ROOT
+							allow_spawning_on_enemy_provs = yes
+						}
+						create_unit = {
+							division = "name = \"2ya Taynaya Militsiya Diviziya\" division_template = \"Taynaya Militsiya Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+							owner = ROOT
+							allow_spawning_on_enemy_provs = yes
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						ROOT = {
+							has_country_flag = can_infiltrate_foreign_countries_wargoal_lvl3
+						}
+					}
+					every_state = {
+						limit = {
+							is_owned_by = FROM
+							has_state_flag = is_chosen_infiltrated_states_anarchist_communism
+						}
+						create_unit = {
+							division = "name = \"1ya Taynaya Militsiya Diviziya\" division_template = \"Taynaya Militsiya Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+							owner = ROOT
+							allow_spawning_on_enemy_provs = yes
+						}
+						create_unit = {
+							division = "name = \"2ya Taynaya Militsiya Diviziya\" division_template = \"Taynaya Militsiya Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+							owner = ROOT
+							allow_spawning_on_enemy_provs = yes
+						}
+						create_unit = {
+							division = "name = \"3ya Taynaya Militsiya Diviziya\" division_template = \"Taynaya Militsiya Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+							owner = ROOT
+							allow_spawning_on_enemy_provs = yes
+						}
+					}
+				}
+				else = {
+					every_state = {
+						limit = {
+							is_owned_by = FROM
+							has_state_flag = is_chosen_infiltrated_states_anarchist_communism
+						}
+						create_unit = {
+							division = "name = \"1ya Taynaya Militsiya Diviziya\" division_template = \"Taynaya Militsiya Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+							owner = ROOT
+							allow_spawning_on_enemy_provs = yes
+						}
+					}
+				}
+			}
+		}
+	}
 }
