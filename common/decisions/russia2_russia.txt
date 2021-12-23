@@ -5035,7 +5035,7 @@ SOV_the_second_civil_war_fn = {
 
 		}
 
-		complete_effect = { #TODO CHeck This later
+		complete_effect = {
 			custom_effect_tooltip = SOV_relocate_arms_industry_tt
 			hidden_effect = {
 				random_owned_state = {
@@ -53935,7 +53935,7 @@ SOV_anarchist_the_revolution_without_borders = {
 		}
 	}
 
-	SOV_decision_test_infiltration = {
+	SOV_infiltrate_chosen_state_from_justify_war = {
 		
 		icon = GFX_decision_onmap_recruit_operative
 
@@ -53943,58 +53943,81 @@ SOV_anarchist_the_revolution_without_borders = {
 			original_tag = SOV
 		}
 
-		visible = {
+		on_map_mode = map_only
 
+		state_target = yes
+
+		visible = {
+			SOV = {
+				is_justifying_wargoal_against = FROM
+				has_government = anarchy
+				has_country_flag = has_elected_anarcho_communism
+				has_country_flag = can_infiltrate_foreign_countries_wargoal
+			}
 		}
 
 		available = {
-
+			has_government = anarchy
+			has_country_flag = has_elected_anarcho_communism
+			custom_trigger_tooltip = {
+				tooltip = not_more_than_3_chosen_infiltrated_states_tt
+				any_country = {
+					owns_state = FROM
+					NOT = {
+						check_variable = {
+							var = anarchist_state_infiltration
+							value = 3
+							compare = equals 
+						}
+					}
+				}
+			}
 		}
 
-		cost = 1
+		target_trigger = {
+			SOV = {
+				is_justifying_wargoal_against = FROM
+			}
+		}
 
 		fire_only_once = yes
 
-		complete_effect = {
-			random_state = {
-				limit = {
-					is_owned_by = POL
-					NOT = {
-						has_state_flag = is_chosen_infiltrated_states_anarchist_communism 
-					}
-				}
-				set_state_flag = is_chosen_infiltrated_states_anarchist_communism
-			}
-			random_state = {
-				limit = {
-					is_owned_by = POL
-					NOT = {
-						has_state_flag = is_chosen_infiltrated_states_anarchist_communism 
-					}
-				}
-				set_state_flag = is_chosen_infiltrated_states_anarchist_communism
-			}
-			random_state = {
-				limit = {
-					is_owned_by = POL
-					NOT = {
-						has_state_flag = is_chosen_infiltrated_states_anarchist_communism 
-					}
-				}
-				set_state_flag = is_chosen_infiltrated_states_anarchist_communism
-			}
-			create_wargoal = {
-				type = annex_everything
-				target = POL
-			}
-		}
+		cost = 15
 
-		ai_will_do = {
-			factor = 150
+		complete_effect = {
+			custom_effect_tooltip = SOV_infiltrate_chosen_state_from_justify_war_tt
+			FROM = {
+				set_state_flag = is_chosen_infiltrated_states_anarchist_communism
+			}
+			add_to_variable = {
+				var = anarchist_state_infiltration
+				value = 1
+			}
+			hidden_effect = {
+				every_country = {
+					limit = {
+						owns_state = FROM
+					}
+					if = {
+						limit = {
+							NOT = {
+								has_variable = anarchist_state_infiltration
+							}
+						}
+						set_variable = { anarchist_state_infiltration = 1 }
+					}
+					else = {
+						add_to_variable = {
+							var = anarchist_state_infiltration
+							value = 1
+						}
+					}
+				}
+			}
 		}
 	}
 
-	SOV_Infitrate_foreign_countries_anarchist = {
+	SOV_infiltrate_foreign_countries_anarchist = {
 		
 		icon = GFX_decision_onmap_recruit_operative
 
