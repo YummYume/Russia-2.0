@@ -23176,6 +23176,30 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_ANARCHY_PROCLAMATION_COMMUNE_RUSSIA }
 		completion_reward = {
 			custom_effect_tooltip = unlock_justification_wargoal_tt
+			set_temp_variable = { current_party = 0 }
+			while_loop_effect = {
+				limit = {
+					check_variable = {
+						var = current_party
+						value = sov_anarchist_election_parties^num
+						compare = less_than
+					}
+				}
+				set_temp_variable = { random_party_support = 0 }
+				randomize_temp_variable = {
+					var = random_party_support
+					min = 0
+					max = 100
+					distribution = uniform
+				}
+				set_variable = { sov_anarchist_election_parties^var:current_party = random_party_support }
+				add_to_temp_variable = { current_party = 1 }
+			}
+			find_highest_in_array = {
+				array = sov_anarchist_election_parties
+				index = sov_anarchist_election_current_ruling_party_temp
+			}
+			set_variable = { sov_anarchist_election_current_ruling_party = sov_anarchist_election_current_ruling_party_temp }
 		}
 	}
 

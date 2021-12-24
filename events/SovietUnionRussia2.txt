@@ -33269,11 +33269,12 @@ country_event = {
 	}
 }
 
+#TODO CHANGE IDS
 #Hidden Event to Spawn Divisions
 country_event = {
 	id = russia2_russia.654
 	title = russia2_russia.654.t
-	
+
 	is_triggered_only = yes
 
 	hidden = yes
@@ -33345,6 +33346,120 @@ country_event = {
 				}
 				clr_state_flag = is_chosen_infiltrated_states_anarchist_communism
 			}
+		}
+	}
+}
+
+#Anarchist Election
+country_event = {
+	id = russia2_russia.654
+	title = russia2_russia.654.t
+	desc = russia2_russia.654.d
+	picture = GFX_report_event_SOV_mongolia_cavalry
+
+	is_triggered_only = yes
+
+	option = {
+		name = russia2_russia.654.a
+		ai_chance = {
+			factor = 100
+		}
+		set_variable = { sov_anarchist_election_current_ruling_party = var:sov_anarchist_election_current_party_context }
+	}
+}
+
+#Random Party Gains 5/10%
+country_event = {
+	id = russia2_russia.655
+	title = russia2_russia.655.t
+	desc = russia2_russia.655.d
+	picture = GFX_report_event_SOV_mongolia_cavalry
+
+	is_triggered_only = yes
+
+	option = {
+		name = russia2_russia.655.a
+		ai_chance = {
+			factor = 100
+		}
+		set_temp_variable = { random_effect = 0 }
+		randomize_temp_variable = {
+			var = random_effect
+			min = 0
+			max = 2
+		}
+		if = {
+			limit = {
+				check_variable = {
+					var = random_effect
+					value = 1
+					compare = less_than
+				}
+			}
+			add_to_variable = { sov_anarchist_election_parties^var:sov_anarchist_election_current_party_context = 5 }
+			clamp_variable = {
+				var = sov_anarchist_election_parties^var:sov_anarchist_election_current_party_context
+				min = 0
+				max = 100
+			}
+			custom_effect_tooltip = sov_current_context_party_gains_5_percent
+		}
+		else = {
+			add_to_variable = { sov_anarchist_election_parties^var:sov_anarchist_election_current_party_context = 10 }
+			clamp_variable = {
+				var = sov_anarchist_election_parties^var:sov_anarchist_election_current_party_context
+				min = 0
+				max = 100
+			}
+			custom_effect_tooltip = sov_current_context_party_gains_10_percent
+		}
+	}
+}
+
+#Random Party Loses 5/10%
+country_event = {
+	id = russia2_russia.656
+	title = russia2_russia.656.t
+	desc = russia2_russia.656.d
+	picture = GFX_report_event_SOV_mongolia_cavalry
+
+	is_triggered_only = yes
+
+	option = {
+		name = russia2_russia.656.a
+		ai_chance = {
+			factor = 100
+		}
+		set_temp_variable = { random_effect = 0 }
+		randomize_temp_variable = {
+			var = random_effect
+			min = 0
+			max = 2
+		}
+		if = {
+			limit = {
+				check_variable = {
+					var = random_effect
+					value = 1
+					compare = less_than
+				}
+			}
+			subtract_from_variable = { sov_anarchist_election_parties^var:sov_anarchist_election_current_party_context = 5 }
+			clamp_variable = {
+				var = sov_anarchist_election_parties^var:sov_anarchist_election_current_party_context
+				min = 0
+				max = 100
+			}
+			custom_effect_tooltip = sov_current_context_party_loses_5_percent
+		}
+		else = {
+			subtract_from_variable = { sov_anarchist_election_parties^var:sov_anarchist_election_current_party_context = 10 }
+			clamp_variable = {
+				var = sov_anarchist_election_parties^var:sov_anarchist_election_current_party_context
+				min = 0
+				max = 100
+			}
+			custom_effect_tooltip = sov_current_context_party_loses_10_percent
 		}
 	}
 }
