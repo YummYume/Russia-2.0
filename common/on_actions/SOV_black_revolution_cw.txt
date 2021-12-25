@@ -256,7 +256,9 @@ on_actions = {
 				}
 				FROM = {
 					clear_variable = anarchist_state_infiltration
-					country_event = { id = russia2_russia.654 hours = 8 }
+					hidden_effect = {
+						country_event = { id = russia2_russia.657 hours = 8 }
+					}
 				}
 			}
 		}
@@ -277,6 +279,38 @@ on_actions = {
 				delete_unit_template_and_units = {
 					division_template = "Taynaya Militsiya Diviziya"
 					disband = no
+				}
+			}
+		}
+	}
+
+	#Annex Puppet for Left Path Just in Case
+	on_puppet = {
+		effect = {
+			if = {
+				limit = {
+					FROM = {
+						TAG = SOV
+						has_government = anarchy
+						NOT = {
+							has_completed_focus = SOV_embrace_total_anarchy
+						}
+					}
+					ROOT = {
+						NOT = {
+							TAG = EAC
+							TAG = NAC
+							TAG = WAC
+							TAG = SWA
+							TAG = AEA
+							TAG = SAE
+						}
+					}
+				}
+				FROM = {
+					annex_country = {
+						target = ROOT
+					}
 				}
 			}
 		}

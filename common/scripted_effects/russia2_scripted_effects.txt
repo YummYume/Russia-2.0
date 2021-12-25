@@ -9523,7 +9523,7 @@ set_variable_anarchist_election_to_0 = {
     set_variable = { anarchy_aviation_party_agility = 0 }
     set_variable = { anarchy_ship_party_dockyard_cap = 0 }
     set_variable = { anarchy_ship_party_dockyard_speed = 0 }
-    set_variable = { anarchy_logistic_infrastructure_build = 0 } 
+    set_variable = { anarchy_logistic_infrastructure_build = 0 }
     set_variable = { anarchy_logistic_railway_build = 0 }
     set_variable = { anarchy_logistic_supply_consumption = 0 }
     set_variable = { anarchy_internal_sec_decryption_fac = 0 }
@@ -9544,7 +9544,10 @@ set_variable_for_winning_anarchist_party_election = {
                 compare = equals
             }
         }
-        set_variable = { anarchy_intellect_party_research = 0.10 }
+        custom_effect_tooltip = research_anarchist_election_bonus_3_months
+        hidden_effect = {
+            set_variable = { anarchy_intellect_party_research = 0.10 }
+        }
         random_tech_anarchist_election = yes
     }
     if = {
@@ -9555,6 +9558,7 @@ set_variable_for_winning_anarchist_party_election = {
                 compare = equals
             }
         }
+        custom_effect_tooltip = civilian_industry_anarchist_election_bonus_3_months
         set_variable = { anarchy_industry_party_factory = 0.10 }
         set_variable = { anarchy_industry_party_resources = 0.25 }
     }
@@ -9566,6 +9570,7 @@ set_variable_for_winning_anarchist_party_election = {
                 compare = equals
             }
         }
+        custom_effect_tooltip = military_industry_anarchist_election_bonus_3_months
         set_variable = { anarchy_military_industry_party_guns = 0.15 }
         set_variable = { anarchy_military_industry_party_guns_fabrication = 0.1 }
     }
@@ -9577,6 +9582,7 @@ set_variable_for_winning_anarchist_party_election = {
                 compare = equals
             }
         }
+        custom_effect_tooltip = militarist_bonus_anarchist_election_bonus_3_months
         set_variable = { anarchy_militarist_party_training = -0.15 }
         set_variable = { anarchy_militarist_party_attack = 0.05 }
         set_variable = { anarchy_militarist_party_defence = 0.05 }
@@ -9590,6 +9596,7 @@ set_variable_for_winning_anarchist_party_election = {
                 compare = equals
             }
         }
+        custom_effect_tooltip = aviation_bonus_anarchist_election_bonus_3_months
         set_variable = { anarchy_aviation_party_accident = -0.15 }
         set_variable = { anarchy_aviation_party_ace_generation = 0.25 }
         set_variable = { anarchy_aviation_party_attack = 0.05 }
@@ -9604,55 +9611,36 @@ set_variable_for_winning_anarchist_party_election = {
                 compare = equals
             }
         }
+        custom_effect_tooltip = naval_bonus_anarchist_election_bonus_3_months
+        custom_effect_tooltip = naval_bonus_anarchist_random_boat
         set_variable = { anarchy_ship_party_dockyard_cap = 0.15 }
         set_variable = { anarchy_ship_party_dockyard_speed = 0.1 }
-        random_list = {
-            25 = {
-                create_ship = {
-                    type = destroyer_1
-                    equipment_variant = "A/B/C/D Class"
-                    creator = ENG
-                    name = "Russkiy esminets"
+        hidden_effect = {
+            random_list = {
+                25 = {
+                    SOV = {
+                        load_oob = "SOV_destroyer_anarchist"
+                    }
                 }
-            }
-            20 = {
-                create_ship = {
-                    type = light_cruiser_1
-                    equipment_variant = "Emerald Class"
-                    creator = ENG
-                    name = "Russkiy legkiy kreyser"
+                25 = {
+                    SOV = {
+                        load_oob = "SOV_light_cruiser_anarchist"
+                    }
                 }
-            }
-            20 = {
-                create_ship = {
-                    type = heavy_cruiser_1
-                    equipment_variant = "County Class"
-                    creator = ENG
-                    name = "Russkiy tyazhelyy kreyser"
+                20 = {
+                    SOV = {
+                        load_oob = "SOV_battle_cruiser_anarchist"
+                    }
                 }
-            }
-            20 = {
-                create_ship = {
-                    type = battle_cruiser_1
-                    equipment_variant = "Admiral Class"
-                    creator = ENG
-                    name = "Russkiy lineynyy kreyser"
+                20 = {
+                    SOV = {
+                        load_oob = "SOV_heavy_cruiser_anarchist"
+                    }
                 }
-            }
-            15 = {
-                create_ship = {
-                    type = battleship_1
-                    equipment_variant = "Nelson Class"
-                    creator = ENG
-                    name = "Russkiy linkor"
-                }
-            }
-            10 = {
-                create_ship = {
-                    type = battleship_1
-                    equipment_variant = "Nelson Class"
-                    creator = ENG
-                    name = "Russkiy linkor"
+                10 = {
+                    SOV = {
+                        load_oob = "SOV_battleship_anarchist"
+                    }
                 }
             }
         }
@@ -9665,6 +9653,7 @@ set_variable_for_winning_anarchist_party_election = {
                 compare = equals
             }
         }
+        custom_effect_tooltip = logistic_bonus_anarchist_election_bonus_3_months
         set_variable = { anarchy_logistic_infrastructure_build = 0.15 }
         set_variable = { anarchy_logistic_railway_build = 0.2 }
         set_variable = { anarchy_logistic_supply_consumption = -0.1 }
@@ -9707,6 +9696,7 @@ set_variable_for_winning_anarchist_party_election = {
                 compare = equals
             }
         }
+        custom_effect_tooltip = internal_security_bonus_anarchist_election_bonus_3_months
         set_variable = { anarchy_internal_sec_decryption_fac = 0.15 }
         set_variable = { anarchy_internal_sec_encryption_fac = 0.15 }
         set_variable = { anarchy_internal_sec_anarchy_drift_fac = 0.05 }
@@ -9721,11 +9711,58 @@ set_variable_for_winning_anarchist_party_election = {
             }
         }
         set_variable = { global_building_slots = 0.35 }
+        custom_effect_tooltip = countryside_bonus_anarchist_election_bonus_3_months
         random_owned_controlled_state = {
             limit = {
-
+                OR = {
+                    has_state_category = wasteland
+                    has_state_category = pastoral
+                    has_state_category = enclave
+                    has_state_category = rural
+                    has_state_category = small_island
+                    has_state_category = tiny_island
+                }
             }
-            add_extra_state_shared_building_slots = 3
+            add_extra_state_shared_building_slots = 5
+        }
+        random_owned_controlled_state = {
+            limit = {
+                OR = {
+                    has_state_category = wasteland
+                    has_state_category = pastoral
+                    has_state_category = enclave
+                    has_state_category = rural
+                    has_state_category = small_island
+                    has_state_category = tiny_island
+                }
+            }
+            add_extra_state_shared_building_slots = 5
+        }
+        random_owned_controlled_state = {
+            limit = {
+                OR = {
+                    has_state_category = wasteland
+                    has_state_category = pastoral
+                    has_state_category = enclave
+                    has_state_category = rural
+                    has_state_category = small_island
+                    has_state_category = tiny_island
+                }
+            }
+            add_extra_state_shared_building_slots = 5
+        }
+        random_owned_controlled_state = {
+            limit = {
+                OR = {
+                    has_state_category = wasteland
+                    has_state_category = pastoral
+                    has_state_category = enclave
+                    has_state_category = rural
+                    has_state_category = small_island
+                    has_state_category = tiny_island
+                }
+            }
+            add_extra_state_shared_building_slots = 5
         }
     }
     if = {
@@ -9736,7 +9773,10 @@ set_variable_for_winning_anarchist_party_election = {
                 compare = equals
             }
         }
-        set_variable = { global_building_slots = 0.35 }
+        set_variable = { anarchy_theorist_party_refinery_speed = 0.25 }
+        set_variable = { anarchy_theorist_party_nuclear_speed = 0.25 }
+        set_variable = { anarchy_theorist_party_rocket_speed = 0.25 }
+        custom_effect_tooltip = theorist_bonus_anarchist_election_bonus_3_months
         random_list = {
             25 = {
                 add_tech_bonus = {
@@ -9762,7 +9802,7 @@ set_variable_for_winning_anarchist_party_election = {
                     category = rocketry
                 }
             }
-        } 
+        }
     }
 }
 
@@ -9846,6 +9886,402 @@ random_tech_anarchist_election = {
                 bonus = 1.0
                 uses = 1
                 category = tactical_bomber
+            }
+        }
+    }
+}
+
+create_ships_variant_for_anarchist_election = {
+    create_equipment_variant = { #Destroyer
+        name = "Russkiy Esminets Klassa"
+        type = ship_hull_light_1
+        parent_version = 0
+        NAME_GROUP = SOV_DD_HISTORICAL
+		modules = {
+			fixed_ship_battery_slot = ship_light_battery_2
+			fixed_ship_anti_air_slot = empty
+			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+			fixed_ship_radar_slot = ship_sonar_1
+			fixed_ship_engine_slot = light_ship_engine_2
+			fixed_ship_torpedo_slot = ship_torpedo_1
+			mid_1_custom_slot = ship_torpedo_1
+			rear_1_custom_slot = ship_depth_charge_1
+		}
+    }
+    create_equipment_variant = { #Light Cruiser
+        name = "Russkiy Legkiy Kreyser Klassa"
+        type = ship_hull_cruiser_1
+        parent_version = 0
+        NAME_GROUP = SOV_CL_HISTORICAL
+        modules = {
+			fixed_ship_battery_slot = ship_light_medium_battery_1
+			fixed_ship_anti_air_slot = ship_anti_air_1
+			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+			fixed_ship_radar_slot = empty
+			fixed_ship_engine_slot = cruiser_ship_engine_2
+			fixed_ship_armor_slot = ship_armor_cruiser_1
+			mid_1_custom_slot = ship_torpedo_1
+			mid_2_custom_slot = ship_torpedo_1
+			rear_1_custom_slot = ship_light_medium_battery_1
+		}
+    }
+    create_equipment_variant = { #Heavy Cruiser
+        name = "Russkiy Lineynyy Kreyser Klassa"
+        type = ship_hull_cruiser_1
+        parent_version = 0
+        NAME_GROUP = SOV_CA_HISTORICAL
+		modules = {
+			fixed_ship_battery_slot = ship_medium_battery_2
+			fixed_ship_anti_air_slot = ship_anti_air_1
+			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+			fixed_ship_radar_slot = empty
+			fixed_ship_engine_slot = cruiser_ship_engine_1
+			fixed_ship_armor_slot = ship_armor_cruiser_1
+			fixed_ship_secondaries_slot = ship_secondaries_1
+			mid_1_custom_slot = ship_airplane_launcher_1
+			mid_2_custom_slot = ship_torpedo_1
+			rear_1_custom_slot = ship_medium_battery_2
+		}
+    }
+    create_equipment_variant = { #Battle Cruiser
+        name = "Russkiy Tyazhelyy Kreyser Klassa"
+        type = ship_hull_heavy_1
+        parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_heavy_battery_1
+			fixed_ship_anti_air_slot = ship_anti_air_1
+			fixed_ship_fire_control_system_slot = ship_fire_control_system_1
+			fixed_ship_radar_slot = empty
+			fixed_ship_engine_slot = heavy_ship_engine_2
+			fixed_ship_secondaries_slot = ship_secondaries_1
+			fixed_ship_armor_slot = ship_armor_bc_1
+			front_1_custom_slot = ship_anti_air_1
+			mid_1_custom_slot = ship_airplane_launcher_1
+			mid_2_custom_slot = ship_secondaries_1
+			rear_1_custom_slot = empty
+		}
+    }
+    create_equipment_variant = { #Battleship
+        name = "Russkiy Linkor Klassa"
+        type = ship_hull_heavy_1
+        parent_version = 0
+        NAME_GROUP = SOV_BB_HISTORICAL
+		modules = {
+			fixed_ship_battery_slot = ship_heavy_battery_2
+			fixed_ship_anti_air_slot = ship_anti_air_1
+			fixed_ship_fire_control_system_slot = ship_fire_control_system_1
+			fixed_ship_radar_slot = empty
+			fixed_ship_engine_slot = heavy_ship_engine_2
+			fixed_ship_secondaries_slot = ship_secondaries_2
+			fixed_ship_armor_slot = ship_armor_bb_2
+			front_1_custom_slot = ship_heavy_battery_2
+			mid_1_custom_slot = empty
+			mid_2_custom_slot = empty
+			rear_1_custom_slot = empty
+		}
+    }
+}
+
+# damn thats some great coding there Paradox
+sov_unlock_nkvd_chiefs = {
+    if = {
+        limit = {
+            has_character = SOV_Genrikh_yagoda
+        }
+        if = { #If active, keep him active after changing his role
+            limit = {
+                has_idea = SOV_Genrikh_yagoda
+            }
+            remove_advisor_role = {
+                character = SOV_Genrikh_yagoda
+                slot = political_advisor
+            }
+            add_advisor_role = {
+                character = SOV_Genrikh_yagoda
+                advisor = {
+                    slot = political_advisor
+                    idea_token = SOV_Genrikh_yagoda
+                    cost = 50
+
+                    allowed = {
+                        original_tag = SOV
+                    }
+
+                    available = {
+                        has_government = communism
+                        NOT = {
+                            has_idea = SOV_Nikolay_yezhov
+                            has_idea = SOV_Lavrentiy_beria
+                            custom_trigger_tooltip = {
+                                tooltip = SOV_idea_not_purged_tt
+                                OR = {
+                                    check_variable = {
+                                        var = sov_great_purge_status^1
+                                        value = 2
+                                        compare = equals
+                                    }
+                                    has_character_flag = SOV_purge_politician_trotsky_russia
+                                }
+                            }
+                        }
+                    }
+
+                    traits = {
+                        russia2_state_security_administrator_2
+                        russia2_head_nkvd
+                    }
+
+                    ai_will_do = {
+                        factor = 5
+                    }
+                }
+                activate = yes
+            }
+        }
+        else = { #If not active, just change his role
+            remove_advisor_role = {
+                character = SOV_Genrikh_yagoda
+                slot = political_advisor
+            }
+            add_advisor_role = {
+                character = SOV_Genrikh_yagoda
+                advisor = {
+                    slot = political_advisor
+                    idea_token = SOV_Genrikh_yagoda
+                    cost = 50
+
+                    allowed = {
+                        original_tag = SOV
+                    }
+
+                    available = {
+                        has_government = communism
+                        NOT = {
+                            has_idea = SOV_Nikolay_yezhov
+                            has_idea = SOV_Lavrentiy_beria
+                            custom_trigger_tooltip = {
+                                tooltip = SOV_idea_not_purged_tt
+                                OR = {
+                                    check_variable = {
+                                        var = sov_great_purge_status^1
+                                        value = 2
+                                        compare = equals
+                                    }
+                                    has_character_flag = SOV_purge_politician_trotsky_russia
+                                }
+                            }
+                        }
+                    }
+
+                    traits = {
+                        russia2_state_security_administrator_2
+                        russia2_head_nkvd
+                    }
+
+                    ai_will_do = {
+                        factor = 5
+                    }
+                }
+            }
+        }
+    }
+
+    if = {
+        limit = {
+            has_character = SOV_Nikolay_yezhov
+        }
+        if = { #If active, keep him active after changing his role
+            limit = {
+                has_idea = SOV_Nikolay_yezhov
+            }
+            remove_advisor_role = {
+                character = SOV_Nikolay_yezhov
+                slot = political_advisor
+            }
+            add_advisor_role = {
+                character = SOV_Nikolay_yezhov
+                advisor = {
+                    slot = political_advisor
+                    idea_token = SOV_Nikolay_yezhov
+                    cost = 50
+
+                    allowed = {
+                        original_tag = SOV
+                    }
+
+                    available = {
+                        has_government = communism
+                        NOT = {
+                            has_idea = SOV_Genrikh_yagoda
+                            has_idea = SOV_Lavrentiy_beria
+                            custom_trigger_tooltip = {
+                                tooltip = SOV_idea_not_purged_tt
+                                OR = {
+                                    has_country_flag = SOV_Nikolay_yezhov_purged
+                                    has_character_flag = SOV_purge_politician_trotsky_russia
+                                }
+                            }
+                        }
+                    }
+
+                    traits = {
+                        russia2_state_security_administrator_3
+                        russia2_head_nkvd
+                    }
+
+                    ai_will_do = {
+                        factor = 5
+                    }
+                }
+                activate = yes
+            }
+        }
+        else = { #If not active, just change his role
+            remove_advisor_role = {
+                character = SOV_Nikolay_yezhov
+                slot = political_advisor
+            }
+            add_advisor_role = {
+                character = SOV_Nikolay_yezhov
+                advisor = {
+                    slot = political_advisor
+                    idea_token = SOV_Nikolay_yezhov
+                    cost = 50
+
+                    allowed = {
+                        original_tag = SOV
+                    }
+
+                    available = {
+                        has_government = communism
+                        NOT = {
+                            has_idea = SOV_Genrikh_yagoda
+                            has_idea = SOV_Lavrentiy_beria
+                            custom_trigger_tooltip = {
+                                tooltip = SOV_idea_not_purged_tt
+                                OR = {
+                                    has_country_flag = SOV_Nikolay_yezhov_purged
+                                    has_character_flag = SOV_purge_politician_trotsky_russia
+                                }
+                            }
+                        }
+                    }
+
+                    traits = {
+                        russia2_state_security_administrator_3
+                        russia2_head_nkvd
+                    }
+
+                    ai_will_do = {
+                        factor = 5
+                    }
+                }
+            }
+        }
+    }
+
+    if = {
+        limit = {
+            has_character = SOV_Lavrentiy_beria
+        }
+        if = { #If active, keep him active after changing his role
+            limit = {
+                has_idea = SOV_Lavrentiy_beria
+            }
+            remove_advisor_role = {
+                character = SOV_Lavrentiy_beria
+                slot = political_advisor
+            }
+            add_advisor_role = {
+                character = SOV_Lavrentiy_beria
+                advisor = {
+                    slot = political_advisor
+                    idea_token = SOV_Lavrentiy_beria
+                    cost = 50
+
+                    allowed = {
+                        original_tag = SOV
+                    }
+
+                    available = {
+                        has_government = communism
+                        NOT = {
+                            has_completed_focus = SOV_avoid_purge
+                            has_idea = SOV_Nikolay_yezhov
+                            has_idea = SOV_Genrikh_yagoda
+                            has_country_flag = sov_lavrentiy_beria_executed
+                            custom_trigger_tooltip = {
+                                tooltip = SOV_idea_not_purged_tt
+                                OR = {
+                                    check_variable = {
+                                        var = sov_great_purge_status^1
+                                        value = 1
+                                        compare = equals
+                                    }
+                                    has_character_flag = SOV_purge_politician_trotsky_russia
+                                }
+                            }
+                        }
+                    }
+
+                    traits = {
+                        russia2_state_security_administrator
+                        russia2_head_nkvd
+                    }
+
+                    ai_will_do = {
+                        factor = 5
+                    }
+                }
+                activate = yes
+            }
+        }
+        else = { #If not active, just change his role
+            remove_advisor_role = {
+                character = SOV_Lavrentiy_beria
+                slot = political_advisor
+            }
+            add_advisor_role = {
+                character = SOV_Lavrentiy_beria
+                advisor = {
+                    slot = political_advisor
+                    idea_token = SOV_Lavrentiy_beria
+                    cost = 50
+
+                    allowed = {
+                        original_tag = SOV
+                    }
+
+                    available = {
+                        has_government = communism
+                        NOT = {
+                            has_completed_focus = SOV_avoid_purge
+                            has_idea = SOV_Nikolay_yezhov
+                            has_idea = SOV_Genrikh_yagoda
+                            has_country_flag = sov_lavrentiy_beria_executed
+                            custom_trigger_tooltip = {
+                                tooltip = SOV_idea_not_purged_tt
+                                OR = {
+                                    check_variable = {
+                                        var = sov_great_purge_status^1
+                                        value = 1
+                                        compare = equals
+                                    }
+                                    has_character_flag = SOV_purge_politician_trotsky_russia
+                                }
+                            }
+                        }
+                    }
+
+                    traits = {
+                        russia2_state_security_administrator
+                        russia2_head_nkvd
+                    }
+
+                    ai_will_do = {
+                        factor = 5
+                    }
+                }
             }
         }
     }
