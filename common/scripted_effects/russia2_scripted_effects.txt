@@ -9523,7 +9523,7 @@ set_variable_anarchist_election_to_0 = {
     set_variable = { anarchy_aviation_party_agility = 0 }
     set_variable = { anarchy_ship_party_dockyard_cap = 0 }
     set_variable = { anarchy_ship_party_dockyard_speed = 0 }
-    set_variable = { anarchy_logistic_infrastructure_build = 0 } 
+    set_variable = { anarchy_logistic_infrastructure_build = 0 }
     set_variable = { anarchy_logistic_railway_build = 0 }
     set_variable = { anarchy_logistic_supply_consumption = 0 }
     set_variable = { anarchy_internal_sec_decryption_fac = 0 }
@@ -9802,7 +9802,7 @@ set_variable_for_winning_anarchist_party_election = {
                     category = rocketry
                 }
             }
-        } 
+        }
     }
 }
 
@@ -9979,5 +9979,310 @@ create_ships_variant_for_anarchist_election = {
 			mid_2_custom_slot = empty
 			rear_1_custom_slot = empty
 		}
+    }
+}
+
+# damn thats some great coding there Paradox
+sov_unlock_nkvd_chiefs = {
+    if = {
+        limit = {
+            has_character = SOV_Genrikh_yagoda
+        }
+        if = { #If active, keep him active after changing his role
+            limit = {
+                has_idea = SOV_Genrikh_yagoda
+            }
+            remove_advisor_role = {
+                character = SOV_Genrikh_yagoda
+                slot = political_advisor
+            }
+            add_advisor_role = {
+                character = SOV_Genrikh_yagoda
+                advisor = {
+                    slot = political_advisor
+                    idea_token = SOV_Genrikh_yagoda
+                    cost = 50
+
+                    allowed = {
+                        original_tag = SOV
+                    }
+
+                    available = {
+                        has_government = communism
+                        NOT = {
+                            has_idea = SOV_Nikolay_yezhov
+                            has_idea = SOV_Lavrentiy_beria
+                            custom_trigger_tooltip = {
+                                tooltip = SOV_idea_not_purged_tt
+                                OR = {
+                                    check_variable = {
+                                        var = sov_great_purge_status^1
+                                        value = 2
+                                        compare = equals
+                                    }
+                                    has_character_flag = SOV_purge_politician_trotsky_russia
+                                }
+                            }
+                        }
+                    }
+
+                    traits = {
+                        russia2_state_security_administrator_2
+                        russia2_head_nkvd
+                    }
+
+                    ai_will_do = {
+                        factor = 5
+                    }
+                }
+                activate = yes
+            }
+        }
+        else = { #If not active, just change his role
+            remove_advisor_role = {
+                character = SOV_Genrikh_yagoda
+                slot = political_advisor
+            }
+            add_advisor_role = {
+                character = SOV_Genrikh_yagoda
+                advisor = {
+                    slot = political_advisor
+                    idea_token = SOV_Genrikh_yagoda
+                    cost = 50
+
+                    allowed = {
+                        original_tag = SOV
+                    }
+
+                    available = {
+                        has_government = communism
+                        NOT = {
+                            has_idea = SOV_Nikolay_yezhov
+                            has_idea = SOV_Lavrentiy_beria
+                            custom_trigger_tooltip = {
+                                tooltip = SOV_idea_not_purged_tt
+                                OR = {
+                                    check_variable = {
+                                        var = sov_great_purge_status^1
+                                        value = 2
+                                        compare = equals
+                                    }
+                                    has_character_flag = SOV_purge_politician_trotsky_russia
+                                }
+                            }
+                        }
+                    }
+
+                    traits = {
+                        russia2_state_security_administrator_2
+                        russia2_head_nkvd
+                    }
+
+                    ai_will_do = {
+                        factor = 5
+                    }
+                }
+            }
+        }
+    }
+
+    if = {
+        limit = {
+            has_character = SOV_Nikolay_yezhov
+        }
+        if = { #If active, keep him active after changing his role
+            limit = {
+                has_idea = SOV_Nikolay_yezhov
+            }
+            remove_advisor_role = {
+                character = SOV_Nikolay_yezhov
+                slot = political_advisor
+            }
+            add_advisor_role = {
+                character = SOV_Nikolay_yezhov
+                advisor = {
+                    slot = political_advisor
+                    idea_token = SOV_Nikolay_yezhov
+                    cost = 50
+
+                    allowed = {
+                        original_tag = SOV
+                    }
+
+                    available = {
+                        has_government = communism
+                        NOT = {
+                            has_idea = SOV_Genrikh_yagoda
+                            has_idea = SOV_Lavrentiy_beria
+                            custom_trigger_tooltip = {
+                                tooltip = SOV_idea_not_purged_tt
+                                OR = {
+                                    has_country_flag = SOV_Nikolay_yezhov_purged
+                                    has_character_flag = SOV_purge_politician_trotsky_russia
+                                }
+                            }
+                        }
+                    }
+
+                    traits = {
+                        russia2_state_security_administrator_3
+                        russia2_head_nkvd
+                    }
+
+                    ai_will_do = {
+                        factor = 5
+                    }
+                }
+                activate = yes
+            }
+        }
+        else = { #If not active, just change his role
+            remove_advisor_role = {
+                character = SOV_Nikolay_yezhov
+                slot = political_advisor
+            }
+            add_advisor_role = {
+                character = SOV_Nikolay_yezhov
+                advisor = {
+                    slot = political_advisor
+                    idea_token = SOV_Nikolay_yezhov
+                    cost = 50
+
+                    allowed = {
+                        original_tag = SOV
+                    }
+
+                    available = {
+                        has_government = communism
+                        NOT = {
+                            has_idea = SOV_Genrikh_yagoda
+                            has_idea = SOV_Lavrentiy_beria
+                            custom_trigger_tooltip = {
+                                tooltip = SOV_idea_not_purged_tt
+                                OR = {
+                                    has_country_flag = SOV_Nikolay_yezhov_purged
+                                    has_character_flag = SOV_purge_politician_trotsky_russia
+                                }
+                            }
+                        }
+                    }
+
+                    traits = {
+                        russia2_state_security_administrator_3
+                        russia2_head_nkvd
+                    }
+
+                    ai_will_do = {
+                        factor = 5
+                    }
+                }
+            }
+        }
+    }
+
+    if = {
+        limit = {
+            has_character = SOV_Lavrentiy_beria
+        }
+        if = { #If active, keep him active after changing his role
+            limit = {
+                has_idea = SOV_Lavrentiy_beria
+            }
+            remove_advisor_role = {
+                character = SOV_Lavrentiy_beria
+                slot = political_advisor
+            }
+            add_advisor_role = {
+                character = SOV_Lavrentiy_beria
+                advisor = {
+                    slot = political_advisor
+                    idea_token = SOV_Lavrentiy_beria
+                    cost = 50
+
+                    allowed = {
+                        original_tag = SOV
+                    }
+
+                    available = {
+                        has_government = communism
+                        NOT = {
+                            has_completed_focus = SOV_avoid_purge
+                            has_idea = SOV_Nikolay_yezhov
+                            has_idea = SOV_Genrikh_yagoda
+                            has_country_flag = sov_lavrentiy_beria_executed
+                            custom_trigger_tooltip = {
+                                tooltip = SOV_idea_not_purged_tt
+                                OR = {
+                                    check_variable = {
+                                        var = sov_great_purge_status^1
+                                        value = 1
+                                        compare = equals
+                                    }
+                                    has_character_flag = SOV_purge_politician_trotsky_russia
+                                }
+                            }
+                        }
+                    }
+
+                    traits = {
+                        russia2_state_security_administrator
+                        russia2_head_nkvd
+                    }
+
+                    ai_will_do = {
+                        factor = 5
+                    }
+                }
+                activate = yes
+            }
+        }
+        else = { #If not active, just change his role
+            remove_advisor_role = {
+                character = SOV_Lavrentiy_beria
+                slot = political_advisor
+            }
+            add_advisor_role = {
+                character = SOV_Lavrentiy_beria
+                advisor = {
+                    slot = political_advisor
+                    idea_token = SOV_Lavrentiy_beria
+                    cost = 50
+
+                    allowed = {
+                        original_tag = SOV
+                    }
+
+                    available = {
+                        has_government = communism
+                        NOT = {
+                            has_completed_focus = SOV_avoid_purge
+                            has_idea = SOV_Nikolay_yezhov
+                            has_idea = SOV_Genrikh_yagoda
+                            has_country_flag = sov_lavrentiy_beria_executed
+                            custom_trigger_tooltip = {
+                                tooltip = SOV_idea_not_purged_tt
+                                OR = {
+                                    check_variable = {
+                                        var = sov_great_purge_status^1
+                                        value = 1
+                                        compare = equals
+                                    }
+                                    has_character_flag = SOV_purge_politician_trotsky_russia
+                                }
+                            }
+                        }
+                    }
+
+                    traits = {
+                        russia2_state_security_administrator
+                        russia2_head_nkvd
+                    }
+
+                    ai_will_do = {
+                        factor = 5
+                    }
+                }
+            }
+        }
     }
 }

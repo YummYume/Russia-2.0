@@ -4988,7 +4988,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_GOLDEN_FOCUS FOCUS_FILTER_INDUSTRY }
 		completion_reward = {
-			custom_effect_tooltip = SOV_comming_soon
+			custom_effect_tooltip = SOV_coming_soon
 			custom_effect_tooltip = SOV_tsar_bomba_tt
 			add_to_array = { sov_national_obligations_unlocked_indexes = 2 }
 			set_variable = { sov_national_obligations_selected_index = 2 }
@@ -5103,7 +5103,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_GOLDEN_FOCUS FOCUS_FILTER_INDUSTRY }
 		completion_reward = {
-			custom_effect_tooltip = SOV_comming_soon
+			custom_effect_tooltip = SOV_coming_soon
 			custom_effect_tooltip = SOV_industrial_awakening_tt
 			add_to_array = { sov_national_obligations_unlocked_indexes = 1 }
 			set_variable = { sov_national_obligations_selected_index = 1 }
@@ -5735,7 +5735,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_GOLDEN_FOCUS FOCUS_FILTER_ARMY_RUSSIA }
 		completion_reward = {
-			custom_effect_tooltip = SOV_comming_soon
+			custom_effect_tooltip = SOV_coming_soon
 			custom_effect_tooltip = SOV_unfailing_army_tt
 			add_to_array = { sov_national_obligations_unlocked_indexes = 3 }
 			set_variable = { sov_national_obligations_selected_index = 3 }
@@ -6833,7 +6833,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_GOLDEN_FOCUS FOCUS_FILTER_NAVY_RUSSIA }
 		completion_reward = {
-			custom_effect_tooltip = SOV_comming_soon
+			custom_effect_tooltip = SOV_coming_soon
 			custom_effect_tooltip = SOV_grand_russian_fleet_tt
 			add_to_array = { sov_national_obligations_unlocked_indexes = 4 }
 			set_variable = { sov_national_obligations_selected_index = 4 }
@@ -9045,7 +9045,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_GOLDEN_FOCUS FOCUS_FILTER_COMMUNISM_STALIN_RUSSIA }
 		completion_reward = {
-			custom_effect_tooltip = SOV_comming_soon
+			custom_effect_tooltip = SOV_coming_soon
 			custom_effect_tooltip = SOV_proletarian_union_tt
 			add_to_array = { sov_national_obligations_unlocked_indexes = 5 }
 			set_variable = { sov_national_obligations_selected_index = 5 }
@@ -10584,7 +10584,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_GOLDEN_FOCUS FOCUS_FILTER_COMMUNISM_TROTSKY_RUSSIA }
 		completion_reward = {
-			custom_effect_tooltip = SOV_comming_soon
+			custom_effect_tooltip = SOV_coming_soon
 			custom_effect_tooltip = SOV_neverending_story_tt
 			add_to_array = { sov_national_obligations_unlocked_indexes = 6 }
 			set_variable = { sov_national_obligations_selected_index = 6 }
@@ -13421,7 +13421,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_GOLDEN_FOCUS FOCUS_FILTER_DEMOCRATIC_UNITED_RUSSIA }
 		completion_reward = {
-			custom_effect_tooltip = SOV_comming_soon
+			custom_effect_tooltip = SOV_coming_soon
 			custom_effect_tooltip = SOV_russian_continental_system_tt
 			add_to_array = { sov_national_obligations_unlocked_indexes = 7 }
 			set_variable = { sov_national_obligations_selected_index = 7 }
@@ -14631,7 +14631,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_GOLDEN_FOCUS FOCUS_FILTER_DEMOCRATIC_PREEMPTIVE_COUP_RUSSIA }
 		completion_reward = {
-			custom_effect_tooltip = SOV_comming_soon
+			custom_effect_tooltip = SOV_coming_soon
 			custom_effect_tooltip = SOV_treaty_moscow_tt
 			add_to_array = { sov_national_obligations_unlocked_indexes = 8 }
 			set_variable = { sov_national_obligations_selected_index = 8 }
@@ -15376,7 +15376,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_GOLDEN_FOCUS FOCUS_FILTER_DEMOCRATIC_CONTINUE_INVESTMENTS_RUSSIA }
 		completion_reward = {
-			custom_effect_tooltip = SOV_comming_soon
+			custom_effect_tooltip = SOV_coming_soon
 			custom_effect_tooltip = SOV_the_russian_golden_age_tt
 			add_to_array = { sov_national_obligations_unlocked_indexes = 9 }
 			set_variable = { sov_national_obligations_selected_index = 9 }
@@ -18256,7 +18256,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_GOLDEN_FOCUS FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA }
 		completion_reward = {
-			custom_effect_tooltip = SOV_comming_soon
+			custom_effect_tooltip = SOV_coming_soon
 			custom_effect_tooltip = SOV_legacy_must_carry_on_tt
 			add_to_array = { sov_national_obligations_unlocked_indexes = 10 }
 			set_variable = { sov_national_obligations_selected_index = 10 }
@@ -18816,6 +18816,61 @@ focus_tree = {
 		}
 	}
 
+	#Second Ultimatum for Poland
+	focus = {
+		id = SOV_second_ultimatum_poland
+		x = 49
+		y = 25
+		prerequisite = { focus = SOV_royal_orders }
+		icon = GFX_goal_generic_major_war
+		cost = 8
+		ai_will_do = {
+			factor = 6
+		}
+		available = {
+			is_faction_leader = yes
+			is_subject = no
+			is_major = yes
+			has_government = neutrality
+			has_completed_focus = SOV_the_emperor
+			custom_trigger_tooltip = {
+				tooltip = poland_refuse_first_ultimatum_tt
+				NOT = {
+					has_country_flag = poland_accept_imperial_puppet
+					has_country_flag = has_given_eastern_poland
+				}
+			}
+			country_exists = POL
+			NOT = {
+				POL = {
+					has_capitulated = yes
+					is_subject_of = SOV
+					is_in_faction_with = SOV
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA }
+		completion_reward = {
+			if = {
+				limit = {
+					POL = {
+						is_subject = yes
+					}
+				}
+				POL = {
+					OVERLORD = {
+						country_event = { id = russia2_poland.32 days = 1 }
+					}
+				}
+			}
+			else = {
+				POL = {
+					country_event = { id = russia2_poland.32 days = 1 }
+				}
+			}
+		}
+	}
+
 	#Purchase African Colonies
 	focus = {
 		id = SOV_purchase_african_colonies
@@ -18932,7 +18987,7 @@ focus_tree = {
 	#Contact German Monarchy
 	focus = {
 		id = SOV_contact_german_exiles
-		x = 54
+		x = 53
 		y = 27
 		prerequisite = { focus = SOV_the_empress }
 		mutually_exclusive = { focus = SOV_alliance_kaiser_empress }
@@ -18973,7 +19028,7 @@ focus_tree = {
 	#Alliance With the Kaiser
 	focus = {
 		id = SOV_alliance_kaiser_empress
-		x = 56
+		x = 55
 		y = 27
 		prerequisite = { focus = SOV_the_empress }
 		mutually_exclusive = { focus = SOV_contact_german_exiles }
@@ -19080,60 +19135,6 @@ focus_tree = {
 		}
 	}
 
-	#Second Ultimatum for Poland
-	focus = {
-		id = SOV_second_ultimatum_poland
-		x = 49
-		y = 28
-		prerequisite = { focus = SOV_contact_french_exiles }
-		icon = GFX_goal_generic_major_war
-		cost = 8
-		ai_will_do = {
-			factor = 6
-		}
-		available = {
-			is_faction_leader = yes
-			is_subject = no
-			is_major = yes
-			has_government = neutrality
-			custom_trigger_tooltip = {
-				tooltip = poland_refuse_first_ultimatum_tt
-				NOT = {
-					has_country_flag = poland_accept_imperial_puppet
-					has_country_flag = has_given_eastern_poland
-				}
-			}
-			country_exists = POL
-			NOT = {
-				POL = {
-					has_capitulated = yes
-					is_subject_of = SOV
-					is_in_faction_with = SOV
-				}
-			}
-		}
-		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA }
-		completion_reward = {
-			if = {
-				limit = {
-					POL = {
-						is_subject = yes
-					}
-				}
-				POL = {
-					OVERLORD = {
-						country_event = { id = russia2_poland.32 days = 1 }
-					}
-				}
-			}
-			else = {
-				POL = {
-					country_event = { id = russia2_poland.32 days = 1 }
-				}
-			}
-		}
-	}
-
 	#Imperial Obligations
 	focus = {
 		id = SOV_imperial_obligations_focus
@@ -19162,7 +19163,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_GOLDEN_FOCUS FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA }
 		completion_reward = {
-			custom_effect_tooltip = SOV_comming_soon
+			custom_effect_tooltip = SOV_coming_soon
 			custom_effect_tooltip = SOV_imperial_obligations_focus_tt
 			add_to_array = { sov_national_obligations_unlocked_indexes = 11 }
 			set_variable = { sov_national_obligations_selected_index = 11 }
@@ -21446,7 +21447,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_GOLDEN_FOCUS FOCUS_FILTER_FASCIST_ANASTASY_RUSSIA FOCUS_FILTER_FASCIST_KONSTANTIN_RUSSIA }
 		completion_reward = {
-			custom_effect_tooltip = SOV_comming_soon
+			custom_effect_tooltip = SOV_coming_soon
 			custom_effect_tooltip = SOV_russian_realm_tt
 			add_to_array = { sov_national_obligations_unlocked_indexes = 12 }
 			set_variable = { sov_national_obligations_selected_index = 12 }
@@ -23215,7 +23216,7 @@ focus_tree = {
 	#Spread the Revolution to the West
 	focus = {
 		id = SOV_spread_revolution_west
-		x = 109
+		x = 114
 		y = 15
 		prerequisite = { focus = SOV_anarchist_election }
 		mutually_exclusive = { focus = SOV_spread_revolution_east }
@@ -23258,7 +23259,7 @@ focus_tree = {
 	#Form the Commune of Europe
 	focus = {
 		id = SOV_form_commune_europe
-		x = 109
+		x = 114
 		y = 16
 		prerequisite = { focus = SOV_spread_revolution_west focus = SOV_spread_revolution_both }
 		mutually_exclusive = { focus = SOV_form_commune_eurasia }
@@ -23305,7 +23306,7 @@ focus_tree = {
 	#Spread the Revolution to the East
 	focus = {
 		id = SOV_spread_revolution_east
-		x = 115
+		x = 116
 		y = 15
 		prerequisite = { focus = SOV_anarchist_election }
 		mutually_exclusive = { focus = SOV_spread_revolution_west }
@@ -23352,7 +23353,7 @@ focus_tree = {
 	#Form the Commune of Asia
 	focus = {
 		id = SOV_form_commune_asia
-		x = 115
+		x = 116
 		y = 16
 		prerequisite = { focus = SOV_spread_revolution_east focus = SOV_spread_revolution_both }
 		mutually_exclusive = { focus = SOV_form_commune_eurasia }
@@ -23424,10 +23425,10 @@ focus_tree = {
 		}
 	}
 
-	#Spread the Revolution to Both
+	#Spread the Revolution to Eurasia
 	focus = {
 		id = SOV_spread_revolution_both
-		x = 112
+		x = 108
 		y = 15
 		prerequisite = { focus = SOV_anarchist_election }
 		mutually_exclusive = { focus = SOV_spread_revolution_west }
@@ -23480,7 +23481,7 @@ focus_tree = {
 	#Form the Commune of Eurasia
 	focus = {
 		id = SOV_form_commune_eurasia
-		x = 112
+		x = 108
 		y = 16
 		prerequisite = { focus = SOV_spread_revolution_both }
 		mutually_exclusive = { focus = SOV_form_commune_asia }
@@ -23570,10 +23571,10 @@ focus_tree = {
 		}
 	}
 
-	#Form the Commune of Peoples
+	#Form the People's Commune
 	focus = {
 		id = SOV_form_the_communes_of_peoples
-		x = 117
+		x = 111
 		y = 16
 		prerequisite = { focus = SOV_spread_revolution_both focus = SOV_spread_revolution_west focus = SOV_spread_revolution_east }
 		mutually_exclusive = { focus = SOV_form_commune_asia }
@@ -23726,7 +23727,7 @@ focus_tree = {
 		}
 	}
 
-	#Spread the Revolution Everywhere 
+	#Spread the Revolution Everywhere
 	focus = {
 		id = SOV_spread_revolution_everywhere
 		x = 112
@@ -23792,7 +23793,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
-			custom_effect_tooltip = SOV_comming_soon
+			custom_effect_tooltip = SOV_coming_soon
 			add_stability = -0.15
 			add_popularity = {
 			    ideology = communism
@@ -23859,7 +23860,7 @@ focus_tree = {
 			set_global_flag = the_great_russian_collapse_is_here
 		}
 		completion_reward = {
-			custom_effect_tooltip = SOV_comming_soon
+			custom_effect_tooltip = SOV_coming_soon
 			custom_effect_tooltip = sov_russia_is_collpasing_total
 			hidden_effect = {
 				if = {
@@ -23898,7 +23899,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
-			custom_effect_tooltip = SOV_comming_soon
+			custom_effect_tooltip = SOV_coming_soon
 			create_faction = russian_league_free_nation
 			for_each_scope_loop = {
 				array = global.sov_federation_member_starter_anarchist
@@ -23937,7 +23938,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
-			custom_effect_tooltip = SOV_comming_soon
+			custom_effect_tooltip = SOV_coming_soon
 			custom_effect_tooltip = sov_future_of_the_league_tt
 			hidden_effect = {
 				country_event = { id = russia2_russia.619 }
@@ -23966,7 +23967,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
-			custom_effect_tooltip = SOV_comming_soon
+			custom_effect_tooltip = SOV_coming_soon
 			custom_effect_tooltip = sov_every_members_receive_2_civ_fac
 			every_country = {
 				limit = {
@@ -24034,7 +24035,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
-			custom_effect_tooltip = SOV_comming_soon
+			custom_effect_tooltip = SOV_coming_soon
 			set_global_flag = reunification_war_is_ongoing_anarchist
 			custom_effect_tooltip = sov_choosing_this_path_will_reform_russia_as_we_know_it
 			custom_effect_tooltip = every_members_league_will_lose_idea_war
@@ -24111,7 +24112,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
-			custom_effect_tooltip = SOV_comming_soon
+			custom_effect_tooltip = SOV_coming_soon
 			custom_effect_tooltip = declare_war_on_members_who_left_the_league
 			hidden_effect = {
 				country_event = { id = russia2_russia.632 days = 20 }
@@ -24204,7 +24205,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
-			custom_effect_tooltip = SOV_comming_soon
+			custom_effect_tooltip = SOV_coming_soon
 			custom_effect_tooltip = annex_members_who_were_loyal_anarchists
 			hidden_effect = {
 				set_cosmetic_tag = FTRS
@@ -24254,7 +24255,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
-			custom_effect_tooltip = SOV_comming_soon
+			custom_effect_tooltip = SOV_coming_soon
 			custom_effect_tooltip = sov_choosing_this_path_will_puppet_russian_state
 			custom_effect_tooltip = sov_some_members_will_not_be_convince_by_reform
 			hidden_effect = {
@@ -24312,7 +24313,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
-			custom_effect_tooltip = SOV_comming_soon
+			custom_effect_tooltip = SOV_coming_soon
 			custom_effect_tooltip = SOV_SOV_convince_disputants_tt
 			if = {
 				limit = {
@@ -24360,7 +24361,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
-			custom_effect_tooltip = SOV_comming_soon
+			custom_effect_tooltip = SOV_coming_soon
 			custom_effect_tooltip = every_members_league_will_be_turned_puppet_supervised
 			hidden_effect = {
 				every_country = {
@@ -24425,7 +24426,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
-			custom_effect_tooltip = SOV_comming_soon
+			custom_effect_tooltip = SOV_coming_soon
 			custom_effect_tooltip = sov_choose_two_beneficiary_for_rule
 		}
 	}
@@ -24448,7 +24449,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
-			custom_effect_tooltip = SOV_comming_soon
+			custom_effect_tooltip = SOV_coming_soon
 			custom_effect_tooltip = SOV_choose_beneficiary_decision_tt
 		}
 	}
@@ -24508,7 +24509,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
-			custom_effect_tooltip = SOV_comming_soon
+			custom_effect_tooltip = SOV_coming_soon
 			every_country = {
 				limit = {
 					OR = {
@@ -24660,7 +24661,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
-			custom_effect_tooltip = SOV_comming_soon
+			custom_effect_tooltip = SOV_coming_soon
 		}
 	}
 
@@ -24682,7 +24683,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
-			custom_effect_tooltip = SOV_comming_soon
+			custom_effect_tooltip = SOV_coming_soon
 			custom_effect_tooltip = will_receive_wargoal_agains_minor_neighbor_nation
 			custom_effect_tooltip = unlock_justification_wargoal_tt
 		}
@@ -24717,7 +24718,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_GOLDEN_FOCUS }
 		completion_reward = {
-			custom_effect_tooltip = SOV_comming_soon
+			custom_effect_tooltip = SOV_coming_soon
 			custom_effect_tooltip = SOV_rebirth_tt
 			add_to_array = { sov_national_obligations_unlocked_indexes = 13 }
 			set_variable = { sov_national_obligations_selected_index = 13 }
