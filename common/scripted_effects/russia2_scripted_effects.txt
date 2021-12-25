@@ -9544,7 +9544,10 @@ set_variable_for_winning_anarchist_party_election = {
                 compare = equals
             }
         }
-        set_variable = { anarchy_intellect_party_research = 0.10 }
+        custom_effect_tooltip = research_anarchist_election_bonus_3_months
+        hidden_effect = {
+            set_variable = { anarchy_intellect_party_research = 0.10 }
+        }
         random_tech_anarchist_election = yes
     }
     if = {
@@ -9555,6 +9558,7 @@ set_variable_for_winning_anarchist_party_election = {
                 compare = equals
             }
         }
+        custom_effect_tooltip = civilian_industry_anarchist_election_bonus_3_months
         set_variable = { anarchy_industry_party_factory = 0.10 }
         set_variable = { anarchy_industry_party_resources = 0.25 }
     }
@@ -9566,6 +9570,7 @@ set_variable_for_winning_anarchist_party_election = {
                 compare = equals
             }
         }
+        custom_effect_tooltip = military_industry_anarchist_election_bonus_3_months
         set_variable = { anarchy_military_industry_party_guns = 0.15 }
         set_variable = { anarchy_military_industry_party_guns_fabrication = 0.1 }
     }
@@ -9577,6 +9582,7 @@ set_variable_for_winning_anarchist_party_election = {
                 compare = equals
             }
         }
+        custom_effect_tooltip = militarist_bonus_anarchist_election_bonus_3_months
         set_variable = { anarchy_militarist_party_training = -0.15 }
         set_variable = { anarchy_militarist_party_attack = 0.05 }
         set_variable = { anarchy_militarist_party_defence = 0.05 }
@@ -9590,6 +9596,7 @@ set_variable_for_winning_anarchist_party_election = {
                 compare = equals
             }
         }
+        custom_effect_tooltip = aviation_bonus_anarchist_election_bonus_3_months
         set_variable = { anarchy_aviation_party_accident = -0.15 }
         set_variable = { anarchy_aviation_party_ace_generation = 0.25 }
         set_variable = { anarchy_aviation_party_attack = 0.05 }
@@ -9604,55 +9611,51 @@ set_variable_for_winning_anarchist_party_election = {
                 compare = equals
             }
         }
+        custom_effect_tooltip = naval_bonus_anarchist_election_bonus_3_months
+        custom_effect_tooltip = naval_bonus_anarchist_random_boat
         set_variable = { anarchy_ship_party_dockyard_cap = 0.15 }
         set_variable = { anarchy_ship_party_dockyard_speed = 0.1 }
-        random_list = {
-            25 = {
-                create_ship = {
-                    type = destroyer_1
-                    equipment_variant = "A/B/C/D Class"
-                    creator = ENG
-                    name = "Russkiy esminets"
+        hidden_effect = {
+            random_list = {
+                25 = {
+                    create_ship = {
+                        type = destroyer_1
+                        equipment_variant = "Russkiy esminets"
+                        creator = SOV
+                        name = "Russkiy esminets klassa"
+                    }
                 }
-            }
-            20 = {
-                create_ship = {
-                    type = light_cruiser_1
-                    equipment_variant = "Emerald Class"
-                    creator = ENG
-                    name = "Russkiy legkiy kreyser"
+                25 = {
+                    create_ship = {
+                        type = light_cruiser_1
+                        equipment_variant = "Russkiy legkiy kreyser"
+                        creator = SOV
+                        name = "Russkiy legkiy kreyser klassa"
+                    }
                 }
-            }
-            20 = {
-                create_ship = {
-                    type = heavy_cruiser_1
-                    equipment_variant = "County Class"
-                    creator = ENG
-                    name = "Russkiy tyazhelyy kreyser"
+                20 = {
+                    create_ship = {
+                        type = heavy_cruiser_1
+                        equipment_variant = "Russkiy tyazhelyy kreyser"
+                        creator = SOV
+                        name = "Russkiy tyazhelyy kreyser klassa"
+                    }
                 }
-            }
-            20 = {
-                create_ship = {
-                    type = battle_cruiser_1
-                    equipment_variant = "Admiral Class"
-                    creator = ENG
-                    name = "Russkiy lineynyy kreyser"
+                20 = {
+                    create_ship = {
+                        type = battle_cruiser_1
+                        equipment_variant = "Russkiy lineynyy kreyser"
+                        creator = SOV
+                        name = "Russkiy lineynyy kreyser klassa"
+                    }
                 }
-            }
-            15 = {
-                create_ship = {
-                    type = battleship_1
-                    equipment_variant = "Nelson Class"
-                    creator = ENG
-                    name = "Russkiy linkor"
-                }
-            }
-            10 = {
-                create_ship = {
-                    type = battleship_1
-                    equipment_variant = "Nelson Class"
-                    creator = ENG
-                    name = "Russkiy linkor"
+                10 = {
+                    create_ship = {
+                        type = battleship_1
+                        equipment_variant = "Russkiy linkor"
+                        creator = SOV
+                        name = "Russkiy linkor klassa"
+                    }
                 }
             }
         }
@@ -9665,6 +9668,7 @@ set_variable_for_winning_anarchist_party_election = {
                 compare = equals
             }
         }
+        custom_effect_tooltip = logistic_bonus_anarchist_election_bonus_3_months
         set_variable = { anarchy_logistic_infrastructure_build = 0.15 }
         set_variable = { anarchy_logistic_railway_build = 0.2 }
         set_variable = { anarchy_logistic_supply_consumption = -0.1 }
@@ -9707,6 +9711,7 @@ set_variable_for_winning_anarchist_party_election = {
                 compare = equals
             }
         }
+        custom_effect_tooltip = internal_security_bonus_anarchist_election_bonus_3_months
         set_variable = { anarchy_internal_sec_decryption_fac = 0.15 }
         set_variable = { anarchy_internal_sec_encryption_fac = 0.15 }
         set_variable = { anarchy_internal_sec_anarchy_drift_fac = 0.05 }
@@ -9721,11 +9726,45 @@ set_variable_for_winning_anarchist_party_election = {
             }
         }
         set_variable = { global_building_slots = 0.35 }
+        custom_effect_tooltip = countryside_bonus_anarchist_election_bonus_3_months
         random_owned_controlled_state = {
             limit = {
-
+                OR = {
+                    has_state_category = wasteland
+                    has_state_category = pastoral
+                    has_state_category = enclave
+                    has_state_category = rural
+                    has_state_category = small_island
+                    has_state_category = tiny_island
+                }
             }
-            add_extra_state_shared_building_slots = 3
+            add_extra_state_shared_building_slots = 5
+        }
+        random_owned_controlled_state = {
+            limit = {
+                OR = {
+                    has_state_category = wasteland
+                    has_state_category = pastoral
+                    has_state_category = enclave
+                    has_state_category = rural
+                    has_state_category = small_island
+                    has_state_category = tiny_island
+                }
+            }
+            add_extra_state_shared_building_slots = 5
+        }
+        random_owned_controlled_state = {
+            limit = {
+                OR = {
+                    has_state_category = wasteland
+                    has_state_category = pastoral
+                    has_state_category = enclave
+                    has_state_category = rural
+                    has_state_category = small_island
+                    has_state_category = tiny_island
+                }
+            }
+            add_extra_state_shared_building_slots = 5
         }
     }
     if = {
@@ -9736,7 +9775,10 @@ set_variable_for_winning_anarchist_party_election = {
                 compare = equals
             }
         }
-        set_variable = { global_building_slots = 0.35 }
+        set_variable = { anarchy_theorist_party_refinery_speed = 0.25 }
+        set_variable = { anarchy_theorist_party_nuclear_speed = 0.25 }
+        set_variable = { anarchy_theorist_party_rocket_speed = 0.25 }
+        custom_effect_tooltip = theorist_bonus_anarchist_election_bonus_3_months
         random_list = {
             25 = {
                 add_tech_bonus = {
@@ -9847,6 +9889,64 @@ random_tech_anarchist_election = {
                 uses = 1
                 category = tactical_bomber
             }
+        }
+    }
+}
+
+create_ships_variant_for_anarchist_election = {
+    create_equipment_variant = {
+        name = "Russkiy esminets"
+        type = destroyer_1
+        parent_version = 0
+        upgrades = {
+            ship_torpedo_upgrade = 1
+            destroyer_engine_upgrade = 3
+            ship_ASW_upgrade = 2
+            ship_anti_air_upgrade = 1
+        }
+    }
+    create_equipment_variant = {
+        name = "Russkiy legkiy kreyser"
+        type = light_cruiser_1
+        parent_version = 0
+        upgrades = {
+            ship_reliability_upgrade = 3
+            ship_engine_upgrade = 3
+            ship_gun_upgrade = 2
+            ship_anti_air_upgrade = 3
+        }
+    }
+    create_equipment_variant = {
+        name = "Russkiy tyazhelyy kreyser"
+        type = heavy_cruiser_1
+        parent_version = 0
+        upgrades = {
+            ship_reliability_upgrade = 2
+            ship_engine_upgrade = 3
+            ship_armor_upgrade = 3
+            ship_gun_upgrade = 3
+        }
+    }
+    create_equipment_variant = {
+        name = "Russkiy lineynyy kreyser"
+        type = battle_cruiser_1
+        parent_version = 0
+        upgrades = {
+            ship_reliability_upgrade = 3
+            ship_engine_upgrade = 2
+            ship_armor_upgrade = 3
+            ship_gun_upgrade = 2
+        }
+    }
+    create_equipment_variant = {
+        name = "Russkiy linkor"
+        type = battleship_1
+        parent_version = 0
+        upgrades = {
+            ship_reliability_upgrade = 3
+            ship_engine_upgrade = 2
+            ship_armor_upgrade = 3
+            ship_gun_upgrade = 3
         }
     }
 }
