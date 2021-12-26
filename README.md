@@ -6,13 +6,17 @@
 
 Updates are very frequent on our GitHub, however, you should **NOT** try to play with this current version unless it is marked as **_Stable_**.
 
-Current version is : **_Unstable_**.
+Current version is : **_Stable_**.
 
-Mod Version : 2.7.3
+Mod Version : 3.0.0
 
 ## How to LOCALLY install the mod for beta testing :
 
-**Important** : You **_cannot_** have two mods with the same name (new paradox launcher won't understand).
+**Important** : You **_cannot_** have two mods with the same name (paradox launcher won't understand).
+
+You can simply download the this GitHub as a zip file (or clone it) and drag it into your mod folder. However, this will most likely not work, even if you manually add the .mod.
+
+**Another, more complicated way, which should work :**
 
 - Download this GitHub as a zip file (Clone or Download > Download as ZIP),
 - Start the HOI4 launcher and go to Mods > Mod Tools > Create a Mod,
@@ -32,37 +36,45 @@ Simply download the ZIP file again, delete everything inside the Russia 2.0 fold
 
 ## Extra notes :
 
-If you encounter any bug or something unusual happens, you can add it here as an issue, or PM any of us directly on Steam or Discord. Using the Steam Page of the mod is also recommended but do **NOT** report any bugs from unstable versions, as those are meant to contain bugs anyways.
+If you encounter any bug or something unusual happens, you can add it here as an issue, or report it in the Discord server. Using the Steam Page of the mod is not recommended. Do **NOT** report any bugs from unstable versions, as those are meant to contain bugs anyways.
 
-The mod is **NOT** compatible with Road to 56, overhaul mods, or mods that modify Soviet files! It might or might not work with Expert AI (please stop asking). The mod is NOT supposed to be 100% historical in any way.
+The mod is **NOT** compatible with Road to 56, overhaul mods, or mods that modify Soviet files! It also does not work with Expert AI (please stop asking). The mod is NOT supposed to be 100% historical in any way.
 
 This mod has been developed for months now, and we are happy with how far we got. We want to thank everyone who helped us, supported the mod, and everyone playing it. We could not have kept going without you guys.
 
-The mod is **NOT** achievement compatible. The 1939 start date now works fine. The AI can play the Soviet Union, factors have been added, as well as an ai_strategy and AI behaviors (the AI can play any ideology).
+The mod is **NOT** achievement compatible but does include its own achievements. The 1939 start date now works fine. The AI can play any path.
 
 Do **NOT** upload this mod as your own.
 
 ## What is currently available on this version?
 
-- More than 250 focuses
-- Seven political paths available
-- More than 500 events
-- More than 100 decisions
-- Two custom puppet types (requires Together for Victory)
-- Nine unique espionage operations (require La Resistance)
-- Easter eggs and hidden events
-- A lot of new advisors, designers, generals and more
-- Full English localization (with news events as well)
-- Unique game mechanics
-- Custom nations and flags
-- More than 12 country leaders
+- More than 600 focuses,
+- A bunch of political paths available, including a new ideology : Anarchism,
+- More than 1000 events,
+- More than 800 decisions,
+- Custom GUIs,
+- Custom and improved AIs,
+- Achievements (does not save between games due to limitations),
+- A focus tree for all the Russian States, and a unique focus tree for Ukraine,
+- Custom puppet types (requires Together for Victory),
+- Unique espionage operations (requires La Resistance),
+- Easter eggs and hidden events,
+- A lot of new advisors, designers, generals and more,
+- Full English localization (with news events as well),
+- Unique game mechanics,
+- Custom nations and flags,
+- More than 30 country leaders,
 - And so much more..!
 
 ## What is to come?
 
-- Minor improvements
-- Bug fixes
+- Priority : Anarchist Path : The Collapse (coming very soon)
+- AI Improvments & bug fixes
+- National Obligations
+- Lastly : Road to 56 compatibility
 
 ## Mod developers :
 - [@YummYume](https://github.com/YummYume) : Yam#2937 (Discord), [Steam link](https://steamcommunity.com/profiles/76561198081584510)
 - [@Raider](https://github.com/Raider472) : Яaider#8659 (Discord); [Steam link](https://steamcommunity.com/profiles/76561198082391047)
+
+You can find the full team on the Steam page of the mod.
