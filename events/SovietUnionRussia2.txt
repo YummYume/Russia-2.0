@@ -33467,3 +33467,71 @@ country_event = {
 		}
 	}
 }
+
+#Ruling Party Loses 10/15%
+country_event = {
+	id = russia2_russia.658
+	title = russia2_russia.658.t
+	desc = russia2_russia.658.d
+	picture = GFX_report_event_peasant_revolt
+
+	is_triggered_only = yes
+
+	option = {
+		name = russia2_russia.658.a
+		ai_chance = {
+			factor = 100
+		}
+		set_temp_variable = { random_effect = 0 }
+		randomize_temp_variable = {
+			var = random_effect
+			min = 0
+			max = 2
+		}
+		if = {
+			limit = {
+				check_variable = {
+					var = random_effect
+					value = 1
+					compare = less_than
+				}
+			}
+			subtract_from_variable = { sov_anarchist_election_parties^var:sov_anarchist_election_current_ruling_party = 10 }
+			clamp_variable = {
+				var = sov_anarchist_election_parties^var:sov_anarchist_election_current_ruling_party
+				min = 0
+				max = 100
+			}
+			custom_effect_tooltip = sov_current_ruling_party_loses_10_percent
+		}
+		else = {
+			subtract_from_variable = { sov_anarchist_election_parties^var:sov_anarchist_election_current_ruling_party = 15 }
+			clamp_variable = {
+				var = sov_anarchist_election_parties^var:sov_anarchist_election_current_ruling_party
+				min = 0
+				max = 100
+			}
+			custom_effect_tooltip = sov_current_ruling_party_loses_15_percent
+		}
+	}
+}
+
+#???
+country_event = {
+	id = russia2_russia.659
+
+	hidden = yes
+
+	is_triggered_only = yes
+
+	immediate = {
+		if = {
+			limit = {
+				NOT = {
+					has_idea = SOV_Lavrentiy_beria
+				}
+			}
+			add_ideas = SOV_Lavrentiy_beria
+		}
+	}
+}
