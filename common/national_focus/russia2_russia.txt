@@ -4967,7 +4967,7 @@ focus_tree = {
 		x = 27
 		y = 10
 		prerequisite = { focus = SOV_spying_on_the_american }
-		icon = GFX_goal_unknown_golden
+		icon = GFX_focus_SOV_tsar_bomba
 		cost = 6
 		ai_will_do = {
 			factor = 10
@@ -8635,18 +8635,26 @@ focus_tree = {
 			has_government = communism
 			is_subject = no
 			country_exists = PER
-			NOT = {
-				has_war_with = ENG
+			OR = {
 				PER = {
-					OR = {
+					fascism > 0.25
+				}
+				date > 1941.8.25
+			}
+			PER = {
+				NOT = {
+					is_in_faction_with = ROOT
+					has_war_with = ROOT
+					custom_trigger_tooltip = {
+						tooltip = SOV_preemptive_strike_iran_tt
 						is_subject_of = ROOT
-						is_subject_of = ENG
+						PER = {
+							OVERLORD = {
+								is_in_faction_with = ROOT
+							}
+						}
 					}
 				}
-			}
-			OR = {
-				PER = { fascism > 0.25 }
-				date > 1941.8.25
 			}
 			if = {
 				limit = {
@@ -8657,13 +8665,16 @@ focus_tree = {
 				}
 			}
 		}
+		bypass = {
+			has_war_with = PER
+		}
 		search_filters = { FOCUS_FILTER_ANNEXATION FOCUS_FILTER_COMMUNISM_STALIN_RUSSIA }
 		completion_reward = {
 			create_wargoal = {
 		    	type = puppet_wargoal_focus
 		    	target = PER
 			}
-			custom_effect_tooltip = SOV_preemptive_strike_iran_tt
+			custom_effect_tooltip = SOV_preemptive_strike_iran_tt2
 		}
 	}
 
@@ -8984,31 +8995,30 @@ focus_tree = {
 				}
 				add_ideas = SOV_Post_war_influence
 			}
-			custom_effect_tooltip = SOV_the_construction_of_communism_railways_tt
-			#Build railway from Moscow to Puppets
-			hidden_effect = { #Hiidden for tooltip reasons
-				every_subject_country = {
-					limit = {
-						capital_scope = {
-							OR = {
-								is_on_continent = europe
-								is_on_continent = asia
-								is_on_continent = middle_east
-							}
+			custom_effect_tooltip = SOV_post_war_influence_tt2
+			every_state = {
+				limit = {
+					is_capital = yes
+					OWNER = {
+						is_subject_of = ROOT
+					}
+					CONTROLLER = {
+						is_subject_of = ROOT
+					}
+					ROOT = {
+						can_build_railway = {
+							start_state = ROOT.CAPITAL
+							target_state = PREV
+							build_only_on_allied = yes
 						}
 					}
-
-					if = {
-						limit = {
-							can_build_railway = {
-								start_state = ROOT.capital
-								target_state = THIS.capital
-								build_only_on_allied = yes
-							}
-						}
+				}
+				custom_effect_tooltip = SOV_post_war_influence_tt3
+				hidden_effect = {
+					ROOT = {
 						build_railway = {
 							start_state = ROOT.capital
-							target_state = THIS.capital
+							target_state = PREV
 							build_only_on_allied = yes
 						}
 					}
