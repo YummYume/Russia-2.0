@@ -2131,9 +2131,19 @@ country_event = {
 		}
 		name = russia2_generic.44.a
 		SOV = {
-			declare_war_on = {
-				target = UKR
-				type = annex_everything
+			for_each_scope_loop = {
+				array = global.russian_scw_participants_ukr
+				if = {
+					limit = {
+						exists = yes
+					}
+					SOV = {
+						declare_war_on = {
+							target = PREV
+							type = annex_everything
+						}
+					}
+				}
 			}
 			hidden_effect = {
 				every_country = {
