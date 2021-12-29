@@ -78,7 +78,7 @@ on_actions = {
 							limit = {
 								var:v = {
 									is_in_faction_with = UKR
-									NOT = { 
+									NOT = {
 										TAG = UKR
 									}
 								}
@@ -179,7 +179,7 @@ on_actions = {
 							}
 							SOV = {
 								set_state_controller = var:v
-							} 
+							}
 						}
 						if = {
 							limit = {
@@ -194,24 +194,25 @@ on_actions = {
 							}
 							SOU = {
 								set_state_controller = var:v
-							} 
+							}
 						}
 					}
 				}
 				#SOU Dies
 				else_if = {
 					limit = {
+						ukr_in_scw = yes
+						sov_in_scw = yes
 						ROOT = {
-							ukr_in_scw = yes
-							sov_in_scw = yes
 							tag = SOU
 						}
 					}
 					log = "[SOU.GetNameDefCap] Capitulated (vs SOV & UKR)"
-					for_each_scope_loop = {
-						array = SOU.enemies
-						break = break_array
 
+					every_country = {
+						limit = {
+							has_war_with = SOU
+						}
 						if = {
 							limit = {
 								NOT = {
@@ -265,7 +266,7 @@ on_actions = {
 							limit = {
 								var:v = {
 									is_in_faction_with = SOU
-									NOT = { 
+									NOT = {
 										TAG = SOU
 									}
 								}
@@ -384,7 +385,7 @@ on_actions = {
 										}
 										SOU = {
 											set_state_controller = var:v
-										} 
+										}
 									}
 								}
 							}
@@ -462,9 +463,9 @@ on_actions = {
 				#SOV Dies
 				else_if = {
 					limit = {
+						ukr_in_scw = yes
+						sou_in_scw = yes
 						ROOT = {
-							ukr_in_scw = yes
-							sou_in_scw = yes
 							tag = SOV
 						}
 					}
@@ -505,7 +506,7 @@ on_actions = {
 							limit = {
 								var:v = {
 									is_in_faction_with = SOV
-									NOT = { 
+									NOT = {
 										TAG = SOV
 									}
 								}
@@ -553,7 +554,7 @@ on_actions = {
 									NOT = {
 										UKR = {
 											has_government = anarchy
-										}	
+										}
 									}
 								}
 								if = {
@@ -709,7 +710,7 @@ on_actions = {
 							for_each_scope_loop = {
 								array = global.russian_scw_participants_ukr
 								break = break_array
-							 
+
 							 	if = {
 									limit = {
 										NOT = {
@@ -727,11 +728,11 @@ on_actions = {
 									}
 								 }
 							}
-						}	
+						}
 						for_each_scope_loop = {
 							array = global.russian_scw_participants_other
 							break = break_array
-						 
+
 							if = {
 								limit = {
 									NOT = {
@@ -766,7 +767,7 @@ on_actions = {
 							value = v
 							index = i
 							break = break_array
-	
+
 							if = {
 								limit = {
 									any_country = {
@@ -792,12 +793,12 @@ on_actions = {
 							value = v
 							index = i
 							break = break_array
-	
+
 							if = {
 								limit = {
 									var:v = {
 										is_in_faction_with = SOU
-										NOT = { 
+										NOT = {
 											TAG = SOU
 										}
 									}
@@ -817,7 +818,7 @@ on_actions = {
 							value = v
 							index = i
 							break = break_array
-	
+
 							add_to_temp_array = { sou.owned_states_scw = var:v }
 						}
 						for_each_loop = {
@@ -919,7 +920,7 @@ on_actions = {
 									}
 									SOU = {
 										set_state_controller = var:v
-									} 
+									}
 								}
 							}
 							if = {
@@ -933,7 +934,7 @@ on_actions = {
 										var:v = {
 											NOT = {
 												is_owned_by = UKR
-											}	
+											}
 										}
 									}
 									SOV = {
@@ -957,7 +958,7 @@ on_actions = {
 									}
 									SOV = {
 										set_state_controller = var:v
-									} 
+									}
 								}
 							}
 							if = {
@@ -983,7 +984,7 @@ on_actions = {
 								}
 								FIN = {
 									set_state_controller = var:v
-								} 
+								}
 							}
 						}
 						if = {
@@ -1016,7 +1017,7 @@ on_actions = {
 							value = v
 							index = i
 							break = break_array
-	
+
 							if = {
 								limit = {
 									any_country = {
@@ -1047,7 +1048,7 @@ on_actions = {
 								limit = {
 									var:v = {
 										is_in_faction_with = SOV
-										NOT = { 
+										NOT = {
 											TAG = SOV
 										}
 									}
@@ -1067,7 +1068,7 @@ on_actions = {
 							value = v
 							index = i
 							break = break_array
-	
+
 							add_to_temp_array = { sov.owned_states_scw = var:v }
 						}
 						for_each_loop = {
@@ -1075,7 +1076,7 @@ on_actions = {
 							value = v
 							index = i
 							break = break_array
-							
+
 							if = {
 								limit = {
 									UKR = {
@@ -1107,7 +1108,7 @@ on_actions = {
 										SOU = {
 											is_subject_of = UKR
 										}
-										NOT = { 
+										NOT = {
 											is_in_array = { global.kievan_rus_state_ukraine = var:v }
 										}
 									}
@@ -1169,7 +1170,7 @@ on_actions = {
 										}
 										SOV = {
 											set_state_controller = var:v
-										} 
+										}
 									}
 								}
 								if = {
@@ -1191,7 +1192,7 @@ on_actions = {
 										}
 										SOU = {
 											set_state_controller = var:v
-										} 
+										}
 									}
 								}
 							}
@@ -1253,7 +1254,7 @@ on_actions = {
 							for_each_scope_loop = {
 								array = global.russian_scw_participants_sou
 								break = break_array
-							 
+
 							 	if = {
 									limit = {
                                         NOT = {
@@ -1271,11 +1272,11 @@ on_actions = {
 									}
 								}
 							}
-						}	
+						}
 						for_each_scope_loop = {
 							array = global.russian_scw_participants_other
                             break = break_array
-						
+
                             if = {
                                 limit = {
                                     NOT = {
@@ -1493,7 +1494,7 @@ on_actions = {
 							for_each_scope_loop = {
 								array = global.russian_scw_participants_sov
                                 break = break_array
-							 
+
                                 if = {
                                     limit = {
                                         NOT = {
@@ -1515,7 +1516,7 @@ on_actions = {
 						for_each_scope_loop = {
 							array = global.russian_scw_participants_other
                             break = break_array
-						 
+
                             if = {
                                 limit = {
                                     NOT = {
@@ -1618,9 +1619,9 @@ on_actions = {
 					}
 				}
 			}
-		}	
+		}
 	}
-	
+
 	#Set a country flag for major that send volunteers to WG durinf CW
 	on_send_volunteers = {
 		effect = {
@@ -1637,7 +1638,7 @@ on_actions = {
 				}
 				ROOT = {
 					set_country_flag = has_helped_whiteguard_by_volunteers
-				}	
+				}
 			}
 		}
 	}
@@ -1699,7 +1700,7 @@ on_actions = {
 									array = global.russian_scw_participants
 									value = v
 									index = i
-									
+
 									ROOT = {
 										tag = var:v
 									}
@@ -1754,7 +1755,7 @@ on_actions = {
 									array = global.russian_scw_participants
 									value = v
 									index = i
-									
+
 									FROM = {
 										tag = var:v
 									}
@@ -1827,7 +1828,7 @@ on_actions = {
 									array = global.russian_scw_participants
 									value = v
 									index = i
-									
+
 									ROOT = {
 										tag = var:v
 									}
@@ -1882,7 +1883,7 @@ on_actions = {
 									array = global.russian_scw_participants
 									value = v
 									index = i
-									
+
 									FROM = {
 										tag = var:v
 									}
@@ -1936,6 +1937,54 @@ on_actions = {
 	}
 
 	#All the following are for safety measures
+	on_weekly_SOV = {
+		effect = {
+			if = {
+				limit = {
+					has_global_flag = second_russian_civil_war_in_progress
+				}
+				every_country = {
+					limit = {
+						NOT = {
+							is_in_array = { global.russian_scw_participants = THIS }
+						}
+						OR = {
+							any_of = {
+								array = global.russian_scw_participants_sov
+								value = v
+								index = i
+
+								var:v = {
+									has_war_with = PREV
+								}
+							}
+							any_of = {
+								array = global.russian_scw_participants_sou
+								value = v
+								index = i
+
+								var:v = {
+									has_war_with = PREV
+								}
+							}
+							any_of = {
+								array = global.russian_scw_participants_ukr
+								value = v
+								index = i
+
+								var:v = {
+									has_war_with = PREV
+								}
+							}
+						}
+					}
+					add_to_array = { global.russian_scw_participants = THIS }
+				}
+				sov_clean_scw_arrays = yes
+			}
+		}
+	}
+
 	on_annex = {
 		effect = {
 			if = {
