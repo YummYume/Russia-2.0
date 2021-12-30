@@ -1,0 +1,65 @@
+SCW_no_need_for_mary_garrisons  = {
+
+	enable = {
+		has_global_flag = second_russian_civil_war_in_progress
+        is_in_array = { global.russian_scw_participants = THIS.id }
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = garrison
+		value = -1000
+	}
+}
+
+SCW_BLR_defense_mode_activated = {
+
+    allowed = {
+		original_tag = BLR
+	}
+
+	enable = {
+		has_global_flag = second_russian_civil_war_in_progress
+        NOT = {
+            any_controlled_state = {
+                any_neighbor_state = {
+                    CONTROLLER = {
+                        is_in_faction_with = BLR
+                    }
+                }
+            }
+        }
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = front_control
+
+		priority = 5000
+
+		execute_order = no
+		manual_attack = yes
+	}
+}
+
+SCW_help_SOV_against_SOU = {
+
+	enable = {
+		has_global_flag = second_russian_civil_war_in_progress
+        is_in_faction_with = SOV
+        has_war_with = SOU
+        NOT = {
+            tag = SOV
+        }
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = force_defend_ally_borders
+        value = 5000
+        id = SOV
+	}
+}

@@ -1,0 +1,181 @@
+SOU_send_volunteers_second_civil_war_soviet_union = {
+
+	enable = {
+		is_major = yes
+		has_government = SOU
+		NOT = {
+			original_tag = SOV
+		}
+		has_global_flag = second_russian_civil_war_in_progress
+		NOT = {
+			has_country_flag = help_whiteguard_during_russian_civil_war
+		}
+		country_exists = SOU
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = send_volunteers_desire
+		id = "SOU"
+		value = 100
+	}
+
+	ai_strategy = {
+		type = send_lend_lease_desire
+		id = SOU
+		value = 100
+	}
+}
+
+SOU_focus_on_your_enemies = {
+
+    reversed = yes
+
+	enable = {
+		has_global_flag = second_russian_civil_war_in_progress
+        NOT = {
+            has_war_with = SOU
+        }
+	}
+
+	enable_reverse = {
+        has_global_flag = second_russian_civil_war_in_progress
+        sou_in_scw = yes
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = conquer
+		id = SOU
+		value = -9999
+	}
+
+	ai_strategy = {
+		type = antagonize
+		id = SOU
+		value = -9999
+	}
+
+	ai_strategy = {
+		type = declare_war
+		id = SOU
+		value = -9999
+	}
+
+    ai_strategy = {
+		type = ignore
+		id = SOU
+		value = 9999
+	}
+}
+
+SOU_focus_only_scw  = {
+
+	allowed = {
+		original_tag = SOU
+	}
+
+	reversed = yes
+
+	enable = {
+        has_global_flag = second_russian_civil_war_in_progress
+		has_war_with = SOU
+	}
+
+	enable_reverse = {
+		tag = SOU
+		has_global_flag = second_russian_civil_war_in_progress
+		sou_in_scw = yes
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = front_control
+
+		priority = 1000
+
+		tag = SOU
+
+		ordertype = front
+		execute_order = yes
+		manual_attack = yes
+	}
+
+	ai_strategy = {
+		type = front_unit_request
+
+		tag = SOU
+
+		value = 1000
+	}
+}
+
+SOU_chill_scw  = {
+
+	allowed = {
+		original_tag = SOU
+	}
+
+	enable = {
+        has_global_flag = second_russian_civil_war_in_progress
+		date < 1940.3.1 #Just attack at this point
+		sov_in_scw = yes
+		sou_in_scw = yes
+		set_temp_variable = { sov_gun_deficit = var:sov.num_target_equipment_in_armies_k@infantry_equipment }
+		subtract_from_temp_variable = { sov_gun_deficit = var:sov.num_equipment_in_armies_k@infantry_equipment }
+		set_temp_variable = { sou_gun_deficit = var:sou.num_target_equipment_in_armies_k@infantry_equipment }
+		subtract_from_temp_variable = { sou_gun_deficit = var:sou.num_equipment_in_armies_k@infantry_equipment }
+		check_variable = {
+			var = sou_gun_deficit
+			value = sov_gun_deficit
+			compare = greater_than
+		}
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = front_control
+
+		priority = 5000
+
+		tag = SOV
+
+		execute_order = no
+		manual_attack = yes
+	}
+}
+
+SOU_destroy_BLR_scw = {
+
+	allowed = {
+		original_tag = SOU
+	}
+
+	enable = {
+        has_global_flag = second_russian_civil_war_in_progress
+		sov_in_scw = yes
+		sou_in_scw = yes
+		BLR = {
+			has_capitulated = no
+			has_war_with = SOU
+		}
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = front_control
+
+		priority = 800
+
+		tag = BLR
+		ordertype = front
+		execution_type = rush_weak
+		execute_order = yes
+		manual_attack = yes
+	}
+}
