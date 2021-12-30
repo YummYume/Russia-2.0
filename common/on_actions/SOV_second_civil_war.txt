@@ -679,20 +679,6 @@ on_actions = {
 								}
 							}
 						}
-						FROM = {
-							OR = {
-								tag = UKR
-								any_country = {
-									OR = {
-										is_in_faction_with = UKR
-										is_subject_of = UKR
-									}
-									NOT = {
-										tag = UKR
-									}
-								}
-							}
-						}
 					}
                     log = "UKR ([UKR.GetNameDefCap]) Wins the SCW"
 					if = {
@@ -1225,20 +1211,6 @@ on_actions = {
 								}
 							}
 						}
-						FROM = {
-							OR = {
-								tag = SOU
-								any_country = {
-									OR = {
-										is_in_faction_with = SOU
-										is_subject_of = SOU
-									}
-									NOT = {
-										tag = SOU
-									}
-								}
-							}
-						}
 					}
                     log = "SOU ([SOU.GetNameDefCap]) Wins the SCW"
 					if = {
@@ -1464,20 +1436,6 @@ on_actions = {
 								}
 							}
 						}
-						FROM = {
-							OR = {
-								tag = SOV
-								any_country = {
-									OR = {
-										is_in_faction_with = SOV
-										is_subject_of = SOV
-									}
-									NOT = {
-										tag = SOV
-									}
-								}
-							}
-						}
 					}
                     log = "SOV ([SOV.GetNameDefCap]) Wins the SCW"
 					if = {
@@ -1621,6 +1579,9 @@ on_actions = {
 						}
 						country_event = { id = russia2_generic.35 days = 1 }
 					}
+				}
+				else = {
+					log = "Error no Conditions is available scw"
 				}
 			}
 		}
@@ -2113,17 +2074,6 @@ on_actions = {
 		}
 	}
 
-	on_peace = {
-		effect = {
-			if = {
-				limit = {
-					has_global_flag = second_russian_civil_war_in_progress
-				}
-				sov_clean_scw_arrays = yes
-			}
-		}
-	}
-
 	on_create_faction = {
 		effect = {
 			if = {
@@ -2197,6 +2147,37 @@ on_actions = {
 					has_global_flag = second_russian_civil_war_in_progress
 				}
 				sov_clean_scw_arrays = yes
+			}
+		}
+	}
+
+	on_capitulation = { #Just in Case
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						OR = {
+							TAG = MON
+							TAG = TAN
+						}
+					}
+					FROM = {
+						OR = {
+							TAG = SOV
+							any_country = {
+								OR = {
+									is_in_faction_with = SOV
+									is_subject_of = SOV
+								}
+							}
+						}
+					}
+				}
+				SOV = {
+					annex_country = {
+						target = ROOT
+					}
+				}
 			}
 		}
 	}
