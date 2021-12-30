@@ -64,7 +64,11 @@ UKR_dont_push_too_hard_wait_for_cores_scw  = {
 		is_subject = no
 		ukr_in_scw = yes
 		has_active_mission = UKR_anarchism_timeout
-		num_of_controlled_states > 19
+		check_variable = {
+			var = ukr.num_controlled_states
+			value = 20
+			compare = greater_than_or_equals
+		}
 		check_variable = {
 			var = ukr.num_core_states
 			value = 20
@@ -536,6 +540,7 @@ UKR_recover_core_territory = {
 
 	enable = {
 		NOT = {
+			has_global_flag = second_russian_civil_war_in_progress
             is_in_faction_with = UKR
             is_subject_of = UKR
         }
@@ -565,6 +570,10 @@ UKR_recover_core_territory = {
 				is_in_array = { global.kievan_rus_state_ukraine = PREV }
 			}
         }
+		UKR = {
+			has_war = no
+			is_subject = no
+		}
 	}
 
 	enable_reverse = {
