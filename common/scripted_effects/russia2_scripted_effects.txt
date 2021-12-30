@@ -2647,6 +2647,113 @@ sov_spawn_english_ships_marines_scw = {
 }
 
 sov_clean_scw_arrays = {
+    for_each_loop = {
+        array = global.russian_scw_participants
+
+        if = {
+            limit = {
+                var:v = {
+                    OR = {
+                        tag = D01
+                        tag = D02
+                        tag = D03
+                        tag = D04
+                        tag = D05
+                        tag = D06
+                        tag = D07
+                        tag = D08
+                        tag = D09
+                        tag = D10
+                        tag = D11
+                        tag = D12
+                        tag = D13
+                        tag = D14
+                        tag = D15
+                        tag = D16
+                        tag = D17
+                        tag = D18
+                        tag = D19
+                        tag = D20
+                        tag = D21
+                        tag = D22
+                        tag = D23
+                        tag = D24
+                        tag = D25
+                        tag = D26
+                        tag = D27
+                        tag = D28
+                        tag = D29
+                        tag = D30
+                        tag = D31
+                        tag = D32
+                        tag = D33
+                        tag = D34
+                        tag = D35
+                        tag = D36
+                        tag = D37
+                        tag = D38
+                        tag = D39
+                        tag = D40
+                        tag = D41
+                        tag = D42
+                        tag = D43
+                        tag = D44
+                        tag = D45
+                        tag = D46
+                        tag = D47
+                        tag = D48
+                        tag = D49
+                        tag = D50
+                    }
+                }
+            }
+            if = {
+                limit = {
+                    var:v = {
+                        OR = {
+                            NOT = {
+                                has_war_with = SOV
+                                has_war_with = SOU
+                                if = {
+                                    limit = {
+                                        is_in_array = { global.russian_scw_participants = UKR }
+                                    }
+                                    has_war_with = UKR
+                                }
+                            }
+                        }
+                    }
+                }
+                remove_from_array = { global.russian_scw_participants = var:v }
+            }
+
+            if = {
+                limit = {
+                    is_in_array = { global.russian_scw_participants_sov = var:v }
+                }
+                remove_from_array = { global.russian_scw_participants_sov = var:v }
+            }
+            if = {
+                limit = {
+                    is_in_array = { global.russian_scw_participants_sou = var:v }
+                }
+                remove_from_array = { global.russian_scw_participants_sou = var:v }
+            }
+            if = {
+                limit = {
+                    is_in_array = { global.russian_scw_participants_ukr = var:v }
+                }
+                remove_from_array = { global.russian_scw_participants_ukr = var:v }
+            }
+            if = {
+                limit = {
+                    is_in_array = { global.russian_scw_participants_other = var:v }
+                }
+                remove_from_array = { global.russian_scw_participants_other = var:v }
+            }
+        }
+    }
+
     for_each_scope_loop = {
         array = global.russian_scw_participants
 
@@ -2654,9 +2761,9 @@ sov_clean_scw_arrays = {
             limit = {
                 OR = {
                     exists = no
-                    NOT = {
-                        has_global_flag = second_russian_civil_war_in_progress
-                    }
+                    # NOT = {
+                    #     has_global_flag = second_russian_civil_war_in_progress
+                    # }
                     NOT = {
                         has_war_with = SOV
                         has_war_with = SOU
