@@ -2630,7 +2630,7 @@ SOV_home_land_is_not_safe = {
 	enable = {
 		tag = SOV
 		NOT = {
-			country_exists = SOU
+			has_war_with = SOU
 		}
 		OR = {
 			has_war_with = ENG
@@ -3562,68 +3562,9 @@ prepare_fight_from_russia = {
 	}
 }
 
-destroy_SOU_do_not_wait = {
-	enable = {
-		OR = {
-			tag = SOV
-			is_in_faction_with = SOV
-		}
-		country_exists = SOU
-	}
-
-	abort_when_not_enabled = yes
-
-	ai_strategy = {
-		type = invade
-		id = "SOU"
-		value = 1000
-	}
-
-	ai_strategy = {
-		type = ignore_army_incompetence
-		value = 1000
-	}
-
-	ai_strategy = {
-		type = antagonize
-		id = "SOU"
-		value = 1000
-	}
-
-	ai_strategy = {
-		type = consider_weak
-		id = "SOU"
-		value = 1000
-	}
-
-	ai_strategy = {
-		type = protect
-		id = "UKR"
-		value = -100
-	}
-
-	ai_strategy = {
-		type = protect
-		id = "BLR"
-		value = -100
-	}
-
-	ai_strategy = {
-		type = support
-		id = "UKR"
-		value = -100
-	}
-
-	ai_strategy = {
-		type = support
-		id = "BLR"
-		value = -100
-	}
-}
-
 SOV_spend_pp_for_concession = {
 	enable = {
-		TAG = SOV
+		tag = SOV
 		SOV = {
 			OR = {
 				has_idea = SOV_Communist_resistance2
@@ -3652,7 +3593,7 @@ SOV_spend_pp_for_concession = {
 
 SOV_keep_political_power_partisan = {
 	enable = {
-		TAG = SOV
+		tag = SOV
 		SOV = {
 			has_idea = SOV_Communist_resistance3
 		}
@@ -3675,7 +3616,7 @@ SOV_keep_political_power_partisan = {
 
 SOV_keep_political_power_reintegration = {
 	enable = {
-		TAG = SOV
+		tag = SOV
 		SOV = {
 			has_government = neutrality
 		}
@@ -3721,7 +3662,7 @@ SOV_keep_political_power_reintegration = {
 
 SOV_keep_political_power_investment = {
 	enable = {
-		TAG = SOV
+		tag = SOV
 		SOV = {
 			has_government = democratic
 			has_idea = SOV_Russian_sphere_investments
@@ -3751,7 +3692,7 @@ SOV_keep_political_power_investment = {
 
 SOV_keep_political_power_perpetual_liberty = {
 	enable = {
-		TAG = SOV
+		tag = SOV
 		SOV = {
 			has_government = democratic
 			has_completed_focus = SOV_perpetual_defense_liberty
@@ -3815,36 +3756,6 @@ SOV_send_volunteers_second_civil_war_white_guard = {
 	}
 }
 
-SOV_send_volunteers_second_civil_war_soviet_union = {
-
-	enable = {
-		is_major = yes
-		has_government = SOU
-		NOT = {
-			original_tag = SOV
-		}
-		has_global_flag = second_russian_civil_war_in_progress
-		NOT = {
-			has_country_flag = help_whiteguard_during_russian_civil_war
-		}
-		country_exists = SOU
-	}
-
-	abort_when_not_enabled = yes
-
-	ai_strategy = {
-		type = send_volunteers_desire
-		id = "SOU"
-		value = 100
-	}
-
-	ai_strategy = {
-		type = send_lend_lease_desire
-		id = SOU
-		value = 100
-	}
-}
-
 #Do not guarantee any fucking country while being democratic Russia
 SOV_no_guarantee_democratic_russia = {
 	enable = {
@@ -3899,18 +3810,18 @@ SOV_invite_minor_communist_boost_opinion = {
 		}
 		is_major = no
 		NOT = {
-			TAG = SLV
-			TAG = CRO
-			TAG = BOS
-			TAG = SER
-			TAG = MNT
-			TAG = MAC
-			TAG = CAT
-			TAG = NAV
-			TAG = GLC
-			TAG = SCO
-			TAG = WLS
-			TAG = NIR
+			tag = SLV
+			tag = CRO
+			tag = BOS
+			tag = SER
+			tag = MNT
+			tag = MAC
+			tag = CAT
+			tag = NAV
+			tag = GLC
+			tag = SCO
+			tag = WLS
+			tag = NIR
 			tag = KOR
 			tag = VIN
 			tag = CAM
@@ -3967,8 +3878,8 @@ SOV_send_volunteers_second_civil_war_white_guard_accept_help_foreign = {
 	}
 }
 
-#Japan Become Friendly Towards White Guard if they Have Idea thanks to sahk
-SOV_japan_non_agre = {
+#Japan Become Friendly Towards White Guard if they Have Idea thanks to Sakhalin
+SOV_japan_non_agression_pact = {
 
 	enable = {
 		has_idea = SOV_Japan_non_agression_pact_sakhalin
@@ -4000,7 +3911,7 @@ SOV_japan_non_agre = {
 }
 
 #Italy Becomes Friendly Towards White Guard if they Have Idea diplomatic relation
-SOV_italy_diplo_relation = {
+SOV_italy_diplomatic_relations = {
 
 	enable = {
 		has_idea = SOV_Russian_italian_diplomacy_neutral
@@ -4093,6 +4004,319 @@ SOV_save_pp_for_scw = {
 	}
 
     ai_strategy = {
+		type = pp_spend_priority
+		id = guarantee
+		value = -9999
+	}
+
+	ai_strategy = {
+		type = pp_spend_priority
+		id = relation
+		value = -9999
+	}
+}
+
+SOV_focus_on_your_enemies = {
+
+    reversed = yes
+
+	enable = {
+		has_global_flag = second_russian_civil_war_in_progress
+        NOT = {
+            has_war_with = SOV
+        }
+	}
+
+	enable_reverse = {
+		tag = SOV
+        has_global_flag = second_russian_civil_war_in_progress
+        sov_in_scw = yes
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = conquer
+		id = SOV
+		value = -9999
+	}
+
+	ai_strategy = {
+		type = antagonize
+		id = SOV
+		value = -9999
+	}
+
+	ai_strategy = {
+		type = declare_war
+		id = SOV
+		value = -9999
+	}
+
+    ai_strategy = {
+		type = ignore
+		id = SOV
+		value = 9999
+	}
+}
+
+SOV_focus_only_scw  = {
+
+	allowed = {
+		original_tag = SOV
+	}
+
+	reversed = yes
+
+	enable = {
+		has_global_flag = second_russian_civil_war_in_progress
+		has_war_with = SOV
+	}
+
+	enable_reverse = {
+		tag = SOV
+		has_global_flag = second_russian_civil_war_in_progress
+		sov_in_scw = yes
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = front_control
+
+		priority = 1000
+
+		tag = SOV
+
+		ordertype = front
+		execute_order = yes
+		manual_attack = yes
+	}
+
+	ai_strategy = {
+		type = front_unit_request
+
+		tag = SOV
+
+		value = 1000
+	}
+}
+
+SOV_destroy_TAN_scw = {
+
+	allowed = {
+		original_tag = SOV
+	}
+
+	enable = {
+		has_global_flag = second_russian_civil_war_in_progress
+		sov_in_scw = yes
+		sou_in_scw = yes
+		TAN = {
+			has_capitulated = no
+			has_war_with = SOV
+		}
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = front_control
+
+		priority = 800
+
+		tag = TAN
+		ordertype = front
+		execution_type = rush_weak
+		execute_order = yes
+		manual_attack = yes
+	}
+}
+
+SOV_destroy_MON_scw = {
+
+	allowed = {
+		original_tag = SOV
+	}
+
+	enable = {
+		has_global_flag = second_russian_civil_war_in_progress
+		sov_in_scw = yes
+		sou_in_scw = yes
+		MON = {
+			has_capitulated = no
+			has_war_with = SOV
+		}
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = front_control
+
+		priority = 800
+
+		tag = MON
+		ordertype = front
+		execution_type = rush_weak
+		execute_order = yes
+		manual_attack = yes
+	}
+}
+
+SOV_chill_scw  = {
+
+	allowed = {
+		original_tag = SOV
+	}
+
+	enable = {
+		has_global_flag = second_russian_civil_war_in_progress
+		date < 1940.3.1 #Just attack at this point
+		sov_in_scw = yes
+		sou_in_scw = yes
+		set_temp_variable = { sov_gun_deficit = var:sov.num_target_equipment_in_armies_k@infantry_equipment }
+		subtract_from_temp_variable = { sov_gun_deficit = var:sov.num_equipment_in_armies_k@infantry_equipment }
+		set_temp_variable = { sou_gun_deficit = var:sou.num_target_equipment_in_armies_k@infantry_equipment }
+		subtract_from_temp_variable = { sou_gun_deficit = var:sou.num_equipment_in_armies_k@infantry_equipment }
+		check_variable = {
+			var = sov_gun_deficit
+			value = sou_gun_deficit
+			compare = greater_than
+		}
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = front_control
+
+		priority = 5000
+
+		tag = SOU
+
+		execute_order = no
+		manual_attack = yes
+	}
+}
+
+SOV_protect_caucasus_until_connected  = {
+
+	allowed = {
+		original_tag = SOV
+	}
+
+	enable = {
+		has_global_flag = second_russian_civil_war_in_progress
+		sov_in_scw = yes
+		any_controlled_state = {
+			OR = {
+				state = 237
+				state = 238
+				state = 218
+				state = 234
+				state = 235
+				state = 232
+				state = 821
+				state = 828
+				state = 827
+				state = 233
+			}
+		}
+		NOT = {
+			can_build_railway = {
+				start_state = SOV.CAPITAL
+				target_state = 237
+				build_only_on_allied = yes
+			}
+			can_build_railway = {
+				start_state = SOV.CAPITAL
+				target_state = 238
+				build_only_on_allied = yes
+			}
+			can_build_railway = {
+				start_state = SOV.CAPITAL
+				target_state = 218
+				build_only_on_allied = yes
+			}
+			can_build_railway = {
+				start_state = SOV.CAPITAL
+				target_state = 234
+				build_only_on_allied = yes
+			}
+			can_build_railway = {
+				start_state = SOV.CAPITAL
+				target_state = 235
+				build_only_on_allied = yes
+			}
+			can_build_railway = {
+				start_state = SOV.CAPITAL
+				target_state = 232
+				build_only_on_allied = yes
+			}
+			can_build_railway = {
+				start_state = SOV.CAPITAL
+				target_state = 821
+				build_only_on_allied = yes
+			}
+			can_build_railway = {
+				start_state = SOV.CAPITAL
+				target_state = 828
+				build_only_on_allied = yes
+			}
+			can_build_railway = {
+				start_state = SOV.CAPITAL
+				target_state = 927
+				build_only_on_allied = yes
+			}
+			can_build_railway = {
+				start_state = SOV.CAPITAL
+				target_state = 233
+				build_only_on_allied = yes
+			}
+		}
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = front_control
+
+		priority = 9999
+
+		state_trigger = {
+			OR = {
+				state = 237
+				state = 238
+				state = 218
+				state = 234
+				state = 235
+				state = 232
+				state = 821
+				state = 828
+				state = 827
+				state = 233
+			}
+		}
+
+		execute_order = no
+		manual_attack = yes
+	}
+}
+
+SOV_do_not_waste_pp = {
+
+	allowed = {
+		original_tag = SOV
+	}
+
+	enable = {
+		has_political_power < 500
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
 		type = pp_spend_priority
 		id = guarantee
 		value = -9999

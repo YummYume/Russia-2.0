@@ -64,7 +64,11 @@ UKR_dont_push_too_hard_wait_for_cores_scw  = {
 		is_subject = no
 		ukr_in_scw = yes
 		has_active_mission = UKR_anarchism_timeout
-		num_of_controlled_states > 19
+		check_variable = {
+			var = ukr.num_controlled_states
+			value = 20
+			compare = greater_than_or_equals
+		}
 		check_variable = {
 			var = ukr.num_core_states
 			value = 20
@@ -102,6 +106,9 @@ UKR_dont_push_too_hard_wait_for_cores_scw  = {
 		type = front_unit_request
 
 		state_trigger = {
+			CONTROLLER = {
+				has_war_with = UKR
+			}
 			OR = {
 				state = 195 #Hold onto Stalingrad
 				any_neighbor_state = {
@@ -217,6 +224,7 @@ UKR_kill_BLR_fast_scw = {
 		priority = 700
 
 		tag = BLR
+		ordertype = front
 		execution_type = rush_weak
 		execute_order = yes
 		manual_attack = yes
@@ -321,6 +329,7 @@ UKR_chill_scw  = {
 	}
 
 	enable = {
+		has_global_flag = second_russian_civil_war_in_progress
 		date < 1940.3.1 #Just attack at this point
 		ukr_in_scw = yes
 		OR = {
@@ -400,6 +409,7 @@ ukr_focus_on_civs_scw = {
 	}
 
 	enable = {
+		has_global_flag = second_russian_civil_war_in_progress
 		ukr_in_scw = yes
 		num_of_civilian_factories < 15
 		surrender_progress < 0.25
@@ -421,6 +431,7 @@ ukr_focus_on_mils_scw = {
 	}
 
 	enable = {
+		has_global_flag = second_russian_civil_war_in_progress
 		ukr_in_scw = yes
 		num_of_military_factories < 20
 		surrender_progress < 0.25
@@ -536,6 +547,7 @@ UKR_recover_core_territory = {
 
 	enable = {
 		NOT = {
+			has_global_flag = second_russian_civil_war_in_progress
             is_in_faction_with = UKR
             is_subject_of = UKR
         }
@@ -565,6 +577,10 @@ UKR_recover_core_territory = {
 				is_in_array = { global.kievan_rus_state_ukraine = PREV }
 			}
         }
+		UKR = {
+			has_war = no
+			is_subject = no
+		}
 	}
 
 	enable_reverse = {
@@ -601,5 +617,74 @@ UKR_recover_core_territory = {
 		type = declare_war
 		id = UKR
 		value = 9999
+	}
+}
+
+UKR_focus_on_your_enemies = {
+
+    reversed = yes
+
+	enable = {
+		has_global_flag = second_russian_civil_war_in_progress
+        NOT = {
+            has_war_with = UKR
+        }
+	}
+
+	enable_reverse = {
+		tag = UKR
+        has_global_flag = second_russian_civil_war_in_progress
+        is_in_array = { global.russian_scw_participants = UKR }
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = conquer
+		id = UKR
+		value = -9999
+	}
+
+	ai_strategy = {
+		type = antagonize
+		id = UKR
+		value = -9999
+	}
+
+	ai_strategy = {
+		type = declare_war
+		id = UKR
+		value = -9999
+	}
+
+    ai_strategy = {
+		type = ignore
+		id = UKR
+		value = 9999
+	}
+}
+
+UKR_do_not_waste_pp = {
+
+	allowed = {
+		original_tag = UKR
+	}
+
+	enable = {
+		has_political_power < 500
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = pp_spend_priority
+		id = guarantee
+		value = -9999
+	}
+
+	ai_strategy = {
+		type = pp_spend_priority
+		id = relation
+		value = -9999
 	}
 }

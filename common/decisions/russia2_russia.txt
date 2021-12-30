@@ -1842,6 +1842,32 @@ SOV_unhappy_peasants = {
 
 		ai_will_do = {
 			factor = 300
+			modifier = {
+				factor = 0
+				is_subject = no
+				OR = {
+					has_completed_focus = SOV_terrible_fate
+					focus_progress = {
+						focus = SOV_terrible_fate
+						progress > 0.01
+					}
+					AND = {
+						OR = {
+							has_country_flag = RUS_AI_VLADIMIR_KIRILLOVICH_NEUTRALITY_BEHAVIOR
+							has_country_flag = RUS_AI_ANASTASIA_NIKOLAEVNA_NEUTRALITY_BEHAVIOR
+							has_country_flag = RUS_AI_ANDREY_VLASOV_NEUTRALITY_BEHAVIOR
+							has_country_flag = RUS_AI_PAVEL_BERMONDT_AVALOV_NEUTRALITY_BEHAVIOR
+							has_country_flag = RUS_AI_KONSTANTIN_RODZAEVSKY_FASCIST_BEHAVIOR
+							has_country_flag = RUS_AI_ANASTASY_VONSYATSKY_FASCIST_BEHAVIOR
+						}
+						date < 1936.05.01
+					}
+				}
+				NOT = {
+					has_completed_focus = SOV_right_to_believe
+					has_completed_focus = SOV_second_civil_war
+				}
+			}
 		}
 
         fire_only_once = yes
@@ -2421,18 +2447,18 @@ SOV_minor_communist_countries_europe = {
 				}
 				is_major = no
 				NOT = {
-					TAG = SLV
-					TAG = CRO
-					TAG = BOS
-					TAG = SER
-					TAG = MNT
-					TAG = MAC
-					TAG = CAT
-					TAG = NAV
-					TAG = GLC
-					TAG = SCO
-					TAG = WLS
-					TAG = NIR
+					tag = SLV
+					tag = CRO
+					tag = BOS
+					tag = SER
+					tag = MNT
+					tag = MAC
+					tag = CAT
+					tag = NAV
+					tag = GLC
+					tag = SCO
+					tag = WLS
+					tag = NIR
 					tag = KOR
 					tag = VIN
 					tag = CAM
@@ -2464,18 +2490,18 @@ SOV_minor_communist_countries_europe = {
 				}
 				is_major = no
 				NOT = {
-					TAG = SLV
-					TAG = CRO
-					TAG = BOS
-					TAG = SER
-					TAG = MNT
-					TAG = MAC
-					TAG = CAT
-					TAG = NAV
-					TAG = GLC
-					TAG = SCO
-					TAG = WLS
-					TAG = NIR
+					tag = SLV
+					tag = CRO
+					tag = BOS
+					tag = SER
+					tag = MNT
+					tag = MAC
+					tag = CAT
+					tag = NAV
+					tag = GLC
+					tag = SCO
+					tag = WLS
+					tag = NIR
 					tag = KOR
 					tag = VIN
 					tag = CAM
@@ -5566,7 +5592,7 @@ SOV_the_second_civil_war_fn = {
 		icon = GFX_decision_infiltrate_state
 
 		allowed = {
-			TAG = SOV
+			tag = SOV
 		}
 
 		on_map_mode = map_and_decisions_view
@@ -5651,7 +5677,7 @@ SOV_the_second_civil_war_fn = {
 
 		available = {
 			has_civil_war = no
-			command_power > 25
+			command_power > 15
 		}
 
 		visible = {
@@ -5692,7 +5718,7 @@ SOV_the_second_civil_war_fn = {
 			add_to_array = { sabotage_military_count = 1 }
 			custom_effect_tooltip = sabotage_military
 			hidden_effect = {
-				add_command_power = -25
+				add_command_power = -15
 			}
 			set_country_flag = sabotage_mils
 		}
@@ -5708,7 +5734,7 @@ SOV_the_second_civil_war_fn = {
 
 		available = {
 			has_civil_war = no
-			command_power > 25
+			command_power > 15
 		}
 
 		visible = {
@@ -5749,7 +5775,7 @@ SOV_the_second_civil_war_fn = {
 			add_to_array = { sabotage_civilian_count = 1 }
 			custom_effect_tooltip = sabotage_civilian
 			hidden_effect = {
-				add_command_power = -25
+				add_command_power = -15
 			}
 			set_country_flag = sabotage_civs
 		}
@@ -5826,7 +5852,7 @@ SOV_the_second_civil_war_fn = {
 		available = {
 			has_country_flag = control_caucasus
 			has_civil_war = no
-			command_power > 50
+			command_power > 30
 		}
 
 		visible = {
@@ -5850,7 +5876,7 @@ SOV_the_second_civil_war_fn = {
 		complete_effect = {
 			custom_effect_tooltip = train_caucasian_soldiers
 			hidden_effect = {
-				add_command_power = -50
+				add_command_power = -30
 				set_country_flag = train_caucasian_soldiers_civil_war
 			}
 		}
@@ -5897,7 +5923,7 @@ SOV_the_second_civil_war_fn = {
 
 		complete_effect = {
 			custom_effect_tooltip = SOV_train_mountaineers_tt
-			custom_effect_tooltip = if_we_own_caucasus_they_will_spanw_here
+			custom_effect_tooltip = if_we_own_caucasus_they_will_spawn_here
 			hidden_effect = {
 				add_command_power = -25
 				set_country_flag = has_trained_mountaineers_for_civil_war
@@ -5962,7 +5988,7 @@ SOV_the_second_civil_war_fn = {
 
 		available = {
 			has_civil_war = no
-			command_power > 40
+			command_power > 30
 		}
 
 		visible = {
@@ -6006,7 +6032,7 @@ SOV_the_second_civil_war_fn = {
 		complete_effect = {
 			custom_effect_tooltip = SOV_train_elite_unit_tt
 			hidden_effect = {
-				add_command_power = -40
+				add_command_power = -30
 				set_country_flag = train_elite_soldiers_civil_war
 			}
 		}
@@ -6022,7 +6048,7 @@ SOV_the_second_civil_war_fn = {
 
 		available = {
 			has_civil_war = no
-			command_power > 40
+			command_power > 30
 		}
 
 		visible = {
@@ -6054,7 +6080,7 @@ SOV_the_second_civil_war_fn = {
 		complete_effect = {
 			custom_effect_tooltip = SOV_train_panzer_unit_tt
 			hidden_effect = {
-				add_command_power = -40
+				add_command_power = -30
 				set_country_flag = has_purchased_panzers_for_civil_war
 			}
 		}
@@ -6070,7 +6096,7 @@ SOV_the_second_civil_war_fn = {
 
 		available = {
 			has_civil_war = no
-			command_power > 40
+			command_power > 30
 		}
 
 		visible = {
@@ -6102,7 +6128,7 @@ SOV_the_second_civil_war_fn = {
 		complete_effect = {
 			custom_effect_tooltip = SOV_recruit_japanese_unit_tt
 			hidden_effect = {
-				add_command_power = -40
+				add_command_power = -30
 				set_country_flag = has_recruited_japanese_elite_for_civil_war
 			}
 		}
@@ -9143,11 +9169,11 @@ SOV_unite_slavic_nation_ultimatum_decision = {
 					is_owned_by = FROM
 				}
 				NOT = {
-					TAG = POL
-					TAG = CZE
-					TAG = YUG
-					TAG = BUL
-					TAG = SLO
+					tag = POL
+					tag = CZE
+					tag = YUG
+					tag = BUL
+					tag = SLO
 					is_subject_of = SOV
 					has_capitulated = yes
 				}
@@ -9162,11 +9188,11 @@ SOV_unite_slavic_nation_ultimatum_decision = {
 					is_owned_by = FROM
 				}
 				NOT = {
-					TAG = POL
-					TAG = CZE
-					TAG = YUG
-					TAG = BUL
-					TAG = SLO
+					tag = POL
+					tag = CZE
+					tag = YUG
+					tag = BUL
+					tag = SLO
 					is_subject_of = SOV
 				}
 			}
@@ -9322,14 +9348,14 @@ SOV_unite_slavic_nation_ultimatum_decision = {
 				}
 				any_country = {
 					OR = {
-						TAG = SLV
-						TAG = CRO
-						TAG = BOS
-						TAG = HRZ
-						TAG = MNT
-						TAG = KOS
-						TAG = MAC
-						TAG = TRA
+						tag = SLV
+						tag = CRO
+						tag = BOS
+						tag = HRZ
+						tag = MNT
+						tag = KOS
+						tag = MAC
+						tag = TRA
 					}
 					is_subject_of = YUG
 					has_capitulated = no
@@ -9387,14 +9413,14 @@ SOV_unite_slavic_nation_ultimatum_decision = {
 			}
 			any_country = {
 				OR = {
-					TAG = SLV
-					TAG = CRO
-					TAG = BOS
-					TAG = HRZ
-					TAG = MNT
-					TAG = KOS
-					TAG = MAC
-					TAG = TRA
+					tag = SLV
+					tag = CRO
+					tag = BOS
+					tag = HRZ
+					tag = MNT
+					tag = KOS
+					tag = MAC
+					tag = TRA
 				}
 				is_subject_of = YUG
 				has_capitulated = no
@@ -9493,11 +9519,11 @@ SOV_unite_slavic_nation_ultimatum_decision = {
 					is_owned_by = FROM
 				}
 				NOT = {
-					TAG = POL
-					TAG = CZE
-					TAG = YUG
-					TAG = BUL
-					TAG = SLO
+					tag = POL
+					tag = CZE
+					tag = YUG
+					tag = BUL
+					tag = SLO
 					is_subject_of = SOV
 					has_capitulated = yes
 				}
@@ -9512,14 +9538,14 @@ SOV_unite_slavic_nation_ultimatum_decision = {
 						}
 					}
 					NOT = {
-						TAG = SLV
-						TAG = CRO
-						TAG = BOS
-						TAG = HRZ
-						TAG = MNT
-						TAG = KOS
-						TAG = MAC
-						TAG = TRA
+						tag = SLV
+						tag = CRO
+						tag = BOS
+						tag = HRZ
+						tag = MNT
+						tag = KOS
+						tag = MAC
+						tag = TRA
 					}
 				}
 			}
@@ -9534,11 +9560,11 @@ SOV_unite_slavic_nation_ultimatum_decision = {
 					is_owned_by = FROM
 				}
 				NOT = {
-					TAG = POL
-					TAG = CZE
-					TAG = YUG
-					TAG = BUL
-					TAG = SLO
+					tag = POL
+					tag = CZE
+					tag = YUG
+					tag = BUL
+					tag = SLO
 					is_subject_of = SOV
 				}
 				if = {
@@ -9552,14 +9578,14 @@ SOV_unite_slavic_nation_ultimatum_decision = {
 						}
 					}
 					NOT = {
-						TAG = SLV
-						TAG = CRO
-						TAG = BOS
-						TAG = HRZ
-						TAG = MNT
-						TAG = KOS
-						TAG = MAC
-						TAG = TRA
+						tag = SLV
+						tag = CRO
+						tag = BOS
+						tag = HRZ
+						tag = MNT
+						tag = KOS
+						tag = MAC
+						tag = TRA
 					}
 				}
 			}
@@ -9800,10 +9826,10 @@ SOV_unite_slavic_nation_ultimatum_decision = {
 					is_owned_by = FROM
 				}
 				NOT = {
-					TAG = POL
-					TAG = CZE
-					TAG = YUG
-					TAG = BUL
+					tag = POL
+					tag = CZE
+					tag = YUG
+					tag = BUL
 					is_subject_of = SOV
 					has_capitulated = yes
 				}
@@ -9819,11 +9845,11 @@ SOV_unite_slavic_nation_ultimatum_decision = {
 					is_owned_by = FROM
 				}
 				NOT = {
-					TAG = POL
-					TAG = CZE
-					TAG = YUG
-					TAG = BUL
-					TAG = SLO
+					tag = POL
+					tag = CZE
+					tag = YUG
+					tag = BUL
+					tag = SLO
 					is_subject_of = SOV
 				}
 			}
@@ -10090,12 +10116,12 @@ SOV_unite_slavic_nation_ultimatum_decision = {
 					is_owned_by = FROM
 				}
 				NOT = {
-					TAG = POL
-					TAG = CZE
-					TAG = YUG
-					TAG = BUL
-					TAG = SLO
-					TAG = GER
+					tag = POL
+					tag = CZE
+					tag = YUG
+					tag = BUL
+					tag = SLO
+					tag = GER
 					is_subject_of = SOV
 				}
 			}
@@ -10116,11 +10142,11 @@ SOV_unite_slavic_nation_ultimatum_decision = {
 					is_owned_by = FROM
 				}
 				NOT = {
-					TAG = POL
-					TAG = CZE
-					TAG = YUG
-					TAG = BUL
-					TAG = SLO
+					tag = POL
+					tag = CZE
+					tag = YUG
+					tag = BUL
+					tag = SLO
 					is_subject_of = SOV
 				}
 			}
@@ -15791,7 +15817,7 @@ SOV_second_civil_war_during_bonus = {
 					infantry_equipment < 10000
 				}
 			}
-			command_power > 25
+			command_power > 15
 		}
 
 		cost = 50
@@ -15804,7 +15830,7 @@ SOV_second_civil_war_during_bonus = {
 
 		complete_effect = {
 			hidden_effect = {
-				add_command_power = -25
+				add_command_power = -15
 			}
 			add_equipment_to_stockpile = {
 				type = infantry_equipment_1
@@ -15822,7 +15848,7 @@ SOV_second_civil_war_during_bonus = {
 		}
 
 		available = {
-			command_power > 50
+			command_power > 25
 		}
 
 		cost = 30
@@ -15835,7 +15861,7 @@ SOV_second_civil_war_during_bonus = {
 
 		complete_effect = {
 			hidden_effect = {
-				add_command_power = -50
+				add_command_power = -25
 			}
 			add_timed_idea = {
 				idea = SOV_For_the_motherland_civil_war
@@ -20064,17 +20090,17 @@ SOV_custom_formable_nations_endgame = {
 				exists = yes
 				is_subject_of = SOV
 				NOT = {
-					TAG = NAF
-					TAG = CAF
-					TAG = SAR
-					TAG = CAI
-					TAG = MEF
-					TAG = AFF
-					TAG = SFR
-					TAG = SEA
-					TAG = EAR
-					TAG = EUR
-					TAG = OCE
+					tag = NAF
+					tag = CAF
+					tag = SAR
+					tag = CAI
+					tag = MEF
+					tag = AFF
+					tag = SFR
+					tag = SEA
+					tag = EAR
+					tag = EUR
+					tag = OCE
 				}
 				any_state = {
 					has_state_flag = north_america_fascist_nation_puppet
@@ -20092,17 +20118,17 @@ SOV_custom_formable_nations_endgame = {
 				exists = yes
 				is_subject_of = SOV
 				NOT = {
-					TAG = NAF
-					TAG = CAF
-					TAG = SAR
-					TAG = CAI
-					TAG = MEF
-					TAG = AFF
-					TAG = SFR
-					TAG = SEA
-					TAG = EAR
-					TAG = EUR
-					TAG = OCE
+					tag = NAF
+					tag = CAF
+					tag = SAR
+					tag = CAI
+					tag = MEF
+					tag = AFF
+					tag = SFR
+					tag = SEA
+					tag = EAR
+					tag = EUR
+					tag = OCE
 				}
 				any_state = {
 					has_state_flag = north_america_fascist_nation_puppet
@@ -20146,17 +20172,17 @@ SOV_custom_formable_nations_endgame = {
 				exists = yes
 				is_subject_of = SOV
 				NOT = {
-					TAG = NAF
-					TAG = CAF
-					TAG = SAR
-					TAG = CAI
-					TAG = MEF
-					TAG = AFF
-					TAG = SFR
-					TAG = SEA
-					TAG = EAR
-					TAG = EUR
-					TAG = OCE
+					tag = NAF
+					tag = CAF
+					tag = SAR
+					tag = CAI
+					tag = MEF
+					tag = AFF
+					tag = SFR
+					tag = SEA
+					tag = EAR
+					tag = EUR
+					tag = OCE
 				}
 				any_state = {
 					has_state_flag = central_america_fascist_nation_puppet
@@ -20174,17 +20200,17 @@ SOV_custom_formable_nations_endgame = {
 				exists = yes
 				is_subject_of = SOV
 				NOT = {
-					TAG = NAF
-					TAG = CAF
-					TAG = SAR
-					TAG = CAI
-					TAG = MEF
-					TAG = AFF
-					TAG = SFR
-					TAG = SEA
-					TAG = EAR
-					TAG = EUR
-					TAG = OCE
+					tag = NAF
+					tag = CAF
+					tag = SAR
+					tag = CAI
+					tag = MEF
+					tag = AFF
+					tag = SFR
+					tag = SEA
+					tag = EAR
+					tag = EUR
+					tag = OCE
 				}
 				any_state = {
 					has_state_flag = central_america_fascist_nation_puppet
@@ -20228,17 +20254,17 @@ SOV_custom_formable_nations_endgame = {
 				exists = yes
 				is_subject_of = SOV
 				NOT = {
-					TAG = NAF
-					TAG = CAF
-					TAG = SAR
-					TAG = CAI
-					TAG = MEF
-					TAG = AFF
-					TAG = SFR
-					TAG = SEA
-					TAG = EAR
-					TAG = EUR
-					TAG = OCE
+					tag = NAF
+					tag = CAF
+					tag = SAR
+					tag = CAI
+					tag = MEF
+					tag = AFF
+					tag = SFR
+					tag = SEA
+					tag = EAR
+					tag = EUR
+					tag = OCE
 				}
 				any_state = {
 					has_state_flag = south_america_fascist_nation_puppet
@@ -20256,17 +20282,17 @@ SOV_custom_formable_nations_endgame = {
 				exists = yes
 				is_subject_of = SOV
 				NOT = {
-					TAG = NAF
-					TAG = CAF
-					TAG = SAR
-					TAG = CAI
-					TAG = MEF
-					TAG = AFF
-					TAG = SFR
-					TAG = SEA
-					TAG = EAR
-					TAG = EUR
-					TAG = OCE
+					tag = NAF
+					tag = CAF
+					tag = SAR
+					tag = CAI
+					tag = MEF
+					tag = AFF
+					tag = SFR
+					tag = SEA
+					tag = EAR
+					tag = EUR
+					tag = OCE
 				}
 				any_state = {
 					has_state_flag = south_america_fascist_nation_puppet
@@ -20310,17 +20336,17 @@ SOV_custom_formable_nations_endgame = {
 				exists = yes
 				is_subject_of = SOV
 				NOT = {
-					TAG = NAF
-					TAG = CAF
-					TAG = SAR
-					TAG = CAI
-					TAG = MEF
-					TAG = AFF
-					TAG = SFR
-					TAG = SEA
-					TAG = EAR
-					TAG = EUR
-					TAG = OCE
+					tag = NAF
+					tag = CAF
+					tag = SAR
+					tag = CAI
+					tag = MEF
+					tag = AFF
+					tag = SFR
+					tag = SEA
+					tag = EAR
+					tag = EUR
+					tag = OCE
 				}
 				any_state = {
 					has_state_flag = caraibe_america_fascist_nation_puppet
@@ -20338,17 +20364,17 @@ SOV_custom_formable_nations_endgame = {
 				exists = yes
 				is_subject_of = SOV
 				NOT = {
-					TAG = NAF
-					TAG = CAF
-					TAG = SAR
-					TAG = CAI
-					TAG = MEF
-					TAG = AFF
-					TAG = SFR
-					TAG = SEA
-					TAG = EAR
-					TAG = EUR
-					TAG = OCE
+					tag = NAF
+					tag = CAF
+					tag = SAR
+					tag = CAI
+					tag = MEF
+					tag = AFF
+					tag = SFR
+					tag = SEA
+					tag = EAR
+					tag = EUR
+					tag = OCE
 				}
 				any_state = {
 					has_state_flag = caraibe_america_fascist_nation_puppet
@@ -20392,17 +20418,17 @@ SOV_custom_formable_nations_endgame = {
 				exists = yes
 				is_subject_of = SOV
 				NOT = {
-					TAG = NAF
-					TAG = CAF
-					TAG = SAR
-					TAG = CAI
-					TAG = MEF
-					TAG = AFF
-					TAG = SFR
-					TAG = SEA
-					TAG = EAR
-					TAG = EUR
-					TAG = OCE
+					tag = NAF
+					tag = CAF
+					tag = SAR
+					tag = CAI
+					tag = MEF
+					tag = AFF
+					tag = SFR
+					tag = SEA
+					tag = EAR
+					tag = EUR
+					tag = OCE
 				}
 				any_state = {
 					has_state_flag = middle_east_fascist_nation_puppet
@@ -20420,17 +20446,17 @@ SOV_custom_formable_nations_endgame = {
 				exists = yes
 				is_subject_of = SOV
 				NOT = {
-					TAG = NAF
-					TAG = CAF
-					TAG = SAR
-					TAG = CAI
-					TAG = MEF
-					TAG = AFF
-					TAG = SFR
-					TAG = SEA
-					TAG = EAR
-					TAG = EUR
-					TAG = OCE
+					tag = NAF
+					tag = CAF
+					tag = SAR
+					tag = CAI
+					tag = MEF
+					tag = AFF
+					tag = SFR
+					tag = SEA
+					tag = EAR
+					tag = EUR
+					tag = OCE
 				}
 				any_state = {
 					has_state_flag = middle_east_fascist_nation_puppet
@@ -20474,17 +20500,17 @@ SOV_custom_formable_nations_endgame = {
 				exists = yes
 				is_subject_of = SOV
 				NOT = {
-					TAG = NAF
-					TAG = CAF
-					TAG = SAR
-					TAG = CAI
-					TAG = MEF
-					TAG = AFF
-					TAG = SFR
-					TAG = SEA
-					TAG = EAR
-					TAG = EUR
-					TAG = OCE
+					tag = NAF
+					tag = CAF
+					tag = SAR
+					tag = CAI
+					tag = MEF
+					tag = AFF
+					tag = SFR
+					tag = SEA
+					tag = EAR
+					tag = EUR
+					tag = OCE
 				}
 				any_state = {
 					has_state_flag = africa_fascist_nation_puppet
@@ -20502,17 +20528,17 @@ SOV_custom_formable_nations_endgame = {
 				exists = yes
 				is_subject_of = SOV
 				NOT = {
-					TAG = NAF
-					TAG = CAF
-					TAG = SAR
-					TAG = CAI
-					TAG = MEF
-					TAG = AFF
-					TAG = SFR
-					TAG = SEA
-					TAG = EAR
-					TAG = EUR
-					TAG = OCE
+					tag = NAF
+					tag = CAF
+					tag = SAR
+					tag = CAI
+					tag = MEF
+					tag = AFF
+					tag = SFR
+					tag = SEA
+					tag = EAR
+					tag = EUR
+					tag = OCE
 				}
 				any_state = {
 					has_state_flag = africa_fascist_nation_puppet
@@ -20556,17 +20582,17 @@ SOV_custom_formable_nations_endgame = {
 				exists = yes
 				is_subject_of = SOV
 				NOT = {
-					TAG = NAF
-					TAG = CAF
-					TAG = SAR
-					TAG = CAI
-					TAG = MEF
-					TAG = AFF
-					TAG = SFR
-					TAG = SEA
-					TAG = EAR
-					TAG = EUR
-					TAG = OCE
+					tag = NAF
+					tag = CAF
+					tag = SAR
+					tag = CAI
+					tag = MEF
+					tag = AFF
+					tag = SFR
+					tag = SEA
+					tag = EAR
+					tag = EUR
+					tag = OCE
 				}
 				any_state = {
 					has_state_flag = south_asia_fascist_nation_puppet
@@ -20584,17 +20610,17 @@ SOV_custom_formable_nations_endgame = {
 				exists = yes
 				is_subject_of = SOV
 				NOT = {
-					TAG = NAF
-					TAG = CAF
-					TAG = SAR
-					TAG = CAI
-					TAG = MEF
-					TAG = AFF
-					TAG = SFR
-					TAG = SEA
-					TAG = EAR
-					TAG = EUR
-					TAG = OCE
+					tag = NAF
+					tag = CAF
+					tag = SAR
+					tag = CAI
+					tag = MEF
+					tag = AFF
+					tag = SFR
+					tag = SEA
+					tag = EAR
+					tag = EUR
+					tag = OCE
 				}
 				any_state = {
 					has_state_flag = south_asia_fascist_nation_puppet
@@ -20638,17 +20664,17 @@ SOV_custom_formable_nations_endgame = {
 				exists = yes
 				is_subject_of = SOV
 				NOT = {
-					TAG = NAF
-					TAG = CAF
-					TAG = SAR
-					TAG = CAI
-					TAG = MEF
-					TAG = AFF
-					TAG = SFR
-					TAG = SEA
-					TAG = EAR
-					TAG = EUR
-					TAG = OCE
+					tag = NAF
+					tag = CAF
+					tag = SAR
+					tag = CAI
+					tag = MEF
+					tag = AFF
+					tag = SFR
+					tag = SEA
+					tag = EAR
+					tag = EUR
+					tag = OCE
 				}
 				any_state = {
 					has_state_flag = south_east_asia_fascist_nation_puppet
@@ -20666,17 +20692,17 @@ SOV_custom_formable_nations_endgame = {
 				exists = yes
 				is_subject_of = SOV
 				NOT = {
-					TAG = NAF
-					TAG = CAF
-					TAG = SAR
-					TAG = CAI
-					TAG = MEF
-					TAG = AFF
-					TAG = SFR
-					TAG = SEA
-					TAG = EAR
-					TAG = EUR
-					TAG = OCE
+					tag = NAF
+					tag = CAF
+					tag = SAR
+					tag = CAI
+					tag = MEF
+					tag = AFF
+					tag = SFR
+					tag = SEA
+					tag = EAR
+					tag = EUR
+					tag = OCE
 				}
 				any_state = {
 					has_state_flag = south_east_asia_fascist_nation_puppet
@@ -20720,17 +20746,17 @@ SOV_custom_formable_nations_endgame = {
 				exists = yes
 				is_subject_of = SOV
 				NOT = {
-					TAG = NAF
-					TAG = CAF
-					TAG = SAR
-					TAG = CAI
-					TAG = MEF
-					TAG = AFF
-					TAG = SFR
-					TAG = SEA
-					TAG = EAR
-					TAG = EUR
-					TAG = OCE
+					tag = NAF
+					tag = CAF
+					tag = SAR
+					tag = CAI
+					tag = MEF
+					tag = AFF
+					tag = SFR
+					tag = SEA
+					tag = EAR
+					tag = EUR
+					tag = OCE
 				}
 				any_state = {
 					has_state_flag = east_asia_fascist_nation_puppet
@@ -20748,17 +20774,17 @@ SOV_custom_formable_nations_endgame = {
 				exists = yes
 				is_subject_of = SOV
 				NOT = {
-					TAG = NAF
-					TAG = CAF
-					TAG = SAR
-					TAG = CAI
-					TAG = MEF
-					TAG = AFF
-					TAG = SFR
-					TAG = SEA
-					TAG = EAR
-					TAG = EUR
-					TAG = OCE
+					tag = NAF
+					tag = CAF
+					tag = SAR
+					tag = CAI
+					tag = MEF
+					tag = AFF
+					tag = SFR
+					tag = SEA
+					tag = EAR
+					tag = EUR
+					tag = OCE
 				}
 				any_state = {
 					has_state_flag = east_asia_fascist_nation_puppet
@@ -20802,17 +20828,17 @@ SOV_custom_formable_nations_endgame = {
 				exists = yes
 				is_subject_of = SOV
 				NOT = {
-					TAG = NAF
-					TAG = CAF
-					TAG = SAR
-					TAG = CAI
-					TAG = MEF
-					TAG = AFF
-					TAG = SFR
-					TAG = SEA
-					TAG = EAR
-					TAG = EUR
-					TAG = OCE
+					tag = NAF
+					tag = CAF
+					tag = SAR
+					tag = CAI
+					tag = MEF
+					tag = AFF
+					tag = SFR
+					tag = SEA
+					tag = EAR
+					tag = EUR
+					tag = OCE
 				}
 				any_state = {
 					has_state_flag = oceania_fascist_nation_puppet
@@ -20830,17 +20856,17 @@ SOV_custom_formable_nations_endgame = {
 				exists = yes
 				is_subject_of = SOV
 				NOT = {
-					TAG = NAF
-					TAG = CAF
-					TAG = SAR
-					TAG = CAI
-					TAG = MEF
-					TAG = AFF
-					TAG = SFR
-					TAG = SEA
-					TAG = EAR
-					TAG = EUR
-					TAG = OCE
+					tag = NAF
+					tag = CAF
+					tag = SAR
+					tag = CAI
+					tag = MEF
+					tag = AFF
+					tag = SFR
+					tag = SEA
+					tag = EAR
+					tag = EUR
+					tag = OCE
 				}
 				any_state = {
 					has_state_flag = oceania_fascist_nation_puppet
@@ -20884,17 +20910,17 @@ SOV_custom_formable_nations_endgame = {
 				exists = yes
 				is_subject_of = SOV
 				NOT = {
-					TAG = NAF
-					TAG = CAF
-					TAG = SAR
-					TAG = CAI
-					TAG = MEF
-					TAG = AFF
-					TAG = SFR
-					TAG = SEA
-					TAG = EAR
-					TAG = EUR
-					TAG = OCE
+					tag = NAF
+					tag = CAF
+					tag = SAR
+					tag = CAI
+					tag = MEF
+					tag = AFF
+					tag = SFR
+					tag = SEA
+					tag = EAR
+					tag = EUR
+					tag = OCE
 				}
 				any_state = {
 					has_state_flag = europe_fascist_nation_puppet
@@ -20912,17 +20938,17 @@ SOV_custom_formable_nations_endgame = {
 				exists = yes
 				is_subject_of = SOV
 				NOT = {
-					TAG = NAF
-					TAG = CAF
-					TAG = SAR
-					TAG = CAI
-					TAG = MEF
-					TAG = AFF
-					TAG = SFR
-					TAG = SEA
-					TAG = EAR
-					TAG = EUR
-					TAG = OCE
+					tag = NAF
+					tag = CAF
+					tag = SAR
+					tag = CAI
+					tag = MEF
+					tag = AFF
+					tag = SFR
+					tag = SEA
+					tag = EAR
+					tag = EUR
+					tag = OCE
 				}
 				any_state = {
 					has_state_flag = europe_fascist_nation_puppet
@@ -24697,7 +24723,7 @@ SOV_balkanize_germany = {
 					is_core_of = BAY
 					any_country = {
 						OR = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 						}
 						owns_state = PREV
@@ -24795,7 +24821,7 @@ SOV_balkanize_germany = {
 					is_core_of = WUR
 					any_country = {
 						OR = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 						}
 						owns_state = PREV
@@ -24913,7 +24939,7 @@ SOV_balkanize_germany = {
 					is_core_of = HAN
 					any_country = {
 						OR = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 						}
 						owns_state = PREV
@@ -25011,7 +25037,7 @@ SOV_balkanize_germany = {
 					is_core_of = SHL
 					any_country = {
 						OR = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 						}
 						owns_state = PREV
@@ -25109,7 +25135,7 @@ SOV_balkanize_germany = {
 					is_core_of = MEK
 					any_country = {
 						OR = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 						}
 						owns_state = PREV
@@ -25207,7 +25233,7 @@ SOV_balkanize_germany = {
 					is_core_of = SAX
 					any_country = {
 						OR = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 						}
 						owns_state = PREV
@@ -25315,7 +25341,7 @@ SOV_balkanize_germany = {
 					is_core_of = BRN
 					any_country = {
 						OR = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 						}
 						owns_state = PREV
@@ -25423,7 +25449,7 @@ SOV_balkanize_germany = {
 					is_core_of = POM
 					any_country = {
 						OR = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 						}
 						owns_state = PREV
@@ -25531,7 +25557,7 @@ SOV_balkanize_germany = {
 					is_core_of = TEU
 					any_country = {
 						OR = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 						}
 						owns_state = PREV
@@ -25639,7 +25665,7 @@ SOV_balkanize_germany = {
 					is_core_of = SIL
 					any_country = {
 						OR = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 						}
 						owns_state = PREV
@@ -25737,7 +25763,7 @@ SOV_balkanize_germany = {
 					is_core_of = THU
 					any_country = {
 						OR = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 						}
 						owns_state = PREV
@@ -25835,7 +25861,7 @@ SOV_balkanize_germany = {
 					is_core_of = HES
 					any_country = {
 						OR = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 						}
 						owns_state = PREV
@@ -25933,7 +25959,7 @@ SOV_balkanize_germany = {
 					is_core_of = TRE
 					any_country = {
 						OR = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 						}
 						owns_state = PREV
@@ -26031,7 +26057,7 @@ SOV_balkanize_germany = {
 					is_core_of = CLG
 					any_country = {
 						OR = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 						}
 						owns_state = PREV
@@ -26241,7 +26267,7 @@ SOV_balkanize_japan = {
 					is_core_of = SHI
 					any_country = {
 						OR = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 						}
 						owns_state = PREV
@@ -26339,7 +26365,7 @@ SOV_balkanize_japan = {
 					is_core_of = HOS
 					any_country = {
 						OR = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 						}
 						owns_state = PREV
@@ -26437,7 +26463,7 @@ SOV_balkanize_japan = {
 					is_core_of = MOI
 					any_country = {
 						OR = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 						}
 						owns_state = PREV
@@ -26545,7 +26571,7 @@ SOV_balkanize_japan = {
 					is_core_of = ODA
 					any_country = {
 						OR = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 						}
 						owns_state = PREV
@@ -26643,7 +26669,7 @@ SOV_balkanize_japan = {
 					is_core_of = TOK
 					any_country = {
 						OR = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 						}
 						owns_state = PREV
@@ -26741,7 +26767,7 @@ SOV_balkanize_japan = {
 					is_core_of = MDE
 					any_country = {
 						OR = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 						}
 						owns_state = PREV
@@ -26839,7 +26865,7 @@ SOV_balkanize_japan = {
 					is_core_of = UES
 					any_country = {
 						OR = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 						}
 						owns_state = PREV
@@ -26937,7 +26963,7 @@ SOV_balkanize_japan = {
 					is_core_of = SHB
 					any_country = {
 						OR = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 						}
 						owns_state = PREV
@@ -27036,7 +27062,7 @@ SOV_balkanize_japan = {
 					is_core_of = AIN
 					any_country = {
 						OR = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 						}
 						owns_state = PREV
@@ -27135,7 +27161,7 @@ SOV_balkanize_japan = {
 					is_core_of = RYU
 					any_country = {
 						OR = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 						}
 						owns_state = PREV
@@ -30559,7 +30585,7 @@ SOV_the_black_revolution = {
 		icon = GFX_decision_generic_ignite_civil_war
 
 		allowed = {
-			TAG = SOV
+			tag = SOV
 		}
 
 		activation = {
@@ -34815,11 +34841,11 @@ SOV_diplomatic_plays_decisions_democratic = {
 					limit = {
 						exists = yes
 						OR = {
-							TAG = KAZ
-							TAG = KYR
-							TAG = TMS
-							TAG = UZB
-							TAG = TAJ
+							tag = KAZ
+							tag = KYR
+							tag = TMS
+							tag = UZB
+							tag = TAJ
 						}
 					}
 					KAZ = {
@@ -35713,13 +35739,13 @@ SOV_middle_east_conquest = {
 								is_subject = yes
 							}
 							OR = {
-								TAG = TUR
-								TAG = PER
-								TAG = AFG
-								TAG = IRQ
-								TAG = SAU
-								TAG = YEM
-								TAG = OMA
+								tag = TUR
+								tag = PER
+								tag = AFG
+								tag = IRQ
+								tag = SAU
+								tag = YEM
+								tag = OMA
 							}
 						}
 						event_target:leader_of_middle_east_coalition = {
@@ -36023,13 +36049,13 @@ SOV_middle_east_conquest = {
 		target_trigger = {
 			FROM = {
 				NOT = {
-					TAG = TUR
-					TAG = PER
-					TAG = AFG
-					TAG = IRQ
-					TAG = SAU
-					TAG = YEM
-					TAG = OMA
+					tag = TUR
+					tag = PER
+					tag = AFG
+					tag = IRQ
+					tag = SAU
+					tag = YEM
+					tag = OMA
 
 				}
 				OR = {
@@ -36635,7 +36661,7 @@ SOV_reshape_middle_east_democratic = {
 					is_core_of = BRP
 					any_country = {
 						OR = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 						}
 						owns_state = PREV
@@ -36872,7 +36898,7 @@ SOV_reshape_middle_east_democratic = {
 					is_core_of = MED
 					any_country = {
 						OR = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 						}
 						owns_state = PREV
@@ -37083,7 +37109,7 @@ SOV_reshape_middle_east_democratic = {
 					is_core_of = BAB
 					any_country = {
 						OR = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 						}
 						owns_state = PREV
@@ -37264,7 +37290,7 @@ SOV_reshape_middle_east_democratic = {
 					is_core_of = ASY
 					any_country = {
 						OR = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 						}
 						owns_state = PREV
@@ -37503,7 +37529,7 @@ SOV_reshape_middle_east_democratic = {
 					is_core_of = HIT
 					any_country = {
 						OR = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 						}
 						owns_state = PREV
@@ -37694,7 +37720,7 @@ SOV_reshape_middle_east_democratic = {
 					is_core_of = CAA
 					any_country = {
 						OR = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 						}
 						owns_state = PREV
@@ -37999,7 +38025,7 @@ SOV_reshape_middle_east_democratic = {
 					is_core_of = MES
 					any_country = {
 						OR = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 						}
 						owns_state = PREV
@@ -38418,7 +38444,7 @@ SOV_reshape_middle_east_democratic = {
 					is_core_of = ANT
 					any_country = {
 						OR = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 						}
 						owns_state = PREV
@@ -38615,7 +38641,7 @@ SOV_reshape_middle_east_democratic = {
 					}
 					any_country = {
 						OR = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 						}
 						owns_state = PREV
@@ -38854,7 +38880,7 @@ SOV_reshape_middle_east_democratic = {
 					}
 					any_country = {
 						OR = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 						}
 						owns_state = PREV
@@ -39014,7 +39040,7 @@ SOV_reshape_middle_east_democratic = {
 					is_core_of = FSZ
 					any_country = {
 						OR = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 						}
 						owns_state = PREV
@@ -39202,7 +39228,7 @@ SOV_reshape_middle_east_democratic = {
 					}
 					any_country = {
 						OR = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 						}
 						owns_state = PREV
@@ -39503,7 +39529,7 @@ SOV_reshape_middle_east_democratic = {
 					}
 					any_country = {
 						OR = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 						}
 						owns_state = PREV
@@ -39998,7 +40024,7 @@ SOV_reshape_middle_east_democratic = {
 					}
 					any_country = {
 						OR = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 						}
 						owns_state = PREV
@@ -40192,7 +40218,7 @@ SOV_reshape_middle_east_democratic = {
 					}
 					any_country = {
 						OR = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 						}
 						owns_state = PREV
@@ -40436,7 +40462,7 @@ SOV_reshape_middle_east_democratic = {
 					}
 					any_country = {
 						OR = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 						}
 						owns_state = PREV
@@ -40559,7 +40585,7 @@ SOV_reshape_middle_east_democratic = {
 					is_core_of = HEJ
 					any_country = {
 						OR = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 						}
 						owns_state = PREV
@@ -40703,7 +40729,7 @@ SOV_reshape_middle_east_democratic = {
 					is_core_of = NEJ
 					any_country = {
 						OR = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 						}
 						owns_state = PREV
@@ -40881,7 +40907,7 @@ SOV_reshape_middle_east_democratic = {
 					is_core_of = ASR
 					any_country = {
 						OR = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 						}
 						owns_state = PREV
@@ -41047,7 +41073,7 @@ SOV_management_suez_canal = {
 				every_country = {
 					limit = {
 						NOT = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 							is_in_faction_with = SOV
 						}
@@ -41107,7 +41133,7 @@ SOV_management_suez_canal = {
 				every_country = {
 					limit = {
 						NOT = {
-							TAG = SOV
+							tag = SOV
 							is_subject_of = SOV
 							is_in_faction_with = SOV
 						}
@@ -41359,6 +41385,90 @@ SOV_develop_france_united_russia = {
 					add_extra_state_shared_building_slots = 1
 					add_building_construction = {
 						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+				}
+			}
+			add_to_variable = {
+				var = france_puppetization_united_russia
+				value = 15
+			}
+		}
+
+		ai_will_do = {
+			factor = 50
+		}
+	}
+
+	SOV_develop_civilian_industries_france = {
+
+		icon = GFX_decision_generic_factory
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			FRA = {
+				is_subject_of = SOV
+			}
+		}
+
+		available = {
+			FRA = {
+				is_subject_of = SOV
+			}
+			NOT = {
+				has_country_flag = is_improving_france_united_russia
+			}
+		}
+
+		modifier = {
+			civilian_factory_use = 10
+		}
+
+		cost = 25
+
+		days_remove = 70
+
+		complete_effect = {
+			set_country_flag = is_improving_france_united_russia
+		}
+
+		remove_effect = {
+			custom_effect_tooltip = france_gains_15_united_russia
+			clr_country_flag = is_improving_france_united_russia
+			FRA = {
+				random_owned_controlled_state = {
+					limit = {
+						is_core_of = FRA
+					}
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						is_core_of = FRA
+					}
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						is_core_of = FRA
+					}
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
 						level = 1
 						instant_build = yes
 					}
@@ -41985,6 +42095,10 @@ SOV_rename_soviet_cities = {
 				}
 			}
 		}
+
+		ai_will_do = {
+			factor = 100
+		}
 	}
 
 	SOV_rename_leningrad = {
@@ -42114,6 +42228,10 @@ SOV_rename_soviet_cities = {
 				}
 			}
 		}
+
+		ai_will_do = {
+			factor = 500
+		}
 	}
 
 	SOV_rename_khmelnytskyi = {
@@ -42171,6 +42289,10 @@ SOV_rename_soviet_cities = {
 					}
 				}
 			}
+		}
+
+		ai_will_do = {
+			factor = 100
 		}
 	}
 
@@ -42230,6 +42352,10 @@ SOV_rename_soviet_cities = {
 				reset_province_name = 6124
 			}
 		}
+
+		ai_will_do = {
+			factor = 100
+		}
 	}
 
 	SOV_rename_voroshilovgrad = {
@@ -42287,6 +42413,10 @@ SOV_rename_soviet_cities = {
 					}
 				}
 			}
+		}
+
+		ai_will_do = {
+			factor = 100
 		}
 	}
 
@@ -42346,6 +42476,10 @@ SOV_rename_soviet_cities = {
 				}
 			}
 		}
+
+		ai_will_do = {
+			factor = 100
+		}
 	}
 
 	SOV_rename_gorki = {
@@ -42403,6 +42537,10 @@ SOV_rename_soviet_cities = {
 					}
 				}
 			}
+		}
+
+		ai_will_do = {
+			factor = 100
 		}
 	}
 
@@ -42462,6 +42600,10 @@ SOV_rename_soviet_cities = {
 				}
 			}
 		}
+
+		ai_will_do = {
+			factor = 100
+		}
 	}
 
 	SOV_rename_kalinin = {
@@ -42520,6 +42662,10 @@ SOV_rename_soviet_cities = {
 				}
 			}
 		}
+
+		ai_will_do = {
+			factor = 100
+		}
 	}
 
 	SOV_rename_ordzhonikidze = {
@@ -42574,6 +42720,10 @@ SOV_rename_soviet_cities = {
 					clr_global_flag = SOV_ordzhonikidze_renamed
 				}
 			}
+		}
+		
+		ai_will_do = {
+			factor = 100
 		}
 	}
 
@@ -42633,6 +42783,10 @@ SOV_rename_soviet_cities = {
 				}
 			}
 		}
+
+		ai_will_do = {
+			factor = 100
+		}
 	}
 
 	SOV_rename_alma_ata = {
@@ -42690,6 +42844,10 @@ SOV_rename_soviet_cities = {
 					}
 				}
 			}
+		}
+
+		ai_will_do = {
+			factor = 100
 		}
 	}
 
@@ -42749,6 +42907,10 @@ SOV_rename_soviet_cities = {
 				}
 			}
 		}
+
+		ai_will_do = {
+			factor = 100
+		}
 	}
 }
 
@@ -42785,6 +42947,10 @@ SOV_russianize_state = {
 				}
 			}
 		}
+
+		ai_will_do = {
+			factor = 100
+		}
 	}
 
 	SOV_rename_memel = {
@@ -42817,6 +42983,10 @@ SOV_russianize_state = {
 					set_state_name = "Klaipeda"
 				}
 			}
+		}
+		
+		ai_will_do = {
+			factor = 100
 		}
 	}
 
@@ -42851,6 +43021,10 @@ SOV_russianize_state = {
 				}
 			}
 		}
+
+		ai_will_do = {
+			factor = 100
+		}
 	}
 
 	SOV_rename_daugavpalis = {
@@ -42883,6 +43057,10 @@ SOV_russianize_state = {
 					set_state_name = "Dvinsk"
 				}
 			}
+		}
+
+		ai_will_do = {
+			factor = 100
 		}
 	}
 
@@ -42917,6 +43095,10 @@ SOV_russianize_state = {
 				}
 			}
 		}
+
+		ai_will_do = {
+			factor = 100
+		}
 	}
 
 	SOV_rename_wilno = {
@@ -42949,6 +43131,10 @@ SOV_russianize_state = {
 					set_state_name = "Vilna"
 				}
 			}
+		}
+
+		ai_will_do = {
+			factor = 100
 		}
 	}
 
@@ -42983,6 +43169,10 @@ SOV_russianize_state = {
 				}
 			}
 		}
+
+		ai_will_do = {
+			factor = 100
+		}
 	}
 
 	SOV_rename_bialstok = {
@@ -43016,6 +43206,10 @@ SOV_russianize_state = {
 				}
 			}
 		}
+
+		ai_will_do = {
+			factor = 100
+		}
 	}
 
 	SOV_rename_suwalki = {
@@ -43043,6 +43237,10 @@ SOV_russianize_state = {
 		complete_effect = {
 			set_global_flag = SOV_suwalki_renamed
 			set_province_name = { id = 3254 name = "Suvalkija" }
+		}
+
+		ai_will_do = {
+			factor = 100
 		}
 	}
 
@@ -43077,6 +43275,10 @@ SOV_russianize_state = {
 				}
 			}
 		}
+
+		ai_will_do = {
+			factor = 100
+		}
 	}
 
 	SOV_rename_brzesc_litewski = {
@@ -43109,6 +43311,10 @@ SOV_russianize_state = {
 					set_state_name = "Brest"
 				}
 			}
+		}
+
+		ai_will_do = {
+			factor = 100
 		}
 	}
 
@@ -43143,6 +43349,10 @@ SOV_russianize_state = {
 				}
 			}
 		}
+
+		ai_will_do = {
+			factor = 100
+		}
 	}
 
 	SOV_rename_lwow = {
@@ -43175,6 +43385,10 @@ SOV_russianize_state = {
 					set_state_name = "Lvov"
 				}
 			}
+		}
+
+		ai_will_do = {
+			factor = 100
 		}
 	}
 
@@ -43209,6 +43423,10 @@ SOV_russianize_state = {
 				}
 			}
 		}
+
+		ai_will_do = {
+			factor = 100
+		}
 	}
 
 	SOV_rename_chernivtsi = {
@@ -43241,6 +43459,10 @@ SOV_russianize_state = {
 					set_state_name = "Chernovtsi"
 				}
 			}
+		}
+
+		ai_will_do = {
+			factor = 100
 		}
 	}
 
@@ -43275,6 +43497,10 @@ SOV_russianize_state = {
 				}
 			}
 		}
+
+		ai_will_do = {
+			factor = 100
+		}
 	}
 
 	SOV_rename_cetatea_alba = {
@@ -43307,6 +43533,10 @@ SOV_russianize_state = {
 					set_state_name = "Bélgorod-Dnestróvskiy"
 				}
 			}
+		}
+
+		ai_will_do = {
+			factor = 100
 		}
 	}
 
@@ -43393,6 +43623,10 @@ SOV_russianize_state = {
 					}
 				}
 			}
+		}
+
+		ai_will_do = {
+			factor = 100
 		}
 	}
 }
@@ -48550,8 +48784,8 @@ SOV_reinstore_german_monarchy_decisions = {
 					is_core_of = GER
 				}
 				NOT = {
-					TAG = GER
-					TAG = SOV
+					tag = GER
+					tag = SOV
 					is_in_faction_with = SOV
 					is_subject_of = SOV
 				}
@@ -48565,8 +48799,8 @@ SOV_reinstore_german_monarchy_decisions = {
 					is_core_of = GER
 				}
 				NOT = {
-					TAG = GER
-					TAG = SOV
+					tag = GER
+					tag = SOV
 					is_in_faction_with = SOV
 					is_subject_of = SOV
 				}
@@ -48760,7 +48994,7 @@ SOV_reinstore_german_monarchy_decisions = {
 						is_core_of = PRE
 						any_country = {
 							OR = {
-								TAG = SOV
+								tag = SOV
 								is_subject_of = SOV
 							}
 							owns_state = PREV
@@ -49050,7 +49284,7 @@ SOV_reinstore_german_monarchy_decisions = {
 						is_core_of = BAY
 						any_country = {
 							OR = {
-								TAG = SOV
+								tag = SOV
 								is_subject_of = SOV
 							}
 							owns_state = PREV
@@ -49166,7 +49400,7 @@ SOV_reinstore_german_monarchy_decisions = {
 						is_core_of = WUR
 						any_country = {
 							OR = {
-								TAG = SOV
+								tag = SOV
 								is_subject_of = SOV
 							}
 							owns_state = PREV
@@ -49315,7 +49549,7 @@ SOV_reinstore_german_monarchy_decisions = {
 						is_core_of = HAN
 						any_country = {
 							OR = {
-								TAG = SOV
+								tag = SOV
 								is_subject_of = SOV
 							}
 							owns_state = PREV
@@ -49444,7 +49678,7 @@ SOV_reinstore_german_monarchy_decisions = {
 						is_core_of = RHI
 						any_country = {
 							OR = {
-								TAG = SOV
+								tag = SOV
 								is_subject_of = SOV
 							}
 							owns_state = PREV
@@ -49659,7 +49893,7 @@ SOV_reinstore_german_monarchy_decisions = {
 						is_core_of = CFR
 						any_country = {
 							OR = {
-								TAG = SOV
+								tag = SOV
 								is_subject_of = SOV
 							}
 							owns_state = PREV
@@ -51514,31 +51748,31 @@ SOV_reunification_war_anarchist_category_decisions = {
 		target_trigger = {
 			FROM = {
 				OR = {
-					TAG = EFR
-					TAG = SIB
-					TAG = URA
-					TAG = KAZ
-					TAG = TMS
-					TAG = UZB
-					TAG = TAJ
-					TAG = KYR
-					TAG = GEO
-					TAG = AZR
-					TAG = ARM
-					TAG = DAG
-					TAG = ROS
-					TAG = KAL
-					TAG = CIR
-					TAG = VLG
-					TAG = VYA
-					TAG = TAT
-					TAG = PRM
-					TAG = KMI
-					TAG = KAR
-					TAG = NOV
-					TAG = UKR
-					TAG = BLR
-					TAG = CRI
+					tag = EFR
+					tag = SIB
+					tag = URA
+					tag = KAZ
+					tag = TMS
+					tag = UZB
+					tag = TAJ
+					tag = KYR
+					tag = GEO
+					tag = AZR
+					tag = ARM
+					tag = DAG
+					tag = ROS
+					tag = KAL
+					tag = CIR
+					tag = VLG
+					tag = VYA
+					tag = TAT
+					tag = PRM
+					tag = KMI
+					tag = KAR
+					tag = NOV
+					tag = UKR
+					tag = BLR
+					tag = CRI
 				}
 			}
 		}
@@ -51648,31 +51882,31 @@ SOV_negotiation_disputants_category_decisions = {
 				has_government = anarchy
 				is_in_faction_with = SOV
 				OR = {
-					TAG = EFR
-					TAG = SIB
-					TAG = URA
-					TAG = KAZ
-					TAG = TMS
-					TAG = UZB
-					TAG = TAJ
-					TAG = KYR
-					TAG = GEO
-					TAG = AZR
-					TAG = ARM
-					TAG = DAG
-					TAG = ROS
-					TAG = KAL
-					TAG = CIR
-					TAG = VLG
-					TAG = VYA
-					TAG = TAT
-					TAG = PRM
-					TAG = KMI
-					TAG = KAR
-					TAG = NOV
-					TAG = UKR
-					TAG = BLR
-					TAG = CRI
+					tag = EFR
+					tag = SIB
+					tag = URA
+					tag = KAZ
+					tag = TMS
+					tag = UZB
+					tag = TAJ
+					tag = KYR
+					tag = GEO
+					tag = AZR
+					tag = ARM
+					tag = DAG
+					tag = ROS
+					tag = KAL
+					tag = CIR
+					tag = VLG
+					tag = VYA
+					tag = TAT
+					tag = PRM
+					tag = KMI
+					tag = KAR
+					tag = NOV
+					tag = UKR
+					tag = BLR
+					tag = CRI
 				}
 			}
 		}
@@ -51738,31 +51972,31 @@ SOV_negotiation_disputants_category_decisions = {
 				has_government = anarchy
 				is_in_faction_with = SOV
 				OR = {
-					TAG = EFR
-					TAG = SIB
-					TAG = URA
-					TAG = KAZ
-					TAG = TMS
-					TAG = UZB
-					TAG = TAJ
-					TAG = KYR
-					TAG = GEO
-					TAG = AZR
-					TAG = ARM
-					TAG = DAG
-					TAG = ROS
-					TAG = KAL
-					TAG = CIR
-					TAG = VLG
-					TAG = VYA
-					TAG = TAT
-					TAG = PRM
-					TAG = KMI
-					TAG = KAR
-					TAG = NOV
-					TAG = UKR
-					TAG = BLR
-					TAG = CRI
+					tag = EFR
+					tag = SIB
+					tag = URA
+					tag = KAZ
+					tag = TMS
+					tag = UZB
+					tag = TAJ
+					tag = KYR
+					tag = GEO
+					tag = AZR
+					tag = ARM
+					tag = DAG
+					tag = ROS
+					tag = KAL
+					tag = CIR
+					tag = VLG
+					tag = VYA
+					tag = TAT
+					tag = PRM
+					tag = KMI
+					tag = KAR
+					tag = NOV
+					tag = UKR
+					tag = BLR
+					tag = CRI
 				}
 			}
 		}
@@ -51841,31 +52075,31 @@ SOV_negotiation_disputants_category_decisions = {
 				has_government = anarchy
 				is_in_faction_with = SOV
 				OR = {
-					TAG = EFR
-					TAG = SIB
-					TAG = URA
-					TAG = KAZ
-					TAG = TMS
-					TAG = UZB
-					TAG = TAJ
-					TAG = KYR
-					TAG = GEO
-					TAG = AZR
-					TAG = ARM
-					TAG = DAG
-					TAG = ROS
-					TAG = KAL
-					TAG = CIR
-					TAG = VLG
-					TAG = VYA
-					TAG = TAT
-					TAG = PRM
-					TAG = KMI
-					TAG = KAR
-					TAG = NOV
-					TAG = UKR
-					TAG = BLR
-					TAG = CRI
+					tag = EFR
+					tag = SIB
+					tag = URA
+					tag = KAZ
+					tag = TMS
+					tag = UZB
+					tag = TAJ
+					tag = KYR
+					tag = GEO
+					tag = AZR
+					tag = ARM
+					tag = DAG
+					tag = ROS
+					tag = KAL
+					tag = CIR
+					tag = VLG
+					tag = VYA
+					tag = TAT
+					tag = PRM
+					tag = KMI
+					tag = KAR
+					tag = NOV
+					tag = UKR
+					tag = BLR
+					tag = CRI
 				}
 			}
 		}
@@ -54486,31 +54720,31 @@ SOV_anarchist_selection_beneficiary_decisions = {
 				has_government = anarchy
 				is_in_faction_with = SOV
 				OR = {
-					TAG = EFR
-					TAG = SIB
-					TAG = URA
-					TAG = KAZ
-					TAG = TMS
-					TAG = UZB
-					TAG = TAJ
-					TAG = KYR
-					TAG = GEO
-					TAG = AZR
-					TAG = ARM
-					TAG = DAG
-					TAG = ROS
-					TAG = KAL
-					TAG = CIR
-					TAG = VLG
-					TAG = VYA
-					TAG = TAT
-					TAG = PRM
-					TAG = KMI
-					TAG = KAR
-					TAG = NOV
-					TAG = UKR
-					TAG = BLR
-					TAG = CRI
+					tag = EFR
+					tag = SIB
+					tag = URA
+					tag = KAZ
+					tag = TMS
+					tag = UZB
+					tag = TAJ
+					tag = KYR
+					tag = GEO
+					tag = AZR
+					tag = ARM
+					tag = DAG
+					tag = ROS
+					tag = KAL
+					tag = CIR
+					tag = VLG
+					tag = VYA
+					tag = TAT
+					tag = PRM
+					tag = KMI
+					tag = KAR
+					tag = NOV
+					tag = UKR
+					tag = BLR
+					tag = CRI
 				}
 			}
 		}
@@ -54567,31 +54801,31 @@ SOV_anarchist_selection_beneficiary_decisions = {
 				has_government = anarchy
 				is_in_faction_with = SOV
 				OR = {
-					TAG = EFR
-					TAG = SIB
-					TAG = URA
-					TAG = KAZ
-					TAG = TMS
-					TAG = UZB
-					TAG = TAJ
-					TAG = KYR
-					TAG = GEO
-					TAG = AZR
-					TAG = ARM
-					TAG = DAG
-					TAG = ROS
-					TAG = KAL
-					TAG = CIR
-					TAG = VLG
-					TAG = VYA
-					TAG = TAT
-					TAG = PRM
-					TAG = KMI
-					TAG = KAR
-					TAG = NOV
-					TAG = UKR
-					TAG = BLR
-					TAG = CRI
+					tag = EFR
+					tag = SIB
+					tag = URA
+					tag = KAZ
+					tag = TMS
+					tag = UZB
+					tag = TAJ
+					tag = KYR
+					tag = GEO
+					tag = AZR
+					tag = ARM
+					tag = DAG
+					tag = ROS
+					tag = KAL
+					tag = CIR
+					tag = VLG
+					tag = VYA
+					tag = TAT
+					tag = PRM
+					tag = KMI
+					tag = KAR
+					tag = NOV
+					tag = UKR
+					tag = BLR
+					tag = CRI
 				}
 			}
 		}
@@ -54659,31 +54893,31 @@ SOV_anarchist_selection_beneficiary_decisions = {
 				has_government = anarchy
 				is_in_faction_with = SOV
 				OR = {
-					TAG = EFR
-					TAG = SIB
-					TAG = URA
-					TAG = KAZ
-					TAG = TMS
-					TAG = UZB
-					TAG = TAJ
-					TAG = KYR
-					TAG = GEO
-					TAG = AZR
-					TAG = ARM
-					TAG = DAG
-					TAG = ROS
-					TAG = KAL
-					TAG = CIR
-					TAG = VLG
-					TAG = VYA
-					TAG = TAT
-					TAG = PRM
-					TAG = KMI
-					TAG = KAR
-					TAG = NOV
-					TAG = UKR
-					TAG = BLR
-					TAG = CRI
+					tag = EFR
+					tag = SIB
+					tag = URA
+					tag = KAZ
+					tag = TMS
+					tag = UZB
+					tag = TAJ
+					tag = KYR
+					tag = GEO
+					tag = AZR
+					tag = ARM
+					tag = DAG
+					tag = ROS
+					tag = KAL
+					tag = CIR
+					tag = VLG
+					tag = VYA
+					tag = TAT
+					tag = PRM
+					tag = KMI
+					tag = KAR
+					tag = NOV
+					tag = UKR
+					tag = BLR
+					tag = CRI
 				}
 			}
 		}
@@ -54740,31 +54974,31 @@ SOV_anarchist_selection_beneficiary_decisions = {
 				has_government = anarchy
 				is_in_faction_with = SOV
 				OR = {
-					TAG = EFR
-					TAG = SIB
-					TAG = URA
-					TAG = KAZ
-					TAG = TMS
-					TAG = UZB
-					TAG = TAJ
-					TAG = KYR
-					TAG = GEO
-					TAG = AZR
-					TAG = ARM
-					TAG = DAG
-					TAG = ROS
-					TAG = KAL
-					TAG = CIR
-					TAG = VLG
-					TAG = VYA
-					TAG = TAT
-					TAG = PRM
-					TAG = KMI
-					TAG = KAR
-					TAG = NOV
-					TAG = UKR
-					TAG = BLR
-					TAG = CRI
+					tag = EFR
+					tag = SIB
+					tag = URA
+					tag = KAZ
+					tag = TMS
+					tag = UZB
+					tag = TAJ
+					tag = KYR
+					tag = GEO
+					tag = AZR
+					tag = ARM
+					tag = DAG
+					tag = ROS
+					tag = KAL
+					tag = CIR
+					tag = VLG
+					tag = VYA
+					tag = TAT
+					tag = PRM
+					tag = KMI
+					tag = KAR
+					tag = NOV
+					tag = UKR
+					tag = BLR
+					tag = CRI
 				}
 			}
 		}
@@ -54815,36 +55049,36 @@ SOV_anarchist_selection_beneficiary_decisions = {
 				limit = {
 					is_neighbor_of = event_target:FROM_first_beneficiary
 					NOT = {
-						TAG = event_target:FROM_first_beneficiary
-						TAG = event_target:FROM_second_beneficiary
-						TAG = SOV
+						tag = event_target:FROM_first_beneficiary
+						tag = event_target:FROM_second_beneficiary
+						tag = SOV
 					}
 					OR = {
-						TAG = EFR
-						TAG = SIB
-						TAG = URA
-						TAG = KAZ
-						TAG = TMS
-						TAG = UZB
-						TAG = TAJ
-						TAG = KYR
-						TAG = GEO
-						TAG = AZR
-						TAG = ARM
-						TAG = DAG
-						TAG = ROS
-						TAG = KAL
-						TAG = CIR
-						TAG = VLG
-						TAG = VYA
-						TAG = TAT
-						TAG = PRM
-						TAG = KMI
-						TAG = KAR
-						TAG = NOV
-						TAG = UKR
-						TAG = BLR
-						TAG = CRI
+						tag = EFR
+						tag = SIB
+						tag = URA
+						tag = KAZ
+						tag = TMS
+						tag = UZB
+						tag = TAJ
+						tag = KYR
+						tag = GEO
+						tag = AZR
+						tag = ARM
+						tag = DAG
+						tag = ROS
+						tag = KAL
+						tag = CIR
+						tag = VLG
+						tag = VYA
+						tag = TAT
+						tag = PRM
+						tag = KMI
+						tag = KAR
+						tag = NOV
+						tag = UKR
+						tag = BLR
+						tag = CRI
 					}
 				}
 				set_country_flag = is_neighbor_of_from_first_beneficiary
@@ -54853,36 +55087,36 @@ SOV_anarchist_selection_beneficiary_decisions = {
 				limit = {
 					is_neighbor_of = event_target:FROM_second_beneficiary
 					NOT = {
-						TAG = event_target:FROM_first_beneficiary
-						TAG = event_target:FROM_second_beneficiary
-						TAG = SOV
+						tag = event_target:FROM_first_beneficiary
+						tag = event_target:FROM_second_beneficiary
+						tag = SOV
 					}
 					OR = {
-						TAG = EFR
-						TAG = SIB
-						TAG = URA
-						TAG = KAZ
-						TAG = TMS
-						TAG = UZB
-						TAG = TAJ
-						TAG = KYR
-						TAG = GEO
-						TAG = AZR
-						TAG = ARM
-						TAG = DAG
-						TAG = ROS
-						TAG = KAL
-						TAG = CIR
-						TAG = VLG
-						TAG = VYA
-						TAG = TAT
-						TAG = PRM
-						TAG = KMI
-						TAG = KAR
-						TAG = NOV
-						TAG = UKR
-						TAG = BLR
-						TAG = CRI
+						tag = EFR
+						tag = SIB
+						tag = URA
+						tag = KAZ
+						tag = TMS
+						tag = UZB
+						tag = TAJ
+						tag = KYR
+						tag = GEO
+						tag = AZR
+						tag = ARM
+						tag = DAG
+						tag = ROS
+						tag = KAL
+						tag = CIR
+						tag = VLG
+						tag = VYA
+						tag = TAT
+						tag = PRM
+						tag = KMI
+						tag = KAR
+						tag = NOV
+						tag = UKR
+						tag = BLR
+						tag = CRI
 					}
 				}
 				set_country_flag = is_neighbor_of_from_second_beneficiary
@@ -54891,36 +55125,36 @@ SOV_anarchist_selection_beneficiary_decisions = {
 				limit = {
 					is_neighbor_of = SOV
 					NOT = {
-						TAG = event_target:FROM_first_beneficiary
-						TAG = event_target:FROM_second_beneficiary
-						TAG = SOV
+						tag = event_target:FROM_first_beneficiary
+						tag = event_target:FROM_second_beneficiary
+						tag = SOV
 					}
 					OR = {
-						TAG = EFR
-						TAG = SIB
-						TAG = URA
-						TAG = KAZ
-						TAG = TMS
-						TAG = UZB
-						TAG = TAJ
-						TAG = KYR
-						TAG = GEO
-						TAG = AZR
-						TAG = ARM
-						TAG = DAG
-						TAG = ROS
-						TAG = KAL
-						TAG = CIR
-						TAG = VLG
-						TAG = VYA
-						TAG = TAT
-						TAG = PRM
-						TAG = KMI
-						TAG = KAR
-						TAG = NOV
-						TAG = UKR
-						TAG = BLR
-						TAG = CRI
+						tag = EFR
+						tag = SIB
+						tag = URA
+						tag = KAZ
+						tag = TMS
+						tag = UZB
+						tag = TAJ
+						tag = KYR
+						tag = GEO
+						tag = AZR
+						tag = ARM
+						tag = DAG
+						tag = ROS
+						tag = KAL
+						tag = CIR
+						tag = VLG
+						tag = VYA
+						tag = TAT
+						tag = PRM
+						tag = KMI
+						tag = KAR
+						tag = NOV
+						tag = UKR
+						tag = BLR
+						tag = CRI
 					}
 				}
 				set_country_flag = is_neighbor_of_from_sov_beneficiary
@@ -55021,31 +55255,31 @@ SOV_anarchist_selection_beneficiary_decisions = {
 				has_government = anarchy
 				is_in_faction_with = SOV
 				OR = {
-					TAG = EFR
-					TAG = SIB
-					TAG = URA
-					TAG = KAZ
-					TAG = TMS
-					TAG = UZB
-					TAG = TAJ
-					TAG = KYR
-					TAG = GEO
-					TAG = AZR
-					TAG = ARM
-					TAG = DAG
-					TAG = ROS
-					TAG = KAL
-					TAG = CIR
-					TAG = VLG
-					TAG = VYA
-					TAG = TAT
-					TAG = PRM
-					TAG = KMI
-					TAG = KAR
-					TAG = NOV
-					TAG = UKR
-					TAG = BLR
-					TAG = CRI
+					tag = EFR
+					tag = SIB
+					tag = URA
+					tag = KAZ
+					tag = TMS
+					tag = UZB
+					tag = TAJ
+					tag = KYR
+					tag = GEO
+					tag = AZR
+					tag = ARM
+					tag = DAG
+					tag = ROS
+					tag = KAL
+					tag = CIR
+					tag = VLG
+					tag = VYA
+					tag = TAT
+					tag = PRM
+					tag = KMI
+					tag = KAR
+					tag = NOV
+					tag = UKR
+					tag = BLR
+					tag = CRI
 				}
 			}
 		}
@@ -56494,7 +56728,7 @@ SOV_anarchist_the_revolution_without_borders = {
 			if = {
 				limit = {
 					FROM = {
-						TAG = GER
+						tag = GER
 					}
 				}
 				NOT = {
@@ -56506,7 +56740,7 @@ SOV_anarchist_the_revolution_without_borders = {
 			if = {
 				limit = {
 					FROM = {
-						TAG = JAP
+						tag = JAP
 					}
 				}
 				NOT = {
@@ -56594,7 +56828,7 @@ SOV_anarchist_the_revolution_without_borders = {
 				if = {
 					limit = {
 						FROM = {
-							TAG = GER
+							tag = GER
 						}
 					}
 					NOT = {
@@ -56606,7 +56840,7 @@ SOV_anarchist_the_revolution_without_borders = {
 				if = {
 					limit = {
 						FROM = {
-							TAG = JAP
+							tag = JAP
 						}
 					}
 					NOT = {
@@ -56880,7 +57114,7 @@ SOV_anarchist_the_peoples_commune_formation = {
 				exists = yes
 				is_subject_of = SOV
 				NOT = {
-					TAG = EAC
+					tag = EAC
 				}
 				any_state = {
 					is_core_of = EAC
@@ -56898,7 +57132,7 @@ SOV_anarchist_the_peoples_commune_formation = {
 				exists = yes
 				is_subject_of = SOV
 				NOT = {
-					TAG = EAC
+					tag = EAC
 				}
 				any_state = {
 					is_core_of = EAC
@@ -57171,7 +57405,7 @@ SOV_anarchist_the_peoples_commune_formation = {
 				exists = yes
 				is_subject_of = SOV
 				NOT = {
-					TAG = NAC
+					tag = NAC
 				}
 				any_state = {
 					is_core_of = NAC
@@ -57189,7 +57423,7 @@ SOV_anarchist_the_peoples_commune_formation = {
 				exists = yes
 				is_subject_of = SOV
 				NOT = {
-					TAG = NAC
+					tag = NAC
 				}
 				any_state = {
 					is_core_of = NAC
@@ -57462,7 +57696,7 @@ SOV_anarchist_the_peoples_commune_formation = {
 				exists = yes
 				is_subject_of = SOV
 				NOT = {
-					TAG = WAC
+					tag = WAC
 				}
 				any_state = {
 					is_core_of = WAC
@@ -57480,7 +57714,7 @@ SOV_anarchist_the_peoples_commune_formation = {
 				exists = yes
 				is_subject_of = SOV
 				NOT = {
-					TAG = WAC
+					tag = WAC
 				}
 				any_state = {
 					is_core_of = WAC
@@ -57753,7 +57987,7 @@ SOV_anarchist_the_peoples_commune_formation = {
 				exists = yes
 				is_subject_of = SOV
 				NOT = {
-					TAG = SWA
+					tag = SWA
 				}
 				any_state = {
 					is_core_of = SWA
@@ -57771,7 +58005,7 @@ SOV_anarchist_the_peoples_commune_formation = {
 				exists = yes
 				is_subject_of = SOV
 				NOT = {
-					TAG = SWA
+					tag = SWA
 				}
 				any_state = {
 					is_core_of = SWA
@@ -58044,7 +58278,7 @@ SOV_anarchist_the_peoples_commune_formation = {
 				exists = yes
 				is_subject_of = SOV
 				NOT = {
-					TAG = AEA
+					tag = AEA
 				}
 				any_state = {
 					is_core_of = AEA
@@ -58062,7 +58296,7 @@ SOV_anarchist_the_peoples_commune_formation = {
 				exists = yes
 				is_subject_of = SOV
 				NOT = {
-					TAG = AEA
+					tag = AEA
 				}
 				any_state = {
 					is_core_of = AEA
@@ -58335,7 +58569,7 @@ SOV_anarchist_the_peoples_commune_formation = {
 				exists = yes
 				is_subject_of = SOV
 				NOT = {
-					TAG = SAE
+					tag = SAE
 				}
 				any_state = {
 					is_core_of = SAE
@@ -58353,7 +58587,7 @@ SOV_anarchist_the_peoples_commune_formation = {
 				exists = yes
 				is_subject_of = SOV
 				NOT = {
-					TAG = SAE
+					tag = SAE
 				}
 				any_state = {
 					is_core_of = SAE

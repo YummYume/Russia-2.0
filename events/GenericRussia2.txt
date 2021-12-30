@@ -555,7 +555,7 @@ country_event = {
 		name = russia2_generic.15.a
 		if = {
 			limit = {
-				TAG = YUG
+				tag = YUG
 				has_completed_focus = YUG_limited_self_government
 			}
 			every_country = {
@@ -620,7 +620,7 @@ country_event = {
 						any_country = {
 							is_subject_of = ROOT
 							owns_state = PREV
-							NOT = { TAG = ROOT }
+							NOT = { tag = ROOT }
 						}
 						is_controlled_by = ROOT
 					}
@@ -1200,7 +1200,7 @@ country_event = {
 			base = 60
 			modifier = {
 				add = 20
-				TAG = USA
+				tag = USA
 			}
 		}
 		name = russia2_generic.31.a
@@ -1219,17 +1219,17 @@ country_event = {
 				add = 30
 				OR = {
 					AND = {
-						TAG = GER
+						tag = GER
 						has_government = fascism
 					}
-					TAG = JAP
+					tag = JAP
 				}
 			}
 		}
 		trigger = {
 			OR = {
-				TAG = GER
-				TAG = JAP
+				tag = GER
+				tag = JAP
 			}
 		}
 		name = russia2_generic.31.b
@@ -1243,13 +1243,13 @@ country_event = {
 			base = 30
 			modifier = {
 				add = 30
-				TAG = ITA
+				tag = ITA
 			}
 		}
 		trigger = {
 			NOT = {
-				TAG = GER
-				TAG = JAP
+				tag = GER
+				tag = JAP
 			}
 		}
 		name = russia2_generic.31.c
@@ -1264,19 +1264,19 @@ country_event = {
 		}
 		if = {
 			limit = {
-				TAG = FRA
+				tag = FRA
 			}
 			custom_effect_tooltip = explain_player_receive_industry
 		}
 		if = {
 			limit = {
-				TAG = ITA
+				tag = ITA
 			}
 			custom_effect_tooltip = explain_player_diplomatic_build_up
 		}
 		if = {
 			limit = {
-				TAG = ENG
+				tag = ENG
 			}
 			custom_effect_tooltip = explain_player_ressource_money
 		}
@@ -1298,7 +1298,7 @@ country_event = {
 		}
 		trigger = {
 			FROM = {
-				TAG = GER
+				tag = GER
 			}
 		}
 		name = russia2_generic.32.a
@@ -1320,7 +1320,7 @@ country_event = {
 		}
 		trigger = {
 			FROM = {
-				TAG = JAP
+				tag = JAP
 			}
 		}
 		name = russia2_generic.32.b
@@ -1342,7 +1342,7 @@ country_event = {
 		}
 		trigger = {
 			FROM = {
-				TAG = USA
+				tag = USA
 			}
 		}
 		name = russia2_generic.32.c
@@ -1364,7 +1364,7 @@ country_event = {
 		}
 		trigger = {
 			FROM = {
-				TAG = FRA
+				tag = FRA
 			}
 		}
 		name = russia2_generic.32.e
@@ -1388,7 +1388,7 @@ country_event = {
 		}
 		trigger = {
 			FROM = {
-				TAG = ITA
+				tag = ITA
 			}
 		}
 		name = russia2_generic.32.f
@@ -1412,7 +1412,7 @@ country_event = {
 		}
 		trigger = {
 			FROM = {
-				TAG = ENG
+				tag = ENG
 			}
 		}
 		name = russia2_generic.32.g
@@ -1454,7 +1454,7 @@ country_event = {
 		}
 		trigger = {
 			FROM = {
-				TAG = GER
+				tag = GER
 			}
 		}
 		name = russia2_generic.33.b
@@ -1471,7 +1471,7 @@ country_event = {
 		}
 		trigger = {
 			FROM = {
-				TAG = JAP
+				tag = JAP
 			}
 			NOT = {
 				has_country_flag = choose_option_a_japan_negotiation
@@ -1491,7 +1491,7 @@ country_event = {
 		}
 		trigger = {
 			FROM = {
-				TAG = JAP
+				tag = JAP
 			}
 		}
 		name = russia2_generic.33.e
@@ -1801,7 +1801,7 @@ country_event = {
 		}
 		trigger = {
 			FROM = {
-				TAG = USA
+				tag = USA
 			}
 		}
 		name = russia2_generic.36.b
@@ -1827,7 +1827,7 @@ country_event = {
 		}
 		trigger = {
 			FROM = {
-				TAG = FRA
+				tag = FRA
 			}
 		}
 		name = russia2_generic.36.c
@@ -1854,7 +1854,7 @@ country_event = {
 		}
 		trigger = {
 			FROM = {
-				TAG = ITA
+				tag = ITA
 			}
 		}
 		name = russia2_generic.36.e
@@ -1881,7 +1881,7 @@ country_event = {
 		}
 		trigger = {
 			FROM = {
-				TAG = ENG
+				tag = ENG
 			}
 		}
 		name = russia2_generic.36.f
@@ -2131,16 +2131,26 @@ country_event = {
 		}
 		name = russia2_generic.44.a
 		SOV = {
-			declare_war_on = {
-				target = UKR
-				type = annex_everything
+			for_each_scope_loop = {
+				array = global.russian_scw_participants_ukr
+				if = {
+					limit = {
+						exists = yes
+					}
+					SOV = {
+						declare_war_on = {
+							target = PREV
+							type = annex_everything
+						}
+					}
+				}
 			}
 			hidden_effect = {
 				every_country = {
 					limit = {
 						is_in_faction_with = SOV
 						NOT = {
-							TAG = SOV
+							tag = SOV
 						}
 					}
 					add_to_war = {
@@ -2165,7 +2175,7 @@ country_event = {
 						limit = {
 							is_in_faction_with = SOV
 							NOT = {
-								TAG = SOV
+								tag = SOV
 							}
 						}
 						add_to_war = {
@@ -2191,7 +2201,7 @@ country_event = {
 						limit = {
 							is_in_faction_with = SOV
 							NOT = {
-								TAG = SOV
+								tag = SOV
 							}
 						}
 						add_to_war = {
@@ -2217,7 +2227,7 @@ country_event = {
 						limit = {
 							is_in_faction_with = SOV
 							NOT = {
-								TAG = SOV
+								tag = SOV
 							}
 						}
 						add_to_war = {
