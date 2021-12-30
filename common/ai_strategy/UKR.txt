@@ -106,6 +106,9 @@ UKR_dont_push_too_hard_wait_for_cores_scw  = {
 		type = front_unit_request
 
 		state_trigger = {
+			CONTROLLER = {
+				has_war_with = UKR
+			}
 			OR = {
 				state = 195 #Hold onto Stalingrad
 				any_neighbor_state = {
@@ -221,6 +224,7 @@ UKR_kill_BLR_fast_scw = {
 		priority = 700
 
 		tag = BLR
+		ordertype = front
 		execution_type = rush_weak
 		execute_order = yes
 		manual_attack = yes
@@ -608,6 +612,50 @@ UKR_recover_core_territory = {
 
 	ai_strategy = {
 		type = declare_war
+		id = UKR
+		value = 9999
+	}
+}
+
+UKR_focus_on_your_enemies = {
+
+    reversed = yes
+
+	enable = {
+		has_global_flag = second_russian_civil_war_in_progress
+        NOT = {
+            has_war_with = UKR
+        }
+	}
+
+	enable_reverse = {
+		tag = UKR
+        has_global_flag = second_russian_civil_war_in_progress
+        is_in_array = { global.russian_scw_participants = UKR }
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = conquer
+		id = UKR
+		value = -9999
+	}
+
+	ai_strategy = {
+		type = antagonize
+		id = UKR
+		value = -9999
+	}
+
+	ai_strategy = {
+		type = declare_war
+		id = UKR
+		value = -9999
+	}
+
+    ai_strategy = {
+		type = ignore
 		id = UKR
 		value = 9999
 	}
