@@ -2212,9 +2212,14 @@ characters = {
 			}
 
 			available = {
-               	has_completed_focus = SOV_second_civil_war
-				NOT = {
-					has_country_flag = denikin_resigned_fascist
+				if = {
+					limit = {
+						TAG = SOV
+					}
+					has_completed_focus = SOV_second_civil_war
+					NOT = {
+						has_country_flag = denikin_resigned_fascist
+					}
 				}
 			}
 
@@ -2287,9 +2292,14 @@ characters = {
 			}
 
 			available = {
-               	OR = {
-					has_country_flag = soviet_generals_deserted
-					has_completed_focus = SOV_second_civil_war
+				if = {
+					limit = {
+						TAG = SOV
+					}
+					OR = {
+						has_country_flag = soviet_generals_deserted
+						has_completed_focus = SOV_second_civil_war
+					}
 				}
 			}
 
@@ -2370,35 +2380,43 @@ characters = {
 			}
 
 			available = {
-                NOT = {
-					custom_trigger_tooltip = {
-						tooltip = SOV_idea_not_purged_tt
-						check_variable = {
-							var = sov_great_purge_status^7
-							value = 1
-							compare = equals
+				if = {
+					limit = {
+						OR = {
+							TAG = SOV
+							TAG = SOU
 						}
 					}
-				}
-				NOT = {
-					has_country_flag = sov_enemy_second_civil_war_russia2
-					custom_trigger_tooltip = {
-						tooltip = SOV_not_is_in_prison_tt
-						has_character_flag = russia_is_in_prison_cw
-					}
-				}
-				custom_trigger_tooltip = {
-					tooltip = sov_not_joined_another_side
 					NOT = {
-						any_other_country = {
-							has_war_with = SOV
-							original_tag = SOV
-							has_unit_leader = 404
+						custom_trigger_tooltip = {
+							tooltip = SOV_idea_not_purged_tt
+							check_variable = {
+								var = sov_great_purge_status^7
+								value = 1
+								compare = equals
+							}
 						}
 					}
-				}
-				NOT = {
-					has_government = anarchy
+					NOT = {
+						has_country_flag = sov_enemy_second_civil_war_russia2
+						custom_trigger_tooltip = {
+							tooltip = SOV_not_is_in_prison_tt
+							has_character_flag = russia_is_in_prison_cw
+						}
+					}
+					custom_trigger_tooltip = {
+						tooltip = sov_not_joined_another_side
+						NOT = {
+							any_other_country = {
+								has_war_with = SOV
+								original_tag = SOV
+								has_unit_leader = 404
+							}
+						}
+					}
+					NOT = {
+						has_government = anarchy
+					}
 				}
 			}
 
@@ -3331,9 +3349,14 @@ characters = {
 			}
 
 			available = {
-				OR = {
-					has_country_flag = soviet_generals_deserted
-					has_completed_focus = SOV_second_civil_war
+				if = {
+					limit = {
+						TAG = SOV
+					}
+					OR = {
+						has_country_flag = soviet_generals_deserted
+						has_completed_focus = SOV_second_civil_war
+					}
 				}
 			}
 
