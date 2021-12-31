@@ -92,9 +92,7 @@ UKR_dont_push_too_hard_wait_for_cores_scw  = {
 		state_trigger = {
 			OR = {
 				state = 195 #Hold onto Stalingrad
-				any_neighbor_state = {
-					is_controlled_by = UKR
-				}
+				is_in_home_area = yes
 			}
 		}
 
@@ -111,9 +109,7 @@ UKR_dont_push_too_hard_wait_for_cores_scw  = {
 			}
 			OR = {
 				state = 195 #Hold onto Stalingrad
-				any_neighbor_state = {
-					is_controlled_by = UKR
-				}
+				is_in_home_area = yes
 			}
 		}
 
@@ -686,5 +682,46 @@ UKR_do_not_waste_pp = {
 		type = pp_spend_priority
 		id = relation
 		value = -9999
+	}
+}
+
+UKR_push_SOU_if_possible  = {
+
+	allowed = {
+		original_tag = SOU
+	}
+
+	enable = {
+        has_global_flag = second_russian_civil_war_in_progress
+		ukr_in_scw = yes
+		sou_in_scw = yes
+		surrender_progress < 0.25
+		check_variable = {
+			var = ukr.num_core_states
+			value = 20
+			compare = greater_than_or_equals
+		}
+		SOU = {
+			surrender_progress > 0.5
+		}
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = front_control
+
+		priority = 9999
+
+		tag = SOU
+
+		state_trigger = {
+			is_controlled_by = SOU
+		}
+
+		ordertype = front
+		type = rush
+		execute_order = yes
+		manual_attack = yes
 	}
 }
