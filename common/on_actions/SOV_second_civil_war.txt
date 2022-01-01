@@ -9,7 +9,7 @@ on_actions = {
 					FROM = {
 						OR = {
 							tag = SOV
-							tag = SOU
+							tag = SOJ
 							tag = UKR
 							any_country = {
 								is_in_faction_with = SOV
@@ -18,9 +18,9 @@ on_actions = {
 								}
 							}
 							any_country = {
-								is_in_faction_with = SOU
+								is_in_faction_with = SOJ
 								NOT = {
-									tag = SOU
+									tag = SOJ
 								}
 							}
 							any_country = {
@@ -35,13 +35,13 @@ on_actions = {
 				#UKR Dies
 				if = {
 					limit = {
-						sou_in_scw = yes
+						soj_in_scw = yes
 						sov_in_scw = yes
 						ROOT = {
 							tag = UKR
 						}
 					}
-					log = "[UKR.GetNameDefCap] Capitulated (vs SOU & SOV)"
+					log = "[UKR.GetNameDefCap] Capitulated (vs SOJ & SOV)"
 					for_each_loop = {
 						array = global.countries
 						value = v
@@ -111,7 +111,7 @@ on_actions = {
 							limit = {
 								any_state = {
 									OR = {
-										is_controlled_by = SOU
+										is_controlled_by = SOJ
 										is_controlled_by = SOV
 									}
 									state = var:v
@@ -119,10 +119,10 @@ on_actions = {
 							}
 							every_state = {
 								limit = {
-									is_controlled_by = SOU
+									is_controlled_by = SOJ
 									state = var:v
 								}
-								SOU = {
+								SOJ = {
 									transfer_state = PREV
 								}
 							}
@@ -140,7 +140,7 @@ on_actions = {
 							limit = {
 								any_state = {
 									NOT = {
-										is_controlled_by = SOU
+										is_controlled_by = SOJ
 										is_controlled_by = SOV
 									}
 									state = var:v
@@ -151,7 +151,7 @@ on_actions = {
 									any_country = {
 										NOT = {
 											tag = SOV
-											tag = SOU
+											tag = SOJ
 										}
 										controls_state = PREV
 										NOT = { tag = ROOT }
@@ -184,34 +184,34 @@ on_actions = {
 						if = {
 							limit = {
 								NOT = {
-									SOU = {
+									SOJ = {
 										controls_state = var:v
 									}
 								}
 								var:v = {
-									is_owned_by = SOU
+									is_owned_by = SOJ
 								}
 							}
-							SOU = {
+							SOJ = {
 								set_state_controller = var:v
 							}
 						}
 					}
 				}
-				#SOU Dies
+				#SOJ Dies
 				else_if = {
 					limit = {
 						ukr_in_scw = yes
 						sov_in_scw = yes
 						ROOT = {
-							tag = SOU
+							tag = SOJ
 						}
 					}
-					log = "[SOU.GetNameDefCap] Capitulated (vs SOV & UKR)"
+					log = "[SOJ.GetNameDefCap] Capitulated (vs SOV & UKR)"
 
 					every_country = {
 						limit = {
-							has_war_with = SOU
+							has_war_with = SOJ
 						}
 						if = {
 							limit = {
@@ -239,25 +239,25 @@ on_actions = {
 						if = {
 							limit = {
 								any_country = {
-									is_in_faction_with = SOU
+									is_in_faction_with = SOJ
 									NOT = {
-										tag = SOU
+										tag = SOJ
 									}
 								}
 							}
 							every_country = {
 								limit = {
-									is_in_faction_with = SOU
+									is_in_faction_with = SOJ
 									NOT = {
-										tag = SOU
+										tag = SOJ
 									}
 								}
-								add_to_temp_array = { global.sou_allies_russian_cw = var:v }
+								add_to_temp_array = { global.soj_allies_russian_cw = var:v }
 							}
 						}
 					}
 					for_each_loop = {
-						array = global.sou_allies_russian_cw
+						array = global.soj_allies_russian_cw
 						value = v
 						index = i
 						break = break_array
@@ -265,9 +265,9 @@ on_actions = {
 						if = {
 							limit = {
 								var:v = {
-									is_in_faction_with = SOU
+									is_in_faction_with = SOJ
 									NOT = {
-										tag = SOU
+										tag = SOJ
 									}
 								}
 							}
@@ -275,22 +275,22 @@ on_actions = {
 								limit = {
 									is_owned_by = var:v
 								}
-								SOU = {
+								SOJ = {
 									transfer_state = PREV
 								}
 							}
 						}
 					}
 					for_each_loop = {
-						array = sou.owned_states
+						array = SOJ.owned_states
 						value = v
 						index = i
 						break = break_array
 
-						add_to_temp_array = { sou.owned_states_scw = var:v }
+						add_to_temp_array = { SOJ.owned_states_scw = var:v }
 					}
 					for_each_loop = {
-						array = sou.owned_states_scw
+						array = SOJ.owned_states_scw
 						value = v
 						index = i
 						break = break_array
@@ -348,17 +348,17 @@ on_actions = {
 								else = {
 									if = {
 										limit = {
-											SOU = {
+											SOJ = {
 												is_subject = no
 											}
 										}
 										UKR = {
 											set_autonomy = {
-												target = SOU
+												target = SOJ
 												autonomy_state = autonomy_puppet
 											}
 										}
-										SOU = {
+										SOJ = {
 											create_country_leader = { #fuck characters
 												name = UKR_Ivan_kononov
 												desc = UKR_Ivan_kononov_desc
@@ -374,16 +374,16 @@ on_actions = {
 									}
 									if = {
 										limit = {
-											SOU = {
+											SOJ = {
 												is_subject_of = UKR
 											}
 											NOT = {
-												SOU = {
+												SOJ = {
 													controls_state = var:v
 												}
 											}
 										}
-										SOU = {
+										SOJ = {
 											set_state_controller = var:v
 										}
 									}
@@ -414,7 +414,7 @@ on_actions = {
 										compare = greater_than_or_equals
 									}
 								}
-								SOU = {
+								SOJ = {
 									is_subject_of = UKR
 								}
 								AND = {
@@ -463,12 +463,12 @@ on_actions = {
 				else_if = {
 					limit = {
 						ukr_in_scw = yes
-						sou_in_scw = yes
+						soj_in_scw = yes
 						ROOT = {
 							tag = SOV
 						}
 					}
-					log = "[SOV.GetNameDefCap] Capitulated (vs SOU & UKR)"
+					log = "[SOV.GetNameDefCap] Capitulated (vs SOJ & UKR)"
 					for_each_loop = {
 						array = global.countries
 						value = v
@@ -606,7 +606,7 @@ on_actions = {
 							}
 						}
 						else = {
-							SOU = {
+							SOJ = {
 								transfer_state = var:v
 							}
 						}
@@ -625,7 +625,7 @@ on_actions = {
 					FROM = {
 						OR = {
 							tag = SOV
-							tag = SOU
+							tag = SOJ
 							tag = UKR
 							any_country = {
 								OR = {
@@ -638,11 +638,11 @@ on_actions = {
 							}
 							any_country = {
 								OR = {
-									is_in_faction_with = SOU
-									is_subject_of = SOU
+									is_in_faction_with = SOJ
+									is_subject_of = SOJ
 								}
 								NOT = {
-									tag = SOU
+									tag = SOJ
 								}
 							}
 							any_country = {
@@ -664,7 +664,7 @@ on_actions = {
 						OR = {
 							AND = {
 								ROOT = {
-									tag = SOU
+									tag = SOJ
 								}
 								NOT = {
 									sov_in_scw = yes
@@ -675,7 +675,7 @@ on_actions = {
 									tag = SOV
 								}
 								NOT = {
-									sou_in_scw = yes
+									soj_in_scw = yes
 								}
 							}
 						}
@@ -748,7 +748,7 @@ on_actions = {
 					if = {
 						limit = {
 							ROOT = {
-								tag = SOU
+								tag = SOJ
 							}
 						}
 						for_each_loop = {
@@ -760,25 +760,25 @@ on_actions = {
 							if = {
 								limit = {
 									any_country = {
-										is_in_faction_with = SOU
+										is_in_faction_with = SOJ
 										NOT = {
-											tag = SOU
+											tag = SOJ
 										}
 									}
 								}
 								every_country = {
 									limit = {
-										is_in_faction_with = SOU
+										is_in_faction_with = SOJ
 										NOT = {
-											tag = SOU
+											tag = SOJ
 										}
 									}
-									add_to_temp_array = { global.sou_allies_russian_cw = var:v }
+									add_to_temp_array = { global.soj_allies_russian_cw = var:v }
 								}
 							}
 						}
 						for_each_loop = {
-							array = global.sou_allies_russian_cw
+							array = global.soj_allies_russian_cw
 							value = v
 							index = i
 							break = break_array
@@ -786,9 +786,9 @@ on_actions = {
 							if = {
 								limit = {
 									var:v = {
-										is_in_faction_with = SOU
+										is_in_faction_with = SOJ
 										NOT = {
-											tag = SOU
+											tag = SOJ
 										}
 									}
 								}
@@ -796,22 +796,22 @@ on_actions = {
 									limit = {
 										is_owned_by = var:v
 									}
-									SOU = {
+									SOJ = {
 										transfer_state = PREV
 									}
 								}
 							}
 						}
 						for_each_loop = {
-							array = sou.owned_states
+							array = SOJ.owned_states
 							value = v
 							index = i
 							break = break_array
 
-							add_to_temp_array = { sou.owned_states_scw = var:v }
+							add_to_temp_array = { SOJ.owned_states_scw = var:v }
 						}
 						for_each_loop = {
-							array = sou.owned_states_scw
+							array = SOJ.owned_states_scw
 							value = v
 							index = i
 							break = break_array
@@ -840,7 +840,7 @@ on_actions = {
 												has_government = anarchy
 											}
 										}
-										SOU = {
+										SOJ = {
 											is_subject = no
 										}
 										SOV = {
@@ -849,11 +849,11 @@ on_actions = {
 									}
 									UKR = {
 										set_autonomy = {
-											target = SOU
+											target = SOJ
 											autonomy_state = autonomy_puppet
 										}
 									}
-									SOU = {
+									SOJ = {
 										create_country_leader = { #fuck characters
 											name = UKR_Ivan_kononov
 											desc = UKR_Ivan_kononov_desc
@@ -889,17 +889,17 @@ on_actions = {
 							}
 							if = {
 								limit = {
-									SOU = {
+									SOJ = {
 										is_subject_of = UKR
 									}
 								}
 								if = {
 									limit = {
-										SOU = {
+										SOJ = {
 											is_subject_of = UKR
 										}
 										NOT = {
-											SOU = {
+											SOJ = {
 												controls_state = var:v
 											}
 											var:v = {
@@ -907,7 +907,7 @@ on_actions = {
 											}
 										}
 									}
-									SOU = {
+									SOJ = {
 										set_state_controller = var:v
 									}
 								}
@@ -967,7 +967,7 @@ on_actions = {
 											is_owned_by = SOV
 										}
 										var:v = {
-											is_owned_by = SOU
+											is_owned_by = SOJ
 										}
 									}
 								}
@@ -1094,14 +1094,14 @@ on_actions = {
 								}
 								if = {
 									limit = {
-										SOU = {
+										SOJ = {
 											is_subject_of = UKR
 										}
 										NOT = {
 											is_in_array = { global.kievan_rus_state_ukraine = var:v }
 										}
 									}
-									SOU = {
+									SOJ = {
 										log = "Transfering state var:v ([?var:v]) [?var:v.GetName] to SOV"
 										transfer_state = var:v
 									}
@@ -1114,7 +1114,7 @@ on_actions = {
 													has_government = anarchy
 												}
 											}
-											SOU = {
+											SOJ = {
 												is_subject = no
 											}
 											SOV = {
@@ -1164,14 +1164,14 @@ on_actions = {
 								}
 								if = {
 									limit = {
-										SOU = {
+										SOJ = {
 											is_subject_of = UKR
 										}
 									}
 									if = {
 										limit = {
 											NOT = {
-												SOU = {
+												SOJ = {
 													controls_state = var:v
 												}
 												var:v = {
@@ -1179,7 +1179,7 @@ on_actions = {
 												}
 											}
 										}
-										SOU = {
+										SOJ = {
 											set_state_controller = var:v
 										}
 									}
@@ -1192,10 +1192,10 @@ on_actions = {
 						news_event = newsrussia2.150
 					}
 				}
-				#SOU Wins SCW
+				#SOJ Wins SCW
 				else_if = {
 					limit = {
-						sou_in_scw = yes
+						soj_in_scw = yes
 						OR = {
 							AND = {
 								ROOT = {
@@ -1218,7 +1218,7 @@ on_actions = {
 					UKR = {
 						clr_country_flag = ukr_anarchist_rebels
 					}
-                    log = "([?global.date.GetDateStringNoHour]) SOU ([SOU.GetNameDefCap]) Wins the SCW"
+                    log = "([?global.date.GetDateStringNoHour]) SOJ ([SOJ.GetNameDefCap]) Wins the SCW"
 					if = {
 						limit = {
 							has_global_flag = {
@@ -1229,7 +1229,7 @@ on_actions = {
                         log = "SCW won in less than 548 days!"
 						if = {
 							limit = {
-								sou_in_scw = yes
+								soj_in_scw = yes
 							}
 							for_each_scope_loop = {
 								array = global.russian_scw_participants_sou
@@ -1277,7 +1277,7 @@ on_actions = {
 					}
 					ROOT = {
 						transfer_navy = {
-							target = SOU
+							target = SOJ
 						}
 					}
 					if = {
@@ -1291,7 +1291,7 @@ on_actions = {
 								tag = TMS
 							}
 						}
-						SOU = {
+						SOJ = {
 							add_state_core = PREV
 						}
 					}
@@ -1306,7 +1306,7 @@ on_actions = {
 								NOT = { tag = ROOT }
 							}
 						}
-						SOU = {
+						SOJ = {
 							transfer_state = PREV
 						}
 					}
@@ -1314,7 +1314,7 @@ on_actions = {
 						limit = {
 							is_owned_by = ROOT
 						}
-						SOU = {
+						SOJ = {
 							transfer_state = PREV
 						}
 					}
@@ -1348,7 +1348,7 @@ on_actions = {
 							retire = yes
 						}
 					}
-					SOU = {
+					SOJ = {
 						every_character = {
 							limit = {
 								OR = {
@@ -1400,7 +1400,7 @@ on_actions = {
 						OR = {
 							AND = {
 								ROOT = {
-									tag = SOU
+									tag = SOJ
 								}
 								NOT = {
 									SOV = {
@@ -1424,7 +1424,7 @@ on_actions = {
 											has_country_flag = ukr_blr_coup_succeeds
 										}
 									}
-									SOU = {
+									SOJ = {
 										is_subject_of = UKR
 									}
 									FIN = {
@@ -1438,7 +1438,7 @@ on_actions = {
 									tag = UKR
 								}
 								NOT = {
-									sou_in_scw = yes
+									soj_in_scw = yes
 								}
 							}
 						}
@@ -1534,7 +1534,7 @@ on_actions = {
 							transfer_state = PREV
 						}
 					}
-					SOU = {
+					SOJ = {
 						every_character = {
 							limit = {
 								OR = {
@@ -1626,6 +1626,37 @@ on_actions = {
 						tag = CRI
 						has_idea = CRI_Master_black_sea
 					}
+					FROM = {
+						OR = {
+							TAG = SOV
+							TAG = UKR
+						}
+					}
+					NOT = {
+						has_global_flag = second_russian_civil_war_in_progress
+					}
+				}
+				ROOT = {
+					transfer_navy = {
+						target = FROM
+					}
+				}
+				FROM = {
+					country_event = russia2_generic.43
+				}
+			}
+		}
+	}
+
+	#Crimea loses all their ships on annexiation
+	on_annex = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						tag = CRI
+						has_idea = CRI_Master_black_sea
+					}
 				}
 				ROOT = {
 					transfer_navy = {
@@ -1651,7 +1682,7 @@ on_actions = {
 						ROOT = {
 							OR = {
 								tag = SOV
-								tag = SOU
+								tag = SOJ
 								tag = UKR
 							}
 							if = {
@@ -1695,8 +1726,8 @@ on_actions = {
 							limit = {
 								ROOT = {
 									OR = {
-										tag = SOU
-										is_in_faction_with = SOU
+										tag = SOJ
+										is_in_faction_with = SOJ
 									}
 								}
 							}
@@ -1749,8 +1780,8 @@ on_actions = {
 							limit = {
 								FROM = {
 									OR = {
-										tag = SOU
-										is_in_faction_with = SOU
+										tag = SOJ
+										is_in_faction_with = SOJ
 									}
 								}
 							}
@@ -1778,7 +1809,7 @@ on_actions = {
 						FROM = {
 							OR = {
 								tag = SOV
-								tag = SOU
+								tag = SOJ
 								tag = UKR
 							}
 							if = {
@@ -1822,8 +1853,8 @@ on_actions = {
 							limit = {
 								ROOT = {
 									OR = {
-										tag = SOU
-										is_in_faction_with = SOU
+										tag = SOJ
+										is_in_faction_with = SOJ
 									}
 								}
 							}
@@ -1876,8 +1907,8 @@ on_actions = {
 							limit = {
 								FROM = {
 									OR = {
-										tag = SOU
-										is_in_faction_with = SOU
+										tag = SOJ
+										is_in_faction_with = SOJ
 									}
 								}
 							}
@@ -2138,7 +2169,7 @@ on_actions = {
 		}
 	}
 
-	on_weekly_SOU = {
+	on_weekly_SOJ = {
 		effect = {
 			if = {
 				limit = {
