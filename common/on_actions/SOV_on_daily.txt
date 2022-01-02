@@ -2414,4 +2414,40 @@ on_actions = {
 			}
 		}
 	}
+
+	#Country Gets Event to Release Armenia if Russia is Neutral or Fascist (for england)
+	on_weekly = {
+		effect = {
+			if = {
+				limit = {
+					country_exists = SOV
+					country_exists = ARM
+					ARM = {
+						owns_state = 230
+						is_subject_of = ENG
+					}
+					NOT = {
+						SOV = {
+							is_subject = yes
+						}
+					}
+					OR = {
+						has_global_flag = second_russian_civil_war_over
+						SOV = {
+							has_completed_focus = SOV_create_russian_sphere
+							NOT = {
+								has_completed_focus = SOV_end_investments
+							}
+						}
+					}
+					ENG = {
+						has_country_flag = GRE_british_armenia
+					}
+				}
+				ENG = {
+					country_event = { id = russia2_russia.659 }
+				}
+			}
+		}
+	}
 }
