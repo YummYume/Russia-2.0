@@ -8788,18 +8788,26 @@ ideas = {
 			on_remove = {
 				if = {
 					limit = {
-						check_variable = {
-							var = sov_great_purge_completion
-							value = 100
-							compare = less_than
+						NOT = {
+							has_country_flag = sov_purge_failed
 						}
 					}
-					set_country_flag = sov_purge_cancelled
-					sov_unlock_nkvd_chiefs = yes
-					country_event = russia2_russia.26
-				}
-				else = {
-					set_country_flag = sov_purge_over
+					if = {
+						limit = {
+							check_variable = {
+								var = sov_great_purge_completion
+								value = 100
+								compare = less_than
+							}
+						}
+						set_country_flag = sov_purge_cancelled
+						sov_unlock_nkvd_chiefs = yes
+						country_event = russia2_russia.26
+					}
+					else = {
+						set_country_flag = sov_purge_over
+					}
+					clr_country_flag = sov_purge_ongoing
 				}
 				remove_dynamic_modifier = {
 					modifier = great_purge_modifiers
@@ -8808,6 +8816,34 @@ ideas = {
 
 			modifier = {
 				custom_modifier_tooltip = SOV_Great_purge_tt
+			}
+		}
+
+		SOV_Remnants_purge = {
+
+			removal_cost = -1
+
+			allowed = {
+				always = no
+			}
+
+			cancel = {
+				NOT = {
+					has_government = communism
+				}
+			}
+
+			picture = great_purge
+
+			modifier = {
+				army_org_factor = -0.2
+				send_volunteer_factor = -0.25
+				army_defence_factor = -0.15
+				army_attack_factor = -0.15
+				training_time_factor = 0.1
+				political_advisor_cost_factor = 0.25
+				party_popularity_stability_factor = -0.15
+				experience_gain_army_factor = -0.2
 			}
 		}
 

@@ -663,6 +663,10 @@ country_event = {
 		add_political_power = -200
 		add_stability = -0.15
 		add_war_support = -0.25
+		add_timed_idea = {
+			idea = SOV_Remnants_purge
+			days = 730
+		}
 	}
 }
 
@@ -1796,8 +1800,7 @@ country_event = {
 				}
 			}
 		}
-		set_temp_variable = { sov_opposition_strength = 100 }
-		subtract_from_temp_variable = { sov_opposition_strength = var:sov_great_purge_completion }
+		set_temp_variable = { sov_opposition_strength = var:sov_great_purge_completion }
 		divide_temp_variable = { sov_opposition_strength = 100 }
 		clamp_temp_variable = {
 			var = sov_opposition_strength
@@ -1809,6 +1812,10 @@ country_event = {
 			size = var:sov_opposition_strength
 			keep_political_leader = yes
 		}
+		add_timed_idea = {
+			idea = SOV_Remnants_purge
+			days = 730
+		}
 		hidden_effect = {
 			create_faction = sov_comintern_faction
 			random_other_country = {
@@ -1818,6 +1825,10 @@ country_event = {
 					NOT = {
 						tag = ROOT
 					}
+				}
+				add_timed_idea = {
+					idea = SOV_Remnants_purge
+					days = 730
 				}
 				every_country = {
 					limit = {
@@ -2024,7 +2035,7 @@ country_event = {
 		}
 	}
 
-	#Go against Stalin
+	#Go Against Stalin
 	option = {
 		name = russia2_russia.49.b
 		ai_chance = {
@@ -2053,6 +2064,10 @@ country_event = {
 			ideology = communism
 			size = var:sov_opposition_strength
 			keep_political_leader = yes
+		}
+		add_timed_idea = {
+			idea = SOV_Remnants_purge
+			days = 730
 		}
 		hidden_effect = {
 			create_faction = sov_comintern_faction
@@ -25183,35 +25198,35 @@ country_event = {
 	option = { #Purge
 		name = russia2_russia.554.a
 		ai_chance = {
-			factor = 75
+			factor = 50
 			modifier = {
-				add = 25
+				add = 50
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -25232,43 +25247,44 @@ country_event = {
 		}
 		custom_effect_tooltip = remove_theorist
 		show_ideas_tooltip = SOV_Mikhail_tukhachevsky
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Don't purge
 		name = russia2_russia.554.b
 		ai_chance = {
-			factor = 25
+			factor = 50
 			modifier = {
-				add = 75
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
-				check_variable = {
-					var = sov_great_purge_completion
-					value = 80
-					compare = greater_than_or_equals
+				factor = 0
+				OR = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					check_variable = {
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
+					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
+				add = -25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = yes
+			}
+			modifier = {
+				add = 50
+				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = less_than
 				}
 			}
 		}
 		custom_effect_tooltip = sov_remove_5_purge_completion
 		set_country_flag = mikhail_tukhachevsky_not_purged
-		add_political_power = -100
 		subtract_from_variable = { sov_great_purge_completion = 5 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
@@ -25276,6 +25292,26 @@ country_event = {
 			min = 0
 			max = 100
 		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = sov_stalin_too_suspicious_tt
+			set_temp_variable = { pp_loss_purge = -50 }
+			multiply_temp_variable = { pp_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { stability_loss_purge = -0.05 }
+			multiply_temp_variable = { stability_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { war_support_loss_purge = -0.05 }
+			multiply_temp_variable = { war_support_loss_purge = var:sov_no_purge_count }
+			add_political_power = var:pp_loss_purge
+			add_stability = var:stability_loss_purge
+			add_war_support = var:war_support_loss_purge
+		}
+		add_to_variable = { sov_no_purge_count = 1 }
 	}
 }
 
@@ -25314,35 +25350,21 @@ country_event = {
 	option = { #Purge
 		name = russia2_russia.555.a
 		ai_chance = {
-			factor = 75
+			factor = 0 #AI doesn't want to purge Zhukov unless necessary
 			modifier = {
-				add = 25
-				OR = {
-					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
+				add = 75
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
-				}
-				else = {
-					always = no
+				add = 100
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = greater_than_or_equals
 				}
 			}
 		}
@@ -25364,43 +25386,32 @@ country_event = {
 		remove_ideas = SOV_Georgy_zhukov
 		custom_effect_tooltip = remove_theorist
 		show_ideas_tooltip = SOV_Georgy_zhukov
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Don't purge
 		name = russia2_russia.555.b
 		ai_chance = {
-			factor = 25
+			factor = 100
 			modifier = {
-				add = 75
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				add = -25
 				check_variable = {
-					var = sov_great_purge_completion
-					value = 80
-					compare = greater_than_or_equals
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
 			}
 			modifier = {
 				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
-				}
-				else = {
-					always = yes
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = greater_than_or_equals
 				}
 			}
 		}
 		custom_effect_tooltip = sov_remove_5_purge_completion
 		set_country_flag = georgy_zhukov_not_purged
-		add_political_power = -100
 		subtract_from_variable = { sov_great_purge_completion = 5 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
@@ -25408,6 +25419,26 @@ country_event = {
 			min = 0
 			max = 100
 		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = sov_stalin_too_suspicious_tt
+			set_temp_variable = { pp_loss_purge = -50 }
+			multiply_temp_variable = { pp_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { stability_loss_purge = -0.05 }
+			multiply_temp_variable = { stability_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { war_support_loss_purge = -0.05 }
+			multiply_temp_variable = { war_support_loss_purge = var:sov_no_purge_count }
+			add_political_power = var:pp_loss_purge
+			add_stability = var:stability_loss_purge
+			add_war_support = var:war_support_loss_purge
+		}
+		add_to_variable = { sov_no_purge_count = 1 }
 	}
 }
 
@@ -25446,89 +25477,80 @@ country_event = {
 	option = { #Purge
 		name = russia2_russia.556.a
 		ai_chance = {
-			factor = 75
+			factor = 50
 			modifier = {
-				add = 25
+				add = 50
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
+				}
+			}
+			modifier = {
+				add = 25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
 			}
 			modifier = {
 				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 				}
-				else = {
-					always = no
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
-		}
-		set_country_flag = mikhail_kalinin_purged
-		set_variable = { sov_great_purge_frame^2 = 2 }
-		set_variable = { sov_great_purge_date^2 = global.date }
-		add_to_variable = { sov_great_purge_completion = 10 }
-		round_variable = sov_great_purge_completion
-		clamp_variable = {
-			var = sov_great_purge_completion
-			min = 0
-			max = 100
 		}
 		custom_effect_tooltip = sov_add_10_purge_completion
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_political_advisor
 		show_ideas_tooltip = SOV_Mikhail_kalinin
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Don't purge
 		name = russia2_russia.556.b
 		ai_chance = {
-			factor = 25
+			factor = 50
 			modifier = {
-				add = 75
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
-				check_variable = {
-					var = sov_great_purge_completion
-					value = 80
-					compare = greater_than_or_equals
+				factor = 0
+				OR = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					check_variable = {
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
+					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
+				add = -25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = yes
+			}
+			modifier = {
+				add = 50
+				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = less_than
 				}
 			}
 		}
 		custom_effect_tooltip = sov_remove_5_purge_completion
 		set_country_flag = mikhail_kalinin_not_purged
-		add_political_power = -100
 		subtract_from_variable = { sov_great_purge_completion = 5 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
@@ -25536,6 +25558,26 @@ country_event = {
 			min = 0
 			max = 100
 		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = sov_stalin_too_suspicious_tt
+			set_temp_variable = { pp_loss_purge = -50 }
+			multiply_temp_variable = { pp_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { stability_loss_purge = -0.05 }
+			multiply_temp_variable = { stability_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { war_support_loss_purge = -0.05 }
+			multiply_temp_variable = { war_support_loss_purge = var:sov_no_purge_count }
+			add_political_power = var:pp_loss_purge
+			add_stability = var:stability_loss_purge
+			add_war_support = var:war_support_loss_purge
+		}
+		add_to_variable = { sov_no_purge_count = 1 }
 	}
 }
 
@@ -25559,35 +25601,35 @@ country_event = {
 	option = { #Purge
 		name = russia2_russia.557.a
 		ai_chance = {
-			factor = 75
+			factor = 50
 			modifier = {
-				add = 25
+				add = 50
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -25609,42 +25651,43 @@ country_event = {
 		custom_effect_tooltip = remove_political_advisor
 		show_ideas_tooltip = SOV_Kliment_voroshilov_advisor
 		show_ideas_tooltip = SOV_Kliment_voroshilov_military
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Don't purge
 		name = russia2_russia.557.b
 		ai_chance = {
-			factor = 25
+			factor = 50
 			modifier = {
-				add = 75
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
-				check_variable = {
-					var = sov_great_purge_completion
-					value = 80
-					compare = greater_than_or_equals
+				factor = 0
+				OR = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					check_variable = {
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
+					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
+				add = -25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = yes
+			}
+			modifier = {
+				add = 50
+				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = less_than
 				}
 			}
 		}
 		custom_effect_tooltip = sov_remove_1_purge_completion
-		add_political_power = -50
 		subtract_from_variable = { sov_great_purge_completion = 1 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
@@ -25652,6 +25695,26 @@ country_event = {
 			min = 0
 			max = 100
 		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = sov_stalin_too_suspicious_tt
+			set_temp_variable = { pp_loss_purge = -50 }
+			multiply_temp_variable = { pp_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { stability_loss_purge = -0.05 }
+			multiply_temp_variable = { stability_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { war_support_loss_purge = -0.05 }
+			multiply_temp_variable = { war_support_loss_purge = var:sov_no_purge_count }
+			add_political_power = var:pp_loss_purge
+			add_stability = var:stability_loss_purge
+			add_war_support = var:war_support_loss_purge
+		}
+		add_to_variable = { sov_no_purge_count = 1 }
 	}
 }
 
@@ -25673,35 +25736,35 @@ country_event = {
 	option = { #Purge Beria
 		name = russia2_russia.558.a
 		ai_chance = {
-			factor = 40
+			factor = 35
 			modifier = {
-				add = 10
+				add = 15
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 7.5
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -25719,40 +25782,41 @@ country_event = {
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_political_advisor
 		show_ideas_tooltip = SOV_Lavrentiy_beria
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Purge Yagoda
 		name = russia2_russia.558.b
 		ai_chance = {
-			factor = 40
+			factor = 35
 			modifier = {
-				add = 10
+				add = 15
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 7.5
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -25770,42 +25834,43 @@ country_event = {
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_political_advisor
 		show_ideas_tooltip = SOV_Genrikh_yagoda
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Don't purge
 		name = russia2_russia.558.c
 		ai_chance = {
-			factor = 20
+			factor = 30
 			modifier = {
-				add = 80
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
-				check_variable = {
-					var = sov_great_purge_completion
-					value = 80
-					compare = greater_than_or_equals
+				factor = 0
+				OR = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					check_variable = {
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
+					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
+				add = -15
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = yes
+			}
+			modifier = {
+				add = 70
+				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = less_than
 				}
 			}
 		}
 		custom_effect_tooltip = sov_remove_3_purge_completion
-		add_political_power = -75
 		subtract_from_variable = { sov_great_purge_completion = 3 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
@@ -25813,6 +25878,26 @@ country_event = {
 			min = 0
 			max = 100
 		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = sov_stalin_too_suspicious_tt
+			set_temp_variable = { pp_loss_purge = -50 }
+			multiply_temp_variable = { pp_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { stability_loss_purge = -0.05 }
+			multiply_temp_variable = { stability_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { war_support_loss_purge = -0.05 }
+			multiply_temp_variable = { war_support_loss_purge = var:sov_no_purge_count }
+			add_political_power = var:pp_loss_purge
+			add_stability = var:stability_loss_purge
+			add_war_support = var:war_support_loss_purge
+		}
+		add_to_variable = { sov_no_purge_count = 1 }
 	}
 }
 
@@ -25835,35 +25920,35 @@ country_event = {
 	option = { #Purge
 		name = russia2_russia.559.a
 		ai_chance = {
-			factor = 75
+			factor = 50
 			modifier = {
-				add = 25
+				add = 50
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -25881,42 +25966,43 @@ country_event = {
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_political_advisor
 		show_ideas_tooltip = SOV_nikolai_voznesensky
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Don't purge
 		name = russia2_russia.559.b
 		ai_chance = {
-			factor = 25
+			factor = 50
 			modifier = {
-				add = 75
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
-				check_variable = {
-					var = sov_great_purge_completion
-					value = 80
-					compare = greater_than_or_equals
+				factor = 0
+				OR = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					check_variable = {
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
+					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
+				add = -25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = yes
+			}
+			modifier = {
+				add = 50
+				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = less_than
 				}
 			}
 		}
 		custom_effect_tooltip = sov_remove_1_purge_completion
-		add_political_power = -50
 		subtract_from_variable = { sov_great_purge_completion = 1 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
@@ -25924,6 +26010,26 @@ country_event = {
 			min = 0
 			max = 100
 		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = sov_stalin_too_suspicious_tt
+			set_temp_variable = { pp_loss_purge = -50 }
+			multiply_temp_variable = { pp_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { stability_loss_purge = -0.05 }
+			multiply_temp_variable = { stability_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { war_support_loss_purge = -0.05 }
+			multiply_temp_variable = { war_support_loss_purge = var:sov_no_purge_count }
+			add_political_power = var:pp_loss_purge
+			add_stability = var:stability_loss_purge
+			add_war_support = var:war_support_loss_purge
+		}
+		add_to_variable = { sov_no_purge_count = 1 }
 	}
 }
 
@@ -25946,35 +26052,35 @@ country_event = {
 	option = { #Purge
 		name = russia2_russia.560.a
 		ai_chance = {
-			factor = 75
+			factor = 50
 			modifier = {
-				add = 25
+				add = 50
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -25993,42 +26099,43 @@ country_event = {
 		SOV_Grigory_kulik = {
 			remove_unit_leader_role = yes
 		}
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Don't purge
 		name = russia2_russia.560.b
 		ai_chance = {
-			factor = 25
+			factor = 50
 			modifier = {
-				add = 75
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
-				check_variable = {
-					var = sov_great_purge_completion
-					value = 80
-					compare = greater_than_or_equals
+				factor = 0
+				OR = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					check_variable = {
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
+					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
+				add = -25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = yes
+			}
+			modifier = {
+				add = 50
+				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = less_than
 				}
 			}
 		}
 		custom_effect_tooltip = sov_remove_1_purge_completion
-		add_political_power = -50
 		subtract_from_variable = { sov_great_purge_completion = 1 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
@@ -26036,6 +26143,26 @@ country_event = {
 			min = 0
 			max = 100
 		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = sov_stalin_too_suspicious_tt
+			set_temp_variable = { pp_loss_purge = -50 }
+			multiply_temp_variable = { pp_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { stability_loss_purge = -0.05 }
+			multiply_temp_variable = { stability_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { war_support_loss_purge = -0.05 }
+			multiply_temp_variable = { war_support_loss_purge = var:sov_no_purge_count }
+			add_political_power = var:pp_loss_purge
+			add_stability = var:stability_loss_purge
+			add_war_support = var:war_support_loss_purge
+		}
+		add_to_variable = { sov_no_purge_count = 1 }
 	}
 }
 
@@ -26058,35 +26185,35 @@ country_event = {
 	option = { #Purge
 		name = russia2_russia.561.a
 		ai_chance = {
-			factor = 75
+			factor = 50
 			modifier = {
-				add = 25
+				add = 50
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -26104,42 +26231,43 @@ country_event = {
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_political_advisor
 		show_ideas_tooltip = SOV_Vsevolod_merkulov
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Don't purge
 		name = russia2_russia.561.b
 		ai_chance = {
-			factor = 25
+			factor = 50
 			modifier = {
-				add = 75
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
-				check_variable = {
-					var = sov_great_purge_completion
-					value = 80
-					compare = greater_than_or_equals
+				factor = 0
+				OR = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					check_variable = {
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
+					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
+				add = -25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = yes
+			}
+			modifier = {
+				add = 50
+				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = less_than
 				}
 			}
 		}
 		custom_effect_tooltip = sov_remove_1_purge_completion
-		add_political_power = -50
 		subtract_from_variable = { sov_great_purge_completion = 1 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
@@ -26147,6 +26275,26 @@ country_event = {
 			min = 0
 			max = 100
 		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = sov_stalin_too_suspicious_tt
+			set_temp_variable = { pp_loss_purge = -50 }
+			multiply_temp_variable = { pp_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { stability_loss_purge = -0.05 }
+			multiply_temp_variable = { stability_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { war_support_loss_purge = -0.05 }
+			multiply_temp_variable = { war_support_loss_purge = var:sov_no_purge_count }
+			add_political_power = var:pp_loss_purge
+			add_stability = var:stability_loss_purge
+			add_war_support = var:war_support_loss_purge
+		}
+		add_to_variable = { sov_no_purge_count = 1 }
 	}
 }
 
@@ -26169,35 +26317,35 @@ country_event = {
 	option = { #Purge Maisky
 		name = russia2_russia.556.a
 		ai_chance = {
-			factor = 40
+			factor = 35
 			modifier = {
-				add = 10
+				add = 15
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 7.5
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -26216,40 +26364,41 @@ country_event = {
 		custom_effect_tooltip = remove_political_advisor
 		show_ideas_tooltip = SOV_Ivan_maisky
 		custom_effect_tooltip = only_molotov_will_remain
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Purge Molotov
 		name = russia2_russia.562.b
 		ai_chance = {
-			factor = 40
+			factor = 35
 			modifier = {
-				add = 10
+				add = 15
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 7.5
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -26268,42 +26417,43 @@ country_event = {
 		custom_effect_tooltip = remove_political_advisor
 		show_ideas_tooltip = SOV_Vyacheslav_molotov
 		custom_effect_tooltip = only_maisky_will_remain
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Don't purge
 		name = russia2_russia.562.c
 		ai_chance = {
-			factor = 20
+			factor = 30
 			modifier = {
-				add = 80
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
-				check_variable = {
-					var = sov_great_purge_completion
-					value = 80
-					compare = greater_than_or_equals
+				factor = 0
+				OR = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					check_variable = {
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
+					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
+				add = -15
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = yes
+			}
+			modifier = {
+				add = 70
+				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = less_than
 				}
 			}
 		}
 		custom_effect_tooltip = sov_remove_3_purge_completion
-		add_political_power = -75
 		subtract_from_variable = { sov_great_purge_completion = 3 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
@@ -26311,6 +26461,26 @@ country_event = {
 			min = 0
 			max = 100
 		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = sov_stalin_too_suspicious_tt
+			set_temp_variable = { pp_loss_purge = -50 }
+			multiply_temp_variable = { pp_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { stability_loss_purge = -0.05 }
+			multiply_temp_variable = { stability_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { war_support_loss_purge = -0.05 }
+			multiply_temp_variable = { war_support_loss_purge = var:sov_no_purge_count }
+			add_political_power = var:pp_loss_purge
+			add_stability = var:stability_loss_purge
+			add_war_support = var:war_support_loss_purge
+		}
+		add_to_variable = { sov_no_purge_count = 1 }
 	}
 }
 
@@ -26333,35 +26503,35 @@ country_event = {
 	option = { #Purge
 		name = russia2_russia.563.a
 		ai_chance = {
-			factor = 75
+			factor = 50
 			modifier = {
-				add = 25
+				add = 50
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -26379,42 +26549,43 @@ country_event = {
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_political_advisor
 		show_ideas_tooltip = SOV_Nikita_khrushchev
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Don't purge
 		name = russia2_russia.563.b
 		ai_chance = {
-			factor = 25
+			factor = 50
 			modifier = {
-				add = 75
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
-				check_variable = {
-					var = sov_great_purge_completion
-					value = 80
-					compare = greater_than_or_equals
+				factor = 0
+				OR = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					check_variable = {
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
+					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
+				add = -25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = yes
+			}
+			modifier = {
+				add = 50
+				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = less_than
 				}
 			}
 		}
 		custom_effect_tooltip = sov_remove_1_purge_completion
-		add_political_power = -50
 		subtract_from_variable = { sov_great_purge_completion = 1 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
@@ -26422,6 +26593,26 @@ country_event = {
 			min = 0
 			max = 100
 		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = sov_stalin_too_suspicious_tt
+			set_temp_variable = { pp_loss_purge = -50 }
+			multiply_temp_variable = { pp_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { stability_loss_purge = -0.05 }
+			multiply_temp_variable = { stability_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { war_support_loss_purge = -0.05 }
+			multiply_temp_variable = { war_support_loss_purge = var:sov_no_purge_count }
+			add_political_power = var:pp_loss_purge
+			add_stability = var:stability_loss_purge
+			add_war_support = var:war_support_loss_purge
+		}
+		add_to_variable = { sov_no_purge_count = 1 }
 	}
 }
 
@@ -26444,35 +26635,35 @@ country_event = {
 	option = { #Purge
 		name = russia2_russia.564.a
 		ai_chance = {
-			factor = 75
+			factor = 50
 			modifier = {
-				add = 25
+				add = 50
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -26493,42 +26684,43 @@ country_event = {
 		}
 		custom_effect_tooltip = remove_chief_of_army
 		show_ideas_tooltip = SOV_Semyon_timoshenko
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Don't purge
 		name = russia2_russia.564.b
 		ai_chance = {
-			factor = 25
+			factor = 50
 			modifier = {
-				add = 75
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
-				check_variable = {
-					var = sov_great_purge_completion
-					value = 80
-					compare = greater_than_or_equals
+				factor = 0
+				OR = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					check_variable = {
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
+					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
+				add = -25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = yes
+			}
+			modifier = {
+				add = 50
+				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = less_than
 				}
 			}
 		}
 		custom_effect_tooltip = sov_remove_1_purge_completion
-		add_political_power = -50
 		subtract_from_variable = { sov_great_purge_completion = 1 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
@@ -26536,6 +26728,26 @@ country_event = {
 			min = 0
 			max = 100
 		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = sov_stalin_too_suspicious_tt
+			set_temp_variable = { pp_loss_purge = -50 }
+			multiply_temp_variable = { pp_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { stability_loss_purge = -0.05 }
+			multiply_temp_variable = { stability_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { war_support_loss_purge = -0.05 }
+			multiply_temp_variable = { war_support_loss_purge = var:sov_no_purge_count }
+			add_political_power = var:pp_loss_purge
+			add_stability = var:stability_loss_purge
+			add_war_support = var:war_support_loss_purge
+		}
+		add_to_variable = { sov_no_purge_count = 1 }
 	}
 }
 
@@ -26558,35 +26770,35 @@ country_event = {
 	option = { #Purge
 		name = russia2_russia.565.a
 		ai_chance = {
-			factor = 75
+			factor = 50
 			modifier = {
-				add = 25
+				add = 50
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -26604,42 +26816,43 @@ country_event = {
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_chief_of_army
 		show_ideas_tooltip = SOV_Alexander_yegorov
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Don't purge
 		name = russia2_russia.565.b
 		ai_chance = {
-			factor = 25
+			factor = 50
 			modifier = {
-				add = 75
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
-				check_variable = {
-					var = sov_great_purge_completion
-					value = 80
-					compare = greater_than_or_equals
+				factor = 0
+				OR = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					check_variable = {
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
+					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
+				add = -25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = yes
+			}
+			modifier = {
+				add = 50
+				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = less_than
 				}
 			}
 		}
 		custom_effect_tooltip = sov_remove_1_purge_completion
-		add_political_power = -50
 		subtract_from_variable = { sov_great_purge_completion = 1 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
@@ -26647,6 +26860,26 @@ country_event = {
 			min = 0
 			max = 100
 		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = sov_stalin_too_suspicious_tt
+			set_temp_variable = { pp_loss_purge = -50 }
+			multiply_temp_variable = { pp_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { stability_loss_purge = -0.05 }
+			multiply_temp_variable = { stability_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { war_support_loss_purge = -0.05 }
+			multiply_temp_variable = { war_support_loss_purge = var:sov_no_purge_count }
+			add_political_power = var:pp_loss_purge
+			add_stability = var:stability_loss_purge
+			add_war_support = var:war_support_loss_purge
+		}
+		add_to_variable = { sov_no_purge_count = 1 }
 	}
 }
 
@@ -26669,35 +26902,35 @@ country_event = {
 	option = { #Purge
 		name = russia2_russia.566.a
 		ai_chance = {
-			factor = 75
+			factor = 50
 			modifier = {
-				add = 25
+				add = 50
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -26715,42 +26948,43 @@ country_event = {
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_chief_of_army
 		show_ideas_tooltip = SOV_Vasily_blucher
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Don't purge
 		name = russia2_russia.566.b
 		ai_chance = {
-			factor = 25
+			factor = 50
 			modifier = {
-				add = 75
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
-				check_variable = {
-					var = sov_great_purge_completion
-					value = 80
-					compare = greater_than_or_equals
+				factor = 0
+				OR = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					check_variable = {
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
+					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
+				add = -25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = yes
+			}
+			modifier = {
+				add = 50
+				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = less_than
 				}
 			}
 		}
 		custom_effect_tooltip = sov_remove_1_purge_completion
-		add_political_power = -50
 		subtract_from_variable = { sov_great_purge_completion = 1 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
@@ -26758,6 +26992,26 @@ country_event = {
 			min = 0
 			max = 100
 		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = sov_stalin_too_suspicious_tt
+			set_temp_variable = { pp_loss_purge = -50 }
+			multiply_temp_variable = { pp_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { stability_loss_purge = -0.05 }
+			multiply_temp_variable = { stability_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { war_support_loss_purge = -0.05 }
+			multiply_temp_variable = { war_support_loss_purge = var:sov_no_purge_count }
+			add_political_power = var:pp_loss_purge
+			add_stability = var:stability_loss_purge
+			add_war_support = var:war_support_loss_purge
+		}
+		add_to_variable = { sov_no_purge_count = 1 }
 	}
 }
 
@@ -26780,35 +27034,35 @@ country_event = {
 	option = { #Purge
 		name = russia2_russia.567.a
 		ai_chance = {
-			factor = 75
+			factor = 50
 			modifier = {
-				add = 25
+				add = 50
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -26826,42 +27080,43 @@ country_event = {
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_chief_of_navy
 		show_ideas_tooltip = SOV_Pyotr_smirnov
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Don't purge
 		name = russia2_russia.567.b
 		ai_chance = {
-			factor = 25
+			factor = 50
 			modifier = {
-				add = 75
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
-				check_variable = {
-					var = sov_great_purge_completion
-					value = 80
-					compare = greater_than_or_equals
+				factor = 0
+				OR = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					check_variable = {
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
+					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
+				add = -25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = yes
+			}
+			modifier = {
+				add = 50
+				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = less_than
 				}
 			}
 		}
 		custom_effect_tooltip = sov_remove_1_purge_completion
-		add_political_power = -50
 		subtract_from_variable = { sov_great_purge_completion = 1 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
@@ -26869,6 +27124,26 @@ country_event = {
 			min = 0
 			max = 100
 		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = sov_stalin_too_suspicious_tt
+			set_temp_variable = { pp_loss_purge = -50 }
+			multiply_temp_variable = { pp_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { stability_loss_purge = -0.05 }
+			multiply_temp_variable = { stability_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { war_support_loss_purge = -0.05 }
+			multiply_temp_variable = { war_support_loss_purge = var:sov_no_purge_count }
+			add_political_power = var:pp_loss_purge
+			add_stability = var:stability_loss_purge
+			add_war_support = var:war_support_loss_purge
+		}
+		add_to_variable = { sov_no_purge_count = 1 }
 	}
 }
 
@@ -26891,35 +27166,35 @@ country_event = {
 	option = { #Purge
 		name = russia2_russia.568.a
 		ai_chance = {
-			factor = 75
+			factor = 50
 			modifier = {
-				add = 25
+				add = 50
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -26937,42 +27212,43 @@ country_event = {
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_chief_of_navy
 		show_ideas_tooltip = SOV_Mikhail_frinovsky
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Don't purge
 		name = russia2_russia.568.b
 		ai_chance = {
-			factor = 25
+			factor = 50
 			modifier = {
-				add = 75
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
-				check_variable = {
-					var = sov_great_purge_completion
-					value = 80
-					compare = greater_than_or_equals
+				factor = 0
+				OR = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					check_variable = {
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
+					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
+				add = -25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = yes
+			}
+			modifier = {
+				add = 50
+				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = less_than
 				}
 			}
 		}
 		custom_effect_tooltip = sov_remove_1_purge_completion
-		add_political_power = -50
 		subtract_from_variable = { sov_great_purge_completion = 1 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
@@ -26980,6 +27256,26 @@ country_event = {
 			min = 0
 			max = 100
 		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = sov_stalin_too_suspicious_tt
+			set_temp_variable = { pp_loss_purge = -50 }
+			multiply_temp_variable = { pp_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { stability_loss_purge = -0.05 }
+			multiply_temp_variable = { stability_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { war_support_loss_purge = -0.05 }
+			multiply_temp_variable = { war_support_loss_purge = var:sov_no_purge_count }
+			add_political_power = var:pp_loss_purge
+			add_stability = var:stability_loss_purge
+			add_war_support = var:war_support_loss_purge
+		}
+		add_to_variable = { sov_no_purge_count = 1 }
 	}
 }
 
@@ -27002,35 +27298,35 @@ country_event = {
 	option = { #Purge
 		name = russia2_russia.569.a
 		ai_chance = {
-			factor = 75
+			factor = 50
 			modifier = {
-				add = 25
+				add = 50
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -27048,42 +27344,43 @@ country_event = {
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_chief_of_navy
 		show_ideas_tooltip = SOV_Nikolay_kuznetsov
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Don't purge
 		name = russia2_russia.569.b
 		ai_chance = {
-			factor = 25
+			factor = 50
 			modifier = {
-				add = 75
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
-				check_variable = {
-					var = sov_great_purge_completion
-					value = 80
-					compare = greater_than_or_equals
+				factor = 0
+				OR = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					check_variable = {
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
+					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
+				add = -25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = yes
+			}
+			modifier = {
+				add = 50
+				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = less_than
 				}
 			}
 		}
 		custom_effect_tooltip = sov_remove_1_purge_completion
-		add_political_power = -50
 		subtract_from_variable = { sov_great_purge_completion = 1 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
@@ -27091,6 +27388,26 @@ country_event = {
 			min = 0
 			max = 100
 		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = sov_stalin_too_suspicious_tt
+			set_temp_variable = { pp_loss_purge = -50 }
+			multiply_temp_variable = { pp_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { stability_loss_purge = -0.05 }
+			multiply_temp_variable = { stability_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { war_support_loss_purge = -0.05 }
+			multiply_temp_variable = { war_support_loss_purge = var:sov_no_purge_count }
+			add_political_power = var:pp_loss_purge
+			add_stability = var:stability_loss_purge
+			add_war_support = var:war_support_loss_purge
+		}
+		add_to_variable = { sov_no_purge_count = 1 }
 	}
 }
 
@@ -27113,35 +27430,35 @@ country_event = {
 	option = { #Purge
 		name = russia2_russia.570.a
 		ai_chance = {
-			factor = 75
+			factor = 50
 			modifier = {
-				add = 25
+				add = 50
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -27159,42 +27476,43 @@ country_event = {
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_chief_of_navy
 		show_ideas_tooltip = SOV_Ivan_yumashev
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Don't purge
 		name = russia2_russia.570.b
 		ai_chance = {
-			factor = 25
+			factor = 50
 			modifier = {
-				add = 75
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
-				check_variable = {
-					var = sov_great_purge_completion
-					value = 80
-					compare = greater_than_or_equals
+				factor = 0
+				OR = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					check_variable = {
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
+					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
+				add = -25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = yes
+			}
+			modifier = {
+				add = 50
+				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = less_than
 				}
 			}
 		}
 		custom_effect_tooltip = sov_remove_1_purge_completion
-		add_political_power = -50
 		subtract_from_variable = { sov_great_purge_completion = 1 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
@@ -27202,6 +27520,26 @@ country_event = {
 			min = 0
 			max = 100
 		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = sov_stalin_too_suspicious_tt
+			set_temp_variable = { pp_loss_purge = -50 }
+			multiply_temp_variable = { pp_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { stability_loss_purge = -0.05 }
+			multiply_temp_variable = { stability_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { war_support_loss_purge = -0.05 }
+			multiply_temp_variable = { war_support_loss_purge = var:sov_no_purge_count }
+			add_political_power = var:pp_loss_purge
+			add_stability = var:stability_loss_purge
+			add_war_support = var:war_support_loss_purge
+		}
+		add_to_variable = { sov_no_purge_count = 1 }
 	}
 }
 
@@ -27224,35 +27562,35 @@ country_event = {
 	option = { #Purge
 		name = russia2_russia.571.a
 		ai_chance = {
-			factor = 75
+			factor = 50
 			modifier = {
-				add = 25
+				add = 50
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -27270,42 +27608,43 @@ country_event = {
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_chief_of_airforce
 		show_ideas_tooltip = SOV_Alexander_novikov
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Don't purge
 		name = russia2_russia.571.b
 		ai_chance = {
-			factor = 25
+			factor = 50
 			modifier = {
-				add = 75
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
-				check_variable = {
-					var = sov_great_purge_completion
-					value = 80
-					compare = greater_than_or_equals
+				factor = 0
+				OR = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					check_variable = {
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
+					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
+				add = -25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = yes
+			}
+			modifier = {
+				add = 50
+				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = less_than
 				}
 			}
 		}
 		custom_effect_tooltip = sov_remove_1_purge_completion
-		add_political_power = -50
 		subtract_from_variable = { sov_great_purge_completion = 1 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
@@ -27313,6 +27652,26 @@ country_event = {
 			min = 0
 			max = 100
 		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = sov_stalin_too_suspicious_tt
+			set_temp_variable = { pp_loss_purge = -50 }
+			multiply_temp_variable = { pp_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { stability_loss_purge = -0.05 }
+			multiply_temp_variable = { stability_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { war_support_loss_purge = -0.05 }
+			multiply_temp_variable = { war_support_loss_purge = var:sov_no_purge_count }
+			add_political_power = var:pp_loss_purge
+			add_stability = var:stability_loss_purge
+			add_war_support = var:war_support_loss_purge
+		}
+		add_to_variable = { sov_no_purge_count = 1 }
 	}
 }
 
@@ -27335,35 +27694,35 @@ country_event = {
 	option = { #Purge
 		name = russia2_russia.572.a
 		ai_chance = {
-			factor = 75
+			factor = 50
 			modifier = {
-				add = 25
+				add = 50
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -27381,42 +27740,43 @@ country_event = {
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_chief_of_airforce
 		show_ideas_tooltip = SOV_Konstantin_vershinin
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Don't purge
 		name = russia2_russia.572.b
 		ai_chance = {
-			factor = 25
+			factor = 50
 			modifier = {
-				add = 75
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
-				check_variable = {
-					var = sov_great_purge_completion
-					value = 80
-					compare = greater_than_or_equals
+				factor = 0
+				OR = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					check_variable = {
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
+					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
+				add = -25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = yes
+			}
+			modifier = {
+				add = 50
+				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = less_than
 				}
 			}
 		}
 		custom_effect_tooltip = sov_remove_1_purge_completion
-		add_political_power = -50
 		subtract_from_variable = { sov_great_purge_completion = 1 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
@@ -27424,6 +27784,26 @@ country_event = {
 			min = 0
 			max = 100
 		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = sov_stalin_too_suspicious_tt
+			set_temp_variable = { pp_loss_purge = -50 }
+			multiply_temp_variable = { pp_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { stability_loss_purge = -0.05 }
+			multiply_temp_variable = { stability_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { war_support_loss_purge = -0.05 }
+			multiply_temp_variable = { war_support_loss_purge = var:sov_no_purge_count }
+			add_political_power = var:pp_loss_purge
+			add_stability = var:stability_loss_purge
+			add_war_support = var:war_support_loss_purge
+		}
+		add_to_variable = { sov_no_purge_count = 1 }
 	}
 }
 
@@ -27446,35 +27826,35 @@ country_event = {
 	option = { #Purge
 		name = russia2_russia.573.a
 		ai_chance = {
-			factor = 75
+			factor = 50
 			modifier = {
-				add = 25
+				add = 50
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -27492,42 +27872,43 @@ country_event = {
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_chief_of_airforce
 		show_ideas_tooltip = SOV_Yakov_smushkevich
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Don't purge
 		name = russia2_russia.573.b
 		ai_chance = {
-			factor = 25
+			factor = 50
 			modifier = {
-				add = 75
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
-				check_variable = {
-					var = sov_great_purge_completion
-					value = 80
-					compare = greater_than_or_equals
+				factor = 0
+				OR = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					check_variable = {
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
+					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
+				add = -25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = yes
+			}
+			modifier = {
+				add = 50
+				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = less_than
 				}
 			}
 		}
 		custom_effect_tooltip = sov_remove_1_purge_completion
-		add_political_power = -50
 		subtract_from_variable = { sov_great_purge_completion = 1 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
@@ -27535,6 +27916,26 @@ country_event = {
 			min = 0
 			max = 100
 		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = sov_stalin_too_suspicious_tt
+			set_temp_variable = { pp_loss_purge = -50 }
+			multiply_temp_variable = { pp_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { stability_loss_purge = -0.05 }
+			multiply_temp_variable = { stability_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { war_support_loss_purge = -0.05 }
+			multiply_temp_variable = { war_support_loss_purge = var:sov_no_purge_count }
+			add_political_power = var:pp_loss_purge
+			add_stability = var:stability_loss_purge
+			add_war_support = var:war_support_loss_purge
+		}
+		add_to_variable = { sov_no_purge_count = 1 }
 	}
 }
 
@@ -27557,35 +27958,35 @@ country_event = {
 	option = { #Purge
 		name = russia2_russia.574.a
 		ai_chance = {
-			factor = 75
+			factor = 50
 			modifier = {
-				add = 25
+				add = 50
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -27603,42 +28004,43 @@ country_event = {
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_chief_of_airforce
 		show_ideas_tooltip = SOV_Pavel_rychagov
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Don't purge
 		name = russia2_russia.574.b
 		ai_chance = {
-			factor = 25
+			factor = 50
 			modifier = {
-				add = 75
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
-				check_variable = {
-					var = sov_great_purge_completion
-					value = 80
-					compare = greater_than_or_equals
+				factor = 0
+				OR = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					check_variable = {
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
+					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
+				add = -25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = yes
+			}
+			modifier = {
+				add = 50
+				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = less_than
 				}
 			}
 		}
 		custom_effect_tooltip = sov_remove_1_purge_completion
-		add_political_power = -50
 		subtract_from_variable = { sov_great_purge_completion = 1 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
@@ -27646,6 +28048,26 @@ country_event = {
 			min = 0
 			max = 100
 		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = sov_stalin_too_suspicious_tt
+			set_temp_variable = { pp_loss_purge = -50 }
+			multiply_temp_variable = { pp_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { stability_loss_purge = -0.05 }
+			multiply_temp_variable = { stability_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { war_support_loss_purge = -0.05 }
+			multiply_temp_variable = { war_support_loss_purge = var:sov_no_purge_count }
+			add_political_power = var:pp_loss_purge
+			add_stability = var:stability_loss_purge
+			add_war_support = var:war_support_loss_purge
+		}
+		add_to_variable = { sov_no_purge_count = 1 }
 	}
 }
 
@@ -27667,35 +28089,35 @@ country_event = {
 	option = { #Purge Konev
 		name = russia2_russia.575.a
 		ai_chance = {
-			factor = 40
+			factor = 35
 			modifier = {
-				add = 10
+				add = 15
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 7.5
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -27716,40 +28138,41 @@ country_event = {
 		}
 		custom_effect_tooltip = remove_military_high_command
 		show_ideas_tooltip = SOV_Ivan_konev
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Purge Rokossovsky
 		name = russia2_russia.575.b
 		ai_chance = {
-			factor = 40
+			factor = 35
 			modifier = {
-				add = 10
+				add = 15
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 7.5
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -27770,42 +28193,43 @@ country_event = {
 		}
 		custom_effect_tooltip = remove_military_high_command
 		show_ideas_tooltip = SOV_Konstantin_rokossovsky
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Don't purge
 		name = russia2_russia.575.c
 		ai_chance = {
-			factor = 20
+			factor = 30
 			modifier = {
-				add = 80
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
-				check_variable = {
-					var = sov_great_purge_completion
-					value = 80
-					compare = greater_than_or_equals
+				factor = 0
+				OR = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					check_variable = {
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
+					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
+				add = -15
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = yes
+			}
+			modifier = {
+				add = 70
+				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = less_than
 				}
 			}
 		}
 		custom_effect_tooltip = sov_remove_3_purge_completion
-		add_political_power = -75
 		subtract_from_variable = { sov_great_purge_completion = 3 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
@@ -27813,6 +28237,26 @@ country_event = {
 			min = 0
 			max = 100
 		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = sov_stalin_too_suspicious_tt
+			set_temp_variable = { pp_loss_purge = -50 }
+			multiply_temp_variable = { pp_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { stability_loss_purge = -0.05 }
+			multiply_temp_variable = { stability_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { war_support_loss_purge = -0.05 }
+			multiply_temp_variable = { war_support_loss_purge = var:sov_no_purge_count }
+			add_political_power = var:pp_loss_purge
+			add_stability = var:stability_loss_purge
+			add_war_support = var:war_support_loss_purge
+		}
+		add_to_variable = { sov_no_purge_count = 1 }
 	}
 }
 
@@ -27835,35 +28279,35 @@ country_event = {
 	option = { #Purge
 		name = russia2_russia.576.a
 		ai_chance = {
-			factor = 75
+			factor = 50
 			modifier = {
-				add = 25
+				add = 50
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -27884,42 +28328,43 @@ country_event = {
 		}
 		custom_effect_tooltip = remove_military_high_command
 		show_ideas_tooltip = SOV_Aleksandr_vasilevsky
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Don't purge
 		name = russia2_russia.576.b
 		ai_chance = {
-			factor = 25
+			factor = 50
 			modifier = {
-				add = 75
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
-				check_variable = {
-					var = sov_great_purge_completion
-					value = 80
-					compare = greater_than_or_equals
+				factor = 0
+				OR = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					check_variable = {
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
+					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
+				add = -25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = yes
+			}
+			modifier = {
+				add = 50
+				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = less_than
 				}
 			}
 		}
 		custom_effect_tooltip = sov_remove_1_purge_completion
-		add_political_power = -50
 		subtract_from_variable = { sov_great_purge_completion = 1 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
@@ -27927,6 +28372,26 @@ country_event = {
 			min = 0
 			max = 100
 		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = sov_stalin_too_suspicious_tt
+			set_temp_variable = { pp_loss_purge = -50 }
+			multiply_temp_variable = { pp_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { stability_loss_purge = -0.05 }
+			multiply_temp_variable = { stability_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { war_support_loss_purge = -0.05 }
+			multiply_temp_variable = { war_support_loss_purge = var:sov_no_purge_count }
+			add_political_power = var:pp_loss_purge
+			add_stability = var:stability_loss_purge
+			add_war_support = var:war_support_loss_purge
+		}
+		add_to_variable = { sov_no_purge_count = 1 }
 	}
 }
 
@@ -27949,35 +28414,35 @@ country_event = {
 	option = { #Purge
 		name = russia2_russia.577.a
 		ai_chance = {
-			factor = 75
+			factor = 50
 			modifier = {
-				add = 25
+				add = 50
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -27995,42 +28460,43 @@ country_event = {
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_military_high_command
 		show_ideas_tooltip = SOV_Pavel_zhigarev
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Don't purge
 		name = russia2_russia.577.b
 		ai_chance = {
-			factor = 25
+			factor = 50
 			modifier = {
-				add = 75
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
-				check_variable = {
-					var = sov_great_purge_completion
-					value = 80
-					compare = greater_than_or_equals
+				factor = 0
+				OR = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					check_variable = {
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
+					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
+				add = -25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = yes
+			}
+			modifier = {
+				add = 50
+				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = less_than
 				}
 			}
 		}
 		custom_effect_tooltip = sov_remove_1_purge_completion
-		add_political_power = -50
 		subtract_from_variable = { sov_great_purge_completion = 1 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
@@ -28038,6 +28504,26 @@ country_event = {
 			min = 0
 			max = 100
 		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = sov_stalin_too_suspicious_tt
+			set_temp_variable = { pp_loss_purge = -50 }
+			multiply_temp_variable = { pp_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { stability_loss_purge = -0.05 }
+			multiply_temp_variable = { stability_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { war_support_loss_purge = -0.05 }
+			multiply_temp_variable = { war_support_loss_purge = var:sov_no_purge_count }
+			add_political_power = var:pp_loss_purge
+			add_stability = var:stability_loss_purge
+			add_war_support = var:war_support_loss_purge
+		}
+		add_to_variable = { sov_no_purge_count = 1 }
 	}
 }
 
@@ -28060,35 +28546,35 @@ country_event = {
 	option = { #Purge
 		name = russia2_russia.578.a
 		ai_chance = {
-			factor = 75
+			factor = 50
 			modifier = {
-				add = 25
+				add = 50
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -28106,42 +28592,43 @@ country_event = {
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_military_high_command
 		show_ideas_tooltip = SOV_Sergei_khudyakov
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Don't purge
 		name = russia2_russia.578.b
 		ai_chance = {
-			factor = 25
+			factor = 50
 			modifier = {
-				add = 75
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
-				check_variable = {
-					var = sov_great_purge_completion
-					value = 80
-					compare = greater_than_or_equals
+				factor = 0
+				OR = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					check_variable = {
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
+					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
+				add = -25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = yes
+			}
+			modifier = {
+				add = 50
+				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = less_than
 				}
 			}
 		}
 		custom_effect_tooltip = sov_remove_1_purge_completion
-		add_political_power = -50
 		subtract_from_variable = { sov_great_purge_completion = 1 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
@@ -28149,6 +28636,26 @@ country_event = {
 			min = 0
 			max = 100
 		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = sov_stalin_too_suspicious_tt
+			set_temp_variable = { pp_loss_purge = -50 }
+			multiply_temp_variable = { pp_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { stability_loss_purge = -0.05 }
+			multiply_temp_variable = { stability_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { war_support_loss_purge = -0.05 }
+			multiply_temp_variable = { war_support_loss_purge = var:sov_no_purge_count }
+			add_political_power = var:pp_loss_purge
+			add_stability = var:stability_loss_purge
+			add_war_support = var:war_support_loss_purge
+		}
+		add_to_variable = { sov_no_purge_count = 1 }
 	}
 }
 
@@ -28171,35 +28678,35 @@ country_event = {
 	option = { #Purge
 		name = russia2_russia.579.a
 		ai_chance = {
-			factor = 75
+			factor = 50
 			modifier = {
-				add = 25
+				add = 50
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -28217,42 +28724,43 @@ country_event = {
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_military_high_command
 		show_ideas_tooltip = SOV_Stepan_krasovsky
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Don't purge
 		name = russia2_russia.579.b
 		ai_chance = {
-			factor = 25
+			factor = 50
 			modifier = {
-				add = 75
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
-				check_variable = {
-					var = sov_great_purge_completion
-					value = 80
-					compare = greater_than_or_equals
+				factor = 0
+				OR = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					check_variable = {
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
+					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
+				add = -25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = yes
+			}
+			modifier = {
+				add = 50
+				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = less_than
 				}
 			}
 		}
 		custom_effect_tooltip = sov_remove_1_purge_completion
-		add_political_power = -50
 		subtract_from_variable = { sov_great_purge_completion = 1 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
@@ -28260,6 +28768,26 @@ country_event = {
 			min = 0
 			max = 100
 		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = sov_stalin_too_suspicious_tt
+			set_temp_variable = { pp_loss_purge = -50 }
+			multiply_temp_variable = { pp_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { stability_loss_purge = -0.05 }
+			multiply_temp_variable = { stability_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { war_support_loss_purge = -0.05 }
+			multiply_temp_variable = { war_support_loss_purge = var:sov_no_purge_count }
+			add_political_power = var:pp_loss_purge
+			add_stability = var:stability_loss_purge
+			add_war_support = var:war_support_loss_purge
+		}
+		add_to_variable = { sov_no_purge_count = 1 }
 	}
 }
 
@@ -28282,35 +28810,35 @@ country_event = {
 	option = { #Purge
 		name = russia2_russia.580.a
 		ai_chance = {
-			factor = 75
+			factor = 50
 			modifier = {
-				add = 25
+				add = 50
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -28331,42 +28859,43 @@ country_event = {
 		}
 		custom_effect_tooltip = remove_military_high_command
 		show_ideas_tooltip = SOV_Vladimir_kasatonov
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Don't purge
 		name = russia2_russia.580.b
 		ai_chance = {
-			factor = 25
+			factor = 50
 			modifier = {
-				add = 75
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
-				check_variable = {
-					var = sov_great_purge_completion
-					value = 80
-					compare = greater_than_or_equals
+				factor = 0
+				OR = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					check_variable = {
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
+					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
+				add = -25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = yes
+			}
+			modifier = {
+				add = 50
+				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = less_than
 				}
 			}
 		}
 		custom_effect_tooltip = sov_remove_1_purge_completion
-		add_political_power = -50
 		subtract_from_variable = { sov_great_purge_completion = 1 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
@@ -28374,6 +28903,26 @@ country_event = {
 			min = 0
 			max = 100
 		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = sov_stalin_too_suspicious_tt
+			set_temp_variable = { pp_loss_purge = -50 }
+			multiply_temp_variable = { pp_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { stability_loss_purge = -0.05 }
+			multiply_temp_variable = { stability_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { war_support_loss_purge = -0.05 }
+			multiply_temp_variable = { war_support_loss_purge = var:sov_no_purge_count }
+			add_political_power = var:pp_loss_purge
+			add_stability = var:stability_loss_purge
+			add_war_support = var:war_support_loss_purge
+		}
+		add_to_variable = { sov_no_purge_count = 1 }
 	}
 }
 
@@ -28396,35 +28945,35 @@ country_event = {
 	option = { #Purge
 		name = russia2_russia.581.a
 		ai_chance = {
-			factor = 75
+			factor = 50
 			modifier = {
-				add = 25
+				add = 50
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -28445,42 +28994,43 @@ country_event = {
 		}
 		custom_effect_tooltip = remove_military_high_command
 		show_ideas_tooltip = SOV_Gordey_levchenko
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Don't purge
 		name = russia2_russia.581.b
 		ai_chance = {
-			factor = 25
+			factor = 50
 			modifier = {
-				add = 75
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
-				check_variable = {
-					var = sov_great_purge_completion
-					value = 80
-					compare = greater_than_or_equals
+				factor = 0
+				OR = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					check_variable = {
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
+					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
+				add = -25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = yes
+			}
+			modifier = {
+				add = 50
+				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = less_than
 				}
 			}
 		}
 		custom_effect_tooltip = sov_remove_1_purge_completion
-		add_political_power = -50
 		subtract_from_variable = { sov_great_purge_completion = 1 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
@@ -28488,6 +29038,26 @@ country_event = {
 			min = 0
 			max = 100
 		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = sov_stalin_too_suspicious_tt
+			set_temp_variable = { pp_loss_purge = -50 }
+			multiply_temp_variable = { pp_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { stability_loss_purge = -0.05 }
+			multiply_temp_variable = { stability_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { war_support_loss_purge = -0.05 }
+			multiply_temp_variable = { war_support_loss_purge = var:sov_no_purge_count }
+			add_political_power = var:pp_loss_purge
+			add_stability = var:stability_loss_purge
+			add_war_support = var:war_support_loss_purge
+		}
+		add_to_variable = { sov_no_purge_count = 1 }
 	}
 }
 
@@ -28510,35 +29080,35 @@ country_event = {
 	option = { #Purge
 		name = russia2_russia.582.a
 		ai_chance = {
-			factor = 75
+			factor = 50
 			modifier = {
-				add = 25
+				add = 50
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -28559,42 +29129,43 @@ country_event = {
 		}
 		custom_effect_tooltip = remove_military_high_command
 		show_ideas_tooltip = SOV_Arseniy_golovko
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Don't purge
 		name = russia2_russia.582.b
 		ai_chance = {
-			factor = 25
+			factor = 50
 			modifier = {
-				add = 75
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
-				check_variable = {
-					var = sov_great_purge_completion
-					value = 80
-					compare = greater_than_or_equals
+				factor = 0
+				OR = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					check_variable = {
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
+					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
+				add = -25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = yes
+			}
+			modifier = {
+				add = 50
+				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = less_than
 				}
 			}
 		}
 		custom_effect_tooltip = sov_remove_1_purge_completion
-		add_political_power = -50
 		subtract_from_variable = { sov_great_purge_completion = 1 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
@@ -28602,6 +29173,26 @@ country_event = {
 			min = 0
 			max = 100
 		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = sov_stalin_too_suspicious_tt
+			set_temp_variable = { pp_loss_purge = -50 }
+			multiply_temp_variable = { pp_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { stability_loss_purge = -0.05 }
+			multiply_temp_variable = { stability_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { war_support_loss_purge = -0.05 }
+			multiply_temp_variable = { war_support_loss_purge = var:sov_no_purge_count }
+			add_political_power = var:pp_loss_purge
+			add_stability = var:stability_loss_purge
+			add_war_support = var:war_support_loss_purge
+		}
+		add_to_variable = { sov_no_purge_count = 1 }
 	}
 }
 
@@ -28623,35 +29214,35 @@ country_event = {
 	option = { #Purge Shaposhnikov
 		name = russia2_russia.583.a
 		ai_chance = {
-			factor = 40
+			factor = 35
 			modifier = {
-				add = 10
+				add = 15
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 7.5
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -28672,40 +29263,41 @@ country_event = {
 		}
 		custom_effect_tooltip = remove_theorist
 		show_ideas_tooltip = SOV_Boris_shaposhnikov
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Purge Gorshkov
 		name = russia2_russia.583.b
 		ai_chance = {
-			factor = 40
+			factor = 35
 			modifier = {
-				add = 10
+				add = 15
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 7.5
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -28726,42 +29318,43 @@ country_event = {
 		}
 		custom_effect_tooltip = remove_theorist
 		show_ideas_tooltip = SOV_Sergey_gorshkov
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Don't purge
 		name = russia2_russia.583.c
 		ai_chance = {
-			factor = 20
+			factor = 30
 			modifier = {
-				add = 80
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
-				check_variable = {
-					var = sov_great_purge_completion
-					value = 80
-					compare = greater_than_or_equals
+				factor = 0
+				OR = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					check_variable = {
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
+					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
+				add = -15
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = yes
+			}
+			modifier = {
+				add = 70
+				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = less_than
 				}
 			}
 		}
 		custom_effect_tooltip = sov_remove_3_purge_completion
-		add_political_power = -75
 		subtract_from_variable = { sov_great_purge_completion = 3 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
@@ -28769,6 +29362,26 @@ country_event = {
 			min = 0
 			max = 100
 		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = sov_stalin_too_suspicious_tt
+			set_temp_variable = { pp_loss_purge = -50 }
+			multiply_temp_variable = { pp_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { stability_loss_purge = -0.05 }
+			multiply_temp_variable = { stability_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { war_support_loss_purge = -0.05 }
+			multiply_temp_variable = { war_support_loss_purge = var:sov_no_purge_count }
+			add_political_power = var:pp_loss_purge
+			add_stability = var:stability_loss_purge
+			add_war_support = var:war_support_loss_purge
+		}
+		add_to_variable = { sov_no_purge_count = 1 }
 	}
 }
 
@@ -28791,35 +29404,35 @@ country_event = {
 	option = { #Purge
 		name = russia2_russia.584.a
 		ai_chance = {
-			factor = 75
+			factor = 50
 			modifier = {
-				add = 25
+				add = 50
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -28837,42 +29450,43 @@ country_event = {
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_theorist
 		show_ideas_tooltip = SOV_Vladimir_tributs
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Don't purge
 		name = russia2_russia.584.b
 		ai_chance = {
-			factor = 25
+			factor = 50
 			modifier = {
-				add = 75
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
-				check_variable = {
-					var = sov_great_purge_completion
-					value = 80
-					compare = greater_than_or_equals
+				factor = 0
+				OR = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					check_variable = {
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
+					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
+				add = -25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = yes
+			}
+			modifier = {
+				add = 50
+				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = less_than
 				}
 			}
 		}
 		custom_effect_tooltip = sov_remove_1_purge_completion
-		add_political_power = -50
 		subtract_from_variable = { sov_great_purge_completion = 1 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
@@ -28880,6 +29494,26 @@ country_event = {
 			min = 0
 			max = 100
 		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = sov_stalin_too_suspicious_tt
+			set_temp_variable = { pp_loss_purge = -50 }
+			multiply_temp_variable = { pp_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { stability_loss_purge = -0.05 }
+			multiply_temp_variable = { stability_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { war_support_loss_purge = -0.05 }
+			multiply_temp_variable = { war_support_loss_purge = var:sov_no_purge_count }
+			add_political_power = var:pp_loss_purge
+			add_stability = var:stability_loss_purge
+			add_war_support = var:war_support_loss_purge
+		}
+		add_to_variable = { sov_no_purge_count = 1 }
 	}
 }
 
@@ -28902,35 +29536,35 @@ country_event = {
 	option = { #Purge
 		name = russia2_russia.585.a
 		ai_chance = {
-			factor = 75
+			factor = 50
 			modifier = {
-				add = 25
+				add = 50
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -28948,42 +29582,43 @@ country_event = {
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_theorist
 		show_ideas_tooltip = SOV_Sergei_rudenko
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Don't purge
 		name = russia2_russia.585.b
 		ai_chance = {
-			factor = 25
+			factor = 50
 			modifier = {
-				add = 75
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
-				check_variable = {
-					var = sov_great_purge_completion
-					value = 80
-					compare = greater_than_or_equals
+				factor = 0
+				OR = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					check_variable = {
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
+					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
+				add = -25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = yes
+			}
+			modifier = {
+				add = 50
+				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = less_than
 				}
 			}
 		}
 		custom_effect_tooltip = sov_remove_1_purge_completion
-		add_political_power = -50
 		subtract_from_variable = { sov_great_purge_completion = 1 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
@@ -28991,6 +29626,26 @@ country_event = {
 			min = 0
 			max = 100
 		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = sov_stalin_too_suspicious_tt
+			set_temp_variable = { pp_loss_purge = -50 }
+			multiply_temp_variable = { pp_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { stability_loss_purge = -0.05 }
+			multiply_temp_variable = { stability_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { war_support_loss_purge = -0.05 }
+			multiply_temp_variable = { war_support_loss_purge = var:sov_no_purge_count }
+			add_political_power = var:pp_loss_purge
+			add_stability = var:stability_loss_purge
+			add_war_support = var:war_support_loss_purge
+		}
+		add_to_variable = { sov_no_purge_count = 1 }
 	}
 }
 
@@ -29013,35 +29668,35 @@ country_event = {
 	option = { #Purge
 		name = russia2_russia.586.a
 		ai_chance = {
-			factor = 75
+			factor = 50
 			modifier = {
-				add = 25
+				add = 50
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -29059,42 +29714,43 @@ country_event = {
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_theorist
 		show_ideas_tooltip = SOV_Alexander_golovanov
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Don't purge
 		name = russia2_russia.586.b
 		ai_chance = {
-			factor = 25
+			factor = 50
 			modifier = {
-				add = 75
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
-				check_variable = {
-					var = sov_great_purge_completion
-					value = 80
-					compare = greater_than_or_equals
+				factor = 0
+				OR = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					check_variable = {
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
+					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
+				add = -25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = yes
+			}
+			modifier = {
+				add = 50
+				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = less_than
 				}
 			}
 		}
 		custom_effect_tooltip = sov_remove_1_purge_completion
-		add_political_power = -50
 		subtract_from_variable = { sov_great_purge_completion = 1 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
@@ -29102,6 +29758,26 @@ country_event = {
 			min = 0
 			max = 100
 		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = sov_stalin_too_suspicious_tt
+			set_temp_variable = { pp_loss_purge = -50 }
+			multiply_temp_variable = { pp_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { stability_loss_purge = -0.05 }
+			multiply_temp_variable = { stability_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { war_support_loss_purge = -0.05 }
+			multiply_temp_variable = { war_support_loss_purge = var:sov_no_purge_count }
+			add_political_power = var:pp_loss_purge
+			add_stability = var:stability_loss_purge
+			add_war_support = var:war_support_loss_purge
+		}
+		add_to_variable = { sov_no_purge_count = 1 }
 	}
 }
 
@@ -29124,35 +29800,35 @@ country_event = {
 	option = { #Purge
 		name = russia2_russia.587.a
 		ai_chance = {
-			factor = 75
+			factor = 50
 			modifier = {
-				add = 25
+				add = 50
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -29170,42 +29846,43 @@ country_event = {
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_theorist
 		show_ideas_tooltip = SOV_Igor_kurchatov
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Don't purge
 		name = russia2_russia.587.b
 		ai_chance = {
-			factor = 25
+			factor = 50
 			modifier = {
-				add = 75
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
-				check_variable = {
-					var = sov_great_purge_completion
-					value = 80
-					compare = greater_than_or_equals
+				factor = 0
+				OR = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					check_variable = {
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
+					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
+				add = -25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = yes
+			}
+			modifier = {
+				add = 50
+				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = less_than
 				}
 			}
 		}
 		custom_effect_tooltip = sov_remove_1_purge_completion
-		add_political_power = -50
 		subtract_from_variable = { sov_great_purge_completion = 1 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
@@ -29213,6 +29890,26 @@ country_event = {
 			min = 0
 			max = 100
 		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = sov_stalin_too_suspicious_tt
+			set_temp_variable = { pp_loss_purge = -50 }
+			multiply_temp_variable = { pp_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { stability_loss_purge = -0.05 }
+			multiply_temp_variable = { stability_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { war_support_loss_purge = -0.05 }
+			multiply_temp_variable = { war_support_loss_purge = var:sov_no_purge_count }
+			add_political_power = var:pp_loss_purge
+			add_stability = var:stability_loss_purge
+			add_war_support = var:war_support_loss_purge
+		}
+		add_to_variable = { sov_no_purge_count = 1 }
 	}
 }
 
@@ -29235,35 +29932,35 @@ country_event = {
 	option = { #Purge
 		name = russia2_russia.588.a
 		ai_chance = {
-			factor = 75
+			factor = 50
 			modifier = {
-				add = 25
+				add = 50
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -29281,42 +29978,43 @@ country_event = {
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_theorist
 		show_ideas_tooltip = SOV_Sergei_korolev
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Don't purge
 		name = russia2_russia.588.b
 		ai_chance = {
-			factor = 25
+			factor = 50
 			modifier = {
-				add = 75
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
-				check_variable = {
-					var = sov_great_purge_completion
-					value = 80
-					compare = greater_than_or_equals
+				factor = 0
+				OR = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					check_variable = {
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
+					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
+				add = -25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = yes
+			}
+			modifier = {
+				add = 50
+				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = less_than
 				}
 			}
 		}
 		custom_effect_tooltip = sov_remove_1_purge_completion
-		add_political_power = -50
 		subtract_from_variable = { sov_great_purge_completion = 1 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
@@ -29324,6 +30022,26 @@ country_event = {
 			min = 0
 			max = 100
 		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = sov_stalin_too_suspicious_tt
+			set_temp_variable = { pp_loss_purge = -50 }
+			multiply_temp_variable = { pp_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { stability_loss_purge = -0.05 }
+			multiply_temp_variable = { stability_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { war_support_loss_purge = -0.05 }
+			multiply_temp_variable = { war_support_loss_purge = var:sov_no_purge_count }
+			add_political_power = var:pp_loss_purge
+			add_stability = var:stability_loss_purge
+			add_war_support = var:war_support_loss_purge
+		}
+		add_to_variable = { sov_no_purge_count = 1 }
 	}
 }
 
@@ -29346,35 +30064,35 @@ country_event = {
 	option = { #Purge
 		name = russia2_russia.589.a
 		ai_chance = {
-			factor = 75
+			factor = 50
 			modifier = {
-				add = 25
+				add = 50
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -29393,42 +30111,43 @@ country_event = {
 		SOV_Leonid_govorov = {
 			remove_unit_leader_role = yes
 		}
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Don't purge
 		name = russia2_russia.589.b
 		ai_chance = {
-			factor = 25
+			factor = 50
 			modifier = {
-				add = 75
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
-				check_variable = {
-					var = sov_great_purge_completion
-					value = 80
-					compare = greater_than_or_equals
+				factor = 0
+				OR = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					check_variable = {
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
+					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
+				add = -25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = yes
+			}
+			modifier = {
+				add = 50
+				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = less_than
 				}
 			}
 		}
 		custom_effect_tooltip = sov_remove_1_purge_completion
-		add_political_power = -50
 		subtract_from_variable = { sov_great_purge_completion = 1 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
@@ -29436,6 +30155,26 @@ country_event = {
 			min = 0
 			max = 100
 		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = sov_stalin_too_suspicious_tt
+			set_temp_variable = { pp_loss_purge = -50 }
+			multiply_temp_variable = { pp_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { stability_loss_purge = -0.05 }
+			multiply_temp_variable = { stability_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { war_support_loss_purge = -0.05 }
+			multiply_temp_variable = { war_support_loss_purge = var:sov_no_purge_count }
+			add_political_power = var:pp_loss_purge
+			add_stability = var:stability_loss_purge
+			add_war_support = var:war_support_loss_purge
+		}
+		add_to_variable = { sov_no_purge_count = 1 }
 	}
 }
 
@@ -29458,35 +30197,35 @@ country_event = {
 	option = { #Purge
 		name = russia2_russia.590.a
 		ai_chance = {
-			factor = 75
+			factor = 50
 			modifier = {
-				add = 25
+				add = 50
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -29505,42 +30244,43 @@ country_event = {
 		SOV_Nikolai_berzarin = {
 			remove_unit_leader_role = yes
 		}
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Don't purge
 		name = russia2_russia.590.b
 		ai_chance = {
-			factor = 25
+			factor = 50
 			modifier = {
-				add = 75
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
-				check_variable = {
-					var = sov_great_purge_completion
-					value = 80
-					compare = greater_than_or_equals
+				factor = 0
+				OR = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					check_variable = {
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
+					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
+				add = -25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = yes
+			}
+			modifier = {
+				add = 50
+				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = less_than
 				}
 			}
 		}
 		custom_effect_tooltip = sov_remove_1_purge_completion
-		add_political_power = -50
 		subtract_from_variable = { sov_great_purge_completion = 1 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
@@ -29548,6 +30288,26 @@ country_event = {
 			min = 0
 			max = 100
 		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = sov_stalin_too_suspicious_tt
+			set_temp_variable = { pp_loss_purge = -50 }
+			multiply_temp_variable = { pp_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { stability_loss_purge = -0.05 }
+			multiply_temp_variable = { stability_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { war_support_loss_purge = -0.05 }
+			multiply_temp_variable = { war_support_loss_purge = var:sov_no_purge_count }
+			add_political_power = var:pp_loss_purge
+			add_stability = var:stability_loss_purge
+			add_war_support = var:war_support_loss_purge
+		}
+		add_to_variable = { sov_no_purge_count = 1 }
 	}
 }
 
@@ -29570,35 +30330,35 @@ country_event = {
 	option = { #Purge
 		name = russia2_russia.591.a
 		ai_chance = {
-			factor = 75
+			factor = 50
 			modifier = {
-				add = 25
+				add = 50
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -29617,42 +30377,43 @@ country_event = {
 		SOV_Alexander_gorbatov = {
 			remove_unit_leader_role = yes
 		}
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Don't purge
 		name = russia2_russia.591.b
 		ai_chance = {
-			factor = 25
+			factor = 50
 			modifier = {
-				add = 75
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
-				check_variable = {
-					var = sov_great_purge_completion
-					value = 80
-					compare = greater_than_or_equals
+				factor = 0
+				OR = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					check_variable = {
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
+					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
+				add = -25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = yes
+			}
+			modifier = {
+				add = 50
+				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = less_than
 				}
 			}
 		}
 		custom_effect_tooltip = sov_remove_1_purge_completion
-		add_political_power = -50
 		subtract_from_variable = { sov_great_purge_completion = 1 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
@@ -29660,6 +30421,26 @@ country_event = {
 			min = 0
 			max = 100
 		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = sov_stalin_too_suspicious_tt
+			set_temp_variable = { pp_loss_purge = -50 }
+			multiply_temp_variable = { pp_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { stability_loss_purge = -0.05 }
+			multiply_temp_variable = { stability_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { war_support_loss_purge = -0.05 }
+			multiply_temp_variable = { war_support_loss_purge = var:sov_no_purge_count }
+			add_political_power = var:pp_loss_purge
+			add_stability = var:stability_loss_purge
+			add_war_support = var:war_support_loss_purge
+		}
+		add_to_variable = { sov_no_purge_count = 1 }
 	}
 }
 
@@ -29682,35 +30463,35 @@ country_event = {
 	option = { #Purge
 		name = russia2_russia.592.a
 		ai_chance = {
-			factor = 75
+			factor = 50
 			modifier = {
-				add = 25
+				add = 50
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -29728,42 +30509,43 @@ country_event = {
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_political_advisor
 		show_ideas_tooltip = SOV_yakov_agranov
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Don't purge
 		name = russia2_russia.592.b
 		ai_chance = {
-			factor = 25
+			factor = 50
 			modifier = {
-				add = 75
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
-				check_variable = {
-					var = sov_great_purge_completion
-					value = 80
-					compare = greater_than_or_equals
+				factor = 0
+				OR = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					check_variable = {
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
+					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
+				add = -25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = yes
+			}
+			modifier = {
+				add = 50
+				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = less_than
 				}
 			}
 		}
 		custom_effect_tooltip = sov_remove_1_purge_completion
-		add_political_power = -50
 		subtract_from_variable = { sov_great_purge_completion = 1 }
 		round_variable = sov_great_purge_completion
 		clamp_variable = {
@@ -29771,6 +30553,26 @@ country_event = {
 			min = 0
 			max = 100
 		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = sov_stalin_too_suspicious_tt
+			set_temp_variable = { pp_loss_purge = -50 }
+			multiply_temp_variable = { pp_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { stability_loss_purge = -0.05 }
+			multiply_temp_variable = { stability_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { war_support_loss_purge = -0.05 }
+			multiply_temp_variable = { war_support_loss_purge = var:sov_no_purge_count }
+			add_political_power = var:pp_loss_purge
+			add_stability = var:stability_loss_purge
+			add_war_support = var:war_support_loss_purge
+		}
+		add_to_variable = { sov_no_purge_count = 1 }
 	}
 }
 
@@ -29793,35 +30595,35 @@ country_event = {
 	option = { #Purge
 		name = russia2_russia.593.a
 		ai_chance = {
-			factor = 75
+			factor = 50
 			modifier = {
-				add = 25
+				add = 50
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -29839,37 +30641,39 @@ country_event = {
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_political_advisor
 		show_ideas_tooltip = SOV_Aleksey_rykov
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Don't purge
 		name = russia2_russia.593.b
 		ai_chance = {
-			factor = 25
+			factor = 50
 			modifier = {
-				add = 75
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
-				check_variable = {
-					var = sov_great_purge_completion
-					value = 80
-					compare = greater_than_or_equals
+				factor = 0
+				OR = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					check_variable = {
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
+					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
+				add = -25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = yes
+			}
+			modifier = {
+				add = 50
+				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = less_than
 				}
 			}
 		}
@@ -29882,6 +30686,26 @@ country_event = {
 			min = 0
 			max = 100
 		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = sov_stalin_too_suspicious_tt
+			set_temp_variable = { pp_loss_purge = -50 }
+			multiply_temp_variable = { pp_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { stability_loss_purge = -0.05 }
+			multiply_temp_variable = { stability_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { war_support_loss_purge = -0.05 }
+			multiply_temp_variable = { war_support_loss_purge = var:sov_no_purge_count }
+			add_political_power = var:pp_loss_purge
+			add_stability = var:stability_loss_purge
+			add_war_support = var:war_support_loss_purge
+		}
+		add_to_variable = { sov_no_purge_count = 1 }
 	}
 }
 
@@ -29904,35 +30728,35 @@ country_event = {
 	option = { #Purge
 		name = russia2_russia.594.a
 		ai_chance = {
-			factor = 75
+			factor = 50
 			modifier = {
-				add = 25
+				add = 50
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -29950,37 +30774,39 @@ country_event = {
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_political_advisor
 		show_ideas_tooltip = SOV_Lev_kamenev
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Don't purge
 		name = russia2_russia.594.b
 		ai_chance = {
-			factor = 25
+			factor = 50
 			modifier = {
-				add = 75
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
-				check_variable = {
-					var = sov_great_purge_completion
-					value = 80
-					compare = greater_than_or_equals
+				factor = 0
+				OR = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					check_variable = {
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
+					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
+				add = -25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = yes
+			}
+			modifier = {
+				add = 50
+				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = less_than
 				}
 			}
 		}
@@ -29993,6 +30819,26 @@ country_event = {
 			min = 0
 			max = 100
 		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = sov_stalin_too_suspicious_tt
+			set_temp_variable = { pp_loss_purge = -50 }
+			multiply_temp_variable = { pp_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { stability_loss_purge = -0.05 }
+			multiply_temp_variable = { stability_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { war_support_loss_purge = -0.05 }
+			multiply_temp_variable = { war_support_loss_purge = var:sov_no_purge_count }
+			add_political_power = var:pp_loss_purge
+			add_stability = var:stability_loss_purge
+			add_war_support = var:war_support_loss_purge
+		}
+		add_to_variable = { sov_no_purge_count = 1 }
 	}
 }
 
@@ -30015,35 +30861,35 @@ country_event = {
 	option = { #Purge
 		name = russia2_russia.595.a
 		ai_chance = {
-			factor = 75
+			factor = 50
 			modifier = {
-				add = 25
+				add = 50
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -30061,37 +30907,39 @@ country_event = {
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_political_advisor
 		show_ideas_tooltip = SOV_Nikolay_bukharin
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Don't purge
 		name = russia2_russia.595.b
 		ai_chance = {
-			factor = 25
+			factor = 50
 			modifier = {
-				add = 75
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
-				check_variable = {
-					var = sov_great_purge_completion
-					value = 80
-					compare = greater_than_or_equals
+				factor = 0
+				OR = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					check_variable = {
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
+					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
+				add = -25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = yes
+			}
+			modifier = {
+				add = 50
+				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = less_than
 				}
 			}
 		}
@@ -30104,6 +30952,26 @@ country_event = {
 			min = 0
 			max = 100
 		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = sov_stalin_too_suspicious_tt
+			set_temp_variable = { pp_loss_purge = -50 }
+			multiply_temp_variable = { pp_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { stability_loss_purge = -0.05 }
+			multiply_temp_variable = { stability_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { war_support_loss_purge = -0.05 }
+			multiply_temp_variable = { war_support_loss_purge = var:sov_no_purge_count }
+			add_political_power = var:pp_loss_purge
+			add_stability = var:stability_loss_purge
+			add_war_support = var:war_support_loss_purge
+		}
+		add_to_variable = { sov_no_purge_count = 1 }
 	}
 }
 
@@ -30126,35 +30994,35 @@ country_event = {
 	option = { #Purge
 		name = russia2_russia.596.a
 		ai_chance = {
-			factor = 75
+			factor = 50
 			modifier = {
-				add = 25
+				add = 50
 				OR = {
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
 					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-							has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = greater_than_or_equals
-					}
+				add = 25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = no
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+				}
+				check_variable = {
+					var = sov_no_purge_count
+					value = 3
+					compare = less_than
 				}
 			}
 		}
@@ -30172,37 +31040,39 @@ country_event = {
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_political_advisor
 		show_ideas_tooltip = SOV_Grigory_zinovyev
+		set_variable = { sov_no_purge_count = 0 }
 	}
 
 	option = { #Don't purge
 		name = russia2_russia.596.b
 		ai_chance = {
-			factor = 25
+			factor = 50
 			modifier = {
-				add = 75
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
-				check_variable = {
-					var = sov_great_purge_completion
-					value = 80
-					compare = greater_than_or_equals
+				factor = 0
+				OR = {
+					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					check_variable = {
+						var = sov_no_purge_count
+						value = 3
+						compare = greater_than_or_equals
+					}
 				}
 			}
 			modifier = {
-				factor = 0
-				if = {
-					limit = {
-						NOT = {
-							has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-						}
-					}
-					check_variable = {
-						var = sov_great_purge_completion
-						value = 80
-						compare = less_than
-					}
+				add = -25
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = equals
 				}
-				else = {
-					always = yes
+			}
+			modifier = {
+				add = 50
+				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = less_than
 				}
 			}
 		}
@@ -30215,6 +31085,26 @@ country_event = {
 			min = 0
 			max = 100
 		}
+		if = {
+			limit = {
+				check_variable = {
+					var = sov_no_purge_count
+					value = 2
+					compare = greater_than_or_equals
+				}
+			}
+			custom_effect_tooltip = sov_stalin_too_suspicious_tt
+			set_temp_variable = { pp_loss_purge = -50 }
+			multiply_temp_variable = { pp_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { stability_loss_purge = -0.05 }
+			multiply_temp_variable = { stability_loss_purge = var:sov_no_purge_count }
+			set_temp_variable = { war_support_loss_purge = -0.05 }
+			multiply_temp_variable = { war_support_loss_purge = var:sov_no_purge_count }
+			add_political_power = var:pp_loss_purge
+			add_stability = var:stability_loss_purge
+			add_war_support = var:war_support_loss_purge
+		}
+		add_to_variable = { sov_no_purge_count = 1 }
 	}
 }
 
