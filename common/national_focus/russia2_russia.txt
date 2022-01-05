@@ -24610,6 +24610,18 @@ focus_tree = {
 				}
 			}
 			custom_effect_tooltip = sov_formation_of_the_league_and_head
+			add_ideas = SOV_Local_anarchist_economy
+			hidden_effect = {
+				every_country = {
+					limit = {
+						NOT = {
+							TAG = SOV
+						}
+						has_government = anarchy
+					}
+					add_ideas = SOV_Local_anarchist_economy
+				}
+			}
 		}
 	}
 
@@ -25087,6 +25099,7 @@ focus_tree = {
 							tag = CRI
 						}
 					}
+					add_ideas = SOV_United_anarchist_economy
 					SOV = {
 						set_autonomy = {
 							target = PREV
@@ -25095,6 +25108,7 @@ focus_tree = {
 					}
 				}
 			}
+			add_ideas = SOV_United_anarchist_economy
 		}
 	}
 
@@ -25239,7 +25253,9 @@ focus_tree = {
 						tag = SOV
 					}
 				}
+				add_ideas = SOV_United_anarchist_economy
 				event_target:FROM_first_beneficiary = {
+					add_ideas = SOV_United_anarchist_economy
 					set_autonomy = {
 						target = PREV
 						autonomy_state = autonomy_supervised_free_territory
@@ -25282,7 +25298,9 @@ focus_tree = {
 						tag = SOV
 					}
 				}
+				add_ideas = SOV_United_anarchist_economy
 				event_target:FROM_second_beneficiary = {
+					add_ideas = SOV_United_anarchist_economy
 					set_autonomy = {
 						target = PREV
 						autonomy_state = autonomy_supervised_free_territory
@@ -25325,7 +25343,9 @@ focus_tree = {
 						tag = SOV
 					}
 				}
+				add_ideas = SOV_United_anarchist_economy
 				SOV = {
+					add_ideas = SOV_United_anarchist_economy
 					set_autonomy = {
 						target = PREV
 						autonomy_state = autonomy_supervised_free_territory
@@ -25354,7 +25374,35 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
+			add_ideas = SOV_Centralization_free_territories
+			hidden_effect = {
+				every_country = {
+					limit = {
+						NOT = {
+							TAG = SOV
+						}
+						is_subject_of = SOV
+					}
+					add_ideas = SOV_Centralization_free_territories
+				}
+			}
 			custom_effect_tooltip = SOV_coming_soon
+			set_variable = { anarchy_collapse_puppet_industrial_complex = SOV.num_subjects }
+			multiply_variable = {anarchy_collapse_puppet_industrial_complex = 0.01 }
+			round_variable = anarchy_collapse_puppet_industrial_complex
+			clamp_variable = {
+				var = anarchy_collapse_puppet_industrial_complex
+				min = 0
+				max = 0.50
+			}
+			set_variable = { anarchy_collapse_puppet_miliary_arms_complex = SOV.num_subjects }
+			multiply_variable = {anarchy_collapse_puppet_miliary_arms_complex = 0.01 }
+			round_variable = anarchy_collapse_puppet_miliary_arms_complex
+			clamp_variable = {
+				var = anarchy_collapse_puppet_miliary_arms_complex
+				min = 0
+				max = 0.50
+			}
 		}
 	}
 
