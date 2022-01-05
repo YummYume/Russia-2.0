@@ -574,7 +574,8 @@ on_actions = {
 					any_country = {
 						is_subject_of = SOV
 						NOT = {
-							has_autonomy_state = autonomy_imperial_governorates
+							has_autonomy_state = autonomy_soviet_republic
+							has_civil_war = yes
 						}
 					}
 					SOV = {
@@ -615,6 +616,7 @@ on_actions = {
 						is_subject_of = SOV
 						NOT = {
 							has_autonomy_state = autonomy_russian_protectorate
+							has_civil_war = yes
 						}
 					}
 					SOV = {
@@ -673,6 +675,48 @@ on_actions = {
 					set_popularities = {
 						democratic = 70
 						neutrality = 10
+						fascism = 10
+						communism = 10
+					}
+				}
+			}
+		}
+	}
+
+	#SOV has puppet non Imperial Governorate
+	on_weekly_SOV = {
+		effect = {
+			if = {
+				limit = {
+					any_country = {
+						is_subject_of = SOV
+						NOT = {
+							has_autonomy_state = autonomy_imperial_governorates
+							has_civil_war = yes
+						}
+					}
+					SOV = {
+						has_government = neutrality
+						is_subject = no
+						has_idea = SOV_Tsar_we_trust
+					}
+				}
+				every_country = {
+					limit = {
+						is_subject_of = SOV
+						NOT = {
+							has_autonomy_state = autonomy_imperial_governorates
+						}
+					}
+					SOV = {
+						set_autonomy = {
+							target = PREV
+							autonomy_state = autonomy_imperial_governorates
+						}
+					}
+					set_popularities = {
+						democratic = 10
+						neutrality = 70
 						fascism = 10
 						communism = 10
 					}
