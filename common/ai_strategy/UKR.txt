@@ -475,10 +475,10 @@ help_ukr_in_scw = {
 		is_major = yes
 		if = {
 			limit = {
-				sou_in_scw = yes
+				soj_in_scw = yes
 			}
 			NOT = {
-				has_government = SOU
+				has_government = SOJ
 			}
 		}
 		NOT = {
@@ -559,6 +559,29 @@ UKR_recover_core_territory = {
 				strength_ratio = {
 					tag = UKR
 					ratio < 1.25
+				}
+			}
+		}
+		if = {
+			limit = {
+				is_in_faction = yes
+			}
+			NOT = {
+				any_country = {
+					is_in_faction_with = ROOT
+					strength_ratio = {
+						tag = UKR
+						ratio > 1.25
+					}
+				}
+			}
+		}
+		NOT = {
+			any_country = {
+				has_guaranteed = ROOT
+				strength_ratio = {
+					tag = UKR
+					ratio > 1.25
 				}
 			}
 		}
@@ -685,23 +708,23 @@ UKR_do_not_waste_pp = {
 	}
 }
 
-UKR_push_SOU_if_possible  = {
+UKR_push_SOJ_if_possible  = {
 
 	allowed = {
-		original_tag = SOU
+		original_tag = SOJ
 	}
 
 	enable = {
         has_global_flag = second_russian_civil_war_in_progress
 		ukr_in_scw = yes
-		sou_in_scw = yes
+		soj_in_scw = yes
 		surrender_progress < 0.25
 		check_variable = {
 			var = ukr.num_core_states
 			value = 20
 			compare = greater_than_or_equals
 		}
-		SOU = {
+		SOJ = {
 			surrender_progress > 0.5
 		}
 	}
@@ -713,14 +736,14 @@ UKR_push_SOU_if_possible  = {
 
 		priority = 9999
 
-		tag = SOU
+		tag = SOJ
 
 		state_trigger = {
-			is_controlled_by = SOU
+			is_controlled_by = SOJ
 		}
 
 		ordertype = front
-		type = rush
+		execution_type = rush
 		execute_order = yes
 		manual_attack = yes
 	}

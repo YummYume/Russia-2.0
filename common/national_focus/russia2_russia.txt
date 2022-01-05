@@ -8,7 +8,7 @@ focus_tree = {
 			add = 1000
 			OR = {
 				tag = SOV
-				tag = SOU
+				tag = SOJ
 			}
 		}
 	}
@@ -5298,8 +5298,8 @@ focus_tree = {
 			hidden_effect = {
 				country_event = { id = russia2_russia.20 }
 			}
-			custom_effect_tooltip = unlock_propaganda_campaign_slot_tt
-			SOV_unlock_propaganda_campaign_slot_effect = yes
+			custom_effect_tooltip = unlock_propaganda_campaign_slot_russia2_tt
+			SOV_unlock_propaganda_campaign_slot_effect_russia2 = yes
 			if = {
 				limit = {
 					has_government = communism
@@ -6946,15 +6946,15 @@ focus_tree = {
 			modifier = {
 				add = 90
 				OR = {
-					has_country_flag = RUS_AI_DEFAULT_BEHAVIOR
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
 				}
 			}
 			modifier = {
 				factor = 0
 				NOT = {
-					has_country_flag = RUS_AI_DEFAULT_BEHAVIOR
 					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
+					has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
 					has_country_flag = RUS_AI_FULL_RANDOM_BEHAVIOR
 				}
 			}
@@ -7384,7 +7384,7 @@ focus_tree = {
 			}
 			if = {
 				limit = {
-					tag = SOU
+					tag = SOJ
 				}
 				always = no
 			}
@@ -7423,8 +7423,8 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_COMMUNISM_STALIN_RUSSIA }
 		completion_reward = {
 			add_ideas = SOV_Reign_terror
-			custom_effect_tooltip = unlock_propaganda_campaign_slot_tt
-			SOV_unlock_propaganda_campaign_slot_effect = yes
+			custom_effect_tooltip = unlock_propaganda_campaign_slot_russia2_tt
+			SOV_unlock_propaganda_campaign_slot_effect_russia2 = yes
 		}
 	}
 
@@ -7446,13 +7446,15 @@ focus_tree = {
 			custom_trigger_tooltip = {
 				tooltip = SOV_foreign_policy_tt
 				has_civil_war = no
-				SOV = {
-					NOT = {
-						has_global_flag = second_russian_civil_war_in_progress
-					}
+				NOT = {
+					has_global_flag = second_russian_civil_war_in_progress
 				}
 			}
-			has_country_flag = sov_purge_over
+			OR = {
+				has_country_flag = sov_purge_over
+				has_country_flag = sov_purge_failed
+				has_country_flag = sov_purge_cancelled
+			}
 			if = {
 				limit = {
 					has_idea = SOV_Exiled_russia
@@ -8491,8 +8493,8 @@ focus_tree = {
 		continue_if_invalid = yes
 		completion_reward = {
 			add_ideas = { SOV_For_the_motherland }
-			custom_effect_tooltip = unlock_propaganda_campaign_slot_tt
-			SOV_unlock_propaganda_campaign_slot_effect = yes
+			custom_effect_tooltip = unlock_propaganda_campaign_slot_russia2_tt
+			SOV_unlock_propaganda_campaign_slot_effect_russia2 = yes
 			unlock_decision_tooltip = SOV_propaganda_for_the_motherland_russia2
 			unlock_decision_tooltip = SOV_propaganda_sweep_scum_out_russia2
 			unlock_decision_tooltip = SOV_propaganda_glory_to_partisans_russia2
@@ -9577,8 +9579,8 @@ focus_tree = {
 			hidden_effect = {
 				news_event = { id = newsrussia2.44 days = 1 }
 			}
-			custom_effect_tooltip = unlock_propaganda_campaign_slot_tt
-			SOV_unlock_propaganda_campaign_slot_effect = yes
+			custom_effect_tooltip = unlock_propaganda_campaign_slot_russia2_tt
+			SOV_unlock_propaganda_campaign_slot_effect_russia2 = yes
 		}
 	}
 
@@ -10516,10 +10518,10 @@ focus_tree = {
 			}
 		}
 		search_filters = { FOCUS_FILTER_COMMUNISM_TROTSKY_RUSSIA }
-		completion_reward = { #WTF ?
+		completion_reward = { #TODO check if this is correct
 			swap_ruler_traits = { remove = russia2_counter_revolutionist add = russia2_true_revolutionist }
-			custom_effect_tooltip = unlock_propaganda_campaign_slot_tt
-			SOV_unlock_propaganda_campaign_slot_effect = yes
+			custom_effect_tooltip = unlock_propaganda_campaign_slot_russia2_tt
+			SOV_unlock_propaganda_campaign_slot_effect_russia2 = yes
 			unlock_decision_tooltip = SOV_propaganda_for_the_motherland_russia2
 			unlock_decision_tooltip = SOV_propaganda_treacherous_enemy_russia2
 			unlock_decision_tooltip = SOV_propaganda_do_not_blab_russia2
@@ -11652,26 +11654,26 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_CONTINUE_INVESTMENTS_RUSSIA FOCUS_FILTER_DEMOCRATIC_UNITED_RUSSIA FOCUS_FILTER_DEMOCRATIC_PREEMPTIVE_COUP_RUSSIA FOCUS_FILTER_INDUSTRY }
 		completion_reward = {
 			random_owned_state = {
-				add_extra_state_shared_building_slots = 2
+				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = industrial_complex
-					level = 2
+					level = 1
 					instant_build = yes
 				}
 			}
 			random_owned_state = {
-				add_extra_state_shared_building_slots = 2
+				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = industrial_complex
-					level = 2
+					level = 1
 					instant_build = yes
 				}
 			}
 			random_owned_state = {
-				add_extra_state_shared_building_slots = 2
+				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = industrial_complex
-					level = 2
+					level = 1
 					instant_build = yes
 				}
 			}
@@ -12646,6 +12648,19 @@ focus_tree = {
 						type = alliance
 						id = SOV
 						value = -25
+					}
+				}
+				every_country = {
+					limit = {
+						is_in_faction_with = ROOT
+						NOT = {
+							has_rule = can_declare_war_on_same_ideology
+						}
+						has_rule = can_only_justify_war_on_threat_country
+					}
+					set_rule = {
+						can_declare_war_on_same_ideology = yes
+						can_only_justify_war_on_threat_country = no
 					}
 				}
 			}
@@ -15601,8 +15616,8 @@ focus_tree = {
 				sov_spawn_italian_volunteers_scw = yes
 				sov_spawn_english_ships_marines_scw = yes
 				sov_spawn_elite_divisions_scw = yes
-				#SOU Setup
-				sov_spawn_sou_scw = yes
+				#SOJ Setup
+				sov_spawn_soj_scw = yes
 				extra_division_soviet_russian_cw = yes
 				#Other Setup
 				sov_liberate_caucasus_scw = yes
@@ -16100,6 +16115,7 @@ focus_tree = {
 				limit = {
 					has_country_flag = sov_old_tsar_still_alive
 				}
+				set_country_flag = kirill_vladimirovich_is_icountry_leader_for_a_year
 				add_country_leader_role = {
 					character = SOV_Kirill_vladimirovich
 					promote_leader = yes
@@ -23865,7 +23881,7 @@ focus_tree = {
 			custom_effect_tooltip = SOV_coming_soon
 			add_stability = -0.15
 			add_popularity = {
-			    ideology = communism
+			    ideology = anarchy
 			    popularity = 0.15
 			}
 			for_each_scope_loop = {

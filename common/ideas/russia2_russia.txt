@@ -3616,7 +3616,7 @@ ideas = {
 			}
 
 			targeted_modifier = {
-				tag = SOU
+				tag = SOJ
 				attack_bonus_against = 0.15
 				defense_bonus_against = 0.15
 			}
@@ -8788,18 +8788,26 @@ ideas = {
 			on_remove = {
 				if = {
 					limit = {
-						check_variable = {
-							var = sov_great_purge_completion
-							value = 100
-							compare = less_than
+						NOT = {
+							has_country_flag = sov_purge_failed
 						}
 					}
-					set_country_flag = sov_purge_cancelled
-					sov_unlock_nkvd_chiefs = yes
-					country_event = russia2_russia.26
-				}
-				else = {
-					set_country_flag = sov_purge_over
+					if = {
+						limit = {
+							check_variable = {
+								var = sov_great_purge_completion
+								value = 100
+								compare = less_than
+							}
+						}
+						set_country_flag = sov_purge_cancelled
+						sov_unlock_nkvd_chiefs = yes
+						country_event = russia2_russia.26
+					}
+					else = {
+						set_country_flag = sov_purge_over
+					}
+					clr_country_flag = sov_purge_ongoing
 				}
 				remove_dynamic_modifier = {
 					modifier = great_purge_modifiers
@@ -8808,6 +8816,34 @@ ideas = {
 
 			modifier = {
 				custom_modifier_tooltip = SOV_Great_purge_tt
+			}
+		}
+
+		SOV_Remnants_purge = {
+
+			removal_cost = -1
+
+			allowed = {
+				always = no
+			}
+
+			cancel = {
+				NOT = {
+					has_government = communism
+				}
+			}
+
+			picture = great_purge
+
+			modifier = {
+				army_org_factor = -0.25
+				send_volunteer_factor = -0.25
+				army_defence_factor = -0.15
+				army_attack_factor = -0.15
+				training_time_factor = 0.1
+				political_advisor_cost_factor = 0.25
+				party_popularity_stability_factor = -0.15
+				experience_gain_army_factor = -0.2
 			}
 		}
 
@@ -9532,7 +9568,8 @@ ideas = {
 
 		designer = yes
 
-		nevskoye_design_bureau = {
+		russia2_nevskoye_design_bureau = {
+			picture = nevskoye_design_bureau
 
 			allowed = {
 				original_tag = SOV
@@ -9738,7 +9775,8 @@ ideas = {
 
 		designer = yes
 
-		mig_design_bureau = {
+		russia2_mig_design_bureau = {
+			picture = mig_design_bureau
 
 			allowed = {
 				original_tag = SOV
@@ -9762,7 +9800,8 @@ ideas = {
 			}
 		}
 
-		ilyushin_design_bureau = {
+		russia2_ilyushin_design_bureau = {
+			picture = ilyushin_design_bureau
 
 			allowed = {
 				original_tag = SOV
@@ -9793,7 +9832,8 @@ ideas = {
 			}
 		}
 
-		tupolev_design_bureau = {
+		russia2_tupolev_design_bureau = {
+			picture = tupolev_design_bureau
 
 			allowed = {
 				original_tag = SOV
@@ -9824,7 +9864,8 @@ ideas = {
 			}
 		}
 
-		yakovlev_design_bureau = {
+		russia2_yakovlev_design_bureau = {
+			picture = yakovlev_design_bureau
 
 			allowed = {
 				original_tag = SOV
@@ -10019,10 +10060,6 @@ ideas = {
 			}
 
 			traits = { railway_company }
-
-			modifier = {
-				custom_modifier_tooltip = SOV_industrial_concern_upgrade_tt
-			}
 		}
 
 		russia2_gosproyektstroy = {
@@ -10054,7 +10091,8 @@ ideas = {
 
 		designer = yes
 
-		morozov_design_bureau = {
+		russia2_morozov_design_bureau = {
+			picture = morozov_design_bureau
 
 			allowed = {
 				OR = {
@@ -10111,7 +10149,8 @@ ideas = {
 			}
 		}
 
-		astrov_design_bureau = {
+		russia2_astrov_design_bureau = {
+			picture = astrov_design_bureau
 
 			allowed = {
 				original_tag = SOV
@@ -10143,7 +10182,8 @@ ideas = {
 			}
 		}
 
-		okmo = {
+		russia2_okmo = {
+			picture = okmo
 
 			allowed = {
 				original_tag = SOV
@@ -10292,7 +10332,9 @@ ideas = {
 
 		designer = yes
 
-		grabin_design_bureau = {
+		russia2_grabin_design_bureau = {
+			picture = grabin_design_bureau
+
 			allowed = {
 				original_tag = SOV
 			}
@@ -10311,7 +10353,8 @@ ideas = {
 			}
 		}
 
-		tula_arms_plant = {
+		russia2_tula_arms_plant = {
+			picture = tula_arms_plant
 
 			allowed = {
 				original_tag = SOV
@@ -10331,7 +10374,8 @@ ideas = {
 			}
 		}
 
-		gaz = {
+		russia2_gaz = {
+			picture = gaz
 
 			allowed = {
 				original_tag = SOV

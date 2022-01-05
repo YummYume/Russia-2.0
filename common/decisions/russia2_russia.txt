@@ -14,6 +14,37 @@ SOV_russia_reworked_load_decision_category_russia2 = {
 
 SOV_great_purge_decisions = {
 
+	SOV_move_on_from_purges = {
+
+		icon = GFX_decision_generic_speech
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			has_idea = SOV_Remnants_purge
+		}
+
+		available = {
+			has_idea = SOV_Remnants_purge
+			surrender_progress > 0.25
+			has_army_experience > 50
+		}
+
+		cost = 25
+
+		ai_will_do = {
+			factor = 10000
+		}
+
+		complete_effect = {
+			army_experience = -50
+			remove_ideas = SOV_Remnants_purge
+			add_stability = 0.05
+		}
+	}
+
 	SOV_reform_military_staff = {
 
 		icon = GFX_decision_generic_speech
@@ -28,7 +59,7 @@ SOV_great_purge_decisions = {
 		}
 
 		available = {
-			has_government = communism
+			has_idea = SOV_Great_purge_idea_russia2
 			has_completed_focus = SOV_reign_of_terror
 			has_country_flag = sov_purge_over
 		}
@@ -38,7 +69,7 @@ SOV_great_purge_decisions = {
 		days_remove = 70
 
 		ai_will_do = {
-			factor = 100
+			factor = 10000
 		}
 
 		remove_effect = {
@@ -77,7 +108,7 @@ SOV_great_purge_decisions = {
 		}
 
 		available = {
-			has_government = communism
+			has_idea = SOV_Great_purge_idea_russia2
 			has_completed_focus = SOV_train_new_officers
 			custom_trigger_tooltip = {
 				tooltip = has_completed_decision_reform
@@ -94,7 +125,7 @@ SOV_great_purge_decisions = {
 		days_remove = 70
 
 		ai_will_do = {
-			factor = 100
+			factor = 10000
 		}
 
 		remove_effect = {
@@ -136,7 +167,7 @@ SOV_great_purge_decisions = {
 		}
 
 		available = {
-			has_government = communism
+			has_idea = SOV_Great_purge_idea_russia2
 			has_completed_focus = SOV_new_russia_military
 			has_army_experience > 25
 			custom_trigger_tooltip = {
@@ -154,7 +185,7 @@ SOV_great_purge_decisions = {
 		days_remove = 70
 
 		ai_will_do = {
-			factor = 100
+			factor = 10000
 		}
 
 		remove_effect = {
@@ -198,7 +229,7 @@ SOV_great_purge_decisions = {
 		}
 
 		available = {
-			has_government = communism
+			has_idea = SOV_Great_purge_idea_russia2
 			has_army_experience > 100
 			any_country = {
 				is_major = yes
@@ -219,7 +250,7 @@ SOV_great_purge_decisions = {
 		days_remove = 70
 
 		ai_will_do = {
-			factor = 100
+			factor = 10000
 		}
 
 		remove_effect = {
@@ -256,7 +287,7 @@ SOV_great_purge_decisions = {
 		}
 
 		available = {
-			has_government = communism
+			has_idea = SOV_Great_purge_idea_russia2
 			has_army_experience > 100
 			any_country = {
 				is_major = yes
@@ -277,7 +308,7 @@ SOV_great_purge_decisions = {
 		days_remove = 70
 
 		ai_will_do = {
-			factor = 100
+			factor = 10000
 		}
 
 		remove_effect = {
@@ -311,7 +342,7 @@ SOV_great_purge_decisions = {
 		}
 
 		available = {
-			has_government = communism
+			has_idea = SOV_Great_purge_idea_russia2
 			has_army_experience > 50
 			any_country = {
 				is_major = yes
@@ -332,7 +363,7 @@ SOV_great_purge_decisions = {
 		days_remove = 70
 
 		ai_will_do = {
-			factor = 100
+			factor = 10000
 		}
 
 		remove_effect = {
@@ -358,6 +389,7 @@ SOV_great_purge_decisions = {
 		}
 
 		available = {
+			has_idea = SOV_Great_purge_idea_russia2
 			surrender_progress > 0.4
 			any_country = {
 				is_major = yes
@@ -368,7 +400,7 @@ SOV_great_purge_decisions = {
 		cost = 50
 
 		ai_will_do = {
-			factor = 100
+			factor = 10000
 		}
 
 		complete_effect = {
@@ -389,7 +421,10 @@ SOV_great_purge_decisions = {
 		}
 
 		available = {
-			has_government = communism
+			OR = {
+				has_idea = SOV_Great_purge_idea_russia2
+				has_idea = SOV_Remnants_purge
+			}
 			any_country = {
 				is_major = yes
 				has_war_with = SOV
@@ -519,12 +554,19 @@ SOV_great_purge_decisions = {
 		}
 
 		visible = {
-			has_idea = SOV_Great_purge_idea_russia2
+			NOT = {
+				has_global_flag = sov_leon_trotsky_dead
+			}
 		}
 
 		available = {
-			has_country_flag = sov_purge_over
+			has_civil_war = no
 			NOT = {
+				has_country_leader = {
+					character = SOV_Leon_trotsky
+					ruling_only = yes
+				}
+				has_country_flag = sov_purge_ongoing
 				has_country_flag = sov_searching_for_trotsky
 				has_global_flag = sov_leon_trotsky_dead
 			}
@@ -536,6 +578,10 @@ SOV_great_purge_decisions = {
 
 		ai_will_do = {
 			factor = 100
+			modifier = {
+				factor = 0
+				has_idea = SOV_Great_purge_idea_russia2
+			}
 		}
 
 		complete_effect = {
@@ -751,6 +797,7 @@ SOV_europe_expansion = {
 					has_capitulated = yes
 				}
 			}
+			poland_controls_eastern_poland_trigger = yes
 			if = {
 				limit = {
 					ROOT = {
@@ -856,6 +903,7 @@ SOV_europe_expansion = {
 			NOT = {
 				has_idea = SOV_molotov_ribbentrop_pact
 			}
+			poland_controls_eastern_poland_trigger = yes
 			POL = {
 				exists = yes
 				NOT = {
@@ -865,13 +913,19 @@ SOV_europe_expansion = {
 				}
 			}
 			OR = {
-				is_neighbor_of = POL
+				AND = {
+					ROOT = {
+						is_neighbor_of = POL
+					}
+					is_neighbor_of_poland_eastern_state_trigger_root = yes
+				}
 				any_country = {
 					OR = {
 						is_in_faction_with = ROOT
 						is_subject_of = ROOT
 					}
 					is_neighbor_of = POL
+					is_neighbor_of_poland_eastern_state_trigger_puppet = yes
 				}
 			}
      	}
@@ -950,6 +1004,9 @@ SOV_europe_expansion = {
 						is_in_faction_with = ROOT
 					}
 					is_neighbor_of = ROOT
+				}
+				any_neighbor_state = {
+					is_owned_by = ROOT
 				}
 			}
      	}
@@ -4612,7 +4669,7 @@ SOV_invest_russian_sphere = {
 
 		icon = GFX_decision_generic_construction
 
-		days_remove = 120
+		days_remove = 180
 
 		allowed = {
 			original_tag = SOV
@@ -4744,7 +4801,7 @@ SOV_invest_russian_sphere = {
 			}
 		}
 
-		cost = 30
+		cost = 40
 
 		remove_effect = {
 			FROM = {
@@ -4784,7 +4841,7 @@ SOV_invest_russian_sphere = {
 
 		icon = GFX_decision_generic_construction
 
-		days_remove = 80
+		days_remove = 140
 
 		allowed = {
 			original_tag = SOV
@@ -4813,6 +4870,176 @@ SOV_invest_russian_sphere = {
 			FROM = {
 				exists = yes
 				has_country_flag = democratic_russia_chaos_asia
+			}
+		}
+
+		available = {
+			FROM = {
+				is_subject_of = ROOT
+			}
+			if = {
+				limit = {
+					FROM = {
+						check_variable = {
+							var = russian_investment@FROM
+							value = 0
+							compare = equals
+						}
+					}
+				}
+				custom_trigger_tooltip = {
+					tooltip = russian_sphere_no_investment
+					FROM = {
+						check_variable = {
+							var = russian_investment@FROM
+							value = 3
+							compare = less_than
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					FROM = {
+						check_variable = {
+							var = russian_investment@FROM
+							value = 1
+							compare = equals
+						}
+					}
+				}
+				custom_trigger_tooltip = {
+					tooltip = russian_sphere_low_investment
+					FROM = {
+						check_variable = {
+							var = russian_investment@FROM
+							value = 3
+							compare = less_than
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					FROM = {
+						check_variable = {
+							var = russian_investment@FROM
+							value = 2
+							compare = equals
+						}
+					}
+				}
+				custom_trigger_tooltip = {
+					tooltip = russian_sphere_medium_investment
+					FROM = {
+						check_variable = {
+							var = russian_investment@FROM
+							value = 3
+							compare = less_than
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					FROM = {
+						check_variable = {
+							var = russian_investment@FROM
+							value = 3
+							compare = equals
+						}
+					}
+				}
+				custom_trigger_tooltip = {
+					tooltip = russian_sphere_high_investment
+					FROM = {
+						check_variable = {
+							var = russian_investment@FROM
+							value = 3
+							compare = less_than
+						}
+					}
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = SOV_preemptive_coup_tt
+				check_variable = {
+					var = united_russia_strength
+					value = 2
+					compare = less_than_or_equals
+				}
+			}
+		}
+
+		cost = 30
+
+		remove_effect = {
+			FROM = {
+				random_owned_state = {
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+				}
+				random_owned_state = {
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+				}
+				add_to_variable = {
+					var = russian_investment@FROM
+					value = 1
+				}
+			}
+			add_to_variable = {
+				var = sov_total_investment
+				value = 1
+			}
+		}
+
+		ai_will_do = {
+			factor = 250
+		}
+	}
+
+	SOV_invest_russian_sphere_caucasus = {
+
+		icon = GFX_decision_generic_construction
+
+		days_remove = 100
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		target_array = global.russia_reworked_russian_states
+
+		highlight_states = {
+			highlight_states_trigger = {
+				state = FROM.capital
+			}
+		}
+
+		visible = {
+			FROM = {
+				exists = yes
+				has_country_flag = democratic_russia_chaos_caucasus
+			}
+		}
+
+		target_root_trigger = {
+			has_completed_focus = SOV_investment_russian_sphere
+		}
+
+		target_trigger = {
+			FROM = {
+				exists = yes
+				has_country_flag = democratic_russia_chaos_caucasus
 			}
 		}
 
@@ -4915,176 +5142,6 @@ SOV_invest_russian_sphere = {
 		}
 
 		cost = 20
-
-		remove_effect = {
-			FROM = {
-				random_owned_state = {
-					add_extra_state_shared_building_slots = 1
-					add_building_construction = {
-						type = industrial_complex
-						level = 1
-						instant_build = yes
-					}
-				}
-				random_owned_state = {
-					add_extra_state_shared_building_slots = 1
-					add_building_construction = {
-						type = arms_factory
-						level = 1
-						instant_build = yes
-					}
-				}
-				add_to_variable = {
-					var = russian_investment@FROM
-					value = 1
-				}
-			}
-			add_to_variable = {
-				var = sov_total_investment
-				value = 1
-			}
-		}
-
-		ai_will_do = {
-			factor = 250
-		}
-	}
-
-	SOV_invest_russian_sphere_caucasus = {
-
-		icon = GFX_decision_generic_construction
-
-		days_remove = 60
-
-		allowed = {
-			original_tag = SOV
-		}
-
-		target_array = global.russia_reworked_russian_states
-
-		highlight_states = {
-			highlight_states_trigger = {
-				state = FROM.capital
-			}
-		}
-
-		visible = {
-			FROM = {
-				exists = yes
-				has_country_flag = democratic_russia_chaos_caucasus
-			}
-		}
-
-		target_root_trigger = {
-			has_completed_focus = SOV_investment_russian_sphere
-		}
-
-		target_trigger = {
-			FROM = {
-				exists = yes
-				has_country_flag = democratic_russia_chaos_caucasus
-			}
-		}
-
-		available = {
-			FROM = {
-				is_subject_of = ROOT
-			}
-			if = {
-				limit = {
-					FROM = {
-						check_variable = {
-							var = russian_investment@FROM
-							value = 0
-							compare = equals
-						}
-					}
-				}
-				custom_trigger_tooltip = {
-					tooltip = russian_sphere_no_investment
-					FROM = {
-						check_variable = {
-							var = russian_investment@FROM
-							value = 3
-							compare = less_than
-						}
-					}
-				}
-			}
-			else_if = {
-				limit = {
-					FROM = {
-						check_variable = {
-							var = russian_investment@FROM
-							value = 1
-							compare = equals
-						}
-					}
-				}
-				custom_trigger_tooltip = {
-					tooltip = russian_sphere_low_investment
-					FROM = {
-						check_variable = {
-							var = russian_investment@FROM
-							value = 3
-							compare = less_than
-						}
-					}
-				}
-			}
-			else_if = {
-				limit = {
-					FROM = {
-						check_variable = {
-							var = russian_investment@FROM
-							value = 2
-							compare = equals
-						}
-					}
-				}
-				custom_trigger_tooltip = {
-					tooltip = russian_sphere_medium_investment
-					FROM = {
-						check_variable = {
-							var = russian_investment@FROM
-							value = 3
-							compare = less_than
-						}
-					}
-				}
-			}
-			else_if = {
-				limit = {
-					FROM = {
-						check_variable = {
-							var = russian_investment@FROM
-							value = 3
-							compare = equals
-						}
-					}
-				}
-				custom_trigger_tooltip = {
-					tooltip = russian_sphere_high_investment
-					FROM = {
-						check_variable = {
-							var = russian_investment@FROM
-							value = 3
-							compare = less_than
-						}
-					}
-				}
-			}
-			custom_trigger_tooltip = {
-				tooltip = SOV_preemptive_coup_tt
-				check_variable = {
-					var = united_russia_strength
-					value = 2
-					compare = less_than_or_equals
-				}
-			}
-		}
-
-		cost = 10
 
 		remove_effect = {
 			FROM = {
@@ -27306,9 +27363,9 @@ SOV_end_second_civil_war = {
 			is_subject = no
 			NOT = {
 				has_war_with = UKR
-				has_war_with = SOU
+				has_war_with = SOJ
 				ukr_in_scw = yes
-				sou_in_scw = yes
+				soj_in_scw = yes
 				UKR = {
 					AND = {
 						exists = yes
@@ -30394,9 +30451,9 @@ SOV_the_black_revolution = {
 							has_state_flag = anarchist_state_black_revolution
 						}
 					}
-					SOU = {
+					SOJ = {
 						add_state_core = PREV
-						set_cosmetic_tag = SOUC
+						set_cosmetic_tag = SOJC
 					}
 				}
 				SOV = {
@@ -30442,7 +30499,7 @@ SOV_the_black_revolution = {
 							}
 						}
 						set_character_flag = sov_character_switched_to_sou
-						set_nationality = SOU
+						set_nationality = SOJ
 					}
 					set_politics = {
 						ruling_party = anarchy
@@ -30466,7 +30523,7 @@ SOV_the_black_revolution = {
 							}
 						}
 					}
-					release = SOU
+					release = SOJ
 					set_country_flag = black_revolution_turned_civil_war
 					set_country_flag = black_revolution_civil_war_in_progress
 					set_cosmetic_tag = ANAC
@@ -30542,7 +30599,7 @@ SOV_the_black_revolution = {
 						retire = yes
 					}
 				}
-				SOU = {
+				SOJ = {
 					declare_war_on = {
 						target = SOV
 						type = annex_everything
@@ -30557,13 +30614,13 @@ SOV_the_black_revolution = {
 					limit = {
 						is_core_of = SOV
 					}
-					SOU = {
+					SOJ = {
 						add_state_core = PREV
 					}
 				}
 				every_state = {
 					limit = {
-						is_core_of = SOU
+						is_core_of = SOJ
 						NOT = {
 							has_state_flag = anarchist_state_black_revolution
 						}
@@ -30641,9 +30698,9 @@ SOV_the_black_revolution = {
 							has_state_flag = anarchist_state_black_revolution
 						}
 					}
-					SOU = {
+					SOJ = {
 						add_state_core = PREV
-						set_cosmetic_tag = SOUC
+						set_cosmetic_tag = SOJC
 					}
 				}
 				SOV = {
@@ -30689,7 +30746,7 @@ SOV_the_black_revolution = {
 							}
 						}
 						set_character_flag = sov_character_switched_to_sou
-						set_nationality = SOU
+						set_nationality = SOJ
 					}
 					set_politics = {
 						ruling_party = anarchy
@@ -30713,7 +30770,7 @@ SOV_the_black_revolution = {
 							}
 						}
 					}
-					release = SOU
+					release = SOJ
 					set_cosmetic_tag = ANAC
 					set_country_flag = black_revolution_turned_civil_war
 					set_country_flag = black_revolution_civil_war_in_progress
@@ -30792,7 +30849,7 @@ SOV_the_black_revolution = {
 						retire = yes
 					}
 				}
-				SOU = {
+				SOJ = {
 					declare_war_on = {
 						target = SOV
 						type = annex_everything
@@ -30807,13 +30864,13 @@ SOV_the_black_revolution = {
 					limit = {
 						is_core_of = SOV
 					}
-					SOU = {
+					SOJ = {
 						add_state_core = PREV
 					}
 				}
 				every_state = {
 					limit = {
-						is_core_of = SOU
+						is_core_of = SOJ
 						NOT = {
 							has_state_flag = anarchist_state_black_revolution
 						}
@@ -30854,9 +30911,9 @@ SOV_the_black_revolution = {
 							has_state_flag = anarchist_state_black_revolution
 						}
 					}
-					SOU = {
+					SOJ = {
 						add_state_core = PREV
-						set_cosmetic_tag = SOUC
+						set_cosmetic_tag = SOJC
 					}
 				}
 				SOV = {
@@ -30902,7 +30959,7 @@ SOV_the_black_revolution = {
 							}
 						}
 						set_character_flag = sov_character_switched_to_sou
-						set_nationality = SOU
+						set_nationality = SOJ
 					}
 					set_politics = {
 						ruling_party = anarchy
@@ -30926,7 +30983,7 @@ SOV_the_black_revolution = {
 							}
 						}
 					}
-					release = SOU
+					release = SOJ
 					set_cosmetic_tag = ANAC
 					set_country_flag = black_revolution_turned_civil_war
 					set_country_flag = black_revolution_civil_war_in_progress
@@ -31005,7 +31062,7 @@ SOV_the_black_revolution = {
 						retire = yes
 					}
 				}
-				SOU = {
+				SOJ = {
 					declare_war_on = {
 						target = SOV
 						type = annex_everything
@@ -31020,13 +31077,13 @@ SOV_the_black_revolution = {
 					limit = {
 						is_core_of = SOV
 					}
-					SOU = {
+					SOJ = {
 						add_state_core = PREV
 					}
 				}
 				every_state = {
 					limit = {
-						is_core_of = SOU
+						is_core_of = SOJ
 						NOT = {
 							has_state_flag = anarchist_state_black_revolution
 						}
@@ -42721,7 +42778,7 @@ SOV_rename_soviet_cities = {
 				}
 			}
 		}
-		
+
 		ai_will_do = {
 			factor = 100
 		}
@@ -42984,7 +43041,7 @@ SOV_russianize_state = {
 				}
 			}
 		}
-		
+
 		ai_will_do = {
 			factor = 100
 		}
