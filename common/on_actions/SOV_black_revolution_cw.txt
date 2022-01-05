@@ -354,4 +354,102 @@ on_actions = {
 			}
 		}
 	}
+
+	#Anarchist League Defensive
+	on_war_relation_added = {
+		effect = {
+			if = {
+				limit = {
+					FROM = {
+						OR = {
+							tag = SOV
+							is_in_faction_with = SOV
+						}
+					}
+					ROOT = {
+						NOT = {
+							is_in_faction_with = SOV
+							is_russian_state_russia2 = yes
+						}
+					}
+					SOV = {
+						has_completed_focus = SOV_we_are_stronger_together
+						has_government = anarchy
+						is_subject = no
+						is_faction_leader = yes
+					}
+				}
+				every_country = {
+					limit = {
+						OR = {
+							tag = SOV
+							is_in_faction_with = SOV
+						}
+						NOT = {
+							has_war_with = ROOT
+						}
+					}
+					ROOT = {
+						declare_war_on = {
+							target = PREV
+							type = defense_anarchist_league
+						}
+					}
+				}
+			}
+		}
+	}
+
+	#Anarchist League Offensive
+	on_war_relation_added = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						tag = SOV
+						has_completed_focus = SOV_we_are_stronger_together
+						has_government = anarchy
+						is_subject = no
+						is_faction_leader = yes
+					}
+					FROM = {
+						NOT = {
+							is_in_faction_with = SOV
+							is_russian_state_russia2 = yes
+						}
+					}
+				}
+				every_country = {
+					limit = {
+						is_in_faction_with = SOV
+						NOT = {
+							has_war_with = FROM
+						}
+					}
+					declare_war_on = {
+						target = FROM
+						type = defense_anarchist_league
+					}
+				}
+			}
+		}
+	}
+
+	#Anarchist Country Switch and Have Ideas Local Anarchist Economy or Other
+	on_ruling_party_change = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						has_government = anarchy
+						OR = {
+							has_idea = SOV_Local_anarchist_economy
+							has_idea = SOV_United_anarchist_economy
+						}
+					}
+				}
+				add_ideas = partial_economic_mobilisation
+			}
+		}
+	}
 }
