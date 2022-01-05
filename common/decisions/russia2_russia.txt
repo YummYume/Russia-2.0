@@ -27,8 +27,9 @@ SOV_great_purge_decisions = {
 		}
 
 		available = {
+			has_idea = SOV_Remnants_purge
 			surrender_progress > 0.25
-			has_army_experience > 49
+			has_army_experience > 50
 		}
 
 		cost = 25
@@ -58,7 +59,7 @@ SOV_great_purge_decisions = {
 		}
 
 		available = {
-			has_government = communism
+			has_idea = SOV_Great_purge_idea_russia2
 			has_completed_focus = SOV_reign_of_terror
 			has_country_flag = sov_purge_over
 		}
@@ -68,7 +69,7 @@ SOV_great_purge_decisions = {
 		days_remove = 70
 
 		ai_will_do = {
-			factor = 100
+			factor = 10000
 		}
 
 		remove_effect = {
@@ -107,7 +108,7 @@ SOV_great_purge_decisions = {
 		}
 
 		available = {
-			has_government = communism
+			has_idea = SOV_Great_purge_idea_russia2
 			has_completed_focus = SOV_train_new_officers
 			custom_trigger_tooltip = {
 				tooltip = has_completed_decision_reform
@@ -124,7 +125,7 @@ SOV_great_purge_decisions = {
 		days_remove = 70
 
 		ai_will_do = {
-			factor = 100
+			factor = 10000
 		}
 
 		remove_effect = {
@@ -166,7 +167,7 @@ SOV_great_purge_decisions = {
 		}
 
 		available = {
-			has_government = communism
+			has_idea = SOV_Great_purge_idea_russia2
 			has_completed_focus = SOV_new_russia_military
 			has_army_experience > 25
 			custom_trigger_tooltip = {
@@ -184,7 +185,7 @@ SOV_great_purge_decisions = {
 		days_remove = 70
 
 		ai_will_do = {
-			factor = 100
+			factor = 10000
 		}
 
 		remove_effect = {
@@ -228,7 +229,7 @@ SOV_great_purge_decisions = {
 		}
 
 		available = {
-			has_government = communism
+			has_idea = SOV_Great_purge_idea_russia2
 			has_army_experience > 100
 			any_country = {
 				is_major = yes
@@ -249,7 +250,7 @@ SOV_great_purge_decisions = {
 		days_remove = 70
 
 		ai_will_do = {
-			factor = 100
+			factor = 10000
 		}
 
 		remove_effect = {
@@ -286,7 +287,7 @@ SOV_great_purge_decisions = {
 		}
 
 		available = {
-			has_government = communism
+			has_idea = SOV_Great_purge_idea_russia2
 			has_army_experience > 100
 			any_country = {
 				is_major = yes
@@ -307,7 +308,7 @@ SOV_great_purge_decisions = {
 		days_remove = 70
 
 		ai_will_do = {
-			factor = 100
+			factor = 10000
 		}
 
 		remove_effect = {
@@ -341,7 +342,7 @@ SOV_great_purge_decisions = {
 		}
 
 		available = {
-			has_government = communism
+			has_idea = SOV_Great_purge_idea_russia2
 			has_army_experience > 50
 			any_country = {
 				is_major = yes
@@ -362,7 +363,7 @@ SOV_great_purge_decisions = {
 		days_remove = 70
 
 		ai_will_do = {
-			factor = 100
+			factor = 10000
 		}
 
 		remove_effect = {
@@ -388,6 +389,7 @@ SOV_great_purge_decisions = {
 		}
 
 		available = {
+			has_idea = SOV_Great_purge_idea_russia2
 			surrender_progress > 0.4
 			any_country = {
 				is_major = yes
@@ -398,7 +400,7 @@ SOV_great_purge_decisions = {
 		cost = 50
 
 		ai_will_do = {
-			factor = 100
+			factor = 10000
 		}
 
 		complete_effect = {
@@ -419,7 +421,10 @@ SOV_great_purge_decisions = {
 		}
 
 		available = {
-			has_government = communism
+			OR = {
+				has_idea = SOV_Great_purge_idea_russia2
+				has_idea = SOV_Remnants_purge
+			}
 			any_country = {
 				is_major = yes
 				has_war_with = SOV
@@ -549,12 +554,19 @@ SOV_great_purge_decisions = {
 		}
 
 		visible = {
-			has_idea = SOV_Great_purge_idea_russia2
+			NOT = {
+				has_global_flag = sov_leon_trotsky_dead
+			}
 		}
 
 		available = {
-			has_country_flag = sov_purge_over
+			has_civil_war = no
 			NOT = {
+				has_country_leader = {
+					character = SOV_Leon_trotsky
+					ruling_only = yes
+				}
+				has_country_flag = sov_purge_ongoing
 				has_country_flag = sov_searching_for_trotsky
 				has_global_flag = sov_leon_trotsky_dead
 			}
@@ -566,6 +578,10 @@ SOV_great_purge_decisions = {
 
 		ai_will_do = {
 			factor = 100
+			modifier = {
+				factor = 0
+				has_idea = SOV_Great_purge_idea_russia2
+			}
 		}
 
 		complete_effect = {
