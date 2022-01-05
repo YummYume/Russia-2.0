@@ -1,5 +1,5 @@
 autonomy_state = {
-	id = autonomy_supervised_free_territory
+	id = autonomy_autonomous_free_territory
 
 	is_puppet = yes
 
@@ -13,18 +13,14 @@ autonomy_state = {
 		can_not_declare_war = yes
 		can_decline_call_to_war = no
 		units_deployed_to_overlord = no
-		can_be_spymaster = no
+		can_be_spymaster = yes
 		contributes_operatives = yes
 		can_create_collaboration_government = no
 	}
 
 	modifier = {
 		can_master_build_for_us = 1
-		extra_trade_to_overlord_factor = 0.2
-		overlord_trade_cost_factor = -0.2
-		cic_to_overlord_factor = 0.15
-		mic_to_overlord_factor = 0.15
-		production_speed_buildings_factor = 0.15
+		production_speed_buildings_factor = 0.05
 		autonomy_manpower_share = 0.25
 	}
 
@@ -42,10 +38,17 @@ autonomy_state = {
 
 	allowed = {
 		OVERLORD = {
-			tag = SOV
+			has_government = anarchy
+			OR = {
+				tag = SOV
+				tag = event_target:FROM_first_beneficiary
+				tag = event_target:FROM_second_beneficiary
+			}
 			has_government = anarchy
 			is_subject = no
-			has_completed_focus = SOV_implement_the_project
+		}
+		SOV = {
+			has_completed_focus = SOV_officialize_act
 		}
 	}
 
