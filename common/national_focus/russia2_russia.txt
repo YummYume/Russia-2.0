@@ -7446,13 +7446,15 @@ focus_tree = {
 			custom_trigger_tooltip = {
 				tooltip = SOV_foreign_policy_tt
 				has_civil_war = no
-				SOV = {
-					NOT = {
-						has_global_flag = second_russian_civil_war_in_progress
-					}
+				NOT = {
+					has_global_flag = second_russian_civil_war_in_progress
 				}
 			}
-			has_country_flag = sov_purge_over
+			OR = {
+				has_country_flag = sov_purge_over
+				has_country_flag = sov_purge_failed
+				has_country_flag = sov_purge_cancelled
+			}
 			if = {
 				limit = {
 					has_idea = SOV_Exiled_russia
@@ -12646,6 +12648,19 @@ focus_tree = {
 						type = alliance
 						id = SOV
 						value = -25
+					}
+				}
+				every_country = {
+					limit = {
+						is_in_faction_with = ROOT
+						NOT = {
+							has_rule = can_declare_war_on_same_ideology
+						}
+						has_rule = can_only_justify_war_on_threat_country
+					}
+					set_rule = {
+						can_declare_war_on_same_ideology = yes
+						can_only_justify_war_on_threat_country = no
 					}
 				}
 			}
