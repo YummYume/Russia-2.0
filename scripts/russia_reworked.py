@@ -108,7 +108,6 @@ if __name__ == '__main__':
             f.write(" %s_AI_BEHAVIOR:0 \"@%s \"\n" % (new_state, new_state))
 
         f.close
-
         print("Success")
 
         f = open("russian_states_ai.txt", "w")
@@ -242,7 +241,88 @@ if __name__ == '__main__':
             """)
 
         f.close
+        print("Success")
 
+        f = open("anarchist_party.txt", "w", encoding='utf-8-sig')
+        anarchist_party_names = [
+            "intellect",
+            "civilian_industry",
+            "military_industry",
+            "militarist",
+            "aviation",
+            "naval",
+            "logistic",
+            "internal_security",
+            "countryside",
+            "theorist"
+        ]
+        index = 0
+
+        for anarchist_party in anarchist_party_names:
+            title = anarchist_party.replace("_", " ").title().replace(" ", "")
+            f.write(f"""
+defined_text = {{
+    name = GetCurrentAnarchistSupport{ title }Party
+    text = {{
+        trigger = {{
+            check_variable = {{
+                var = sov.sov_anarchist_election_parties^{ index }
+                value = 100
+                compare = greater_than_or_equals
+            }}
+        }}
+        localization_key = LOC_anarchist_{ anarchist_party }_party_100
+    }}
+    text = {{
+        trigger = {{
+            check_variable = {{
+                var = sov.sov_anarchist_election_parties^{ index }
+                value = 75
+                compare = greater_than_or_equals
+            }}
+        }}
+        localization_key = LOC_anarchist_{ anarchist_party }_party_75
+    }}
+    text = {{
+        trigger = {{
+            check_variable = {{
+                var = sov.sov_anarchist_election_parties^{ index }
+                value = 50
+                compare = greater_than_or_equals
+            }}
+        }}
+        localization_key = LOC_anarchist_{ anarchist_party }_party_50
+    }}
+    text = {{
+        trigger = {{
+            check_variable = {{
+                var = sov.sov_anarchist_election_parties^{ index }
+                value = 25
+                compare = greater_than_or_equals
+            }}
+        }}
+        localization_key = LOC_anarchist_{ anarchist_party }_party_25
+    }}
+    text = {{
+        localization_key = LOC_anarchist_{ anarchist_party }_party_0
+    }}
+}}
+            """)
+            index += 1
+
+        index = 0
+
+        for anarchist_party in anarchist_party_names:
+            f.write(f"""
+ LOC_anarchist_{ anarchist_party }_party_100:0 "§0[?sov_anarchist_election_parties^{ index }|1]%§!"
+ LOC_anarchist_{ anarchist_party }_party_75:0 "§2[?sov_anarchist_election_parties^{ index }|1]%§!"
+ LOC_anarchist_{ anarchist_party }_party_50:0 "§7[?sov_anarchist_election_parties^{ index }|1]%§!"
+ LOC_anarchist_{ anarchist_party }_party_25:0 "§9[?sov_anarchist_election_parties^{ index }|1]%§!"
+ LOC_anarchist_{ anarchist_party }_party_0:0 "§R[?sov_anarchist_election_parties^{ index }|1]%§!"
+            """)
+            index += 1
+
+        f.close
         print("Success")
 
         manpower = []
