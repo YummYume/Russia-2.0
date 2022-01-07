@@ -29,19 +29,32 @@ SOV_great_purge_decisions = {
 		available = {
 			has_idea = SOV_Remnants_purge
 			surrender_progress > 0.25
-			has_army_experience > 50
 		}
 
-		cost = 25
+		custom_cost_trigger = {
+            has_army_experience > 49
+			has_political_power > 74
+        }
+
+        custom_cost_text = SOV_reform_purge_major_cost_tt
 
 		ai_will_do = {
 			factor = 10000
 		}
 
 		complete_effect = {
-			army_experience = -50
-			remove_ideas = SOV_Remnants_purge
+			hidden_effect = {
+				add_political_power = -75
+				army_experience = -50
+			}
 			add_stability = 0.05
+			add_doctrine_cost_reduction = {
+				name = SOV_move_on_from_purges
+				cost_reduction = 0.25
+				uses = 1
+				category = land_doctrine
+			}
+			remove_ideas = SOV_Remnants_purge
 		}
 	}
 
@@ -56,11 +69,21 @@ SOV_great_purge_decisions = {
 		visible = {
 			has_idea = SOV_Great_purge_idea_russia2
 			has_country_flag = sov_purge_over
-			NOT = {
+			OR = {
 				check_variable = {
-					var = reform_purge
-					value = 1
-					compare = greater_than_or_equals
+					var = party_popularity_stability_factor_great_purge
+					value = 0
+					compare = less_than
+				}
+				check_variable = {
+					var = send_volunteer_factor_great_purge
+					value = 0
+					compare = less_than
+				}
+				check_variable = {
+					var = political_advisor_cost_factor_great_purge
+					value = 0
+					compare = less_than
 				}
 			}
 		}
@@ -68,28 +91,121 @@ SOV_great_purge_decisions = {
 		available = {
 			has_idea = SOV_Great_purge_idea_russia2
 			has_completed_focus = SOV_reign_of_terror
-			has_country_flag = sov_purge_over
 		}
 
-		cost = 150
+		custom_cost_trigger = {
+            has_army_experience > 24
+			has_political_power > 49
+        }
+
+        custom_cost_text = SOV_reform_purge_no_major_cost_tt
 
 		days_remove = 70
+
+		days_re_enable = 1
 
 		ai_will_do = {
 			factor = 10000
 		}
 
+		complete_effect = {
+			add_doctrine_cost_reduction = {
+				name = SOV_reform_military_staff
+				cost_reduction = 0.1
+				uses = 1
+				category = land_doctrine
+			}
+			hidden_effect = {
+				army_experience = -25
+				add_political_power = -50
+			}
+		}
+
 		remove_effect = {
-			set_variable = { reform_purge = 1 }
-			custom_effect_tooltip = first_removal_of_great_purge
-			multiply_variable = { army_org_factor_great_purge = 0.667 } #-0.4
-			multiply_variable = { send_volunteer_factor_great_purge = 0.75 } #-0.3
-			multiply_variable = { army_attack_factor_great_purge = 0.8 } #-0.4
-			multiply_variable = { army_defence_factor_great_purge = 0.8 } #-0.4
-			multiply_variable = { party_popularity_stability_factor_great_purge = 0.6 } #-0.15
-			multiply_variable = { experience_gain_army_factor_great_purge = 0.8 } #-0.4
-			multiply_variable = { training_time_factor_great_purge = 0.75 } #-0.15
-			multiply_variable = { political_advisor_cost_factor_great_purge = 0.6 } #-0.3
+			set_temp_variable = { party_popularity_stability_factor_great_purge_temp = party_popularity_stability_factor_great_purge }
+			add_to_temp_variable = { party_popularity_stability_factor_great_purge_temp = 0.025 }
+			set_temp_variable = { send_volunteer_factor_great_purge_temp = send_volunteer_factor_great_purge }
+			add_to_temp_variable = { send_volunteer_factor_great_purge_temp = 0.05 }
+			set_temp_variable = { political_advisor_cost_factor_great_purge_temp = political_advisor_cost_factor_great_purge }
+			add_to_temp_variable = { political_advisor_cost_factor_great_purge_temp = 0.05 }
+
+			add_to_variable = { party_popularity_stability_factor_great_purge = 0.025 }
+			clamp_variable = {
+				var = party_popularity_stability_factor_great_purge
+				min = var:party_popularity_stability_factor_great_purge_max
+				max = 0
+			}
+			add_to_variable = { send_volunteer_factor_great_purge = 0.05 }
+			clamp_variable = {
+				var = send_volunteer_factor_great_purge
+				min = var:send_volunteer_factor_great_purge_max
+				max = 0
+			}
+			add_to_variable = { political_advisor_cost_factor_great_purge = 0.05 }
+			clamp_variable = {
+				var = political_advisor_cost_factor_great_purge
+				min = var:political_advisor_cost_factor_great_purge_max
+				max = 0
+			}
+
+			if = {
+				limit = {
+					OR = {
+						check_variable = {
+							var = party_popularity_stability_factor_great_purge_temp
+							value = 0
+							compare = less_than
+						}
+						check_variable = {
+							var = send_volunteer_factor_great_purge_temp
+							value = 0
+							compare = less_than
+						}
+						check_variable = {
+							var = political_advisor_cost_factor_great_purge_temp
+							value = 0
+							compare = less_than
+						}
+						check_variable = {
+							var = experience_gain_army_factor_great_purge
+							value = 0
+							compare = less_than
+						}
+						check_variable = {
+							var = army_org_factor_great_purge
+							value = 0
+							compare = less_than
+						}
+						check_variable = {
+							var = army_attack_factor_great_purge
+							value = 0
+							compare = less_than
+						}
+						check_variable = {
+							var = army_defence_factor_great_purge
+							value = 0
+							compare = less_than
+						}
+						check_variable = {
+							var = training_time_factor_great_purge
+							value = 0
+							compare = less_than
+						}
+					}
+				}
+				custom_effect_tooltip = SOV_reform_military_staff_tt
+			}
+			else = {
+				custom_effect_tooltip = SOV_reform_purge_remove_purge_idea_tt
+				hidden_effect = {
+					if = {
+						limit = {
+							has_idea = SOV_Great_purge_idea_russia2
+						}
+						remove_ideas = SOV_Great_purge_idea_russia2
+					}
+				}
+			}
 		}
 	}
 
@@ -104,11 +220,16 @@ SOV_great_purge_decisions = {
 		visible = {
 			has_idea = SOV_Great_purge_idea_russia2
 			has_country_flag = sov_purge_over
-			NOT = {
+			OR = {
 				check_variable = {
-					var = reform_purge
-					value = 2
-					compare = greater_than_or_equals
+					var = experience_gain_army_factor_great_purge
+					value = 0
+					compare = less_than
+				}
+				check_variable = {
+					var = army_org_factor_great_purge
+					value = 0
+					compare = less_than
 				}
 			}
 		}
@@ -116,38 +237,113 @@ SOV_great_purge_decisions = {
 		available = {
 			has_idea = SOV_Great_purge_idea_russia2
 			has_completed_focus = SOV_train_new_officers
-			custom_trigger_tooltip = {
-				tooltip = has_completed_decision_reform
-				check_variable = {
-					var = reform_purge
-					value = 1
-					compare = equals
-				}
-			}
 		}
 
-		cost = 150
+		custom_cost_trigger = {
+            has_army_experience > 24
+			has_political_power > 49
+        }
+
+        custom_cost_text = SOV_reform_purge_no_major_cost_tt
 
 		days_remove = 70
+
+		days_re_enable = 1
 
 		ai_will_do = {
 			factor = 10000
 		}
 
-		remove_effect = {
-			add_to_variable = {
-				var = reform_purge
-				value = 1
+		complete_effect = {
+			add_doctrine_cost_reduction = {
+				name = SOV_engage_new_officer
+				cost_reduction = 0.1
+				uses = 1
+				category = land_doctrine
 			}
-			custom_effect_tooltip = second_removal_of_great_purge
-			multiply_variable = { army_org_factor_great_purge = 0.625 } #-0.25
-			multiply_variable = { send_volunteer_factor_great_purge = 0.333 } #-0.1
-			multiply_variable = { army_attack_factor_great_purge = 0.875 } #-0.35
-			multiply_variable = { army_defence_factor_great_purge = 0.875 } #-0.35
-			multiply_variable = { party_popularity_stability_factor_great_purge = 0.667 } #-0.1
-			multiply_variable = { experience_gain_army_factor_great_purge = 0.75 } #-0.3
-			multiply_variable = { training_time_factor_great_purge = 0.667 } #-0.1
-			multiply_variable = { political_advisor_cost_factor_great_purge = 0.5 } #-0.15
+			hidden_effect = {
+				army_experience = -25
+				add_political_power = -50
+			}
+		}
+
+		remove_effect = {
+			set_temp_variable = { experience_gain_army_factor_great_purge_temp = experience_gain_army_factor_great_purge }
+			add_to_temp_variable = { experience_gain_army_factor_great_purge_temp = 0.05 }
+			set_temp_variable = { army_org_factor_great_purge_temp = army_org_factor_great_purge }
+			add_to_temp_variable = { army_org_factor_great_purge_temp = 0.05 }
+
+			add_to_variable = { experience_gain_army_factor_great_purge = 0.05 }
+			clamp_variable = {
+				var = experience_gain_army_factor_great_purge
+				min = var:experience_gain_army_factor_great_purge_max
+				max = 0
+			}
+			add_to_variable = { army_org_factor_great_purge = 0.05 }
+			clamp_variable = {
+				var = army_org_factor_great_purge
+				min = var:army_org_factor_great_purge_max
+				max = 0
+			}
+
+			if = {
+				limit = {
+					OR = {
+						check_variable = {
+							var = experience_gain_army_factor_great_purge_temp
+							value = 0
+							compare = less_than
+						}
+						check_variable = {
+							var = army_org_factor_great_purge_temp
+							value = 0
+							compare = less_than
+						}
+						check_variable = {
+							var = party_popularity_stability_factor_great_purge
+							value = 0
+							compare = less_than
+						}
+						check_variable = {
+							var = send_volunteer_factor_great_purge
+							value = 0
+							compare = less_than
+						}
+						check_variable = {
+							var = political_advisor_cost_factor_great_purge
+							value = 0
+							compare = less_than
+						}
+						check_variable = {
+							var = army_attack_factor_great_purge
+							value = 0
+							compare = less_than
+						}
+						check_variable = {
+							var = army_defence_factor_great_purge
+							value = 0
+							compare = less_than
+						}
+						check_variable = {
+							var = training_time_factor_great_purge
+							value = 0
+							compare = less_than
+						}
+					}
+				}
+				custom_effect_tooltip = SOV_engage_new_officer_tt
+			}
+			else = {
+				custom_effect_tooltip = SOV_reform_purge_remove_purge_idea_tt
+				hidden_effect = {
+					if = {
+						limit = {
+							has_idea = SOV_Great_purge_idea_russia2
+						}
+						remove_ideas = SOV_Great_purge_idea_russia2
+					}
+				}
+			}
 		}
 	}
 
@@ -162,11 +358,21 @@ SOV_great_purge_decisions = {
 		visible = {
 			has_idea = SOV_Great_purge_idea_russia2
 			has_country_flag = sov_purge_over
-			NOT = {
+			OR = {
 				check_variable = {
-					var = reform_purge
-					value = 3
-					compare = greater_than_or_equals
+					var = army_attack_factor_great_purge
+					value = 0
+					compare = less_than
+				}
+				check_variable = {
+					var = army_defence_factor_great_purge
+					value = 0
+					compare = less_than
+				}
+				check_variable = {
+					var = training_time_factor_great_purge
+					value = 0
+					compare = less_than
 				}
 			}
 		}
@@ -174,49 +380,121 @@ SOV_great_purge_decisions = {
 		available = {
 			has_idea = SOV_Great_purge_idea_russia2
 			has_completed_focus = SOV_new_russia_military
-			has_army_experience > 25
-			custom_trigger_tooltip = {
-				tooltip = has_completed_decision_reform_2
-				check_variable = {
-					var = reform_purge
-					value = 2
-					compare = equals
-				}
-			}
 		}
 
-		cost = 50
+		custom_cost_trigger = {
+            has_army_experience > 24
+			has_political_power > 49
+        }
+
+        custom_cost_text = SOV_reform_purge_no_major_cost_tt
 
 		days_remove = 70
+
+		days_re_enable = 1
 
 		ai_will_do = {
 			factor = 10000
 		}
 
-		cancel_trigger = {
-			has_army_experience < 25
-		}
-
-		remove_effect = {
-			add_to_variable = {
-				var = reform_purge
-				value = 1
-			}
-			army_experience = -25
+		complete_effect = {
 			add_doctrine_cost_reduction = {
 				name = SOV_review_military_tactics
-				cost_reduction = 0.5
+				cost_reduction = 0.1
 				uses = 1
 				category = land_doctrine
 			}
-			custom_effect_tooltip = third_removal_of_great_purge
-			multiply_variable = { send_volunteer_factor_great_purge = 0 } #0
-			multiply_variable = { army_attack_factor_great_purge = 0.714 } #-0.25
-			multiply_variable = { army_defence_factor_great_purge = 0.714 } #-0.25
-			multiply_variable = { party_popularity_stability_factor_great_purge = 0 } #0
-			multiply_variable = { experience_gain_army_factor_great_purge = 0.5 } #-0.15
-			multiply_variable = { training_time_factor_great_purge = 0.5 } #-0.05
-			multiply_variable = { political_advisor_cost_factor_great_purge = 0 } #0
+			hidden_effect = {
+				army_experience = -25
+				add_political_power = -50
+			}
+		}
+
+		remove_effect = {
+			set_temp_variable = { army_attack_factor_great_purge_temp = army_attack_factor_great_purge }
+			add_to_temp_variable = { army_attack_factor_great_purge_temp = 0.05 }
+			set_temp_variable = { army_defence_factor_great_purge_temp = army_defence_factor_great_purge }
+			add_to_temp_variable = { army_defence_factor_great_purge_temp = 0.05 }
+			set_temp_variable = { training_time_factor_great_purge_temp = training_time_factor_great_purge }
+			add_to_temp_variable = { training_time_factor_great_purge_temp = 0.025 }
+
+			add_to_variable = { army_attack_factor_great_purge = 0.05 }
+			clamp_variable = {
+				var = army_attack_factor_great_purge
+				min = var:army_attack_factor_great_purge_max
+				max = 0
+			}
+			add_to_variable = { army_defence_factor_great_purge = 0.05 }
+			clamp_variable = {
+				var = army_defence_factor_great_purge
+				min = var:army_defence_factor_great_purge_max
+				max = 0
+			}
+			add_to_variable = { training_time_factor_great_purge = 0.025 }
+			clamp_variable = {
+				var = training_time_factor_great_purge
+				min = var:training_time_factor_great_purge_max
+				max = 0
+			}
+
+			if = {
+				limit = {
+					OR = {
+						check_variable = {
+							var = army_attack_factor_great_purge_temp
+							value = 0
+							compare = less_than
+						}
+						check_variable = {
+							var = army_defence_factor_great_purge_temp
+							value = 0
+							compare = less_than
+						}
+						check_variable = {
+							var = training_time_factor_great_purge_temp
+							value = 0
+							compare = less_than
+						}
+						check_variable = {
+							var = experience_gain_army_factor_great_purge
+							value = 0
+							compare = less_than
+						}
+						check_variable = {
+							var = army_org_factor_great_purge
+							value = 0
+							compare = less_than
+						}
+						check_variable = {
+							var = party_popularity_stability_factor_great_purge
+							value = 0
+							compare = less_than
+						}
+						check_variable = {
+							var = send_volunteer_factor_great_purge
+							value = 0
+							compare = less_than
+						}
+						check_variable = {
+							var = political_advisor_cost_factor_great_purge
+							value = 0
+							compare = less_than
+						}
+					}
+				}
+				custom_effect_tooltip = SOV_review_military_tactics_tt
+			}
+			else = {
+				custom_effect_tooltip = SOV_reform_purge_remove_purge_idea_tt
+				hidden_effect = {
+					if = {
+						limit = {
+							has_idea = SOV_Great_purge_idea_russia2
+						}
+						remove_ideas = SOV_Great_purge_idea_russia2
+					}
+				}
+			}
 		}
 	}
 
@@ -231,57 +509,150 @@ SOV_great_purge_decisions = {
 		visible = {
 			has_idea = SOV_Great_purge_idea_russia2
 			has_country_flag = sov_purge_over
-			NOT = {
+			OR = {
 				check_variable = {
-					var = reform_purge
-					value = 4
-					compare = greater_than_or_equals
+					var = party_popularity_stability_factor_great_purge
+					value = 0
+					compare = less_than
+				}
+				check_variable = {
+					var = send_volunteer_factor_great_purge
+					value = 0
+					compare = less_than
+				}
+				check_variable = {
+					var = political_advisor_cost_factor_great_purge
+					value = 0
+					compare = less_than
 				}
 			}
 		}
 
 		available = {
 			has_idea = SOV_Great_purge_idea_russia2
-			has_army_experience > 100
 			any_country = {
 				is_major = yes
 				has_war_with = SOV
 			}
-			custom_trigger_tooltip = {
-				tooltip = has_completed_decision_reform_3
-				check_variable = {
-					var = reform_purge
-					value = 3
-					compare = equals
-				}
-			}
 		}
 
-		cancel_trigger = {
-			has_army_experience < 100
-		}
+		custom_cost_trigger = {
+            has_army_experience > 49
+			has_political_power > 74
+        }
 
-		cost = 50
+        custom_cost_text = SOV_reform_purge_major_cost_tt
 
-		days_remove = 70
+		days_remove = 35
+
+		days_re_enable = 1
+
+		fire_only_once = yes
+
+		fire_only_once = yes
 
 		ai_will_do = {
 			factor = 10000
 		}
 
-		remove_effect = {
-			add_to_variable = {
-				var = reform_purge
-				value = 1
+		complete_effect = {
+			add_doctrine_cost_reduction = {
+				name = SOV_emergency_training_reservist
+				cost_reduction = 0.25
+				uses = 1
+				category = land_doctrine
 			}
-			army_experience = -100
-			add_manpower = 200000
-			custom_effect_tooltip = fourth_removal_of_great_purge
-			multiply_variable = { army_org_factor_great_purge = 0.8 } #-0.2
-			multiply_variable = { army_attack_factor_great_purge = 0.6 } #-0.15
-			multiply_variable = { army_defence_factor_great_purge = 0.6 } #-0.15
-			multiply_variable = { experience_gain_army_factor_great_purge = 0.333 } #-0.05
-			multiply_variable = { training_time_factor_great_purge = 0 } #0
+			hidden_effect = {
+				army_experience = -50
+				add_political_power = -75
+			}
+		}
+
+		remove_effect = {
+			set_temp_variable = { party_popularity_stability_factor_great_purge_temp = party_popularity_stability_factor_great_purge }
+			add_to_temp_variable = { party_popularity_stability_factor_great_purge_temp = 0.05 }
+			set_temp_variable = { send_volunteer_factor_great_purge_temp = send_volunteer_factor_great_purge }
+			add_to_temp_variable = { send_volunteer_factor_great_purge_temp = 0.1 }
+			set_temp_variable = { political_advisor_cost_factor_great_purge_temp = political_advisor_cost_factor_great_purge }
+			add_to_temp_variable = { political_advisor_cost_factor_great_purge_temp = 0.1 }
+
+			add_to_variable = { party_popularity_stability_factor_great_purge = 0.05 }
+			clamp_variable = {
+				var = party_popularity_stability_factor_great_purge
+				min = var:party_popularity_stability_factor_great_purge_max
+				max = 0
+			}
+			add_to_variable = { send_volunteer_factor_great_purge = 0.1 }
+			clamp_variable = {
+				var = send_volunteer_factor_great_purge
+				min = var:send_volunteer_factor_great_purge_max
+				max = 0
+			}
+			add_to_variable = { political_advisor_cost_factor_great_purge = 0.1 }
+			clamp_variable = {
+				var = political_advisor_cost_factor_great_purge
+				min = var:political_advisor_cost_factor_great_purge_max
+				max = 0
+			}
+
+			if = {
+				limit = {
+					OR = {
+						check_variable = {
+							var = party_popularity_stability_factor_great_purge_temp
+							value = 0
+							compare = less_than
+						}
+						check_variable = {
+							var = send_volunteer_factor_great_purge_temp
+							value = 0
+							compare = less_than
+						}
+						check_variable = {
+							var = political_advisor_cost_factor_great_purge_temp
+							value = 0
+							compare = less_than
+						}
+						check_variable = {
+							var = experience_gain_army_factor_great_purge
+							value = 0
+							compare = less_than
+						}
+						check_variable = {
+							var = army_org_factor_great_purge
+							value = 0
+							compare = less_than
+						}
+						check_variable = {
+							var = army_attack_factor_great_purge
+							value = 0
+							compare = less_than
+						}
+						check_variable = {
+							var = army_defence_factor_great_purge
+							value = 0
+							compare = less_than
+						}
+						check_variable = {
+							var = training_time_factor_great_purge
+							value = 0
+							compare = less_than
+						}
+					}
+				}
+				custom_effect_tooltip = SOV_emergency_training_reservist_tt
+			}
+			else = {
+				custom_effect_tooltip = SOV_reform_purge_remove_purge_idea_tt
+				hidden_effect = {
+					if = {
+						limit = {
+							has_idea = SOV_Great_purge_idea_russia2
+						}
+						remove_ideas = SOV_Great_purge_idea_russia2
+					}
+				}
+			}
 		}
 	}
 
@@ -296,55 +667,137 @@ SOV_great_purge_decisions = {
 		visible = {
 			has_idea = SOV_Great_purge_idea_russia2
 			has_country_flag = sov_purge_over
-			NOT = {
+			OR = {
 				check_variable = {
-					var = reform_purge
-					value = 5
-					compare = greater_than_or_equals
+					var = experience_gain_army_factor_great_purge
+					value = 0
+					compare = less_than
+				}
+				check_variable = {
+					var = army_org_factor_great_purge
+					value = 0
+					compare = less_than
 				}
 			}
 		}
 
 		available = {
 			has_idea = SOV_Great_purge_idea_russia2
-			has_army_experience > 100
 			any_country = {
 				is_major = yes
 				has_war_with = SOV
 			}
-			custom_trigger_tooltip = {
-				tooltip = has_completed_decision_reform_4
-				check_variable = {
-					var = reform_purge
-					value = 4
-					compare = equals
-				}
-			}
 		}
 
-		cancel_trigger = {
-			has_army_experience < 100
-		}
+		custom_cost_trigger = {
+            has_army_experience > 49
+			has_political_power > 74
+        }
 
-		cost = 50
+        custom_cost_text = SOV_reform_purge_major_cost_tt
 
-		days_remove = 70
+		days_remove = 35
+
+		days_re_enable = 1
+
+		fire_only_once = yes
+
+		fire_only_once = yes
 
 		ai_will_do = {
 			factor = 10000
 		}
 
-		remove_effect = {
-			add_to_variable = {
-				var = reform_purge
-				value = 1
+		complete_effect = {
+			add_doctrine_cost_reduction = {
+				name = SOV_abolish_temporarily_political_commisars
+				cost_reduction = 0.25
+				uses = 1
+				category = land_doctrine
 			}
-			army_experience = -100
-			custom_effect_tooltip = fifth_removal_of_great_purge
-			multiply_variable = { army_org_factor_great_purge = 0.5 } #-0.1
-			multiply_variable = { army_attack_factor_great_purge = 0.667 } #-0.10
-			multiply_variable = { army_defence_factor_great_purge = 0.333 } #-0.05
-			multiply_variable = { experience_gain_army_factor_great_purge = 0 } #0
+			hidden_effect = {
+				army_experience = -50
+				add_political_power = -75
+			}
+		}
+
+		remove_effect = {
+			set_temp_variable = { experience_gain_army_factor_great_purge_temp = experience_gain_army_factor_great_purge }
+			add_to_temp_variable = { experience_gain_army_factor_great_purge_temp = 0.1 }
+			set_temp_variable = { army_org_factor_great_purge_temp = army_org_factor_great_purge }
+			add_to_temp_variable = { army_org_factor_great_purge_temp = 0.1 }
+
+			add_to_variable = { experience_gain_army_factor_great_purge = 0.1 }
+			clamp_variable = {
+				var = experience_gain_army_factor_great_purge
+				min = var:experience_gain_army_factor_great_purge_max
+				max = 0
+			}
+			add_to_variable = { army_org_factor_great_purge = 0.1 }
+			clamp_variable = {
+				var = army_org_factor_great_purge
+				min = var:army_org_factor_great_purge_max
+				max = 0
+			}
+
+			if = {
+				limit = {
+					OR = {
+						check_variable = {
+							var = experience_gain_army_factor_great_purge_temp
+							value = 0
+							compare = less_than
+						}
+						check_variable = {
+							var = army_org_factor_great_purge_temp
+							value = 0
+							compare = less_than
+						}
+						check_variable = {
+							var = party_popularity_stability_factor_great_purge
+							value = 0
+							compare = less_than
+						}
+						check_variable = {
+							var = send_volunteer_factor_great_purge
+							value = 0
+							compare = less_than
+						}
+						check_variable = {
+							var = political_advisor_cost_factor_great_purge
+							value = 0
+							compare = less_than
+						}
+						check_variable = {
+							var = army_attack_factor_great_purge
+							value = 0
+							compare = less_than
+						}
+						check_variable = {
+							var = army_defence_factor_great_purge
+							value = 0
+							compare = less_than
+						}
+						check_variable = {
+							var = training_time_factor_great_purge
+							value = 0
+							compare = less_than
+						}
+					}
+				}
+				custom_effect_tooltip = SOV_abolish_temporarily_political_commisars_tt
+			}
+			else = {
+				custom_effect_tooltip = SOV_reform_purge_remove_purge_idea_tt
+				hidden_effect = {
+					if = {
+						limit = {
+							has_idea = SOV_Great_purge_idea_russia2
+						}
+						remove_ideas = SOV_Great_purge_idea_russia2
+					}
+				}
+			}
 		}
 	}
 
@@ -359,54 +812,150 @@ SOV_great_purge_decisions = {
 		visible = {
 			has_idea = SOV_Great_purge_idea_russia2
 			has_country_flag = sov_purge_over
-			NOT = {
+			OR = {
 				check_variable = {
-					var = reform_purge
-					value = 6
-					compare = greater_than_or_equals
+					var = army_attack_factor_great_purge
+					value = 0
+					compare = less_than
+				}
+				check_variable = {
+					var = army_defence_factor_great_purge
+					value = 0
+					compare = less_than
+				}
+				check_variable = {
+					var = training_time_factor_great_purge
+					value = 0
+					compare = less_than
 				}
 			}
 		}
 
 		available = {
 			has_idea = SOV_Great_purge_idea_russia2
-			has_army_experience > 50
 			any_country = {
 				is_major = yes
 				has_war_with = SOV
 			}
-			custom_trigger_tooltip = {
-				tooltip = has_completed_decision_reform_5
-				check_variable = {
-					var = reform_purge
-					value = 5
-					compare = equals
-				}
-			}
 		}
 
-		cancel_trigger = {
-			has_army_experience < 50
-		}
+		custom_cost_trigger = {
+            has_army_experience > 49
+			has_political_power > 74
+        }
 
-		cost = 50
+        custom_cost_text = SOV_reform_purge_major_cost_tt
 
-		days_remove = 70
+		days_remove = 35
+
+		days_re_enable = 1
+
+		fire_only_once = yes
+
+		fire_only_once = yes
 
 		ai_will_do = {
 			factor = 10000
 		}
 
-		remove_effect = {
-			add_to_variable = {
-				var = reform_purge
-				value = 1
+		complete_effect = {
+			add_doctrine_cost_reduction = {
+				name = SOV_restore_military_rank_decoration
+				cost_reduction = 0.25
+				uses = 1
+				category = land_doctrine
 			}
-			army_experience = -50
-			multiply_variable = { army_org_factor_great_purge = 0 } #0
-			multiply_variable = { army_attack_factor_great_purge = 0 } #0
-			multiply_variable = { army_defence_factor_great_purge = 0 } #0
-			remove_ideas = SOV_Great_purge_idea_russia2
+			hidden_effect = {
+				army_experience = -50
+				add_political_power = -75
+			}
+		}
+
+		remove_effect = {
+			set_temp_variable = { army_attack_factor_great_purge_temp = army_attack_factor_great_purge }
+			add_to_temp_variable = { army_attack_factor_great_purge_temp = 0.1 }
+			set_temp_variable = { army_defence_factor_great_purge_temp = army_defence_factor_great_purge }
+			add_to_temp_variable = { army_defence_factor_great_purge_temp = 0.1 }
+			set_temp_variable = { training_time_factor_great_purge_temp = training_time_factor_great_purge }
+			add_to_temp_variable = { training_time_factor_great_purge_temp = 0.05 }
+
+			add_to_variable = { army_attack_factor_great_purge = 0.1 }
+			clamp_variable = {
+				var = army_attack_factor_great_purge
+				min = var:army_attack_factor_great_purge_max
+				max = 0
+			}
+			add_to_variable = { army_defence_factor_great_purge = 0.1 }
+			clamp_variable = {
+				var = army_defence_factor_great_purge
+				min = var:army_defence_factor_great_purge_max
+				max = 0
+			}
+			add_to_variable = { training_time_factor_great_purge = 0.05 }
+			clamp_variable = {
+				var = training_time_factor_great_purge
+				min = var:training_time_factor_great_purge_max
+				max = 0
+			}
+
+			if = {
+				limit = {
+					OR = {
+						check_variable = {
+							var = army_attack_factor_great_purge_temp
+							value = 0
+							compare = less_than
+						}
+						check_variable = {
+							var = army_defence_factor_great_purge_temp
+							value = 0
+							compare = less_than
+						}
+						check_variable = {
+							var = training_time_factor_great_purge_temp
+							value = 0
+							compare = less_than
+						}
+						check_variable = {
+							var = experience_gain_army_factor_great_purge
+							value = 0
+							compare = less_than
+						}
+						check_variable = {
+							var = army_org_factor_great_purge
+							value = 0
+							compare = less_than
+						}
+						check_variable = {
+							var = party_popularity_stability_factor_great_purge
+							value = 0
+							compare = less_than
+						}
+						check_variable = {
+							var = send_volunteer_factor_great_purge
+							value = 0
+							compare = less_than
+						}
+						check_variable = {
+							var = political_advisor_cost_factor_great_purge
+							value = 0
+							compare = less_than
+						}
+					}
+				}
+				custom_effect_tooltip = SOV_restore_military_rank_decoration_tt
+			}
+			else = {
+				custom_effect_tooltip = SOV_reform_purge_remove_purge_idea_tt
+				hidden_effect = {
+					if = {
+						limit = {
+							has_idea = SOV_Great_purge_idea_russia2
+						}
+						remove_ideas = SOV_Great_purge_idea_russia2
+					}
+				}
+			}
 		}
 	}
 
@@ -432,14 +981,22 @@ SOV_great_purge_decisions = {
 			}
 		}
 
-		cost = 50
+		custom_cost_trigger = {
+            has_army_experience > 49
+			has_political_power > 74
+        }
+
+        custom_cost_text = SOV_reform_hastily_the_army_tt
 
 		ai_will_do = {
 			factor = 10000
 		}
 
 		complete_effect = {
-			remove_ideas = SOV_Great_purge_idea_russia2
+			custom_effect_tooltip = SOV_reform_hastily_the_army_tt2
+			hidden_effect = {
+				remove_ideas = SOV_Great_purge_idea_russia2
+			}
 		}
 	}
 
@@ -503,10 +1060,7 @@ SOV_great_purge_decisions = {
 			add_manpower = -132000
 			custom_effect_tooltip = unlock_shtrafbat_temlate_capital
 			hidden_effect = {
-				random_owned_controlled_state = {
-					limit = {
-						is_capital = yes
-					}
+				capital_scope = {
 					create_unit = {
 						division = "name = \"1st Shtrafbats Diviziya\" division_template = \"Shtrafbats Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
 						owner = SOV
@@ -611,7 +1165,7 @@ SOV_great_purge_decisions = {
 			}
 		}
 
-		cost = 200
+		cost = 150
 
 		days_remove = 200
 
@@ -42792,8 +43346,8 @@ SOV_rename_soviet_cities = {
 
 		visible = {
 			OR = {
-				owns_state = 233
-				controls_state = 233
+				owns_state = 828
+				controls_state = 828
 			}
 			if = {
 				limit = {
@@ -42810,12 +43364,12 @@ SOV_rename_soviet_cities = {
 
 		highlight_states = {
 			highlight_states_trigger = {
-				state = 233
+				state = 828
 			}
 		}
 
 		available = {
-			has_full_control_of_state = 233
+			has_full_control_of_state = 828
 		}
 
 		complete_effect = {
@@ -42825,7 +43379,7 @@ SOV_rename_soviet_cities = {
 						has_government = communism
 					}
 				}
-				set_province_name = { id = 9663 name = "Vladikavkaz" }
+				set_province_name = { id = 9628 name = "Vladikavkaz" }
 				hidden_effect = {
 					233 = {
 						set_state_name = "Vladikavkaz"
@@ -42834,7 +43388,7 @@ SOV_rename_soviet_cities = {
 				}
 			}
 			else = {
-				reset_province_name = 9663
+				reset_province_name = 9628
 				hidden_effect = {
 					clr_global_flag = SOV_ordzhonikidze_renamed
 				}
@@ -43151,28 +43705,28 @@ SOV_russianize_state = {
 
 		visible = {
 			OR = {
-				owns_state = 180
-				controls_state = 180
+				owns_state = 810
+				controls_state = 810
 			}
 		}
 
 		highlight_states = {
 			highlight_states_trigger = {
-				state = 180
+				state = 810
 			}
 		}
 
 		fire_only_once = yes
 
 		available = {
-			has_full_control_of_state = 180
+			has_full_control_of_state = 810
 		}
 
 		complete_effect = {
 			set_province_name = { id = 310 name = "Dvinsk" }
 			hidden_effect = {
 				set_global_flag = SOV_daugavpalis_renamed
-				180 = {
+				810 = {
 					set_state_name = "Dvinsk"
 				}
 			}
