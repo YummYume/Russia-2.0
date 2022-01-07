@@ -34580,7 +34580,7 @@ country_event = {
 	is_triggered_only = yes
 
 	option = { #Choose First Beneficiary
-		name = russia2_russia.652.a #AI Factor for neighbors and etc
+		name = russia2_russia.652.a
 		trigger = {
 			FROM = {
 				OR = {
@@ -34600,7 +34600,27 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			factor = 33
+			base = 33
+			modifier = {
+				add = 67
+				OR = {
+					FROM = {
+						is_neighbor_of = event_target:FROM_first_beneficiary 
+					}
+					any_country = {
+						AND = {
+							has_country_flag = is_neighbor_of_from_first_beneficiary
+							NOT = {
+								has_country_flag = is_neighbor_of_from_second_beneficiary
+							}
+							NOT = {
+								has_country_flag = is_neighbor_of_from_sov_beneficiary
+							}
+						}
+						is_neighbor_of = FROM
+					}
+				}
+			}
 		}
 		every_other_country = {
 			limit = {
@@ -34635,7 +34655,27 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			factor = 33
+			base = 33
+			modifier = {
+				add = 67
+				OR = {
+					FROM = {
+						is_neighbor_of = event_target:FROM_second_beneficiary 
+					}
+					any_country = {
+						AND = {
+							NOT = {
+								has_country_flag = is_neighbor_of_from_first_beneficiary
+							}
+							has_country_flag = is_neighbor_of_from_second_beneficiary
+							NOT = {
+								has_country_flag = is_neighbor_of_from_sov_beneficiary
+							}
+						}
+						is_neighbor_of = FROM
+					}
+				}
+			}
 		}
 		every_other_country = {
 			limit = {
@@ -34670,7 +34710,27 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			factor = 33
+			base = 33
+			modifier = {
+				add = 67
+				OR = {
+					FROM = {
+						is_neighbor_of = ROOT
+					}
+					any_country = {
+						AND = {
+							NOT = {
+								has_country_flag = is_neighbor_of_from_first_beneficiary
+							}
+							NOT = {
+								has_country_flag = is_neighbor_of_from_second_beneficiary
+							}
+							has_country_flag = is_neighbor_of_from_sov_beneficiary
+						}
+						is_neighbor_of = FROM
+					}
+				}
+			}
 		}
 		every_other_country = {
 			limit = {
