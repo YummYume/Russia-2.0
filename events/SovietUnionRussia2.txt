@@ -7983,7 +7983,7 @@ country_event = {
 							is_character = SOV_Nikita_khrushchev
 							is_character = SOV_Vyacheslav_molotov
 							is_character = SOV_Alexander_yegorov
-							is_character = SOV_Vasily_blucher
+							is_character = SOV_Vasily_blyukher
 						}
 					}
 					set_character_flag = russia_is_in_prison_cw
@@ -26957,7 +26957,7 @@ country_event = {
 		custom_effect_tooltip = sov_add_4_purge_completion
 		sov_increase_great_purge_penalties = yes
 		custom_effect_tooltip = remove_chief_of_army
-		show_ideas_tooltip = SOV_Vasily_blucher
+		show_ideas_tooltip = SOV_Vasily_blyukher
 		set_variable = { sov_no_purge_count = 0 }
 	}
 
@@ -28289,20 +28289,9 @@ country_event = {
 	option = { #Purge
 		name = russia2_russia.576.a
 		ai_chance = {
-			factor = 50
+			factor = 0 #AI doesn't want to purge him unless necessary (needed to gain army exp)
 			modifier = {
-				add = 50
-				OR = {
-					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-					check_variable = {
-						var = sov_no_purge_count
-						value = 3
-						compare = greater_than_or_equals
-					}
-				}
-			}
-			modifier = {
-				add = 25
+				add = 75
 				check_variable = {
 					var = sov_no_purge_count
 					value = 2
@@ -28310,14 +28299,11 @@ country_event = {
 				}
 			}
 			modifier = {
-				factor = 0
-				NOT = {
-					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-				}
+				add = 100
 				check_variable = {
 					var = sov_no_purge_count
 					value = 3
-					compare = less_than
+					compare = greater_than_or_equals
 				}
 			}
 		}
@@ -28344,18 +28330,7 @@ country_event = {
 	option = { #Don't purge
 		name = russia2_russia.576.b
 		ai_chance = {
-			factor = 50
-			modifier = {
-				factor = 0
-				OR = {
-					has_country_flag = RUS_AI_JOSEPH_STALIN_COMMUNISM_BEHAVIOR
-					check_variable = {
-						var = sov_no_purge_count
-						value = 3
-						compare = greater_than_or_equals
-					}
-				}
-			}
+			factor = 100
 			modifier = {
 				add = -25
 				check_variable = {
@@ -28365,12 +28340,11 @@ country_event = {
 				}
 			}
 			modifier = {
-				add = 50
-				has_country_flag = RUS_AI_OPPOSE_STALIN_COMMUNISM_BEHAVIOR
+				factor = 0
 				check_variable = {
 					var = sov_no_purge_count
-					value = 2
-					compare = less_than
+					value = 3
+					compare = greater_than_or_equals
 				}
 			}
 		}
