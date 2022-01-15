@@ -3216,6 +3216,7 @@ ignore_japanese_puppets = {
 			}
 		}
 	}
+
 	abort = {
 		OR = {
 			date > 1943.08.05
@@ -4172,17 +4173,36 @@ SOV_chill_scw  = {
 
 	enable = {
 		has_global_flag = second_russian_civil_war_in_progress
-		date < 1940.3.1 #Just attack at this point
+		date < 1939.3.1 #Just attack at this point
 		sov_in_scw = yes
 		soj_in_scw = yes
-		set_temp_variable = { sov_gun_deficit = var:sov.num_target_equipment_in_armies_k@infantry_equipment }
-		subtract_from_temp_variable = { sov_gun_deficit = var:sov.num_equipment_in_armies_k@infantry_equipment }
-		set_temp_variable = { soj_gun_deficit = var:SOJ.num_target_equipment_in_armies_k@infantry_equipment }
-		subtract_from_temp_variable = { soj_gun_deficit = var:SOJ.num_equipment_in_armies_k@infantry_equipment }
-		check_variable = {
-			var = sov_gun_deficit
-			value = soj_gun_deficit
-			compare = greater_than
+		OR = {
+			has_manpower < 100000
+			AND = {
+				set_temp_variable = { sov_gun_deficit = var:sov.num_target_equipment_in_armies_k@infantry_equipment }
+				subtract_from_temp_variable = { sov_gun_deficit = var:sov.num_equipment_in_armies_k@infantry_equipment }
+				set_temp_variable = { soj_gun_deficit = var:soj.num_target_equipment_in_armies_k@infantry_equipment }
+				subtract_from_temp_variable = { soj_gun_deficit = var:soj.num_equipment_in_armies_k@infantry_equipment }
+				check_variable = {
+					var = sov_gun_deficit
+					value = soj_gun_deficit
+					compare = greater_than
+				}
+				if = {
+					limit = {
+						check_variable = {
+							var = sov_gun_deficit
+							value = 10
+							compare = less_than
+						}
+					}
+					check_variable = {
+						var = sov.num_divisions
+						value = var:soj.num_divisions
+						compare = less_than
+					}
+				}
+			}
 		}
 	}
 
@@ -4200,7 +4220,7 @@ SOV_chill_scw  = {
 	}
 }
 
-SOV_protect_caucasus_until_connected  = {
+SOV_protect_caucasus_until_connected = {
 
 	allowed = {
 		original_tag = SOV
@@ -4209,6 +4229,7 @@ SOV_protect_caucasus_until_connected  = {
 	enable = {
 		has_global_flag = second_russian_civil_war_in_progress
 		sov_in_scw = yes
+		date < 1939.3.1
 		any_controlled_state = {
 			OR = {
 				state = 237
@@ -4249,6 +4270,8 @@ SOV_protect_caucasus_until_connected  = {
 			is_in_home_area = no
 		}
 
+		ordertype = front
+		execution_type = careful
 		execute_order = no
 		manual_attack = yes
 	}
@@ -4276,5 +4299,67 @@ SOV_do_not_waste_pp = {
 		type = pp_spend_priority
 		id = relation
 		value = -9999
+	}
+}
+
+SOV_unit_buffer_for_asian_threat = {
+	allowed = {
+		original_tag = SOV
+	}
+	enable = {
+		surrender_progress < 0.75
+		OR = {
+			controls_state = 564
+			controls_state = 563
+			controls_state = 566
+			controls_state = 567
+			controls_state = 561
+			controls_state = 657
+			controls_state = 408
+			controls_state = 409
+		}
+		any_country = {
+			OR = {
+				has_war_with = SOV
+				has_wargoal_against = SOV
+				is_justifying_wargoal_against = SOV
+			}
+			is_neighbor_of = SOV
+			capital_scope = {
+				is_on_continent = asia
+			}
+		}
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = put_unit_buffers
+
+		# ratio of total armeis in country to be buffered
+		ratio = 0.1
+
+		# you can specify an order id. ratio of same orders ids will be share same ratio
+		#order_id = 2
+
+		# states to put garrison orders (if no state is friendly, strat is invalid)
+		states = {
+			564
+			563
+			566
+			567
+			561
+			657
+			408
+			409
+		}
+
+		# ai areas that the orders will use these buffers in
+		area = asia
+
+		# by default if you have orders in target areas, the buffer will request less units.
+		# you can override this to disable the feature
+		subtract_invasions_from_need = no
+		subtract_fronts_from_need = no
 	}
 }

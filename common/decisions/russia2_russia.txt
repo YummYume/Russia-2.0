@@ -5856,6 +5856,11 @@ SOV_the_second_civil_war_fn = {
 					NOT = {
 						has_country_flag = control_caucasus
 					}
+					check_variable = {
+						var = civilian_relocate_count
+						value = 2
+						compare = greater_than
+					}
 				}
 			}
 		}
@@ -5863,12 +5868,14 @@ SOV_the_second_civil_war_fn = {
 		cost = 10
 
 		days_remove = 15
+
 		remove_effect = {
 
 		}
 
 		complete_effect = {
 			custom_effect_tooltip = SOV_relocate_civ_industry_tt
+			add_to_variable = { civilian_relocate_count = 1 }
 			hidden_effect = {
 				random_owned_state = {
 					limit = {
@@ -5925,6 +5932,11 @@ SOV_the_second_civil_war_fn = {
 					NOT = {
 						has_country_flag = control_caucasus
 					}
+					check_variable = {
+						var = military_relocate_count
+						value = 2
+						compare = greater_than
+					}
 				}
 			}
 		}
@@ -5938,6 +5950,7 @@ SOV_the_second_civil_war_fn = {
 
 		complete_effect = {
 			custom_effect_tooltip = SOV_relocate_arms_industry_tt
+			add_to_variable = { military_relocate_count = 1 }
 			hidden_effect = {
 				random_owned_state = {
 					limit = {
@@ -6097,6 +6110,7 @@ SOV_the_second_civil_war_fn = {
 					NOT = {
 						has_country_flag = control_caucasus
 					}
+					has_country_flag = sov_from_accepts_to_help_scw
 				}
 			}
 		}
@@ -6373,8 +6387,15 @@ SOV_the_second_civil_war_fn = {
 			factor = 9
 			modifier = {
 				factor = 0
-				NOT = {
-					has_country_flag = train_caucasian_soldiers_civil_war
+				OR = {
+					NOT = {
+						has_country_flag = train_caucasian_soldiers_civil_war
+					}
+					check_variable = {
+						var = sabotage_count
+						value = 1
+						compare = greater_than
+					}
 				}
 			}
 		}
@@ -6430,8 +6451,15 @@ SOV_the_second_civil_war_fn = {
 			factor = 9
 			modifier = {
 				factor = 0
-				NOT = {
-					has_country_flag = train_caucasian_soldiers_civil_war
+				OR = {
+					NOT = {
+						has_country_flag = train_caucasian_soldiers_civil_war
+					}
+					check_variable = {
+						var = sabotage_count
+						value = 1
+						compare = greater_than
+					}
 				}
 			}
 		}
@@ -6604,53 +6632,6 @@ SOV_the_second_civil_war_fn = {
 		}
 	}
 
-	SOV_engage_italian_unit = {
-
-		icon = GFX_decision_generic_prepare_civil_war
-
-		allowed = {
-			tag = SOV
-		}
-
-		available = {
-			has_civil_war = no
-			has_country_flag = control_caucasus
-		}
-
-		visible = {
-			has_country_flag = can_engage_italian_volunteers
-		}
-
-		ai_will_do = {
-			factor = 400
-			modifier = {
-				factor = 0
-				OR = {
-					NOT = {
-						has_country_flag = control_belarus
-					}
-					NOT = {
-						has_country_flag = control_central_asia
-					}
-					NOT = {
-						has_country_flag = control_caucasus
-					}
-				}
-			}
-		}
-
-		fire_only_once = yes
-
-		cost = 20
-
-		complete_effect = {
-			custom_effect_tooltip = SOV_engage_italian_unit_tt
-			hidden_effect = {
-				set_country_flag = has_engaged_italian_division_for_civil_war
-			}
-		}
-	}
-
 	SOV_train_elite_unit = {
 
 		icon = GFX_decision_generic_army_support
@@ -6711,6 +6692,59 @@ SOV_the_second_civil_war_fn = {
 		}
 	}
 
+	SOV_engage_italian_unit = {
+
+		icon = GFX_decision_generic_prepare_civil_war
+
+		allowed = {
+			tag = SOV
+		}
+
+		available = {
+			has_civil_war = no
+			has_country_flag = control_caucasus
+		}
+
+		visible = {
+			has_country_flag = can_engage_italian_volunteers
+		}
+
+		ai_will_do = {
+			factor = 400
+			modifier = {
+				factor = 0
+				OR = {
+					NOT = {
+						has_country_flag = control_belarus
+					}
+					NOT = {
+						has_country_flag = control_central_asia
+					}
+					NOT = {
+						has_country_flag = control_caucasus
+					}
+				}
+			}
+		}
+
+		fire_only_once = yes
+
+		cost = 20
+
+		complete_effect = {
+			custom_effect_tooltip = SOV_engage_italian_unit_tt
+			hidden_effect = {
+				set_country_flag = has_engaged_italian_division_for_civil_war
+				if = {
+					limit = {
+						has_country_flag = sov_from_accepts_to_help_scw
+					}
+					clr_country_flag = sov_from_accepts_to_help_scw
+				}
+			}
+		}
+	}
+
 	SOV_purchase_panzer_elite_unit = {
 
 		icon = GFX_decision_generic_tank
@@ -6755,6 +6789,12 @@ SOV_the_second_civil_war_fn = {
 			hidden_effect = {
 				add_command_power = -30
 				set_country_flag = has_purchased_panzers_for_civil_war
+				if = {
+					limit = {
+						has_country_flag = sov_from_accepts_to_help_scw
+					}
+					clr_country_flag = sov_from_accepts_to_help_scw
+				}
 			}
 		}
 	}
@@ -6803,6 +6843,12 @@ SOV_the_second_civil_war_fn = {
 			hidden_effect = {
 				add_command_power = -30
 				set_country_flag = has_recruited_japanese_elite_for_civil_war
+				if = {
+					limit = {
+						has_country_flag = sov_from_accepts_to_help_scw
+					}
+					clr_country_flag = sov_from_accepts_to_help_scw
+				}
 			}
 		}
 	}
@@ -6849,6 +6895,12 @@ SOV_the_second_civil_war_fn = {
 			custom_effect_tooltip = SOV_buy_japanese_ships_cw_tt
 			hidden_effect = {
 				set_country_flag = has_bought_japanese_ships_for_civil_war
+				if = {
+					limit = {
+						has_country_flag = sov_from_accepts_to_help_scw
+					}
+					clr_country_flag = sov_from_accepts_to_help_scw
+				}
 			}
 		}
 	}
@@ -6895,6 +6947,12 @@ SOV_the_second_civil_war_fn = {
 			custom_effect_tooltip = SOV_buy_american_planes_cw_tt
 			hidden_effect = {
 				set_country_flag = has_bought_american_planes_for_civil_war
+				if = {
+					limit = {
+						has_country_flag = sov_from_accepts_to_help_scw
+					}
+					clr_country_flag = sov_from_accepts_to_help_scw
+				}
 			}
 		}
 	}
@@ -6941,6 +6999,12 @@ SOV_the_second_civil_war_fn = {
 			custom_effect_tooltip = SOV_buy_french_artillery_cw_tt
 			hidden_effect = {
 				set_country_flag = has_bought_french_artillery_for_civil_war
+				if = {
+					limit = {
+						has_country_flag = sov_from_accepts_to_help_scw
+					}
+					clr_country_flag = sov_from_accepts_to_help_scw
+				}
 			}
 		}
 	}
@@ -6987,6 +7051,12 @@ SOV_the_second_civil_war_fn = {
 			custom_effect_tooltip = SOV_buy_french_support_equipment_cw_tt
 			hidden_effect = {
 				set_country_flag = has_bought_french_support_equipment_for_civil_war
+				if = {
+					limit = {
+						has_country_flag = sov_from_accepts_to_help_scw
+					}
+					clr_country_flag = sov_from_accepts_to_help_scw
+				}
 			}
 		}
 	}
@@ -7033,6 +7103,12 @@ SOV_the_second_civil_war_fn = {
 			custom_effect_tooltip = SOV_buy_english_ships_cw_tt
 			hidden_effect = {
 				set_country_flag = has_bought_english_ships_for_civil_war
+				if = {
+					limit = {
+						has_country_flag = sov_from_accepts_to_help_scw
+					}
+					clr_country_flag = sov_from_accepts_to_help_scw
+				}
 			}
 		}
 	}
@@ -7079,6 +7155,12 @@ SOV_the_second_civil_war_fn = {
 			custom_effect_tooltip = SOV_train_russian_marine_cw_tt
 			hidden_effect = {
 				set_country_flag = has_trained_russian_marine_for_civil_war
+				if = {
+					limit = {
+						has_country_flag = sov_from_accepts_to_help_scw
+					}
+					clr_country_flag = sov_from_accepts_to_help_scw
+				}
 			}
 		}
 	}
@@ -16497,6 +16579,13 @@ SOV_second_civil_war_during_bonus = {
 
 		ai_will_do = {
 			factor = 100000
+			modifier = {
+				factor = 0
+				has_manpower < 100000
+				NOT = {
+					has_idea = SOV_Organize_volunteer_forces
+				}
+			}
 		}
 
 		days_re_enable = 50
@@ -16528,6 +16617,13 @@ SOV_second_civil_war_during_bonus = {
 
 		ai_will_do = {
 			factor = 10000
+			modifier = {
+				factor = 0
+				has_manpower < 100000
+				NOT = {
+					has_idea = SOV_Organize_volunteer_forces
+				}
+			}
 		}
 
 		days_re_enable = 150
@@ -16554,18 +16650,22 @@ SOV_second_civil_war_during_bonus = {
 		fire_only_once = yes
 
 		available = {
-			command_power > 40
+			command_power > 20
 		}
 
 		cost = 25
 
 		ai_will_do = {
 			factor = 10000
+			modifier = {
+				factor = 0
+				has_manpower > 500000
+			}
 		}
 
 		complete_effect = {
 			hidden_effect = {
-				add_command_power = -40
+				add_command_power = -20
 			}
 			add_ideas = SOV_Organize_volunteer_forces
 		}
