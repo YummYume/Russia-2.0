@@ -120,18 +120,37 @@ SOJ_chill_scw = {
 	}
 
 	enable = {
-        has_global_flag = second_russian_civil_war_in_progress
-		date < 1940.3.1 #Just attack at this point
+		has_global_flag = second_russian_civil_war_in_progress
+		date < 1939.3.1 #Just attack at this point
 		sov_in_scw = yes
 		soj_in_scw = yes
-		set_temp_variable = { sov_gun_deficit = var:sov.num_target_equipment_in_armies_k@infantry_equipment }
-		subtract_from_temp_variable = { sov_gun_deficit = var:sov.num_equipment_in_armies_k@infantry_equipment }
-		set_temp_variable = { soj_gun_deficit = var:SOJ.num_target_equipment_in_armies_k@infantry_equipment }
-		subtract_from_temp_variable = { soj_gun_deficit = var:SOJ.num_equipment_in_armies_k@infantry_equipment }
-		check_variable = {
-			var = soj_gun_deficit
-			value = sov_gun_deficit
-			compare = greater_than
+		OR = {
+			has_manpower < 100000
+			AND = {
+				set_temp_variable = { sov_gun_deficit = var:sov.num_target_equipment_in_armies_k@infantry_equipment }
+				subtract_from_temp_variable = { sov_gun_deficit = var:sov.num_equipment_in_armies_k@infantry_equipment }
+				set_temp_variable = { soj_gun_deficit = var:soj.num_target_equipment_in_armies_k@infantry_equipment }
+				subtract_from_temp_variable = { soj_gun_deficit = var:soj.num_equipment_in_armies_k@infantry_equipment }
+				check_variable = {
+					var = soj_gun_deficit
+					value = sov_gun_deficit
+					compare = greater_than
+				}
+				if = {
+					limit = {
+						check_variable = {
+							var = soj_gun_deficit
+							value = 10
+							compare = less_than
+						}
+					}
+					check_variable = {
+						var = soj.num_divisions
+						value = var:sov.num_divisions
+						compare = less_than
+					}
+				}
+			}
 		}
 	}
 
