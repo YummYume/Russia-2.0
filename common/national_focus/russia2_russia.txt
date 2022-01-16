@@ -15098,6 +15098,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_CONTINUE_INVESTMENTS_RUSSIA }
 		completion_reward = {
+			custom_effect_tooltip = SOV_promote_russian_culture_tt
 			add_ideas = SOV_Promote_russian_culture
 			every_country = {
 				limit = {
@@ -16270,7 +16271,7 @@ focus_tree = {
 				limit = {
 					has_country_flag = sov_old_tsar_still_alive
 				}
-				set_country_flag = kirill_vladimirovich_is_icountry_leader_for_a_year
+				set_country_flag = kirill_vladimirovich_is_country_leader_for_a_year
 				add_country_leader_role = {
 					character = SOV_Kirill_vladimirovich
 					promote_leader = yes
@@ -16549,6 +16550,22 @@ focus_tree = {
 			custom_effect_tooltip = SOV_reintegrate_lost_state_tt
 			if = {
 				limit = {
+					has_country_flag = sympathize_with_ukraine
+					has_country_flag = russia_ukraine_accept_neutrality_scw
+				}
+				set_variable = {
+					var = stability_hit_ukraine
+					value = -5
+				}
+			}
+			else = {
+				set_variable = {
+					var = stability_hit_ukraine
+					value = -10
+				}
+			}
+			if = {
+				limit = {
 					country_exists = UKR
 				}
 				if = {
@@ -16564,27 +16581,6 @@ focus_tree = {
 				}
 				custom_effect_tooltip = ukraine_core_lost_state
 				hidden_effect = {
-					if = {
-						limit = {
-							has_country_flag = sympathize_with_ukraine
-						}
-						set_variable = {
-							var = stability_hit_ukraine
-							value = -10
-						}
-					}
-					else_if = {
-						limit = {
-							country_exists = UKR
-							NOT = {
-								has_country_flag = sympathize_with_ukraine
-							}
-						}
-						set_variable = {
-							var = stability_hit_ukraine
-							value = -5
-						}
-					}
 					every_state = {
 						limit = {
 							is_owned_and_controlled_by = UKR
@@ -16987,74 +16983,162 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_ANNEXATION }
 		completion_reward = {
 			hidden_effect = {
-				89 = { set_state_flag = SOV_slavic_states }
-				91 = { set_state_flag = SOV_slavic_states }
-				93 = { set_state_flag = SOV_slavic_states }
-				94 = { set_state_flag = SOV_slavic_states }
-				95 = { set_state_flag = SOV_slavic_states }
-				96 = { set_state_flag = SOV_slavic_states }
-				784 = { set_state_flag = SOV_slavic_states }
-				97 = { set_state_flag = SOV_slavic_states }
-				92 = { set_state_flag = SOV_slavic_states }
-				88 = { set_state_flag = SOV_slavic_states }
-				90 = { set_state_flag = SOV_slavic_states }
-				10 = { set_state_flag = SOV_slavic_states }
-				98 = { set_state_flag = SOV_slavic_states }
-				87 = { set_state_flag = SOV_slavic_states }
-				11 = { set_state_flag = SOV_baltic_states_slav }
-				814 = { set_state_flag = SOV_baltic_states_slav }
-				815 = { set_state_flag = SOV_baltic_states_slav }
-				189 = { set_state_flag = SOV_baltic_states_slav }
-				809 = { set_state_flag = SOV_baltic_states_slav }
-				808 = { set_state_flag = SOV_baltic_states_slav }
-				810 = { set_state_flag = SOV_baltic_states_slav }
-				12 = { set_state_flag = SOV_baltic_states_slav }
-				190 = { set_state_flag = SOV_baltic_states_slav }
-				191 = { set_state_flag = SOV_baltic_states_slav }
-				13 = { set_state_flag = SOV_baltic_states_slav }
-				811 = { set_state_flag = SOV_baltic_states_slav }
-				812 = { set_state_flag = SOV_baltic_states_slav }
-				813 = { set_state_flag = SOV_baltic_states_slav }
-				70 = { set_state_flag = SOV_slavic_states }
-				71 = { set_state_flag = SOV_slavic_states }
-				72 = { set_state_flag = SOV_slavic_states }
-				73 = { set_state_flag = SOV_slavic_states }
-				664 = { set_state_flag = SOV_slavic_states }
-				75 = { set_state_flag = SOV_czech_slavic_states }
-				74 = { set_state_flag = SOV_czech_slavic_states }
-				9 = { set_state_flag = SOV_czech_slavic_states }
-				69 = { set_state_flag = SOV_czech_slavic_states }
-				211 = { set_state_flag = SOV_slavic_states }
-				212 = { set_state_flag = SOV_slavic_states }
-				48 = { set_state_flag = SOV_slavic_states }
-				801 = { set_state_flag = SOV_slavic_states }
-				802 = { set_state_flag = SOV_slavic_states }
-				803 = { set_state_flag = SOV_slavic_states }
-				804 = { set_state_flag = SOV_slavic_states }
-				106 = { set_state_flag = SOV_slavic_states }
-				107 = { set_state_flag = SOV_slavic_states }
-				108 = { set_state_flag = SOV_slavic_states }
-				764 = { set_state_flag = SOV_slavic_states }
-				45 = { set_state_flag = SOV_slavic_states }
-				109 = { set_state_flag = SOV_slavic_states }
-				104 = { set_state_flag = SOV_slavic_states }
-				103 = { set_state_flag = SOV_slavic_states }
-				105 = { set_state_flag = SOV_slavic_states }
-				102 = { set_state_flag = SOV_slavic_states }
-				86 = { set_state_flag = SOV_german_slavic_state }
-				85 = { set_state_flag = SOV_german_slavic_state }
-				807 = { set_state_flag = SOV_german_slavic_state }
-				762 = { set_state_flag = SOV_german_slavic_state }
-				188 = { set_state_flag = SOV_german_baltic_state }
 				every_state = {
 					limit = {
 						OR = {
-							has_state_flag = SOV_slavic_states
-							has_state_flag = SOV_czech_slavic_states
+							state = 89
+							state = 91
+							state = 93
+							state = 94
+							state = 95
+							state = 96
+							state = 97
+							state = 92
+							state = 88
+							state = 90
+							state = 10
+							state = 98
+							state = 87
+							state = 70
+							state = 71
+							state = 72
+							state = 73
+							state = 664
+							state = 211
+							state = 212
+							state = 48
+							state = 801
+							state = 802
+							state = 803
+							state = 804
+							state = 106
+							state = 107
+							state = 108
+							state = 764
+							state = 45
+							state = 109
+							state = 104
+							state = 103
+							state = 102
+							state = 105
+							state = 784
+							state = 11
+							state = 814
+							state = 815
+							state = 189
+							state = 809
+							state = 808
+							state = 810
+							state = 12
+							state = 190
+							state = 191
+							state = 13
+							state = 811
+							state = 812
+							state = 813
+							state = 75
+							state = 74
+							state = 9
+							state = 69
+							state = 86
+							state = 85
+							state = 807
+							state = 762
+							state = 188
 						}
 					}
-					ROOT = {
-						add_state_claim = PREV
+					if = {
+						limit = {
+							OR = {
+								state = 89
+								state = 91
+								state = 93
+								state = 94
+								state = 95
+								state = 96
+								state = 97
+								state = 92
+								state = 88
+								state = 90
+								state = 10
+								state = 98
+								state = 87
+								state = 70
+								state = 71
+								state = 72
+								state = 73
+								state = 664
+								state = 211
+								state = 212
+								state = 48
+								state = 801
+								state = 802
+								state = 803
+								state = 804
+								state = 106
+								state = 107
+								state = 108
+								state = 764
+								state = 45
+								state = 109
+								state = 104
+								state = 103
+								state = 102
+								state = 105
+							}
+						}
+						set_state_flag = SOV_slavic_states
+						ROOT = {
+							add_state_claim = PREV
+						}
+					}
+					else_if = {
+						limit = {
+							OR = {
+								state = 784
+								state = 11
+								state = 814
+								state = 815
+								state = 189
+								state = 809
+								state = 808
+								state = 810
+								state = 12
+								state = 190
+								state = 191
+								state = 13
+								state = 811
+								state = 812
+								state = 813
+							}
+						}
+						set_state_flag = SOV_baltic_states_slav
+						ROOT = {
+							add_state_claim = PREV
+						}
+					}
+					else_if = {
+						limit = {
+							OR = {
+								state = 75
+								state = 74
+								state = 9
+								state = 69
+							}
+						}
+						set_state_flag = SOV_czech_slavic_states
+					}
+					else_if = {
+						limit = {
+							OR = {
+								state = 86
+								state = 85
+								state = 807
+								state = 762
+								state = 188
+							}
+						}
+						set_state_flag = SOV_german_slavic_state
 					}
 				}
 				news_event = {
@@ -17998,7 +18082,7 @@ focus_tree = {
 					has_idea = SOV_Exiled_russia
 				}
 			}
-			has_country_flag = protestors_has_striked_anti_military_junta_striked
+			has_country_flag = protestors_striked_anti_military_junta
 			NOT = {
 				has_war_with = PRT
 			}
@@ -18007,7 +18091,7 @@ focus_tree = {
 		completion_reward = {
 			custom_effect_tooltip = begin_the_destruction_of_protestors
 			hidden_effect = {
-				clr_country_flag = protestors_has_striked_anti_military_junta_striked
+				clr_country_flag = protestors_striked_anti_military_junta
 				set_country_flag = is_crushing_the_protestors
 				country_event = { id = russia2_russia.521 days = 25 }
 				set_variable = {
@@ -18171,19 +18255,22 @@ focus_tree = {
 			}
 			set_country_flag = SOV_became_slavic_empire
 			custom_effect_tooltip = SOV_slavic_empire_tt2
-			hidden_effect = {
-				every_state = {
-					limit = {
-						OR = {
-							has_state_flag = SOV_baltic_states_slav
-							has_state_flag = SOV_german_baltic_state
-						}
-						is_owned_by = SOV
+			every_state = {
+				limit = {
+					OR = {
+						has_state_flag = SOV_baltic_states_slav
+						has_state_flag = SOV_german_baltic_state
 					}
-					SOV = {
+					is_owned_by = SOV
+				}
+				custom_effect_tooltip = SOV_slavic_empire_tt3
+				hidden_effect = {
+					ROOT = {
 						add_state_core = PREV
 					}
 				}
+			}
+			hidden_effect = {
 				news_event = {
 					id = newsrussia2.106 hours = 12
 				}
@@ -23489,18 +23576,27 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_PROCLAMATION_COMMUNE_RUSSIA FOCUS_FILTER_ANNEXATION }
 		completion_reward = {
-			custom_effect_tooltip = SOV_spread_anarchist_revolution_west_tt
-			show_ideas_tooltip = SOV_Anarchist_uprising
+			effect_tooltip = {
+				every_country = {
+					limit = {
+						NOT = {
+							tag = SOV
+						}
+						capital_scope = {
+							is_on_continent = europe
+						}
+					}
+					add_ideas = SOV_Anarchist_uprising
+				}
+			}
 			hidden_effect = {
 				every_country = {
 					limit = {
 						NOT = {
 							tag = SOV
 						}
-						any_state = {
-							is_capital = yes
+						capital_scope = {
 							is_on_continent = europe
-							is_owned_by = PREV
 						}
 					}
 					country_event = { id = russia2_generic.45 hours = 1 }
@@ -23579,24 +23675,32 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_PROCLAMATION_COMMUNE_RUSSIA FOCUS_FILTER_ANNEXATION }
 		completion_reward = {
-			custom_effect_tooltip = SOV_spread_anarchist_revolution_east_tt
-			show_ideas_tooltip = SOV_Anarchist_uprising
+			effect_tooltip = {
+				every_country = {
+					limit = {
+						NOT = {
+							tag = SOV
+						}
+						capital_scope = {
+							OR = {
+								is_on_continent = asia
+								is_on_continent = middle_east
+							}
+						}
+					}
+					add_ideas = SOV_Anarchist_uprising
+				}
+			}
 			hidden_effect = {
 				every_country = {
 					limit = {
 						NOT = {
 							tag = SOV
 						}
-						OR = {
-							any_state = {
-								is_capital = yes
+						capital_scope = {
+							OR = {
 								is_on_continent = asia
-								is_owned_by = PREV
-							}
-							any_state = {
-								is_capital = yes
 								is_on_continent = middle_east
-								is_owned_by = PREV
 							}
 						}
 					}
@@ -23702,29 +23806,34 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_PROCLAMATION_COMMUNE_RUSSIA FOCUS_FILTER_ANNEXATION }
 		completion_reward = {
-			custom_effect_tooltip = SOV_spread_anarchist_revolution_both_tt
-			show_ideas_tooltip = SOV_Anarchist_uprising
+			effect_tooltip = {
+				every_country = {
+					limit = {
+						NOT = {
+							tag = SOV
+						}
+						capital_scope = {
+							OR = {
+								is_on_continent = europe
+								is_on_continent = asia
+								is_on_continent = middle_east
+							}
+						}
+					}
+					add_ideas = SOV_Anarchist_uprising
+				}
+			}
 			hidden_effect = {
 				every_country = {
 					limit = {
 						NOT = {
 							tag = SOV
 						}
-						OR = {
-							any_state = {
-								is_capital = yes
+						capital_scope = {
+							OR = {
 								is_on_continent = europe
-								is_owned_by = PREV
-							}
-							any_state = {
-								is_capital = yes
 								is_on_continent = asia
-								is_owned_by = PREV
-							}
-							any_state = {
-								is_capital = yes
 								is_on_continent = middle_east
-								is_owned_by = PREV
 							}
 						}
 					}
@@ -23965,16 +24074,10 @@ focus_tree = {
 						NOT = {
 							tag = SOV
 						}
-						OR = {
-							any_state = {
-								is_capital = yes
+						capital_scope = {
+							OR = {
 								is_on_continent = north_america
-								is_owned_by = PREV
-							}
-							any_state = {
-								is_capital = yes
 								is_on_continent = south_america
-								is_owned_by = PREV
 							}
 						}
 					}
