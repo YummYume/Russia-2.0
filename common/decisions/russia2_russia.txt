@@ -6159,29 +6159,21 @@ SOV_the_second_civil_war_fn = {
 		ai_will_do = {
 			factor = 800
 			modifier = {
-				factor = 0
-				OR = {
-					has_game_rule = {
-						rule = UKR_ai_behavior
-						option = ANARCHISM
-					}
-					has_game_rule = {
-						rule = UKR_ai_behavior
-						option = ISOLATED
-					}
-					has_game_rule = {
-						rule = UKR_ai_behavior
-						option = AGGRESSIVE
-					}
-					has_game_rule = {
-						rule = UKR_ai_behavior
-						option = ALLIANCE_FINLAND
+				factor = 0.1
+				UKR = {
+					OR = {
+						has_country_flag = UKR_AI_ISOLATED_BEHAVIOR
+						has_country_flag = UKR_AI_AGGRESSIVE_BEHAVIOR
+						has_country_flag = UKR_AI_ALLIANCE_FINLAND_BEHAVIOR
 					}
 				}
 			}
 			modifier = {
 				factor = 0
 				OR = {
+					UKR = {
+						has_country_flag = UKR_AI_ANARCHIST_BEHAVIOR
+					}
 					NOT = {
 						has_country_flag = control_belarus
 					}
@@ -6205,24 +6197,20 @@ SOV_the_second_civil_war_fn = {
 				limit = {
 					UKR = {
 						is_ai = yes
+						OR = {
+							has_country_flag = UKR_AI_ISOLATED_BEHAVIOR
+							has_country_flag = UKR_AI_AGGRESSIVE_BEHAVIOR
+							has_country_flag = UKR_AI_ALLIANCE_FINLAND_BEHAVIOR
+						}
 					}
-					OR = {
-						has_game_rule = {
-							rule = UKR_ai_behavior
-							option = ANARCHISM
-						}
-						has_game_rule = {
-							rule = UKR_ai_behavior
-							option = ISOLATED
-						}
-						has_game_rule = {
-							rule = UKR_ai_behavior
-							option = AGGRESSIVE
-						}
-						has_game_rule = {
-							rule = UKR_ai_behavior
-							option = ALLIANCE_FINLAND
-						}
+				}
+				custom_effect_tooltip = sympathize_with_ukraine_will_have_less_effect_tt
+			}
+			else_if = {
+				limit = {
+					UKR = {
+						is_ai = yes
+						has_country_flag = UKR_AI_ANARCHIST_BEHAVIOR
 					}
 				}
 				custom_effect_tooltip = sympathize_with_ukraine_wont_have_effect_tt
