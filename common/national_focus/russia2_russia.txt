@@ -25427,10 +25427,8 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
-			add_ideas = SOV_Centralization_free_territories
 			custom_effect_tooltip = every_members_league_tooltip_tt
 			custom_effect_tooltip = gain_united_anarchist_economy_local_tt
-			show_ideas_tooltip = SOV_United_anarchist_economy
 			hidden_effect = {
 				every_country = {
 					limit = {
@@ -25470,8 +25468,9 @@ focus_tree = {
 			custom_effect_tooltip = SOV_coming_soon
 			if = {
 				limit = {
-					NOT = {
-						has_completed_focus = SOV_officialize_act
+					OR = {
+						has_completed_focus = SOV_reform_russia
+						has_completed_focus = SOV_a_tight_grip
 					}
 				}
 				hidden_effect = {
@@ -25485,6 +25484,32 @@ focus_tree = {
 						add_ideas = SOV_Centralization_free_territories
 					}
 					SOV_refresh_puppet_count_anarchist_collapse = yes
+				}
+				if = {
+					limit = {
+						has_completed_focus = SOV_a_tight_grip
+					}
+					custom_effect_tooltip = tight_grip_idea_centralization_tt
+				}
+				else_if = {
+					limit = {
+						has_completed_focus = SOV_reform_russia
+					}
+					custom_effect_tooltip = reform_russia_idea_centralization_tt
+				}
+			}
+			else_if = {
+				limit = {
+					has_completed_focus = SOV_semi_devolution
+				}
+				hidden_effect = {
+
+				}
+				custom_effect_tooltip = semi_devolution_idea_centralization_tt
+			}
+			else = {
+				effect_tooltip = {
+					add_ideas = SOV_Centralization_free_territories
 				}
 			}
 		}
