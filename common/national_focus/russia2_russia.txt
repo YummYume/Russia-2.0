@@ -24486,7 +24486,6 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
-			custom_effect_tooltip = SOV_coming_soon
 			add_stability = -0.15
 			add_popularity = {
 			    ideology = anarchy
@@ -24553,7 +24552,6 @@ focus_tree = {
 			set_global_flag = the_great_russian_collapse_is_here
 		}
 		completion_reward = {
-			custom_effect_tooltip = SOV_coming_soon
 			custom_effect_tooltip = sov_russia_is_collpasing_total
 			hidden_effect = {
 				if = {
@@ -24592,7 +24590,6 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
-			custom_effect_tooltip = SOV_coming_soon
 			create_faction = russian_league_free_nation
 			for_each_scope_loop = {
 				array = global.sov_federation_member_starter_anarchist
@@ -24670,7 +24667,6 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
-			custom_effect_tooltip = SOV_coming_soon
 			custom_effect_tooltip = sov_future_of_the_league_tt
 			hidden_effect = {
 				country_event = { id = russia2_russia.619 }
@@ -24681,10 +24677,10 @@ focus_tree = {
 	#Cooperation Between the League
 	focus = {
 		id = SOV_copperation_between_league
-		x = 131
+		x = 132
 		y = 11
 		prerequisite = { focus = SOV_future_of_the_league }
-		icon = GFX_Embrace_total_anarchy
+		icon = GFX_goal_generic_improve_relations
 		cost = 6
 		ai_will_do = {
 			factor = 7
@@ -24699,37 +24695,13 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
-			custom_effect_tooltip = SOV_coming_soon
 			custom_effect_tooltip = sov_every_members_receive_2_civ_fac
 			hidden_effect = {
 				every_country = {
 					limit = {
-						OR = {
-							tag = EFR
-							tag = SIB
-							tag = URA
-							tag = KAZ
-							tag = TMS
-							tag = UZB
-							tag = TAJ
-							tag = KYR
-							tag = GEO
-							tag = AZR
-							tag = ARM
-							tag = DAG
-							tag = ROS
-							tag = KAL
-							tag = CIR
-							tag = VLG
-							tag = VYA
-							tag = TAT
-							tag = PRM
-							tag = KMI
-							tag = KAR
-							tag = NOV
-							tag = UKR
-							tag = BLR
-							tag = CRI
+						is_in_faction_with = ROOT
+						NOT = {
+							TAG = ROOT
 						}
 					}
 					random_owned_state = {
@@ -24742,6 +24714,252 @@ focus_tree = {
 					}
 				}
 			}
+		}
+	}
+
+	#Road of the League
+	focus = {
+		id = SOV_road_of_league_free
+		x = 130
+		y = 12
+		prerequisite = { focus = SOV_copperation_between_league }
+		icon = GFX_goal_generic_construct_infrastructure
+		cost = 10
+		ai_will_do = {
+			factor = 7
+		}
+		available = {
+			always = no
+			is_subject = no
+			has_government = anarchy
+			NOT = {
+				has_completed_focus = SOV_reform_russia
+			}
+		}
+		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
+		completion_reward = {
+			every_country = {
+				limit = {
+					is_in_faction_with = ROOT
+					NOT = {
+						TAG = ROOT
+					}
+				}
+				custom_effect_tooltip = SOV_road_of_league_free_tt
+				hidden_effect = {
+					every_state = {
+						limit = {
+							infrastructure < 3
+							is_owned_and_controlled_by = PREV
+						}
+						add_building_construction = {
+							type = infrastructure
+							level = 1
+							instant_build = yes
+						}
+					}
+				}
+			}
+			custom_effect_tooltip = SOV_road_of_league_free_tt2
+			every_state = {
+				limit = {
+					is_capital = yes
+					OWNER = {
+						is_in_faction_with = ROOT
+						NOT = {
+							TAG = ROOT
+						}
+					}
+					CONTROLLER = {
+						is_in_faction_with = ROOT
+						NOT = {
+							TAG = ROOT
+						}
+					}
+					ROOT = {
+						can_build_railway = {
+							start_state = ROOT.CAPITAL
+							target_state = PREV
+							build_only_on_allied = yes
+						}
+					}
+				}
+				custom_effect_tooltip = SOV_post_war_influence_tt3
+				hidden_effect = {
+					ROOT = {
+						build_railway = {
+							start_state = ROOT.capital
+							target_state = PREV
+							build_only_on_allied = yes
+						}
+					}
+				}
+			}
+		}
+	}
+
+	#Military Infrastructure of the League
+	focus = {
+		id = SOV_military_infrastructure_of_league_free
+		x = 132
+		y = 12
+		prerequisite = { focus = SOV_copperation_between_league }
+		icon = GFX_goal_generic_fortify_city
+		cost = 10
+		ai_will_do = {
+			factor = 7
+		}
+		available = {
+			always = no
+			is_subject = no
+			has_government = anarchy
+			NOT = {
+				has_completed_focus = SOV_reform_russia
+			}
+		}
+		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
+		completion_reward = {
+			custom_effect_tooltip = SOV_military_infrastructure_of_league_free_tt
+			custom_effect_tooltip = SOV_military_infrastructure_of_league_free_tt2
+			hidden_effect = {
+				every_country = {
+					limit = {
+						is_in_faction_with = ROOT
+						NOT = {
+							TAG = ROOT
+						}
+					}
+					if = {
+						limit = {
+							any_state = {
+								air_base > 0
+								air_base < 8
+								is_owned_and_controlled_by = PREV
+							}
+						}
+						every_state = {
+							limit = {
+								air_base > 0
+								air_base < 8
+								is_owned_and_controlled_by = PREV
+							}
+							add_building_construction = {
+								type = air_base
+								level = 3
+								instant_build = yes
+							}
+						}
+					}
+					else = {
+						random_owned_state = {
+							add_building_construction = {
+								type = air_base
+								level = 8
+								instant_build = yes
+							}
+						}
+					}
+					every_state = {
+						limit = {
+							is_owned_and_controlled_by = PREV
+							any_neighbor_state = {
+								NOT = {
+									is_core_of = PREV
+									is_controlled_by = PREV
+									any_country = {
+										is_in_faction_with = SOV
+										owns_state = PREV
+									}
+								}
+							}	
+						}
+						add_building_construction = {
+							type = bunker
+							level = 3
+							instant_build = yes
+							province = {
+								all_provinces = yes
+								limit_to_border = yes
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	#Industrial Cooperation in the League
+	focus = {
+		id = SOV_industrial_cooperation_league
+		x = 134
+		y = 12
+		prerequisite = { focus = SOV_copperation_between_league }
+		icon = GFX_goal_generic_construct_civilian
+		cost = 10
+		ai_will_do = {
+			factor = 7
+		}
+		available = {
+			always = no
+			is_subject = no
+			has_government = anarchy
+			NOT = {
+				has_completed_focus = SOV_reform_russia
+			}
+		}
+		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
+		completion_reward = {
+			custom_effect_tooltip = SOV_industrial_cooperation_league_tt
+			hidden_effect = {
+				every_country = {
+					limit = {
+						is_in_faction_with = ROOT
+						NOT = {
+							TAG = ROOT
+						}
+					}
+					random_owned_state = {
+						add_extra_state_shared_building_slots = 3
+						add_building_construction = {
+							type = industrial_complex
+							level = 1
+							instant_build = yes
+						}
+						add_building_construction = {
+							type = arms_factory
+							level = 2
+							instant_build = yes
+						}
+					}
+				}
+			}
+		}
+	}
+
+	#Future Cooperation Project League
+	focus = {
+		id = SOV_cooperation_project_league
+		x = 132
+		y = 13
+		prerequisite = { focus = SOV_road_of_league_free }
+		prerequisite = { focus = SOV_military_infrastructure_of_league_free }
+		prerequisite = { focus = SOV_industrial_cooperation_league }
+		icon = GFX_goal_generic_intelligence_exchange
+		cost = 5
+		ai_will_do = {
+			factor = 7
+		}
+		available = {
+			always = no
+			is_subject = no
+			has_government = anarchy
+			NOT = {
+				has_country_flag = has_chosen_reform_russia_anarchist
+			}
+		}
+		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
+		completion_reward = {
+			
 		}
 	}
 
@@ -24766,7 +24984,6 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
-			custom_effect_tooltip = SOV_coming_soon
 			set_global_flag = reunification_war_is_ongoing_anarchist
 			custom_effect_tooltip = sov_choosing_this_path_will_reform_russia_as_we_know_it
 			custom_effect_tooltip = every_members_league_will_lose_idea_war
@@ -24843,7 +25060,6 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
-			custom_effect_tooltip = SOV_coming_soon
 			custom_effect_tooltip = declare_war_on_members_who_left_the_league
 			hidden_effect = {
 				country_event = { id = russia2_russia.632 days = 20 }
@@ -24936,7 +25152,6 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
-			custom_effect_tooltip = SOV_coming_soon
 			custom_effect_tooltip = annex_members_who_were_loyal_anarchists
 			hidden_effect = {
 				set_cosmetic_tag = FTRS
@@ -24986,7 +25201,6 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
-			custom_effect_tooltip = SOV_coming_soon
 			custom_effect_tooltip = sov_choosing_this_path_will_puppet_russian_state
 			custom_effect_tooltip = sov_some_members_will_not_be_convince_by_reform
 			every_country = {
@@ -25042,7 +25256,6 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
-			custom_effect_tooltip = SOV_coming_soon
 			custom_effect_tooltip = SOV_SOV_convince_disputants_tt
 			if = {
 				limit = {
@@ -25090,7 +25303,6 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
-			custom_effect_tooltip = SOV_coming_soon
 			custom_effect_tooltip = every_members_league_will_be_turned_puppet_supervised
 			hidden_effect = {
 				every_country = {
@@ -25156,7 +25368,6 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
-			custom_effect_tooltip = SOV_coming_soon
 			custom_effect_tooltip = sov_choose_two_beneficiary_for_rule
 		}
 	}
@@ -25179,7 +25390,6 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
-			custom_effect_tooltip = SOV_coming_soon
 			custom_effect_tooltip = SOV_choose_beneficiary_decision_tt
 		}
 	}
@@ -25273,7 +25483,6 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
-			custom_effect_tooltip = SOV_coming_soon
 			custom_effect_tooltip = every_members_will_be_puppet_beneficiaty_tt
 			hidden_effect = {
 				every_country = {
@@ -25465,7 +25674,6 @@ focus_tree = {
 					add_ideas = SOV_United_anarchist_economy
 				}
 			}
-			custom_effect_tooltip = SOV_coming_soon
 			if = {
 				limit = {
 					OR = {
@@ -25477,12 +25685,13 @@ focus_tree = {
 					every_country = {
 						limit = {
 							NOT = {
-								TAG = SOV
+								tag = SOV
 							}
 							is_subject_of = SOV
 						}
 						add_ideas = SOV_Centralization_free_territories
 					}
+					add_ideas = SOV_Centralization_free_territories
 					SOV_refresh_puppet_count_anarchist_collapse = yes
 				}
 				if = {
@@ -25503,7 +25712,32 @@ focus_tree = {
 					has_completed_focus = SOV_semi_devolution
 				}
 				hidden_effect = {
-
+					every_country = {
+						limit = {
+							NOT = {
+								tag = SOV
+								tag = event_target:FROM_first_beneficiary
+								tag = event_target:FROM_second_beneficiary
+							}
+							OR = {
+								is_subject_of = SOV
+								is_subject_of = event_target:FROM_first_beneficiary
+								is_subject_of = event_target:FROM_second_beneficiary
+							}
+						}
+						add_ideas = SOV_Centralization_free_territories
+					}
+					add_ideas = SOV_Centralization_economy_anarchist
+					add_ideas = SOV_Centralization_free_territories2
+					event_target:FROM_first_beneficiary = {
+						add_ideas = SOV_Centralization_social_anarchist
+						add_ideas = SOV_Centralization_free_territories2
+					}
+					event_target:FROM_second_beneficiary = {
+						add_ideas = SOV_Centralization_military_anarchist
+						add_ideas = SOV_Centralization_free_territories2
+					}
+					SOV_refresh_puppet_count_anarchist_collapse_semi_devolution = yes
 				}
 				custom_effect_tooltip = semi_devolution_idea_centralization_tt
 			}
@@ -25533,9 +25767,41 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
-			custom_effect_tooltip = SOV_coming_soon
 			custom_effect_tooltip = will_receive_wargoal_agains_minor_neighbor_nation
 			custom_effect_tooltip = unlock_justification_wargoal_tt
+			hidden_effect = {
+				every_country = {
+					limit = {
+						OR = {
+							AND = {
+								NOT = {
+									is_in_faction_with = SOV
+									TAG = SOV
+									is_major = yes
+									is_subject = yes
+								}
+								any_country = {
+									is_neighbor_of = PREV
+									is_in_faction_with = SOV
+								}
+							}
+							AND = {
+								is_neighbor_of = ROOT
+								NOT = {
+									is_in_faction_with = ROOT
+									TAG = ROOT
+								}
+							}
+						}
+					}
+					ROOT = {
+						create_wargoal = {
+							type = puppet_wargoal_focus
+							target = PREV
+						}
+					}
+				}
+			}
 		}
 	}
 
@@ -25567,7 +25833,6 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_GOLDEN_FOCUS FOCUS_FILTER_ANARCHY_PROCLAMATION_COMMUNE_RUSSIA FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
-			custom_effect_tooltip = SOV_coming_soon
 			custom_effect_tooltip = SOV_rebirth_tt
 			add_to_array = { sov_national_obligations_unlocked_indexes = 13 }
 			set_variable = { sov_national_obligations_selected_index = 13 }
