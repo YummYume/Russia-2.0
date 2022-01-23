@@ -3023,3 +3023,98 @@ country_event = {
 		}
 	}
 }
+
+#Send Sergei Wojciechowski to the White Guard
+country_event = {
+	id = russia2_generic.66
+	title = russia2_generic.66.t
+	desc = russia2_generic.66.d
+	picture = GFX_report_event_bose_meeting
+
+	fire_only_once = yes
+
+	trigger = {
+		sov_in_scw = yes
+		has_global_flag = second_russian_civil_war_in_progress
+		SOV = {
+			has_war = yes
+			NOT = {
+				has_character = CZE_sergej_vojcechovsky
+			}
+		}
+		NOT = {
+			original_tag = SOV
+			has_government = communism
+			has_war_with = SOV
+		}
+		has_character = CZE_sergej_vojcechovsky
+	}
+
+	#Fulfill your destiny!
+	option = {
+		name = russia2_generic.66.a
+		ai_chance = {
+			factor = 100
+			modifier = {
+				factor = 0
+				has_war = yes
+				has_capitulated = no
+			}
+		}
+		add_stability = 0.05
+		add_war_support = 0.05
+		add_political_power = 50
+		custom_effect_tooltip = sov_sergej_vojcechovsky_stops_being_general
+		SOV = {
+			country_event = russia2_generic.67
+			add_opinion_modifier = {
+				target = ROOT
+				modifier = sov_transferred_sergej_vojcechovsky
+			}
+		}
+		hidden_effect = {
+			CZE_sergej_vojcechovsky = {
+				set_nationality = SOV
+				set_leader_portrait = GFX_Portrait_Russia_Sergei_Wojciechowski
+			}
+		}
+	}
+
+	#No.
+	option = {
+		name = russia2_generic.66.b
+		ai_chance = {
+			factor = 0
+			modifier = {
+				factor = 100
+				has_war = yes
+				has_capitulated = no
+			}
+		}
+	}
+}
+
+#Sergei Wojciechowski Arrives
+country_event = {
+	id = russia2_generic.67
+	title = russia2_generic.67.t
+	desc = russia2_generic.67.d
+	picture = GFX_report_event_bose_meeting
+
+	is_triggered_only = yes
+
+	#Amazing
+	option = {
+		name = russia2_generic.67.a
+		ai_chance = {
+			factor = 100
+		}
+		custom_effect_tooltip = sov_sergej_vojcechovsky_becomes_general
+		FROM = {
+			add_opinion_modifier = {
+				target = ROOT
+				modifier = sov_received_sergej_vojcechovsky
+			}
+		}
+	}
+}
