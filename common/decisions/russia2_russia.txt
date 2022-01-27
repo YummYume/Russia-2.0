@@ -5397,7 +5397,7 @@ SOV_invest_russian_sphere = {
 				tooltip = SOV_preemptive_coup_tt
 				check_variable = {
 					var = united_russia_strength
-					value = 2
+					value = 3
 					compare = less_than_or_equals
 				}
 			}
@@ -5572,7 +5572,7 @@ SOV_invest_russian_sphere = {
 				tooltip = SOV_preemptive_coup_tt
 				check_variable = {
 					var = united_russia_strength
-					value = 2
+					value = 3
 					compare = less_than_or_equals
 				}
 			}
@@ -5747,7 +5747,7 @@ SOV_invest_russian_sphere = {
 				tooltip = SOV_preemptive_coup_tt
 				check_variable = {
 					var = united_russia_strength
-					value = 2
+					value = 3
 					compare = less_than_or_equals
 				}
 			}
@@ -35701,7 +35701,7 @@ SOV_diplomatic_plays_decisions_democratic = {
 			clr_country_flag = is_doing_diplomatic_play
 			custom_effect_tooltip = declare_war_remaining_country_central_asia
 			custom_effect_tooltip = remaining_central_asia_country_form_coal
-			hidden_effect = { #TODO Optimize Peace Deal
+			hidden_effect = {
 				every_country = {
 					limit = {
 						exists = yes
@@ -35729,13 +35729,18 @@ SOV_diplomatic_plays_decisions_democratic = {
 						white_peace = PREV
 					}
 				}
-				random_scope_in_array = {
-					array = global.sov_central_asia_country
+				random_country = {
 					limit = {
 						exists = yes
 						is_subject = no
+						OR = {
+							tag = KAZ
+							tag = KY
+							tag = TAJ
+							tag = TMS
+							tag = UZB
+						}
 					}
-
 					create_faction = anti_russian_coalition
 					add_to_faction = KAZ
 					add_to_faction = KYR
@@ -35763,6 +35768,27 @@ SOV_diplomatic_plays_decisions_democratic = {
 					declare_war_on = {
 						target = KYR
 						type = annex_everything
+					}
+				}
+				every_country = {
+					limit = {
+						exists = yes
+						OR = {
+							tag = KAZ
+							tag = KYR
+							tag = TMS
+							tag = UZB
+							tag = TAJ
+							tag = KKP
+							tag = KHI
+							tag = BUK
+						}
+					}
+					SOV = {
+						create_wargoal = {
+							type = annex_everything
+							target = PREV
+						} 
 					}
 				}
 			}
