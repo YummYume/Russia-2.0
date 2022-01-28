@@ -117,7 +117,7 @@ country_event = {
 	}
 }
 
-#Ukraine Has Refused
+#Ukraine Refuses
 country_event = {
 	id = russia2_ukraine.3
 	title = russia2_ukraine.3.t
@@ -239,7 +239,7 @@ country_event = {
 	}
 }
 
-#Ukraine Has Refused
+#Ukraine Refuses
 country_event = {
 	id = russia2_ukraine.6
 	title = russia2_ukraine.6.t
@@ -1590,7 +1590,7 @@ country_event = {
 			}
 		}
 		trigger = {
-			has_war = no
+			has_country_flag = ukr_anarchist_rebels
 		}
 		add_stability = -0.05
 		add_to_variable = { ukr_current_anarchist_support = 1 }
@@ -1657,7 +1657,7 @@ country_event = {
 			}
 		}
 		trigger = {
-			has_war = no
+			has_country_flag = ukr_anarchist_rebels
 		}
 		add_war_support = 0.05
 		add_to_variable = { ukr_current_anarchist_support = 1 }
@@ -1726,7 +1726,7 @@ country_event = {
 			}
 		}
 		trigger = {
-			has_war = no
+			has_country_flag = ukr_anarchist_rebels
 		}
 		add_stability = -0.1
 		add_to_variable = { ukr_current_anarchist_support = 1 }
@@ -1802,7 +1802,7 @@ country_event = {
 			}
 		}
 		trigger = {
-			has_war = no
+			has_country_flag = ukr_anarchist_rebels
 		}
 		add_stability = -0.2
 		add_to_variable = { ukr_current_anarchist_support = 1 }
@@ -4729,5 +4729,56 @@ country_event = {
 		hidden_effect = {
 			retire_character = UKR_Makhno_nestor
 		}
+	}
+}
+
+#Anarchist Rebels Disappear
+country_event = {
+	id = russia2_ukraine.90
+	title = russia2_ukraine.90.t
+	desc = russia2_ukraine.90.d
+	picture = GFX_report_event_royal_parade
+
+	trigger = {
+		tag = UKR
+		has_war = yes
+		has_country_flag = ukr_clr_anarchist_rebels_event
+		NOT = {
+			has_country_flag = ukr_anarchist_rebels
+		}
+	}
+
+	fire_only_once = yes
+
+	immediate = {
+		hidden_effect = {
+			clr_country_flag = ukr_clr_anarchist_rebels_event
+		}
+	}
+
+	option = { # Ok
+		name = russia2_ukraine.90.a
+		ai_chance = {
+			factor = 100
+		}
+		custom_effect_tooltip = ukr_can_complete_provisional_government_focus
+	}
+}
+
+#Anarchist Rebels Appear
+country_event = {
+	id = russia2_ukraine.91
+	title = russia2_ukraine.91.t
+	desc = russia2_ukraine.91.d
+	picture = GFX_report_event_royal_parade
+
+	is_triggered_only = yes
+
+	option = { # Ok
+		name = russia2_ukraine.91.a
+		ai_chance = {
+			factor = 100
+		}
+		custom_effect_tooltip = ukr_going_to_war_will_lower_rebels
 	}
 }
