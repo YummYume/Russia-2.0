@@ -1592,39 +1592,13 @@ on_actions = {
 		}
 	}
 
-	#Array for Russian States
+	#Array of Original Russian States
 	on_startup = {
 		effect = {
-			if = {
-				limit = {
-					date < 1936.1.2
-					NOT = {
-						OR = {
-							has_game_rule = {
-								rule = sov_fragmentation_status
-								option = SOV_FRAGMENTED
-							}
-							has_game_rule = {
-								rule = sov_fragmentation_status
-								option = SOV_UTTERLY_FRAGMENTED
-							}
-						}
-					}
-				}
-				for_each_scope_loop = {
-					array = SOV.owned_controlled_states
+			for_each_scope_loop = {
+				array = SOV.owned_controlled_states
 
-					if = {
-						limit = {
-							THIS = {
-								any_state = {
-									is_owned_and_controlled_by = SOV
-								}
-							}
-						}
-						add_to_array = { global.sov_original_states = THIS }
-					}
-				}
+				add_to_array = { global.sov_original_states = THIS }
 			}
 		}
 	}
