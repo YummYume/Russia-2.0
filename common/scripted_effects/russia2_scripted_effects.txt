@@ -2747,8 +2747,18 @@ sov_clean_scw_arrays = {
                     var:v = {
                         OR = {
                             NOT = {
-                                has_war_with = SOV
-                                has_war_with = SOJ
+                                if = {
+                                    limit = {
+                                        sov_in_scw = yes
+                                    }
+                                    has_war_with = SOV
+                                }
+                                if = {
+                                    limit = {
+                                        soj_in_scw = yes
+                                    }
+                                    has_war_with = SOJ
+                                }
                                 if = {
                                     limit = {
                                         ukr_in_scw = yes
@@ -2800,8 +2810,18 @@ sov_clean_scw_arrays = {
                         has_global_flag = second_russian_civil_war_in_progress
                     }
                     NOT = {
-                        has_war_with = SOV
-                        has_war_with = SOJ
+                        if = {
+                            limit = {
+                                sov_in_scw = yes
+                            }
+                            has_war_with = SOV
+                        }
+                        if = {
+                            limit = {
+                                soj_in_scw = yes
+                            }
+                            has_war_with = SOJ
+                        }
                         if = {
                             limit = {
                                 ukr_in_scw = yes
@@ -2855,6 +2875,7 @@ sov_clean_scw_arrays = {
                         NOT = {
                             tag = SOV
                             is_in_faction_with = SOV
+                            is_subject_of = SOV
                         }
                         sov_in_scw = no
                     }
@@ -2870,6 +2891,7 @@ sov_clean_scw_arrays = {
                         NOT = {
                             tag = SOJ
                             is_in_faction_with = SOJ
+                            is_subject_of = SOJ
                         }
                         soj_in_scw = no
                     }
@@ -2885,6 +2907,7 @@ sov_clean_scw_arrays = {
                         NOT = {
                             tag = UKR
                             is_in_faction_with = UKR
+                            is_subject_of = UKR
                         }
                         ukr_in_scw = no
                     }
@@ -2897,12 +2920,31 @@ sov_clean_scw_arrays = {
                 limit = {
                     is_in_array = { global.russian_scw_participants_other = THIS }
                     OR = {
-                        tag = SOV
-                        tag = SOJ
-                        tag = UKR
-                        is_in_faction_with = SOV
-                        is_in_faction_with = SOJ
-                        is_in_faction_with = UKR
+                        is_in_array = { global.russian_scw_participants_sov = THIS }
+                        is_in_array = { global.russian_scw_participants_soj = THIS }
+                        is_in_array = { global.russian_scw_participants_ukr = THIS }
+                        AND = {
+                            NOT = {
+                                if = {
+                                    limit = {
+                                        sov_in_scw = yes
+                                    }
+                                    has_war_with = SOV
+                                }
+                                if = {
+                                    limit = {
+                                        sov_in_scw = yes
+                                    }
+                                    has_war_with = SOJ
+                                }
+                                if = {
+                                    limit = {
+                                        ukr_in_scw = yes
+                                    }
+                                    has_war_with = UKR
+                                }
+                            }
+                        }
                     }
                 }
                 remove_from_array = { global.russian_scw_participants_other = THIS }
@@ -2917,6 +2959,7 @@ sov_clean_scw_arrays = {
                     OR = {
                         tag = SOV
                         is_in_faction_with = SOV
+                        is_subject_of = SOV
                     }
                     sov_in_scw = yes
                 }
@@ -2931,6 +2974,7 @@ sov_clean_scw_arrays = {
                     OR = {
                         tag = SOJ
                         is_in_faction_with = SOJ
+                        is_subject_of = SOJ
                     }
                     soj_in_scw = yes
                 }
@@ -2945,6 +2989,7 @@ sov_clean_scw_arrays = {
                     OR = {
                         tag = UKR
                         is_in_faction_with = UKR
+                        is_subject_of = UKR
                     }
                     ukr_in_scw = yes
                 }
@@ -2955,14 +3000,16 @@ sov_clean_scw_arrays = {
                 limit = {
                     NOT = {
                         is_in_array = { global.russian_scw_participants_other = THIS }
-                    }
-                    NOT = {
+                        is_in_array = { global.russian_scw_participants_sov = THIS }
+                        is_in_array = { global.russian_scw_participants_soj = THIS }
+                        is_in_array = { global.russian_scw_participants_ukr = THIS }
                         if = {
                             limit = {
                                 sov_in_scw = yes
                             }
                             tag = SOV
                             is_in_faction_with = SOV
+                            is_subject_of = SOV
                         }
                         if = {
                             limit = {
@@ -2970,6 +3017,7 @@ sov_clean_scw_arrays = {
                             }
                             tag = SOJ
                             is_in_faction_with = SOJ
+                            is_subject_of = SOJ
                         }
                         if = {
                             limit = {
@@ -2977,11 +3025,22 @@ sov_clean_scw_arrays = {
                             }
                             tag = UKR
                             is_in_faction_with = UKR
+                            is_subject_of = UKR
                         }
                     }
                     OR = {
-                        has_war_with = SOV
-                        has_war_with = SOJ
+                        if = {
+                            limit = {
+                                sov_in_scw = yes
+                            }
+                            has_war_with = SOV
+                        }
+                        if = {
+                            limit = {
+                                sov_in_scw = yes
+                            }
+                            has_war_with = SOJ
+                        }
                         if = {
                             limit = {
                                 ukr_in_scw = yes
