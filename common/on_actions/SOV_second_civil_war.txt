@@ -295,6 +295,16 @@ on_actions = {
 						index = i
 						break = break_array
 
+						SOV = {
+							transfer_state = var:v
+						}
+					}
+					for_each_loop = {
+						array = SOJ.owned_states_scw
+						value = v
+						index = i
+						break = break_array
+
 						if = {
 							limit = {
 								var:v = {
@@ -319,81 +329,23 @@ on_actions = {
 							limit = {
 								is_in_array = { ukr.scw_claimed_states = var:v }
 							}
-							if = {
-								limit = {
-									UKR = {
-										has_government = anarchy
-									}
-								}
-								UKR = {
-									transfer_state = var:v
-								}
-							}
-							else_if = {
-								limit = {
-									NOT = {
-										UKR = {
-											has_government = anarchy
-										}
-									}
-								}
-								if = {
-									limit = {
-										is_in_array = { global.kievan_rus_state_ukraine = var:v }
-									}
-									UKR = {
-										transfer_state = var:v
-									}
-								}
-								else = {
-									if = {
-										limit = {
-											SOJ = {
-												is_subject = no
-											}
-										}
-										UKR = {
-											set_autonomy = {
-												target = SOJ
-												autonomy_state = autonomy_puppet
-											}
-										}
-										SOJ = {
-											create_country_leader = { #fuck characters
-												name = UKR_Ivan_kononov
-												desc = UKR_Ivan_kononov_desc
-												picture = "gfx/leaders/UKR/Portrait_Ukraine_Ivan_Kononov.dds"
-												expire = "1965.1.1"
-												ideology = oligarchism
-												traits = {
-													russia2_loyal_collaborator
-												}
-											}
-											set_cosmetic_tag = AFS
-										}
-									}
-									if = {
-										limit = {
-											SOJ = {
-												is_subject_of = UKR
-											}
-											NOT = {
-												SOJ = {
-													controls_state = var:v
-												}
-											}
-										}
-										SOJ = {
-											set_state_controller = var:v
-										}
-									}
-								}
-							}
-						}
-						else = {
-							SOV = {
+							UKR = {
 								transfer_state = var:v
 							}
+						}
+					}
+					if = {
+						limit = {
+							any_state = {
+								NOT = {
+									is_in_array = { global.kievan_rus_state_ukraine = PREV }
+								}
+								is_core_of = SOV
+								is_owned_by = UKR
+							}
+						}
+						UKR = {
+							country_event = russia2_ukraine.93
 						}
 					}
 					if = {
@@ -1676,15 +1628,24 @@ on_actions = {
 					limit = {
 						ROOT = {
 							OR = {
-								tag = SOV
-								tag = SOJ
-								tag = UKR
-							}
-							if = {
-								limit = {
+								if = {
+									limit = {
+										sov_in_scw = yes
+									}
+									tag = SOV
+								}
+								if = {
+									limit = {
+										soj_in_scw = yes
+									}
+									tag = SOJ
+								}
+								if = {
+									limit = {
+										ukr_in_scw = yes
+									}
 									tag = UKR
 								}
-								is_in_array = { global.russian_scw_participants = UKR }
 							}
 						}
 					}
@@ -1712,8 +1673,10 @@ on_actions = {
 									OR = {
 										tag = SOV
 										is_in_faction_with = SOV
+										is_subject_of = SOV
 									}
 								}
+								sov_in_scw = yes
 							}
 							add_to_array = { global.russian_scw_participants_sov = ROOT }
 						}
@@ -1723,8 +1686,10 @@ on_actions = {
 									OR = {
 										tag = SOJ
 										is_in_faction_with = SOJ
+										is_subject_of = SOJ
 									}
 								}
+								soj_in_scw = yes
 							}
 							add_to_array = { global.russian_scw_participants_soj = ROOT }
 						}
@@ -1734,9 +1699,10 @@ on_actions = {
 									OR = {
 										tag = UKR
 										is_in_faction_with = UKR
+										is_subject_of = UKR
 									}
 								}
-								is_in_array = { global.russian_scw_participants = UKR }
+								ukr_in_scw = yes
 							}
 							add_to_array = { global.russian_scw_participants_ukr = ROOT }
 						}
@@ -1766,8 +1732,10 @@ on_actions = {
 									OR = {
 										tag = SOV
 										is_in_faction_with = SOV
+										is_subject_of = SOV
 									}
 								}
+								sov_in_scw = yes
 							}
 							add_to_array = { global.russian_scw_participants_sov = FROM }
 						}
@@ -1777,8 +1745,10 @@ on_actions = {
 									OR = {
 										tag = SOJ
 										is_in_faction_with = SOJ
+										is_subject_of = SOJ
 									}
 								}
+								soj_in_scw = yes
 							}
 							add_to_array = { global.russian_scw_participants_soj = FROM }
 						}
@@ -1788,9 +1758,10 @@ on_actions = {
 									OR = {
 										tag = UKR
 										is_in_faction_with = UKR
+										is_subject_of = UKR
 									}
 								}
-								is_in_array = { global.russian_scw_participants = UKR }
+								ukr_in_scw = yes
 							}
 							add_to_array = { global.russian_scw_participants_ukr = FROM }
 						}
@@ -1803,15 +1774,24 @@ on_actions = {
 					limit = {
 						FROM = {
 							OR = {
-								tag = SOV
-								tag = SOJ
-								tag = UKR
-							}
-							if = {
-								limit = {
+								if = {
+									limit = {
+										sov_in_scw = yes
+									}
+									tag = SOV
+								}
+								if = {
+									limit = {
+										soj_in_scw = yes
+									}
+									tag = SOJ
+								}
+								if = {
+									limit = {
+										ukr_in_scw = yes
+									}
 									tag = UKR
 								}
-								is_in_array = { global.russian_scw_participants = UKR }
 							}
 						}
 					}
@@ -1839,8 +1819,10 @@ on_actions = {
 									OR = {
 										tag = SOV
 										is_in_faction_with = SOV
+										is_subject_of = SOV
 									}
 								}
+								sov_in_scw = yes
 							}
 							add_to_array = { global.russian_scw_participants_sov = ROOT }
 						}
@@ -1850,8 +1832,10 @@ on_actions = {
 									OR = {
 										tag = SOJ
 										is_in_faction_with = SOJ
+										is_subject_of = SOJ
 									}
 								}
+								soj_in_scw = yes
 							}
 							add_to_array = { global.russian_scw_participants_soj = ROOT }
 						}
@@ -1861,9 +1845,10 @@ on_actions = {
 									OR = {
 										tag = UKR
 										is_in_faction_with = UKR
+										is_subject_of = UKR
 									}
 								}
-								is_in_array = { global.russian_scw_participants = UKR }
+								ukr_in_scw = yes
 							}
 							add_to_array = { global.russian_scw_participants_ukr = ROOT }
 						}
@@ -1893,8 +1878,10 @@ on_actions = {
 									OR = {
 										tag = SOV
 										is_in_faction_with = SOV
+										is_subject_of = SOV
 									}
 								}
+								sov_in_scw = yes
 							}
 							add_to_array = { global.russian_scw_participants_sov = FROM }
 						}
@@ -1904,8 +1891,10 @@ on_actions = {
 									OR = {
 										tag = SOJ
 										is_in_faction_with = SOJ
+										is_subject_of = SOJ
 									}
 								}
+								soj_in_scw = yes
 							}
 							add_to_array = { global.russian_scw_participants_soj = FROM }
 						}
@@ -1915,9 +1904,10 @@ on_actions = {
 									OR = {
 										tag = UKR
 										is_in_faction_with = UKR
+										is_subject_of = UKR
 									}
 								}
-								is_in_array = { global.russian_scw_participants = UKR }
+								ukr_in_scw = yes
 							}
 							add_to_array = { global.russian_scw_participants_ukr = FROM }
 						}
@@ -2195,23 +2185,40 @@ on_actions = {
 						OR = {
 							tag = MON
 							tag = TAN
-						}
-					}
-					FROM = {
-						OR = {
-							tag = SOV
-							any_country = {
-								OR = {
-									is_in_faction_with = SOV
-									is_subject_of = SOV
-								}
-							}
+							exists = yes
 						}
 					}
 				}
-				SOV = {
-					annex_country = {
-						target = ROOT
+				if = {
+					limit = {
+						FROM = {
+							OR = {
+								tag = SOV
+								is_in_faction_with = SOV
+								is_subject_of = SOV
+							}
+						}
+					}
+					SOV = {
+						annex_country = {
+							target = ROOT
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						FROM = {
+							OR = {
+								tag = UKR
+								is_in_faction_with = UKR
+								is_subject_of = UKR
+							}
+						}
+					}
+					UKR = {
+						annex_country = {
+							target = ROOT
+						}
 					}
 				}
 			}
