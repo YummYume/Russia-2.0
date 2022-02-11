@@ -4833,7 +4833,7 @@ country_event = {
 	}
 }
 
-#Release Russian Puppet if Condition are Correct
+#Release Russian Puppet if Conditions are Valid
 country_event = {
 	id = russia2_ukraine.93
 	title = russia2_ukraine.93.t
@@ -5012,5 +5012,103 @@ country_event = {
 				}
 			}
 		}
+	}
+}
+
+#Abba Kovner Doesn't like Germany
+country_event = {
+	id = russia2_ukraine.94
+	title = russia2_ukraine.94.t
+	desc = russia2_ukraine.94.d
+	picture = GFX_report_event_ger_civil_war
+
+	fire_only_once = yes
+
+	trigger = {
+		original_tag = UKR
+		is_subject = no
+		has_character = UKR_Abba_kovner
+		has_war_with = GER
+		has_completed_focus = UKR_hold_elections
+		NOT = {
+			has_government = anarchy
+			has_country_leader = {
+				character = UKR_Abba_kovner
+				ruling_only = yes
+			}
+		}
+	}
+
+	mean_time_to_happen = { days = 30 }
+
+	option = { #Come in!
+		name = russia2_ukraine.94.a
+		ai_chance = {
+			factor = 50
+		}
+		add_country_leader_role = {
+			character = UKR_Abba_kovner
+			promote_leader = yes
+			country_leader = {
+				desc = UKR_Abba_kovner_desc
+				ideology = conservatism
+				expire = "1965.1.1.1"
+				traits = {
+					russia2_dislikes_germany
+					russia2_full_powers
+					russia2_no_political_alignment
+				}
+			}
+			country_leader = {
+				desc = UKR_Abba_kovner_desc
+				ideology = marxism
+				expire = "1965.1.1.1"
+				traits = {
+					russia2_dislikes_germany
+					russia2_full_powers
+					russia2_no_political_alignment
+				}
+			}
+			country_leader = {
+				desc = UKR_Abba_kovner_desc
+				ideology = oligarchism
+				expire = "1965.1.1.1"
+				traits = {
+					russia2_dislikes_germany
+					russia2_full_powers
+					russia2_no_political_alignment
+				}
+			}
+			country_leader = {
+				desc = UKR_Abba_kovner_desc
+				ideology = fascism_anastasy
+				expire = "1965.1.1.1"
+				traits = {
+					russia2_dislikes_germany
+					russia2_full_powers
+					russia2_no_political_alignment
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_elections = yes
+			}
+			custom_effect_tooltip = ukr_elections_will_not_happen
+		}
+		hidden_effect = {
+			set_politics = {
+				ruling_party = ROOT
+				elections_allowed = no
+			}
+		}
+	}
+
+	option = { #No.
+		name = russia2_ukraine.94.b
+		ai_chance = {
+			factor = 50
+		}
+		add_political_power = 50
 	}
 }
