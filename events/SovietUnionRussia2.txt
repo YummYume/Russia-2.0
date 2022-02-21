@@ -7693,7 +7693,10 @@ country_event = {
 					tag = TAN
 				}
 			}
-			add_ideas = SOV_Isolation
+			add_timed_idea = {
+				idea = SOV_Isolation
+				days = 2000
+			}
 		}
 		every_country = {
 			limit = {
@@ -11033,7 +11036,10 @@ country_event = {
 					tag = TAN
 				}
 			}
-			add_ideas = SOV_Isolation
+			add_timed_idea = {
+				idea = SOV_Isolation
+				days = 2000
+			}
 		}
 		every_country = {
 			limit = {
@@ -18131,7 +18137,7 @@ country_event = {
 
 	immediate = {
 		hidden_effect = {
-			set_country_flag = sov_students_protest
+			set_country_flag = sov_students_protest_flag
 			country_event = { id = russia2_russia.428 days = 30 }
 		}
 	}
@@ -18220,7 +18226,10 @@ country_event = {
 			}
 		}
 		add_political_power = 50
-		add_ideas = SOV_Students_protest
+		add_timed_idea = {
+			idea = SOV_Students_protest
+			days = 467
+		}
 		add_to_variable = { united_russia_strength = 1 }
 		round_variable = united_russia_strength
 		clamp_variable = {
@@ -18499,7 +18508,7 @@ country_event = {
 		has_completed_focus = SOV_reinforce_military_presence
 		has_country_flag = {
 			flag = sov_reinforced_military_presence
-			days > 50
+			days > 35
 		}
 		check_variable = {
 			var = united_russia_strength
@@ -18508,6 +18517,8 @@ country_event = {
 		}
 		NOT = {
 			has_country_flag = sov_democratic_opposition_destroyed
+			has_completed_focus = SOV_end_investments
+			has_completed_focus = SOV_continue_investments
 		}
 	}
 
@@ -18559,7 +18570,10 @@ country_event = {
 			}
 		}
 		add_stability = -0.05
-		add_ideas = SOV_Army_disobedience
+		add_timed_idea = {
+			idea = SOV_Army_disobedience
+			days = 560
+		}
 		add_to_variable = { united_russia_strength = 1 }
 		round_variable = united_russia_strength
 		clamp_variable = {
@@ -19950,6 +19964,15 @@ country_event = {
 	option = { #Fools !
 		name = russia2_russia.452.a
 		ai_chance = { factor = 100 }
+		every_state = {
+			limit = {
+				is_core_of = UKR
+				is_owned_by = UKR
+			}
+			SOV = {
+				add_state_core = PREV
+			}
+		}
 		SOV = {
 			create_wargoal = {
 				type = annex_everything
@@ -23095,26 +23118,31 @@ country_event = {
 
 	is_triggered_only = yes
 
-	option = { #Crush them
-		name = russia2_russia.520.a
-		every_state = {
-			limit = {
-				is_owned_by = SOV
-				is_core_of = SOV
-				is_capital = yes
-			}
-			SOV = {
-				remove_state_core = PREV
-			}
-			PRT = {
-				add_state_core = PREV
-			}
-		}
+	immediate = {
 		hidden_effect = {
-			set_country_flag = protestors_striked_anti_military_junta
+			every_state = {
+				limit = {
+					is_owned_by = SOV
+					is_core_of = SOV
+					is_capital = yes
+				}
+				SOV = {
+					remove_state_core = PREV
+				}
+				PRT = {
+					add_state_core = PREV
+				}
+			}
 			SOV = {
 				release = PRT
 			}
+		}
+	}
+
+	option = { #Crush them
+		name = russia2_russia.520.a
+		hidden_effect = {
+			set_country_flag = protestors_striked_anti_military_junta
 			PRT = {
 				add_ideas = SOV_Protestors_neutrality
 				set_popularities = {
@@ -23242,23 +23270,31 @@ country_event = {
 
 	is_triggered_only = yes
 
-	option = { #We must stay vigilant
-		name = russia2_russia.521.a
-		random_owned_controlled_state = {
-			limit = {
-				is_owned_by = SOV
-				is_core_of = SOV
-				NOT = {
-					state = 655
+	immediate = {
+		hidden_effect = {
+			random_owned_controlled_state = {
+				limit = {
+					is_owned_by = SOV
+					is_core_of = SOV
+					NOT = {
+						state = 655
+					}
+				}
+				SOV = {
+					remove_state_core = PREV
+				}
+				PRT = {
+					add_state_core = PREV
 				}
 			}
 			SOV = {
-				remove_state_core = PREV
-			}
-			PRT = {
-				add_state_core = PREV
+				release = PRT
 			}
 		}
+	}
+
+	option = { #We must stay vigilant
+		name = russia2_russia.521.a
 		hidden_effect = {
 			if = {
 				limit = {
@@ -23285,9 +23321,6 @@ country_event = {
 					max = 100
 				}
 				round_variable = protestors_destruction_variable
-			}
-			SOV = {
-				release = PRT
 			}
 			PRT = {
 				add_ideas = SOV_Protestors_neutrality
@@ -23330,7 +23363,7 @@ country_event = {
 						}
 					}
 				}
-				random_owned_controlled_state = {
+				capital_scope = {
 					create_unit = {
 						division = "name = \"1st Protestors Division\" division_template = \"Protestors Division\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
 						owner = PRT
@@ -23409,6 +23442,106 @@ country_event = {
 					}
 					create_unit = {
 						division = "name = \"20th Protestors Division\" division_template = \"Protestors Division\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+						owner = PRT
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						is_capital = no
+					}
+					create_unit = {
+						division = "name = \"21th Protestors Division\" division_template = \"Protestors Division\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+						owner = PRT
+					}
+					create_unit = {
+						division = "name = \"22th Protestors Division\" division_template = \"Protestors Division\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+						owner = PRT
+					}
+					create_unit = {
+						division = "name = \"23th Protestors Division\" division_template = \"Protestors Division\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+						owner = PRT
+					}
+					create_unit = {
+						division = "name = \"24th Protestors Division\" division_template = \"Protestors Division\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+						owner = PRT
+					}
+					create_unit = {
+						division = "name = \"25th Protestors Division\" division_template = \"Protestors Division\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+						owner = PRT
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						is_capital = no
+					}
+					create_unit = {
+						division = "name = \"26th Protestors Division\" division_template = \"Protestors Division\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+						owner = PRT
+					}
+					create_unit = {
+						division = "name = \"27th Protestors Division\" division_template = \"Protestors Division\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+						owner = PRT
+					}
+					create_unit = {
+						division = "name = \"28th Protestors Division\" division_template = \"Protestors Division\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+						owner = PRT
+					}
+					create_unit = {
+						division = "name = \"29th Protestors Division\" division_template = \"Protestors Division\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+						owner = PRT
+					}
+					create_unit = {
+						division = "name = \"30th Protestors Division\" division_template = \"Protestors Division\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+						owner = PRT
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						is_capital = no
+					}
+					create_unit = {
+						division = "name = \"31th Protestors Division\" division_template = \"Protestors Division\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+						owner = PRT
+					}
+					create_unit = {
+						division = "name = \"32th Protestors Division\" division_template = \"Protestors Division\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+						owner = PRT
+					}
+					create_unit = {
+						division = "name = \"33th Protestors Division\" division_template = \"Protestors Division\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+						owner = PRT
+					}
+					create_unit = {
+						division = "name = \"34th Protestors Division\" division_template = \"Protestors Division\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+						owner = PRT
+					}
+					create_unit = {
+						division = "name = \"35th Protestors Division\" division_template = \"Protestors Division\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+						owner = PRT
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						is_capital = no
+					}
+					create_unit = {
+						division = "name = \"36th Protestors Division\" division_template = \"Protestors Division\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+						owner = PRT
+					}
+					create_unit = {
+						division = "name = \"37th Protestors Division\" division_template = \"Protestors Division\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+						owner = PRT
+					}
+					create_unit = {
+						division = "name = \"38th Protestors Division\" division_template = \"Protestors Division\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+						owner = PRT
+					}
+					create_unit = {
+						division = "name = \"39th Protestors Division\" division_template = \"Protestors Division\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
+						owner = PRT
+					}
+					create_unit = {
+						division = "name = \"40th Protestors Division\" division_template = \"Protestors Division\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
 						owner = PRT
 					}
 				}

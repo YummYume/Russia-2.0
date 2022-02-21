@@ -895,7 +895,7 @@ on_actions = {
 	}
 
 	# Annex PRT when they Capitulate and vice versa
-	on_capitulation_immediate  = {
+	on_capitulation  = {
 		effect = {
 			if = {
 				limit = {
@@ -908,20 +908,9 @@ on_actions = {
 						has_country_flag = protestors_striked_anti_military_junta
 					}
 				}
-				every_state = {
-					limit = {
-						is_owned_by = ROOT
-					}
-					ROOT = {
-						remove_state_core = PREV
-					}
-					FROM = {
-						transfer_state = PREV
-						add_state_core = PREV
-						add_equipment_to_stockpile = {
-							type = infantry_equipment
-							amount = -15000
-						}
+				FROM = {
+					annex_country = {
+						target = ROOT
 					}
 				}
 			}
@@ -937,13 +926,9 @@ on_actions = {
 						has_war_with = SOV
 					}
 				}
-				every_state = {
-					limit = {
-						is_owned_by = ROOT
-					}
-					FROM = {
-						transfer_state = PREV
-						add_state_core = PREV
+				FROM = {
+					annex_country = {
+						target = ROOT
 					}
 				}
 			}
@@ -951,7 +936,7 @@ on_actions = {
 	}
 
 	# Annex PRT when they Capitulate and vice versa and relaunch event
-	on_capitulation_immediate  = {
+	on_capitulation  = {
 		effect = {
 			if = {
 				limit = {
@@ -964,20 +949,9 @@ on_actions = {
 						has_country_flag = is_crushing_the_protestors
 					}
 				}
-				every_state = {
-					limit = {
-						is_owned_by = ROOT
-					}
-					ROOT = {
-						remove_state_core = PREV
-					}
-					FROM = {
-						transfer_state = PREV
-						add_state_core = PREV
-						add_equipment_to_stockpile = {
-							type = infantry_equipment
-							amount = -15000
-						}
+				FROM = {
+					annex_country = {
+						target = ROOT
 					}
 				}
 				FROM = {
@@ -996,13 +970,9 @@ on_actions = {
 						has_war_with = SOV
 					}
 				}
-				every_state = {
-					limit = {
-						is_owned_by = ROOT
-					}
-					FROM = {
-						transfer_state = PREV
-						add_state_core = PREV
+				FROM = {
+					annex_country = {
+						target = ROOT
 					}
 				}
 			}
@@ -1010,7 +980,7 @@ on_actions = {
 	}
 
 	# Annex PRT when they Capitulate and Finish off Protestors
-	on_capitulation_immediate  = {
+	on_capitulation  = {
 		effect = {
 			if = {
 				limit = {
@@ -1023,20 +993,20 @@ on_actions = {
 						has_country_flag = killed_the_protestor_junta
 					}
 				}
+				FROM = {
+					annex_country = {
+						target = ROOT
+					}
+				}
 				every_state = {
 					limit = {
-						is_owned_by = ROOT
+						is_core_of = ROOT
 					}
 					ROOT = {
 						remove_state_core = PREV
 					}
 					FROM = {
-						transfer_state = PREV
 						add_state_core = PREV
-						add_equipment_to_stockpile = {
-							type = infantry_equipment
-							amount = -15000
-						}
 					}
 				}
 				FROM = {
@@ -1055,12 +1025,19 @@ on_actions = {
 						has_war_with = SOV
 					}
 				}
+				FROM = {
+					annex_country = {
+						target = ROOT
+					}
+				}
 				every_state = {
 					limit = {
-						is_owned_by = ROOT
+						is_core_of = ROOT
+					}
+					ROOT = {
+						remove_state_core = PREV
 					}
 					FROM = {
-						transfer_state = PREV
 						add_state_core = PREV
 					}
 				}
