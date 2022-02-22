@@ -35742,18 +35742,6 @@ SOV_diplomatic_plays_decisions_democratic = {
 							division = "name = \"7nd Free Infantry\" division_template = \"Free Infantry\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
 							owner = KAZ
 						}
-						create_unit = {
-							division = "name = \"8rd Free Infantry\" division_template = \"Free Infantry\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
-							owner = KAZ
-						}
-						create_unit = {
-							division = "name = \"9th Free Infantry\" division_template = \"Free Infantry\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
-							owner = KAZ
-						}
-						create_unit = {
-							division = "name = \"10th Free Infantry\" division_template = \"Free Infantry\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
-							owner = KAZ
-						}
 					}
 				}
 				KYR = {
@@ -35768,14 +35756,6 @@ SOV_diplomatic_plays_decisions_democratic = {
 						}
 						create_unit = {
 							division = "name = \"8rd Free Infantry\" division_template = \"Free Infantry\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
-							owner = KYR
-						}
-						create_unit = {
-							division = "name = \"9th Free Infantry\" division_template = \"Free Infantry\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
-							owner = KYR
-						}
-						create_unit = {
-							division = "name = \"10th Free Infantry\" division_template = \"Free Infantry\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
 							owner = KYR
 						}
 					}
@@ -35794,14 +35774,6 @@ SOV_diplomatic_plays_decisions_democratic = {
 							division = "name = \"8rd Free Infantry\" division_template = \"Free Infantry\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
 							owner = TAJ
 						}
-						create_unit = {
-							division = "name = \"9th Free Infantry\" division_template = \"Free Infantry\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
-							owner = TAJ
-						}
-						create_unit = {
-							division = "name = \"10th Free Infantry\" division_template = \"Free Infantry\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
-							owner = TAJ
-						}
 					}
 				}
 				TMS = {
@@ -35812,18 +35784,6 @@ SOV_diplomatic_plays_decisions_democratic = {
 						}
 						create_unit = {
 							division = "name = \"7nd Free Infantry\" division_template = \"Free Infantry\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
-							owner = TMS
-						}
-						create_unit = {
-							division = "name = \"8rd Free Infantry\" division_template = \"Free Infantry\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
-							owner = TMS
-						}
-						create_unit = {
-							division = "name = \"9th Free Infantry\" division_template = \"Free Infantry\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
-							owner = TMS
-						}
-						create_unit = {
-							division = "name = \"10th Free Infantry\" division_template = \"Free Infantry\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
 							owner = TMS
 						}
 					}
@@ -35840,14 +35800,6 @@ SOV_diplomatic_plays_decisions_democratic = {
 						}
 						create_unit = {
 							division = "name = \"8rd Free Infantry\" division_template = \"Free Infantry\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
-							owner = UZB
-						}
-						create_unit = {
-							division = "name = \"9th Free Infantry\" division_template = \"Free Infantry\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
-							owner = UZB
-						}
-						create_unit = {
-							division = "name = \"10th Free Infantry\" division_template = \"Free Infantry\" start_experience_factor = 0.4 start_equipment_factor = 1.0"
 							owner = UZB
 						}
 					}
@@ -36747,8 +36699,6 @@ SOV_middle_east_conquest = {
 
 		icon = GFX_decision_generic_break_treaty
 
-		target_array = global.sov_middle_east_democratic_country
-
 		allowed = {
 			original_tag = SOV
 		}
@@ -36780,6 +36730,31 @@ SOV_middle_east_conquest = {
 			}
 		}
 
+		target_trigger = {
+			FROM = {
+				exists = yes
+				OR = {
+					tag = TUR
+					tag = PER
+					tag = IRQ
+					tag = SAU
+					tag = YEM
+					tag = OMA
+					tag = AFG
+					tag = SYR
+					tag = LEB
+					tag = JOR
+					tag = PAL
+					tag = ISR
+					tag = EGY
+					tag = SUD
+					tag = UAE
+					tag = QAT
+					tag = KUW
+				}
+			}
+		}
+
 		days_remove = 35
 
 		cost = 50
@@ -36802,7 +36777,7 @@ SOV_middle_east_conquest = {
 		remove_effect = {
 			clr_country_flag = is_sending_ultimatum_middle_east
 			FROM = {
-				country_event = { id = russia2_russia.469 days = 6 }
+				country_event = { id = russia2_russia.469 days = 3 }
 			}
 			hidden_effect = {
 				if = {
@@ -36812,7 +36787,11 @@ SOV_middle_east_conquest = {
 							value = 85
 							compare = greater_than_or_equals
 						}
+						NOT = {
+							has_global_flag = coalition_was_formed_middle_east
+						}
 					}
+					set_global_flag = coalition_was_formed_middle_east
 					SOV = {
 						country_event = { id = russia2_russia.472 days = 2 }
 					}
@@ -36833,6 +36812,7 @@ SOV_middle_east_conquest = {
 					}
 					every_country = {
 						limit = {
+							exists = yes
 							NOT = {
 								has_capitulated = yes
 								is_in_faction = yes
@@ -36841,15 +36821,30 @@ SOV_middle_east_conquest = {
 							OR = {
 								tag = TUR
 								tag = PER
-								tag = AFG
 								tag = IRQ
 								tag = SAU
 								tag = YEM
 								tag = OMA
+								tag = AFG
+								tag = SYR
+								tag = LEB
+								tag = JOR
+								tag = PAL
+								tag = ISR
+								tag = EGY
+								tag = SUD
+								tag = UAE
+								tag = QAT
+								tag = KUW
 							}
 						}
 						event_target:leader_of_middle_east_coalition = {
 							add_to_faction = PREV
+						}
+						add_ai_strategy = {
+							type = alliance
+							id = event_target:leader_of_middle_east_coalition
+							value = 500
 						}
 					}
 				}
@@ -36862,6 +36857,20 @@ SOV_middle_east_conquest = {
 			}
 		}
 
+		cancel_trigger = {
+			FROM = {
+				OR = {
+					exists = no
+					has_war_with = SOV
+					has_capitulated = yes
+				}
+			}
+		}
+
+		cancel_effect = {
+			clr_country_flag = is_sending_ultimatum_middle_east
+		}
+
 		ai_will_do = {
 			factor = 100
 		}
@@ -36870,8 +36879,6 @@ SOV_middle_east_conquest = {
 	SOV_ultimatum_country_middle_east_dem_overlord_edition = {
 
 		icon = GFX_decision_generic_break_treaty
-
-		target_array = global.sov_middle_east_democratic_country
 
 		allowed = {
 			original_tag = SOV
@@ -36899,6 +36906,35 @@ SOV_middle_east_conquest = {
 			}
 		}
 
+		target_trigger = {
+			FROM = {
+				exists = yes
+				NOT = {
+					is_subject_of = SOV
+				}
+				is_subject = yes
+				OR = {
+					tag = TUR
+					tag = PER
+					tag = IRQ
+					tag = SAU
+					tag = YEM
+					tag = OMA
+					tag = AFG
+					tag = SYR
+					tag = LEB
+					tag = JOR
+					tag = PAL
+					tag = ISR
+					tag = EGY
+					tag = SUD
+					tag = UAE
+					tag = QAT
+					tag = KUW
+				}
+			}
+		}
+
 		days_remove = 30
 
 		cost = 50
@@ -36923,6 +36959,17 @@ SOV_middle_east_conquest = {
 					}
 				}
 			}
+		}
+
+		cancel_trigger = {
+			has_war_with = FROM
+			FROM = {
+				exists = no
+			}
+		}
+
+		cancel_effect = {
+			clr_country_flag = is_sending_ultimatum_middle_east
 		}
 
 		ai_will_do = {
@@ -36988,6 +37035,19 @@ SOV_middle_east_conquest = {
 			create_wargoal = {
 				type = annex_everything
 				target = FROM
+			}
+			hidden_effect = {
+				every_country = {
+					limit = {
+						is_in_faction_with = FROM
+					}
+					SOV = {
+						create_wargoal = {
+							type = annex_everything
+							target = PREV
+						}
+					}
+				}
 			}
 		}
 
@@ -37149,14 +37209,38 @@ SOV_middle_east_conquest = {
 		target_trigger = {
 			FROM = {
 				NOT = {
+					is_subject_of = SOV
 					tag = TUR
 					tag = PER
-					tag = AFG
 					tag = IRQ
 					tag = SAU
 					tag = YEM
 					tag = OMA
-
+					tag = AFG
+					tag = SYR
+					tag = LEB
+					tag = JOR
+					tag = PAL
+					tag = ISR
+					tag = EGY
+					tag = SUD
+					tag = UAE
+					tag = QAT
+					tag = KUW
+					tag = BRP
+					tag = MED
+					tag = BAB
+					tag = ASY
+					tag = HIT
+					tag = CAA
+					tag = MES
+					tag = ANT
+					tag = KUR
+					tag = FSZ
+					tag = FAT
+					tag = HEJ
+					tag = NEJ
+					tag = ASR
 				}
 				OR = {
 					owns_state = 453
