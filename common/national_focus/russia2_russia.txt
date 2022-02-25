@@ -4452,6 +4452,9 @@ focus_tree = {
 				}
 				is_subject = no
 			}
+			NOT = {
+				has_war_with = TAN 
+			}
 		}
 		bypass = {
 			OR = {
@@ -4463,6 +4466,7 @@ focus_tree = {
 					}
 				}
 				has_government = anarchy
+				has_war_with = TAN 
 			}
 		}
 		search_filters = { FOCUS_FILTER_ANNEXATION }
@@ -5075,6 +5079,9 @@ focus_tree = {
 				category = industry
 			}
 			random_owned_state = {
+				limit = {
+					is_valid_russian_state_to_spawn_factories_special_triggers = yes
+				}
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = industrial_complex
@@ -5083,6 +5090,9 @@ focus_tree = {
 				}
 			}
 			random_owned_state = {
+				limit = {
+					is_valid_russian_state_to_spawn_factories_special_triggers = yes
+				}
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = arms_factory
@@ -11880,6 +11890,9 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_CONTINUE_INVESTMENTS_RUSSIA FOCUS_FILTER_DEMOCRATIC_UNITED_RUSSIA FOCUS_FILTER_DEMOCRATIC_PREEMPTIVE_COUP_RUSSIA FOCUS_FILTER_INDUSTRY }
 		completion_reward = {
 			random_owned_state = {
+				limit = {
+					is_valid_russian_state_to_spawn_factories_special_triggers = yes
+				}
 				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = industrial_complex
@@ -11888,6 +11901,9 @@ focus_tree = {
 				}
 			}
 			random_owned_state = {
+				limit = {
+					is_valid_russian_state_to_spawn_factories_special_triggers = yes
+				}
 				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = industrial_complex
@@ -11896,6 +11912,9 @@ focus_tree = {
 				}
 			}
 			random_owned_state = {
+				limit = {
+					is_valid_russian_state_to_spawn_factories_special_triggers = yes
+				}
 				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = industrial_complex
@@ -12322,7 +12341,10 @@ focus_tree = {
 							autonomy_state = autonomy_free
 						}
 					}
-					add_ideas = SOV_Isolation
+					add_timed_idea = {
+						idea = SOV_Isolation
+						days = 2000
+					}
 					remove_ideas = SOV_Guided_by_russia
 				}
 			}
@@ -12445,30 +12467,18 @@ focus_tree = {
 			add_ideas = SOV_United_russia_idea
 			custom_effect_tooltip = bonus_changes_depending_on_opposition_strength
 			set_temp_variable = { united_russia_influence = united_russia_strength }
-			clamp_temp_variable = {
-				var = united_russia_influence
-				max = 4
-				min = 0
-			}
-			round_temp_variable = united_russia_influence
 			set_temp_variable = { stability_add = -0.1 }
 			set_temp_variable = { pp_add = -150 }
 			set_temp_variable = { democracy_add = -0.1 }
-
-			while_loop_effect = {
-				limit = {
-					check_variable = {
-						var = united_russia_influence
-						value = 1
-						compare = greater_than
-					}
-				}
-				add_to_temp_variable = { stability_add = 0.05 }
-				add_to_temp_variable = { pp_add = 100 }
-				add_to_temp_variable = { democracy_add = 0.05 }
-				subtract_from_temp_variable = { united_russia_influence = 1 }
-			}
-
+			set_temp_variable = { stability_add_addition = 0.1 }
+			set_temp_variable = { pp_add_addition = 150 }
+			set_temp_variable = { democracy_add_addition = 0.1 }
+			multiply_temp_variable = { stability_add_addition = united_russia_influence }
+			multiply_temp_variable = { pp_add_addition = united_russia_influence }
+			multiply_temp_variable = { democracy_add_addition = united_russia_influence }
+			add_to_temp_variable = { stability_add = stability_add_addition }
+			add_to_temp_variable = { pp_add = pp_add_addition }
+			add_to_temp_variable = { democracy_add = democracy_add_addition }
 			add_political_power = var:pp_add
 			add_stability = var:stability_add
 			add_popularity = {
@@ -12581,30 +12591,18 @@ focus_tree = {
 			add_ideas = SOV_New_russia_idea
 			custom_effect_tooltip = bonus_changes_depending_on_opposition_strength
 			set_temp_variable = { united_russia_influence = united_russia_strength }
-			clamp_temp_variable = {
-				var = united_russia_influence
-				max = 4
-				min = 0
-			}
-			round_temp_variable = united_russia_influence
 			set_temp_variable = { stability_add = 0.1 }
 			set_temp_variable = { pp_add = 150 }
 			set_temp_variable = { democracy_add = 0.1 }
-
-			while_loop_effect = {
-				limit = {
-					check_variable = {
-						var = united_russia_influence
-						value = 1
-						compare = greater_than
-					}
-				}
-				subtract_from_temp_variable = { stability_add = 0.05 }
-				subtract_from_temp_variable = { pp_add = 100 }
-				subtract_from_temp_variable = { democracy_add = 0.05 }
-				subtract_from_temp_variable = { united_russia_influence = 1 }
-			}
-
+			set_temp_variable = { stability_add_addition = 0.05 }
+			set_temp_variable = { pp_add_addition = 100 }
+			set_temp_variable = { democracy_add_addition = 0.05 }
+			multiply_temp_variable = { stability_add_addition = united_russia_influence }
+			multiply_temp_variable = { pp_add_addition = united_russia_influence }
+			multiply_temp_variable = { democracy_add_addition = united_russia_influence }
+			subtract_from_temp_variable = { stability_add = stability_add_addition }
+			subtract_from_temp_variable = { pp_add = pp_add_addition }
+			subtract_from_temp_variable = { democracy_add = democracy_add_addition }
 			add_political_power = var:pp_add
 			add_stability = var:stability_add
 			add_popularity = {
@@ -12818,7 +12816,49 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_UNITED_RUSSIA }
 		completion_reward = {
-			country_event = { id = russia2_russia.450 hours = 15 }
+			if = {
+				limit = {
+					UKR = {
+						exists = yes
+						NOT = {
+							is_subject_of = SOV
+						}
+					}
+				}
+				country_event = { id = russia2_russia.450 hours = 15 }
+			}
+			else_if = {
+				limit = {
+					UKR = {
+						is_subject_of = SOV
+					}
+				}
+				every_state = {
+					limit = {
+						is_core_of = UKR
+						is_owned_by = ROOT
+					}
+					SOV = {
+						add_state_core = PREV
+					}
+				}
+				SOV = {
+					annex_country = {
+						target = UKR
+					}
+				}
+			}
+			else = {
+				every_state = {
+					limit = {
+						is_core_of = UKR
+						is_owned_by = ROOT
+					}
+					SOV = {
+						add_state_core = PREV
+					}
+				}
+			}
 		}
 	}
 
@@ -13201,7 +13241,6 @@ focus_tree = {
 				array = global.countries
 				if = {
 					limit = {
-						exists = yes
 						OR = {
 							tag = TUR
 							tag = PER
@@ -13210,6 +13249,16 @@ focus_tree = {
 							tag = YEM
 							tag = OMA
 							tag = AFG
+							tag = SYR
+							tag = LEB
+							tag = JOR
+							tag = PAL
+							tag = ISR
+							tag = EGY
+							tag = SUD
+							tag = UAE
+							tag = QAT
+							tag = KUW
 						}
 					}
 					add_to_array = { global.sov_middle_east_democratic_country = THIS }
