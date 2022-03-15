@@ -11,4 +11,4 @@ tags={
 	"Balance"
 }
 name="Russia 2.0"
-supported_version="1.11.7"
+supported_version="1.11.9"
