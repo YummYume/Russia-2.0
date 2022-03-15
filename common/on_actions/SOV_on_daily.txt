@@ -2601,4 +2601,81 @@ on_actions = {
 			}
 		}
 	}
+
+	#Check if Free Territory of Moscow or any Member of the League Owns Non-Core Territory
+	on_daily_SOV = {
+		effect = {
+			if = {
+				limit = {
+					SOV = {
+						has_government = anarchy
+						has_completed_focus = SOV_spread_anarchism_beyond_our_neighbors
+						NOT = {
+							has_country_flag = is_facing_crisis_anarchist_right_path
+						}
+						NOT = {
+							has_country_flag = can_hold_non_core_state_anarchy
+						}
+					}
+					OR = {
+						any_state = {
+							is_owned_by = SOV
+							NOT = {
+								is_core_of = SOV
+							}
+						}
+						any_country = {
+							is_in_faction_with = SOV
+							any_state = {
+								is_owned_by = PREV
+								NOT = {
+									is_core_of = PREV
+								}
+							}
+						}
+					}
+				}
+				SOV = {
+					set_country_flag = is_facing_crisis_anarchist_right_path
+					country_event = { id = russia2_russia.662 }
+				}
+			}
+		}
+	}
+
+	#Check if Free Territory of Moscow or any Member of the League Released Contested Territory Territory
+	on_daily_SOV = {
+		effect = {
+			if = {
+				limit = {
+					SOV = {
+						has_government = anarchy
+						has_completed_focus = SOV_spread_anarchism_beyond_our_neighbors
+						has_country_flag = is_facing_crisis_anarchist_right_path
+					}
+					NOT = {
+						any_state = {
+							is_owned_by = SOV
+							NOT = {
+								is_core_of = SOV
+							}
+						}
+						any_country = {
+							is_in_faction_with = SOV
+							any_state = {
+								is_owned_by = PREV
+								NOT = {
+									is_core_of = PREV
+								}
+							}
+						}
+					}
+				}
+				SOV = {
+					clr_country_flag = is_facing_crisis_anarchist_right_path
+					country_event = { id = russia2_russia.663 }
+				}
+			}
+		}
+	}
 }
