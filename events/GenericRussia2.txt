@@ -3118,3 +3118,210 @@ country_event = {
 		}
 	}
 }
+
+#Give Back Controls of German State After Tsar Insurection
+country_event = {
+	id = russia2_generic.68
+
+	is_triggered_only = yes
+
+	hidden = yes
+
+	immediate = {
+		if = {
+			limit = {
+				has_country_flag = ger_exiles_accept_puppet
+			}
+			release_autonomy = {
+				target = GER
+				autonomy_state = autonomy_imperial_governorates
+				freedom_level = 0.5
+			}
+			every_state = {
+				limit = {
+					is_core_of = GER
+					is_initial_core_of_ger = yes
+				}
+				GER = {
+					set_state_controller = PREV
+				}
+			}
+			GER = {
+				set_politics = {
+					ruling_party = neutrality
+					elections_allowed = no
+				}
+				hidden_effect = {
+					set_popularities = {
+						democratic = 10
+						neutrality = 70
+						fascism = 10
+						communism = 10
+					}
+				}
+				if = {
+					limit = {
+						date < 1941.06.04
+					}
+					create_country_leader = {
+						name = "Wilhelm II"
+						desc = "POLITICS_WILHELM_II_DESC"
+						picture = GFX_portrait_ger_wilhelm_ii
+						expire = "1965.1.1"
+						ideology = despotism
+						traits = {
+							anti_democrat imperial_connections
+						}
+					}
+				}
+				else = {
+					create_country_leader = {
+						name = "Wilhelm III"
+						desc = "POLITICS_WILHELM_III_DESC"
+						picture = GFX_portrait_ger_wilhelm_iii
+						expire = "1965.1.1"
+						ideology = despotism
+						traits = {
+							popular_figurehead2
+						}
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_country_flag = ger_exiles_accept_puppet_reduced
+			}
+			release_autonomy = {
+				target = GER
+				autonomy_state = autonomy_dominion
+				freedom_level = 0.5
+			}
+			every_state = {
+				limit = {
+					is_core_of = GER
+					is_initial_core_of_ger = yes
+				}
+				GER = {
+					set_state_controller = PREV
+				}
+			}
+			GER = {
+				set_cosmetic_tag = GEC
+				set_politics = {
+					ruling_party = neutrality
+					elections_allowed = no
+				}
+				hidden_effect = {
+					set_popularities = {
+						democratic = 10
+						neutrality = 70
+						fascism = 10
+						communism = 10
+					}
+				}
+				if = {
+					limit = {
+						date < 1941.06.04
+					}
+					create_country_leader = {
+						name = "Wilhelm II"
+						desc = "POLITICS_WILHELM_II_DESC"
+						picture = GFX_portrait_ger_wilhelm_ii
+						expire = "1965.1.1"
+						ideology = despotism
+						traits = {
+							anti_democrat imperial_connections
+						}
+					}
+				}
+				else = {
+					create_country_leader = {
+						name = "Wilhelm III"
+						desc = "POLITICS_WILHELM_III_DESC"
+						picture = GFX_portrait_ger_wilhelm_iii
+						expire = "1965.1.1"
+						ideology = despotism
+						traits = {
+							popular_figurehead2
+						}
+					}
+				}
+				set_country_flag = GER_dominion_no_imperial
+				set_country_flag = germany_no_imperial_transform
+			}
+		}
+		else = {
+			release = GER
+			if = {
+				limit = {
+					NOT = {
+						SOV = { 
+							is_faction_leader = yes
+						}
+					}
+				}
+				create_faction = moscow_berlin_pact
+				add_to_faction = GER
+			}
+			else = {
+				add_to_faction = GER
+			}
+			every_state = {
+				limit = {
+					is_core_of = GER
+					is_initial_core_of_ger = yes
+				}
+				GER = {
+					set_state_controller = PREV
+				}
+			}
+			GER = {
+				add_ai_strategy = {
+					type = alliance
+					id = SOV
+					value = 300
+				}
+				set_politics = {
+					ruling_party = neutrality
+					elections_allowed = no
+				}
+				hidden_effect = {
+					set_popularities = {
+						democratic = 10
+						neutrality = 70
+						fascism = 10
+						communism = 10
+					}
+				}
+				if = {
+					limit = {
+						date < 1941.06.04
+					}
+					create_country_leader = {
+						name = "Wilhelm II"
+						desc = "POLITICS_WILHELM_II_DESC"
+						picture = GFX_portrait_ger_wilhelm_ii
+						expire = "1965.1.1"
+						ideology = despotism
+						traits = {
+							anti_democrat imperial_connections
+						}
+					}
+				}
+				else = {
+					create_country_leader = {
+						name = "Wilhelm III"
+						desc = "POLITICS_WILHELM_III_DESC"
+						picture = GFX_portrait_ger_wilhelm_iii
+						expire = "1965.1.1"
+						ideology = despotism
+						traits = {
+							popular_figurehead2
+						}
+					}
+				}
+			}
+		}
+	}
+}

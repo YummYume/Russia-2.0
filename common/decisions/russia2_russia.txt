@@ -49701,8 +49701,23 @@ SOV_reinstore_german_monarchy_decisions = {
 						set_country_flag = germany_no_imperial_transform
 					}
 					else = {
-						SOV = {
-							add_to_faction = PRE
+						if = {
+							limit = {
+								NOT = {
+									SOV = { 
+										is_faction_leader = yes
+									}
+								}
+							}
+							SOV = {
+								create_faction = moscow_berlin_pact
+								add_to_faction = PRE
+							}
+						}
+						else = {
+							SOV = {
+								add_to_faction = PRE
+							}
 						}
 						add_ai_strategy = {
 							type = alliance
