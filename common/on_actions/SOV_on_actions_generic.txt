@@ -895,7 +895,7 @@ on_actions = {
 	}
 
 	# Annex PRT when they Capitulate and vice versa
-	on_capitulation  = {
+	on_capitulation = {
 		effect = {
 			if = {
 				limit = {
@@ -908,9 +908,18 @@ on_actions = {
 						has_country_flag = protestors_striked_anti_military_junta
 					}
 				}
-				FROM = {
-					annex_country = {
-						target = ROOT
+				ROOT = {
+					every_state = {
+						limit = {
+							is_core_of = ROOT
+							NOT = {
+								has_state_flag = is_controlled_protestor_state
+							}
+						}
+						set_state_flag = is_controlled_protestor_state
+						ROOT = {
+							remove_state_core = PREV
+						}
 					}
 				}
 			}
@@ -936,7 +945,7 @@ on_actions = {
 	}
 
 	# Annex PRT when they Capitulate and vice versa and relaunch event
-	on_capitulation  = {
+	on_capitulation = {
 		effect = {
 			if = {
 				limit = {
@@ -949,9 +958,18 @@ on_actions = {
 						has_country_flag = is_crushing_the_protestors
 					}
 				}
-				FROM = {
-					annex_country = {
-						target = ROOT
+				ROOT = {
+					every_state = {
+						limit = {
+							is_core_of = ROOT
+							NOT = {
+								has_state_flag = is_controlled_protestor_state
+							}
+						}
+						set_state_flag = is_controlled_protestor_state
+						ROOT = {
+							remove_state_core = PREV
+						}
 					}
 				}
 				FROM = {
@@ -991,6 +1009,15 @@ on_actions = {
 					FROM = {
 						tag = SOV
 						has_country_flag = killed_the_protestor_junta
+					}
+				}
+				ROOT = {
+					every_state = {
+						limit = {
+							is_core_of = ROOT
+							has_state_flag = is_controlled_protestor_state
+						}
+						clr_state_flag = is_controlled_protestor_state
 					}
 				}
 				FROM = {

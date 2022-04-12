@@ -23325,8 +23325,20 @@ country_event = {
 
 	immediate = {
 		hidden_effect = {
+			every_state = {
+				limit = {
+					is_owned_by = SOV
+					has_state_flag = is_controlled_protestor_state
+				}
+				PRT = {
+					add_state_core = PREV
+				}
+			}
 			random_owned_controlled_state = {
 				limit = {
+					NOT = {
+						has_state_flag = is_controlled_protestor_state
+					}
 					is_owned_by = SOV
 					is_core_of = SOV
 					NOT = {
@@ -23340,8 +23352,14 @@ country_event = {
 					add_state_core = PREV
 				}
 			}
-			SOV = {
-				release = PRT
+			every_state = {
+				limit = {
+					is_core_of = PRT
+				}
+				PRT = {
+					transfer_state = PREV
+					set_state_controller = PREV
+				}
 			}
 		}
 	}
@@ -23359,7 +23377,6 @@ country_event = {
 				}
 				SOV = {
 					set_country_flag = killed_the_protestor_junta
-					clr_country_flag = is_crushing_the_protestors
 				}
 			}
 			else = {
@@ -23619,6 +23636,7 @@ country_event = {
 	option = { #We are done with the protestors
 		name = russia2_russia.522.a
 		remove_ideas = SOV_Anti_military_junta_protestor
+		clr_country_flag = is_crushing_the_protestors
 	}
 }
 
