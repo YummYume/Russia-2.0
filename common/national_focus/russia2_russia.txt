@@ -6003,7 +6003,15 @@ focus_tree = {
 		continue_if_invalid = yes
 		search_filters = { FOCUS_FILTER_ARMY_RUSSIA FOCUS_FILTER_INDUSTRY FOCUS_FILTER_AIR_RUSSIA }
 		completion_reward = {
-			add_ideas = SOV_Mass_production
+			if = {
+				limit = {
+					has_dlc = "No Step Back"
+				}
+				add_ideas = SOV_Mass_production_nsb
+			}
+			else = {
+				add_ideas = SOV_Mass_production
+			}
 			custom_effect_tooltip = available_designer
 			show_ideas_tooltip = russia2_uralvagonzavod
 		}
@@ -6923,7 +6931,7 @@ focus_tree = {
 			num_of_naval_factories > 10
 		}
 		search_filters = { FOCUS_FILTER_NAVY_RUSSIA }
-		completion_reward = { #TODO CHeck OOB
+		completion_reward = {
 			navy_experience = 50
 			add_ideas = SOV_Russia_flagship
 			custom_effect_tooltip = SOV_flagship_russia_tt
@@ -6942,11 +6950,11 @@ focus_tree = {
 							fixed_ship_fire_control_system_slot = ship_fire_control_system_3
 							fixed_ship_radar_slot = ship_radar_3
 							fixed_ship_engine_slot = heavy_ship_engine_4
-							fixed_ship_secondaries_slot = dp_ship_secondaries
+							fixed_ship_secondaries_slot = dp_ship_secondaries_1
 							fixed_ship_armor_slot = ship_armor_bb_3
 							front_1_custom_slot = ship_heavy_battery_3
 							mid_1_custom_slot = ship_anti_air_4
-							mid_2_custom_slot = dp_ship_secondaries
+							mid_2_custom_slot = dp_ship_secondaries_1
 							mid_3_custom_slot = ship_airplane_launcher_2
 							rear_1_custom_slot = ship_heavy_battery_3
 						}
@@ -6964,11 +6972,11 @@ focus_tree = {
 							fixed_ship_fire_control_system_slot = ship_fire_control_system_3
 							fixed_ship_radar_slot = ship_radar_3
 							fixed_ship_engine_slot = heavy_ship_engine_4
-							fixed_ship_secondaries_slot = dp_ship_secondaries
+							fixed_ship_secondaries_slot = dp_ship_secondaries_1
 							fixed_ship_armor_slot = ship_armor_bb_3
 							front_1_custom_slot = ship_heavy_battery_3
 							mid_1_custom_slot = ship_anti_air_4
-							mid_2_custom_slot = dp_ship_secondaries
+							mid_2_custom_slot = dp_ship_secondaries_1
 							mid_3_custom_slot = ship_airplane_launcher_2
 							rear_1_custom_slot = ship_heavy_battery_3
 						}
@@ -8830,13 +8838,21 @@ focus_tree = {
 				type = bomber_genius
 				is_female = yes
 			}
-			if = { #TODO oob
+			if = {
 				limit = {
 					ROOT = { has_full_control_of_state = 219 }
 				}
 				custom_effect_tooltip = SOV_night_witches_588_tt
 				hidden_effect = {
-					load_oob = "SOV_night_witches"
+					if = {
+						limit = {
+							has_dlc = "By Blood Alone"
+						}
+						load_oob = "SOV_night_witches_BBA"
+					}
+					else = {
+						load_oob = "SOV_night_witches"
+					}
 				}
 			}
 		}
@@ -25421,118 +25437,7 @@ focus_tree = {
 		y = 21
 		cost = 0
 		completion_reward = {
-			every_state = {
-				limit = {
-					OR = {
-						state = 408
-						state = 657
-						state = 563
-						state = 562
-					}
-				}
-				BRA = {
-					transfer_state = PREV
-				}
-			}
-			every_state = {
-				limit = {
-					OR = {
-						state = 213
-						state = 214
-						state = 825
-						state = 216
-						state = 397
-					}
-				}
-				CZE = {
-					transfer_state = PREV
-				}
-			}
-			every_state = {
-				limit = {
-					OR = {
-						state = 586
-						state = 405
-						state = 584
-						state = 742
-						state = 732
-						state = 831
-						state = 402
-						state = 407
-						state = 590
-					}
-				}
-				GER = {
-					transfer_state = PREV
-				}
-			}
-			every_state = {
-				limit = {
-					OR = {
-						state = 570
-						state = 577
-						state = 516
-						state = 568
-						state = 576
-						state = 580
-						state = 653
-						state = 572
-					}
-				}
-				SAU = {
-					transfer_state = PREV
-				}
-			}
-			every_state = {
-				limit = {
-					OR = {
-						state = 217
-						state = 234
-						state = 237
-						state = 231
-						state = 229
-						state = 230
-						state = 232
-						state = 829
-					}
-				}
-				LIT = {
-					transfer_state = PREV
-				}
-			}
-			every_state = {
-				limit = {
-					OR = {
-						state = 251
-						state = 398
-						state = 400
-						state = 399
-						state = 256
-						state = 582
-						state = 651
-					}
-				}
-				POL = {
-					transfer_state = PREV
-				}
-			}
-			every_state = {
-				limit = {
-					OR = {
-						state = 202
-						state = 195
-						state = 206
-						state = 200
-						state = 137
-						state = 242
-						state = 227
-						state = 241
-					}
-				}
-				NOR = {
-					transfer_state = PREV
-				}
-			}
+		   add_country_leader_trait = russia2_individualist_advisor
 		}
 	}
 }
