@@ -1690,7 +1690,7 @@ country_event = {
 				size = 0.5
 				capital = 217
 				states = {
-					217 260 265 240 401 407 402 404 732 742 405 584 585 587 406 236 237 238 234 218 228 217 245 236 237 238 234 235 232 233 231 229 230 586 589 227 221 200 226 137 196 259 203 198 192 197 823 826 827 828 821 834 831 832 830 829
+					217 260 265 240 401 407 402 404 732 742 405 584 585 587 406 236 237 238 234 218 228 217 245 236 237 238 234 235 232 233 231 229 230 586 589 227 221 200 226 137 196 259 203 198 192 197 823 826 827 828 821 834 831 832 830 829 881
 				}
 				keep_unit_leaders = {
 					401 402 407 410 405 407
@@ -7816,6 +7816,7 @@ country_event = {
 					transfer_state = 407
 					transfer_state = 589
 					transfer_state = 588
+					transfer_state = 882
 				}
 			}
 			582 = {
@@ -11072,6 +11073,8 @@ country_event = {
 	desc = russia2_russia.260.d
 	picture = GFX_report_event_generic_ruins
 
+	fire_only_once = yes
+
 	is_triggered_only = yes
 
 	option = {
@@ -11132,31 +11135,33 @@ country_event = {
 		}
 		custom_effect_tooltip = end_civil_war_focus
 		hidden_effect = {
-			every_character = {
-				limit = {
-					has_character_flag = flag_former_deserting_generals
-					OR = {
-						is_character = SOV_Semyon_timoshenko
-						is_character = SOV_Ivan_chernyakhovsky
-						is_character = SOV_Andrey_yeryomenko
+			UKR = {
+				every_character = {
+					limit = {
+						has_character_flag = flag_former_deserting_generals
+						OR = {
+							is_character = SOV_Semyon_timoshenko
+							is_character = SOV_Ivan_chernyakhovsky
+							is_character = SOV_Andrey_yeryomenko
+						}
 					}
+					set_nationality = SOV
+					set_character_flag = russia_is_in_prison_cw
+					clr_character_flag = sov_character_switched_to_sou
+					clr_character_flag = flag_former_deserting_generals
 				}
-				set_nationality = SOV
-				set_character_flag = russia_is_in_prison_cw
-				clr_character_flag = sov_character_switched_to_sou
-				clr_character_flag = flag_former_deserting_generals
-			}
-			every_character = {
-				limit = {
-					has_character_flag = flag_former_deserting_generals
-					OR = {
-						is_character = SOV_Vladimir_kislitsin
-						is_character = SOV_Boris_shteifon
-						is_character = SOV_Alexander_rodzyanko
+				every_character = {
+					limit = {
+						has_character_flag = flag_former_deserting_generals
+						OR = {
+							is_character = SOV_Vladimir_kislitsin
+							is_character = SOV_Boris_shteifon
+							is_character = SOV_Alexander_rodzyanko
+						}
 					}
+					set_nationality = SOV
+					clr_character_flag = flag_former_deserting_generals
 				}
-				set_nationality = SOV
-				clr_character_flag = flag_former_deserting_generals
 			}
 			if = {
 				limit = {
@@ -11210,6 +11215,7 @@ country_event = {
 					transfer_state = 407
 					transfer_state = 589
 					transfer_state = 588
+					transfer_state = 882
 				}
 			}
 			582 = {
@@ -11344,6 +11350,20 @@ country_event = {
 				}
 				delete_unit_template_and_units = {
 					division_template = "Diviziya Morskoy Pekhoty"
+				}
+			}
+			SOV = {
+				every_character = {
+					limit = {
+						OR = {
+							is_character = SOV_Mikhail_kalinin
+							is_character = SOV_Nikita_khrushchev
+							is_character = SOV_Vyacheslav_molotov
+							is_character = SOV_Alexander_yegorov
+							is_character = SOV_Vasily_blyukher
+						}
+					}
+					set_character_flag = russia_is_in_prison_cw
 				}
 			}
 		}
@@ -16666,6 +16686,15 @@ country_event = {
 		SOJ = {
 			if = {
 				limit = {
+					has_dlc = "By Blood Alone"
+				}
+				load_oob = "SOJ_black_revolution_air_BBA"
+			}
+			else = {
+				load_oob = "SOJ_black_revolution_air_legacy"
+			}
+			if = {
+				limit = {
 					NOT = {
 						has_dlc = "No Step Back"
 					}
@@ -21003,6 +21032,13 @@ country_event = {
 					state = 800
 					state = 798
 					state = 799
+					state = 907
+					state = 855
+					state = 854
+					state = 857
+					state = 859
+					state = 856
+					state = 858
 				}
 			}
 			SOV = {
@@ -21098,6 +21134,13 @@ country_event = {
 						state = 800
 						state = 798
 						state = 799
+						state = 907
+						state = 855
+						state = 854
+						state = 857
+						state = 859
+						state = 856
+						state = 858
 					}
 				}
 				SOV = {
@@ -21269,6 +21312,13 @@ country_event = {
 					state = 800
 					state = 798
 					state = 799
+					state = 907
+					state = 855
+					state = 854
+					state = 857
+					state = 859
+					state = 856
+					state = 858
 				}
 			}
 			SOV = {
@@ -21359,6 +21409,13 @@ country_event = {
 					state = 800
 					state = 798
 					state = 799
+					state = 907
+					state = 855
+					state = 854
+					state = 857
+					state = 859
+					state = 856
+					state = 858
 				}
 			}
 			SOV = {

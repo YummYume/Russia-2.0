@@ -972,6 +972,8 @@ focus_tree = {
                             state = 71
                             state = 70
                             state = 72
+                            state = 853
+                            state = 852
                         }
                     }
                 }
@@ -1615,7 +1617,15 @@ focus_tree = {
         }
         search_filters = { FOCUS_FILTER_ARMY_UKRAINE }
         completion_reward = {
-            add_ideas = UKR_Tank_production_effort
+            if = {
+                limit = {
+                    has_dlc = "No Step Back"
+                }
+                add_ideas = UKR_Tank_production_effort_nsb
+            }
+            else = {
+                add_ideas = UKR_Tank_production_effort
+            }
             add_tech_bonus = {
 				name = UKR_focus_tank_production
 				bonus = 1
@@ -2161,7 +2171,7 @@ focus_tree = {
     }
 
     # State of the Navy
-    focus = {
+    focus = { #TODO Check OOB
         id = UKR_state_navy
         x = 48
         y = 3
@@ -2267,7 +2277,7 @@ focus_tree = {
 							fixed_ship_anti_air_slot = ship_anti_air_1
 							fixed_ship_radar_slot = empty
 							fixed_ship_engine_slot = carrier_ship_engine_2
-							fixed_ship_secondaries_slot = dp_ship_secondaries
+							fixed_ship_secondaries_slot = dp_ship_secondaries_1
 							front_1_custom_slot = empty
 						}
 					}
@@ -4997,6 +5007,7 @@ focus_tree = {
         }
         search_filters = { FOCUS_FILTER_NOT_ANARCHIST_UKRAINE }
         completion_reward = {
+            remove_ideas = UKR_Provisional_government
             if = {
                 limit = {
                     is_faction_leader = yes
@@ -5078,6 +5089,7 @@ focus_tree = {
                 limit = {
                     SOJ = {
                         is_subject_of = UKR
+                        exists = yes
                     }
                 }
                 custom_effect_tooltip = soj_becomes_integrated_country
@@ -5309,6 +5321,7 @@ focus_tree = {
                 }
                 custom_effect_tooltip = UKR_reform_kievan_rus_tt
                 hidden_effect = {
+                    cancel_resistance = yes
                     ROOT = {
                         add_state_core = PREV
                     }
@@ -5480,7 +5493,7 @@ focus_tree = {
     }
 
     # Master of the League
-    focus = {
+    focus = { #TODO Check Again Triggers after path is done
         id = UKR_master_league
         x = 77
         y = 6
