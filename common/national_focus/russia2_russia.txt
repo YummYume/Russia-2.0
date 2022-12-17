@@ -25957,9 +25957,11 @@ focus_tree = {
 						TAG = ROOT
 					}
 				}
-				annex_country = {
-					target = PREV
-					transfer_troops = yes
+				ROOT = {
+					annex_country = {
+						target = PREV
+						transfer_troops = yes
+					}
 				}
 			}
 			custom_effect_tooltip = SOV_one_against_world_tt_effect_tt
@@ -26005,9 +26007,11 @@ focus_tree = {
 					}
 					is_subject = yes
 				}
-				set_autonomy = {
-					target = PREV
-					autonomy_state = autonomy_free
+				ROOT = {
+					set_autonomy = {
+						target = PREV
+						autonomy_state = autonomy_free
+					}
 				}
 				add_ideas = SOV_United_against_the_world
 			}
@@ -26035,16 +26039,34 @@ focus_tree = {
 		completion_reward = {
 			every_country = {
 				limit = {
+					is_subject = no
 					is_major = yes
 					is_ai = yes
-					is_subject = no
+					NOT = {
+						TAG = ROOT
+						is_in_faction_with = ROOT
+					}
 				}
 				ROOT = {
 					declare_war_on = {
 						target = PREV
-						type = annex_everything
+						type = puppet_wargoal_focus
 					}
 				}
+			}
+			every_country = {
+				limit = {
+					OR = {
+						is_major = no
+						is_ai = no
+					}
+					is_subject = no
+					NOT = {
+						TAG = ROOT
+						is_in_faction_with = ROOT
+					}
+				}
+				country_event = { id = russia2_russia.664 }
 			}
 			custom_effect_tooltip = SOV_world_revolution_anarchy_tt
 			if = {
