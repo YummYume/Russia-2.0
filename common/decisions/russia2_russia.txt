@@ -34072,6 +34072,7 @@ SOV_banditry_decision = {
 		days_remove = 40
 
 		complete_effect = {
+			custom_effect_tooltip = might_lead_to_chaos_tt
 			set_country_flag = put_bounty_bandits_steppe
 		}
 
@@ -34130,6 +34131,7 @@ SOV_banditry_decision = {
 		days_remove = 25
 
 		complete_effect = {
+			custom_effect_tooltip = might_lead_to_chaos_tt
 			set_country_flag = put_bounty_bandits_arctic
 		}
 
@@ -34188,6 +34190,7 @@ SOV_banditry_decision = {
 		days_remove = 25
 
 		complete_effect = {
+			custom_effect_tooltip = might_lead_to_chaos_tt
 			set_country_flag = put_bounty_bandits_far_east
 		}
 
@@ -34246,6 +34249,7 @@ SOV_banditry_decision = {
 		days_remove = 30
 
 		complete_effect = {
+			custom_effect_tooltip = might_lead_to_chaos_tt
 			set_country_flag = put_bounty_bandits_western_siberia
 		}
 
@@ -34304,6 +34308,7 @@ SOV_banditry_decision = {
 		days_remove = 40
 
 		complete_effect = {
+			custom_effect_tooltip = might_lead_to_chaos_tt
 			set_country_flag = put_bounty_bandits_kuban_caucasus
 		}
 
@@ -34362,6 +34367,7 @@ SOV_banditry_decision = {
 		days_remove = 30
 
 		complete_effect = {
+			custom_effect_tooltip = might_lead_to_chaos_tt
 			set_country_flag = put_bounty_bandits_transvolga_region
 		}
 
@@ -34420,6 +34426,7 @@ SOV_banditry_decision = {
 		days_remove = 40
 
 		complete_effect = {
+			custom_effect_tooltip = might_lead_to_chaos_tt
 			set_country_flag = put_bounty_bandits_western_russia
 		}
 
@@ -60988,6 +60995,62 @@ SOV_anarchist_project_planning_league = {
 							level = 1
 							instant_build = yes
 						}
+					}
+				}
+			}
+		}
+	}
+}
+
+SOV_release_contested_territory_league = {
+	
+	SOV_transfer_contested_territory_anarchism = {
+		icon = GFX_decision_generic_decision
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			any_country = {
+				NOT = {
+					TAG = ROOT
+				}
+				is_in_faction_with = ROOT
+				any_state = {
+					is_owned_by = PREV
+					NOT = {
+						is_core_of = PREV
+					}
+				}
+			}
+		}
+
+		visible = {
+			
+		}
+
+		ai_will_do =  {
+			factor = 2500
+		}
+
+		complete_effect = {
+			every_country = {
+				limit = {
+					is_in_faction_with = ROOT
+					NOT = {
+						TAG = ROOT
+					}
+				}
+				every_state = {
+					limit = {
+						is_owned_by = PREV
+						NOT = {
+							is_core_of = PREV
+						}
+					}
+					ROOT = {
+						transfer_state = PREV
 					}
 				}
 			}
