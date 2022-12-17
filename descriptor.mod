@@ -11,8 +11,4 @@ tags={
 	"Balance"
 }
 name="Russia 2.0"
-<<<<<<< HEAD
-supported_version="1.12.*"
-=======
 supported_version="1.11.9"
->>>>>>> Anarchist Collapse Progress + Update Version
