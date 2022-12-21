@@ -34570,9 +34570,9 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			base = 33
+			base = 0
 			modifier = {
-				add = 67
+				add = 100
 				OR = {
 					FROM = {
 						is_neighbor_of = event_target:FROM_first_beneficiary 
@@ -34625,9 +34625,9 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			base = 33
+			base = 0
 			modifier = {
-				add = 67
+				add = 100
 				OR = {
 					FROM = {
 						is_neighbor_of = event_target:FROM_second_beneficiary 
@@ -34680,9 +34680,9 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			base = 33
+			base = 0
 			modifier = {
-				add = 67
+				add = 100
 				OR = {
 					FROM = {
 						is_neighbor_of = ROOT
@@ -36589,6 +36589,144 @@ country_event = {
 		create_wargoal = {
 			target = FROM
 			type = puppet_wargoal_focus
+		}
+	}
+}
+
+#Decision to FROM to make function the decision of selection of beneficiary
+country_event = {
+	id = russia2_russia.728
+	title = russia2_russia.652.t
+	desc = russia2_russia.652.d
+	picture = GFX_report_event_peasant_revolt
+
+	is_triggered_only = yes
+
+	option = {
+		name = russia2_russia.728.a
+		ai_chance = {
+			factor = 100
+		}
+		SOV = {
+			country_event = { id = russia2_russia.729 } #I don't like cursed numbers
+		}
+	}
+}
+
+#Choose Beneficiary For Newly Acquired Puppet
+country_event = {
+	id = russia2_russia.729
+	title = russia2_russia.729.t
+	desc = russia2_russia.729.d
+	picture = GFX_report_event_sanation_left_victory
+
+	is_triggered_only = yes
+
+	option = { #Choose First Beneficiary
+		name = russia2_russia.729.a
+		ai_chance = {
+			base = 0
+			modifier = {
+				add = 100
+				OR = {
+					FROM = {
+						is_neighbor_of = event_target:FROM_first_beneficiary 
+					}
+					any_country = {
+						AND = {
+							has_country_flag = is_neighbor_of_from_first_beneficiary
+							NOT = {
+								has_country_flag = is_neighbor_of_from_second_beneficiary
+							}
+							NOT = {
+								has_country_flag = is_neighbor_of_from_sov_beneficiary
+							}
+						}
+						is_neighbor_of = FROM
+					}
+				}
+			}
+		}
+		FROM = {
+			set_country_flag = is_neighbor_of_from_first_beneficiary
+		}
+		event_target:FROM_first_beneficiary = {
+			set_autonomy = {
+				target = FROM
+				autonomy_state = autonomy_supervised_free_territory_foreign
+			}
+		}
+	}
+
+	option = { #Choose Second Beneficiary
+		name = russia2_russia.729.b
+		ai_chance = {
+			base = 0
+			modifier = {
+				add = 100
+				OR = {
+					FROM = {
+						is_neighbor_of = event_target:FROM_second_beneficiary 
+					}
+					any_country = {
+						AND = {
+							NOT = {
+								has_country_flag = is_neighbor_of_from_first_beneficiary
+							}
+							has_country_flag = is_neighbor_of_from_second_beneficiary
+							NOT = {
+								has_country_flag = is_neighbor_of_from_sov_beneficiary
+							}
+						}
+						is_neighbor_of = FROM
+					}
+				}
+			}
+		}
+		FROM = {
+			set_country_flag = is_neighbor_of_from_second_beneficiary
+		}
+		event_target:FROM_second_beneficiary = {
+			set_autonomy = {
+				target = FROM
+				autonomy_state = autonomy_supervised_free_territory_foreign
+			}
+		}
+	}
+
+	option = { #Choose SOV Beneficiary
+		name = russia2_russia.729.c
+		ai_chance = {
+			base = 0
+			modifier = {
+				add = 100
+				OR = {
+					FROM = {
+						is_neighbor_of = ROOT
+					}
+					any_country = {
+						AND = {
+							NOT = {
+								has_country_flag = is_neighbor_of_from_first_beneficiary
+							}
+							NOT = {
+								has_country_flag = is_neighbor_of_from_second_beneficiary
+							}
+							has_country_flag = is_neighbor_of_from_sov_beneficiary
+						}
+						is_neighbor_of = FROM
+					}
+				}
+			}
+		}
+		FROM = {
+			set_country_flag = is_neighbor_of_from_sov_beneficiary
+		}
+		SOV = {
+			set_autonomy = {
+				target = FROM
+				autonomy_state = autonomy_supervised_free_territory_foreign
+			}
 		}
 	}
 }
