@@ -2602,6 +2602,24 @@ on_actions = {
 		}
 	}
 
+	#Check the Numbers of Members in the Faction
+	on_weekly_SOV = {
+		effect = {
+			if = {
+				limit = {
+					has_government = anarchy
+					is_subject = no
+					has_completed_focus = SOV_centralization_free_territory
+					has_completed_focus = SOV_united_against_world
+					NOT = {
+						has_completed_focus = SOV_officialize_act
+					}
+				}
+				SOV_refresh_puppet_count_anarchist_collapse_united_world_version = yes
+			}
+		}
+	}
+
 	#Check if Free Territory of Moscow or any Member of the League Owns Non-Core Territory
 	on_daily_SOV = {
 		effect = {
@@ -2674,6 +2692,251 @@ on_actions = {
 				SOV = {
 					clr_country_flag = is_facing_crisis_anarchist_right_path
 					country_event = { id = russia2_russia.663 }
+				}
+			}
+		}
+	}
+
+	#Check if the Puppet have the Corresponding Type - Anarchist Collapse
+	on_weelky_SOV = {
+		effect = {
+			if = {
+				limit = {
+					SOV = {
+						has_government = anarchy
+						has_completed_focus = SOV_spread_anarchism_beyond_our_neighbors
+					}
+					any_country = {
+						OR = {
+							is_subject_of = SOV
+							AND = {
+								is_in_faction_with = SOV
+								has_government = anarchy
+							}
+						}
+						NOT = {
+							TAG = SOV
+							sov_anarchist_russian_free_state = yes
+							has_autonomy_state = autonomy_supervised_free_territory_foreign
+						}
+					}
+				}
+				every_country = {
+					limit = {
+						is_subject_of = SOV
+						NOT = {
+							TAG = SOV
+							sov_anarchist_russian_free_state = yes
+							has_autonomy_state = autonomy_supervised_free_territory_foreign
+						}
+					}
+					set_cosmetic_tag = ANAR
+					set_party_name = {
+						ideology = anarchy
+						long_name = russia2_anarchy_people_council_russian_state_party
+						name = russia2_anarchy_people_council_russian_state_party
+					}
+					set_popularities = {
+						anarchy = 90
+						democratic = 3
+						neutrality = 3
+						fascism = 1
+						communism = 3
+					}
+					create_country_leader = {
+						name = council_of_country_anarchist
+						desc = council_of_country_anarchist_desc
+						picture = "gfx/leaders/SOV/Portrait_Russia_Anarchist_Commune.dds"
+						expire = "1965.1.1"
+						ideology = anarchist
+					}
+					SOV = {
+						set_autonomy = {
+							target = PREV
+							autonomy_state = autonomy_supervised_free_territory_foreign
+						}
+					}
+				}
+			}
+		}
+	}
+
+	#Check if any Members of the League has The Corresponding National Spirit
+	on_daily_SOV = {
+		effect = {
+			if = {
+				limit = {
+					SOV = {
+						has_government = anarchy
+						has_completed_focus = SOV_we_are_stronger_together
+						has_completed_focus = SOV_centralization_free_territory
+					}
+					any_country = {
+						is_in_faction_with = SOV
+						NOT = {
+							TAG = SOV
+							has_idea = SOV_Centralization_free_territories
+						}
+					}
+				}
+				every_country = {
+					limit = {
+						is_in_faction_with = SOV
+						NOT = {
+							TAG = SOV
+							has_idea = SOV_Centralization_free_territories
+							has_idea = SOV_Centralization_free_territories2
+						}
+					}
+					add_ideas = SOV_Centralization_free_territories
+					add_ideas = SOV_United_anarchist_economy
+				}
+			}
+			if = {
+				limit = {
+					SOV = {
+						has_government = anarchy
+						has_completed_focus = SOV_we_are_stronger_together
+						has_completed_focus = SOV_united_against_world
+					}
+					any_country = {
+						is_in_faction_with = SOV
+						NOT = {
+							TAG = SOV
+							has_idea = SOV_United_against_the_world
+						}
+					}
+				}
+				every_country = {
+					limit = {
+						is_in_faction_with = SOV
+						NOT = {
+							TAG = SOV
+							has_idea = SOV_United_against_the_world
+						}
+					}
+					add_ideas = SOV_United_against_the_world
+				}
+			}
+			if = {
+				limit = {
+					SOV = {
+						has_government = anarchy
+						has_completed_focus = SOV_we_are_stronger_together
+						has_completed_focus = SOV_future_of_the_league
+					}
+				}
+				if = {
+					limit = {
+						any_country = {
+							is_in_faction_with = SOV
+							has_idea = SOV_Member_of_the_league_idea
+							NOT = {
+								TAG = SOV
+							}
+						}
+						any_country = {
+							is_in_faction_with = SOV
+							NOT = {
+								TAG = SOV
+								has_idea = SOV_Member_of_the_league_idea
+							}
+						}
+					}
+					every_country = {
+						limit = {
+							is_in_faction_with = SOV
+							NOT = {
+								TAG = SOV
+								has_idea = SOV_Member_of_the_league_idea
+							}
+						}
+						add_ideas = SOV_Member_of_the_league_idea
+					}
+				}
+				else_if = {
+					limit = {
+						any_country = {
+							is_in_faction_with = SOV
+							has_idea = SOV_Member_of_the_league_idea_1
+							NOT = {
+								TAG = SOV
+							}
+						}
+						any_country = {
+							is_in_faction_with = SOV
+							NOT = {
+								TAG = SOV
+								has_idea = SOV_Member_of_the_league_idea_1
+							}
+						}
+					}
+					every_country = {
+						limit = {
+							is_in_faction_with = SOV
+							NOT = {
+								TAG = SOV
+								has_idea = SOV_Member_of_the_league_idea_1
+							}
+						}
+						add_ideas = SOV_Member_of_the_league_idea_1
+					}
+				}
+				else_if = {
+					limit = {
+						any_country = {
+							is_in_faction_with = SOV
+							has_idea = SOV_Member_of_the_league_idea_2
+							NOT = {
+								TAG = SOV
+							}
+						}
+						any_country = {
+							is_in_faction_with = SOV
+							NOT = {
+								TAG = SOV
+								has_idea = SOV_Member_of_the_league_idea_2
+							}
+						}
+					}
+					every_country = {
+						limit = {
+							is_in_faction_with = SOV
+							NOT = {
+								TAG = SOV
+								has_idea = SOV_Member_of_the_league_idea_2
+							}
+						}
+						add_ideas = SOV_Member_of_the_league_idea_2
+					}
+				}
+				else_if = {
+					limit = {
+						any_country = {
+							is_in_faction_with = SOV
+							has_idea = SOV_Member_of_the_league_idea_3
+							NOT = {
+								TAG = SOV
+							}
+						}
+						any_country = {
+							is_in_faction_with = SOV
+							NOT = {
+								TAG = SOV
+								has_idea = SOV_Member_of_the_league_idea_3
+							}
+						}
+					}
+					every_country = {
+						limit = {
+							is_in_faction_with = SOV
+							NOT = {
+								TAG = SOV
+								has_idea = SOV_Member_of_the_league_idea_3
+							}
+						}
+						add_ideas = SOV_Member_of_the_league_idea_3
+					}
 				}
 			}
 		}
