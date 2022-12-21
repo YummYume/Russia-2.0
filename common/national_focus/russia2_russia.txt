@@ -25933,38 +25933,50 @@ focus_tree = {
 					value = 50
 				}
 			}
+			NOT = {
+				has_completed_focus = SOV_semi_devolution
+			}
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
-			every_state = {
-				limit = {
-					any_country = {
+			hidden_effect = {
+				every_state = {
+					limit = {
+						any_country = {
+							is_in_faction_with = ROOT
+							NOT = {
+								TAG = ROOT
+							}
+							owns_state = PREV
+						}
+					}
+					ROOT = {
+						add_state_core = PREV
+					}
+				}
+				every_country = {
+					limit = {
 						is_in_faction_with = ROOT
 						NOT = {
 							TAG = ROOT
 						}
-						owns_state = PREV
 					}
-				}
-				ROOT = {
-					add_state_core = PREV
-				}
-			}
-			every_country = {
-				limit = {
-					is_in_faction_with = ROOT
-					NOT = {
-						TAG = ROOT
+					hidden_effect = {
+						remove_ideas = SOV_Centralization_free_territories
 					}
-				}
-				ROOT = {
-					annex_country = {
-						target = PREV
-						transfer_troops = yes
+					ROOT = {
+						annex_country = {
+							target = PREV
+							transfer_troops = yes
+						}
 					}
 				}
 			}
 			custom_effect_tooltip = SOV_one_against_world_tt_effect_tt
+			custom_effect_tooltip = SOV_one_against_SOV_Centralization_free_territories_tt_effect_tt
+			hidden_effect = {
+				remove_ideas = SOV_Centralization_free_territories
+			}
 			add_timed_idea = {
 				days = 730
 				idea = SOV_Difficult_integration_anarchy
@@ -25999,23 +26011,38 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
+			if = {
+				limit = {
+					NOT = {
+						has_completed_focus = SOV_semi_devolution
+					}
+				}
+				hidden_effect = {
+					every_country = {
+						limit = {
+							is_in_faction_with = ROOT
+							NOT = {
+								TAG = ROOT
+							}
+							is_subject = yes
+						}
+						ROOT = {
+							set_autonomy = {
+								target = PREV
+								autonomy_state = autonomy_free
+							}
+						}
+					}
+					SOV_refresh_puppet_count_anarchist_collapse = yes
+				}
+				custom_effect_tooltip = SOV_united_against_world_effect_tt
+			}
 			every_country = {
 				limit = {
-					is_in_faction_with = ROOT
-					NOT = {
-						TAG = ROOT
-					}
-					is_subject = yes
-				}
-				ROOT = {
-					set_autonomy = {
-						target = PREV
-						autonomy_state = autonomy_free
-					}
+					is_in_faction_with = SOV
 				}
 				add_ideas = SOV_United_against_the_world
 			}
-			custom_effect_tooltip = SOV_united_against_world_effect_tt
 		}
 	}
 

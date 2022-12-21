@@ -34387,9 +34387,9 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			base = 33
+			base = 0
 			modifier = {
-				add = 67
+				add = 100
 				OR = {
 					FROM = {
 						is_neighbor_of = event_target:FROM_first_beneficiary 
@@ -34437,9 +34437,9 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			base = 33
+			base = 0
 			modifier = {
-				add = 67
+				add = 100
 				OR = {
 					FROM = {
 						is_neighbor_of = event_target:FROM_second_beneficiary 
@@ -34487,9 +34487,9 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			base = 33
+			base = 0
 			modifier = {
-				add = 67
+				add = 100
 				OR = {
 					FROM = {
 						is_neighbor_of = ROOT
@@ -34888,8 +34888,8 @@ country_event = {
 #Contested Territories of the League send event to SOV, the Player is not supposed to see this
 country_event = {
 	id = russia2_russia.661
-	title = russia2_russia.658.t
-	desc = russia2_russia.658.d
+	title = russia2_russia.661.t
+	desc = russia2_russia.661.d
 	picture = GFX_report_event_peasant_revolt
 
 	is_triggered_only = yes
@@ -34990,6 +34990,144 @@ country_event = {
 		create_wargoal = {
 			target = FROM
 			type = puppet_wargoal_focus
+		}
+	}
+}
+
+#Decision to FROM to make function the decision of selection of beneficiary
+country_event = {
+	id = russia2_russia.665
+	title = russia2_russia.661.t
+	desc = russia2_russia.661.d
+	picture = GFX_report_event_peasant_revolt
+
+	is_triggered_only = yes
+
+	option = {
+		name = russia2_russia.658.a
+		ai_chance = {
+			factor = 100
+		}
+		SOV = {
+			country_event = { id = russia2_russia.667 } #I don't like cursed numbers
+		}
+	}
+}
+
+#Choose Beneficiary For Newly Acquired Puppet
+country_event = {
+	id = russia2_russia.667
+	title = russia2_russia.667.t
+	desc = russia2_russia.667.d
+	picture = GFX_report_event_sanation_left_victory
+
+	is_triggered_only = yes
+
+	option = { #Choose First Beneficiary
+		name = russia2_russia.667.a
+		ai_chance = {
+			base = 0
+			modifier = {
+				add = 100
+				OR = {
+					FROM = {
+						is_neighbor_of = event_target:FROM_first_beneficiary 
+					}
+					any_country = {
+						AND = {
+							has_country_flag = is_neighbor_of_from_first_beneficiary
+							NOT = {
+								has_country_flag = is_neighbor_of_from_second_beneficiary
+							}
+							NOT = {
+								has_country_flag = is_neighbor_of_from_sov_beneficiary
+							}
+						}
+						is_neighbor_of = FROM
+					}
+				}
+			}
+		}
+		FROM = {
+			set_country_flag = is_neighbor_of_from_first_beneficiary
+		}
+		event_target:FROM_first_beneficiary = {
+			set_autonomy = {
+				target = FROM
+				autonomy_state = autonomy_supervised_free_territory_foreign
+			}
+		}
+	}
+
+	option = { #Choose Second Beneficiary
+		name = russia2_russia.667.b
+		ai_chance = {
+			base = 0
+			modifier = {
+				add = 100
+				OR = {
+					FROM = {
+						is_neighbor_of = event_target:FROM_second_beneficiary 
+					}
+					any_country = {
+						AND = {
+							NOT = {
+								has_country_flag = is_neighbor_of_from_first_beneficiary
+							}
+							has_country_flag = is_neighbor_of_from_second_beneficiary
+							NOT = {
+								has_country_flag = is_neighbor_of_from_sov_beneficiary
+							}
+						}
+						is_neighbor_of = FROM
+					}
+				}
+			}
+		}
+		FROM = {
+			set_country_flag = is_neighbor_of_from_second_beneficiary
+		}
+		event_target:FROM_second_beneficiary = {
+			set_autonomy = {
+				target = FROM
+				autonomy_state = autonomy_supervised_free_territory_foreign
+			}
+		}
+	}
+
+	option = { #Choose SOV Beneficiary
+		name = russia2_russia.667.c
+		ai_chance = {
+			base = 0
+			modifier = {
+				add = 100
+				OR = {
+					FROM = {
+						is_neighbor_of = ROOT
+					}
+					any_country = {
+						AND = {
+							NOT = {
+								has_country_flag = is_neighbor_of_from_first_beneficiary
+							}
+							NOT = {
+								has_country_flag = is_neighbor_of_from_second_beneficiary
+							}
+							has_country_flag = is_neighbor_of_from_sov_beneficiary
+						}
+						is_neighbor_of = FROM
+					}
+				}
+			}
+		}
+		FROM = {
+			set_country_flag = is_neighbor_of_from_sov_beneficiary
+		}
+		SOV = {
+			set_autonomy = {
+				target = FROM
+				autonomy_state = autonomy_supervised_free_territory_foreign
+			}
 		}
 	}
 }

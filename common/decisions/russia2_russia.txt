@@ -56607,122 +56607,126 @@ SOV_anarchist_selection_beneficiary_decisions = {
 			has_completed_focus = SOV_choose_beneficiary
 		}
 
+		fire_only_once = yes
+
 		complete_effect = {
 			custom_effect_tooltip = will_confirm_our_choice_no_back
 			set_country_flag = has_confirmed_beneficiary
-			every_country = {
-				limit = {
-					is_neighbor_of = event_target:FROM_first_beneficiary
-					NOT = {
-						tag = event_target:FROM_first_beneficiary
-						tag = event_target:FROM_second_beneficiary
-						tag = SOV
+			hidden_effect = {
+				every_country = {
+					limit = {
+						is_neighbor_of = event_target:FROM_first_beneficiary
+						NOT = {
+							tag = event_target:FROM_first_beneficiary
+							tag = event_target:FROM_second_beneficiary
+							tag = SOV
+						}
+						OR = {
+							tag = EFR
+							tag = SIB
+							tag = URA
+							tag = KAZ
+							tag = TMS
+							tag = UZB
+							tag = TAJ
+							tag = KYR
+							tag = GEO
+							tag = AZR
+							tag = ARM
+							tag = DAG
+							tag = ROS
+							tag = KAL
+							tag = CIR
+							tag = VLG
+							tag = VYA
+							tag = TAT
+							tag = PRM
+							tag = KMI
+							tag = KAR
+							tag = NOV
+							tag = UKR
+							tag = BLR
+							tag = CRI
+						}
 					}
-					OR = {
-						tag = EFR
-						tag = SIB
-						tag = URA
-						tag = KAZ
-						tag = TMS
-						tag = UZB
-						tag = TAJ
-						tag = KYR
-						tag = GEO
-						tag = AZR
-						tag = ARM
-						tag = DAG
-						tag = ROS
-						tag = KAL
-						tag = CIR
-						tag = VLG
-						tag = VYA
-						tag = TAT
-						tag = PRM
-						tag = KMI
-						tag = KAR
-						tag = NOV
-						tag = UKR
-						tag = BLR
-						tag = CRI
-					}
+					set_country_flag = is_neighbor_of_from_first_beneficiary
 				}
-				set_country_flag = is_neighbor_of_from_first_beneficiary
-			}
-			every_country = {
-				limit = {
-					is_neighbor_of = event_target:FROM_second_beneficiary
-					NOT = {
-						tag = event_target:FROM_first_beneficiary
-						tag = event_target:FROM_second_beneficiary
-						tag = SOV
+				every_country = {
+					limit = {
+						is_neighbor_of = event_target:FROM_second_beneficiary
+						NOT = {
+							tag = event_target:FROM_first_beneficiary
+							tag = event_target:FROM_second_beneficiary
+							tag = SOV
+						}
+						OR = {
+							tag = EFR
+							tag = SIB
+							tag = URA
+							tag = KAZ
+							tag = TMS
+							tag = UZB
+							tag = TAJ
+							tag = KYR
+							tag = GEO
+							tag = AZR
+							tag = ARM
+							tag = DAG
+							tag = ROS
+							tag = KAL
+							tag = CIR
+							tag = VLG
+							tag = VYA
+							tag = TAT
+							tag = PRM
+							tag = KMI
+							tag = KAR
+							tag = NOV
+							tag = UKR
+							tag = BLR
+							tag = CRI
+						}
 					}
-					OR = {
-						tag = EFR
-						tag = SIB
-						tag = URA
-						tag = KAZ
-						tag = TMS
-						tag = UZB
-						tag = TAJ
-						tag = KYR
-						tag = GEO
-						tag = AZR
-						tag = ARM
-						tag = DAG
-						tag = ROS
-						tag = KAL
-						tag = CIR
-						tag = VLG
-						tag = VYA
-						tag = TAT
-						tag = PRM
-						tag = KMI
-						tag = KAR
-						tag = NOV
-						tag = UKR
-						tag = BLR
-						tag = CRI
-					}
+					set_country_flag = is_neighbor_of_from_second_beneficiary
 				}
-				set_country_flag = is_neighbor_of_from_second_beneficiary
-			}
-			every_country = {
-				limit = {
-					is_neighbor_of = SOV
-					NOT = {
-						tag = event_target:FROM_first_beneficiary
-						tag = event_target:FROM_second_beneficiary
-						tag = SOV
+				every_country = {
+					limit = {
+						is_neighbor_of = SOV
+						NOT = {
+							tag = event_target:FROM_first_beneficiary
+							tag = event_target:FROM_second_beneficiary
+							tag = SOV
+						}
+						OR = {
+							tag = EFR
+							tag = SIB
+							tag = URA
+							tag = KAZ
+							tag = TMS
+							tag = UZB
+							tag = TAJ
+							tag = KYR
+							tag = GEO
+							tag = AZR
+							tag = ARM
+							tag = DAG
+							tag = ROS
+							tag = KAL
+							tag = CIR
+							tag = VLG
+							tag = VYA
+							tag = TAT
+							tag = PRM
+							tag = KMI
+							tag = KAR
+							tag = NOV
+							tag = UKR
+							tag = BLR
+							tag = CRI
+						}
 					}
-					OR = {
-						tag = EFR
-						tag = SIB
-						tag = URA
-						tag = KAZ
-						tag = TMS
-						tag = UZB
-						tag = TAJ
-						tag = KYR
-						tag = GEO
-						tag = AZR
-						tag = ARM
-						tag = DAG
-						tag = ROS
-						tag = KAL
-						tag = CIR
-						tag = VLG
-						tag = VYA
-						tag = TAT
-						tag = PRM
-						tag = KMI
-						tag = KAR
-						tag = NOV
-						tag = UKR
-						tag = BLR
-						tag = CRI
-					}
+					set_country_flag = is_neighbor_of_from_sov_beneficiary
 				}
-				set_country_flag = is_neighbor_of_from_sov_beneficiary
 			}
 		}
 
@@ -56746,6 +56750,11 @@ SOV_anarchist_selection_beneficiary_decisions = {
 				exists = yes
 				has_government = anarchy
 				is_in_faction_with = SOV
+				NOT = {
+					TAG = SOV
+					tag = event_target:FROM_first_beneficiary
+					tag = event_target:FROM_second_beneficiary
+				}
 				OR = {
 					AND = {
 						has_country_flag = is_neighbor_of_from_first_beneficiary
@@ -60619,4 +60628,94 @@ SOV_release_contested_territory_league = {
 	}
 }
 
-#TODO Decisiosn to release country for puppet
+SOV_anarchist_selection_beneficiary_decisions_new_puppet = {
+
+	SOV_choose_beneficiary_newly_acquired_territory_anarchist = {
+
+		icon = GFX_decision_eng_trade_unions_support
+
+		on_map_mode = map_and_decisions_view
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		visible = {
+			FROM = {
+				NOT = {
+					TAG = SOV
+					tag = event_target:FROM_first_beneficiary
+					tag = event_target:FROM_second_beneficiary
+				}
+				exists = yes
+				has_government = anarchy
+				is_in_faction_with = SOV
+				NOT = {
+					has_country_flag = is_neighbor_of_from_sov_beneficiary
+					has_country_flag = is_neighbor_of_from_second_beneficiary
+					has_country_flag = is_neighbor_of_from_first_beneficiary
+				}
+			}
+		}
+
+		target_root_trigger = {
+			has_completed_focus = SOV_choose_beneficiary
+		}
+
+		target_trigger = {
+			FROM = {
+				NOT = {
+					has_country_flag = is_neighbor_of_from_sov_beneficiary
+					has_country_flag = is_neighbor_of_from_second_beneficiary
+					has_country_flag = is_neighbor_of_from_first_beneficiary
+				}
+				exists = yes
+				has_government = anarchy
+				is_in_faction_with = SOV
+				NOT = {
+					tag = EFR
+					tag = SIB
+					tag = URA
+					tag = KAZ
+					tag = TMS
+					tag = UZB
+					tag = TAJ
+					tag = KYR
+					tag = GEO
+					tag = AZR
+					tag = ARM
+					tag = DAG
+					tag = ROS
+					tag = KAL
+					tag = CIR
+					tag = VLG
+					tag = VYA
+					tag = TAT
+					tag = PRM
+					tag = KMI
+					tag = KAR
+					tag = NOV
+					tag = UKR
+					tag = BLR
+					tag = CRI
+				}
+			}
+		}
+
+		available = {
+			has_completed_focus = SOV_spread_anarchism_beyond_our_neighbors
+		}
+
+		fire_only_once = yes
+
+		complete_effect = {
+			FROM = {
+				country_event = { id = russia2_russia.665 }
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+}
