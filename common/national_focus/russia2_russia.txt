@@ -1370,9 +1370,9 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 		completion_reward = {
 			add_tech_bonus = {
-    		bonus = 2
-    		uses = 2
-    		category = synth_resources
+				bonus = 2
+				uses = 2
+				category = synth_resources
 			}
 		}
 	}
@@ -25805,7 +25805,7 @@ focus_tree = {
 				check_variable = {
 					var = sov_puppet_calculator_anarchy_collapse
 					compare = greater_than_or_equals
-					value = 15
+					value = 20
 				}
 			}
 		}
@@ -25839,7 +25839,7 @@ focus_tree = {
 				check_variable = {
 					var = sov_puppet_calculator_anarchy_collapse
 					compare = greater_than_or_equals
-					value = 20
+					value = 30
 				}
 			}
 		}
@@ -25861,6 +25861,54 @@ focus_tree = {
 					swap_ideas = {
 						remove_idea = SOV_Reorganization_league_army_idea
 						add_idea = SOV_Reorganization_league_army_idea_2
+					}
+				}
+			}
+		}
+	}
+
+	#Protect True Freedom
+	focus = {
+		id = SOV_protection_of_freedom
+		x = 122
+		y = 19
+		prerequisite = { focus = SOV_unite_army_common_goal }
+		icon = GFX_focus_generic_strike_at_democracy3
+		cost = 10
+		ai_will_do = {
+			factor = 7
+		}
+		available = {
+			is_subject = no
+			has_government = anarchy
+			custom_trigger_tooltip = {
+				tooltip = SOV_protection_of_freedom_tt
+				check_variable = {
+					var = sov_puppet_calculator_anarchy_collapse
+					compare = greater_than_or_equals
+					value = 40
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
+		completion_reward = {
+			every_country = {
+				limit = {
+					is_in_faction_with = ROOT
+				}
+				if = {
+					limit = {
+						NOT = {
+							has_idea = SOV_Reorganization_league_army_idea
+							has_idea = SOV_Reorganization_league_army_idea_2
+						}
+					}
+					add_ideas = SOV_Reorganization_league_army_idea_3
+				}
+				else = {
+					swap_ideas = {
+						remove_idea = SOV_Reorganization_league_army_idea_2
+						add_idea = SOV_Reorganization_league_army_idea_3
 					}
 				}
 			}
@@ -25893,6 +25941,41 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
 		completion_reward = {
 			add_ideas = SOV_Anarchy_without_limit_idea
+		}
+	}
+
+	#Prepare for the World Revolution
+	focus = {
+		id = SOV_prepare_world_revolution
+		x = 125
+		y = 17
+		prerequisite = { focus = SOV_anarchy_without_limit }
+		icon = GFX_focus_eng_move_to_secure_the_dominions
+		cost = 10
+		ai_will_do = {
+			factor = 7
+		}
+		available = {
+			is_subject = no
+			has_government = anarchy
+			custom_trigger_tooltip = {
+				tooltip = SOV_prepare_world_revolution_tt
+				check_variable = {
+					var = sov_puppet_calculator_anarchy_collapse
+					compare = greater_than_or_equals
+					value = 25
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
+		completion_reward = {
+			add_political_power = 300
+			add_stability = 0.1
+			add_war_support = 0.1
+			swap_ideas = {
+				remove_idea = SOV_Anarchy_without_limit_idea
+				add_idea = SOV_Anarchy_without_limit_idea2
+			}
 		}
 	}
 
@@ -25945,6 +26028,69 @@ focus_tree = {
 						}
 					}
 				}	
+			}
+		}
+	}
+
+	#Towards a Self-Sufficient Society
+	focus = {
+		id = SOV_towards_self_sufficient_society
+		x = 128
+		y = 18
+		prerequisite = { focus = SOV_repartition_of_wealth }
+		icon = GFX_goal_generic_oil_refinery
+		cost = 8
+		ai_will_do = {
+			factor = 7
+		}
+		available = {
+			is_subject = no
+			has_government = anarchy
+			custom_trigger_tooltip = {
+				tooltip = SOV_towards_self_sufficient_society_tt
+				check_variable = {
+					var = sov_puppet_calculator_anarchy_collapse
+					compare = greater_than_or_equals
+					value = 25
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_ANARCHY_TOTAL_ANARCHY_RUSSIA }
+		completion_reward = {
+			custom_effect_tooltip = SOV_towards_self_sufficient_society_effect_tt
+			hidden_effect = {
+				every_country = {
+					limit = {
+						is_in_faction_with = ROOT
+					}
+					add_tech_bonus = {
+						bonus = 1
+						uses = 2
+						category = synth_resources
+					}
+					random_owned_controlled_state = {
+						add_extra_state_shared_building_slots = 3
+						add_building_construction = {
+							type = synthetic_refinery
+							level = 3
+							instant_build = yes
+						}	
+					}
+					random_owned_controlled_state = {
+						add_resource = {
+							type = steel
+							amount = 16
+						}
+						add_resource = {
+							type = tungsten
+							amount = 16
+						}
+						add_resource = {
+							type = aluminium
+							amount = 16
+						}
+					}
+				}
 			}
 		}
 	}
@@ -26002,7 +26148,7 @@ focus_tree = {
 		id = SOV_one_against_world
 		x = 126
 		y = 18
-		#prerequisite = { focus = SOV_spread_anarchism_beyond_our_neighbors }
+		prerequisite = { focus = SOV_prepare_world_revolution }
 		icon = GFX_focus_ITA_corpo_volontari_della_liberta
 		mutually_exclusive = { focus = SOV_united_against_world }
 		cost = 10
@@ -26065,7 +26211,7 @@ focus_tree = {
 				remove_ideas = SOV_Centralization_free_territories
 			}
 			add_timed_idea = {
-				days = 730
+				days = 300
 				idea = SOV_Difficult_integration_anarchy
 			}
 		}
@@ -26076,7 +26222,7 @@ focus_tree = {
 		id = SOV_united_against_world
 		x = 124
 		y = 18
-		#prerequisite = { focus = SOV_spread_anarchism_beyond_our_neighbors }
+		prerequisite = { focus = SOV_prepare_world_revolution }
 		icon = GFX_focus_spr_anarchism_knows_no_borders
 		mutually_exclusive = { focus = SOV_one_against_world }
 		cost = 10
