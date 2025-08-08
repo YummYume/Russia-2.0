@@ -106,6 +106,728 @@ on_actions = {
                     set_variable = { tsar_bomba_nuke_count = 0 }
                 }
             }
+
+            #Checks for industrial awakening
+			if = {
+				limit = {
+					SOV = { has_country_flag = SOV_national_obligation_industrial_awakening_option_3 }
+					any_owned_state = {
+						check_variable = { civ_factory_no_level < industrial_complex_level }
+					}
+				}
+				every_owned_state = {
+					limit = {
+						AND = {
+							check_variable = { civ_factory_no_level < industrial_complex_level }
+							is_coastal = yes
+						}
+					}
+					random_list = {
+						25 = {
+							add_building_construction = {
+								type = arms_factory
+								level = 1
+								instant_build = yes
+							}
+						}
+						25 = {
+							add_building_construction = {
+								type = dockyard
+								level = 1
+								instant_build = yes
+							}
+						}
+						25 = {
+							add_building_construction = {
+								type = synthetic_refinery
+								level = 1
+								instant_build = yes
+							}
+						}
+						25 = {
+							add_building_construction = {
+								type = fuel_silo
+								level = 1
+								instant_build = yes
+							}
+						}
+					}
+					civ_factory_no_level = industrial_complex_level
+				}
+				every_owned_state = {
+					limit = {
+						AND = {
+							check_variable = { civ_factory_no_level < industrial_complex_level }
+							is_coastal = no
+						}
+					}
+					random_list = {
+						50 = {
+							add_building_construction = {
+								type = arms_factory
+								level = 1
+								instant_build = yes
+							}
+						}
+						25 = {
+							add_building_construction = {
+								type = synthetic_refinery
+								level = 1
+								instant_build = yes
+							}
+						}
+						25 = {
+							add_building_construction = {
+								type = fuel_silo
+								level = 1
+								instant_build = yes
+							}
+						}
+					}
+					civ_factory_no_level = industrial_complex_level
+				}
+			}
+		#Checks for grand fleet
+			if = {
+				limit = {
+					SOV = { has_country_flag = SOV_national_obligation_grand_fleet_option_2 }
+				}
+				if = {
+					limit = {
+						check_variable = { sov_amount_of_carriers < num_ships_with_type@carrier }
+					}
+					SOV = { load_oob = "SOV_national_obligation_grand_fleet_cv" }
+					set_variable = {
+						var = sov_amount_of_carriers 
+						value = num_ships_with_type@carrier
+					}
+				}
+				if = {
+					limit = {
+						check_variable = { sov_amount_of_battleship < num_ships_with_type@battleship }
+					}
+					SOV = { load_oob = "SOV_national_obligation_grand_fleet_bb" }
+					set_variable = {
+						var = sov_amount_of_battleship 
+						value = num_ships_with_type@battleship
+					}
+				}
+				if = {
+					limit = {
+						check_variable = { sov_amount_of_battlecruiser < num_ships_with_type@battle_cruiser }
+					}
+					SOV = { load_oob = "SOV_national_obligation_grand_fleet_bb" }
+					set_variable = {
+						var = sov_amount_of_battlecruiser 
+						value = num_ships_with_type@battle_cruiser
+					}
+				}
+				if = {
+					limit = {
+						check_variable = { sov_amount_of_heavycruiser < num_ships_with_type@heavy_cruiser }
+					}
+					SOV = { load_oob = "SOV_national_obligation_grand_fleet_ca" }
+					set_variable = {
+						var = sov_amount_of_heavycruiser 
+						value = num_ships_with_type@heavy_cruiser
+					}
+				}
+				Sets because if you lose ships the game needs to know
+				set_variable = {
+					var = sov_amount_of_carriers 
+					value = num_ships_with_type@carrier
+				}
+				set_variable = {
+					var = sov_amount_of_battleship 
+					value = num_ships_with_type@battleship
+				}
+				set_variable = {
+					var = sov_amount_of_battlecruiser 
+					value = num_ships_with_type@battle_cruiser
+				}
+				set_variable = {
+					var = sov_amount_of_heavycruiser 
+					value = num_ships_with_type@heavy_cruiser
+				}
+			}
+		if = {
+				limit = {
+					SOV = { has_country_flag = SOV_proletarian_union_option_3 }
+				}
+				if = {
+					limit = {
+						any_other_country = {
+							AND = {
+								is_in_faction_with = SOV
+								has_offensive_war = yes
+							}
+						}
+					}
+					SOV = { add_ideas = SOV_proletarian_union_offense }
+					every_other_country = {
+						limit = {
+							is_in_faction_with = SOV
+						}
+						add_ideas = SOV_proletarian_union_offense
+					}
+				}
+				if = {
+					limit = {
+						any_other_country = {
+							AND = {
+								is_in_faction_with = SOV
+								has_defensive_war = yes
+							}
+						}
+					}
+					SOV = { add_ideas = SOV_proletarian_union_defense }
+					every_other_country = {
+						limit = {
+							is_in_faction_with = SOV
+						}
+						add_ideas = SOV_proletarian_union_defense
+					}
+				}
+				if = {
+					limit = {
+						any_other_country = {
+							AND = {
+								is_in_faction_with = SOV
+								has_offensive_war = no
+								has_idea = SOV_proletarian_union_offense
+							}
+						}
+					}
+					SOV = { remove_ideas = SOV_proletarian_union_offense }
+					every_other_country = {
+						limit = {
+							is_in_faction_with = SOV
+						}
+						remove_ideas = SOV_proletarian_union_offense
+					}
+				}
+				if = {
+					limit = {
+						any_other_country = {
+							AND = {
+								is_in_faction_with = SOV
+								has_defensive_war = no
+								has_idea = SOV_proletarian_union_defense
+							}
+						}
+					}
+					SOV = { remove_ideas = SOV_proletarian_union_defense }
+					every_other_country = {
+						limit = {
+							is_in_faction_with = SOV
+						}
+						remove_ideas = SOV_proletarian_union_defense
+					}
+				}
+			}
+		if = {
+				limit = {
+					SOV = { has_country_flag = treaty_of_moscow_forming_coalition }	
+				}
+			every_other_country = {
+				limit = {
+					has_government = democratic
+					NOT = {
+						has_country_flag = signitor_treaty_moscow
+						has_country_flag = non_signitor_treaty_moscow
+					}
+				}
+				country_event = { id = russia2_russia.676 days = 1 }
+			}
+			}
+		if = {
+				limit = {
+					has_country_flag = golden_age_random_spirits
+				}
+				random_list = {
+						3 = {
+							country_event = { id = russia2_russia.705 }
+						}
+						3 = {
+							country_event = { id = russia2_russia.706 }
+						}
+						3 = {
+							country_event = { id = russia2_russia.707 }
+						}
+						3 = {
+							country_event = { id = russia2_russia.708 }
+						}
+						3 = {
+							country_event = { id = russia2_russia.709 }
+						}
+						3 = {
+							country_event = { id = russia2_russia.710 }
+						}
+						3 = {
+							country_event = { id = russia2_russia.711 }
+						}
+						79 = {	
+						}
+					}
+			}
+	if = {
+				limit = {
+					SOV = { 
+						AND = {
+							has_country_flag = sov_rebirth_option_1 
+							has_war = yes
+						}
+					}
+				}
+				SOV = {
+					random_list = {
+						50 = {
+							219 = {
+								create_unit = {
+									division = "name = \"Free Army\" division_template = \"Free Army\" start_experience_factor = 0.5" 
+									owner = SOV
+								}
+								create_unit = {
+									division = "name = \"Free Army\" division_template = \"Free Army\" start_experience_factor = 0.5" 
+									owner = SOV
+								}
+								create_unit = {
+									division = "name = \"Free Army\" division_template = \"Free Army\" start_experience_factor = 0.5" 
+									owner = SOV
+								}
+							}
+						}
+						50 = { }
+					}
+				}
+			}
+
         }
+
     }
+
+on_daily_SOV = {
+		effect = {
+		
+			if = {
+				limit = {
+					SOV = {
+						has_country_flag = unfailing_army_offense_flag
+						NOT = {
+							has_country_flag = russian_realm_amry_power_double
+						}
+						has_war = yes
+						#check_variable = { zcurrent_state_number < num_controlled_states }
+						check_variable = {
+                                    var = zcurrent_state_number
+                                    value = num_controlled_states
+                                    compare = less_than
+                                }
+						}
+					}
+					#SOV = {
+						#	set_variable = { math_current_state_number = num_controlled_states }
+						#	subtract_from_variable = { math_current_state_number = zcurrent_state_number }
+						#	set_variable = { math_current_state_number = math_current_state_number_five }
+						#	set_variable = { math_current_state_number = math_current_state_number_two }
+						#	set_variable = { math_current_state_number = math_current_state_number_one }
+						#	set_variable = { math_current_state_number = math_current_state_number_small_one }
+						#	multiply_variable = { math_current_state_number_five = 0.05 }
+						#	multiply_variable = { math_current_state_number_two = 0.02 }
+						#	multiply_variable = { math_current_state_number_one = 0.01 }
+						#	multiply_variable = { math_current_state_number_small_one = 0.001 }
+						#	multiply_variable = { neg_math_current_state_number_five = -0.05 }
+						#	multiply_variable = { neg_math_current_state_number_two = -0.02 }
+						#	multiply_variable = { neg_math_current_state_number_one = -0.01 }
+						#	multiply_variable = { neg_math_current_state_number_small_one = -0.001 }
+						#}
+					add_to_variable  = { uao_offence = 0.02 }
+					add_to_variable  = { uao_land_night_attack = 0.02 }
+					add_to_variable  = { uao_attack_factor = 0.02 }
+					add_to_variable  = { uao_core_attack_factor = 0.025 }
+					add_to_variable  = { uao_speed_factor = 0.01 }
+					add_to_variable  = { uao_army_org = 0.01 }
+					add_to_variable  = { uao_armor_attack = 0.02 }
+					add_to_variable  = { uao_org_loss_moving = -0.01 }
+					add_to_variable  = { uao_breakthrough = 0.01 }
+					add_to_variable  = { uao_fort_damage = 0.01 }
+					add_to_variable  = { uao_supply_consumption = -0.02 }
+					add_to_variable  = { uao_winter_attrition = -0.02 }
+					add_to_variable  = { uao_heat_attrition = -0.02 }
+					add_to_variable  = { uao_river_crossing = -0.02 }
+					add_to_variable  = { uao_terrain = 0.02 }
+					SOV = {
+							set_variable = { zcurrent_state_number = num_controlled_states }
+						}
+					
+				}
+				
+				if = {
+				limit = {
+					SOV = {
+						has_country_flag = unfailing_army_defense_flag
+						has_war = yes
+						#check_variable = { zcurrent_state_number > num_controlled_states }
+						check_variable = {
+                                    var = zcurrent_state_number
+                                    value = num_controlled_states
+                                    compare = greater_than
+                                }
+						}
+					}
+					#SOV = {
+						#	set_variable = { math_current_state_number = zcurrent_state_number }
+						#	subtract_from_variable = { math_current_state_number = num_controlled_states }
+						#	set_variable = { math_current_state_number = math_current_state_number_five }
+						#	set_variable = { math_current_state_number = math_current_state_number_two }
+						#	set_variable = { math_current_state_number = math_current_state_number_one }
+						#	set_variable = { math_current_state_number = math_current_state_number_small_one }
+						#	multiply_variable = { math_current_state_number_five = 0.05 }
+						#	multiply_variable = { math_current_state_number_two = 0.02 }
+						#	multiply_variable = { math_current_state_number_one = 0.01 }
+						#	multiply_variable = { math_current_state_number_small_one = 0.001 }
+						#	multiply_variable = { neg_math_current_state_number_five = -0.05 }
+						#	multiply_variable = { neg_math_current_state_number_two = -0.02 }
+						#	multiply_variable = { neg_math_current_state_number_one = -0.01 }
+						#	multiply_variable = { neg_math_current_state_number_small_one = -0.001 }
+						#}
+					add_to_variable  = { uad_defence = 0.02 }
+					add_to_variable  = { uad_defence_factor = 0.02 }
+					add_to_variable  = { uad_core_defence = 0.025 }
+					add_to_variable  = { uad_org_regain = 0.02 }
+					add_to_variable  = { uad_recovery = 0.02 }
+					add_to_variable  = { uad_entrench_speed = 0.02 }
+					add_to_variable  = { uad_entrench_factor = 0.01 }
+					add_to_variable  = { uad_recon = 0.02 }
+					add_to_variable  = { uad_entrenched_recon = 0.02 }
+					add_to_variable  = { uad_out_of_supply = -0.02 }
+					add_to_variable  = { uad_supply_grace = 0.01 }
+					add_to_variable  = { uad_pocket_penalty = -0.02 }
+					add_to_variable  = { uad_fort_damage = -0.02 }
+					add_to_variable  = { uad_reinforce = 0.01 }
+					add_to_variable  = { uad_speed = 0.01 }
+					add_to_variable  = { uad_org = 0.01 }
+					add_to_variable  = { uad_supply_consumption = -0.02 }
+					add_to_variable  = { uad_winter_attrition = -0.02 }
+					add_to_variable  = { uad_heat_attrition = -0.02 }
+					add_to_variable  = { uad_terrain = 0.02 }	
+					SOV = {
+							set_variable = { zcurrent_state_number = num_controlled_states }
+						}
+					
+				}
+				if = {
+				limit = {
+					SOV = {
+						has_country_flag = unfailing_army_offense_flag
+						has_country_flag = russian_realm_amry_power_double
+						has_war = yes
+						check_variable = {
+                                    var = zcurrent_state_number
+                                    value = num_controlled_states
+                                    compare = less_than
+                                }
+						}
+					}
+					add_to_variable  = { uao_offence = 0.04 }
+					add_to_variable  = { uao_land_night_attack = 0.04 }
+					add_to_variable  = { uao_attack_factor = 0.04 }
+					add_to_variable  = { uao_core_attack_factor = 0.05 }
+					add_to_variable  = { uao_speed_factor = 0.02 }
+					add_to_variable  = { uao_army_org = 0.02 }
+					add_to_variable  = { uao_armor_attack = 0.04 }
+					add_to_variable  = { uao_org_loss_moving = -0.02 }
+					add_to_variable  = { uao_breakthrough = 0.02 }
+					add_to_variable  = { uao_fort_damage = 0.02 }
+					add_to_variable  = { uao_supply_consumption = -0.04 }
+					add_to_variable  = { uao_winter_attrition = -0.04 }
+					add_to_variable  = { uao_heat_attrition = -0.04 }
+					add_to_variable  = { uao_river_crossing = -0.04 }
+					add_to_variable  = { uao_terrain = 0.04 }
+					SOV = {
+							set_variable = { zcurrent_state_number = num_controlled_states }
+						}
+					
+				}
+				if = {
+				limit = {
+					SOV = {
+						has_country_flag = unfailing_army_offense_flag
+						has_dynamic_modifier = {
+							modifier = SOV_unfailing_army_offense_mod
+						}
+						has_war = no
+					}
+				}
+						remove_dynamic_modifier = { modifier = SOV_unfailing_army_offense_mod }
+						set_variable = { var = uao_offence value = 0 }
+						set_variable = { var = uao_land_night_attack value = 0 }
+						set_variable = { var = uao_attack_factor value = 0 }
+						set_variable = { var = uao_core_attack_factor value = 0 }
+						set_variable = { var = uao_speed_factor value = 0 }
+						set_variable = { var = uao_army_org value = 0 }
+						set_variable = { var = uao_armor_attack value = 0 }
+						set_variable = { var = uao_org_loss_moving value = 0 }
+						set_variable = { var = uao_breakthrough value = 0 }
+						set_variable = { var = uao_fort_damage value = 0 }
+						set_variable = { var = uao_supply_consumption value = 0 }
+						set_variable = { var = uao_winter_attrition value = 0 }
+						set_variable = { var = uao_heat_attrition value = 0 }
+						set_variable = { var = uao_river_crossing value = 0 }
+						set_variable = { var = uao_terrain value = 0 }	
+						SOV = {
+							set_variable = { zcurrent_state_number = num_controlled_states }
+						}
+				}
+				if = {
+				limit = {
+					SOV = {
+						has_country_flag = unfailing_army_defense_flag
+						has_war = no
+						has_dynamic_modifier = {
+							modifier = SOV_unfailing_army_defense_mod
+						}
+					}
+				}
+						remove_dynamic_modifier = { modifier = SOV_unfailing_army_defense_mod }
+						set_country_flag = unfailing_army_defense_flag
+						set_variable = { var = uad_defence value = 0 }
+						set_variable = { var = uad_defence_factor value = 0 }
+						set_variable = { var = uad_core_defence value = 0 }
+						set_variable = { var = uad_org_regain value = 0 }
+						set_variable = { var = uad_recovery value = 0 }
+						set_variable = { var = uad_entrench_speed value = 0 }
+						set_variable = { var = uad_entrench_factor value = 0 }
+						set_variable = { var = uad_recon value = 0 }
+						set_variable = { var = uad_entrenched_recon value = 0 }
+						set_variable = { var = uad_out_of_supply value = 0 }
+						set_variable = { var = uad_supply_grace value = 0 }
+						set_variable = { var = uad_pocket_penalty value = 0 }
+						set_variable = { var = uad_fort_damage value = 0 }
+						set_variable = { var = uad_reinforce value = 0 }
+						set_variable = { var = uad_speed value = 0 }
+						set_variable = { var = uad_org value = 0 }
+						set_variable = { var = uad_supply_consumption value = 0 }
+						set_variable = { var = uad_winter_attrition value = 0 }
+						set_variable = { var = uad_heat_attrition value = 0 }
+						set_variable = { var = uad_terrain value = 0 }	
+						SOV = {
+							set_variable = { zcurrent_state_number = num_controlled_states }
+						}
+				}
+				if = {
+				limit = {
+					OR = {
+					ROOT = {
+						original_tag = SOV
+						}
+					FROM = {
+						original_tag = SOV
+						}
+					}
+					SOV = {
+						has_country_flag = unfailing_army_offense_flag
+						has_war = yes
+						NOT = {
+							has_dynamic_modifier = {
+								modifier = SOV_unfailing_army_offense_mod
+							}
+						}
+					}
+				}
+			SOV = {
+				add_dynamic_modifier = { modifier = SOV_unfailing_army_offense_mod }
+			}
+			}
+				if = {
+					limit = {
+						OR = {
+							ROOT = {
+								original_tag = SOV
+							}
+							FROM = {
+								original_tag = SOV
+							}
+						}
+						SOV = {
+							has_country_flag = unfailing_army_defense_flag
+							has_war = yes
+							NOT = {
+								has_dynamic_modifier = {
+									modifier = SOV_unfailing_army_defense_mod
+								}
+							}
+						}
+						
+					}
+					SOV = {
+						add_dynamic_modifier = { modifier = SOV_unfailing_army_defense_mod }
+					}
+				}
+			}
+		}
+
+	on_state_control_changed = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						original_tag = SOV
+					}
+					FROM = {
+						AND = {
+							has_war_with = SOV
+							communism > 0.25
+							NOT = { has_government = communism }
+							NOT = { has_country_flag = sov_never_ending_story_revolution_success }
+						}
+					}
+					SOV = { has_country_flag = sov_never_ending_story_option_3 }
+				}
+				FROM = { country_event = russia2_russia.675 }
+			}
+		}
+		
+	}
+
+#ROOT - country that just went to peace
+	on_peaceconference_ended = {
+		effect = {
+			if = {
+				limit = {
+					has_global_flag = continental_system_creating 
+					ROOT = {
+						original_tag = SOV 
+					}
+					FROM = {
+						capital_scope = {
+							is_on_continent = europe
+						}
+					}
+				}
+				SOV = {
+					add_to_faction = FROM
+				}
+				FROM = {
+						add_ideas = the_continental_system_idea
+				}
+				every_other_country = {
+					limit = {
+						NOT = { 
+							original_tag = SOV
+							capital_scope = {
+								is_on_continent = europe
+							}
+						}
+					}
+					add_opinion_modifier = { target = FROM modifier = not_allowed_trade_foreign }
+					}
+				}
+				if = {
+				limit = {
+					any_other_country = {
+						has_country_flag = treaty_moscow_getting_lend_lease
+						has_war = no
+					}
+				}
+				PREV = {
+					clr_country_flag = treaty_moscow_getting_lend_lease
+					}
+				}
+				if = {
+				limit = {
+					any_other_country = {
+						has_country_flag = treaty_moscow_getting_volunteers
+						has_war = no
+					}
+				}
+				PREV = {
+					clr_country_flag = treaty_moscow_getting_volunteers
+					}
+				}
+				if = {
+				limit = {
+					any_other_country = {
+						has_country_flag = treaty_moscow_full_invasion
+						has_war = no
+					}
+				}
+				PREV = {
+					clr_country_flag = treaty_moscow_full_invasion
+					}
+				}
+			if = {
+					limit = {
+						any_other_country = {
+							has_country_flag = signitor_treaty_moscow
+						}
+					}
+				PREV = {
+				add_ai_strategy = {
+					type = send_lend_lease_desire
+					id = ROOT
+					value = -5000
+					}
+				}
+				}
+				if = {
+					limit = {
+						any_other_country = {
+							has_country_flag = signitor_treaty_moscow
+						}
+					}
+				PREV = {
+				add_ai_strategy = {
+					type = send_volunteers_desire
+					id = ROOT
+					value = -5000
+					}
+				}
+				}
+		}
+
+	}
+#ROOT is new controller #FROM is old controller #FROM.FROM is state ID
+	on_state_control_changed = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						has_country_flag = russian_realm_auto_coring
+						has_war_with = FROM
+					}
+				}
+				SOV = {
+						add_state_core = FROM.FROM
+					}
+			}
+			if = {
+				limit = {
+					ROOT = {
+						has_country_flag = rebirth_extinction
+					}
+				}
+				every_possible_country = {
+					limit = {
+						any_core_state = {
+							state = FROM.FROM
+						}
+					}
+						remove_state_core = FROM.FROM
+				}
+			}
+			
+			if = {
+				limit = {
+					ROOT = {
+						has_country_flag = rebirth_extinction
+					}
+				}
+				SOV = {
+						add_state_core = FROM.FROM
+					}
+			}
+		}
+	}
+
 }
