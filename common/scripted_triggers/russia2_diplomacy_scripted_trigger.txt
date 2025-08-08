@@ -2339,3 +2339,417 @@ DIPLOMACY_GUARANTEE_ENABLE_TRIGGER = {
 		}
 	}
 }
+DIPLOMACY_SEND_VOLUNTEERS_ENABLE_TRIGGER = {
+	if = {
+		limit = {
+			has_game_rule = {
+				rule = allow_volunteers
+				option = ALWAYS_FREE
+			}
+		}
+		if = {
+			limit = {
+				NOT = { tag = SPC }
+				FROM = {
+					tag = SPC
+					has_completed_focus = SPR_regional_defense_council_of_aragon
+				}
+				NOT = { 
+					AND = {
+						tag = ETH 
+						ETH = {
+							has_completed_focus = ETH_support_spain
+						}
+					}
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = RULE_VOLUNTEERS_NOT_ANARCHISTS_TT
+				NOT = { FROM = { tag = SPC } }
+			}
+		}
+		else = {
+			always = yes
+		}
+	}
+	if = {
+		limit = {
+			has_game_rule = {
+				rule = allow_volunteers
+				option = LIMITED
+			}
+		}
+		if = {
+			limit = {
+				NOT = { tag = SPC }
+				FROM = {
+					tag = SPC
+					has_completed_focus = SPR_regional_defense_council_of_aragon
+				}
+				NOT = { 
+					AND = {
+						tag = ETH 
+						ETH = {
+							has_completed_focus = ETH_support_spain
+						}
+					}
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = RULE_VOLUNTEERS_NOT_ANARCHISTS_TT
+				NOT = { FROM = { tag = SPC } }
+			}
+		}
+		else_if = {
+			limit = {
+				has_dlc = "La Resistance"
+				tag = POR
+				FROM = { original_tag = SPR }
+				NOT = { has_global_flag = scw_over }
+			}
+			custom_trigger_tooltip = {
+				tooltip = RULE_VOLUNTEERS_PORTUGAL_SCW_TT
+				NOT = {
+					AND = {
+						has_completed_focus = POR_support_the_spanish_republic
+						FROM = { NOT = { tag = SPD } }
+					}
+				}
+				NOT = {
+					AND = {
+						has_completed_focus = POR_support_the_spanish_nationalists
+						FROM = { NOT = { tag = SPA } }
+					}
+				}
+				NOT = {
+					AND = {
+						has_completed_focus = POR_support_a_spanish_monarchy_in_the_war
+						FROM = { NOT = { tag = SPB } }
+					}
+				}
+			}
+		}
+		else_if = { #Bulgarian volunteers in SCW (with La Resistance)
+			limit = {
+				has_dlc = "Battle for the Bosporus"
+				tag = BUL
+				FROM = { original_tag = SPR }
+				has_dlc = "La Resistance"
+				NOT = { has_global_flag = scw_over }
+				
+			}
+			custom_trigger_tooltip = {
+				tooltip = RULE_VOLUNTEERS_BULGARIA_SCW_TT
+				NOT = {
+					AND = {
+						has_completed_focus = BUL_the_spanish_struggle
+						FROM = { NOT = { tag = SPD } }
+					}
+				}
+				NOT = {
+					AND = {
+						has_completed_focus = BUL_support_the_spanish_coup
+						FROM = { NOT = { tag = SPA } }
+					}
+				}
+			}
+		}
+		else_if = { #Bulgarian volunteers in SCW (without La Resistance)
+			limit = {
+				has_dlc = "Battle for the Bosporus"
+				NOT = { has_dlc = "La Resistance" }
+				tag = BUL
+				FROM = { original_tag = SPR }	
+				any_country = {
+					original_tag = SPR
+					has_civil_war = yes
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = RULE_VOLUNTEERS_BULGARIA_SCW_TT
+				NOT = {
+					AND = {
+						has_completed_focus = BUL_the_spanish_struggle
+						FROM = {
+							NOT = { has_government = communism }
+							NOT = { has_government = democratic }
+						}
+					}
+				}
+				NOT = {
+					AND = {
+						has_completed_focus = BUL_support_the_spanish_coup
+						FROM = {
+							NOT = { has_government = fascism }
+							NOT = { has_government = neutrality }
+						}
+					}
+				}
+			}
+		}
+		#else_if = { #Soviet volunteers to China (Communist Soviet -> Only to the supported China)
+		#	limit = {
+		#		original_tag = SOV
+		#		has_government = communism
+		#		FROM = { is_literally_china = yes }
+		#	}
+		#	custom_trigger_tooltip = {
+		#		tooltip = RULE_VOLUNTEERS_SOVIET_CHINA_SUPPORT_CHOSEN_ONE_TT
+		#		OR = {
+		#			has_completed_focus = SOV_the_gobi_gambit
+			#		has_completed_focus = SOV_two_red_flags
+		#			has_completed_focus = SOV_support_the_kuomintang
+		#			has_country_flag = override_road_to_56
+		#		}
+		#		NOT = {
+		#			OR = {
+		#			AND = {
+		#				has_completed_focus = SOV_the_gobi_gambit
+		#				FROM = { NOT = { tag = SIK } }
+		#			}
+		#			AND = {
+		#				has_country_flag = override_road_to_56
+		#				FROM = { NOT = { tag = SIK } }
+		#			}
+		#			}
+		#		}
+		#		NOT = {
+		#			OR = {
+		#			AND = {
+		#				has_completed_focus = SOV_two_red_flags
+		#				FROM = { NOT = { tag = PRC } }
+		#			}
+		#		AND = {
+		#				has_country_flag = override_road_to_56
+		#				FROM = { NOT = { tag = PRC } }
+		#			}
+			#		}
+		#		}
+		#		NOT = {
+		#			OR = {
+		#			AND = {
+		#				has_completed_focus = SOV_support_the_kuomintang
+		#				FROM = { NOT = { tag = CHI } }
+		#			}
+		#			AND = {
+		#				has_country_flag = override_road_to_56
+		#				FROM = { NOT = { tag = CHI } }
+		#			}
+		#			}
+		#		}
+		#	}
+		#}
+		#else_if = { #Soviet volunteers to China (other ideologies -> Only to one China)
+		#	limit = {
+		#		original_tag = SOV
+		#		NOT = { has_government = communism }
+		#		FROM = { is_literally_china = yes }
+		#	}
+		#	custom_trigger_tooltip = {
+		#		tooltip = RULE_VOLUNTEERS_SOVIET_CHINA_ONLY_ONE_TT
+		#		NOT = {
+		#			any_other_country = {
+		#				is_literally_china = yes
+		#				NOT = { tag = FROM }
+		#				has_country_flag = SOV_russian_volunteers_in_china_flag
+		#			}
+		#		}
+		#	}
+		#}
+		else_if = { #Soviet volunteers to Spain (Commie & Democr) (no POUM) (with No Step Back)
+			limit = {
+				has_dlc = "No Step Back"
+				original_tag = SOV
+				OR = {
+					has_government = communism
+					has_government = democratic
+				}
+				FROM = { original_tag = SPR }
+				OR = {
+					NOT = { has_completed_focus = SOV_covert_support_for_spanish_poum }
+					AND = {
+						has_completed_focus = SOV_covert_support_for_spanish_poum
+						NOT = { has_global_flag = SPR_anarchist_uprising_flag }
+					}
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = RULE_VOLUNTEERS_SOVIET_SCW_TT
+				NOT = {
+					OR = {
+						AND = {
+							has_dlc = "La Resistance"
+							FROM = { NOT = { tag = SPD } }
+						}
+						AND = {
+							NOT = { has_dlc = "La Resistance" }
+							FROM = {
+								NOT = { has_government = communism }
+								NOT = { has_government = democratic }
+							}
+						}
+					}
+				}
+			}
+		}
+		else_if = { #Soviet volunteers to Spain (Commie) (supporting POUM -> POUM split happened -> Stalin in charge) (with No Step Back)
+			limit = {
+				has_dlc = "No Step Back"
+				has_dlc = "La Resistance"
+				original_tag = SOV
+				has_government = communism
+				FROM = { original_tag = SPR }
+				has_completed_focus = SOV_covert_support_for_spanish_poum
+				NOT = { has_completed_focus = SOV_coup_detat }
+				has_global_flag = SPR_anarchist_uprising_flag
+				SPC = { has_completed_focus = SPR_the_anti_fascist_workers_revolution }
+			}
+			custom_trigger_tooltip = {
+				tooltip = RULE_VOLUNTEERS_SOVIET_SCW_COVERT_POUM_TT
+				NOT = {
+					FROM = { NOT = { tag = SPD } }
+				}
+			}
+		}
+		else_if = { #Soviet volunteers to Spain (Commie) (supporting POUM -> POUM split happened -> Right Oppo in charge) (with No Step Back)
+			limit = {
+				has_dlc = "No Step Back"
+				has_dlc = "La Resistance"
+				original_tag = SOV
+				has_government = communism
+				FROM = { original_tag = SPR }
+				has_completed_focus = SOV_covert_support_for_spanish_poum
+				has_completed_focus = SOV_coup_detat
+				has_global_flag = SPR_anarchist_uprising_flag
+				SPC = { has_completed_focus = SPR_the_anti_fascist_workers_revolution }
+			}
+			custom_trigger_tooltip = {
+				tooltip = RULE_VOLUNTEERS_SOVIET_SCW_POUM_TT
+				NOT = {
+					AND = {
+						country_exists = SPC
+						FROM = { NOT = { tag = SPC } }
+					}
+				}
+			}
+		}
+		else_if = { #Soviet volunteers to Spain (Commie & Democr) (without No Step Back)
+			limit = {
+				NOT = { has_dlc = "No Step Back" }
+				original_tag = SOV
+				OR = {
+					has_government = communism
+					has_government = democratic
+				}
+				FROM = { original_tag = SPR }
+			}
+			custom_trigger_tooltip = {
+				tooltip = RULE_VOLUNTEERS_SOVIET_SCW_TT
+				NOT = {
+					OR = {
+						AND = {
+							has_dlc = "La Resistance"
+							FROM = { NOT = { tag = SPD } }
+						}
+						AND = {
+							NOT = { has_dlc = "La Resistance" }
+							FROM = {
+								NOT = { has_government = communism }
+								NOT = { has_government = democratic }
+							}
+						}
+					}
+						
+				}
+			}
+		}
+		else_if = { #Soviet volunteers to Spain (Exiles)
+			limit = {
+				original_tag = SOV
+				OR = {
+					has_government = fascism
+					has_government = neutrality
+				}
+				FROM = { original_tag = SPR }
+			}
+			custom_trigger_tooltip = {
+				tooltip = RULE_VOLUNTEERS_SOVIET_EXILES_SCW_TT
+				NOT = {
+					OR = {
+						AND = {
+							has_dlc = "La Resistance"
+							FROM = { NOT = { tag = SPA } }
+							FROM = { NOT = { tag = SPB } }
+						}
+						AND = {
+							NOT = { has_dlc = "La Resistance" }
+							FROM = {
+								NOT = { has_government = fascism }
+								NOT = { has_government = neutrality }
+							}
+						}
+					}
+						
+				}
+			}
+		}
+		#else_if = { #Can only send Volunteers to Ethiopia while having the National Spirit to do so)
+		#	limit = {
+		#		has_dlc = "By Blood Alone"
+		#		has_idea = ETH_support_for_ethiopia_idea
+		#	}
+		#	custom_trigger_tooltip = {
+		#		tooltip = RULE_VOLUNTEERS_ETHIOPIA_ONLY_ONE_TT
+		#		FROM = { tag = ETH } 
+		#	}
+		#}
+		else = {
+			always = yes
+		}
+	}
+	if = {
+		limit = {
+			has_game_rule = {
+				rule = allow_volunteers
+				option = SAME_IDEOLOGY
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_VOLUNTEERS_SAME_IDEOLOGY_TT
+			has_government = FROM
+		}
+		if = {
+			limit = {
+				NOT = { tag = SPC }
+				NOT = { 
+					AND = {
+						tag = ETH 
+						ETH = {
+							has_completed_focus = ETH_support_spain
+						}
+					}
+				}
+				FROM = {
+					tag = SPC
+					has_completed_focus = SPR_regional_defense_council_of_aragon
+	}
+			}
+			custom_trigger_tooltip = {
+				tooltip = RULE_VOLUNTEERS_NOT_ANARCHISTS_TT
+				NOT = { FROM = { tag = SPC } }
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_game_rule = {
+				rule = allow_volunteers
+				option = BLOCKED
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = RULE_VOLUNTEERS_BLOCKED_TT
+			always = no
+		}
+	}
+}
