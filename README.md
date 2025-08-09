@@ -1,50 +1,48 @@
 # Russia Reworked
-## A Complete Soviet Rework for Hearts of Iron IV
+
+A Complete Soviet Rework for Hearts of Iron IV
+
+![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/YummYume/Russia-2.0?utm_source=oss&utm_medium=github&utm_campaign=YummYume%2FRussia-2.0&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)
+
+## Content
+
+- [Russia Reworked](#russia-reworked)
+  - [Content](#content)
+  - [Links](#links)
+  - [About this repository](#about-this-repository)
+  - [Contributing or installing the mod locally](#contributing-or-installing-the-mod-locally)
+  - [What is currently available on this version?](#what-is-currently-available-on-this-version)
+  - [What is to come?](#what-is-to-come)
+  - [Extra notes](#extra-notes)
+  - [Mod developers](#mod-developers)
+  - [Changelog](#changelog)
+  - [Code of Conduct](#code-of-conduct)
+  - [License](#license)
+
+## Links
 
 - [Steam Page](https://steamcommunity.com/sharedfiles/filedetails/?id=2092066524)
 - [Discord Link](https://discord.gg/xf5PUxK)
 
-Updates are very frequent on our GitHub, however, you should **NOT** try to play with this current version unless it is marked as **_Stable_**.
+> [!TIP]
+> The current mod version is **3.0.4**.
 
-Current version is : **_Stable_**.
+## About this repository
 
-Mod Version : 3.0.4
+The main branch is the [stable](https://github.com/YummYume/Russia-2.0) branch, which is always equivalent to the current Steam version.
 
-## How to LOCALLY install the mod for beta testing :
+The beta branch is the [next](https://github.com/YummYume/Russia-2.0/tree/next) branch.
+It only contains reviewed code, but might contain bug or unfinished features.
+It will at the very least be up to date with the Steam version, and often ahead of it.
 
-**Important** : You **_cannot_** have two mods with the same name (paradox launcher won't understand).
+> [!WARNING]
+> This mod has no political agenda, and is not meant to be a political statement in any way.
+> It is a work of fiction, and should be treated as such.
+> We do not endorse any ideology or political view, and will not tolerate any form of political discussion in the mod's community.
 
-You can simply download the this GitHub as a zip file (or clone it) and drag it into your mod folder. However, this will most likely not work, even if you manually add the .mod.
+## Contributing or installing the mod locally
 
-**Another, more complicated way, which should work :**
-
-- Download this GitHub as a zip file (Clone or Download > Download as ZIP),
-- Start the HOI4 launcher and go to Mods > Mod Tools > Create a Mod,
-- Name : Russia 2.0,
-- Version : 1.0,
-- Directory : mod/Russia 2.0,
-- Tags : Alternative History, Events, Gameplay, Historical, National Focuses, Utilities, Military, Fixes, Balance,
-- Create the Mod. Do **NOT** enable it yet (very important),
-- Go to Documents\Paradox Interactive\Hearts of Iron IV\mod, here you should see a folder Russia 2.0 (if not then you've done something wrong),
-- Go in the Russia 2.0 Folder and unzip the files there. All the files should be directly inside the folder (e.g. mod\Russia 2.0\common and NOT mod\Russia 2.0\Russia 2.0\common),
-- Once this is done, simply enable the mod and you're good to go!
-
-If you have any problems with the installation, feel free to ask (once you've completed the steps above).
-
-What if you already have the mod installed locally and want to update it with the latest version?
-Simply download the ZIP file again, delete everything inside the Russia 2.0 folder and then drag the new files in.
-
-## Extra notes :
-
-If you encounter any bug or something unusual happens, you can add it here as an issue, or report it in the Discord server. Using the Steam Page of the mod is not recommended. Do **NOT** report any bugs from unstable versions, as those are meant to contain bugs anyways.
-
-The mod is **NOT** compatible with Road to 56, overhaul mods, or mods that modify Soviet files! It also does not work with Expert AI (please stop asking). The mod is NOT supposed to be 100% historical in any way.
-
-This mod has been developed for months now, and we are happy with how far we got. We want to thank everyone who helped us, supported the mod, and everyone playing it. We could not have kept going without you guys.
-
-The mod is **NOT** achievement compatible but does include its own achievements. The 1939 start date now works fine. The AI can play any path.
-
-Do **NOT** upload this mod as your own.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for more information on how to contribute to the mod or install it locally.
 
 ## What is currently available on this version?
 
@@ -69,12 +67,40 @@ Do **NOT** upload this mod as your own.
 ## What is to come?
 
 - Priority : Anarchist Path : The Collapse (coming very soon)
-- AI Improvments & bug fixes
-- National Obligations
+- National Obligations (coming very soon)
+- AI Improvments, balance patchs & bug fixes
 - Lastly : Road to 56 compatibility
 
-## Mod developers :
-- [@YummYume](https://github.com/YummYume) : Yam#2937 (Discord), [Steam link](https://steamcommunity.com/profiles/76561198081584510)
-- [@Raider](https://github.com/Raider472) : Яaider#8659 (Discord); [Steam link](https://steamcommunity.com/profiles/76561198082391047)
+## Extra notes
+
+If you encounter any bug or something unusual happens, you can add it here as an issue, or report it in the Discord server.
+Using the Steam Page of the mod is **NOT** recommended.
+
+The mod is **NOT** compatible with Road to 56, overhaul mods, or mods that modify Soviet files! It also does not work with Expert AI (please stop asking). The mod is NOT supposed to be 100% historical in any way.
+
+This mod has been developed for years now, and we are happy with how far we got.
+We want to thank everyone who helped us, supported the mod, and everyone playing it. We could not have kept going without you guys.
+We have decided to work again on the mod, to keep it up to date with the current HOI4 version, and possibly more.
+
+The mod is **NOT** achievement compatible but does include its own achievements. The 1939 start date now works fine. The AI can play any path.
+
+Do **NOT** upload this mod as your own.
+
+## Mod developers
+
+- [@YummYume](https://github.com/YummYume) : yamuwu (Discord), [Steam link](https://steamcommunity.com/profiles/76561198081584510)
+- [@Raider](https://github.com/Raider472) : raider472 (Discord), [Steam link](https://steamcommunity.com/profiles/76561198082391047)
 
 You can find the full team on the Steam page of the mod.
+
+## Changelog
+
+See [CHANGELOG.md](./CHANGELOG.md).
+
+## Code of Conduct
+
+See [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md).
+
+## License
+
+This project (mod) is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.

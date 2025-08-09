@@ -1,0 +1,23 @@
+name: Check the source branch
+
+on:
+  pull_request:
+    branches:
+      - stable
+    types: [opened, synchronize, reopened]
+
+env:
+  ALLOWED_BRANCH: "next"
+
+jobs:
+  check-source:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check source branch
+        run: |
+          if [[ "${{ github.event.pull_request.head.ref }}" != $ALLOWED_BRANCH ]]; then
+            echo "Error: Pull requests must be made from the '$ALLOWED_BRANCH' branch."
+            echo "Current source branch: ${{ github.event.pull_request.head.ref }}"
+            echo "Please create a new pull request pointing to the '$ALLOWED_BRANCH' branch instead."
+            exit 1
+          fi
