@@ -32,8 +32,8 @@ A Complete Soviet Rework for Hearts of Iron IV
 The main branch is the [stable](https://github.com/YummYume/Russia-2.0) branch, which is always equivalent to the current Steam version.
 
 The beta branch is the [next](https://github.com/YummYume/Russia-2.0/tree/next) branch.
-It only contains reviewed code, but might contain bug or unfinished features.
-It will at the very least be up to date with the Steam version, and often ahead of it.
+It only contains reviewed code but might contain bugs or unfinished features.
+It will be at least up to date with the Steam version, and often ahead of it.
 
 > [!WARNING]
 > This mod has no political agenda, and is not meant to be a political statement in any way.
@@ -68,7 +68,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for more information on how to contribute
 
 - Priority : Anarchist Path : The Collapse (coming very soon)
 - National Obligations (coming very soon)
-- AI Improvments, balance patchs & bug fixes
+- AI improvements, balance patches, and bug fixes
 - Lastly : Road to 56 compatibility
 
 ## Extra notes

@@ -7,17 +7,26 @@ on:
     types: [opened, synchronize, reopened]
 
 env:
-  ALLOWED_BRANCH: "next"
+  ALLOWED_BRANCHES: "next"
 
 jobs:
   check-source:
     runs-on: ubuntu-latest
     steps:
       - name: Check source branch
+        env:
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
         run: |
-          if [[ "${{ github.event.pull_request.head.ref }}" != $ALLOWED_BRANCH ]]; then
-            echo "Error: Pull requests must be made from the '$ALLOWED_BRANCH' branch."
-            echo "Current source branch: ${{ github.event.pull_request.head.ref }}"
-            echo "Please create a new pull request pointing to the '$ALLOWED_BRANCH' branch instead."
+          set -euo pipefail
+          shopt -s extglob
+          allowed="${ALLOWED_BRANCHES}"
+          match=false
+          for pat in ${allowed}; do
+            if [[ "${HEAD_REF}" == ${pat} ]]; then match=true; break; fi
+          done
+          if [[ "${match}" != "true" ]]; then
+            echo "Error: Pull requests to 'stable' must be made from the '${ALLOWED_BRANCH}' branch."
+            echo "Current source branch: ${HEAD_REF}"
+            echo "Please create a new pull request from one of '${ALLOWED_BRANCHES}'."
             exit 1
           fi
