@@ -66,10 +66,10 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for more information on how to contribute
 
 ## What is to come?
 
-- Priority : Anarchist Path : The Collapse (coming very soon)
+- Priority: Anarchist Path - The Collapse (coming very soon)
 - National Obligations (coming very soon)
 - AI improvements, balance patches, and bug fixes
-- Lastly : Road to 56 compatibility
+- Lastly: Road to 56 compatibility
 
 ## Extra notes
 

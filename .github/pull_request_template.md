@@ -7,7 +7,7 @@
 <!-- Add the issue number(s) this PR addresses (e.g. #123 Closes #124 #87) -->
 <!-- Only add "Closes" if the issue is closed by this PR, otherwise just add the issue number -->
 
-Closes #<issue-number>
+Closes #ISSUE_NUMBER
 <!-- Or, if no issue is linked, replace with: -->
 No linked issue.
 
