@@ -34387,21 +34387,20 @@ SOV_chaos_all_over_russia = {
 		}
 
 		complete_effect = {
-			#if = { #TODO Change back to normal when the second path is finished
-			#	limit = {
-			#		check_variable = {
-			#			var = chaos_triumphed_over_order
-			#			value = 2
-			#			compare = greater_than_or_equals
-			#		}
-			#		has_country_flag = black_revolution_turned_civil_war
-			#	}
-			#	country_event = { id = russia2_russia.443 }
-			#}
-			#else ={
-			#	country_event = { id = russia2_russia.442 }
-			#}
-			country_event = { id = russia2_russia.442 }
+			if = { #TODO Change back to normal when the second path is finished
+				limit = {
+					check_variable = {
+						var = chaos_triumphed_over_order
+						value = 2
+						compare = greater_than_or_equals
+					}
+					has_country_flag = black_revolution_turned_civil_war
+				}
+				country_event = { id = russia2_russia.443 }
+			}
+			else ={
+				country_event = { id = russia2_russia.442 }
+			}
 		}
 
 		ai_will_do = {
@@ -37641,7 +37640,7 @@ SOV_improve_arctic_russia = {
 
 		available = {
 			FROM = {
-				is_owned_and_controlled_by = RAS
+				is_owned_and_controlled_by = RAI
 			}
 			NOT = {
 				has_country_flag = is_excavating_arctic_russia
@@ -37835,7 +37834,7 @@ SOV_improve_arctic_russia = {
 		}
 
 		available = {
-			RAS = {
+			RAI = {
 				is_subject_of = SOV
 			}
 			NOT = {
@@ -37863,7 +37862,7 @@ SOV_improve_arctic_russia = {
 								has_idea = SOV_Emigration_in_alaska_idea
 							}
 						}
-						RAS = {
+						RAI = {
 							NOT = {
 								has_idea = SOV_Immigration_in_alaska_idea
 							}
@@ -37877,7 +37876,7 @@ SOV_improve_arctic_russia = {
 						add_dynamic_modifier = { modifier = democratic_alaska_emigration }
 					}
 				}
-				RAS = {
+				RAI = {
 					custom_effect_tooltip = idea_immigration_alaska_tooltip
 					hidden_effect = {
 						add_ideas = SOV_Immigration_in_alaska_idea
@@ -37890,7 +37889,7 @@ SOV_improve_arctic_russia = {
 					custom_effect_tooltip = SOV_emigration_malus_alaska
 					add_to_variable = { alaska_emigration_calculation_demo = -2000 }
 				}
-				RAS = {
+				RAI = {
 					custom_effect_tooltip = SOV_immigration_bonus_alaska
 					add_to_variable = { alaska_immigration_calculation_demo = 2000 }
 				}
@@ -37911,7 +37910,7 @@ SOV_improve_arctic_russia = {
 		}
 
 		available = {
-			RAS = {
+			RAI = {
 				is_subject_of = SOV
 				has_idea = SOV_Immigration_in_alaska_idea
 			}
@@ -37927,7 +37926,7 @@ SOV_improve_arctic_russia = {
 					remove_dynamic_modifier = { modifier = democratic_alaska_emigration }
 				}
 			}
-			RAS = {
+			RAI = {
 				remove_ideas = SOV_Immigration_in_alaska_idea
 				hidden_effect = {
 					remove_dynamic_modifier = { modifier = democratic_alaska_immigration }
@@ -37953,7 +37952,7 @@ SOV_improve_arctic_russia = {
 		fire_only_once = yes
 
 		available = {
-			RAS = {
+			RAI = {
 				owns_state = 471
 				owns_state = 472
 				owns_state = 473
@@ -37985,7 +37984,7 @@ SOV_improve_arctic_russia = {
 		}
 
 		complete_effect = {
-			RAS = {
+			RAI = {
 				set_cosmetic_tag = GRAR
 				add_state_core = 739
 				add_state_core = 740
@@ -45189,7 +45188,7 @@ SOV_russianize_state = {
 							limit = {
 								is_subject = no
 								has_government = neutrality
-								has_cosmetic_tag = RUS
+								has_cosmetic_tag = RUR
 								has_full_control_of_state = 219
 								has_full_control_of_state = 2
 								has_full_control_of_state = 797
@@ -53565,7 +53564,7 @@ SOV_negotiation_disputants_category_decisions = {
 
 		icon = GFX_decision_eng_propaganda_campaigns
 
-		days_remove = 30
+		days_remove = 20
 
 		on_map_mode = map_and_decisions_view
 
@@ -53639,7 +53638,7 @@ SOV_negotiation_disputants_category_decisions = {
 					check_variable = {
 						var = opinion_russian_anarchist_puppet_reform_plan
 						value = 85
-						compare = greater_than_or_equals
+						compare = less_than_or_equals
 					}
 				}
 			}
@@ -53647,10 +53646,13 @@ SOV_negotiation_disputants_category_decisions = {
 
 		complete_effect = {
 			set_country_flag = is_swaying_political_anarchist_oppenent
+			FROM = {
+				save_global_event_target_as = FROM_being_swayed 
+			}
 		}
 
 		remove_effect = {
-			clr_country_flag = is_swaying_political_anarchist_oppenent
+			#clr_country_flag = is_swaying_political_anarchist_oppenent
 			custom_effect_tooltip = will_receive_random_event_choose_option_anarchists
 			hidden_effect = {
 				FROM = {
@@ -53668,7 +53670,7 @@ SOV_negotiation_disputants_category_decisions = {
 
 		icon = GFX_decision_onmap_recruit_operative
 
-		days_remove = 30
+		days_remove = 15
 
 		on_map_mode = map_and_decisions_view
 
@@ -53744,7 +53746,7 @@ SOV_negotiation_disputants_category_decisions = {
 					check_variable = {
 						var = opinion_russian_anarchist_puppet_reform_plan
 						value = 85
-						compare = greater_than_or_equals
+						compare = less_than_or_equals
 					}
 				}
 			}
@@ -53761,11 +53763,7 @@ SOV_negotiation_disputants_category_decisions = {
 				if = {
 					limit = {
 						FROM = {
-							check_variable = {
-								var = militaristic_personality_type_anarchist
-								value = 0
-								compare = equals
-							}
+							has_country_flag = militaristic_personality_flag
 						}
 					}
 					FROM = {
@@ -53778,11 +53776,7 @@ SOV_negotiation_disputants_category_decisions = {
 				else_if = {
 					limit = {
 						FROM = {
-							check_variable = {
-								var = economic_personality_type_anarchist
-								value = 0
-								compare = equals
-							}
+							has_country_flag = economic_personality_flag
 						}
 					}
 					FROM = {
@@ -53795,11 +53789,7 @@ SOV_negotiation_disputants_category_decisions = {
 				else_if = {
 					limit = {
 						FROM = {
-							check_variable = {
-								var = social_personality_type_anarchist
-								value = 0
-								compare = equals
-							}
+							has_country_flag = social_personality_flag
 						}
 					}
 					FROM = {
@@ -53812,11 +53802,7 @@ SOV_negotiation_disputants_category_decisions = {
 				else_if = {
 					limit = {
 						FROM = {
-							check_variable = {
-								var = peaceful_personality_type_anarchist
-								value = 0
-								compare = equals
-							}
+							has_country_flag = peaceful_personality_flag
 						}
 					}
 					FROM = {
@@ -55896,7 +55882,7 @@ SOV_propaganda_campaigns_russia2 = {
 		}
 
 		remove_effect = {
-			every_controlled_state = {
+			every_state = {
 				limit = {
 					has_dynamic_modifier = { modifier = SOV_invaders_must_die }
 				}
@@ -56661,10 +56647,16 @@ SOV_anarchist_selection_beneficiary_decisions = {
 			any_country = {
 				has_country_flag = has_been_chosen_as_second_beneficiary
 			}
+			NOT = {
+				has_country_flag = has_confirmed_beneficiary
+			}
 		}
 
 		available = {
 			has_completed_focus = SOV_choose_beneficiary
+			NOT = {
+				has_country_flag = has_confirmed_beneficiary
+			}
 		}
 
 		complete_effect = {
@@ -56846,39 +56838,51 @@ SOV_anarchist_selection_beneficiary_decisions = {
 
 		target_trigger = {
 			FROM = {
-				OR = {
-					AND = {
-						has_country_flag = is_neighbor_of_from_first_beneficiary
-						OR = {
-							has_country_flag = is_neighbor_of_from_second_beneficiary
-							has_country_flag = is_neighbor_of_from_sov_beneficiary
-						}
-					}
-					AND = {
-						has_country_flag = is_neighbor_of_from_second_beneficiary
-						OR = {
-							has_country_flag = is_neighbor_of_from_first_beneficiary
-							has_country_flag = is_neighbor_of_from_sov_beneficiary
-						}
-					}
-					AND = {
-						has_country_flag = is_neighbor_of_from_sov_beneficiary
-						OR = {
-							has_country_flag = is_neighbor_of_from_first_beneficiary
-							has_country_flag = is_neighbor_of_from_second_beneficiary
-						}
-					}
-					NOT = {
-						AND = {
-							has_country_flag = is_neighbor_of_from_first_beneficiary
-							has_country_flag = is_neighbor_of_from_second_beneficiary
-							has_country_flag = is_neighbor_of_from_sov_beneficiary
-						}
-					}
-				}
+				#OR = {
+				#	AND = {
+				#		has_country_flag = is_neighbor_of_from_first_beneficiary
+				#		OR = {
+				#			has_country_flag = is_neighbor_of_from_second_beneficiary
+				#			has_country_flag = is_neighbor_of_from_sov_beneficiary
+				#		}
+				#	}
+				#	AND = {
+				#		has_country_flag = is_neighbor_of_from_second_beneficiary
+				#		OR = {
+				#			has_country_flag = is_neighbor_of_from_first_beneficiary
+				#			has_country_flag = is_neighbor_of_from_sov_beneficiary
+				#		}
+				#	}
+				#	AND = {
+				#		has_country_flag = is_neighbor_of_from_sov_beneficiary
+				#		OR = {
+				#			has_country_flag = is_neighbor_of_from_first_beneficiary
+				#			has_country_flag = is_neighbor_of_from_second_beneficiary
+				#		}
+				#	}
+				#	NOT = {
+				#		AND = {
+				#			has_country_flag = is_neighbor_of_from_first_beneficiary
+				#			has_country_flag = is_neighbor_of_from_second_beneficiary
+				#			has_country_flag = is_neighbor_of_from_sov_beneficiary
+				#		}
+				#	}
+				#	NOT = {
+				#		OR = {
+				#		has_country_flag = has_been_chosen_as_first_beneficiary
+				#		has_country_flag = has_been_chosen_as_second_beneficiary
+					#	}
+				#	}
+				#}
 				exists = yes
 				has_government = anarchy
 				is_in_faction_with = SOV
+				NOT = {
+					OR = {
+					has_country_flag = has_been_chosen_as_first_beneficiary
+					has_country_flag = has_been_chosen_as_second_beneficiary
+						}
+					}
 				OR = {
 					tag = EFR
 					tag = SIB
@@ -56918,8 +56922,10 @@ SOV_anarchist_selection_beneficiary_decisions = {
 		complete_effect = {
 			FROM = {
 				SOV = {
-					country_event = { id = russia2_russia.647 }
+					country_event = { id = russia2_russia.652 }
 				}
+				#save_event_target_as = FROM_deciding_fate_anarchy
+				set_country_flag = deciding_fate
 			}
 		}
 
@@ -60286,3 +60292,278 @@ SOV_anarchist_the_peoples_commune_formation = {
 		}
 	}
 }
+
+SOV_coalition_for_communism = {
+	SOV_call_upon_the_workers_to_fight_against = {
+
+		icon = GFX_decision_generic_nationalism
+
+		available = {
+				has_country_flag = neverending_story_communist_coalition
+		}
+		visible = {
+			has_government = communism
+			is_subject = no
+			has_country_flag = neverending_story_communist_coalition
+			FROM = {
+				exists = yes
+			}
+		}
+		target_trigger = {
+			FROM = {
+				exists = yes
+				is_major = yes
+				NOT = {
+					has_government = communism
+				}
+				has_war_with = SOV
+			}
+		}
+		cost = 100
+		fire_only_once = yes
+		ai_will_do = {
+			factor = 10
+		}
+		complete_effect = {
+			FROM = {
+				#set_country_flag = SOV_forming_coalition
+				#Does not seem to be correct #days = 10
+				save_global_event_target_as = SOV_forming_coalition
+			}
+			every_other_country = {
+				limit = {
+					has_government = communism
+					is_subject = no
+					NOT = {
+						is_in_faction_with = SOV
+					}
+				}
+				country_event = { id = russia2_russia.661 days = 3 }	
+				}
+		}
+	}
+}
+
+SOV_proletarian_union_invitations = {
+	invite_FROM_to_the_proletarian_union = {
+		icon = generic_civil_support
+	
+		allowed = {
+			original_tag = SOV
+		}
+		
+		available = {
+			FROM = {
+				NOT = {
+					has_country_flag = refused_to_join_proletarian_union
+				}
+			}
+		}
+
+		cost = 100
+		
+		ai_will_do = {
+			base = 1
+		}
+		
+		
+
+		target_trigger = {
+			FROM = {
+				OR = {
+					has_government = communism
+					is_subject_of = SOV
+				}
+			}
+		}
+		visible = {
+			FROM = {
+				NOT = {
+					has_country_flag = refused_to_join_proletarian_union
+				}
+			}
+		}
+		
+		complete_effect = {
+			FROM = { 
+				country_event = {
+					id = russia2_russia.666	
+					hours = 12
+				}
+			}
+		}
+	}
+}
+
+SOV_interventions_for_democracy = {
+	SOV_treaty_intervention_small = {
+
+		icon = GFX_decision_generic_nationalism
+
+		available = {
+				has_country_flag = treaty_of_moscow_forming_coalition
+		}
+		visible = {
+			has_government = democratic
+			is_subject = no
+			has_country_flag = treaty_of_moscow_forming_coalition
+			FROM = {
+				exists = yes
+			}
+		}
+		target_trigger = {
+			FROM = {
+				exists = yes
+				has_war = yes
+				is_subject = no
+				NOT = {
+					has_country_flag = treaty_moscow_getting_lend_lease
+				}
+			}
+		}
+		cost = 150
+		ai_will_do = {
+			factor = 50
+		}
+		complete_effect = {
+			FROM = {
+				set_country_flag = treaty_moscow_getting_lend_lease
+				save_global_event_target_as = SOV_target_intervention_small
+			}
+			every_other_country = {
+				limit = {
+					has_government = democratic
+					has_country_flag = signitor_treaty_moscow
+					NOT = {
+						has_war = yes
+					}
+				}
+				country_event = { id = russia2_russia.700 days = 3 }	
+				}
+		}
+	}
+	SOV_treaty_intervention_medium = {
+
+		icon = GFX_decision_generic_nationalism
+
+		available = {
+				has_country_flag = treaty_of_moscow_forming_coalition
+		}
+		visible = {
+			has_government = democratic
+			is_subject = no
+			has_country_flag = treaty_of_moscow_forming_coalition
+			FROM = {
+				exists = yes
+			}
+		}
+		target_trigger = {
+			FROM = {
+				exists = yes
+				has_war = yes
+				is_subject = no
+				NOT = {
+					has_country_flag = treaty_moscow_getting_volunteers
+				}
+			}
+		}
+		cost = 200
+		ai_will_do = {
+			factor = 30
+		}
+		complete_effect = {
+			FROM = {
+				set_country_flag = treaty_moscow_getting_volunteers
+				save_global_event_target_as = SOV_target_intervention_medium
+			}
+			every_other_country = {
+				limit = {
+					has_government = democratic
+					has_country_flag = signitor_treaty_moscow
+					NOT = {
+						has_war = yes
+					}
+				}
+				country_event = { id = russia2_russia.701 days = 3 }	
+				}
+		}
+	}
+	SOV_treaty_intervention_full = {
+
+		icon = GFX_decision_generic_nationalism
+
+		available = {
+				has_country_flag = treaty_of_moscow_forming_coalition
+		}
+		visible = {
+			has_government = democratic
+			is_subject = no
+			has_country_flag = treaty_of_moscow_forming_coalition
+			FROM = {
+				exists = yes
+			}
+		}
+		target_trigger = {
+			FROM = {
+				exists = yes
+				has_war = yes
+				is_subject = no
+				NOT = {
+					OR = {
+						has_country_flag = treaty_moscow_full_invasion
+						has_country_flag = signitor_treaty_moscow
+					}
+				}
+			}
+		}
+		cost = 250
+		ai_will_do = {
+			factor = 10
+		}
+		complete_effect = {
+			FROM = {
+				set_country_flag = treaty_moscow_full_invasion
+				save_global_event_target_as = SOV_target_intervention_full
+			}
+			every_country = {
+				limit = {
+					has_government = democratic
+					has_country_flag = signitor_treaty_moscow
+					NOT = {
+						has_war = yes
+					}
+				}
+				country_event = { id = russia2_russia.702 days = 3 }	
+				}
+		}
+	}
+}
+
+SOV_expand_the_russian_realm = {
+	SOV_russian_blitz = {
+
+		icon = GFX_decision_generic_nationalism
+
+		available = {
+				has_country_flag = russian_realm_blitxkrieg
+				has_war = yes
+				NOT = {
+					has_country_flag = russian_realm_blitxkrieg_coolddown
+				}
+		}
+		visible = {
+			has_country_flag = russian_realm_blitxkrieg
+		}
+		cost = 150
+		ai_will_do = {
+			factor = 10
+		}
+		complete_effect = {
+			add_timed_idea = { idea = russian_blitz_idea days = 30 }
+			set_country_flag = russian_realm_blitxkrieg_coolddown
+			country_event = { id = russia2_russia.724 days = 120 }
+		}
+	}
+}
+
+
