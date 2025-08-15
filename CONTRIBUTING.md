@@ -64,9 +64,9 @@ Breaking changes are changes that are, most of the time, not save-game compatibl
 
 ### The simple way
 
-- Download the mod from the desired branch (`stable` or `next`) as a ZIP file (Clone or Download > Download as ZIP),
+- Download the mod from the desired branch (`stable`, `next` or `playtest`) as a ZIP file (Clone or Download > Download as ZIP),
 - Unzip the file in `Documents\Paradox Interactive\Hearts of Iron IV\mod`,
-- Copy the mod descriptor file (`mod/Russia-2.0/descriptor.mod`) to your mod folder (`Documents\Paradox Interactive\Hearts of Iron IV\mod`),
+- Copy the mod descriptor file (`mod/Russia-2.0/descriptor.mod`) to your mod folder (`Documents\Paradox Interactive\Hearts of Iron IV\mod`) and name it `Russia-2.0.mod` (the name should match the mod folder name),
 - Its contents should remain unchanged, except for an added `path` line at the end. Set it to the full absolute path to the mod's folder, for example: `path="C:/Users/YourName/Documents/Paradox Interactive/Hearts of Iron IV/mod/Russia 2.0"`,
 - The mod should now appear in the Paradox launcher, and you can enable it.
 
