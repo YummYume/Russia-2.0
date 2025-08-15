@@ -7,6 +7,8 @@ Thank you for considering contributing to this mod! Here's how you can help.
 - [Contributing](#contributing)
   - [Content](#content)
   - [Reporting issues](#reporting-issues)
+  - [Commit naming conventions](#commit-naming-conventions)
+    - [Breaking changes](#breaking-changes)
   - [How to install the mod locally](#how-to-install-the-mod-locally)
     - [The simple way](#the-simple-way)
     - [The manual way](#the-manual-way)
@@ -19,6 +21,41 @@ You can also find answers or talk about anything else on our [Discord](https://d
 
 > [!NOTE]
 > [CodeRabbit AI](https://www.coderabbit.ai/) is used to review pull requests automatically. You can also talk to it by tagging it using `@coderabbitai` anywhere in a PR, an issue or a discussion.
+
+## Commit naming conventions
+
+This mod uses [conventional commits](https://www.conventionalcommits.org/) for commit messages. The following commit types are recognized by our changelog generator:
+
+- `feat` or `feature` - New features
+- `fix` - Bug fixes
+- `balance` - Game balance changes
+- `doc` or `documentation` - Documentation changes
+- `imp` or `improvement` - General improvements
+- `perf` or `performance` - Performance improvements
+- `refactor` - Code refactoring
+- `gfx` or `interface` - Interface and graphics changes
+- `test` - Test-related changes
+- `chore` or `ci` - Miscellaneous chores and CI changes
+- `revert` - Reverted changes
+- `security` - Security-related changes
+
+Anything not covered by the above types will still be considered a valid change under the "Other" category.
+
+**Format:** `type(scope): description`
+
+Where `scope` is optional and describes what part of the mod is affected (e.g., `feat(focus): add new focus for x nation`).
+You are, however, not expected to use the `scope` part in your commit messages, as it is optional.
+The main goal is to keep the commit message clear and concise, thus `type: description` is sufficient.
+
+### Breaking changes
+
+If your commit introduces a breaking change, you should append `BREAKING CHANGE:` to the commit message, or add a `!` at the end of the type (e.g., `feat!: add new focus tree for x nation`).
+Breaking changes are changes that are, most of the time, not save-game compatible, meaning that they will break existing saves or require a new game to be started to see the changes.
+
+> [!NOTE]
+> All pull requests will be **squash merged** to maintain a clean commit history.
+> The final commit message will follow the conventional commit format based on your PR title and description.
+> This also means that only the squashed commit matters in the final changelog, and it can always be edited before merging to ensure clarity and consistency.
 
 ## How to install the mod locally
 
