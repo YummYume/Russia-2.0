@@ -2254,7 +2254,7 @@ characters = {
 				}
 				NOT = {
 					has_country_flag = denikin_resigned_fascist
-					has_idea = SOV_Pyotr_Nikolayevich_Krasnov
+					has_idea = SOV_pyotr_krasnov
 				}
 			}
 
@@ -2359,21 +2359,22 @@ characters = {
 		}
 	}
 
-	SOV_Boris_shteifon = {
-		name = SOV_Boris_shteifon
-
+	#Another Boris Shteifon exists in the Yugoslavian character file, this one will replace him when possible
+	SOV_Boris_shteifon2 = {
+		name = SOV_Boris_shteifon2
+	
 		advisor = {
 			slot = army_chief
-			idea_token = SOV_Boris_shteifon
+			idea_token = SOV_Boris_shteifon2
 			cost = 100
-
+	
 			allowed = {
 				OR = {
 					original_tag = SOV
 					original_tag = UKR
 				}
 			}
-
+	
 			available = {
 				if = {
 					limit = {
@@ -2384,17 +2385,23 @@ characters = {
 						has_completed_focus = SOV_second_civil_war
 					}
 				}
+				NOT = {
+					OR = {
+						has_global_flag = SOV_flug_and_shteifon_went_to_germany_flag
+						has_global_flag = SOV_flug_and_shteifon_decided_to_fight_for_yugoslavia_flag
+					}
+				}
 			}
-
+	
 			traits = {
 				army_chief_drill_2
 			}
-
+	
 			ai_will_do = {
 				factor = 10
 			}
 		}
-
+	
 		portraits = {
 			army = {
 				large = "gfx/leaders/SOV/Portrait_Russia_Boris_Shteifon.dds"
@@ -3561,13 +3568,40 @@ characters = {
 		}
 	}
 
-	SOV_Pyotr_Nikolayevich_Krasnov = {
-		name = SOV_Pyotr_Nikolayevich_Krasnov
+	SOV_pyotr_krasnov = {
+		name = SOV_pyotr_krasnov
+
+		corps_commander = {
+            traits = {
+                trait_reckless
+                infantry_officer
+                trait_mountaineer
+            }
+            skill = 4
+            attack_skill = 4
+            defense_skill = 3
+            planning_skill = 3
+            logistics_skill = 3
+			visible = {
+				OR = {
+					ROOT = {
+						has_country_flag = soviet_generals_deserted
+					}
+					ROOT = {
+						OR = {
+							has_completed_focus = SOV_second_civil_war 
+							has_completed_focus = GER_ally_white_russian_forces 
+							has_completed_focus = GER_war_with_the_ussr 
+						}
+					}
+				}
+			}
+		}
 
 		advisor = {
 			slot = high_command
 			ledger = army
-			idea_token = SOV_Pyotr_Nikolayevich_Krasnov
+			idea_token = SOV_pyotr_krasnov
 			cost = 100
 
 			allowed = {
@@ -3601,13 +3635,40 @@ characters = {
 		}
 	}
 
-	SOV_Andrei_shkuro = {
-		name = SOV_Andrei_shkuro
+	SOV_andrey_shkuro = {
+		name = SOV_andrey_shkuro
+
+		corps_commander = {
+            traits = {
+                brilliant_strategist
+                trickster
+            }
+            skill = 3
+            attack_skill = 3
+            defense_skill = 1
+            planning_skill = 2
+            logistics_skill = 2
+            legacy_id = 518
+			visible = {
+				OR = {
+					ROOT = {
+						has_country_flag = soviet_generals_deserted
+					}
+					ROOT = { 
+						OR = {
+							has_completed_focus = SOV_second_civil_war 
+							has_completed_focus = GER_ally_white_russian_forces 
+							has_completed_focus = GER_war_with_the_ussr
+						}
+					}
+				}
+			}
+		}
 
 		advisor = {
 			slot = high_command
 			ledger = army
-			idea_token = SOV_Andrei_shkuro
+			idea_token = SOV_andrey_shkuro
 			cost = 100
 
 			allowed = {
@@ -5056,8 +5117,17 @@ characters = {
 			}
 		}
 
+		scientist = {
+			traits = { scientist_trait_nuclear_specialist scientist_trait_fast_learner }
+			skills = {
+				specialization_nuclear = 2
+				specialization_naval = 2
+			}
+		}
+
 		portraits = {
 			army = {
+				large = GFX_portrait_SOV_igor_kurchatov
 				small = "gfx/interface/ideas/advisors/advisor_SOV_igor_kurchatov.dds"
 			}
 		}
@@ -6032,8 +6102,69 @@ characters = {
 		}
 	}
 
-	SOV_Bronislaw_kaminski = {
-		name = SOV_Bronislaw_kaminski
+	SOV_konstantin_voskoboinik = {
+		name = SOV_konstantin_voskoboinik
+		portraits = {
+			army = {
+				large = GFX_portrait_SOV_konstantin_voskoboinik
+				small = GFX_portrait_SOV_konstantin_voskoboinik_small
+			}
+		}
+		corps_commander = {
+			traits = { politically_connected militias_officer urban_assault_specialist }
+			skill = 1
+			attack_skill = 1
+			defense_skill = 1
+			planning_skill = 1
+			logistics_skill = 1
+			visible = {
+				OR = {
+					AND = {
+						has_global_flag = lokot_autonomy_has_been_established_flag
+						NOT = {
+							has_government = communism
+						}
+						NOT = {
+							has_global_flag = lokot_autonomy_has_been_crushed_flag
+						}
+					}
+					ROOT = {
+						has_completed_focus = SOV_second_civil_war
+					}
+				}
+			}
+		}
+	}
+
+	SOV_bronislav_kaminski = {
+		name = SOV_bronislav_kaminski
+
+		corps_commander = {
+			traits = {
+				harsh_leader
+			}
+            skill = 2
+            attack_skill = 2
+            defense_skill = 1
+            planning_skill = 2
+            logistics_skill = 2
+			visible = {
+				OR = {
+					AND = {
+						has_global_flag = lokot_autonomy_has_been_established_flag
+						NOT = {
+							has_government = communism
+						}
+						NOT = {
+							has_global_flag = lokot_autonomy_has_been_crushed_flag
+						}
+					}
+					ROOT = {
+						has_completed_focus = SOV_second_civil_war
+					}
+				}
+			}
+		}
 
 		portraits = {
 			army = {
@@ -6182,40 +6313,6 @@ characters = {
 		}
     }
 	#Scientists
-	
-	SOV_igor_kurchatov = {
-		name = SOV_igor_kurchatov
-		portraits = {
-			army = {
-				large = GFX_portrait_SOV_igor_kurchatov
-				small = GFX_idea_igor_kurchatov
-			}
-		}
-
-		scientist = {
-			traits = { scientist_trait_nuclear_specialist scientist_trait_fast_learner }
-			skills = {
-				specialization_nuclear = 2
-				specialization_naval = 2
-			}
-		}
-
-		#advisor = {
-		#	cost = 100
-		#	slot = theorist
-		#	idea_token = igor_kurchatov
-		#	ledger = army
-		#	allowed = {
-		#		original_tag = SOV
-		#	}
-		#	research_bonus = {
-		#		nuclear = 0.150
-		#	}
-		#	traits = {
-		#		nuclear_scientist
-		#	}
-		#}
-	}
 
 	SOV_abram_ioffe = {
 		name = SOV_abram_ioffe
