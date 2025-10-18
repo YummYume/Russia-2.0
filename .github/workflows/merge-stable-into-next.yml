@@ -1,0 +1,46 @@
+name: Merge stable into next after release
+
+on:
+  pull_request:
+    branches: release/*
+    types:
+      - closed
+  workflow_dispatch:
+    inputs:
+      manual_call:
+        description: To distinguish workflow_call from workflow_dispatch
+        type: boolean
+        required: false
+        default: true
+
+jobs:
+  update-next:
+    name: Create a pull request from stable to next
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true || inputs.manual_call == true
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout code from stable
+        uses: actions/checkout@v4
+        with:
+          ref: stable
+          fetch-depth: 0
+
+      - name: Create a PR to next
+        uses: peter-evans/create-pull-request@v7
+        with:
+          base: next
+          commit-message: Merge branch stable into next to sync changes
+          branch: merge/stable-into-next
+          sign-commits: true
+          maintainer-can-modify: true
+          title: "Merge stable into next [skip ai review]"
+          body: Sync changes from stable, including changelog and release updates.
+          reviewers: |
+            YummYume
+            Raider472
+          labels: |
+            Automated
+            Changelog

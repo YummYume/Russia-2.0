@@ -1,0 +1,119 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - stable
+  workflow_dispatch:
+
+jobs:
+  changelog:
+    name: Generate changelog
+    runs-on: ubuntu-latest
+    outputs:
+      release_body: ${{ steps.git-cliff.outputs.content }}
+      release_version: ${{ steps.git-cliff.outputs.version }}
+      release_needed: ${{ steps.version-check.outputs.release_needed }}
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: stable
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Install pandoc
+        uses: pandoc/actions/setup@v1
+        with:
+          version: 3.1
+
+      - name: Generate Markdown changelog
+        uses: orhun/git-cliff-action@v4
+        id: git-cliff
+        with:
+          config: cliff.toml
+          args: --verbose --latest --strip header
+        env:
+          OUTPUT: CHANGELOG.md
+          GITHUB_REPO: ${{ github.repository }}
+
+      - name: Compare versions
+        id: version-check
+        run: |
+          current_version=$(sed -n 's/version="\([^"]*\)"/\1/p' descriptor.mod)
+          echo "Current version in descriptor.mod: $current_version"
+
+          cliff_version="${{ steps.git-cliff.outputs.version }}"
+          echo "Version from git-cliff: $cliff_version"
+
+          if [ "$current_version" = "$cliff_version" ]; then
+            echo "Versions are the same. No release needed."
+            echo "release_needed=false" >> $GITHUB_OUTPUT
+          else
+            echo "Versions differ. Release needed."
+            echo "release_needed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Generate Steam BBCode changelog
+        if: steps.version-check.outputs.release_needed == 'true'
+        run: ./2bbcode gfm < CHANGELOG.md > STEAM_CHANGELOG
+
+      - name: Update descriptor.mod and README.md version
+        if: steps.version-check.outputs.release_needed == 'true'
+        run: |
+          export VERSION="${{ steps.git-cliff.outputs.version }}"
+          sed -i 's/version="[^"]*"/version="'$VERSION'"' descriptor.mod
+          sed -i 's/> The current mod version is \*\*[^*]*\*\*\./> The current mod version is **'$VERSION'**./' README.md
+
+  release:
+    name: Upload the release
+    needs: changelog
+    runs-on: ubuntu-latest
+    if: needs.changelog.outputs.release_needed == 'true'
+    permissions:
+      contents: write
+    steps:
+      - name: Archive the release
+        uses: thedoctor0/zip-release@0.7.5
+        with:
+          type: zip
+          filename: russia_reworked_${{ needs.changelog.outputs.release_version }}.zip
+          command: find . -name '*.py' -delete
+          exclusions: /.git /.github /pandoc /scripts .gitattributes .gitignore *.md LICENSE STEAM_CHANGELOG
+
+      - name: Create the release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ needs.changelog.outputs.release_version }}
+          name: Russia Reworked v${{ needs.changelog.outputs.release_version }}
+          body: ${{ needs.changelog.outputs.release_body }}
+          artifacts: russia_reworked_${{ needs.changelog.outputs.release_version }}.zip
+          allowUpdates: true
+
+  update-stable:
+    name: Create a pull request to stable
+    needs: changelog
+    runs-on: ubuntu-latest
+    if: needs.changelog.outputs.release_needed == 'true'
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Create a PR to stable
+        uses: peter-evans/create-pull-request@v7
+        with:
+          base: stable
+          commit-message: "chore(version): release changelog for ${{ needs.changelog.outputs.release_version }}"
+          branch: release/v-${{ needs.changelog.outputs.release_version }}
+          sign-commits: true
+          maintainer-can-modify: true
+          title: "Version ${{ needs.changelog.outputs.release_version }} Changelog [skip ai review]"
+          body: "Automated changes for version ${{ needs.changelog.outputs.release_version }}."
+          reviewers: |
+            YummYume
+            Raider472
+          labels: |
+            Automated
+            Changelog
