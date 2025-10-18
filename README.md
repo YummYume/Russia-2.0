@@ -84,6 +84,9 @@ We have decided to work again on the mod, to keep it up to date with the current
 
 The mod is **NOT** achievement compatible but does include its own achievements. The 1939 start date now works fine. The AI can play any path.
 
+> [!NOTE]
+> Integration with Paradox mod achievements will come later.
+
 Do **NOT** upload this mod as your own.
 
 ## Mod developers

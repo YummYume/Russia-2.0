@@ -27,7 +27,7 @@ jobs:
       - name: Install pandoc
         uses: pandoc/actions/setup@v1
         with:
-          version: 3.1
+          version: 3.8
 
       - name: Generate Markdown changelog
         uses: orhun/git-cliff-action@v4
@@ -58,7 +58,7 @@ jobs:
 
       - name: Generate Steam BBCode changelog
         if: steps.version-check.outputs.release_needed == 'true'
-        run: ./2bbcode gfm < CHANGELOG.md > STEAM_CHANGELOG
+        run: ./pandoc/2bbcode gfm < CHANGELOG.md > STEAM_CHANGELOG
 
       - name: Update descriptor.mod and README.md version
         if: steps.version-check.outputs.release_needed == 'true'

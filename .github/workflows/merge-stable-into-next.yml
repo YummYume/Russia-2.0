@@ -2,7 +2,8 @@ name: Merge stable into next after release
 
 on:
   pull_request:
-    branches: release/*
+    branches:
+      - stable
     types:
       - closed
   workflow_dispatch:
@@ -17,7 +18,7 @@ jobs:
   update-next:
     name: Create a pull request from stable to next
     runs-on: ubuntu-latest
-    if: github.event.pull_request.merged == true || inputs.manual_call == true
+    if: (github.event.pull_request.merged == true && startsWith(github.head_ref, 'release/')) || inputs.manual_call == true
     permissions:
       contents: write
       pull-requests: write
