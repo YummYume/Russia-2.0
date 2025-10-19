@@ -2,10 +2,10 @@
 
 Thank you for considering contributing to this mod! Here's how you can help.
 
-## Content
+## Table of contents
 
 - [Contributing](#contributing)
-  - [Content](#content)
+  - [Table of contents](#table-of-contents)
   - [Reporting issues](#reporting-issues)
   - [Commit naming conventions](#commit-naming-conventions)
     - [Breaking changes](#breaking-changes)
@@ -67,7 +67,7 @@ Breaking changes are changes that are, most of the time, not save-game compatibl
 - Download the mod from the desired branch (`stable`, `next`, or `playtest`) as a ZIP file (Code > Download ZIP),
 - Unzip the file in `Documents\Paradox Interactive\Hearts of Iron IV\mod` and ensure the extracted folder is named `Russia-2.0`,
 - Copy the mod descriptor file (`mod/Russia-2.0/descriptor.mod`) to your mod folder (`Documents\Paradox Interactive\Hearts of Iron IV\mod`) and name it `Russia-2.0.mod` (the name should match the mod folder name),
-- Its contents should remain unchanged, except for an added `path` line at the end. Set it to the absolute path to the mod's folder, for example: `path="C:/Users/YourName/Documents/Paradox Interactive/Hearts of Iron IV/mod/Russia 2.0"`,
+- Its contents should remain unchanged, except for an added `path` line at the end. Set it to the absolute path to the mod's folder, for example: `path="C:/Users/YourName/Documents/Paradox Interactive/Hearts of Iron IV/mod/Russia-2.0"`,
 - The mod should now appear in the Paradox launcher, and you can enable it.
 
 ### The manual way
@@ -81,11 +81,11 @@ If, for whatever reason, the simple way does not work for you, you can install t
 - **Directory**: `mod/Russia-2.0`,
 - **Tags**: Alternative History, Events, Gameplay, Historical, National Focuses, Utilities, Military, Fixes, Balance,
 - Create the Mod. Do **NOT** enable it yet (very important),
-- Go to `Documents\Paradox Interactive\Hearts of Iron IV\mod`, here you should see a folder `Russia-2.0` (if not then you've done something wrong),
-- Go in the `Russia-2.0` Folder and unzip the files there. All the files should be directly inside the folder (e.g. `mod\Russia-2.0\common`, NOT `mod\Russia-2.0\Russia-2.0\common`),
+- Go to `Documents\Paradox Interactive\Hearts of Iron IV\mod`, here you should see a `Russia-2.0` folder (if not, something went wrong),
+- Go in the `Russia-2.0` Folder and unzip the files there. All the files should be directly inside (e.g. `mod\Russia-2.0\common`, NOT `mod\Russia-2.0\Russia-2.0\common`),
 - Once this is done, simply enable the mod and you're good to go!
 
-If you have any problems with the installation, feel free to ask (once you've completed the steps above).
+If you encounter any installation issues, feel free to ask (after completing the steps above).
 
 What if you already have the mod installed locally and want to update it with the latest version?
 Simply download the ZIP file again, delete everything inside the Russia 2.0 folder and then drag the new files in.

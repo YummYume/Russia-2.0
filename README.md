@@ -4,10 +4,10 @@ A Complete Soviet Rework for Hearts of Iron IV
 
 ![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/YummYume/Russia-2.0?utm_source=oss&utm_medium=github&utm_campaign=YummYume%2FRussia-2.0&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)
 
-## Content
+## Table of contents
 
 - [Russia Reworked](#russia-reworked)
-  - [Content](#content)
+  - [Table of contents](#table-of-contents)
   - [Links](#links)
   - [About this repository](#about-this-repository)
   - [Contributing or installing the mod locally](#contributing-or-installing-the-mod-locally)
