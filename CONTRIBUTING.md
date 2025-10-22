@@ -74,7 +74,8 @@ Breaking changes are changes that are, most of the time, not save-game compatibl
 
 If, for whatever reason, the simple way does not work for you, you can install the mod manually by following these steps:
 
-- Download the code as a zip file (Clone or Download > Download as ZIP), make sure to download the correct branch (`stable`, `next`, or `playtest`),
+- Download the code as a zip file (Code > Download as ZIP), make sure to download the correct branch (`stable`, `next`, or `playtest`),
+- Alternatively, download the desired version from the releases,
 - Start the HOI4 launcher and go to Mods > Mod Tools > Create a Mod,
 - **Name**: Russia 2.0,
 - **Version**: The current version shown in `descriptor.mod` (e.g., `3.0.4`),
@@ -88,4 +89,4 @@ If, for whatever reason, the simple way does not work for you, you can install t
 If you encounter any installation issues, feel free to ask (after completing the steps above).
 
 What if you already have the mod installed locally and want to update it with the latest version?
-Simply download the ZIP file again, delete everything inside the Russia 2.0 folder and then drag the new files in.
+Simply download the ZIP file again, delete everything inside the `Russia-2.0` folder and then drag the new files in.

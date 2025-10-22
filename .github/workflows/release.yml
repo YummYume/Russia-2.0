@@ -5,6 +5,10 @@ on:
     branches:
       - stable
   workflow_dispatch:
+    inputs:
+      commit_sha:
+        description: An optional commit SHA to release that will be used for the new tag creation.
+        required: false
 
 jobs:
   changelog:
@@ -90,6 +94,7 @@ jobs:
           name: Russia Reworked v${{ needs.changelog.outputs.release_version }}
           body: ${{ needs.changelog.outputs.release_body }}
           artifacts: russia_reworked_${{ needs.changelog.outputs.release_version }}.zip
+          commit: ${{ github.event.inputs.commit_sha || github.sha }}
           allowUpdates: true
 
   update-stable:
