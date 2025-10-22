@@ -1,0 +1,45 @@
+name: Check the source branch
+
+permissions:
+  contents: read
+
+on:
+  pull_request:
+    branches:
+      - stable
+    types: [opened, synchronize, reopened]
+
+env:
+  ALLOWED_BRANCHES: |
+    next
+    release/*
+
+jobs:
+  check-source:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check source branch
+        env:
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        run: |
+          set -euo pipefail
+          shopt -s extglob
+          # Prevent pathname expansion when iterating wildcard patterns (e.g., release/*)
+          set -f
+
+          allowed="${ALLOWED_BRANCHES}"
+          match=false
+
+          for pat in ${allowed}; do
+            if [[ "${HEAD_REF}" == ${pat} ]]; then match=true; break; fi
+          done
+
+          # Restore default pathname expansion behavior
+          set +f
+
+          if [[ "${match}" != "true" ]]; then
+            echo "Error: Pull requests to 'stable' must originate from an allowed branch."
+            echo "Current source branch: ${HEAD_REF}"
+            echo "Allowed source patterns: ${allowed}"
+            exit 1
+          fi
