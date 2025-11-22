@@ -56,4 +56,81 @@ characters = {
 	SOV_aleksandr_kerensky = {
 		
 	}
+
+	#Konstantin for the german decision to put him in power of German Moscow
+	SOV_konstantin_rodzayevsky = {
+		instance = {
+			allowed = {
+				has_dlc = "No Step Back"
+			}
+			name = SOV_konstantin_rodzayevsky
+
+			portraits = {
+				civilian = {
+					large = GFX_portrait_SOV_konstantin_rodzayevsky
+				}
+				army = {
+					small = "GFX_idea_konstantin_rodzaevsky"
+				}
+			}
+
+			country_leader = {
+				ideology = fascism_ideology
+				traits = { fascist_orchestrator }
+				expire = "1953.3.1.1"
+				id = -1
+			}
+		}
+		instance = {
+			allowed = {
+				NOT = { has_dlc = "No Step Back" }
+			}
+			name = SOV_konstantin_rodzayevsky
+
+			portraits = {
+				army = {
+					small = "GFX_idea_konstantin_rodzaevsky"
+				}
+			}
+			advisor = {
+				slot = political_advisor
+				idea_token = konstantin_rodzaevsky
+				allowed = {
+					original_tag = SOV
+				}
+				visible = {
+					NOT = {
+						has_character_flag = SOV_character_purged_flag 
+					}
+				}
+				available = {
+					if = {
+						limit = {
+							has_dlc = "Man the Guns"
+						}
+						NOT = {
+							has_autonomy_state = autonomy_supervised_state
+						}
+					}
+					if = {
+						limit = {
+							has_character_flag = SOV_exiled_flag
+						}
+						NOT = { has_character_flag = SOV_exiled_flag }
+					}
+				}
+				traits = {
+					fascist_demagogue 
+				}
+				do_effect = {
+					NOT = {
+						has_government = fascism 
+					}
+				}
+				ai_will_do = {
+					factor = 0.000
+				}
+			}
+		}
+	}
 }

@@ -9037,6 +9037,7 @@ focus_tree = {
 					has_war_with = ROOT
 					custom_trigger_tooltip = {
 						tooltip = SOV_preemptive_strike_iran_tt
+						not_tooltip = SOV_preemptive_strike_iran_tt
 						is_subject_of = ROOT
 						PER = {
 							OVERLORD = {
@@ -11091,6 +11092,7 @@ focus_tree = {
 				has_completed_focus = SOV_another_revolution
 				custom_trigger_tooltip = {
 					tooltip = SOV_terrible_fate_tt
+					not_tooltip = SOV_terrible_fate_tt
 					OR = {
 						has_game_rule = {
 							rule = sov_fragmentation_status
@@ -11119,6 +11121,34 @@ focus_tree = {
 					is_ai = yes
 				}
 				add_command_power = 100
+			}
+			unlock_national_focus = SOV_beaten_but_not_defeated
+			set_global_flag = SOV_flug_and_shteifon_went_to_russia_flag
+			if = {
+				limit = {
+					NOT = {
+						OR = {
+							has_global_flag = SOV_flug_and_shteifon_went_to_germany_flag
+							has_global_flag = SOV_flug_and_shteifon_decided_to_fight_for_yugoslavia_flag
+						}
+					}
+				}
+				every_other_country = {
+					limit = {
+						has_character = SOV_vasily_flug
+					}
+					SOV_vasily_flug = {
+						set_nationality = SOV
+					}
+				}
+				every_other_country = {
+					limit = {
+						has_character = SOV_boris_shteifon
+					}
+					SOV_boris_shteifon = {
+						retire = yes
+					}
+				}
 			}
 		}
 		cancelable = no
@@ -13204,12 +13234,12 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_DEMOCRATIC_UNITED_RUSSIA }
 		completion_reward = {
-			RAS = {
+			RAI = {
 				add_state_core = 463
 			}
 			every_state = {
 				limit = {
-					is_core_of = RAS
+					is_core_of = RAI
 					any_country = {
 						OR = {
 							tag = SOV
@@ -13218,18 +13248,18 @@ focus_tree = {
 						owns_state = PREV
 					}
 				}
-				RAS = {
+				RAI = {
 					transfer_state = PREV
 				}
 			}
 			SOV = {
 				set_autonomy = {
-					target = RAS
+					target = RAI
 					autonomy_state = autonomy_supervised_colony
 				}
 			}
 			hidden_effect = {
-				RAS = {
+				RAI = {
 					set_popularities = {
 						democratic = 67
 						neutrality = 14
@@ -13257,7 +13287,7 @@ focus_tree = {
 							tag = SOV
 						}
 					}
-					RAS = {
+					RAI = {
 						add_opinion_modifier = {
 							target = PREV
 							modifier = not_allowed_trade_foreign
@@ -13268,7 +13298,7 @@ focus_tree = {
 						}
 					}
 				}
-				RAS = {
+				RAI = {
 					division_template = {
 						name = "Arctic Garrison Division"
 						priority = 1
@@ -13292,19 +13322,19 @@ focus_tree = {
 					random_owned_controlled_state = {
 						create_unit = {
 							division = "name = \"1st Arctic Garrison Division\" division_template = \"Arctic Garrison Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
-							owner = RAS
+							owner = RAI
 						}
 					}
 					random_owned_controlled_state = {
 						create_unit = {
 							division = "name = \"2nd Arctic Garrison Division\" division_template = \"Arctic Garrison Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
-							owner = RAS
+							owner = RAI
 						}
 					}
 					random_owned_controlled_state = {
 						create_unit = {
 							division = "name = \"3rd Arctic Garrison Division\" division_template = \"Arctic Garrison Division\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
-							owner = RAS
+							owner = RAI
 						}
 					}
 				}
@@ -13334,7 +13364,7 @@ focus_tree = {
 					has_idea = SOV_Exiled_russia
 				}
 			}
-			RAS = {
+			RAI = {
 				is_subject_of = SOV
 			}
 		}
@@ -13370,7 +13400,7 @@ focus_tree = {
 				amount = 20
 				state = 463
 			}
-			RAS = {
+			RAI = {
 				add_state_core = 471
 				add_state_core = 472
 				add_state_core = 473
@@ -16059,6 +16089,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_NEUTRALITY_TSAR_RUSSIA FOCUS_FILTER_NEUTRALITY_MILITARY_RUSSIA FOCUS_FILTER_FASCIST_KONSTANTIN_RUSSIA FOCUS_FILTER_FASCIST_ANASTASY_RUSSIA }
 		completion_reward = {
+			set_country_flag = SOV_flug_and_shteifon_are_ready_to_serve_flag
 			custom_effect_tooltip = second_civil_war_tt
 			custom_effect_tooltip = second_civil_war_tt2
 			custom_effect_tooltip = second_civil_war_tt3
@@ -16610,7 +16641,7 @@ focus_tree = {
 					}
 				}
 			}
-			set_cosmetic_tag = RUS
+			set_cosmetic_tag = RUR
 			add_ideas = SOV_Tsar_we_trust
 			remove_ideas = SOV_Political_Unstability2
 			if = {
@@ -17355,6 +17386,7 @@ focus_tree = {
 							state = 807
 							state = 762
 							state = 188
+							state = 970
 						}
 					}
 					if = {
@@ -17396,6 +17428,7 @@ focus_tree = {
 								state = 102
 								state = 105
 								state = 853
+								state = 970
 							}
 						}
 						set_state_flag = SOV_slavic_states
@@ -17435,6 +17468,7 @@ focus_tree = {
 								state = 74
 								state = 9
 								state = 69
+								state = 972
 							}
 						}
 						set_state_flag = SOV_czech_slavic_states
@@ -18214,6 +18248,7 @@ focus_tree = {
 			NOT = {
 				custom_trigger_tooltip = {
 					tooltip = SOV_agreement_france_tt2
+					not_tooltip = SOV_agreement_france_tt2
 					any_country = { #IT WORKS
 						is_guaranteed_by = FRA
 						any_state = {
@@ -22136,6 +22171,7 @@ focus_tree = {
 				has_completed_focus = SOV_avoid_purge
 				custom_trigger_tooltip = {
 					tooltip = SOV_another_revolution_tt
+					not_tooltip = SOV_another_revolution_tt
 					OR = {
 						has_game_rule = {
 							rule = sov_fragmentation_status
@@ -25115,6 +25151,7 @@ focus_tree = {
 			has_government = anarchy
 			custom_trigger_tooltip = {
 				tooltip = not_any_country_whose_fate_hasnt_been_chosen_anarchist_semi_devolution
+				not_tooltip = not_any_country_whose_fate_hasnt_been_chosen_anarchist_semi_devolution
 				any_country = {
 					AND = {
 						OR = {
@@ -25531,15 +25568,8 @@ focus_tree = {
 		available = {
 			has_government = communism
 			is_subject = no
-			OR = {
 			KOR = {
 				exists = yes
-			}
-			hidden_effect = {
-				NKR = {
-					exists = yes
-				}
-			}
 			}
 		}
 		bypass = {
@@ -25550,16 +25580,17 @@ focus_tree = {
 					owns_state = 527
 					owns_state = 525
 				}
-				NKR = {
-					exists = yes
-					has_government = communism
-					owns_state = 527
-					owns_state = 525
-					owns_state = 918
-					owns_state = 917
-					owns_state = 920
-					owns_state = 919
-				}
+				#This tag doesn't exists
+				#NKR = {
+				#	exists = yes
+				#	has_government = communism
+				#	owns_state = 527
+				#	owns_state = 525
+				#	owns_state = 918
+				#	owns_state = 917
+				#	owns_state = 920
+				#	owns_state = 919
+				#}
 			}
 		}
 		search_filters = { FOCUS_FILTER_COMMUNISM_STALIN_RUSSIA }
@@ -25570,7 +25601,7 @@ focus_tree = {
 						exists = yes
 					}
 				}
-			"KOR" = { 
+			KOR = { 
 					start_civil_war = {
 					ideology = communism 
 					size = 0.5
@@ -25579,20 +25610,20 @@ focus_tree = {
 					}
 				}
 			}
-			if = {
-				limit = {
-					NKR = {
-						exists = yes
-						has_government = communism
-					}
-				}
-				NKR = {
-				declare_war_on = {
-							target = KOR
-							type = annex_everything
-					}
-				}
-			}
+			#if = {
+			#	limit = {
+			#		NKR = {
+			#			exists = yes
+			#			has_government = communism
+			#		}
+			#	}
+			#	NKR = {
+			#	declare_war_on = {
+			#				target = KOR
+			#				type = annex_everything
+			#		}
+			#	}
+			#}
 		}
 	}
 	
