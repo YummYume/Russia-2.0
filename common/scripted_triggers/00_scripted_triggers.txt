@@ -33,6 +33,7 @@ is_border_conflict_defender_vs_FROM = {
 }
 
 has_not_initiated_border_incident_with_FROM = {
+	# NOTE this check is very expensive! Use it with caution.
 	custom_trigger_tooltip = {
 		tooltip = not_initiated_border_incident_with_FROM
 		NOT = {
@@ -44,6 +45,7 @@ has_not_initiated_border_incident_with_FROM = {
 }
 
 has_not_initiated_border_incident_with_ROOT = {
+	# NOTE this check is very expensive! Use it with caution.
 	custom_trigger_tooltip = {
 		tooltip = not_initiated_border_incident_with_ROOT
 		NOT = {
@@ -121,6 +123,18 @@ check_has_focus_tree_to_switch_to_fascism = {
 			has_dlc = "Gotterdammerung"
 		}
 	}
+	NOT = {
+		AND = {
+			original_tag = PHI
+			has_dlc =  "No Compromise, No Surrender"
+		}
+	}
+	NOT = {
+		AND = {
+			original_tag = CHI
+			has_dlc =  "No Compromise, No Surrender"
+		}
+	}
 }
 
 check_has_focus_tree_to_switch_to_democratic = {
@@ -150,6 +164,18 @@ check_has_focus_tree_to_switch_to_democratic = {
 		AND = {
 			tag = GER
 			has_dlc = "Waking the Tiger"
+		}
+	}
+	NOT = {
+		AND = {
+			original_tag = PHI
+			has_dlc =  "No Compromise, No Surrender"
+		}
+	}
+	NOT = {
+		AND = {
+			original_tag = CHI 
+			has_dlc =  "No Compromise, No Surrender"
 		}
 	}
 }
@@ -217,6 +243,12 @@ check_has_focus_tree_to_switch_to_communism = {
 		AND = {
 			original_tag = GER
 			has_dlc =  "Gotterdammerung"
+		}
+	}
+	NOT = {
+		AND = {
+			original_tag = PHI
+			has_dlc =  "No Compromise, No Surrender"
 		}
 	}
 }
@@ -306,49 +338,6 @@ has_naval_treaty_trigger = {
 		has_idea = MTG_naval_treaty_cheating
 		has_idea = MTG_naval_treaty_adherent_reduced
 		has_idea = MTG_naval_treaty_cheating_reduced
-	}
-}
-
-ai_air_doctrine_tier_1_trigger = {
-	OR = {
-		has_tech = naval_strike_tactics
-		has_tech = direct_ground_support
-		has_tech = low_echelon_support
-	}
-}
-
-ai_air_doctrine_tier_2_trigger = {
-	OR = {
-		has_tech = multialtitude_flying
-		has_tech = hunt_and_destroy
-		has_tech = operational_destruction
-	}
-}
-ai_air_doctrine_tier_3_trigger = {
-	OR = {
-		has_tech = flying_fortress
-		has_tech = naval_strike_torpedo_tactics
-		has_tech = infiltration_bombing
-	}
-}
-
-ai_land_doctrine_tier_1_trigger = {
-	OR = {
-		has_tech = elastic_defence
-		has_tech = mobile_defence
-		has_tech = grand_assault
-		has_tech = defence_in_depth
-	}
-}
-
-ai_land_doctrine_tier_2_trigger = {
-	OR = {
-		has_tech = kampfgruppe
-		has_tech = mechanised_offensive
-		has_tech = branch_interoperation
-		has_tech = infiltration_assault
-		has_tech = vast_offensives
-		has_tech = large_front_offensive
 	}
 }
 
@@ -793,7 +782,6 @@ state_is_in_the_mediterranean_sea = {
 			state = 22
 			state = 21
 			state = 851
-			state = 911
 			state = 735
 			state = 162
 			state = 2
@@ -1048,6 +1036,10 @@ state_has_any_resource = {
 			resource = chromium
 			amount > 0
 		}
+		has_resources_amount = {
+			resource = coal
+			amount > 0
+		}
 	}
 }
 
@@ -1062,6 +1054,7 @@ country_can_be_reasonable_target_of_wargoal = { #Expected scopes: Target country
 	}
 }
 
+# Countries will be less likely to try and liberate or puppet these nations 
 is_unlikely_country_tag = {
 	OR = {
 	    tag = BRI
@@ -1129,6 +1122,22 @@ is_unlikely_country_tag = {
 		tag = THU
 		tag = HES
 		tag = RHI
+		tag = RNG 
+		tag = PSR 
+		tag = GXC
+		tag = YUN
+		tag = SHX
+		tag = XSM
+		tag = SIK
+		tag = GDC
+		tag = SND
+		tag = SIC
+		tag = NXM
+		tag = GSM
+		tag = XIC
+		tag = KHM
+		tag = KUM
+		tag = HBC
 	}
 }
 
@@ -1404,43 +1413,6 @@ FROM_is_twice_as_weak = {
 	}
 }
 
-ai_has_completed_army_doctrine = {
-	is_ai = yes
-	OR = {
-		has_tech = werwolf_guerillas
-		has_tech = modern_blitzkrieg
-		has_tech = air_land_battle
-		has_tech = shock_and_awe
-		has_tech = c3i_theory
-		has_tech = infiltration_in_depth
-		has_tech = continuous_offensive
-		has_tech = guerilla_warfare
-	}
-}
-
-ai_has_completed_air_doctrine = {
-	is_ai = yes
-	OR = {
-		has_tech = offensive_formations
-		has_tech = mass_destruction
-		has_tech = forward_interception
-		has_tech = high_level_bombing
-	}
-}
-
-ai_has_completed_naval_doctrine = {
-	is_ai = yes
-	OR = {
-		has_tech = grand_battlefleet
-		has_tech = submarine_offensive
-		has_tech = floating_airfield
-		has_tech = combined_operations_raiding
-		has_tech = integrated_convoy_defence
-		has_tech = submarine_offensive_bs
-		has_tech = carrier_battlegroups
-	}
-}
-
 ### Neutrality Act - only trade with countries at peace 
 trade_partner_not_at_war = {
 	custom_trigger_tooltip = {
@@ -1480,5 +1452,16 @@ is_allied_seller_trigger = {
 	custom_trigger_tooltip = {
 		tooltip = subsidy_allied_nation_tt
 		FROM = { is_in_faction_with = ROOT }
+	}
+}
+
+should_play_south_american_music = {
+	capital_scope = { is_on_continent = south_america }
+}
+
+check_allow_alternate_political_events = {
+	OR = {
+		original_tag = PHI
+		#
 	}
 }
