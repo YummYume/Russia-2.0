@@ -1,5 +1,5 @@
 autonomy_state = {
-	id = autonomy_supervised_free_territory
+	id = autonomy_supervised_free_territory_foreign
 
 	is_puppet = yes
 
@@ -22,10 +22,10 @@ autonomy_state = {
 		can_master_build_for_us = 1
 		extra_trade_to_overlord_factor = 0.2
 		overlord_trade_cost_factor = -0.2
-		cic_to_overlord_factor = 0.15
-		mic_to_overlord_factor = 0.15
-		production_speed_buildings_factor = 0.15
-		autonomy_manpower_share = 0.25
+		cic_to_overlord_factor = 0.3
+		mic_to_overlord_factor = 0.3
+		production_speed_buildings_factor = 0.10
+		autonomy_manpower_share = 0.35
 	}
 
 	ai_subject_wants_higher = {
@@ -42,15 +42,29 @@ autonomy_state = {
 
 	allowed = {
 		OVERLORD = {
-			tag = SOV
+			OR = {
+				tag = SOV
+				tag = event_target:FROM_first_beneficiary
+				tag = event_target:FROM_second_beneficiary
+			}
 			has_government = anarchy
 			is_subject = no
-			has_completed_focus = SOV_implement_the_project
+			SOV = {
+				has_completed_focus = SOV_spread_anarchism_beyond_our_neighbors
+			}
 		}
 	}
 
 	use_for_peace_conference_weight = {
 		base = 0
+		modifier = {
+			add = 100000
+			FROM = {
+				original_tag = SOV
+				has_government = anarchy
+				has_completed_focus = SOV_spread_anarchism_beyond_our_neighbors
+			}
+		}
 	}
 
 	can_take_level = {
